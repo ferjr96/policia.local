@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 8. Examen de la Organización y Competencia</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <h1>Tema 8. Examen de la Organización y Competencia</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+  {
+    pregunta: "1. ¿Qué tipo de asuntos de jurisdicción voluntaria conocen los Juzgados de Primera Instancia?",
+    opciones: [
+      " Solo testamentarias",
+      " Los que prevean las leyes",
+      " Únicamente adopciones internacionales",
+      " Solo tutelas y curatelas"
+    ],
+    correcta: 1,
+    explicacion: "Los Juzgados de Primera Instancia conocen de los actos de jurisdicción voluntaria en los términos que prevean las leyes, sin limitarse a materias específicas."
+  },
+  {
+    pregunta: "2. ¿Qué competencia tienen los Juzgados de Primera Instancia respecto a los Juzgados de Paz?",
+    opciones: [
+      " Nombrar a sus jueces",
+      " Conocer de recursos contra sus resoluciones y cuestiones de competencia",
+      " Supervisar su gestión económica",
+      " Sustituirlos en vacantes"
+    ],
+    correcta: 1,
+    explicacion: "Los Juzgados de Primera Instancia conocen de los recursos que establezca la ley contra las resoluciones de los Juzgados de Paz del partido y de las cuestiones de competencia entre estos."
+  },
+  {
+    pregunta: "3. ¿Qué excepción existe a la competencia de los Juzgados de Primera Instancia en reconocimiento de resoluciones extranjeras?",
+    opciones: [
+      " Cuando corresponda a otro Juzgado o Tribunal según tratados internacionales",
+      " Cuando la resolución sea de país no europeo",
+      " Cuando el valor sea inferior a 50.000 euros",
+      " Cuando se trate de resoluciones administrativas"
+    ],
+    correcta: 0,
+    explicacion: "No conocerán cuando, según tratados u otras normas internacionales, corresponda su conocimiento a otro Juzgado o Tribunal."
+  },
+  {
+    pregunta: "4. ¿Qué delitos NO instruyen los Juzgados de Instrucción?",
+    opciones: [
+      " Los cuyo enjuiciamiento corresponda a Juzgados de Violencia sobre la Mujer",
+      " Delitos contra la seguridad del Estado",
+      " Delitos económicos",
+      " Delitos contra la propiedad intelectual"
+    ],
+    correcta: 0,
+    explicacion: "Los Juzgados de Instrucción no instruyen causas por delitos cuyo enjuiciamiento corresponda a los Juzgados de Violencia sobre la Mujer."
+  },
+  {
+    pregunta: "5. ¿En qué casos pueden dictar sentencia los Juzgados de Instrucción?",
+    opciones: [
+      " En todos los procesos penales",
+      " En procesos por aceptación de decreto y cuando la ley lo establezca",
+      " Únicamente en delitos leves",
+      " Nunca dictan sentencias"
+    ],
+    correcta: 1,
+    explicacion: "Pueden dictar sentencia de conformidad con la acusación en los casos establecidos por la Ley y en los procesos por aceptación de decreto."
+  },
+  {
+    pregunta: "6. ¿Qué competencia tienen los Juzgados de Instrucción en materia de violencia sobre la mujer?",
+    opciones: [
+      " Ninguna, es exclusiva de juzgados especializados",
+      " Solo cuando actúan de guardia pueden adoptar órdenes de protección",
+      " Conocen siempre de estos casos",
+      " Solo en fase de ejecución de sentencias"
+    ],
+    correcta: 1,
+    explicacion: "Cuando estén desarrollando funciones de guardia, pueden adoptar la orden de protección a las víctimas de violencia sobre la mujer."
+  },
+  {
+    pregunta: "7. ¿Qué procedimientos de decomiso conocen los Juzgados de Instrucción?",
+    opciones: [
+      " Todos los decomisos",
+      " Solo los decomisos de bienes culturales",
+      " Los decomisos autónomos por delitos de su competencia",
+      " Únicamente decomisos en delitos económicos"
+    ],
+    correcta: 2,
+    explicacion: "Conocen de los procedimientos de decomiso autónomo por los delitos para cuyo conocimiento sean competentes."
+  },
+  {
+    pregunta: "8. ¿Qué instrumentos europeos NO tramitan los Juzgados Centrales de Instrucción?",
+    opciones: [
+      " Órdenes europeas de detención",
+      " Solicitudes de información entre servicios de seguridad de Estados miembros",
+      " Reconocimiento de títulos universitarios",
+      " Extradición pasiva"
+    ],
+    correcta: 2,
+    explicacion: "No tramitan reconocimiento de títulos universitarios, que es materia administrativa, no penal."
+  },
+  {
+    pregunta: "9. ¿Qué peticiones de la Fiscalía Europea conocen los Juzgados Centrales de Instrucción?",
+    opciones: [
+      " Todas las peticiones",
+      " Sobre medidas cautelares personales y limitación de derechos fundamentales",
+      " Únicamente sobre extradiciones",
+      " Solo sobre cooperación judicial civil"
+    ],
+    correcta: 1,
+    explicacion: "Como Jueces de garantías, conocen peticiones sobre adopción de medidas cautelares personales y autorización de actos que limiten derechos fundamentales."
+  },
+  {
+    pregunta: "10. ¿Qué impugnan los Juzgados Centrales de Instrucción respecto a Fiscales europeos?",
+    opciones: [
+      " Sus nombramientos",
+      " Los decretos de los Fiscales europeos delegados",
+      " Sus instrucciones",
+      " Sus recursos"
+    ],
+    correcta: 1,
+    explicacion: "Conocen de las impugnaciones que establezca la ley contra los decretos de los Fiscales europeos delegados."
+  },
+  {
+    pregunta: "11. ¿Qué ejecutan los Juzgados de lo Penal?",
+    opciones: [
+      " Solo sentencias por delitos graves",
+      " Sentencias dictadas en causas por delito grave o menos grave",
+      " Únicamente sentencias de tribunales extranjeros",
+      " Solo sentencias contencioso-administrativas"
+    ],
+    correcta: 1,
+    explicacion: "Ejecutan las sentencias dictadas en causas por delito grave o menos grave por los Juzgados de Instrucción."
+  },
+  {
+    pregunta: "12. ¿Qué resoluciones extranjeras ejecutan los Juzgados de lo Penal?",
+    opciones: [
+      " Todas las resoluciones penales extranjeras",
+      " Las que impongan sanciones pecuniarias transmitidas por autoridades de otros Estados UE",
+      " Únicamente condenas privativas de libertad",
+      " Solo resoluciones de países con convenio bilateral"
+    ],
+    correcta: 1,
+    explicacion: "Ejecutan el reconocimiento y ejecución de las resoluciones que impongan sanciones pecuniarias transmitidas por autoridades de otros Estados miembros de la UE."
+  },
+  {
+    pregunta: "13. ¿Qué delitos conocen los Juzgados Centrales de lo Penal?",
+    opciones: [
+      " Todos los delitos cometidos en Madrid",
+      " Los atribuidos a la Audiencia Nacional",
+      " Únicamente delitos económicos",
+      " Solo delitos cometidos por funcionarios"
+    ],
+    correcta: 1,
+    explicacion: "Conocen de las causas por delitos atribuidos a la Audiencia Nacional, con jurisdicción en toda España."
+  },
+  {
+    pregunta: "14. ¿Qué autorizan los Juzgados de lo Contencioso-administrativo?",
+    opciones: [
+      " Entrada en domicilios y lugares que requieran consentimiento",
+      " Intervenciones telefónicas",
+      " Registros en sedes políticas",
+      " Incautaciones de documentos"
+    ],
+    correcta: 0,
+    explicacion: "Autorizan mediante auto la entrada en domicilios y en los restantes edificios o lugares cuyo acceso requiera el consentimiento del titular."
+  },
+  {
+    pregunta: "15. ¿Qué requirimientos autorizan los Juzgados Centrales de lo Contencioso-administrativo?",
+    opciones: [
+      " Todos los requirimientos administrativos",
+      " De información por AEPD y autoridades administrativas independientes a operadores de comunicaciones",
+      " Únicamente inspecciones de trabajo",
+      " Solo requerimientos tributarios"
+    ],
+    correcta: 1,
+    explicacion: "Autorizan requerimientos de información por parte de la AEPD y otras autoridades administrativas independientes a operadores de comunicaciones electrónicas y prestadores de servicios de la sociedad de la información."
+  },
+  {
+    pregunta: "16. ¿Qué recursos conocen los Juzgados de lo Contencioso-administrativo?",
+    opciones: [
+      " Todos los recursos contra actos administrativos",
+      " Los que expresamente les atribuya la Ley",
+      " Únicamente recursos contra comunidades autónomas",
+      " Solo recursos en materia fiscal"
+    ],
+    correcta: 1,
+    explicacion: "Conocen en primera o única instancia de los recursos contencioso-administrativos contra actos que expresamente les atribuya la Ley."
+  },
+  {
+    pregunta: "17. ¿Qué materias conocen los Juzgados de lo Social?",
+    opciones: [
+      " Todas las materias sociales",
+      " Procesos sobre materias propias de su orden no atribuidas a otros órganos",
+      " Únicamente despidos",
+      " Solo conflictos colectivos"
+    ],
+    correcta: 1,
+    explicacion: "Conocen en primera o única instancia de los procesos sobre materias propias de este orden jurisdiccional que no estén atribuidos a otros órganos del mismo."
+  },
+  {
+    pregunta: "18. ¿Qué función NO tienen los Juzgados de Vigilancia Penitenciaria?",
+    opciones: [
+      " Control jurisdiccional de la potestad disciplinaria",
+      " Amparo de derechos de internos",
+      " Ejecución de penas privativas de libertad",
+      " Instrucción de causas penales"
+    ],
+    correcta: 3,
+    explicacion: "No instruyen causas penales, función que corresponde a los Juzgados de Instrucción. Las otras tres opciones sí son funciones suyas."
+  },
+  {
+    pregunta: "19. ¿Qué instrumentos europeos ejecutan los Juzgados de Vigilancia Penitenciaria?",
+    opciones: [
+      " Todos los instrumentos europeos",
+      " Instrumentos de reconocimiento mutuo de resoluciones penales en la UE",
+      " Únicamente órdenes de protección",
+      " Solo resoluciones civiles"
+    ],
+    correcta: 1,
+    explicacion: "Entre sus funciones está la emisión y ejecución de los instrumentos de reconocimiento mutuo de resoluciones penales en la UE que les atribuya la ley."
+  },
+  {
+    pregunta: "20. ¿Cuándo es excluyente la competencia de los Juzgados Centrales de Vigilancia Penitenciaria?",
+    opciones: [
+      " Siempre",
+      " Cuando el penado cumpla también otras condenas no impuestas por la Audiencia Nacional",
+      " Nunca",
+      " Solo para delitos de terrorismo"
+    ],
+    correcta: 1,
+    explicacion: "Su competencia es preferente y excluyente cuando el penado cumpla también otras condenas no impuestas por la Audiencia Nacional."
+  },
+  {
+    pregunta: "21. ¿Qué causas conoce el Juzgado Central de Menores?",
+    opciones: [
+      " Todas las causas de menores en España",
+      " Las que le atribuya la legislación sobre responsabilidad penal de menores",
+      " Únicamente las de menores infractores reincidentes",
+      " Solo las de protección de menores"
+    ],
+    correcta: 1,
+    explicacion: "Conoce de las causas que le atribuya la legislación reguladora de la responsabilidad penal de los menores, no de todas las causas."
+  },
+  {
+    pregunta: "22. ¿Qué instrumentos europeos ejecuta el Juzgado Central de Menores?",
+    opciones: [
+      " Todos los instrumentos europeos",
+      " Los de reconocimiento mutuo de resoluciones penales que le atribuya la ley",
+      " Únicamente órdenes de protección",
+      " Solo resoluciones civiles sobre custodia"
+    ],
+    correcta: 1,
+    explicacion: "Entre sus competencias está la emisión y ejecución de los instrumentos de reconocimiento mutuo de resoluciones penales en la UE que le atribuya la ley."
+  },
+  {
+    pregunta: "23. ¿Dónde debe haber al menos un Juzgado de lo Mercantil?",
+    opciones: [
+      " En cada municipio grande",
+      " En la capital de cada provincia",
+      " Solo en capitales autonómicas",
+      " En todas las ciudades con más de 100.000 habitantes"
+    ],
+    correcta: 1,
+    explicacion: "En la capital de cada provincia habrá uno o varios Juzgados de lo Mercantil, con excepciones para provincias pequeñas."
+  },
+  {
+    pregunta: "24. ¿Qué materias mercantiles NO conocen los Juzgados de lo Mercantil?",
+    opciones: [
+      " Competencia desleal",
+      " Daños en equipaje facturado previstos en Convenios internacionales",
+      " Derecho marítimo",
+      " Sociedades mercantiles"
+    ],
+    correcta: 1,
+    explicacion: "Por excepción, no son competentes para conocer de daños en equipaje facturado previstos en determinados Convenios internacionales y Reglamentos de la UE."
+  },
+  {
+    pregunta: "25. ¿Qué acciones son competencia exclusiva del juez del concurso contra administradores?",
+    opciones: [
+      " Todas las acciones civiles",
+      " Acciones de responsabilidad contra administradores o liquidadores",
+      " Únicamente impugnación de acuerdos",
+      " Solo revocación de nombramientos"
+    ],
+    correcta: 1,
+    explicacion: "Cuando el deudor es persona jurídica, el juez del concurso tiene competencia exclusiva para acciones de responsabilidad contra administradores o liquidadores."
+  },
+  {
+    pregunta: "26. ¿Qué materias sobre deudor persona natural son competencia del juez del concurso?",
+    opciones: [
+      " Solo embargo de bienes",
+      " Asistencia jurídica gratuita y disolución/liquidación de sociedad conyugal",
+      " Únicamente declaración de insolvencia",
+      " Solo negociación con acreedores"
+    ],
+    correcta: 1,
+    explicacion: "Para deudores personas naturales, tiene competencia exclusiva en asistencia jurídica gratuita y disolución/liquidación de sociedad o comunidad conyugal del concursado."
+  },
+  {
+    pregunta: "27. ¿Qué cuestiones prejudiciales incluye la jurisdicción del juez del concurso?",
+    opciones: [
+      " Solo civiles",
+      " Civiles, administrativas y sociales directamente relacionadas con el concurso",
+      " Únicamente penales",
+      " Solo fiscales"
+    ],
+    correcta: 1,
+    explicacion: "Su jurisdicción se extiende a todas las cuestiones prejudiciales civiles, administrativas y sociales directamente relacionadas con el concurso."
+  },
+  {
+    pregunta: "28. ¿Qué organismo gestiona la Marca de la Unión Europea?",
+    opciones: [
+      " OMPI en Ginebra",
+      " EUIPO en Alicante",
+      " OEPM en Madrid",
+      " OHIM en Bruselas"
+    ],
+    correcta: 1,
+    explicacion: "La Oficina de Propiedad Intelectual de la Unión Europea (EUIPO), antes OAMI, con sede en Alicante, gestiona la Marca de la UE."
+  },
+  {
+    pregunta: "29. ¿Qué caracteriza a la Marca de la UE respecto a su ámbito territorial?",
+    opciones: [
+      " Solo protege en el país de registro",
+      " Tiene efectos en toda la UE simultáneamente",
+      " Sustituye obligatoriamente las marcas nacionales",
+      " Solo es válida en 5 países"
+    ],
+    correcta: 1,
+    explicacion: "Una de sus características principales es que tiene efectos en toda la Unión Europea al mismo tiempo con un único registro."
+  },
+  {
+    pregunta: "30. ¿Qué elementos puede incluir una Marca de la UE?",
+    opciones: [
+      " Solo palabras",
+      " Palabras, nombres, imágenes, letras, números, etc.",
+      " Únicamente logotipos gráficos",
+      " Solo sonidos"
+    ],
+    correcta: 1,
+    explicacion: "Puede estar formada por cualquier signo que permita distinguir productos o servicios: palabras, nombres, imágenes, letras, números, etc."
+  },
+  {
+    pregunta: "31. ¿Qué delitos conocen los Juzgados de Violencia sobre la Mujer?",
+    opciones: [
+      " Todos los delitos cometidos por hombres",
+      " Delitos cometidos con violencia o intimidación en ámbito de violencia de género",
+      " Únicamente delitos contra la propiedad",
+      " Solo delitos contra el honor"
+    ],
+    correcta: 1,
+    explicacion: "Conocen de delitos cometidos con violencia o intimidación contra quien sea o haya sido su pareja, así como contra descendientes u otros en el ámbito familiar."
+  },
+  {
+    pregunta: "32. ¿Qué delitos leves conocen específicamente estos juzgados?",
+    opciones: [
+      " Todos los delitos leves",
+      " Amenazas, coacciones, injurias o vejaciones injustas",
+      " Únicamente hurtos menores",
+      " Solo daños leves"
+    ],
+    correcta: 1,
+    explicacion: "En el orden penal, conocen específicamente del conocimiento y fallo de los delitos leves de amenazas, coacciones, injurias o vejaciones injustas en este ámbito."
+  },
+  {
+    pregunta: "33. ¿Qué materias civiles conocen los Juzgados de Violencia sobre la Mujer?",
+    opciones: [
+      " Todas las materias civiles",
+      " Filiación, nulidad matrimonial, divorcio, relaciones paterno-filiales y medidas de familia",
+      " Únicamente herencias",
+      " Solo arrendamientos"
+    ],
+    correcta: 1,
+    explicacion: "En el orden civil conocen de materias como filiación, nulidad matrimonial, divorcio, relaciones paterno-filiales, medidas de familia y otras relacionadas."
+  },
+  {
+    pregunta: "34. ¿Qué requisito procesal debe darse para su competencia civil exclusiva?",
+    opciones: [
+      " Solo que trate de materias de familia",
+      " Que se hayan iniciado actuaciones penales por violencia de género o exista orden de protección",
+      " Únicamente que lo solicite la víctima",
+      " Que el juez penal lo remita"
+    ],
+    correcta: 1,
+    explicacion: "Para su competencia civil exclusiva debe haberse iniciado actuaciones penales por violencia de género o haberse adoptado orden de protección."
+  },
+  {
+    pregunta: "35. ¿Qué funciones cumplen los Juzgados de Paz en el orden civil?",
+    opciones: [
+      " Todos los asuntos civiles en el municipio",
+      " Juicios verbales de pequeña cuantía y actos de conciliación",
+      " Únicamente testamentarias",
+      " Solo arrendamientos urbanos"
+    ],
+    correcta: 1,
+    explicacion: "En el orden civil conocen de juicios verbales de cuantía no superior a noventa euros y actos de conciliación, además de funciones de Registro Civil."
+  },
+  {
+    pregunta: "36. ¿Qué funciones de Registro Civil cumplen los Juzgados de Paz?",
+    opciones: [
+      " Todas las funciones registrales",
+      " Las establecidas por la ley",
+      " Únicamente inscripción de nacimientos",
+      " Solo registro de matrimonios"
+    ],
+    correcta: 1,
+    explicacion: "Cumplen funciones de Registro Civil en los términos establecidos por la legislación aplicable."
+  },
+  {
+    pregunta: "37. ¿Quién nombra a los Jueces de Paz?",
+    opciones: [
+      " El Ministerio de Justicia",
+      " La Sala de Gobierno del TSJ a propuesta municipal",
+      " El Consejo General del Poder Judicial",
+      " El Decano de los Juzgados"
+    ],
+    correcta: 1,
+    explicacion: "Son nombrados por la Sala de Gobierno del Tribunal Superior de Justicia correspondiente, a propuesta del Ayuntamiento, para un periodo de cuatro años."
+  },
+  {
+    pregunta: "38. ¿Qué ocurre si no hay solicitantes para Juez de Paz?",
+    opciones: [
+      " El puesto queda vacante",
+      " El pleno elige libremente entre personas con requisitos",
+      " Lo nombra directamente el TSJ",
+      " Asume sus funciones el Juzgado de Primera Instancia"
+    ],
+    correcta: 1,
+    explicacion: "Si no hay solicitantes, el pleno municipal puede elegir libremente entre personas que reúnan las condiciones legales para el cargo."
+  },
+  {
+    pregunta: "39. ¿Qué mayoría necesita el pleno municipal para elegir Juez de Paz?",
+    opciones: [
+      " Mayoría simple",
+      " Mayoría absoluta",
+      " Mayoría de tres quintos",
+      " Unanimidad"
+    ],
+    correcta: 1,
+    explicacion: "El pleno del Ayuntamiento elige al Juez de Paz con el voto favorable de la mayoría absoluta de sus miembros."
+  },
+  {
+    pregunta: "40. ¿Ante quién prestan juramento los Jueces de Paz?",
+    opciones: [
+      " Ante el Alcalde",
+      " Ante el Juez de Primera Instancia e Instrucción",
+      " Ante el Presidente del TSJ",
+      " Ante el Decano"
+    ],
+    correcta: 1,
+    explicacion: "Los Jueces de Paz prestan juramento ante el juez de primera instancia e instrucción correspondiente."
+  },
+  {
+    pregunta: "41. ¿Cómo se elige al Juez Decano en poblaciones con menos de 10 juzgados?",
+    opciones: [
+      " Por sorteo",
+      " El de mejor puesto en el escalafón ejerce como Decano",
+      " Por votación de todos los jueces de la provincia",
+      " Lo designa el TSJ"
+    ],
+    correcta: 1,
+    explicacion: "En poblaciones con menos de diez juzgados, ejerce como Decano el juez o magistrado con mejor puesto en el escalafón."
+  },
+  {
+    pregunta: "42. ¿Qué función NO corresponde al Juez Decano?",
+    opciones: [
+      " Velar por la buena utilización de locales judiciales",
+      " Adoptar medidas urgentes en asuntos no repartidos",
+      " Nombrar a los jueces titulares",
+      " Cuidar del servicio de guardia"
+    ],
+    correcta: 2,
+    explicacion: "El Juez Decano no nombra a los jueces titulares, función que corresponde al Consejo General del Poder Judicial."
+  },
+  {
+    pregunta: "43. ¿Qué resuelve el Juez Decano respecto a sustituciones?",
+    opciones: [
+      " Nombra a los sustitutos",
+      " Resuelve cuestiones gubernativas sobre planes de sustitución",
+      " Decide ceses de jueces titulares",
+      " Aprueba los presupuestos para sustituciones"
+    ],
+    correcta: 1,
+    explicacion: "Resuelve con carácter gubernativo interno las cuestiones que se planteen sobre sustituciones y corrige irregularidades en los planes anuales de sustitución."
+  },
+  {
+    pregunta: "44. ¿Qué representa el Juez Decano?",
+    opciones: [
+      " Solo a su juzgado",
+      " A todos los jueces ante los poderes públicos",
+      " Únicamente al orden jurisdiccional al que pertenece",
+      " Solo ante el CGPJ"
+    ],
+    correcta: 1,
+    explicacion: "El Decano ostenta ante los poderes públicos la representación de todos los jueces de la población, no solo de su orden jurisdiccional."
+  },
+  {
+    pregunta: "45. ¿Qué acuerdos puede tomar la Junta de Jueces?",
+    opciones: [
+      " Solo sobre reparto de asuntos",
+      " Sobre reparto, unificación de criterios y asuntos comunes",
+      " Únicamente sobre nombramientos",
+      " Solo sobre presupuestos"
+    ],
+    correcta: 1,
+    explicacion: "Puede proponer normas de reparto, unificar criterios y prácticas, y tratar asuntos comunes o sobre los que estimen conveniente elevar exposición a la Sala de Gobierno."
+  },
+  {
+    pregunta: "46. ¿Qué elabora la Junta de Jueces para la Sala de Gobierno?",
+    opciones: [
+      " Listas de aspirantes a judicatura",
+      " Planes anuales de sustitución entre jueces titulares",
+      " Presupuestos anuales",
+      " Reglamentos internos"
+    ],
+    correcta: 1,
+    explicacion: "Corresponde a la Junta de Jueces elaborar los planes anuales de sustitución entre jueces titulares para su remisión a la Sala de Gobierno."
+  },
+  {
+    pregunta: "47. ¿Qué mayoría se necesita para convocar la Junta de Jueces a solicitud de parte?",
+    opciones: [
+      " Un tercio de los jueces",
+      " La cuarta parte de los jueces",
+      " La mitad de los jueces",
+      " Dos tercios de los jueces"
+    ],
+    correcta: 1,
+    explicacion: "La Junta debe convocarse por el Decano siempre que lo solicite la cuarta parte de los jueces de la población."
+  },
+  {
+    pregunta: "48. ¿Qué mayoría se necesita para adoptar acuerdos en la Junta de Jueces?",
+    opciones: [
+      " Unanimidad",
+      " Dos tercios",
+      " Mayoría simple de asistentes",
+      " Tres quintos"
+    ],
+    correcta: 2,
+    explicacion: "La Junta adopta acuerdos por mayoría simple de los asistentes, una vez constituida válidamente con la mitad más uno de sus miembros."
+  },
+  {
+    pregunta: "49. ¿Qué debe hacer el Juez Decano ante posibles anomalías en servicios comunes?",
+    opciones: [
+      " Sancionar directamente",
+      " Ponerlo en conocimiento de la Sala de Gobierno",
+      " Remitirlo al Ministerio",
+      " Archivar el asunto"
+    ],
+    correcta: 1,
+    explicacion: "Debe poner en conocimiento de la Sala de Gobierno toda posible anomalía en el funcionamiento de servicios comunes procesales de su territorio."
+  },
+  {
+    pregunta: "50. ¿Qué recurso resuelven los Jueces Decanos en única instancia?",
+    opciones: [
+      " Recursos contra sentencias",
+      " Recursos gubernativos contra decisiones de Letrados en materia de reparto",
+      " Recursos de amparo",
+      " Recursos de casación"
+    ],
+    correcta: 1,
+    explicacion: "Corresponde a los Jueces Decanos resolver en única instancia los recursos gubernativos que quepa interponer contra las decisiones de los Letrados de la Administración de Justicia en materia de reparto."
+  }
+];</script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+    <script src="../js/main.js"></script>
+</body>
+</html>

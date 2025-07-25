@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OposPolicia - Test</title>
+    <style>
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #ffffff;
+            color: #0a1a2f;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin: 30px 0;
+            color: #bb9402;
+            font-weight: 700;
+        }
+
+        .main-categories {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .category {
+            width: 500px;
+            min-width: 250px;
+            margin: 10px auto;
+            background: linear-gradient(135deg, #0a1a2f, #13294b);
+            color: #f5f5f5;
+            padding: 18px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            font-size: 19px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        }
+
+        .category:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 0 15px #00c3ff, 0 0 30px #00c3ff;
+            background: linear-gradient(135deg, #0e5dad, #0a1a2f 50%, #0e5dad);
+            color: #ff1744;
+            text-shadow: 0 0 5px #ff1744, 0 0 5px black;
+        }
+
+
+        .subtopics-container {
+            display: none; /* <--- ESTA LÍNEA ES LA CLAVE */
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 30px;
+
+        }
+
+        .subtopics {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+        }
+
+        .subtopic {
+            width: 500px;
+            min-width: 250px;
+            margin: 10px auto;
+            background: linear-gradient(135deg, #0a1a2f, #13294b);
+            color: #f5f5f5;
+            padding: 18px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            font-size: 19px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        }
+
+        .subtopic:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 0 15px #00c3ff, 0 0 30px #00c3ff;
+            background: linear-gradient(135deg, #0e5dad, #0a1a2f 50%, #0e5dad);
+            color: #ff1744;
+            text-shadow: 0 0 5px #ff1744, 0 0 5px black;
+        }
+
+        .tests-container {
+            display: none;
+            margin-top: 20px;
+            padding: 16px 8px;
+            background: #010c1f;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .tests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+
+        }
+
+        .test {
+            background: white;
+            color: black;
+            padding: 14px 0;
+            margin: 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            width: 110px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.22s, background 0.22s;
+        }
+
+        .test:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 0 15px #00c3ff, 0 0 30px #00c3ff;
+            background: linear-gradient(135deg, #0e5dad, #0a1a2f 50%, #0e5dad);
+            color: #ff1744;
+            text-shadow: 0 0 5px #ff1744, 0 0 5px black;
+        }
+
+        .back-button {
+            display: block;
+            margin: 50px auto 6px auto;
+            padding: 3px 23px;
+            background: #0a1a2f;
+            color: white;
+            border: 2px solid #c29a04;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 17px;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background: #9e7d02;
+            transform: scale(1.02);
+            transition: transform 0.7s;
+        }
+
+        #modo-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        body.modo-policial {
+            background: #041429;
+        }
+
+        body.modo-policial .category {
+        }
+
+        body.modo-policial .category:hover {
+        }
+
+        body.modo-policial .subtopic {
+        }
+
+        body.modo-policial .subtopic:hover {
+        }
+
+        body.modo-policial .tests-container {
+        }
+
+        body.modo-policial .test {
+            
+            background: linear-gradient(135deg, #0a1a2f, #13294b);
+            color: #f5f5f5;
+        }
+
+        body.modo-policial .test:hover {
+            background: linear-gradient(135deg, #0e5dad, #0a1a2f 50%, #0e5dad);
+            color: #ff1744;
+        }
+
+        @media (max-width: 800px) {
+            .main-categories {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .subtopic,
+            .test {
+                width: 96%;
+            }
+
+            .category {
+                width: 96%;
+                min-width: unset;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>🚔 POLICIA LOCAL /// 🚨</h1>
+
+    <div class="main-categories" id="main-categories"></div>
+
+    <!-- Subtemas por categoría -->
+    <div id="subtopics-wrappers"></div>
+
+    <!-- Contenedor para tests -->
+    <div class="tests-container" id="tests-container">
+        <h3 id="test-title"></h3>
+        <div class="tests" id="tests-list"></div>
+        <button class="back-button" onclick="backToSubtopics()">← Volver</button>
+    </div>
+
+    <script>
+        // Datos de categorías y subtemas
+        const categorias = [{
+                nombre: 'CONSTITUCIONAL',
+                desde: 1,
+                hasta: 6
+            },
+            {
+                nombre: 'TRAFICO',
+                desde: 7,
+                hasta: 17
+            },
+            {
+                nombre: 'Dº POLICIAL',
+                desde: 18,
+                hasta: 21
+            },
+            {
+                nombre: 'Dº PROCESAL',
+                desde: 22,
+                hasta: 23
+            },
+            {
+                nombre: 'Dº PENAL',
+                desde: 24,
+                hasta: 27
+            },
+            {
+                nombre: 'L.O.P.D',
+                desde: 28,
+                hasta: 28
+            },
+            {
+                nombre: 'LEY DE IGUALDAD',
+                desde: 29,
+                hasta: 29
+            },
+            {
+                nombre: 'LGTBI+',
+                desde: 30,
+                hasta: 30
+            }
+        ];
+
+        let currentCategory = '';
+        let currentCategoryObj = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Renderizar categorías
+            const categoriesDiv = document.getElementById('main-categories');
+            categorias.forEach((cat, idx) => {
+                const div = document.createElement('div');
+                div.className = 'category';
+                div.textContent = cat.nombre;
+                div.onclick = () => showSubtopics(cat.nombre);
+                categoriesDiv.appendChild(div);
+            });
+
+            // Renderizar subtemas ocultos
+            const subtopicsWrappers = document.getElementById('subtopics-wrappers');
+            categorias.forEach((cat, idx) => {
+                const subContainer = document.createElement('div');
+                subContainer.className = 'subtopics-container';
+                subContainer.id = 'subtopics-' + cat.nombre.replace(/[^a-zA-Z0-9]/g, '');
+
+                const subDiv = document.createElement('div');
+                subDiv.className = 'subtopics';
+                subDiv.id = 'subtopics-list-' + cat.nombre.replace(/[^a-zA-Z0-9]/g, '');
+                for (let i = cat.desde; i <= cat.hasta; i++) {
+                    const subtopic = document.createElement('div');
+                    subtopic.className = 'subtopic';
+                    subtopic.textContent = 'Tema ' + i;
+                    subtopic.onclick = function() {
+                        currentCategory = cat.nombre;
+                        currentCategoryObj = cat;
+                        showTests(cat.nombre + ' - Tema ' + i, i);
+                    };
+                    subDiv.appendChild(subtopic);
+                }
+                subContainer.appendChild(subDiv);
+                // Botón volver
+                const btn = document.createElement('button');
+                btn.className = 'back-button';
+                btn.textContent = '← Volver';
+                btn.onclick = backToCategories;
+                subContainer.appendChild(btn);
+
+                subtopicsWrappers.appendChild(subContainer);
+            });
+
+            // Modo policial
+            const toggle = document.getElementById("toggleModo");
+            if (localStorage.getItem("modoPolicial") === "true") {
+                document.body.classList.add("modo-policial");
+                toggle.checked = true;
+            }
+            toggle.addEventListener("change", () => {
+                if (toggle.checked) {
+                    document.body.classList.add("modo-policial");
+                    localStorage.setItem("modoPolicial", "true");
+                } else {
+                    document.body.classList.remove("modo-policial");
+                    localStorage.setItem("modoPolicial", "false");
+                }
+            });
+        });
+
+        function showSubtopics(catNombre) {
+            // Ocultar todo
+            document.querySelectorAll('.subtopics-container').forEach(el => el.style.display = 'none');
+            document.getElementById('main-categories').style.display = 'none';
+            document.getElementById('tests-container').style.display = 'none';
+            // Mostrar el de la categoría seleccionada
+            const id = 'subtopics-' + catNombre.replace(/[^a-zA-Z0-9]/g, '');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function backToCategories() {
+            document.querySelectorAll('.subtopics-container').forEach(el => el.style.display = 'none');
+            document.getElementById('main-categories').style.display = 'flex';
+            document.getElementById('tests-container').style.display = 'none';
+        }
+const testsPorTema = {
+1: 4, // Tema 1 tiene 4 tests
+2: 7, // Tema 2 tiene 7 tests
+3: 2, // Tema 3 tiene 2 tests
+// ... y así sucesivamente
+// si no pones uno, puedes ponerle un default
+};
+        function showTests(topicName, topicNumber) {
+            // Ocultar subtemas
+            document.querySelectorAll('.subtopics-container').forEach(el => el.style.display = 'none');
+            const testsContainer = document.getElementById('tests-container');
+            const testsList = document.getElementById('tests-list');
+            testsList.innerHTML = '';
+            document.getElementById('test-title').textContent = 'Tests de ' + topicName;
+            let testCount = testsPorTema[topicNumber] || 3; // 3 es el valor por defecto si no especificas el tema
+            for (let i = 1; i <= testCount; i++) {
+                const test = document.createElement('div');
+                test.className = 'test';
+                test.textContent = 'Test ' + i;
+                test.onclick = function() {
+                    window.open('tests/test' + topicNumber + '-' + i + '.html', '_blank');
+                };
+                testsList.appendChild(test);
+            }
+            testsContainer.style.display = 'block';
+        }
+
+        function backToSubtopics() {
+            document.getElementById('tests-container').style.display = 'none';
+            // Mostrar los subtemas de la categoría actual
+            if (currentCategoryObj) {
+                const id = 'subtopics-' + currentCategoryObj.nombre.replace(/[^a-zA-Z0-9]/g, '');
+                document.getElementById(id).style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

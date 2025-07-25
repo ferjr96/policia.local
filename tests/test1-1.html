@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+  {
+    pregunta: "1. ¿Cuál es el valor superior del ordenamiento jurídico español según la Constitución?",
+    opciones: [
+      " La eficiencia económica",
+      " La libertad, justicia, igualdad y pluralismo político",
+      " La unidad nacional",
+      " La seguridad nacional"
+    ],
+    correcta: 1,
+    explicacion: "La Constitución establece como valores superiores la libertad, justicia, igualdad y pluralismo político (Art. 1.1)."
+  },
+  {
+    pregunta: "2. ¿Qué tipo de monarquía establece la Constitución Española?",
+    opciones: [
+      " Monarquía absoluta",
+      " Monarquía parlamentaria",
+      " Monarquía constitucional",
+      " Monarquía federal"
+    ],
+    correcta: 1,
+    explicacion: "La Constitución establece una Monarquía parlamentaria como forma política del Estado (Art. 1.3)."
+  },
+  {
+    pregunta: "3. ¿Cómo se denomina la parte de la Constitución que contiene los principios generales y derechos fundamentales?",
+    opciones: [
+      " Parte orgánica",
+      " Parte dogmática",
+      " Parte estructural",
+      " Parte programática"
+    ],
+    correcta: 1,
+    explicacion: "La parte dogmática incluye el Título Preliminar (principios) y el Título I (derechos y deberes fundamentales)."
+  },
+  {
+    pregunta: "4. ¿Qué característica NO es propia de la Constitución Española de 1978?",
+    opciones: [
+      " Es consensuada",
+      " Es rígida",
+      " Es breve",
+      " Es normativa"
+    ],
+    correcta: 2,
+    explicacion: "La Constitución Española es extensa (no breve), con 169 artículos más disposiciones adicionales y transitorias."
+  },
+  {
+    pregunta: "5. ¿Qué órgano es el intérprete supremo de la Constitución?",
+    opciones: [
+      " El Tribunal Supremo",
+      " El Tribunal Constitucional",
+      " Las Cortes Generales",
+      " El Consejo General del Poder Judicial"
+    ],
+    correcta: 1,
+    explicacion: "El Tribunal Constitucional es el intérprete supremo de la Constitución según su Ley Orgánica."
+  },
+  {
+    pregunta: "6. ¿Qué principio constitucional garantiza que las normas inferiores no pueden contradecir a las superiores?",
+    opciones: [
+      " Principio de legalidad",
+      " Jerarquía normativa",
+      " Seguridad jurídica",
+      " Irretroactividad"
+    ],
+    correcta: 1,
+    explicacion: "La jerarquía normativa (Art. 9.3) establece este orden entre normas constitucionales, leyes y reglamentos."
+  },
+  {
+    pregunta: "7. ¿Qué derecho fundamental NO puede suspenderse durante los estados de excepción o sitio?",
+    opciones: [
+      " Derecho a la libertad de expresión",
+      " Derecho a la libertad personal (Art. 17.3)",
+      " Derecho de reunión",
+      " Derecho de huelga"
+    ],
+    correcta: 1,
+    explicacion: "El artículo 17.3 sobre plazo máximo de detención preventiva no puede suspenderse ni en estado de excepción."
+  },
+  {
+    pregunta: "8. ¿Qué tipo de ley desarrolla los derechos fundamentales y libertades públicas?",
+    opciones: [
+      " Ley ordinaria",
+      " Ley orgánica",
+      " Ley marco",
+      " Ley básica"
+    ],
+    correcta: 1,
+    explicacion: "Las leyes orgánicas (Art. 81) desarrollan derechos fundamentales y otras materias reservadas por la Constitución."
+  },
+  {
+    pregunta: "9. ¿Qué requisito tiene el procedimiento de reforma constitucional agravada?",
+    opciones: [
+      " Mayoría simple en ambas cámaras",
+      " Mayoría absoluta en ambas cámaras",
+      " Mayoría de 3/5 en ambas cámaras",
+      " Aprobación por referéndum obligatorio"
+    ],
+    correcta: 3,
+    explicacion: "La reforma agravada (Art. 168) requiere disolución de Cortes, 2/3 en nuevas Cortes y referéndum obligatorio."
+  },
+  {
+    pregunta: "10. ¿Qué característica define al modelo territorial español según la Constitución?",
+    opciones: [
+      " Estado federal",
+      " Estado unitario",
+      " Estado autonómico",
+      " Estado confederal"
+    ],
+    correcta: 2,
+    explicacion: "La Constitución establece un Estado autonómico que combina unidad nacional con autonomía de regiones y nacionalidades."
+  },
+  {
+    pregunta: "11. ¿Qué órgano puede plantear un recurso de inconstitucionalidad contra leyes?",
+    opciones: [
+      " Cualquier ciudadano",
+      " El Defensor del Pueblo y 50 diputados o senadores",
+      " Los sindicatos más representativos",
+      " Los gobiernos autonómicos"
+    ],
+    correcta: 1,
+    explicacion: "Según el Art. 162, pueden recurrir el Presidente, Defensor del Pueblo, 50 diputados/senadores y gobiernos autonómicos."
+  },
+  {
+    pregunta: "12. ¿Qué principio constitucional prohíbe aplicar normas que perjudiquen retroactivamente?",
+    opciones: [
+      " Principio de igualdad",
+      " Principio de legalidad",
+      " Principio de irretroactividad",
+      " Principio de seguridad jurídica"
+    ],
+    correcta: 2,
+    explicacion: "El Art. 9.3 prohíbe la retroactividad de normas sancionadoras no favorables o restrictivas de derechos."
+  },
+  {
+    pregunta: "13. ¿Qué derecho NO está incluido en la Sección 1ª del Capítulo II del Título I?",
+    opciones: [
+      " Derecho a la vida",
+      " Derecho a la huelga",
+      " Derecho a la intimidad",
+      " Derecho a la educación"
+    ],
+    correcta: 1,
+    explicacion: "El derecho a la huelga (Art. 28) está en la Sección 2ª, mientras los otros están en la Sección 1ª (Arts. 15-29)."
+  },
+  {
+    pregunta: "14. ¿Qué institución es el alto comisionado de las Cortes para defender derechos fundamentales?",
+    opciones: [
+      " El Ministerio Fiscal",
+      " El Defensor del Pueblo",
+      " El Tribunal Constitucional",
+      " El Consejo de Estado"
+    ],
+    correcta: 1,
+    explicacion: "El Defensor del Pueblo (Art. 54) supervisa la actividad administrativa en defensa de los derechos del Título I."
+  },
+  {
+    pregunta: "15. ¿Qué característica tiene el procedimiento de cuestión de confianza?",
+    opciones: [
+      " Lo plantea el Rey",
+      " Lo plantea el Presidente del Gobierno",
+      " Lo plantean 50 diputados",
+      " Lo plantea el Tribunal Constitucional"
+    ],
+    correcta: 1,
+    explicacion: "El Presidente puede plantear cuestión de confianza (Art. 112) sobre su programa o política general."
+  },
+  {
+    pregunta: "16. ¿Qué órgano elige al Presidente del Gobierno?",
+    opciones: [
+      " El Rey",
+      " El Congreso de los Diputados",
+      " Las Cortes Generales en sesión conjunta",
+      " El Consejo General del Poder Judicial"
+    ],
+    correcta: 1,
+    explicacion: "Tras la propuesta del Rey, el Congreso otorga su confianza al candidato por mayoría absoluta o simple (Art. 99)."
+  },
+  {
+    pregunta: "17. ¿Qué función NO corresponde al Rey según la Constitución?",
+    opciones: [
+      " Sancionar leyes",
+      " Nombrar al Presidente del Gobierno",
+      " Dirigir la política exterior",
+      " Convocar referéndum"
+    ],
+    correcta: 2,
+    explicacion: "La dirección de política exterior corresponde al Gobierno (Art. 97), no al Rey cuyas funciones son arbitrales y representativas."
+  },
+  {
+    pregunta: "18. ¿Qué principio rige la sucesión en la Corona española?",
+    opciones: [
+      " Únicamente la primogenitura masculina",
+      " Primogenitura con preferencia del varón sobre la mujer",
+      " Igualdad absoluta entre hombres y mujeres",
+      " Elección por las Cortes Generales"
+    ],
+    correcta: 1,
+    explicacion: "La sucesión sigue primogenitura con preferencia del varón (Art. 57), aunque esta disposición ha sido cuestionada."
+  },
+  {
+    pregunta: "19. ¿Qué mayoría se requiere para aprobar una moción de censura constructiva?",
+    opciones: [
+      " Mayoría simple",
+      " Mayoría absoluta",
+      " Mayoría de 3/5",
+      " Unanimidad"
+    ],
+    correcta: 1,
+    explicacion: "La moción de censura (Art. 113) requiere mayoría absoluta del Congreso y debe incluir candidato alternativo a Presidente."
+  },
+  {
+    pregunta: "20. ¿Qué característica tienen los Decretos-Leyes?",
+    opciones: [
+      " Son normas aprobadas por las Comunidades Autónomas",
+      " Requieren previa autorización parlamentaria",
+      " Son disposiciones gubernamentales provisionales",
+      " Desarrollan leyes orgánicas"
+    ],
+    correcta: 2,
+    explicacion: "Los Decretos-Leyes (Art. 86) son normas provisionales del Gobierno en casos de extraordinaria y urgente necesidad."
+  },
+  {
+    pregunta: "21. ¿Qué órgano resuelve los conflictos de competencia entre Estado y CCAA?",
+    opciones: [
+      " El Tribunal Supremo",
+      " El Tribunal Constitucional",
+      " Las Cortes Generales",
+      " El Consejo de Estado"
+    ],
+    correcta: 1,
+    explicacion: "El Tribunal Constitucional (Art. 161) resuelve conflictos entre Estado y CCAA o entre CCAA."
+  },
+  {
+    pregunta: "22. ¿Qué principio constitucional permite a las CCAA asumir competencias no reservadas al Estado?",
+    opciones: [
+      " Principio de subsidiariedad",
+      " Principio de autonomía",
+      " Principio dispositivo",
+      " Principio de solidaridad"
+    ],
+    correcta: 2,
+    explicacion: "El principio dispositivo (Art. 143) permite a las CCAA asumir competencias mediante sus Estatutos de Autonomía."
+  },
+  {
+    pregunta: "23. ¿Qué tipo de ley regula las bases de la organización militar?",
+    opciones: [
+      " Ley ordinaria",
+      " Ley orgánica",
+      " Ley marco",
+      " Ley de bases"
+    ],
+    correcta: 1,
+    explicacion: "Según el Art. 8.2, una ley orgánica regula las bases de la organización militar conforme a la Constitución."
+  },
+  {
+    pregunta: "24. ¿Qué derecho puede ser suspendido individualmente en investigaciones antiterroristas?",
+    opciones: [
+      " Derecho a la vida",
+      " Derecho a la inviolabilidad del domicilio",
+      " Derecho a la educación",
+      " Derecho al honor"
+    ],
+    correcta: 1,
+    explicacion: "El Art. 55.2 permite suspender individualmente derechos como la inviolabilidad del domicilio en casos de terrorismo."
+  },
+  {
+    pregunta: "25. ¿Qué órgano designa a los magistrados del Tribunal Constitucional?",
+    opciones: [
+      " Solo el Gobierno",
+      " Solo las Cortes Generales",
+      " El Rey a propuesta de diversos órganos",
+      " El Consejo General del Poder Judicial"
+    ],
+    correcta: 2,
+    explicacion: "El Rey nombra a los 12 magistrados: 4 a propuesta del Congreso, 4 del Senado, 2 del Gobierno y 2 del CGPJ (Art. 159)."
+  },
+  {
+    pregunta: "26. ¿Qué característica tiene el recurso de amparo constitucional?",
+    opciones: [
+      " Lo puede interponer cualquier ciudadano sin requisitos",
+      " Protege solo derechos del Título I",
+      " Tiene plazo de 6 meses para interponerse",
+      " Lo resuelve el Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicacion: "El amparo protege derechos fundamentales (Arts. 14-29) y debe interponerse en 20-30 días tras agotar vías judiciales."
+  },
+  {
+    pregunta: "27. ¿Qué principio establece que los poderes públicos deben facilitar la participación ciudadana?",
+    opciones: [
+      " Principio de legalidad",
+      " Principio de igualdad",
+      " Principio de democracia participativa",
+      " Principio de autonomía"
+    ],
+    correcta: 2,
+    explicacion: "El Art. 9.2 establece que los poderes públicos deben facilitar la participación ciudadana en la vida política, económica y social."
+  },
+  {
+    pregunta: "28. ¿Qué tipo de disposición deroga el ordenamiento anterior al aprobarse la Constitución?",
+    opciones: [
+      " Disposición adicional",
+      " Disposición transitoria",
+      " Disposición derogatoria",
+      " Disposición final"
+    ],
+    correcta: 2,
+    explicacion: "La Disposición Derogatoria deroga expresamente las leyes anteriores que se opongan a lo establecido en la Constitución."
+  },
+  {
+    pregunta: "29. ¿Qué órgano puede declarar los estados de alarma, excepción y sitio?",
+    opciones: [
+      " El Gobierno",
+      " El Congreso de los Diputados",
+      " El Tribunal Constitucional",
+      " El Rey"
+    ],
+    correcta: 1,
+    explicacion: "El Gobierno declara los estados (Art. 116), pero su autorización y control corresponden al Congreso de los Diputados."
+  },
+  {
+    pregunta: "30. ¿Qué característica define a las leyes orgánicas?",
+    opciones: [
+      " Regulan materias de especial importancia",
+      " Requieren referéndum para su aprobación",
+      " Solo pueden ser propuestas por el Gobierno",
+      " Derogan automáticamente leyes anteriores"
+    ],
+    correcta: 0,
+    explicacion: "Las leyes orgánicas (Art. 81) desarrollan derechos fundamentales, Estatutos de Autonomía y otras materias reservadas."
+  },
+  {
+    pregunta: "31. ¿Qué principio constitucional prohíbe la arbitrariedad de los poderes públicos?",
+    opciones: [
+      " Principio de legalidad",
+      " Principio de interdicción de la arbitrariedad",
+      " Principio de jerarquía normativa",
+      " Principio de publicidad normativa"
+    ],
+    correcta: 1,
+    explicacion: "El Art. 9.3 establece la interdicción de la arbitrariedad como garantía frente a actuaciones injustificadas del poder."
+  },
+  {
+    pregunta: "32. ¿Qué órgano ejerce el control previo de constitucionalidad de tratados internacionales?",
+    opciones: [
+      " El Tribunal Supremo",
+      " El Tribunal Constitucional",
+      " El Consejo de Estado",
+      " Las Cortes Generales"
+    ],
+    correcta: 1,
+    explicacion: "El Tribunal Constitucional puede realizar un control previo de constitucionalidad de tratados internacionales (Art. 95)."
+  },
+  {
+    pregunta: "33. ¿Qué característica tiene la iniciativa legislativa popular?",
+    "opciones": [
+      " No está permitida en España",
+      " Requiere 500.000 firmas y no aplica a ciertas materias",
+      " Puede proponer reformas constitucionales",
+      " Exime del trámite parlamentario"
+    ],
+    correcta: 1,
+    explicacion: "La iniciativa popular (Art. 87.3) requiere 500.000 firmas y no es posible para leyes orgánicas, tributarias o internacionales."
+  },
+  {
+    pregunta: "34. ¿Qué principio establece que las nacionalidades y regiones tienen derecho a la autonomía?",
+    opciones: [
+      " Principio de unidad indisoluble",
+      " Principio de autonomía",
+      " Principio de solidaridad interterritorial",
+      " Principio de igualdad"
+    ],
+    correcta: 1,
+    explicacion: "El Art. 2 combina la unidad indisoluble de la nación española con el derecho a la autonomía de nacionalidades y regiones."
+  },
+  {
+    pregunta: "35. ¿Qué función corresponde al Consejo General del Poder Judicial?",
+    opciones: [
+      " Elaborar leyes judiciales",
+      " Nombrar a todos los jueces y magistrados",
+      " Gobernar el Poder Judicial con independencia",
+      " Supervisar al Tribunal Constitucional"
+    ],
+    correcta: 2,
+    explicacion: "El CGPJ (Art. 122) garantiza la independencia del Poder Judicial, aunque no nombra a todos los jueces (solo a algunos cargos)."
+  },
+  {
+    pregunta: "36. ¿Qué característica tiene el Senado en el sistema constitucional español?",
+    opciones: [
+      " Es una cámara de representación territorial",
+      " Tiene poder de veto absoluto sobre las leyes",
+      " Es la cámara dominante en el proceso legislativo",
+      " Elige al Presidente del Gobierno"
+    ],
+    correcta: 0,
+    explicacion: "El Senado (Art. 69) es la Cámara de representación territorial, aunque con menos peso que el Congreso en el proceso legislativo."
+  },
+  {
+    pregunta: "37. ¿Qué órgano puede plantear un conflicto en defensa de la autonomía local?",
+    opciones: [
+      " Los ayuntamientos individualmente",
+      " Las diputaciones provinciales",
+      " Las asociaciones de municipios",
+      " El Gobierno central"
+    ],
+    correcta: 2,
+    explicacion: "Los municipios y provincias pueden plantear conflictos ante el Tribunal Constitucional en defensa de su autonomía (Art. 161-bis)."
+  },
+  {
+    pregunta: "38. ¿Qué principio limita el ejercicio de los derechos fundamentales?",
+    opciones: [
+      " El respeto a los derechos de los demás",
+      " Las decisiones del Gobierno",
+      " Las ordenanzas municipales",
+      " Las directrices europeas"
+    ],
+    correcta: 0,
+    explicacion: "El Art. 10.1 establece que el ejercicio de los derechos encuentra su límite en el respeto a los derechos de los demás."
+  },
+  {
+    pregunta: "39. ¿Qué característica tiene la Diputación Permanente del Congreso?",
+    opciones: [
+      " Asume las funciones de las Cortes cuando están disueltas",
+      " Puede aprobar leyes orgánicas",
+      " Nombra al Presidente del Gobierno",
+      " Controla directamente al Tribunal Constitucional"
+    ],
+    correcta: 0,
+    explicacion: "Las Diputaciones Permanentes (Art. 78) velan por los poderes de las Cámaras cuando no están reunidas o están disueltas."
+  },
+  {
+    pregunta: "40. ¿Qué derecho está reconocido en el Capítulo III del Título I (principios rectores)?",
+    opciones: [
+      " Derecho a la libertad religiosa",
+      " Derecho a la protección de la salud",
+      " Derecho a la inviolabilidad del domicilio",
+      " Derecho a la libertad de expresión"
+    ],
+    correcta: 1,
+    explicacion: "La protección de la salud (Art. 43) es un principio rector, mientras los otros son derechos fundamentales de la Sección 1ª."
+  },
+  {
+    pregunta: "41. ¿Qué órgano puede interponer un conflicto entre órganos constitucionales?",
+    opciones: [
+      " El Ministerio Fiscal",
+      " El Gobierno contra el Congreso",
+      " Los partidos políticos",
+      " Las asociaciones ciudadanas"
+    ],
+    correcta: 1,
+    explicacion: "El Gobierno, Congreso, Senado o CGPJ pueden plantear conflictos entre órganos constitucionales ante el Tribunal Constitucional."
+  },
+  {
+    pregunta: "42. ¿Qué característica tiene el procedimiento de elaboración de los Estatutos de Autonomía?",
+    opciones: [
+      " Lo aprueban únicamente las Cortes Generales",
+      " Requieren referéndum obligatorio en la CCAA",
+      " Son leyes orgánicas aprobadas por las Cortes",
+      " Los redacta exclusivamente el Gobierno central"
+    ],
+    correcta: 2,
+    explicacion: "Los Estatutos son leyes orgánicas (Art. 81) que requieren aprobación por las Cortes Generales tras su elaboración por la CCAA."
+  },
+  {
+    pregunta: "43. ¿Qué principio constitucional obliga a los poderes públicos a remover obstáculos para la igualdad real?",
+    opciones: [
+      " Principio de igualdad formal",
+      " Principio de acción positiva",
+      " Principio de solidaridad",
+      " Principio de progresividad"
+    ],
+    correcta: 1,
+    explicacion: "El Art. 9.2 obliga a promover condiciones para igualdad real y efectiva, removiendo obstáculos (acción positiva)."
+  },
+  {
+    pregunta: "44. ¿Qué órgano resuelve sobre la constitucionalidad de las disposiciones autonómicas?",
+    opciones: [
+      " El Tribunal Supremo",
+      " El Tribunal Constitucional",
+      " Las Cortes Generales",
+      " El Consejo de Estado"
+    ],
+    correcta: 1,
+    explicacion: "El Tribunal Constitucional (Art. 161) controla la constitucionalidad de normas con rango de ley, incluidas las autonómicas."
+  },
+  {
+    pregunta: "45. ¿Qué característica tiene el derecho a la objeción de conciencia?",
+    opciones: [
+      " Está expresamente regulado en la Constitución",
+      " Solo se aplica al servicio militar",
+      " Fue desarrollado por jurisprudencia del Tribunal Constitucional",
+      " Permite incumplir cualquier ley por motivos de conciencia"
+    ],
+    correcta: 2,
+    explicacion: "Aunque no mencionado expresamente, el TC reconoció este derecho derivado de la libertad ideológica (Art. 16)."
+  },
+  {
+    pregunta: "46. ¿Qué principio establece que las normas deben publicarse para ser exigibles?",
+    opciones: [
+      " Principio de publicidad normativa",
+      " Principio de seguridad jurídica",
+      " Principio de jerarquía normativa",
+      " Principio de legalidad"
+    ],
+    correcta: 0,
+    explicacion: "El Art. 9.3 establece la publicidad de las normas como garantía para su entrada en vigor y conocimiento por los ciudadanos."
+  },
+  {
+    pregunta: "47. ¿Qué órgano puede solicitar al Tribunal Constitucional un pronunciamiento sobre derechos fundamentales?",
+    opciones: [
+      " Los jueces ordinarios mediante cuestión de inconstitucionalidad",
+      " Los fiscales en cualquier proceso judicial",
+      " Los notarios en documentos públicos",
+      " Los registradores de la propiedad"
+    ],
+    correcta: 0,
+    explicacion: "Los jueces pueden plantear cuestión de inconstitucionalidad (Art. 163) cuando consideren que una ley aplicable vulnera derechos."
+  },
+  {
+    pregunta: "48. ¿Qué característica tiene el derecho a la educación en la Constitución?",
+    opciones: [
+      " Garantiza la escolarización obligatoria hasta los 18 años",
+      " Reconoce la libertad de enseñanza y creación de centros",
+      " Establece la gratuidad universitaria obligatoria",
+      " Prohíbe la educación religiosa en centros públicos"
+    ],
+    correcta: 1,
+    explicacion: "El Art. 27 reconoce la libertad de enseñanza, el derecho a crear centros y que los padres elijan formación moral para sus hijos."
+  },
+  {
+    pregunta: "49. ¿Qué principio inspira la organización económica según la Constitución?",
+    opciones: [
+      " Economía planificada",
+      " Economía social de mercado",
+      " Libre mercado sin intervención estatal",
+      " Autogestión empresarial"
+    ],
+    correcta: 1,
+    explicacion: "La Constitución (Art. 38 y Título VII) combina libertad de empresa con intervención estatal para garantizar justicia social."
+  },
+  {
+    pregunta: "50. ¿Qué característica tiene la reforma constitucional en España?",
+    opciones: [
+      " Es un procedimiento flexible y sencillo",
+      " Requiere siempre referéndum obligatorio",
+      " Tiene dos procedimientos (ordinario y agravado)",
+      " Solo puede iniciarla el Rey"
+    ],
+    correcta: 2,
+    explicacion: "La Constitución (Arts. 167-168) establece un procedimiento ordinario (3/5) y otro agravado para reformas fundamentales (2/3 + referéndum)."
+  }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

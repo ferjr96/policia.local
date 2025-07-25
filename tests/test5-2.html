@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 5. La Unión Europea</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <h1>Test sobre La Unión Europea</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+  {
+    pregunta: "1. ¿Qué tratado introdujo por primera vez el concepto de 'ciudadanía europea'?",
+    opciones: [
+      " Tratado de Roma (1957)",
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Lisboa (2007)"
+    ],
+    correcta: 1,
+    explicación: "El Tratado de Maastricht (1992) estableció formalmente la ciudadanía europea en el artículo 9 TUE."
+  },
+  {
+    pregunta: "2. ¿Qué institución de la UE tiene el monopolio de la iniciativa legislativa?",
+    opciones: [
+      " Parlamento Europeo",
+      " Consejo de la Unión Europea",
+      " Comisión Europea",
+      " Consejo Europeo"
+    ],
+    correcta: 2,
+    explicación: "La Comisión Europea tiene el derecho exclusivo de iniciativa legislativa según el artículo 17.2 TUE."
+  },
+  {
+    pregunta: "3. ¿Qué formación del Consejo de la UE coordina las políticas económicas?",
+    opciones: [
+      " Consejo de Asuntos Generales",
+      " Consejo ECOFIN",
+      " Consejo de Asuntos Exteriores",
+      " Consejo de Agricultura"
+    ],
+    correcta: 1,
+    explicación: "El Consejo de Asuntos Económicos y Financieros (ECOFIN) coordina políticas económicas según el artículo 16.6 TUE."
+  },
+  {
+    pregunta: "4. ¿Qué principio establece que la UE no debe actuar si los Estados pueden lograr los objetivos por sí mismos?",
+    opciones: [
+      " Principio de proporcionalidad",
+      " Principio de subsidiariedad",
+      " Principio de atribución",
+      " Principio de cooperación leal"
+    ],
+    correcta: 1,
+    explicación: "El principio de subsidiariedad (artículo 5.3 TUE) limita la acción de la UE a lo que no puedan lograr eficazmente los Estados miembros."
+  },
+  {
+    pregunta: "5. ¿Qué tratado incorporó el espacio de libertad, seguridad y justicia?",
+    opciones: [
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Niza (2001)",
+      " Tratado de Lisboa (2007)",
+      " Acta Única Europea (1986)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Ámsterdam (1997) incorporó este espacio como uno de los objetivos de la UE."
+  },
+  {
+    pregunta: "6. ¿Qué institución representa los intereses de la UE a nivel internacional?",
+    opciones: [
+      " Consejo Europeo",
+      " Alto Representante para Asuntos Exteriores",
+      " Presidente de la Comisión",
+      " Tribunal de Justicia"
+    ],
+    correcta: 1,
+    explicación: "El Alto Representante para Asuntos Exteriores y Política de Seguridad (artículo 18 TUE) dirige la política exterior de la UE."
+  },
+  {
+    pregunta: "7. ¿Qué tribunal actúa como instancia de apelación frente a decisiones del Tribunal General de la UE?",
+    opciones: [
+      " Tribunal Europeo de Derechos Humanos",
+      " Tribunal de Justicia de la UE",
+      " Tribunal de Cuentas",
+      " Tribunal Penal Internacional"
+    ],
+    correcta: 1,
+    explicación: "El Tribunal de Justicia de la UE conoce de los recursos de casación contra decisiones del Tribunal General (artículo 256 TFUE)."
+  },
+  {
+    pregunta: "8. ¿Qué tratado estableció el procedimiento de codecisión como principal método legislativo?",
+    opciones: [
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Lisboa (2007)",
+      " Tratado de Niza (2001)"
+    ],
+    correcta: 2,
+    explicación: "El Tratado de Lisboa (2007) convirtió el procedimiento de codecisión (ahora legislativo ordinario) en el principal método de adopción de leyes."
+  },
+  {
+    pregunta: "9. ¿Qué órgano del BCE decide sobre la política monetaria del euro?",
+    opciones: [
+      " Comité Ejecutivo",
+      " Consejo de Gobierno",
+      " Consejo General",
+      " Junta de Supervisión"
+    ],
+    correcta: 1,
+    explicación: "El Consejo de Gobierno del BCE (artículo 283 TFUE) formula la política monetaria para la zona euro."
+  },
+  {
+    pregunta: "10. ¿Qué institución controla la legalidad de los actos de las instituciones de la UE?",
+    opciones: [
+      " Tribunal de Cuentas",
+      " Fiscalía Europea",
+      " Tribunal de Justicia de la UE",
+      " Defensor del Pueblo Europeo"
+    ],
+    correcta: 2,
+    explicación: "El Tribunal de Justicia garantiza el respeto del Derecho en la interpretación y aplicación de los Tratados (artículo 19 TUE)."
+  },
+  {
+    pregunta: "11. ¿Qué tratado introdujo el mecanismo de cooperación reforzada?",
+    opciones: [
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Niza (2001)",
+      " Tratado de Lisboa (2007)",
+      " Tratado de Maastricht (1992)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Ámsterdam (1997) introdujo este mecanismo que permite a algunos Estados avanzar en integración sin esperar a todos."
+  },
+  {
+    pregunta: "12. ¿Qué institución elige al Defensor del Pueblo Europeo?",
+    opciones: [
+      " Consejo Europeo",
+      " Parlamento Europeo",
+      " Comisión Europea",
+      " Consejo de la UE"
+    ],
+    correcta: 1,
+    explicación: "El Parlamento Europeo elige al Defensor del Pueblo para investigar denuncias sobre mala administración en instituciones UE (artículo 228 TFUE)."
+  },
+  {
+    pregunta: "13. ¿Qué tratado cambió el nombre de 'Comunidad Europea' por 'Unión Europea'?",
+    opciones: [
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Lisboa (2007)",
+      " Tratado de Roma (1957)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Maastricht (1992) creó oficialmente la Unión Europea sobre la base de las Comunidades Europeas."
+  },
+  {
+    pregunta: "14. ¿Qué principio exige que la acción de la UE no exceda lo necesario para alcanzar sus objetivos?",
+    opciones: [
+      " Principio de subsidiariedad",
+      " Principio de proporcionalidad",
+      " Principio de atribución",
+      " Principio de cooperación leal"
+    ],
+    correcta: 1,
+    explicación: "El principio de proporcionalidad (artículo 5.4 TUE) limita la intensidad de la acción de la UE a lo estrictamente necesario."
+  },
+  {
+    pregunta: "15. ¿Qué institución supervisa el Sistema Europeo de Bancos Centrales?",
+    opciones: [
+      " Comisión Europea",
+      " Consejo ECOFIN",
+      " Banco Central Europeo",
+      " Parlamento Europeo"
+    ],
+    correcta: 2,
+    explicación: "El BCE (artículo 282 TFUE) dirige el SEBC que comprende el BCE y bancos centrales nacionales."
+  },
+  {
+    pregunta: "16. ¿Qué tratado introdujo la cláusula de flexibilidad (artículo 352 TFUE)?",
+    opciones: [
+      " Tratado de Roma (1957)",
+      " Acta Única Europea (1986)",
+      " Tratado de Maastricht (1992)",
+      " Tratado de Lisboa (2007)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Roma (1957) incluyó esta cláusula (originalmente artículo 235) para actuar en ausencia de competencias explícitas."
+  },
+  {
+    pregunta: "17. ¿Qué institución puede presentar recurso por incumplimiento contra un Estado miembro?",
+    opciones: [
+      " Solo la Comisión Europea",
+      " Comisión Europea o otro Estado miembro",
+      " Solo el Parlamento Europeo",
+      " Cualquier institución de la UE"
+    ],
+    correcta: 1,
+    explicación: "Según el artículo 259 TFUE, tanto la Comisión como otros Estados pueden iniciar procedimientos por incumplimiento."
+  },
+  {
+    pregunta: "18. ¿Qué tratado estableció por primera vez la Política Exterior y de Seguridad Común (PESC)?",
+    opciones: [
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Niza (2001)",
+      " Tratado de Lisboa (2007)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Maastricht (1992) estableció la PESC como segundo pilar de la Unión Europea."
+  },
+  {
+    pregunta: "19. ¿Qué órgano prepara las reuniones del Consejo Europeo?",
+    opciones: [
+      " Comité de Representantes Permanentes (COREPER)",
+      " Consejo de Asuntos Generales",
+      " Secretaría General del Consejo",
+      " Comisión Europea"
+    ],
+    correcta: 1,
+    explicación: "El Consejo de Asuntos Generales prepara y asegura el seguimiento de las reuniones del Consejo Europeo (artículo 16.6 TUE)."
+  },
+  {
+    pregunta: "20. ¿Qué tratado introdujo el procedimiento de cooperación como paso previo a la codecisión?",
+    opciones: [
+      " Acta Única Europea (1986)",
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Roma (1957)"
+    ],
+    correcta: 0,
+    explicación: "El Acta Única Europea (1986) introdujo este procedimiento que reforzó los poderes del Parlamento Europeo."
+  },
+  {
+    pregunta: "21. ¿Qué institución nombra a los miembros del Comité Económico y Social Europeo?",
+    opciones: [
+      " Parlamento Europeo",
+      " Consejo de la UE",
+      " Comisión Europea",
+      " Consejo Europeo"
+    ],
+    correcta: 1,
+    explicación: "El Consejo de la UE nombra a los miembros del CESE por unanimidad (artículo 302 TFUE)."
+  },
+  {
+    pregunta: "22. ¿Qué tratado estableció formalmente el Eurogrupo?",
+    opciones: [
+      " Tratado de Ámsterdam (1997)",
+      " Protocolo anexo al Tratado de Lisboa (2007)",
+      " Tratado de Niza (2001)",
+      " Tratado de Maastricht (1992)"
+    ],
+    correcta: 1,
+    explicación: "El Protocolo 14 anexo al Tratado de Lisboa (2007) reconoció formalmente al Eurogrupo como entidad informal de coordinación."
+  },
+  {
+    pregunta: "23. ¿Qué institución puede solicitar un dictamen al Tribunal de Justicia sobre la compatibilidad de un acuerdo internacional con los Tratados?",
+    opciones: [
+      " Solo el Consejo Europeo",
+      " Consejo, Comisión o Estados miembros",
+      " Solo el Parlamento Europeo",
+      " Cualquier institución de la UE"
+    ],
+    correcta: 1,
+    explicación: "Según el artículo 218.11 TFUE, el Consejo, la Comisión o cualquier Estado miembro pueden solicitar este dictamen."
+  },
+  {
+    pregunta: "24. ¿Qué tratado introdujo la posibilidad de que el Parlamento Europeo rechace en bloque a la Comisión propuesta?",
+    opciones: [
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Niza (2001)",
+      " Tratado de Lisboa (2007)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Maastricht (1992) introdujo este importante poder de control parlamentario."
+  },
+  {
+    pregunta: "25. ¿Qué institución adopta las 'orientaciones generales' de la política económica de la UE?",
+    opciones: [
+      " Consejo ECOFIN",
+      " Consejo Europeo",
+      " Comisión Europea",
+      " Banco Central Europeo"
+    ],
+    correcta: 1,
+    explicación: "El Consejo Europeo define estas orientaciones generales según el artículo 121.2 TFUE."
+  },
+  {
+    pregunta: "26. ¿Qué tratado estableció el principio de 'cooperación reforzada' entre algunos Estados miembros?",
+    opciones: [
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Niza (2001)",
+      " Tratado de Lisboa (2007)",
+      " Tratado de Maastricht (1992)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Ámsterdam (1997) introdujo este mecanismo de integración diferenciada."
+  },
+  {
+    pregunta: "27. ¿Qué institución puede presentar recurso de anulación contra actos de la UE?",
+    opciones: [
+      " Solo los Estados miembros",
+      " Estados miembros, Parlamento, Consejo o Comisión",
+      " Solo el Tribunal de Cuentas",
+      " Cualquier ciudadano europeo"
+    ],
+    correcta: 1,
+    explicación: "Según el artículo 263 TFUE, estas instituciones tienen legitimación activa para impugnar actos de la UE."
+  },
+  {
+    pregunta: "28. ¿Qué tratado modificó el sistema de votación por mayoría cualificada en el Consejo?",
+    opciones: [
+      " Tratado de Niza (2001)",
+      " Tratado de Lisboa (2007)",
+      " Ambos tratados",
+      " Ninguno, sigue igual desde Roma"
+    ],
+    correcta: 2,
+    explicación: "Tanto el Tratado de Niza (2001) como el de Lisboa (2007) reformaron el sistema de votación por mayoría cualificada."
+  },
+  {
+    pregunta: "29. ¿Qué institución puede convocar una convención para revisar los Tratados?",
+    opciones: [
+      " Solo el Consejo Europeo",
+      " Parlamento Europeo por mayoría absoluta",
+      " Comisión Europea por unanimidad",
+      " Tribunal de Justicia"
+    ],
+    correcta: 0,
+    explicación: "El Consejo Europeo puede convocar una convención para examinar proyectos de revisión (artículo 48 TUE)."
+  },
+  {
+    pregunta: "30. ¿Qué tratado introdujo el procedimiento de 'cooperación' entre Parlamento y Consejo?",
+    opciones: [
+      " Acta Única Europea (1986)",
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Roma (1957)"
+    ],
+    correcta: 0,
+    explicación: "El Acta Única Europea (1986) introdujo este procedimiento que aumentó la influencia del Parlamento."
+  },
+  {
+    pregunta: "31. ¿Qué institución puede iniciar un procedimiento por incumplimiento contra un Estado miembro?",
+    opciones: [
+      " Solo la Comisión Europea",
+      " Comisión Europea u otro Estado miembro",
+      " Solo el Parlamento Europeo",
+      " Cualquier institución de la UE"
+    ],
+    correcta: 1,
+    explicación: "Según el artículo 258 TFUE, la Comisión puede iniciar este procedimiento, y según el 259, también otros Estados."
+  },
+  {
+    pregunta: "32. ¿Qué tratado estableció el 'método comunitario' como principal forma de decisión?",
+    opciones: [
+      " Tratado de Roma (1957)",
+      " Tratado de Maastricht (1992)",
+      " Tratado de Lisboa (2007)",
+      " Acta Única Europea (1986)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Roma (1957) estableció este método basado en iniciativa de la Comisión, codecisión y control judicial."
+  },
+  {
+    pregunta: "33. ¿Qué institución puede solicitar la revisión de los Tratados?",
+    opciones: [
+      " Cualquier Estado miembro o institución de la UE",
+      " Solo el Consejo Europeo",
+      " Solo el Parlamento Europeo",
+      " Solo la Comisión Europea"
+    ],
+    correcta: 0,
+    explicación: "Según el artículo 48 TUE, cualquier Estado miembro, el Parlamento o la Comisión pueden presentar proyectos de revisión."
+  },
+  {
+    pregunta: "34. ¿Qué tratado introdujo la 'cláusula de solidaridad' en materia de terrorismo?",
+    opciones: [
+      " Tratado de Lisboa (2007)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Niza (2001)",
+      " Tratado de Maastricht (1992)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Lisboa (2007) introdujo en el artículo 222 TFUE esta cláusula de asistencia mutua frente a ataques terroristas."
+  },
+  {
+    pregunta: "35. ¿Qué institución supervisa la aplicación del Derecho de la UE en los Estados miembros?",
+    opciones: [
+      " Tribunal de Justicia",
+      " Comisión Europea",
+      " Consejo de la UE",
+      " Parlamento Europeo"
+    ],
+    correcta: 1,
+    explicación: "La Comisión, como 'guardiana de los Tratados', supervisa la aplicación del Derecho UE (artículo 17 TUE)."
+  },
+  {
+    pregunta: "36. ¿Qué tratado creó el cargo de Alto Representante para la PESC?",
+    opciones: [
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Niza (2001)",
+      " Tratado de Lisboa (2007)",
+      " Tratado de Maastricht (1992)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Ámsterdam (1997) creó este cargo que luego fue reforzado por el Tratado de Lisboa."
+  },
+  {
+    pregunta: "37. ¿Qué institución puede presentar recurso por omisión contra una institución de la UE?",
+    opciones: [
+      " Solo los Estados miembros",
+      " Estados miembros u otras instituciones",
+      " Solo el Parlamento Europeo",
+      " Cualquier ciudadano europeo"
+    ],
+    correcta: 1,
+    explicación: "Según el artículo 265 TFUE, los Estados miembros y otras instituciones pueden recurrir por omisión legislativa."
+  },
+  {
+    pregunta: "38. ¿Qué tratado introdujo la posibilidad de retirada voluntaria de un Estado miembro?",
+    opciones: [
+      " Tratado de Lisboa (2007)",
+      " Tratado de Niza (2001)",
+      " Tratado de Ámsterdam (1997)",
+      " Ninguno, no está permitido"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Lisboa (2007) introdujo en el artículo 50 TUE el procedimiento de retirada voluntaria."
+  },
+  {
+    pregunta: "39. ¿Qué institución puede solicitar un dictamen al Tribunal sobre la compatibilidad de un acuerdo internacional con los Tratados?",
+    opciones: [
+      " Solo el Consejo Europeo",
+      " Consejo, Comisión o Estados miembros",
+      " Solo el Parlamento Europeo",
+      " Cualquier institución de la UE"
+    ],
+    correcta: 1,
+    explicación: "Según el artículo 218.11 TFUE, estas instituciones pueden solicitar un dictamen previo sobre acuerdos internacionales."
+  },
+  {
+    pregunta: "40. ¿Qué tratado estableció el principio de 'lealtad comunitaria'?",
+    opciones: [
+      " Tratado de Roma (1957)",
+      " Tratado de Maastricht (1992)",
+      " Tratado de Lisboa (2007)",
+      " Acta Única Europea (1986)"
+    ],
+    correcta: 0,
+    explicación: "El principio de cooperación leal (artículo 4.3 TUE) tiene su origen en el Tratado de Roma como 'lealtad comunitaria'."
+  },
+  {
+    pregunta: "41. ¿Qué institución puede iniciar un procedimiento por incumplimiento contra un Estado miembro?",
+    opciones: [
+      " Solo la Comisión Europea",
+      " Comisión Europea u otro Estado miembro",
+      " Solo el Parlamento Europeo",
+      " Cualquier institución de la UE"
+    ],
+    correcta: 1,
+    explicación: "Según los artículos 258 y 259 TFUE, tanto la Comisión como otros Estados pueden iniciar este procedimiento."
+  },
+  {
+    pregunta: "42. ¿Qué tratado introdujo la 'tarjeta amarilla' en el control de subsidiariedad?",
+    opciones: [
+      " Tratado de Lisboa (2007)",
+      " Tratado de Niza (2001)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Maastricht (1992)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Lisboa (2007) introdujo este mecanismo que permite a parlamentos nacionales oponerse a propuestas legislativas."
+  },
+  {
+    pregunta: "43. ¿Qué institución puede presentar recurso de indemnización por daños causados por instituciones UE?",
+    opciones: [
+      " Solo los Estados miembros",
+      " Cualquier persona física o jurídica",
+      " Solo el Parlamento Europeo",
+      " Solo la Comisión Europea"
+    ],
+    correcta: 1,
+    explicación: "Según el artículo 268 TFUE, cualquier persona puede demandar por responsabilidad extracontractual de las instituciones."
+  },
+  {
+    pregunta: "44. ¿Qué tratado estableció el procedimiento de 'codecisión' entre Parlamento y Consejo?",
+    opciones: [
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Lisboa (2007)",
+      " Acta Única Europea (1986)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Maastricht (1992) introdujo este procedimiento que luego se convirtió en el ordinario."
+  },
+  {
+    pregunta: "45. ¿Qué institución puede solicitar la revisión de los Tratados?",
+    opciones: [
+      " Cualquier Estado miembro o institución de la UE",
+      " Solo el Consejo Europeo",
+      " Solo el Parlamento Europeo",
+      " Solo la Comisión Europea"
+    ],
+    correcta: 0,
+    explicación: "Según el artículo 48 TUE, cualquier Estado miembro, el Parlamento o la Comisión pueden presentar proyectos de revisión."
+  },
+  {
+    pregunta: "46. ¿Qué tratado introdujo la 'cooperación estructurada permanente' en defensa?",
+    opciones: [
+      " Tratado de Lisboa (2007)",
+      " Tratado de Niza (2001)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Maastricht (1992)"
+    ],
+    correcta: 0,
+    explicación: "El Tratado de Lisboa (2007) introdujo en el artículo 42.6 TUE esta cooperación reforzada en materia de defensa."
+  },
+  {
+    pregunta: "47. ¿Qué institución puede presentar recurso de anulación contra actos de la UE?",
+    opciones: [
+      " Solo los Estados miembros",
+      " Estados miembros, Parlamento, Consejo o Comisión",
+      " Solo el Tribunal de Cuentas",
+      " Cualquier ciudadano europeo"
+    ],
+    correcta: 1,
+    explicación: "Según el artículo 263 TFUE, estas instituciones tienen legitimación activa para impugnar actos de la UE."
+  },
+  {
+    pregunta: "48. ¿Qué tratado modificó el sistema de votación por mayoría cualificada en el Consejo?",
+    opciones: [
+      " Tratado de Niza (2001)",
+      " Tratado de Lisboa (2007)",
+      " Ambos tratados",
+      " Ninguno, sigue igual desde Roma"
+    ],
+    correcta: 2,
+    explicación: "Tanto el Tratado de Niza (2001) como el de Lisboa (2007) reformaron el sistema de votación por mayoría cualificada."
+  },
+  {
+    pregunta: "49. ¿Qué institución puede convocar una convención para revisar los Tratados?",
+    opciones: [
+      " Solo el Consejo Europeo",
+      " Parlamento Europeo por mayoría absoluta",
+      " Comisión Europea por unanimidad",
+      " Tribunal de Justicia"
+    ],
+    correcta: 0,
+    explicación: "El Consejo Europeo puede convocar una convención para examinar proyectos de revisión (artículo 48 TUE)."
+  },
+  {
+    pregunta: "50. ¿Qué tratado introdujo el procedimiento de 'cooperación' entre Parlamento y Consejo?",
+    opciones: [
+      " Acta Única Europea (1986)",
+      " Tratado de Maastricht (1992)",
+      " Tratado de Ámsterdam (1997)",
+      " Tratado de Roma (1957)"
+    ],
+    correcta: 0,
+    explicación: "El Acta Única Europea (1986) introdujo este procedimiento que aumentó la influencia del Parlamento."
+  }
+];</script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+    <script src="../js/main.js"></script>
+</body>
+</html>

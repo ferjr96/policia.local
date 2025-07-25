@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <h1>Test sobre La Unión Europea</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+  {
+    pregunta: "1. ¿Qué tipo de protección específica establece la Carta para víctimas de violencia de género?",
+    opciones: [
+      " Derecho a representación legal gratuita automática",
+      " Protección inmediata y efectiva por los Juzgados",
+      " Exención total de declarar",
+      " Indemnización económica garantizada"
+    ],
+    correcta: 1,
+    explicacion: "La Carta establece el derecho a ser protegido de forma inmediata y efectiva por los Juzgados y Tribunales."
+  },
+  {
+    pregunta: "2. ¿Qué derecho tiene un ciudadano sordo en un proceso judicial?",
+    opciones: [
+      " Que se le exima de participar",
+      " Utilizar un intérprete de signos",
+      " Que el proceso se realice por escrito",
+      " Elegir el juez que llevará el caso"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a la utilización de un intérprete de signos o medios tecnológicos que permitan su participación efectiva."
+  },
+  {
+    pregunta: "3. ¿Qué plazo máximo tiene la Administración para responder quejas según la Carta?",
+    opciones: [
+      " 15 días naturales",
+      " 1 mes natural",
+      " 3 meses naturales",
+      " 6 meses naturales"
+    ],
+    correcta: 1,
+    explicacion: "El ciudadano tiene derecho a recibir respuesta a sus quejas y reclamaciones dentro del plazo de un mes."
+  },
+  {
+    pregunta: "4. ¿Qué información debe recibir una víctima sobre su intervención en el proceso penal?",
+    opciones: [
+      " Solo la fecha del juicio",
+      " Las posibilidades de reparación del daño",
+      " La identidad del juez instructor",
+      " La vida personal del acusado"
+    ],
+    correcta: 1,
+    explicacion: "La víctima tiene derecho a ser informada sobre su intervención en el proceso y las posibilidades de reparación del daño."
+  },
+  {
+    pregunta: "5. ¿Qué derecho tiene un menor con suficiente juicio en procesos que le afecten?",
+    opciones: [
+      " Ser representado siempre por sus padres",
+      " Ser oído en el proceso",
+      " Vetar al juez asignado",
+      " Exigir sentencia inmediata"
+    ],
+    correcta: 1,
+    explicacion: "El menor con suficiente juicio tiene derecho a ser oído en procesos que le afecten directamente."
+  },
+  {
+    pregunta: "6. ¿Qué garantía tienen los inmigrantes respecto al significado de las actuaciones judiciales?",
+    opciones: [
+      " Que se usará su lengua materna siempre",
+      " Protección para comprender su trascendencia jurídica",
+      " Exención de costas procesales",
+      " Representación diplomática obligatoria"
+    ],
+    correcta: 1,
+    explicacion: "Tienen derecho a protección para asegurar que comprenden el significado de las actuaciones procesales."
+  },
+  {
+    pregunta: "7. ¿Qué derecho tiene el ciudadano sobre documentos en poder de Administraciones Públicas?",
+    opciones: [
+      " Que siempre se le exijan originales",
+      " Que no se le exijan si obran en dichas Administraciones",
+      " Recibirlos en formato electrónico automáticamente",
+      " Acceder a todos los documentos administrativos"
+    ],
+    correcta: 1,
+    explicacion: "No se le puede exigir aportar documentos que ya obren en poder de las Administraciones Públicas."
+  },
+  {
+    pregunta: "8. ¿Qué característica deben tener las notificaciones según la Carta?",
+    opciones: [
+      " Ser extremadamente técnicas",
+      " Contener términos sencillos y comprensibles",
+      " Incluir solo referencias legales",
+      " Realizarse siempre por correo certificado"
+    ],
+    correcta: 1,
+    explicacion: "Las notificaciones deben contener términos sencillos y comprensibles para el ciudadano."
+  },
+  {
+    pregunta: "9. ¿Qué derecho tiene el ciudadano respecto a la puntualidad en actuaciones judiciales?",
+    opciones: [
+      " Exigir que se celebren con máxima puntualidad",
+      " Recibir compensación económica por retrasos",
+      " Suspenderlas unilateralmente",
+      " Elegir la hora de las comparecencias"
+    ],
+    correcta: 0,
+    explicacion: "Tiene derecho a exigir que las actuaciones judiciales se celebren con la máxima puntualidad."
+  },
+  {
+    pregunta: "10. ¿Qué información debe recibir el ciudadano sobre el estado de los órganos judiciales?",
+    opciones: [
+      " Solo datos históricos",
+      " Información transparente y actualizada",
+      " Solo sobre juzgados de su localidad",
+      " Exclusivamente mediante solicitud expresa"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a recibir información transparente sobre el estado, actividad y asuntos de todos los órganos jurisdiccionales."
+  },
+  {
+    pregunta: "11. ¿Qué derecho tiene el ciudadano respecto a los formularios judiciales?",
+    opciones: [
+      " Pagar por su obtención siempre",
+      " Disponer de ellos gratuitamente cuando no sea necesaria representación",
+      " Recibirlos solo en formato papel",
+      " Que sean completados por funcionarios"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a disponer gratuitamente de formularios cuando no sea preceptiva la intervención de abogado y procurador."
+  },
+  {
+    pregunta: "12. ¿Qué protección tiene la víctima respecto a su vida privada en actuaciones judiciales?",
+    opciones: [
+      " Ninguna protección especial",
+      " Protección frente a publicidad no deseada",
+      " Derecho a veto sobre todas las publicaciones",
+      " Que se oculte completamente su identidad"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a ser protegida frente a la publicidad no deseada sobre su vida privada."
+  },
+  {
+    pregunta: "13. ¿Qué obligación tienen las autoridades respecto a actuaciones con menores?",
+    opciones: [
+      " Publicarlas en boletines oficiales",
+      " Guardar la debida reserva",
+      " Informar a los medios de comunicación",
+      " Transmitirlas a centros educativos"
+    ],
+    correcta: 1,
+    explicacion: "Deben guardar la debida reserva sobre actuaciones relacionadas con menores."
+  },
+  {
+    pregunta: "14. ¿Qué derecho tiene el ciudadano respecto a la comunicación electrónica con la Justicia?",
+    opciones: [
+      " No está permitida",
+      " Comunicarse a través de correo electrónico y videoconferencia",
+      " Solo para consultas informales",
+      " Exclusivamente para profesionales"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a comunicarse con la Administración de Justicia a través de medios telemáticos."
+  },
+  {
+    pregunta: "15. ¿Qué información debe recibir el cliente sobre los honorarios de su abogado?",
+    opciones: [
+      " Ninguna hasta finalizar el caso",
+      " El coste aproximado y forma de pago anticipadamente",
+      " Solo un rango estimado muy amplio",
+      " Exclusivamente cuando lo solicite expresamente"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a conocer anticipadamente el coste aproximado y forma de pago."
+  },
+  {
+    pregunta: "16. ¿Qué derecho tiene el ciudadano sobre las resoluciones judiciales?",
+    opciones: [
+      " Que sean redactadas en lenguaje técnico complejo",
+      " Que sean comprensibles para sus destinatarios",
+      " Que no contengan fundamentos jurídicos",
+      " Que sean extremadamente detalladas"
+    ],
+    correcta: 1,
+    explicacion: "Las resoluciones deben redactarse de forma que sean comprensibles para sus destinatarios."
+  },
+  {
+    pregunta: "17. ¿Qué garantía tiene el ciudadano sobre la calidad de los abogados de oficio?",
+    opciones: [
+      " Ninguna garantía específica",
+      " Exigir formación de calidad al profesional designado",
+      " Elegir personalmente entre todos los colegiados",
+      " Cambiar de abogado diariamente"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a exigir una formación de calidad al profesional del turno de oficio."
+  },
+  {
+    pregunta: "18. ¿Qué institución realiza el seguimiento del cumplimiento de la Carta?",
+    opciones: [
+      " El Defensor del Pueblo",
+      " La Comisión de Justicia e Interior del Congreso",
+      " El Tribunal Constitucional",
+      " El Consejo de Estado"
+    ],
+    correcta: 1,
+    explicacion: "La Comisión de Justicia e Interior del Congreso realiza el seguimiento y evaluación del cumplimiento."
+  },
+  {
+    pregunta: "19. ¿Qué derecho tiene el testigo que colabora con la Justicia?",
+    opciones: [
+      " Ser compensado económicamente siempre",
+      " Recibir protección adecuada",
+      " Negarse a declarar sin consecuencias",
+      " Elegir el formato de su declaración"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a ser adecuadamente protegido cuando colabore con la Administración de Justicia."
+  },
+  {
+    pregunta: "20. ¿Qué característica debe tener la atención al ciudadano en dependencias judiciales?",
+    opciones: [
+      " Respetuosa y adaptada a sus circunstancias",
+      " Exclusivamente formal",
+      " Limitada a cuestiones procedimentales",
+      " Solo en lengua castellana"
+    ],
+    correcta: 0,
+    explicacion: "Debe ser respetuosa y adaptada a sus circunstancias psicológicas, sociales y culturales."
+  },
+  {
+    pregunta: "21. ¿Qué información puede conocer un ciudadano sobre un abogado sancionado?",
+    opciones: [
+      " Ninguna por secreto profesional",
+      " Si ha sido objeto de sanción disciplinaria",
+      " Solo sanciones muy graves",
+      " Exclusivamente mediante orden judicial"
+    ],
+    correcta: 1,
+    explicacion: "Puede conocer, a través del Colegio, si un abogado ha sido sancionado disciplinariamente."
+  },
+  {
+    pregunta: "22. ¿Qué derecho tiene el ciudadano sobre la tramitación de sus asuntos?",
+    opciones: [
+      " Que sean eternos",
+      " Una tramitación ágil",
+      " Paralizarlos cuando lo desee",
+      " Elegir los plazos procesales"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a una tramitación ágil de los asuntos que le afecten."
+  },
+  {
+    pregunta: "23. ¿Qué garantía tienen las personas con discapacidad psíquica?",
+    opciones: [
+      " Exención de participar en procesos",
+      " Ejercer plenamente sus derechos",
+      " Representación automática por familiares",
+      " Procesos especiales sin formalidades"
+    ],
+    correcta: 1,
+    explicacion: "Pueden ejercitar con plenitud los derechos reconocidos en la Carta y leyes procesales."
+  },
+  {
+    pregunta: "24. ¿Qué derecho tiene el ciudadano respecto a la identificación de funcionarios?",
+    opciones: [
+      " Conocer siempre su identidad y categoría",
+      " Solo el nombre sin apellidos",
+      " Solo en procedimientos civiles",
+      " Nunca conocer sus datos personales"
+    ],
+    correcta: 0,
+    explicacion: "Tiene derecho a conocer la identidad y categoría del funcionario, salvo en causas criminales por seguridad."
+  },
+  {
+    pregunta: "25. ¿Qué debe hacer el juez o letrado ante la suspensión de una actuación?",
+    opciones: [
+      " Nada, no está obligado",
+      " Informar al ciudadano sobre las razones",
+      " Compensar económicamente al afectado",
+      " Reprogramarla sin informar"
+    ],
+    correcta: 1,
+    explicacion: "Deben informar al ciudadano sobre las razones del retraso o suspensión."
+  },
+  {
+    pregunta: "26. ¿Qué derecho tiene el ciudadano sobre el estado de su proceso?",
+    opciones: [
+      " Solo conocer el resultado final",
+      " Conocer su contenido y estado con interés legítimo",
+      " Acceso ilimitado a todo el expediente",
+      " Solo si contrata un abogado privado"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a conocer el contenido y estado de los procesos con interés legítimo."
+  },
+  {
+    pregunta: "27. ¿Qué característica debe tener el lenguaje en vistas judiciales?",
+    opciones: [
+      " Técnico y especializado",
+      " Comprensible para los asistentes",
+      " Formal y complejo",
+      " Con abundantes tecnicismos"
+    ],
+    correcta: 1,
+    explicacion: "Debe utilizarse un lenguaje comprensible en vistas y comparecencias."
+  },
+  {
+    pregunta: "28. ¿Qué derecho tiene el extranjero ante la Administración de Justicia?",
+    opciones: [
+      " Ser atendido sin discriminación",
+      " Procesos en su lengua materna siempre",
+      " Exención de tasas judiciales",
+      " Representación diplomática obligatoria"
+    ],
+    correcta: 0,
+    explicacion: "Tiene derecho a ser atendido sin discriminación por razón de raza, lengua, religión o creencias."
+  },
+  {
+    pregunta: "29. ¿Qué puede hacer el ciudadano ante conductas no deontológicas de profesionales?",
+    opciones: [
+      " Nada, es competencia exclusiva de los jueces",
+      " Denunciarlas ante los Colegios Profesionales",
+      " Exigir indemnización directa",
+      " Publicarlas en medios de comunicación"
+    ],
+    correcta: 1,
+    explicacion: "Puede denunciar conductas contrarias a la deontología ante los Colegios de Abogados o Procuradores."
+  },
+  {
+    pregunta: "30. ¿Qué derecho tiene el ciudadano sobre la comparecencia de menores?",
+    opciones: [
+      " Que sea siempre a puerta cerrada",
+      " Adecuada a su situación y desarrollo evolutivo",
+      " Con presencia obligatoria de padres",
+      " Grabada en video siempre"
+    ],
+    correcta: 1,
+    explicacion: "La comparecencia debe ser adecuada a su situación y desarrollo evolutivo."
+  },
+  {
+    pregunta: "31. ¿Qué información debe recibir el cliente sobre las costas procesales?",
+    opciones: [
+      " Ninguna hasta la sentencia",
+      " Consecuencias y cuantía estimada previamente",
+      " Solo un porcentaje aproximado",
+      " Exclusivamente si lo solicita por escrito"
+    ],
+    correcta: 1,
+    explicacion: "Debe ser informado previamente sobre consecuencias de condena en costas y su cuantía estimada."
+  },
+  {
+    pregunta: "32. ¿Qué profesional puede representar en procedimientos de Seguridad Social?",
+    opciones: [
+      " Solo abogados",
+      " Solo procuradores",
+      " Graduados sociales colegiados",
+      " Solo economistas"
+    ],
+    correcta: 2,
+    explicacion: "En procedimientos laborales y de Seguridad Social puede representar un graduado social colegiado."
+  },
+  {
+    pregunta: "33. ¿Qué garantía tiene el ciudadano sobre el secreto profesional?",
+    opciones: [
+      " Que los profesionales guarden riguroso secreto",
+      " Que pueda renunciar al secreto parcialmente",
+      " Que se comparta información con otros clientes",
+      " Que sea supervisado por el juez"
+    ],
+    correcta: 0,
+    explicacion: "Los profesionales deben guardar riguroso secreto de lo revelado por el cliente."
+  },
+  {
+    pregunta: "34. ¿Qué derecho tiene el ciudadano sobre la asistencia jurídica gratuita?",
+    opciones: [
+      " Ser asesorado por abogado cualificado",
+      " Elegir cualquier abogado del colegio",
+      " Tener preferencia en los juzgados",
+      " No pagar nunca costas"
+    ],
+    correcta: 0,
+    explicacion: "Cuando tenga derecho a asistencia jurídica gratuita, será asesorado por abogado suficientemente cualificado."
+  },
+  {
+    pregunta: "35. ¿Qué institución aprobó el Plan de Transparencia Judicial?",
+    opciones: [
+      " El Congreso de los Diputados",
+      " El Consejo de Ministros",
+      " El Consejo General del Poder Judicial",
+      " El Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicacion: "Fue aprobado por el Consejo de Ministros en 2005 a propuesta del Ministro de Justicia."
+  },
+  {
+    pregunta: "36. ¿Qué herramienta utiliza el Plan de Transparencia Judicial?",
+    opciones: [
+      " Solo reformas legislativas",
+      " Estadística Judicial y tecnologías de información",
+      " Reducción de plazos procesales",
+      " Limitación de recursos"
+    ],
+    correcta: 1,
+    explicacion: "Se apoya en Estadística Judicial, tecnologías de información, buenas prácticas y cooperación internacional."
+  },
+  {
+    pregunta: "37. ¿Qué objetivo tiene el Plan de Transparencia Judicial?",
+    opciones: [
+      " Hacer la Justicia más clara y accesible",
+      " Reducir el número de juzgados",
+      " Limitar el acceso a la información",
+      " Centralizar todos los procedimientos"
+    ],
+    correcta: 0,
+    explicacion: "Busca hacer la Justicia clara, moderna y accesible para los ciudadanos."
+  },
+  {
+    pregunta: "38. ¿Qué derecho tiene el ciudadano sobre horario de atención en juzgados?",
+    opciones: [
+      " Solo por las mañanas",
+      " Mañana y tarde",
+      " Horario continuo",
+      " Solo con cita previa"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a ser atendido en horario de mañana y tarde en dependencias judiciales."
+  },
+  {
+    pregunta: "39. ¿Qué garantía tienen las personas con discapacidad visual?",
+    opciones: [
+      " Exención de participar en procesos",
+      " Uso de medios tecnológicos para acceder a información",
+      " Representación automática por familiares",
+      " Procesos especiales sin formalidades"
+    ],
+    correcta: 1,
+    explicacion: "Pueden usar medios tecnológicos que permitan obtener información de forma comprensible."
+  },
+  {
+    pregunta: "40. ¿Qué derecho tiene el ciudadano sobre las leyes aplicables a su caso?",
+    opciones: [
+      " Ninguno específico",
+      " Conocer el contenido actualizado de las leyes",
+      " Modificar las leyes que le afecten",
+      " Elegir el sistema jurídico aplicable"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a conocer el contenido actualizado de las leyes españolas y de la UE."
+  },
+  {
+    pregunta: "41. ¿Qué debe garantizarse en la atención personal por parte de jueces o letrados?",
+    opciones: [
+      " Que sea excepcional y limitada",
+      " Atención personal sobre incidencias del órgano judicial",
+      " Solo mediante escrito formal",
+      " Exclusivamente para abogados"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a ser atendido personalmente por juez o letrado sobre incidencias del órgano judicial."
+  },
+  {
+    pregunta: "42. ¿Qué tipo de responsabilidad puede exigir el ciudadano por funcionamiento anormal de la Justicia?",
+    opciones: [
+      " Solo disciplinaria",
+      " Civil o penal según el caso",
+      " Responsabilidad por error judicial o funcionamiento anormal",
+      " Solo administrativa"
+    ],
+    correcta: 2,
+    explicacion: "Puede exigir responsabilidades por error judicial o funcionamiento anormal de la Administración de Justicia."
+  },
+  {
+    pregunta: "43. ¿Qué principio guía la relación con ciudadanos en situación de vulnerabilidad?",
+    opciones: [
+      " Igualdad formal estricta",
+      " Especial atención y cuidado",
+      " Tratamiento uniforme sin distinciones",
+      " Limitación de sus derechos procesales"
+    ],
+    correcta: 1,
+    explicacion: "La Carta establece necesidad de especial atención y cuidado con ciudadanos en situación de vulnerabilidad."
+  },
+  {
+    pregunta: "44. ¿Qué derecho tiene el ciudadano sobre la publicidad de actuaciones judiciales?",
+    opciones: [
+      " Que sean siempre secretas",
+      " Protección de su vida privada en actuaciones judiciales",
+      " Grabación libre por cualquier medio",
+      " Transmisión en directo por redes sociales"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a protección frente a publicidad no deseada sobre su vida privada en actuaciones judiciales."
+  },
+  {
+    pregunta: "45. ¿Qué información debe recibir el ciudadano sobre procedimientos judiciales?",
+    opciones: [
+      " Solo la estrictamente necesaria",
+      " Características y requisitos genéricos de los procedimientos",
+      " Exclusivamente mediante abogado",
+      " Solo sobre procedimientos en curso"
+    ],
+    correcta: 1,
+    explicacion: "Tiene derecho a recibir información sobre características y requisitos genéricos de los procedimientos."
+  },
+  {
+    pregunta: "46. ¿Qué derecho tiene el ciudadano respecto a la designación de abogado de oficio?",
+    opciones: [
+      " Elegir libremente cualquier abogado",
+      " Exigir formación de calidad al designado",
+      " Rechazar hasta tres designaciones",
+      " Ser representado siempre por procurador"
+    ],
+    correcta: 1,
+    explicacion: "Puede exigir formación de calidad al profesional designado por el turno de oficio."
+  },
+  {
+    pregunta: "47. ¿Qué garantía tienen los menores en procesos judiciales?",
+    opciones: [
+      " Comparecencia adaptada a su desarrollo evolutivo",
+      " Exención de declarar siempre",
+      " Representación exclusiva por padres",
+      " Procesos ultrarrápidos"
+    ],
+    correcta: 0,
+    explicacion: "Tienen derecho a que su comparecencia sea adecuada a su situación y desarrollo evolutivo."
+  },
+  {
+    pregunta: "48. ¿Qué derecho tiene el ciudadano sobre la reserva de sus datos personales?",
+    opciones: [
+      " Ninguno específico",
+      " Que se guarden secreto profesional",
+      " Publicación completa en boletines oficiales",
+      " Cesión a medios de comunicación"
+    ],
+    correcta: 1,
+    explicacion: "Los profesionales deben guardar riguroso secreto de lo revelado por el cliente."
+  },
+  {
+    pregunta: "49. ¿Qué característica debe tener la Justicia según el Preámbulo de la Carta?",
+    opciones: [
+      " Opaca y técnicamente compleja",
+      " Transparente y comprensible",
+      " Excluyente con grupos vulnerables",
+      " Lentitud deliberada"
+    ],
+    correcta: 1,
+    explicacion: "La Carta concibe una Justicia transparente, comprensible y protectora de los más débiles."
+  },
+  {
+    pregunta: "50. ¿Qué institución NO está expresamente vinculada al cumplimiento de la Carta?",
+    opciones: [
+      " Jueces y Magistrados",
+      " Funcionarios de prisiones",
+      " Empresas de seguridad privada",
+      " Médicos forenses"
+    ],
+    correcta: 2,
+    explicacion: "Están vinculados operadores jurídicos y quienes cooperan con la Justicia, no empresas de seguridad sin relación directa."
+  }
+];</script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+    <script src="../js/main.js"></script>
+</body>
+</html>

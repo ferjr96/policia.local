@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test 10. La modernizacion de la Oficina Judicial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <h1>Test 10. La modernizacion de la Oficina Judicial</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+  {
+    pregunta: "1. ¿Qué caracteriza a la Oficina Judicial según su definición legal?",
+    opciones: [
+      " Es un órgano jurisdiccional con capacidad para dictar sentencias",
+      " Es una organización instrumental que sirve de soporte a la actividad jurisdiccional",
+      " Es un departamento independiente del Poder Judicial",
+      " Es una entidad con personalidad jurídica propia"
+    ],
+    correcta: 1,
+    explicacion: "La Oficina Judicial es la organización de carácter instrumental que sirve de soporte y apoyo a la actividad jurisdiccional de jueces y tribunales."
+  },
+  {
+    pregunta: "2. ¿Qué principio NO forma parte de los que rigen la estructura de la Oficina Judicial?",
+    opciones: [
+      " Jerarquía",
+      " División de funciones",
+      " Coordinación",
+      " Descentralización"
+    ],
+    correcta: 3,
+    explicacion: "La estructura básica de la Oficina judicial está basada en los principios de jerarquía, división de funciones y coordinación, no en la descentralización."
+  },
+  {
+    pregunta: "3. ¿Qué criterios deben regir el funcionamiento de la Oficina Judicial?",
+    opciones: [
+      " Lentitud deliberada y formalismo estricto",
+      " Agilidad, eficacia y eficiencia",
+      " Exclusividad y rigidez",
+      " Centralización y secretismo"
+    ],
+    correcta: 1,
+    explicacion: "La Oficina judicial funcionará con criterios de agilidad, eficacia, eficiencia, racionalización del trabajo, responsabilidad por la gestión, coordinación y cooperación entre Administraciones."
+  },
+  {
+    pregunta: "4. ¿Quiénes pueden ocupar los puestos de trabajo en la Oficina Judicial?",
+    opciones: [
+      " Cualquier persona con título universitario",
+      " Solo personal de los Cuerpos de funcionarios al servicio de la Administración de Justicia",
+      " Profesionales externos contratados temporalmente",
+      " Abogados en ejercicio"
+    ],
+    correcta: 1,
+    explicacion: "Los puestos de trabajo de la Oficina judicial sólo podrán ser cubiertos por personal de los Cuerpos de funcionarios al servicio de la Administración de Justicia."
+  },
+  {
+    pregunta: "5. ¿Qué es una Unidad Procesal de Apoyo Directo?",
+    opciones: [
+      " Una unidad que gestiona recursos materiales",
+      " Una unidad que asiste directamente a jueces y magistrados",
+      " Un departamento de estadística judicial",
+      " Una oficina de relaciones públicas"
+    ],
+    correcta: 1,
+    explicacion: "La unidad procesal de apoyo directo es aquella unidad de la Oficina judicial que directamente asiste a jueces y magistrados en el ejercicio de las funciones que les son propias."
+  },
+  {
+    pregunta: "6. ¿Qué profesional está al frente de una Unidad Procesal de Apoyo Directo?",
+    opciones: [
+      " Un Juez",
+      " Un Letrado de la Administración de Justicia",
+      " Un Procurador",
+      " Un Funcionario de nivel auxiliar"
+    ],
+    correcta: 1,
+    explicacion: "Las Unidades Procesales de Apoyo Directo contarán con un letrado de la Administración de Justicia."
+  },
+  {
+    pregunta: "7. ¿Qué tipo de labores realiza un Servicio Común Procesal?",
+    opciones: [
+      " Labores centralizadas de gestión y apoyo en actuaciones procesales",
+      " Exclusivamente tareas de archivo",
+      " Solo funciones de comunicación externa",
+      " Únicamente gestión económica"
+    ],
+    correcta: 0,
+    explicacion: "El servicio común procesal asume labores centralizadas de gestión y apoyo en actuaciones derivadas de la aplicación de las leyes procesales."
+  },
+  {
+    pregunta: "8. ¿Quién es competente para el diseño y organización de los Servicios Comunes Procesales?",
+    opciones: [
+      " Solo el Ministerio de Justicia",
+      " El Ministerio de Justicia y las Comunidades Autónomas en sus respectivos territorios",
+      " Exclusivamente el Consejo General del Poder Judicial",
+      " Los Ayuntamientos"
+    ],
+    correcta: 1,
+    explicacion: "El Ministerio de Justicia y las Comunidades Autónomas en sus respectivos territorios serán competentes para el diseño, creación y organización de los servicios comunes procesales."
+  },
+  {
+    pregunta: "9. ¿Cómo pueden estructurarse los Servicios Comunes Procesales?",
+    opciones: [
+      " Solo como unidades indivisibles",
+      " En secciones y, si es necesario, en equipos",
+      " Exclusivamente por materias",
+      " Únicamente por turnos"
+    ],
+    correcta: 1,
+    explicacion: "Los servicios comunes procesales podrán estructurarse en secciones, a las que se dotará de los correspondientes puestos de trabajo y estas, a su vez, si el servicio lo requiere, en equipos."
+  },
+  {
+    pregunta: "10. ¿Qué son las Unidades Administrativas en el ámbito de la Administración de Justicia?",
+    opciones: [
+      " Unidades integradas en la Oficina Judicial",
+      " Unidades para la jefatura, ordenación y gestión de recursos humanos y medios materiales",
+      " Oficinas de atención al ciudadano",
+      " Departamentos de estadística"
+    ],
+    correcta: 1,
+    explicacion: "Son unidades que, sin estar integradas en la Oficina judicial, se constituyen para la jefatura, ordenación y gestión de los recursos humanos de la Oficina judicial sobre los que se tienen competencias, así como sobre los medios informáticos, nuevas tecnologías y demás medios materiales."
+  },
+  {
+    pregunta: "11. ¿Qué establece la LOPJ sobre el uso de medios tecnológicos?",
+    opciones: [
+      " Son opcionales para juzgados y tribunales",
+      " Son obligatorios para juzgados, tribunales y fiscalías",
+      " Solo son obligatorios para el Tribunal Supremo",
+      " Están prohibidos en la actividad jurisdiccional"
+    ],
+    correcta: 1,
+    explicacion: "La LOPJ obliga a juzgados, tribunales y fiscalías a usar medios electrónicos y tecnológicos, garantizando la protección de datos y la validez de los documentos digitales."
+  },
+  {
+    pregunta: "12. ¿Qué garantías deben ofrecer los sistemas informáticos según la LOPJ?",
+    opciones: [
+      " Solo compatibilidad básica",
+      " Identificación del órgano, confidencialidad y seguridad de datos personales",
+      " Exclusivamente acceso rápido",
+      " Únicamente capacidad de almacenamiento"
+    ],
+    correcta: 1,
+    explicacion: "Los procesos judiciales deben asegurar la identificación del órgano, la confidencialidad y la seguridad de los datos personales."
+  },
+  {
+    pregunta: "13. ¿Qué organismo es responsable de la validación de los sistemas informáticos judiciales?",
+    opciones: [
+      " El Comité Técnico Estatal",
+      " El Ministerio de Hacienda",
+      " Las Comunidades Autónomas",
+      " Los Colegios Profesionales"
+    ],
+    correcta: 0,
+    explicacion: "Los sistemas informáticos deben ser compatibles entre sí, y el Comité Técnico Estatal es el responsable de su validación."
+  },
+  {
+    pregunta: "14. ¿Qué es el Tablón Edictal Judicial Único?",
+    opciones: [
+      " Un sistema físico de publicación en los juzgados",
+      " Un medio electrónico para la publicidad de edictos judiciales",
+      " Un registro de abogados",
+      " Un archivo de sentencias"
+    ],
+    correcta: 1,
+    explicacion: "La publicidad de los edictos se realiza a través del Tablón Edictal Judicial Único."
+  },
+  {
+    pregunta: "15. ¿Qué establece la LOPJ sobre el uso de papel en los procedimientos?",
+    opciones: [
+      " Se exige documentación en papel en todos los casos",
+      " No se exigirá documentación en papel salvo excepciones legales",
+      " Solo se permite en primera instancia",
+      " Es obligatorio para recursos"
+    ],
+    correcta: 1,
+    explicacion: "El uso de medios informáticos es obligatorio para jueces y magistrados, y no se exigirá documentación en papel salvo excepciones legales."
+  },
+  {
+    pregunta: "16. ¿Qué ámbito regula el Real Decreto-ley 6/2023?",
+    opciones: [
+      " Solo las relaciones entre administraciones públicas",
+      " La utilización de tecnologías de la información en relaciones con la Administración de Justicia",
+      " Exclusivamente el funcionamiento interno de los juzgados",
+      " Únicamente la protección de datos"
+    ],
+    correcta: 1,
+    explicacion: "Tiene por objeto regular la utilización de las tecnologías de la información por parte de los ciudadanos y profesionales en sus relaciones con la Administración de Justicia."
+  },
+  {
+    pregunta: "17. ¿Qué caracteriza a una aplicación de fuentes abiertas según el RDL 6/2023?",
+    opciones: [
+      " Tiene código fuente cerrado",
+      " Permite libertad de ejecución, modificación y redistribución",
+      " Es de uso exclusivo gubernamental",
+      " No puede ser modificada"
+    ],
+    correcta: 1,
+    explicacion: "Es aquella que se distribuye con una licencia que permite la libertad de ejecutarla, de conocer el código fuente, de modificarla o mejorarla y de redistribuir copias a otros usuarios."
+  },
+  {
+    pregunta: "18. ¿Qué es la autenticación del interviniente?",
+    opciones: [
+      " Un acto para reforzar la identificación de las actuaciones",
+      " Un sistema de firma manual",
+      " Un registro de comparecencias",
+      " Un método de archivo"
+    ],
+    correcta: 0,
+    explicacion: "Es el acto realizado por el Tribunal, oficina judicial u oficina fiscal que tiene por objetivo reforzar la identificación de las actuaciones que se lleven a cabo."
+  },
+  {
+    pregunta: "19. ¿Qué garantiza la confidencialidad en sistemas de información?",
+    opciones: [
+      " Que la información se revele a cualquier persona",
+      " Que la información ni se ponga a disposición ni se revele a individuos no autorizados",
+      " El acceso libre a todos los datos",
+      " La publicación indiscriminada de información"
+    ],
+    correcta: 1,
+    explicacion: "Consiste en que la información ni se pone a disposición, ni se revela a individuos, entidades o procesos no autorizados."
+  },
+  {
+    pregunta: "20. ¿Qué es un documento electrónico según la normativa?",
+    opciones: [
+      " Un documento escaneado",
+      " Información en forma electrónica, archivada en un soporte electrónico",
+      " Un archivo en papel digitalizado",
+      " Un formulario impreso"
+    ],
+    correcta: 1,
+    explicacion: "Es información en forma electrónica, archivada en un soporte electrónico."
+  },
+  {
+    pregunta: "21. ¿Qué derecho NO está reconocido a los ciudadanos en el ámbito digital de la Administración de Justicia?",
+    opciones: [
+      " A un servicio público de Justicia prestado por medios digitales",
+      " A la desigualdad en el acceso electrónico",
+      " A la calidad de los servicios públicos",
+      " A elegir el canal de relación electrónica"
+    ],
+    correcta: 1,
+    explicacion: "Los ciudadanos tienen derecho a la igualdad en el acceso electrónico, no a la desigualdad."
+  },
+  {
+    pregunta: "22. ¿Qué contiene obligatoriamente una sede judicial electrónica?",
+    opciones: [
+      " Solo información general",
+      " Identificación de la sede, canales de acceso y cauces para sugerencias",
+      " Exclusivamente datos personales de los funcionarios",
+      " Únicamente formularios en PDF"
+    ],
+    correcta: 1,
+    explicacion: "Debe contener al menos: identificación de la dirección electrónica de referencia de la sede, identificación de su titular, identificación de los canales de acceso y cauces disponibles para sugerencias y quejas."
+  },
+  {
+    pregunta: "23. ¿Qué servicio ofrece la Carpeta Justicia?",
+    opciones: [
+      " Un acceso genérico a información judicial",
+      " Un servicio personalizado que facilita el acceso a servicios y procedimientos que afecten al ciudadano",
+      " Solo consulta de jurisprudencia",
+      " Exclusivamente información sobre tasas judiciales"
+    ],
+    correcta: 1,
+    explicacion: "Es un servicio personalizado que facilitará el acceso a los servicios, procedimientos e informaciones accesibles de la Administración de Justicia que afecten a un ciudadano."
+  },
+  {
+    pregunta: "24. ¿Qué debe garantizarse en los entornos remotos de trabajo?",
+    opciones: [
+      " Solo la velocidad de conexión",
+      " Protección, integridad, autenticidad y confidencialidad de la información",
+      " Exclusivamente el acceso libre",
+      " Únicamente la compatibilidad con dispositivos móviles"
+    ],
+    correcta: 1,
+    explicacion: "Deben garantizar la protección, integridad, autenticidad y confidencialidad de la información, asegurando la identificación de usuarios y el control de accesos."
+  },
+  {
+    pregunta: "25. ¿Qué registra el Registro de Datos para el contacto electrónico?",
+    opciones: [
+      " Solo direcciones físicas",
+      " Datos de contacto electrónicos de ciudadanos y profesionales que intervienen en procedimientos judiciales",
+      " Exclusivamente números de teléfono",
+      " Únicamente datos de abogados"
+    ],
+    correcta: 1,
+    explicacion: "Este registro recopila los datos de contacto electrónicos de ciudadanos y profesionales que intervienen en procedimientos judiciales."
+  },
+  {
+    pregunta: "26. ¿Qué caracteriza al Registro Electrónico Común de la Administración de Justicia?",
+    opciones: [
+      " Es de uso exclusivo para abogados",
+      " Posibilita la presentación de escritos de manera complementaria e interoperable con otros registros",
+      " Solo acepta documentos en papel",
+      " No emite acuses de recibo"
+    ],
+    correcta: 1,
+    explicacion: "Posibilitará la presentación de escritos y comunicaciones dirigidas a la Administración de Justicia, de manera complementaria e interoperable con otros registros existentes."
+  },
+  {
+    pregunta: "27. ¿Qué tipo de apoderamientos pueden inscribirse en el Registro Electrónico de Apoderamientos Judiciales?",
+    opciones: [
+      " Solo los genéricos",
+      " Genéricos, limitados y específicos",
+      " Exclusivamente los notariales",
+      " Únicamente los judiciales"
+    ],
+    correcta: 1,
+    explicacion: "Los apoderamientos pueden ser genéricos (para cualquier actuación), limitados (para ciertas clases de procedimientos) o específicos (para un procedimiento concreto)."
+  },
+  {
+    pregunta: "28. ¿Qué establece el Código de Conducta sobre el uso de equipos informáticos?",
+    opciones: [
+      " Pueden usarse libremente para fines personales",
+      " Son para uso profesional, permitiéndose un uso personal excepcional y no reservado",
+      " No tienen restricciones de uso",
+      " Pueden modificarse libremente"
+    ],
+    correcta: 1,
+    explicacion: "Los equipos informáticos proporcionados por las Administraciones Públicas son para uso profesional, permitiéndose un uso personal excepcional y no reservado."
+  },
+  {
+    pregunta: "29. ¿Qué se prohíbe respecto al uso de programas y archivos informáticos?",
+    opciones: [
+      " Enviar información confidencial a terceros no autorizados",
+      " Usarlos exclusivamente para fines profesionales",
+      " Cumplir con la normativa de protección de datos",
+      " Todas las anteriores son correctas"
+    ],
+    correcta: 3,
+    explicacion: "Está prohibido enviar información confidencial a terceros no autorizados, y es obligatorio usarlos principalmente para fines profesionales y cumplir con la normativa de protección de datos."
+  },
+  {
+    pregunta: "30. ¿Qué regla rige la instalación de programas en equipos judiciales?",
+    opciones: [
+      " Pueden instalarse libremente",
+      " Solo pueden instalarse programas autorizados por la Administración de Justicia",
+      " No hay control sobre las instalaciones",
+      " Cada usuario decide qué instalar"
+    ],
+    correcta: 1,
+    explicacion: "Solo pueden instalarse programas autorizados por la Administración de Justicia, respetando siempre las licencias correspondientes."
+  },
+  {
+    pregunta: "31. ¿Qué deben garantizar los letrados respecto a la información judicial?",
+    opciones: [
+      " Solo su almacenamiento",
+      " Autenticidad, integridad y privacidad de la información",
+      " Su publicación indiscriminada",
+      " Su modificación libre"
+    ],
+    correcta: 1,
+    explicacion: "Los letrados deben garantizar la autenticidad, integridad y privacidad de la información, usando los mecanismos de seguridad disponibles."
+  },
+  {
+    pregunta: "32. ¿Qué deben hacer los jueces respecto a sus resoluciones?",
+    opciones: [
+      " Solo redactarlas en papel",
+      " Asegurar que se elaboren e integren en la aplicación informática de gestión procesal",
+      " No usar firma electrónica",
+      " Evitar su registro"
+    ],
+    correcta: 1,
+    explicacion: "Los jueces y magistrados deben asegurar que sus resoluciones se elaboren e integren en la aplicación informática de gestión procesal."
+  },
+  {
+    pregunta: "33. ¿Qué establece el Código de Conducta sobre el uso de Internet?",
+    opciones: [
+      " Uso ilimitado para fines personales",
+      " Uso profesional, permitiéndose un uso personal ocasional y no reservado",
+      " Acceso libre a cualquier contenido",
+      " No hay restricciones"
+    ],
+    correcta: 1,
+    explicacion: "El uso de Internet debe tener fines profesionales, permitiéndose un uso personal ocasional y no reservado."
+  },
+  {
+    pregunta: "34. ¿Qué responsabilidad tiene el usuario respecto a su firma electrónica?",
+    opciones: [
+      " Ninguna",
+      " Custodiar su clave privada y comunicar su pérdida o robo",
+      " Compartirla con colegas",
+      " No necesita actualizar sus datos"
+    ],
+    correcta: 1,
+    explicacion: "El usuario es responsable de custodiar su clave privada y debe comunicar de inmediato su pérdida o robo."
+  },
+  {
+    pregunta: "35. ¿Qué consecuencias tiene el incumplimiento del Código de Conducta?",
+    opciones: [
+      " Ninguna",
+      " Puede conllevar responsabilidad disciplinaria",
+      " Solo un apercibimiento",
+      " Un simple aviso"
+    ],
+    correcta: 1,
+    explicacion: "El incumplimiento puede conllevar responsabilidad disciplinaria."
+  },
+  {
+    pregunta: "36. ¿Qué es el expediente judicial electrónico?",
+    opciones: [
+      " Un archivo físico digitalizado",
+      " Un conjunto ordenado de documentos, datos y actuaciones electrónicas de un procedimiento judicial",
+      " Solo las resoluciones judiciales en formato digital",
+      " Un registro de abogados"
+    ],
+    correcta: 1,
+    explicacion: "Es un conjunto ordenado de documentos, datos y actuaciones electrónicas de un procedimiento judicial, identificado con un número único."
+  },
+  {
+    pregunta: "37. ¿Qué permite el Sistema Común de Intercambio?",
+    opciones: [
+      " Solo consultar jurisprudencia",
+      " El envío de documentos y expedientes judiciales electrónicos entre órganos judiciales o fiscales",
+      " Exclusivamente el acceso a bases de datos",
+      " Únicamente la comunicación interna"
+    ],
+    correcta: 1,
+    explicacion: "Permite el envío de documentos y expedientes judiciales electrónicos entre órganos judiciales o fiscales, incluso si usan diferentes sistemas de gestión."
+  },
+  {
+    pregunta: "38. ¿Qué son las actuaciones automatizadas?",
+    opciones: [
+      " Actuaciones que requieren intervención humana constante",
+      " Actuaciones que realiza un sistema informático sin intervención humana en cada caso individual",
+      " Solo las notificaciones automáticas",
+      " Exclusivamente los recordatorios"
+    ],
+    correcta: 1,
+    explicacion: "Son aquellas que realiza un sistema informático sin intervención humana en cada caso individual, aplicables a trámites simples sin interpretación jurídica."
+  },
+  {
+    pregunta: "39. ¿Qué requisitos debe cumplir una firma electrónica avanzada?",
+    opciones: [
+      " Solo estar vinculada al firmante",
+      " Estar vinculada al firmante de manera única, permitir su identificación, usarse bajo su control exclusivo y detectar modificaciones",
+      " Ser una firma escaneada",
+      " No necesita requisitos especiales"
+    ],
+    correcta: 1,
+    explicacion: "Debe estar vinculada al firmante de manera única, permitir su identificación, usarse bajo su control exclusivo y detectar cualquier modificación posterior."
+  },
+  {
+    pregunta: "40. ¿Qué contiene un certificado cualificado de firma electrónica?",
+    opciones: [
+      " Solo el nombre del firmante",
+      " Identidad del prestador, nombre del firmante, fechas de validez, firma del prestador y código único",
+      " Exclusivamente la fecha de expedición",
+      " Únicamente un número de serie"
+    ],
+    correcta: 1,
+    explicacion: "Contiene datos como identidad del prestador, nombre del firmante (o seudónimo), fechas de validez, firma del prestador, información sobre el estado del certificado y código único de identidad."
+  },
+  {
+    pregunta: "41. ¿Qué caracteriza a los servicios de confianza cualificados?",
+    opciones: [
+      " No cumplen requisitos estrictos",
+      " Cumplen con requisitos estrictos establecidos por la normativa europea",
+      " Son servicios informales",
+      " No necesitan verificar identidades"
+    ],
+    correcta: 1,
+    explicacion: "Son aquellos que cumplen con requisitos estrictos establecidos por la normativa europea, con prestadores que deben verificar identidad, garantizar seguridad y contar con personal capacitado."
+  },
+  {
+    pregunta: "42. ¿Qué establece la normativa sobre protección de datos en la Administración de Justicia?",
+    opciones: [
+      " Que no es necesario proteger datos en procesos judiciales",
+      " Que el tratamiento con fines jurisdiccionales se regula por el RGPD y la LOPD",
+      " Que los datos pueden tratarse sin límites",
+      " Que no aplica el derecho a la tutela judicial efectiva"
+    ],
+    correcta: 1,
+    explicacion: "Para fines jurisdiccionales, el tratamiento se realiza en el marco de los procesos judiciales y se regula por el Reglamento (UE) 2016/679 y la Ley Orgánica 3/2018."
+  },
+  {
+    pregunta: "43. ¿Qué derechos tienen los interesados en el tratamiento de datos con fines jurisdiccionales?",
+    opciones: [
+      " Ningún derecho",
+      " Pueden ejercer derechos como acceso, rectificación o supresión, según las normas del proceso",
+      " Solo derecho a indemnización",
+      " Únicamente derecho a información"
+    ],
+    correcta: 1,
+    explicacion: "Pueden ejercer derechos como acceso, rectificación o supresión, según las normas del proceso. No se permitirá el acceso a datos en casos secretos."
+  },
+  {
+    pregunta: "44. ¿Qué funciones tienen el CGPJ y la Fiscalía General del Estado respecto a protección de datos?",
+    opciones: [
+      " Ninguna función específica",
+      " Supervisar el cumplimiento de la normativa en el ámbito jurisdiccional",
+      " Solo funciones consultivas",
+      " Exclusivamente sancionadoras"
+    ],
+    correcta: 1,
+    explicacion: "Supervisan el cumplimiento de la normativa de protección de datos en el ámbito jurisdiccional, promoviendo la sensibilización y gestionando reclamaciones."
+  },
+  {
+    pregunta: "45. ¿Qué es la interoperabilidad?",
+    opciones: [
+      " La incompatibilidad entre sistemas",
+      " La capacidad de los sistemas de información de compartir datos y posibilitar el intercambio de información",
+      " La independencia absoluta de los sistemas",
+      " La exclusividad en el tratamiento de datos"
+    ],
+    correcta: 1,
+    explicacion: "Es la capacidad de los sistemas de información de compartir datos y posibilitar el intercambio de información y conocimiento entre ellos."
+  },
+  {
+    pregunta: "46. ¿Qué requisitos debe cumplir un sello electrónico avanzado?",
+    opciones: [
+      " Solo tener una imagen digital",
+      " Vinculación única al creador, identificación del creador, uso exclusivo bajo su control y detección de cambios",
+      " Ser un simple archivo PDF",
+      " No necesita requisitos específicos"
+    ],
+    correcta: 1,
+    explicacion: "Debe tener vinculación única al creador del sello, identificación del creador, uso exclusivo bajo su control, y vinculación con los datos que permita detectar cambios."
+  },
+  {
+    pregunta: "47. ¿Qué organismo gestiona el Punto de Acceso General de la Administración de Justicia?",
+    opciones: [
+      " Las Comunidades Autónomas",
+      " El Ministerio de la Presidencia, Justicia y Relaciones con las Cortes",
+      " El Consejo General del Poder Judicial",
+      " Los Ayuntamientos"
+    ],
+    correcta: 1,
+    explicacion: "El Punto de Acceso General de la Administración de Justicia será gestionado por el Ministerio de la Presidencia, Justicia y Relaciones con las Cortes."
+  },
+  {
+    pregunta: "48. ¿Qué información puede consultarse en la Carpeta Justicia?",
+    opciones: [
+      " Solo datos personales",
+      " Expedientes judiciales, actos de comunicación pendientes, información del Tablón Edictal y agenda personalizada",
+      " Exclusivamente jurisprudencia",
+      " Únicamente formularios"
+    ],
+    correcta: 1,
+    explicacion: "Incluye acceso a expedientes judiciales, actos de comunicación pendientes, información del Tablón Edictal Judicial Único, agenda personalizada y cauces para sugerencias."
+  },
+  {
+    pregunta: "49. ¿Qué prohibiciones existen sobre grabaciones de actuaciones judiciales telemáticas?",
+    opciones: [
+      " Está prohibido grabar, tomar imágenes o reproducir sonido e imagen sin autorización judicial",
+      " Se pueden grabar libremente",
+      " Solo los medios de comunicación pueden grabar",
+      " No hay regulación al respecto"
+    ],
+    correcta: 0,
+    explicacion: "Está prohibido grabar, tomar imágenes o reproducir sonido e imagen sin autorización judicial. Las grabaciones solo pueden usarse con fines jurisdiccionales."
+  },
+  {
+    pregunta: "50. ¿Qué establece la normativa sobre la presentación telemática de escritos por profesionales?",
+    opciones: [
+      " Es opcional",
+      " Los profesionales están obligados a presentar sus escritos por vía telemática con firma electrónica",
+      " Solo se permite en papel",
+      " Depende del tipo de procedimiento"
+    ],
+    correcta: 1,
+    explicacion: "Los profesionales (abogados, procuradores, etc.) están obligados a presentar sus escritos por vía telemática con firma electrónica."
+  }
+];</script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+    <script src="../js/main.js"></script>
+</body>
+</html>

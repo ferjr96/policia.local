@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 6. El Poder Judicial</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <h1>Tema 6. El Poder Judicial</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+  {
+    pregunta: "1. ¿Qué título de la Constitución Española regula el Poder Judicial?",
+    opciones: [
+      " Título IV",
+      " Título V",
+      " Título VI",
+      " Título VII"
+    ],
+    correcta: 2,
+    explicación: "El Título VI de la Constitución (artículos 117 a 127) está dedicado íntegramente al Poder Judicial."
+  },
+  {
+    pregunta: "2. ¿Qué porcentaje de vocales del CGPJ deben ser jueces o magistrados en activo?",
+    opciones: [
+      " 40%",
+      " 50%",
+      " 60%",
+      " 70%"
+    ],
+    correcta: 2,
+    explicación: "12 de los 20 vocales (60%) deben ser jueces o magistrados en servicio activo en la carrera judicial."
+  },
+  {
+    pregunta: "3. ¿Qué órgano propone al Rey el nombramiento de los vocales del CGPJ?",
+    opciones: [
+      " El Gobierno",
+      " Las Cortes Generales",
+      " El Tribunal Supremo",
+      " El propio CGPJ"
+    ],
+    correcta: 1,
+    explicación: "Las Cortes Generales proponen los vocales y el Rey los nombra mediante Real Decreto."
+  },
+  {
+    pregunta: "4. ¿Qué comisión del CGPJ se encarga específicamente de la política económica del órgano?",
+    opciones: [
+      " Comisión Permanente",
+      " Comisión de Asuntos Económicos",
+      " Comisión Disciplinaria",
+      " Comisión de Presupuestos"
+    ],
+    correcta: 1,
+    explicación: "La Comisión de Asuntos Económicos realiza estudios y proyectos de carácter económico y financiero."
+  },
+  {
+    pregunta: "5. ¿Qué principio constitucional garantiza que los jueces solo pueden ser separados por causas establecidas por ley?",
+    opciones: [
+      " Principio de independencia",
+      " Principio de inamovilidad",
+      " Principio de legalidad",
+      " Principio de responsabilidad"
+    ],
+    correcta: 1,
+    explicación: "El principio de inamovilidad (art. 117 CE) garantiza que los jueces no pueden ser separados, suspendidos, trasladados ni jubilados sino por causas establecidas por ley."
+  },
+  {
+    pregunta: "6. ¿Qué tipo de inmunidad tienen los jueces en el ejercicio de sus funciones?",
+    opciones: [
+      " Inmunidad absoluta",
+      " Inmunidad relativa",
+      " Solo aforamiento",
+      " No tienen inmunidad"
+    ],
+    correcta: 3,
+    explicación: "Los jueces no tienen inmunidad, solo están sometidos al imperio de la ley y responden penal, civil y disciplinariamente según lo establecido."
+  },
+  {
+    pregunta: "7. ¿Qué órgano elige al Vicepresidente del Tribunal Supremo?",
+    opciones: [
+      " El Gobierno",
+      " Las Cortes Generales",
+      " El Pleno del CGPJ",
+      " El Tribunal Supremo"
+    ],
+    correcta: 2,
+    explicación: "El Vicepresidente es nombrado por mayoría de tres quintos del Pleno del CGPJ, a propuesta de su Presidente."
+  },
+  {
+    pregunta: "8. ¿Qué función no corresponde al Ministerio Fiscal?",
+    opciones: [
+      " Velar por la independencia de los tribunales",
+      " Ejercer la acción penal",
+      " Nombrar jueces",
+      " Proteger a víctimas y testigos"
+    ],
+    correcta: 2,
+    explicación: "El nombramiento de jueces corresponde al CGPJ, no al Ministerio Fiscal."
+  },
+  {
+    pregunta: "9. ¿Qué Fiscal de Sala se encarga específicamente de delitos contra menores?",
+    opciones: [
+      " Fiscal de Sala de Menores",
+      " Fiscal de Protección de Menores",
+      " Fiscal de Sala Especialista en menores",
+      " Fiscal de la Familia"
+    ],
+    correcta: 2,
+    explicación: "Los Fiscales de Sala Especialistas coordinan la actividad en materia de protección y reforma de menores."
+  },
+  {
+    pregunta: "10. ¿Qué mayoría se necesita para modificar el Reglamento del CGPJ?",
+    opciones: [
+      " Mayoría simple",
+      " Mayoría absoluta",
+      " Mayoría de tres quintos",
+      " Unanimidad"
+    ],
+    correcta: 2,
+    explicación: "La potestad reglamentaria del CGPJ se ejerce por el Pleno con mayoría de tres quintos."
+  },
+  {
+    pregunta: "11. ¿Qué órgano resuelve los recursos contra acuerdos de la Comisión Disciplinaria?",
+    opciones: [
+      " La Comisión Permanente",
+      " El Pleno",
+      " El Tribunal Supremo",
+      " La Sala de lo Contencioso-Administrativo"
+    ],
+    correcta: 1,
+    explicación: "El Pleno resuelve los recursos de alzada contra acuerdos de la Comisión Disciplinaria."
+  },
+  {
+    pregunta: "12. ¿Qué tratamiento protocolario recibe el Secretario General del CGPJ?",
+    opciones: [
+      " Señoría",
+      " Ilustrísima",
+      " Excelencia",
+      " Ninguno especial"
+    ],
+    correcta: 2,
+    explicación: "El Secretario General del CGPJ tiene tratamiento de Excelencia, al igual que los Vocales."
+  },
+  {
+    pregunta: "13. ¿Qué plazo máximo tiene el CGPJ para proponer los magistrados del Tribunal Constitucional?",
+    opciones: [
+      " 1 mes",
+      " 3 meses",
+      " 6 meses",
+      " 1 año"
+    ],
+    correcta: 1,
+    explicación: "El CGPJ debe realizar la propuesta en el plazo máximo de 3 meses desde el vencimiento del mandato anterior."
+  },
+  {
+    pregunta: "14. ¿Qué órgano del Ministerio Fiscal coordina las fiscalías autonómicas?",
+    opciones: [
+      " Consejo Fiscal",
+      " Junta de Fiscales Superiores",
+      " Inspección Fiscal",
+      " Secretaría Técnica"
+    ],
+    correcta: 1,
+    explicación: "La Junta de Fiscales Superiores de las CCAA asegura la coordinación entre fiscalías en todo el territorio."
+  },
+  {
+    pregunta: "15. ¿Qué requisito se exige para ser vocal del CGPJ por el turno de juristas?",
+    opciones: [
+      " 10 años de ejercicio profesional",
+      " 15 años de ejercicio profesional",
+      " 20 años de ejercicio profesional",
+      " Ser catedrático de Derecho"
+    ],
+    correcta: 1,
+    explicación: "Los juristas deben tener más de 15 años de ejercicio profesional y reconocida competencia."
+  },
+  {
+    pregunta: "16. ¿Qué función cumple el Gabinete Técnico del CGPJ?",
+    opciones: [
+      " Asesorar al Pleno",
+      " Preparar informes jurídicos",
+      " Ambas anteriores",
+      " Ninguna de las anteriores"
+    ],
+    correcta: 2,
+    explicación: "El Gabinete Técnico asesora al CGPJ y prepara informes jurídicos para sus decisiones."
+  },
+  {
+    pregunta: "17. ¿Qué Fiscalía interviene en procesos ante el Tribunal de Cuentas?",
+    opciones: [
+      " Fiscalía del Tribunal Supremo",
+      " Fiscalía del Tribunal de Cuentas",
+      " Fiscalía Contable",
+      " Fiscalía de lo Público"
+    ],
+    correcta: 1,
+    explicación: "La Fiscalía del Tribunal de Cuentas es un órgano específico del Ministerio Fiscal."
+  },
+  {
+    pregunta: "18. ¿Qué comisión del CGPJ estudia la respuesta judicial en violencia de género?",
+    opciones: [
+      " Comisión de Igualdad",
+      " Comisión de Violencia de Género",
+      " Comisión Permanente",
+      " Comisión Disciplinaria"
+    ],
+    correcta: 0,
+    explicación: "La Comisión de Igualdad estudia específicamente la respuesta judicial en violencia de género."
+  },
+  {
+    pregunta: "19. ¿Qué órgano del Ministerio Fiscal elabora las memorias anuales?",
+    opciones: [
+      " Secretaría Técnica",
+      " Junta de Fiscales de Sala",
+      " Consejo Fiscal",
+      " Inspección Fiscal"
+    ],
+    correcta: 1,
+    explicación: "La Junta de Fiscales de Sala asiste al Fiscal General en la elaboración de memorias y circulares."
+  },
+  {
+    pregunta: "20. ¿Qué sanción disciplinaria solo puede imponer el Pleno del CGPJ?",
+    opciones: [
+      " Amonestación",
+      " Suspensión",
+      " Separación de la carrera",
+      " Multa"
+    ],
+    correcta: 2,
+    explicación: "La separación de la carrera judicial solo puede ser impuesta por acuerdo del Pleno."
+  },
+  {
+    pregunta: "21. ¿Qué Fiscalía coordina la lucha contra el crimen organizado?",
+    opciones: [
+      " Fiscalía de la Audiencia Nacional",
+      " Fiscalía contra el Crimen Organizado",
+      " Fiscalía Especial contra la Criminalidad Organizada",
+      " Fiscalía Central"
+    ],
+    correcta: 2,
+    explicación: "La Fiscalía contra la Corrupción y Criminalidad Organizada es la especializada en estos delitos."
+  },
+  {
+    pregunta: "22. ¿Qué órgano del CGPJ nombra al Director de la Escuela Judicial?",
+    opciones: [
+      " Comisión Permanente",
+      " Pleno",
+      " Presidente",
+      " Comisión de Calificación"
+    ],
+    correcta: 1,
+    explicación: "El Pleno regula la Escuela Judicial y nombra a su director y profesores."
+  },
+  {
+    pregunta: "23. ¿Qué principio rige el acceso a la carrera judicial?",
+    opciones: [
+      " Principio de mérito y capacidad",
+      " Principio de antigüedad",
+      " Principio de oportunidad",
+      " Principio de discrecionalidad"
+    ],
+    correcta: 0,
+    explicación: "El ingreso en la carrera judicial se basa en los principios de mérito y capacidad."
+  },
+  {
+    pregunta: "24. ¿Qué porcentaje de vocales del CGPJ son elegidos por el Senado?",
+    opciones: [
+      " 25%",
+      " 40%",
+      " 50%",
+      " 60%"
+    ],
+    correcta: 2,
+    explicación: "Cada cámara (Congreso y Senado) elige 10 vocales (50% del total)."
+  },
+  {
+    pregunta: "25. ¿Qué órgano del Ministerio Fiscal investiga a los propios fiscales?",
+    opciones: [
+      " Inspección Fiscal",
+      " Consejo Fiscal",
+      " Junta de Fiscales de Sala",
+      " Comisión Disciplinaria Fiscal"
+    ],
+    correcta: 0,
+    explicación: "La Inspección Fiscal investiga el funcionamiento y conducta de los fiscales."
+  },
+  {
+    pregunta: "26. ¿Qué función no corresponde al Presidente del CGPJ?",
+    opciones: [
+      " Representar al Poder Judicial",
+      " Convocar el Pleno",
+      " Nombrar a los vocales",
+      " Fijar el orden del día"
+    ],
+    correcta: 2,
+    explicación: "Los vocales son elegidos por las Cortes, no nombrados por el Presidente."
+  },
+  {
+    pregunta: "27. ¿Qué Fiscalía interviene en procesos sobre discriminación racial?",
+    opciones: [
+      " Fiscalía de Derechos Humanos",
+      " Fiscalía contra los Delitos de Odio",
+      " Fiscalía de Igualdad",
+      " Fiscalía Social"
+    ],
+    correcta: 1,
+    explicación: "El Fiscal contra los Delitos de Odio y Discriminación coordina estas actuaciones."
+  },
+  {
+    pregunta: "28. ¿Qué órgano del CGPJ puede delegar competencias del Pleno?",
+    opciones: [
+      " Comisión Permanente",
+      " Comisión Disciplinaria",
+      " Presidente",
+      " Ninguno, es indelegable"
+    ],
+    correcta: 0,
+    explicación: "El Pleno puede delegar competencias en la Comisión Permanente, excepto las más importantes."
+  },
+  {
+    pregunta: "29. ¿Qué tipo de juez ejerce funciones de sustitución en plazas vacantes?",
+    opciones: [
+      " Juez de refuerzo",
+      " Juez de adscripción territorial",
+      " Juez sustituto",
+      " Juez en prácticas"
+    ],
+    correcta: 1,
+    explicación: "Los jueces de adscripción territorial ejercen funciones en plazas vacantes o con titulares ausentes."
+  },
+  {
+    pregunta: "30. ¿Qué órgano del Ministerio Fiscal supervisa el tratamiento de datos personales?",
+    opciones: [
+      " Secretaría Técnica",
+      " Unidad de Protección de Datos",
+      " Inspección Fiscal",
+      " Consejo Fiscal"
+    ],
+    correcta: 1,
+    explicación: "La Unidad de Supervisión y Control de Protección de Datos ejerce estas funciones."
+  },
+  {
+    pregunta: "31. ¿Qué comisión del CGPJ informa sobre nombramientos discrecionales?",
+    opciones: [
+      " Comisión Permanente",
+      " Comisión de Calificación",
+      " Comisión de Nombramientos",
+      " Comisión de Selección"
+    ],
+    correcta: 1,
+    explicación: "La Comisión de Calificación informa sobre nombramientos garantizando valoración objetiva."
+  },
+  {
+    pregunta: "32. ¿Qué Fiscalía interviene en delitos contra el patrimonio histórico?",
+    opciones: [
+      " Fiscalía de Medio Ambiente",
+      " Fiscalía de Patrimonio Cultural",
+      " Fiscalía contra el Vandalismo",
+      " Fiscalía del Tribunal Supremo"
+    ],
+    correcta: 0,
+    explicación: "El Fiscal contra delitos relativos al patrimonio histórico forma parte de la Fiscalía de Medio Ambiente."
+  },
+  {
+    pregunta: "33. ¿Qué órgano del CGPJ recibe la rendición de cuentas anual?",
+    opciones: [
+      " Comisión de Asuntos Económicos",
+      " Pleno",
+      " Comisión Permanente",
+      " Presidencia"
+    ],
+    correcta: 1,
+    explicación: "El Pleno aprueba el presupuesto y recibe la rendición de cuentas de su ejecución."
+  },
+  {
+    pregunta: "34. ¿Qué función cumple la Secretaría Técnica de la Fiscalía?",
+    opciones: [
+      " Realizar inspecciones",
+      " Preparar estudios e informes",
+      " Gestionar recursos humanos",
+      " Coordinar fiscalías autonómicas"
+    ],
+    correcta: 1,
+    explicación: "La Secretaría Técnica realiza trabajos preparatorios, estudios e informes para el Fiscal General."
+  },
+  {
+    pregunta: "35. ¿Qué mayoría se necesita para cesar al Presidente del TS y CGPJ?",
+    opciones: [
+      " Mayoría simple",
+      " Mayoría absoluta",
+      " Mayoría de tres quintos",
+      " Unanimidad"
+    ],
+    correcta: 2,
+    explicación: "El Presidente puede ser cesado por decisión del Pleno del CGPJ con mayoría de tres quintos."
+  },
+  {
+    pregunta: "36. ¿Qué Fiscalía interviene en procesos sobre derechos fundamentales?",
+    opciones: [
+      " Fiscalía Constitucional",
+      " Fiscalía de Derechos Humanos",
+      " Fiscalía del Tribunal Supremo",
+      " Fiscalía de Libertades Públicas"
+    ],
+    correcta: 1,
+    explicación: "El Fiscal en materia de derechos humanos supervisa estos procesos."
+  },
+  {
+    pregunta: "37. ¿Qué órgano del CGPJ resuelve sobre licencias de jueces?",
+    opciones: [
+      " Comisión Permanente",
+      " Comisión Disciplinaria",
+      " Pleno",
+      " Presidente"
+    ],
+    correcta: 0,
+    explicación: "La Comisión Permanente resuelve sobre concesión de licencias a jueces y magistrados."
+  },
+  {
+    pregunta: "38. ¿Qué función cumple el Teniente Fiscal del Tribunal Supremo?",
+    opciones: [
+      " Sustituir al Fiscal General",
+      " Coordinar la Fiscalía del TS",
+      " Ambas anteriores",
+      " Ninguna de las anteriores"
+    ],
+    correcta: 2,
+    explicación: "El Teniente Fiscal del TS cumple ambas funciones: sustitución y coordinación."
+  },
+  {
+    pregunta: "39. ¿Qué comisión del CGPJ supervisa el régimen disciplinario?",
+    opciones: [
+      " Comisión Permanente",
+      " Comisión Disciplinaria",
+      " Comisión de Régimen Interior",
+      " Comisión de Inspección"
+    ],
+    correcta: 1,
+    explicación: "La Comisión Disciplinaria supervisa el régimen disciplinario de jueces y magistrados."
+  },
+  {
+    pregunta: "40. ¿Qué Fiscalía interviene en procesos penales europeos?",
+    opciones: [
+      " Fiscalía Europea",
+      " Fiscalía de Cooperación Internacional",
+      " Fiscalía de la UE",
+      " Fiscalía de Extranjería"
+    ],
+    correcta: 0,
+    explicación: "La Fiscalía Europea puede ejercer la acción penal por delitos contra los intereses financieros de la UE."
+  },
+  {
+    pregunta: "41. ¿Qué órgano del CGPJ designa al Jefe de la Inspección de Tribunales?",
+    opciones: [
+      " Comisión Permanente",
+      " Pleno",
+      " Presidente",
+      " Comisión Disciplinaria"
+    ],
+    correcta: 1,
+    explicación: "El Pleno nombra al Jefe de la Inspección de Tribunales a propuesta del Presidente."
+  },
+  {
+    pregunta: "42. ¿Qué principio rige la actuación del Ministerio Fiscal?",
+    opciones: [
+      " Principio de legalidad",
+      " Principio de oportunidad",
+      " Principio de jerarquía",
+      " Todos los anteriores"
+    ],
+    correcta: 3,
+    explicación: "El Ministerio Fiscal actúa bajo los principios de legalidad, oportunidad y jerarquía."
+  },
+  {
+    pregunta: "43. ¿Qué comisión del CGPJ analiza necesidades de recursos judiciales?",
+    opciones: [
+      " Comisión de Asuntos Económicos",
+      " Comisión de Infraestructuras",
+      " Comisión Permanente",
+      " Comisión de Recursos"
+    ],
+    correcta: 0,
+    explicación: "La Comisión de Asuntos Económicos analiza necesidades económicas y de recursos."
+  },
+  {
+    pregunta: "44. ¿Qué Fiscalía coordina la lucha contra el tráfico de drogas?",
+    opciones: [
+      " Fiscalía Antidroga",
+      " Fiscalía de Salud Pública",
+      " Fiscalía de Seguridad Ciudadana",
+      " Fiscalía Penal Especial"
+    ],
+    correcta: 0,
+    explicación: "La Fiscalía Antidroga es la especializada en delitos relacionados con estupefacientes."
+  },
+  {
+    pregunta: "45. ¿Qué órgano del CGPJ puede crear grupos de trabajo temporales?",
+    opciones: [
+      " Comisión Permanente",
+      " Pleno",
+      " Presidente",
+      " Todos los anteriores"
+    ],
+    correcta: 2,
+    explicación: "El Presidente puede encargar cometidos a vocales o crear grupos de trabajo no permanentes."
+  },
+  {
+    pregunta: "46. ¿Qué función cumple el Centro de Documentación Judicial?",
+    opciones: [
+      " Formar jueces",
+      " Recopilar jurisprudencia",
+      " Inspeccionar tribunales",
+      " Gestionar recursos humanos"
+    ],
+    correcta: 1,
+    explicación: "El CGPJ regula el Centro de Documentación Judicial que recopila y difunde jurisprudencia."
+  },
+  {
+    pregunta: "47. ¿Qué Fiscalía interviene en procesos sobre memoria histórica?",
+    opciones: [
+      " Fiscalía de Derechos Humanos",
+      " Fiscalía de Memoria Democrática",
+      " Fiscalía Histórica",
+      " Fiscalía de Justicia Transicional"
+    ],
+    correcta: 1,
+    explicación: "El Fiscal en materia de derechos humanos y memoria democrática supervisa estos procesos."
+  },
+  {
+    pregunta: "48. ¿Qué órgano del CGPJ aprueba la relación de puestos de trabajo?",
+    opciones: [
+      " Comisión de Asuntos Económicos",
+      " Pleno",
+      " Comisión Permanente",
+      " Presidente"
+    ],
+    correcta: 1,
+    explicación: "El Pleno aprueba la relación de puestos de trabajo del personal funcionario del CGPJ."
+  },
+  {
+    pregunta: "49. ¿Qué principio garantiza que los jueces solo están sometidos al imperio de la ley?",
+    opciones: [
+      " Independencia judicial",
+      " Inamovilidad",
+      " Responsabilidad",
+      " Legalidad"
+    ],
+    correcta: 0,
+    explicación: "El principio de independencia garantiza que los jueces solo están sometidos a la Constitución y la ley."
+  },
+  {
+    pregunta: "50. ¿Qué órgano del Ministerio Fiscal elabora informes sobre violencia de género?",
+    opciones: [
+      " Fiscalía contra la Violencia sobre la Mujer",
+      " Consejo Fiscal",
+      " Junta de Fiscales de Sala",
+      " Inspección Fiscal"
+    ],
+    correcta: 0,
+    explicación: "El Fiscal contra la Violencia sobre la Mujer elabora informes semestrales sobre esta materia."
+  }
+];</script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+    <script src="../js/main.js"></script>
+</body>
+</html>

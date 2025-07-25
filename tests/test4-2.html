@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 4. Organización Territorial del Estado</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <h1>Tema 4. Organización Territorial del Estado</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+  {
+    pregunta: "1. ¿Qué garantiza el Estado en relación con los derechos de los españoles en el territorio?",
+    opciones: [
+      " Derechos diferenciados por regiones",
+      " Igualdad de derechos y obligaciones en todo el territorio",
+      " Privilegios económicos según el Estatuto",
+      " Autonomía legislativa absoluta"
+    ],
+    correcta: 1,
+    explicación: "El Estado garantiza que todos los españoles tengan los mismos derechos y obligaciones en cualquier parte del territorio (principio de igualdad)."
+  },
+  {
+    pregunta: "2. ¿Qué autoridad puede obstaculizar la libre circulación de personas y bienes en el territorio español?",
+    opciones: [
+      " Las Comunidades Autónomas en casos especiales",
+      " Los municipios en su ámbito local",
+      " Ninguna autoridad puede hacerlo",
+      " Solo el Gobierno central"
+    ],
+    correcta: 2,
+    explicación: "Ninguna autoridad puede adoptar medidas que obstaculicen la libertad de circulación (artículo 139.2 CE)."
+  },
+  {
+    pregunta: "3. ¿Qué plazo tienen las corporaciones locales para cumplir los requisitos de iniciativa autonómica?",
+    opciones: [
+      " 3 meses",
+      " 6 meses",
+      " 1 año",
+      " 5 años"
+    ],
+    correcta: 1,
+    explicación: "Los requisitos para la iniciativa autonómica deben cumplirse en 6 meses desde el primer acuerdo."
+  },
+  {
+    pregunta: "4. Según el art. 144 CE, ¿qué puede hacer las Cortes Generales respecto a territorios no integrados en la organización provincial?",
+    opciones: [
+      " Disolverlos",
+      " Autorizar estatutos de autonomía",
+      " Convertirlos en provincias",
+      " Suprimir sus derechos"
+    ],
+    correcta: 1,
+    explicación: "Las Cortes pueden autorizar estatutos para territorios no integrados en la organización provincial."
+  },
+  {
+    pregunta: "5. ¿Cuántos miembros pueden delegar las Asambleas Legislativas autonómicas para defender una proposición de ley?",
+    opciones: [
+      " 1 miembro",
+      " 3 miembros como máximo",
+      " 5 miembros",
+      " No hay límite"
+    ],
+    correcta: 1,
+    explicación: "Pueden delegar un máximo de 3 miembros para defender una proposición de ley."
+  },
+  {
+    pregunta: "6. ¿Qué tipo de territorios pueden constituirse en Comunidades Autónomas según el art. 143?",
+    opciones: [
+      " Solo provincias con entidad regional histórica",
+      " Provincias limítrofes con características comunes, territorios insulares o provincias con entidad regional",
+      " Solo capitales de provincia",
+      " Municipios con más de 500,000 habitantes"
+    ],
+    correcta: 1,
+    explicación: "El artículo 143 menciona provincias limítrofes con características comunes, territorios insulares y provincias con entidad regional histórica."
+  },
+  {
+    pregunta: "7. ¿Cuándo puede reiterarse una iniciativa autonómica si no prospera?",
+    opciones: [
+      " Nunca",
+      " Pasados 6 meses",
+      " Pasados 5 años",
+      " Pasado 1 año"
+    ],
+    correcta: 2,
+    explicación: "Una iniciativa autonómica fracasada solo puede reiterarse pasados 5 años."
+  },
+  {
+    pregunta: "8. Para el procedimiento del art. 151, ¿qué porcentaje de municipios debe apoyar la iniciativa?",
+    opciones: [
+      " 50%",
+      " 2/3 partes",
+      " 3/4 partes",
+      " 90%"
+    ],
+    correcta: 2,
+    explicación: "Se requiere el acuerdo de 3/4 partes de los municipios que representen mayoría del censo electoral."
+  },
+  {
+    pregunta: "9. ¿Qué competencia NO aparece en el art. 148 como asumible por las CCAA?",
+    opciones: [
+      " Ordenación del territorio",
+      " Pesca marítima",
+      " Ferias interiores",
+      " Puertos deportivos"
+    ],
+    correcta: 1,
+    explicación: "La pesca marítima es competencia estatal según el art. 149, no del 148."
+  },
+  {
+    pregunta: "10. ¿Qué tipo de puertos pueden gestionar las CCAA según el art. 148?",
+    opciones: [
+      " Puertos de interés general",
+      " Puertos comerciales",
+      " Puertos deportivos y de refugio",
+      " Todos los puertos"
+    ],
+    correcta: 2,
+    explicación: "Las CCAA pueden gestionar puertos de refugio, deportivos y los que no desarrollen actividades comerciales."
+  },
+  {
+    pregunta: "11. ¿Qué competencia autonómica relacionada con el agua menciona el art. 148?",
+    opciones: [
+      " Todas las aguas territoriales",
+      " Aprovechamientos hidráulicos de interés autonómico",
+      " Gestión de cuencas intercomunitarias",
+      " Legislación sobre aguas"
+    ],
+    correcta: 1,
+    explicación: "Las CCAA pueden gestionar aprovechamientos hidráulicos de interés autonómico (art. 148.10)."
+  },
+  {
+    pregunta: "12. ¿Qué ámbito educativo pueden fomentar las CCAA según el art. 148?",
+    opciones: [
+      " El sistema educativo nacional",
+      " La enseñanza de la lengua autonómica",
+      " La formación profesional",
+      " La educación universitaria"
+    ],
+    correcta: 1,
+    explicación: "Pueden fomentar la enseñanza de la lengua de la Comunidad Autónoma."
+  },
+  {
+    pregunta: "13. ¿Qué artículo de la CE reserva al Estado la legislación laboral?",
+    opciones: [
+      " Art. 148",
+      " Art. 149.1.7",
+      " Art. 150",
+      " Art. 151"
+    ],
+    correcta: 1,
+    explicación: "El art. 149.1.7 reserva al Estado la legislación laboral."
+  },
+  {
+    pregunta: "14. ¿Qué competencia estatal menciona expresamente la posible atribución a CCAA?",
+    opciones: [
+      " Defensa",
+      " Pesca marítima",
+      " Nacionalidad",
+      " Relaciones internacionales"
+    ],
+    correcta: 1,
+    explicación: "El art. 149.1.19 sobre pesca marítima menciona que se pueden atribuir competencias a CCAA en su ordenación."
+  },
+  {
+    pregunta: "15. ¿Qué tipo de policías pueden crear las CCAA?",
+    opciones: [
+      " Policías con competencias exclusivas",
+      " Policías locales bajo coordinación",
+      " Cuerpos de seguridad nacional",
+      " No pueden crear policías"
+    ],
+    correcta: 1,
+    explicación: "Pueden crear policías en los términos que establezca una ley orgánica (art. 149.1.29)."
+  },
+  {
+    pregunta: "16. ¿Cómo se denomina la ley que permite al Estado atribuir facultades legislativas a CCAA?",
+    opciones: [
+      " Ley marco",
+      " Ley orgánica",
+      " Ley básica",
+      " Ley de transferencia"
+    ],
+    correcta: 0,
+    explicación: "Las Cortes pueden atribuir facultades mediante leyes marco (art. 150.1)."
+  },
+  {
+    pregunta: "17. ¿Qué contenido mínimo debe tener un Estatuto de Autonomía?",
+    opciones: [
+      " Solo la denominación",
+      " Denominación, territorio, instituciones y competencias",
+      " Solo las competencias",
+      " Sistema fiscal completo"
+    ],
+    correcta: 1,
+    explicación: "Debe contener denominación, delimitación territorial, instituciones y competencias (art. 147)."
+  },
+  {
+    pregunta: "18. ¿Qué órgano controla el ejercicio de funciones delegadas a CCAA?",
+    opciones: [
+      " Tribunal Constitucional",
+      " Gobierno previo dictamen del Consejo de Estado",
+      " Cortes Generales",
+      " Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicación: "El Gobierno, previo dictamen del Consejo de Estado, controla funciones delegadas (art. 153b CE)."
+  },
+  {
+    pregunta: "19. ¿Qué tipo de recursos financieros tienen las CCAA?",
+    opciones: [
+      " Solo impuestos estatales",
+      " Impuestos cedidos, propios, transferencias y rendimientos patrimoniales",
+      " Solo préstamos internacionales",
+      " Solo tasas municipales"
+    ],
+    correcta: 1,
+    explicación: "Tienen recursos variados: impuestos cedidos, propios, transferencias, rendimientos patrimoniales y crédito."
+  },
+  {
+    pregunta: "20. ¿Qué artículo constitucional regula los municipios?",
+    opciones: [
+      " Art. 137",
+      " Art. 140",
+      " Art. 143",
+      " Art. 148"
+    ],
+    correcta: 1,
+    explicación: "El artículo 140 CE regula la autonomía municipal."
+  },
+  {
+    pregunta: "21. ¿Qué requisito demográfico exige la creación de nuevos municipios?",
+    opciones: [
+      " 1,000 habitantes",
+      " 2,500 habitantes",
+      " 4,000 habitantes",
+      " 10,000 habitantes"
+    ],
+    correcta: 2,
+    explicación: "Se requieren núcleos de al menos 4,000 habitantes territorialmente diferenciados."
+  },
+  {
+    pregunta: "22. ¿Qué dato NO es obligatorio en el Padrón Municipal?",
+    opciones: [
+      " Nombre y apellidos",
+      " Ideología política",
+      " Domicilio habitual",
+      " Lugar de nacimiento"
+    ],
+    correcta: 1,
+    explicación: "La ideología política no es dato padronal (sí lo son nombre, domicilio, nacionalidad, etc.)."
+  },
+  {
+    pregunta: "23. ¿Cómo se elige al Alcalde en el régimen común?",
+    opciones: [
+      " Por designación real",
+      " Por los concejales o vecinos",
+      " Por la Diputación provincial",
+      " Por sorteo"
+    ],
+    correcta: 1,
+    explicación: "El Alcalde es elegido por los concejales o por los vecinos (según el municipio)."
+  },
+  {
+    pregunta: "24. ¿En qué municipios existe obligatoriamente Junta de Gobierno Local?",
+    opciones: [
+      " Todos",
+      " Más de 1,000 habitantes",
+      " Más de 5,000 habitantes",
+      " Solo capitales"
+    ],
+    correcta: 2,
+    explicación: "Existe obligatoriamente en municipios de más de 5,000 habitantes."
+  },
+  {
+    pregunta: "25. ¿Qué servicio es obligatorio en municipios de más de 50,000 habitantes?",
+    opciones: [
+      " Biblioteca pública",
+      " Transporte colectivo urbano",
+      " Parque público",
+      " Cementerio"
+    ],
+    correcta: 1,
+    explicación: "El transporte colectivo urbano es obligatorio en municipios de más de 50,000 habitantes."
+  },
+  {
+    pregunta: "26. ¿Qué entidad coordina servicios en municipios menores de 20,000 habitantes?",
+    opciones: [
+      " Gobierno central",
+      " Diputación provincial",
+      " Comunidad Autónoma",
+      " Mancomunidad"
+    ],
+    correcta: 1,
+    explicación: "La Diputación provincial coordina servicios básicos en estos municipios."
+  },
+  {
+    pregunta: "27. ¿Qué caracteriza el Concejo Abierto?",
+    opciones: [
+      " Solo existe en grandes ciudades",
+      " Es un régimen asambleario",
+      " Lo nombra la Comunidad Autónoma",
+      " Sustituye a la Diputación"
+    ],
+    correcta: 1,
+    explicación: "El Concejo Abierto es un régimen asambleario para pequeños municipios o por tradición."
+  },
+  {
+    pregunta: "28. ¿Qué fin específico tiene la provincia?",
+    opciones: [
+      " Sustituir a los municipios",
+      " Garantizar solidaridad intermunicipal",
+      " Ejercer competencias estatales",
+      " Gestionar relaciones internacionales"
+    ],
+    correcta: 1,
+    explicación: "Su fin es garantizar solidaridad y equilibrio intermunicipal."
+  },
+  {
+    pregunta: "29. ¿Qué órgano existe en todas las diputaciones?",
+    opciones: [
+      " Consejo de Ministros",
+      " Comisión Legislativa",
+      " Junta de Gobierno",
+      " Asamblea Regional"
+    ],
+    correcta: 2,
+    explicación: "Todas tienen Presidente, Vicepresidentes, Junta de Gobierno y Pleno."
+  },
+  {
+    pregunta: "30. ¿Qué provincias tienen régimen foral en el País Vasco?",
+    opciones: [
+      " Solo Vizcaya",
+      " Álava, Guipúzcoa y Vizcaya",
+      " Todas las vascas",
+      " Solo Navarra"
+    ],
+    correcta: 1,
+    explicación: "Álava, Guipúzcoa y Vizcaya tienen órganos forales según su Estatuto."
+  },
+  {
+    pregunta: "31. ¿Qué asume una Comunidad Autónoma uniprovincial?",
+    opciones: [
+      " Solo competencias municipales",
+      " Competencias, medios y recursos de las Diputaciones",
+      " Solo funciones representativas",
+      " Ninguna competencia provincial"
+    ],
+    correcta: 1,
+    explicación: "Asume las competencias, medios y recursos que corresponderían a la Diputación."
+  },
+  {
+    pregunta: "32. ¿Qué son los Cabildos Insulares?",
+    opciones: [
+      " Órganos judiciales",
+      " Entidades locales canarias",
+      " Asambleas autonómicas",
+      " Organismos estatales"
+    ],
+    correcta: 1,
+    explicación: "Son entidades locales de gobierno insular en Canarias."
+  },
+  {
+    pregunta: "33. ¿Quién puede iniciar la creación de una comarca?",
+    opciones: [
+      " Solo el Estado",
+      " Los municipios o la Comunidad Autónoma",
+      " Solo las diputaciones",
+      " Los ciudadanos por referéndum"
+    ],
+    correcta: 1,
+    explicación: "La iniciativa puede partir de los municipios o de la Comunidad Autónoma."
+  },
+  {
+    pregunta: "34. ¿Qué caracteriza a un área metropolitana?",
+    opciones: [
+      " Ser una sola ciudad",
+      " Agrupar municipios con vinculaciones económicas y sociales",
+      " Depender directamente del Estado",
+      " Tener más de 1 millón de habitantes"
+    ],
+    correcta: 1,
+    explicación: "Agrupa municipios con vinculaciones que requieren planificación conjunta."
+  },
+  {
+    pregunta: "35. ¿Para qué pueden asociarse municipios en mancomunidades?",
+    opciones: [
+      " Para obras y servicios comunes",
+      " Para constituirse en provincia",
+      " Para eliminar competencias autonómicas",
+      " Para gestionar competencias estatales"
+    ],
+    correcta: 0,
+    explicación: "Las mancomunidades sirven para ejecutar en común obras y servicios."
+  },
+  {
+    pregunta: "36. ¿Qué población define un municipio de gran población?",
+    opciones: [
+      " +100,000 habitantes",
+      " +250,000 habitantes o capitales con +175,000",
+      " +500,000 habitantes",
+      " +1,000,000 habitantes"
+    ],
+    correcta: 1,
+    explicación: "Son municipios de +250,000 hab., capitales con +175,000 hab. u otros con circunstancias especiales."
+  },
+  {
+    pregunta: "37. ¿Qué artículo CE regula la autonomía municipal?",
+    opciones: [
+      " 137",
+      " 140",
+      " 143",
+      " 148"
+    ],
+    correcta: 1,
+    explicación: "El artículo 140 CE garantiza la autonomía municipal."
+  },
+  {
+    pregunta: "38. ¿Qué servicio NO es obligatorio en todos los municipios?",
+    opciones: [
+      " Alumbrado público",
+      " Recogida de residuos",
+      " Biblioteca pública",
+      " Cementerio"
+    ],
+    correcta: 2,
+    explicación: "La biblioteca pública solo es obligatoria en municipios de más de 5,000 habitantes."
+  },
+  {
+    pregunta: "39. ¿Qué competencia municipal está relacionada con la igualdad?",
+    opciones: [
+      " Promoción de igualdad entre hombres y mujeres",
+      " Legislación laboral",
+      " Política exterior",
+      " Defensa nacional"
+    ],
+    correcta: 0,
+    explicación: "Los municipios pueden actuar en promoción de igualdad y contra violencia de género."
+  },
+  {
+    pregunta: "40. ¿Qué mínimo de duración tiene una delegación de competencias a municipios?",
+    opciones: [
+      " 1 año",
+      " 3 años",
+      " 5 años",
+      " 10 años"
+    ],
+    correcta: 2,
+    explicación: "Las delegaciones no pueden ser inferiores a 5 años."
+  },
+  {
+    pregunta: "41. ¿Qué órgano municipal existe solo en municipios grandes?",
+    opciones: [
+      " Pleno",
+      " Alcalde",
+      " Junta de Gobierno Local",
+      " Tenientes de Alcalde"
+    ],
+    correcta: 2,
+    explicación: "La Junta de Gobierno Local no existe en todos los municipios, solo en los de más de 5,000 hab. o por acuerdo."
+  },
+  {
+    pregunta: "42. ¿Qué competencia NO es propia de las diputaciones?",
+    opciones: [
+      " Coordinación intermunicipal",
+      " Prestación de servicios a municipios pequeños",
+      " Relaciones internacionales",
+      " Cooperación con CCAA"
+    ],
+    correcta: 2,
+    explicación: "Las relaciones internacionales son competencia estatal exclusiva."
+  },
+  {
+    pregunta: "43. ¿Qué islas tienen Consejos en lugar de Cabildos?",
+    opciones: [
+      " Canarias",
+      " Baleares",
+      " Azores",
+      " Madeira"
+    ],
+    correcta: 1,
+    explicación: "Baleares tiene Consejos Insulares, Canarias tiene Cabildos."
+  },
+  {
+    pregunta: "44. ¿Qué NO puede hacer una mancomunidad de municipios?",
+    opciones: [
+      " Gestionar servicios conjuntos",
+      " Suprimir competencias municipales",
+      " Realizar obras comunes",
+      " Optimizar recursos"
+    ],
+    correcta: 1,
+    explicación: "No puede suprimir competencias municipales, solo gestionar en común."
+  },
+  {
+    pregunta: "45. ¿Qué caracteriza a las entidades de ámbito inferior al municipio?",
+    opciones: [
+      " Tienen personalidad jurídica propia",
+      " Facilitan participación ciudadana",
+      " Sustituyen al ayuntamiento",
+      " Dependen directamente de la CCAA"
+    ],
+    correcta: 1,
+    explicación: "Son órganos desconcentrados para mejorar la participación y gestión local."
+  },
+  {
+    pregunta: "46. ¿Qué municipio sería de gran población aunque no alcance 250,000 habitantes?",
+    opciones: [
+      " Cualquier municipio rural",
+      " Capital autonómica con +175,000 hab.",
+      " Municipio costero",
+      " Municipio fronterizo"
+    ],
+    correcta: 1,
+    explicación: "Las capitales autonómicas con +175,000 hab. se consideran de gran población."
+  },
+  {
+    pregunta: "47. ¿Qué servicio coordinan obligatoriamente las diputaciones?",
+    opciones: [
+      " Educación universitaria",
+      " Sanidad exterior",
+      " Recogida de residuos en municipios pequeños",
+      " Defensa nacional"
+    ],
+    correcta: 2,
+    explicación: "Coordina servicios como recogida de residuos en municipios de menos de 20,000 hab."
+  },
+  {
+    pregunta: "48. ¿Qué artículo CE prohíbe privilegios económicos entre CCAA?",
+    opciones: [
+      " 138.2",
+      " 140",
+      " 143",
+      " 151"
+    ],
+    correcta: 0,
+    explicación: "El artículo 138.2 prohíbe privilegios económicos o sociales entre CCAA."
+  },
+  {
+    pregunta: "49. ¿Qué controla la jurisdicción contencioso-administrativa sobre CCAA?",
+    opciones: [
+      " Constitucionalidad de sus leyes",
+      " Actividad administrativa",
+      " Políticas económicas",
+      " Elección de cargos"
+    ],
+    correcta: 1,
+    explicación: "Controla la legalidad de su actividad administrativa."
+  },
+  {
+    pregunta: "50. ¿Qué tipo de policía coordinan las CCAA según el art. 148?",
+    opciones: [
+      " Policía Nacional",
+      " Guardia Civil",
+      " Policías locales",
+      " Policía judicial"
+    ],
+    correcta: 2,
+    explicación: "Pueden coordinar policías locales en los términos que establezca una ley orgánica."
+  }
+];</script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+    <script src="../js/main.js"></script>
+</body>
+</html>

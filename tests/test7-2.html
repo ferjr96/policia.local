@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 7. Examen de la organización y competencia del Tribunal Supremo,
+     de la Audiencia Nacional, de los Tribunales Superiores y de las Audiencias Provinciales</title>
+    <link rel="stylesheet" href="../css/style.css">
+    
+</head>
+<body>
+    <h1>Tema 7. Examen de la organización y competencia del Tribunal Supremo,
+     de la Audiencia Nacional, de los Tribunales Superiores y de las Audiencias Provinciales</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+  {
+    pregunta: "1. ¿Qué órgano judicial tiene competencia en todo el territorio nacional?",
+    opciones: [
+      " Tribunal Superior de Justicia",
+      " Audiencia Provincial",
+      " Audiencia Nacional",
+      " Juzgado de Primera Instancia"
+    ],
+    correcta: 2,
+    explicacion: "La Audiencia Nacional tiene jurisdicción en toda España, según el artículo 62 de la LOPJ."
+  },
+  {
+    pregunta: "2. ¿Cuántas Salas tiene el Tribunal Supremo?",
+    opciones: [
+      " 3",
+      " 5",
+      " 7",
+      " 9"
+    ],
+    correcta: 1,
+    explicacion: "El TS está compuesto por 5 Salas: Civil, Penal, Contencioso-Administrativo, Social y Militar."
+  },
+  {
+    pregunta: "3. ¿Qué Sala del TS conoce de recursos contra actos del CGPJ?",
+    opciones: [
+      " Sala de lo Civil",
+      " Sala de lo Contencioso-Administrativo",
+      " Sala de lo Social",
+      " Sala de lo Penal"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de lo Contencioso-Administrativo del TS conoce de recursos contra actos del CGPJ."
+  },
+  {
+    pregunta: "4. ¿Qué delitos NO son competencia de la Sala de lo Penal de la Audiencia Nacional?",
+    opciones: [
+      " Terrorismo",
+      " Narcotráfico organizado",
+      " Delitos contra la Corona",
+      " Homicidios comunes"
+    ],
+    correcta: 3,
+    explicacion: "Los homicidios comunes son competencia de los juzgados penales ordinarios, no de la Audiencia Nacional."
+  },
+  {
+    pregunta: "5. ¿Qué órgano resuelve conflictos entre jurisdicción ordinaria y militar?",
+    opciones: [
+      " Tribunal Constitucional",
+      " Sala de Conflictos de Jurisdicción del TS",
+      " CGPJ",
+      " Ministerio de Justicia"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de Conflictos del TS, compuesta por el Presidente del TS y magistrados de lo civil y militar, resuelve estos conflictos."
+  },
+  {
+    pregunta: "6. ¿Qué recurso puede interponerse contra sentencias firmes de Juzgados de lo Contencioso-Administrativo?",
+    opciones: [
+      " Casación",
+      " Apelación",
+      " Revisión",
+      " Queja"
+    ],
+    correcta: 2,
+    explicacion: "Los TSJ conocen de recursos de revisión contra sentencias firmes de Juzgados de lo Contencioso-Administrativo."
+  },
+  {
+    pregunta: "7. ¿Qué órgano conoce en primera instancia de demandas contra miembros del Consejo de Gobierno autonómico?",
+    opciones: [
+      " Juzgado de Primera Instancia",
+      " Audiencia Provincial",
+      " Tribunal Superior de Justicia",
+      " Tribunal Supremo"
+    ],
+    correcta: 2,
+    explicacion: "Los TSJ conocen en única instancia de estas demandas de responsabilidad civil."
+  },
+  {
+    pregunta: "8. ¿Qué competencia tiene la Sala de lo Social de los TSJ?",
+    opciones: [
+      " Conflictos individuales de trabajo",
+      " Conflictos colectivos de ámbito autonómico",
+      " Impugnación de estatutos de trabajadores",
+      " Tutela de derechos fundamentales laborales"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de lo Social de los TSJ conoce de conflictos colectivos cuyo ámbito no supere la CCAA."
+  },
+  {
+    pregunta: "9. ¿Qué Juzgados tienen competencia en materia de violencia sobre la mujer?",
+    opciones: [
+      " Juzgados de Violencia sobre la Mujer",
+      " Juzgados de Instrucción",
+      " Juzgados de Primera Instancia",
+      " Todos los anteriores según competencia"
+    ],
+    correcta: 3,
+    explicacion: "Todos estos juzgados pueden conocer según la materia concreta del asunto."
+  },
+  {
+    pregunta: "10. ¿Qué órgano conoce de recursos contra resoluciones de Juzgados de lo Mercantil?",
+    opciones: [
+      " Audiencia Provincial",
+      " Tribunal Superior de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 0,
+    explicacion: "Las Audiencias Provinciales conocen de recursos contra resoluciones de Juzgados de lo Mercantil."
+  },
+  {
+    pregunta: "11. ¿Qué mayoría se requiere para resolver un conflicto de competencia?",
+    opciones: [
+      " Unanimidad",
+      " Mayoría simple",
+      " Mayoría absoluta",
+      " Mayoría de 2/3"
+    ],
+    correcta: 1,
+    explicacion: "Los conflictos de competencia se resuelven por mayoría simple de la Sala correspondiente."
+  },
+  {
+    pregunta: "12. ¿Qué Sala del TS conoce de procesos de ilegalización de partidos políticos?",
+    opciones: [
+      " Sala de lo Penal",
+      " Sala Especial",
+      " Sala de lo Contencioso-Administrativo",
+      " Sala de Gobierno"
+    ],
+    correcta: 1,
+    explicacion: "La Sala Especial del TS conoce de estos procesos según el art. 61 LOPJ."
+  },
+  {
+    pregunta: "13. ¿Qué órgano judicial tiene competencia en materia de vigilancia penitenciaria?",
+    opciones: [
+      " Juzgados de Vigilancia Penitenciaria",
+      " Audiencias Provinciales",
+      " Ambos según competencia",
+      " Tribunales Superiores de Justicia"
+    ],
+    correcta: 2,
+    explicacion: "Los Juzgados de Vigilancia Penitenciaria conocen en primera instancia y las Audiencias Provinciales de los recursos."
+  },
+  {
+    pregunta: "14. ¿Qué órgano conoce de la impugnación de convenios colectivos de ámbito estatal?",
+    opciones: [
+      " Juzgados de lo Social",
+      " Tribunales Superiores de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 2,
+    explicacion: "La Sala de lo Social de la Audiencia Nacional conoce de estos procesos."
+  },
+  {
+    pregunta: "15. ¿Qué magistrados componen la Sala de Conflictos entre jurisdicción ordinaria y militar?",
+    opciones: [
+      " 3 del TS y 2 militares",
+      " 2 del TS y 3 militares",
+      " 4 del TS y 1 militar",
+      " 1 del TS y 4 militares"
+    ],
+    correcta: 0,
+    explicacion: "La Sala de Conflictos se compone del Presidente del TS, 2 magistrados del TS y 2 de la Sala de lo Militar."
+  },
+  {
+    pregunta: "16. ¿Qué recurso cabe contra las resoluciones de la Sala de lo Penal de la Audiencia Nacional?",
+    opciones: [
+      " Apelación ante Sala de Apelación de la AN",
+      " Casación ante TS",
+      " Revisión ante TSJ",
+      " Queja ante CGPJ"
+    ],
+    correcta: 0,
+    explicacion: "La Sala de Apelación de la AN conoce de estos recursos."
+  },
+  {
+    pregunta: "17. ¿Qué órgano conoce de recursos contra actos de Juntas Electorales Provinciales?",
+    opciones: [
+      " Juzgados de lo Contencioso-Administrativo",
+      " Tribunales Superiores de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicacion: "Los TSJ conocen de recursos contra actos de Juntas Electorales Provinciales."
+  },
+  {
+    pregunta: "18. ¿Qué órgano puede crear secciones especializadas en Audiencias Provinciales?",
+    opciones: [
+      " Ministerio de Justicia",
+      " CGPJ",
+      " Tribunal Supremo",
+      " Gobierno autonómico"
+    ],
+    correcta: 1,
+    explicacion: "El CGPJ puede acordar la creación de secciones especializadas."
+  },
+  {
+    pregunta: "19. ¿Qué Sala del TS conoce de demandas contra la Reina consorte?",
+    opciones: [
+      " Sala de lo Civil",
+      " Sala de lo Penal",
+      " Sala Especial",
+      " Sala de Gobierno"
+    ],
+    correcta: 0,
+    explicacion: "La Sala de lo Civil del TS conoce de estas demandas de responsabilidad civil."
+  },
+  {
+    pregunta: "20. ¿Qué órgano conoce de causas contra magistrados de la Audiencia Nacional?",
+    opciones: [
+      " La propia Audiencia Nacional",
+      " Tribunal Supremo",
+      " Tribunal Constitucional",
+      " CGPJ"
+    ],
+    correcta: 1,
+    explicacion: "El TS conoce de causas contra magistrados de la AN o TSJ."
+  },
+  {
+    pregunta: "21. ¿Qué competencia tiene la Sala de Apelación de la Audiencia Nacional?",
+    opciones: [
+      " Conoce en primera instancia de delitos graves",
+      " Resuelve recursos contra Sala de lo Penal de la AN",
+      " Conoce de conflictos de competencia",
+      " Resuelve cuestiones de ilegalización"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de Apelación conoce de recursos contra resoluciones de la Sala de lo Penal de la AN."
+  },
+  {
+    pregunta: "22. ¿Qué órgano conoce de recursos contra resoluciones del Tribunal de Cuentas?",
+    opciones: [
+      " Audiencia Nacional",
+      " Tribunal Supremo",
+      " Tribunal Constitucional",
+      " No cabe recurso"
+    ],
+    correcta: 1,
+    explicacion: "El TS conoce de recursos contra resoluciones del Tribunal de Cuentas."
+  },
+  {
+    pregunta: "23. ¿Qué Juzgados conocen en primera instancia de delitos menos graves?",
+    opciones: [
+      " Juzgados de Instrucción",
+      " Juzgados de lo Penal",
+      " Audiencias Provinciales",
+      " Juzgados de Vigilancia Penitenciaria"
+    ],
+    correcta: 1,
+    explicacion: "Los Juzgados de lo Penal conocen de delitos con pena menos grave (hasta 5 años)."
+  },
+  {
+    pregunta: "24. ¿Qué órgano conoce de responsabilidad civil de todos los magistrados de una Audiencia Provincial?",
+    opciones: [
+      " Otra Audiencia Provincial",
+      " Tribunal Superior de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicacion: "El TSJ conoce en única instancia de estas demandas."
+  },
+  {
+    pregunta: "25. ¿Qué Sala del TS conoce de recursos sobre protección de datos personales?",
+    opciones: [
+      " Sala de lo Civil",
+      " Sala de lo Contencioso-Administrativo",
+      " Sala de lo Penal",
+      " Sala de Gobierno"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de lo Contencioso-Administrativo del TS y AN conocen de estas autorizaciones."
+  },
+  {
+    pregunta: "26. ¿Qué órgano resuelve conflictos de competencia entre Juzgados de Instrucción de una provincia?",
+    opciones: [
+      " Juzgado Decano",
+      " Audiencia Provincial",
+      " Tribunal Superior de Justicia",
+      " CGPJ"
+    ],
+    correcta: 1,
+    explicacion: "Las Audiencias Provinciales resuelven estos conflictos entre órganos sin superior común."
+  },
+  {
+    pregunta: "27. ¿Qué competencia tienen los Juzgados de Menores?",
+    opciones: [
+      " Delitos cometidos por menores",
+      " Delitos contra menores",
+      " Ambas",
+      " Ninguna"
+    ],
+    correcta: 0,
+    explicacion: "Conocen de delitos cometidos por mayores de 14 y menores de 18 años."
+  },
+  {
+    pregunta: "28. ¿Qué órgano conoce de recursos contra resoluciones de Juzgados de lo Social?",
+    opciones: [
+      " Audiencias Provinciales",
+      " Tribunales Superiores de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicacion: "Los TSJ conocen de recursos contra resoluciones de Juzgados de lo Social."
+  },
+  {
+    pregunta: "29. ¿Qué Sala del TS conoce de recursos sobre materia laboral?",
+    opciones: [
+      " Sala de lo Civil",
+      " Sala de lo Social",
+      " Sala de lo Contencioso-Administrativo",
+      " Sala de lo Penal"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de lo Social del TS conoce de recursos en materia laboral."
+  },
+  {
+    pregunta: "30. ¿Qué órgano conoce de delitos contra la forma de gobierno?",
+    opciones: [
+      " Juzgados de lo Penal",
+      " Audiencias Provinciales",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 2,
+    explicacion: "La Sala de lo Penal de la AN conoce de estos delitos."
+  },
+  {
+    pregunta: "31. ¿Qué competencia tienen las Salas de lo Civil y Penal de los TSJ?",
+    opciones: [
+      " Solo materia civil",
+      " Solo materia penal",
+      " Ambas materias",
+      " Materia social"
+    ],
+    correcta: 2,
+    explicacion: "Estas Salas conocen de ambas materias en sus respectivos ámbitos."
+  },
+  {
+    pregunta: "32. ¿Qué órgano conoce de recursos contra actos de Ministros?",
+    opciones: [
+      " Juzgados Centrales Contencioso-Administrativo",
+      " Sala de lo Contencioso-Administrativo de la AN",
+      " Tribunal Supremo",
+      " Tribunal Constitucional"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de lo Contencioso-Administrativo de la AN conoce en única instancia de estos recursos."
+  },
+  {
+    pregunta: "33. ¿Qué órgano conoce de demandas contra magistrados del Tribunal Supremo?",
+    opciones: [
+      " Sala Especial del TS",
+      " Tribunal Constitucional",
+      " Audiencia Nacional",
+      " CGPJ"
+    ],
+    correcta: 0,
+    explicacion: "La Sala Especial del TS conoce de estas demandas."
+  },
+  {
+    pregunta: "34. ¿Qué órgano conoce de recursos contra resoluciones de Juzgados Centrales de Instrucción?",
+    opciones: [
+      " Juzgados Centrales de lo Penal",
+      " Sala de lo Penal de la AN",
+      " Tribunal Supremo",
+      " No caben recursos"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de lo Penal de la AN conoce de estos recursos."
+  },
+  {
+    pregunta: "35. ¿Qué competencia tiene el Gabinete Técnico del TS?",
+    opciones: [
+      " Resolver recursos de casación",
+      " Asistir a la Presidencia y Salas",
+      " Sustituir a magistrados",
+      " Inspeccionar juzgados"
+    ],
+    correcta: 1,
+    explicacion: "El Gabinete Técnico asiste a la Presidencia y Salas en procesos de admisión y elabora informes."
+  },
+  {
+    pregunta: "36. ¿Qué órgano conoce de conflictos colectivos de ámbito provincial?",
+    opciones: [
+      " Juzgados de lo Social",
+      " Audiencias Provinciales",
+      " Tribunales Superiores de Justicia",
+      " Audiencia Nacional"
+    ],
+    correcta: 0,
+    explicacion: "Los Juzgados de lo Social conocen de conflictos colectivos de ámbito provincial."
+  },
+  {
+    pregunta: "37. ¿Qué Sala del TS conoce de causas contra magistrados de una Sala del propio TS?",
+    opciones: [
+      " La propia Sala afectada",
+      " Sala Especial",
+      " Sala de lo Penal",
+      " Sala de Gobierno"
+    ],
+    correcta: 1,
+    explicacion: "La Sala Especial conoce de causas contra magistrados del TS."
+  },
+  {
+    pregunta: "38. ¿Qué órgano conoce de recursos contra resoluciones de Juzgados de Paz?",
+    opciones: [
+      " Juzgados de Primera Instancia",
+      " Audiencias Provinciales",
+      " Tribunales Superiores de Justicia",
+      " No caben recursos"
+    ],
+    correcta: 0,
+    explicacion: "Los Juzgados de Primera Instancia conocen de recursos contra resoluciones de Juzgados de Paz."
+  },
+  {
+    pregunta: "39. ¿Qué competencia tienen los Juzgados Mercantiles?",
+    opciones: [
+      " Competencia mercantil exclusiva",
+      " Competencia civil y mercantil",
+      " Competencia penal económica",
+      " Competencia contencioso-administrativa"
+    ],
+    correcta: 0,
+    explicacion: "Los Juzgados Mercantiles tienen competencia exclusiva en materia mercantil."
+  },
+  {
+    pregunta: "40. ¿Qué órgano conoce de recursos contra resoluciones del Tribunal Económico-Administrativo Regional?",
+    opciones: [
+      " Juzgados de lo Contencioso-Administrativo",
+      " Tribunales Superiores de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicacion: "Los TSJ conocen de recursos contra resoluciones de tribunales económico-administrativos regionales."
+  },
+  {
+    pregunta: "41. ¿Qué Sala del TS conoce de recursos contra Estatutos de Autonomía?",
+    opciones: [
+      " Sala de lo Contencioso-Administrativo",
+      " Sala de lo Civil",
+      " Sala de lo Penal",
+      " Tribunal Constitucional"
+    ],
+    correcta: 3,
+    explicacion: "El TC es competente para conocer de recursos contra Estatutos de Autonomía, no el TS."
+  },
+  {
+    pregunta: "42. ¿Qué órgano conoce de procesos sobre error judicial atribuible al TS?",
+    opciones: [
+      " Sala Especial del TS",
+      " Tribunal Constitucional",
+      " Audiencia Nacional",
+      " CGPJ"
+    ],
+    correcta: 0,
+    explicacion: "La Sala Especial del TS conoce de estos procesos sobre error judicial."
+  },
+  {
+    pregunta: "43. ¿Qué competencia tienen los Juzgados de Instrucción?",
+    opciones: [
+      " Instrucción de causas penales",
+      " Juicio oral de delitos leves",
+      " Ambas",
+      " Ninguna"
+    ],
+    correcta: 2,
+    explicacion: "Los Juzgados de Instrucción instruyen causas penales y juzgan delitos leves."
+  },
+  {
+    pregunta: "44. ¿Qué órgano conoce de recursos contra convenios entre Administraciones públicas?",
+    opciones: [
+      " Juzgados de lo Contencioso-Administrativo",
+      " Tribunales Superiores de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicacion: "Los TSJ conocen de recursos contra convenios entre Administraciones de su ámbito autonómico."
+  },
+  {
+    pregunta: "45. ¿Qué Sala del TS conoce de recursos contra laudos arbitrales extranjeros?",
+    opciones: [
+      " Sala de lo Civil",
+      " Sala de lo Penal",
+      " Sala de lo Contencioso-Administrativo",
+      " Sala de lo Social"
+    ],
+    correcta: 0,
+    explicacion: "La Sala de lo Civil del TS conoce de estas solicitudes de exequátur."
+  },
+  {
+    pregunta: "46. ¿Qué órgano conoce de delitos cometidos por jueces en el ejercicio de su cargo?",
+    opciones: [
+      " Juzgados de lo Penal",
+      " Tribunales Superiores de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 1,
+    explicacion: "Los TSJ instruyen y fallan causas penales contra jueces por delitos cometidos en el ejercicio de su cargo."
+  },
+  {
+    pregunta: "47. ¿Qué competencia tiene la Sala de lo Militar del TS?",
+    opciones: [
+      " Conoce de recursos contra resoluciones de tribunales militares",
+      " Instruye causas contra militares",
+      " Juzga delitos comunes de militares",
+      " Todas las anteriores"
+    ],
+    correcta: 0,
+    explicacion: "La Sala de lo Militar del TS conoce principalmente de recursos contra resoluciones de tribunales militares."
+  },
+  {
+    pregunta: "48. ¿Qué órgano conoce de recursos contra actos de la Comisión de Vigilancia de Financiación del Terrorismo?",
+    opciones: [
+      " Juzgados Centrales Contencioso-Administrativo",
+      " Sala de lo Contencioso-Administrativo de la AN",
+      " Tribunal Supremo",
+      " Tribunal Constitucional"
+    ],
+    correcta: 1,
+    explicacion: "La Sala de lo Contencioso-Administrativo de la AN conoce de estos recursos en única instancia."
+  },
+  {
+    pregunta: "49. ¿Qué órgano resuelve cuestiones de competencia entre Juzgados Mercantiles?",
+    opciones: [
+      " Audiencia Provincial",
+      " Tribunal Superior de Justicia",
+      " Audiencia Nacional",
+      " Tribunal Supremo"
+    ],
+    correcta: 0,
+    explicacion: "Las Audiencias Provinciales resuelven conflictos de competencia entre juzgados de su provincia."
+  },
+  {
+    pregunta: "50. ¿Qué órgano conoce de recursos contra resoluciones de Juzgados de Violencia sobre la Mujer?",
+    opciones: [
+      " Otro Juzgado de Violencia sobre la Mujer",
+      " Audiencia Provincial",
+      " Tribunal Superior de Justicia",
+      " Audiencia Nacional"
+    ],
+    correcta: 1,
+    explicacion: "Las Audiencias Provinciales conocen de recursos contra resoluciones de Juzgados de Violencia sobre la Mujer."
+  }
+];</script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+    <script src="../js/main.js"></script>
+</body>
+</html>
