@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Según la LO 6/1984, en caso de que el detenido fuese militar, será competente para conocer de la solicitud de Habeas Corpus:",
+        "opciones": [
+            "El Juez Central de Instrucción de su circunscripción.",
+            "El Juez Togado militar de lo Penal de su circunscripción.",
+            "El Juez Togado Militar de Instrucción de su circunscripción.",
+            "El Juez de Instrucción de su circunscripción."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, si el detenido fuese menor de edad, la detención deberá comunicarse a:",
+        "opciones": [
+            "Al familiar o persona que desee.",
+            "Al familiar o persona que desee, si el detenido es mayor de 16 años.",
+            "A quienes ejerzan la patria potestad, la tutela o la guarda de hecho del menor.",
+            "A los Servicios Sociales de la localidad donde se llevo a cabo la detención"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520. LECrim 4. Si se tratare de un menor, será puesto a disposición de las Secciones de Menores de la Fiscalía y se comunicará el hecho y el lugar de custodia a quienes ejerzan la patria potestad, la tutela o la guarda de hecho del mismo, tan pronto se tenga constancia de la minoría de edad. En caso de conflicto de intereses con quienes ejerzan la patria potestad, la tutela o la guarda de hecho del menor, se le nombrará un defensor judicial a quien se pondrá en conocimiento del hecho y del lugar de detención. Si el detenido tuviere su capacidad modificada judicialmente, la información prevista en el apartado 2 de este artículo se comunicará a quienes ejerzan la tutela o guarda de hecho del mismo, dando cuenta al Ministerio Fiscal. Si el detenido menor o con capacidad modificada judicialmente fuera extranjero, el hecho de la detención se notificará de oficio al Cónsul de su país."
+    },
+    {
+        "pregunta": "Según la LECrim, el plazo para que se persone el abogado para la asistencia de un detenido es de:",
+        "opciones": [
+            "Plazo máximo de 8 horas.",
+            "Plazo máximo de 6 horas.",
+            "Plazo máximo de 3 horas.",
+            "Plazo máximo de 12 horas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520 LECrim 5. El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio. Ninguna autoridad o agente le efectuará recomendación alguna sobre el abogado a designar más allá de informarle de su derecho. La autoridad que tenga bajo su custodia al detenido comunicará inmediatamente al Colegio de Abogados el nombre del designado por el detenido para asistirle a los efectos de su localización y transmisión del encargo profesional o, en su caso, le comunicará la petición de nombramiento de abogado de oficio. Si el detenido no hubiere designado abogado, o el elegido rehusare el encargo o no fuere hallado, el Colegio de Abogados procederá de inmediato al nombramiento de un abogado del turno de oficio. El abogado designado acudirá al centro de detención con la máxima premura, siempre dentro del plazo máximo de tres horas desde la recepción del encargo. Si en dicho plazo no compareciera, el Colegio de Abogados designará un nuevo abogado del turno de oficio que deberá comparecer a la mayor brevedad y siempre dentro del plazo indicado, sin perjuicio de la exigencia de la responsabilidad disciplinaria en que haya podido incurrir el incompareciente."
+    },
+    {
+        "pregunta": "Cuál de los siguientes no es un derecho del 520.2 LECrim, señale la incorrecta:",
+        "opciones": [
+            "Derecho a acceder a los elementos de las actuaciones en su totalidad para impugnar la legalidad de la detención o privación de libertad.",
+            "Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas.",
+            "Derecho a ser asistido gratuitamente por un traductor, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate.",
+            "Derecho a designar abogado y procurador, sin perjuicio de lo dispuesto en el apartado 1.a) del artículo 527 y a ser asistido por él sin demora injustificada."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520.2.g) LECrim g) Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas."
+    },
+    {
+        "pregunta": "Según la LECrim, a qué no tiene derecho un detenido incomunicado?:",
+        "opciones": [
+            "A guardar silencio no declarando si no quiere.",
+            "A designar abogado.",
+            "A ser expresamente informado acerca del plazo máximo legal de la duración de la detención.",
+            "Derecho a ser asistido gratuitamente por un intérprete."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 527 LECrim 1. En los supuestos del artículo 509 (incomunicación), el detenido o preso podrá ser privado de los siguientes derechos si así lo justifican las circunstancias del caso: a) Designar un abogado de su confianza. b) Comunicarse con todas o alguna de las personas con las que tenga derecho a hacerlo, salvo con la autoridad judicial, el Ministerio Fiscal y el Médico Forense. c) Entrevistarse reservadamente con su abogado. d) Acceder él o su abogado a las actuaciones, salvo a los elementos esenciales para poder impugnar la legalidad de la detención."
+    },
+    {
+        "pregunta": "Según la LECrim, si por lejanía geográfica no fuese posible de inmediato la asistencia del letrado libremente designado por el detenido:",
+        "opciones": [
+            "Se le asignara uno del turno de oficio.",
+            "Se ampliará el plazo para su presentación al lugar donde se halle el detenido hasta un máximo de 8 horas desde la recepción del encargo.",
+            "Se facilitará al detenido comunicación telefónica o por videoconferencia con el abogado designado.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520 LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: c) Derecho a designar abogado, sin perjuicio de lo dispuesto en el apartado 1.a) del artículo 527 y a ser asistido por él sin demora injustificada. En caso de que, debido a la lejanía geográfica no sea posible de inmediato la asistencia de letrado, se facilitará al detenido comunicación telefónica o por videoconferencia con aquél, salvo que dicha comunicación sea imposible."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, para la iniciación del procedimiento de Habeas Corpus, será preceptiva la asistencia de abogado y procurador:",
+        "opciones": [
+            "En todos los casos.",
+            "En ningún caso.",
+            "La asistencia del abogado es preceptiva, no así el procurador.",
+            "La asistencia de procurador es preceptiva, no así el abogado."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo cuarto. El procedimiento se iniciará, salvo cuando se incoe de oficio, por medio de escrito o comparecencia, no siendo preceptiva la intervención de Abogado ni de Procurador. En dicho escrito o comparecencia deberán constar: a) El nombre y circunstancias personales del solicitante y de la persona para la que se solicita el amparo judicial regulado en esta ley. b) El lugar en que se halle el privado de libertad, autoridad o persona, bajo cuya custodia se encuentre, si fueren conocidos, y todas aquellas otras circunstancias que pudieran resultar relevantes. c) El motivo concreto por el que se solicita el «Habeas Corpus»."
+    },
+    {
+        "pregunta": "En qué artículo de la LECrim viene regulada la llamada detención Judicial?",
+        "opciones": [
+            "Artículo 491 LECrim.",
+            "Artículo 492 LECrim",
+            "Artículo 493 LECrim.",
+            "Artículo 494 LECrim."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 494 LECrim Dicho Juez o Tribunal acordará también la detención de los comprendidos en el artículo 492, a prevención con las Autoridades y agentes de Policía judicial."
+    },
+    {
+        "pregunta": "Qué afirmación es FALSA con respecto a la LECrim?:",
+        "opciones": [
+            "El detenido tiene derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección.",
+            "El detenido tiene derecho de acceso a los elementos de las actuaciones que sean esenciales para impugnar la legalidad de la detención",
+            "El detenido tiene derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas.",
+            "El detenido tiene derecho a ser reconocido por el médico forense o su sustituto legal y, en su defecto, por el designado por el propio detenido."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal"
+    },
+    {
+        "pregunta": "Según la LECrim, los reconocimientos médicos al detenido incomunicado se realizarán con una frecuencia de:",
+        "opciones": [
+            "Dos reconocimientos cada 24 horas.",
+            "Un reconocimiento cada 24 horas.",
+            "Un reconocimiento cada 48 horas.",
+            "Dos reconocimientos cada 48 horas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 527 LECrim 3. Los reconocimientos médicos al detenido a quien se le restrinja el derecho a comunicarse con todas o alguna de las personas con las que tenga derecho a hacerlo se realizarán con una frecuencia de al menos dos reconocimientos cada veinticuatro horas, según criterio facultativo."
+    },
+    {
+        "pregunta": "La Policía judicial realizará funciones de:",
+        "opciones": [
+            "Averiguación del delito y descubrimiento y aseguramiento del delincuente",
+            "Descubrimiento del delito y averiguación y aseguramiento del delincuente.",
+            "Aseguramiento del delito y averiguación y descubrimiento del delincuente",
+            "Ninguna es correcta"
+        ],
+        "correcta": 0,
+        "explicacion": "Constitución española, el artículo 126 establece que “la policía judicial depende de los Jueces, de los Tribunales y del Ministerio Fiscal en sus funciones de averiguación del delito y descubrimiento y aseguramiento del delincuente, en los términos que la Ley establezca."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, la incoación del procedimiento de Habeas Corpus, se efectuará mediante:",
+        "opciones": [
+            "Diligencia de Ordenación.",
+            "Auto.",
+            "Providencia.",
+            "Sentencia."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, la prolongación de la detención por el tiempo necesario para los fines investigadores, en caso de una persona detenida como presunto partícipe de alguno de los delitos del artículo 384 bis, deberá ser autorizada por el Juez:",
+        "opciones": [
+            "En las 12 horas siguientes a la solicitud de la prórroga.",
+            "En las 24 horas siguientes a la solicitud de la prórroga.",
+            "En las 48 horas siguientes a la solicitud de la prórroga.",
+            "En las 72 horas siguientes a la solicitud de la prórroga."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520 bis. LECrim 1. Toda persona detenida como presunto partícipe de alguno de los delitos a que se refiere el artículo 384 bis será puesta a disposición del Juez competente dentro de las setenta y dos horas siguientes a la detención. No obstante, podrá prolongarse la detención el tiempo necesario para los fines investigadores, hasta un límite máximo de otras cuarenta y ocho horas, siempre que, solicitada tal prórroga mediante comunicación motivada dentro de las primeras cuarenta y ocho horas desde la detención, sea autorizada por el Juez en las veinticuatro horas siguientes. Tanto la autorización cuanto la denegación de la prórroga se adoptarán en resolución motivada. 2. Detenida una persona por los motivos expresados en el número anterior, podrá solicitarse del Juez que decrete su incomunicación, el cual deberá pronunciarse sobre la misma, en resolución motivada, en el plazo de veinticuatro horas. Solicitada la incomunicación, el detenido quedará en todo caso incomunicado sin perjuicio del derecho de defensa que le asiste y de lo establecido en los artículos 520 y 527, hasta que el Juez hubiere dictado la resolución pertinente. 3. Durante la detención, el Juez podrá en todo momento requerir información y conocer, personalmente o mediante delegación en el Juez de Instrucción del partido o demarcación donde se encuentre el detenido, la situación de éste."
+    },
+    {
+        "pregunta": "Detenido por un presunto delito de agresión sexual se encuentra Pedro que, cuando los funcionarios policiales competentes van a proceder a la recogida de las muestras mediante frotis bucal, conforme a las previsiones de la Ley Orgánica 10/2007, de 8 de octubre, reguladora de la base de datos policial sobre identificadores obtenidos a partir del ADN, se encuentran con su oposición. Para proceder a su ejecución forzosa:",
+        "opciones": [
+            "Podrá la Policía imponerla por iniciativa propia para resolver el conflicto.",
+            "Tal medida podrá ser impuesta por el Ministerio Fiscal que indicará las medidas coercitivas mínimas.",
+            "Será el Juez de Instrucción el que la tenga que imponer.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal Artículo 520. 6 La asistencia del abogado consistirá en: a) Solicitar, en su caso, que se informe al detenido o preso de los derechos establecidos en el apartado 2 y que se proceda, si fuera necesario, al reconocimiento médico señalado en su letra i). b) Intervenir en las diligencias de declaración del detenido, en las diligencias de reconocimiento de que sea objeto y en las de reconstrucción de los hechos en que participe el detenido. El abogado podrá solicitar al juez o funcionario que hubiesen practicado la diligencia en la que haya intervenido, una vez terminada ésta, la declaración o ampliación de los extremos que considere convenientes, así como la consignación en el acta de cualquier incidencia que haya tenido lugar durante su práctica. c) Informar al detenido de las consecuencias de la prestación o denegación de consentimiento a la práctica de diligencias que se le soliciten. Si el detenido se opusiera a la recogida de las muestras mediante frotis bucal, conforme a las previsiones de la Ley Orgánica 10/2007, de 8 de octubre, reguladora de la base de datos policial sobre identificadores obtenidos a partir del ADN, el juez de instrucción, a instancia de la Policía Judicial o del Ministerio Fiscal, podrá imponer la ejecución forzosa de tal diligencia mediante el recurso a las medidas coactivas mínimas indispensables, que deberán ser proporcionadas a las circunstancias del caso y respetuosas con su dignidad. d) Entrevistarse reservadamente con el detenido, incluso antes de que se le reciba declaración por la policía, el fiscal o la autoridad judicial, sin perjuicio de lo dispuesto en el artículo 527."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, si la detención obedece a la aplicación de la Ley Orgánica que desarrolla los supuestos previstos en el artículo 55.2 de la Constitución (ley sobre elementos terroristas), el procedimiento de Habeas Corpus deberá seguirse ante:",
+        "opciones": [
+            "El Juez de Instrucción del lugar en que se encuentre la persona privada de libertad.",
+            "El Juez Central de Instrucción correspondiente.",
+            "El Juez de Instrucción de lo Penal correspondiente.",
+            "El Juez de Instrucción de la Audiencia Nacional."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo segundo. Es competente para conocer la solicitud de «Habeas Corpus» el Juez de Instrucción del lugar en que se encuentre la persona privada de libertad; si no constare, el del lugar en que se produzca la detención, y, en defecto de los anteriores, el del lugar donde se hayan tenido las últimas noticias sobre el paradero del detenido. Si la detención obedece a la aplicación de la ley orgánica que desarrolla los supuestos previstos en el art. 55.2 de la Constitución, el procedimiento deberá seguirse ante el Juez Central de Instrucción correspondiente. En el ámbito de la Jurisdicción Militar será competente para conocer de la solicitud de «Habeas Corpus» el Juez Togado Militar de Instrucción constituido en la cabecera de la circunscripción jurisdiccional en la que se efectuó la detención."
+    },
+    {
+        "pregunta": "Según la LECrim, en qué momento debe informarse al detenido de sus derechos y de las razones de su detención?:",
+        "opciones": [
+            "Al llegar a las dependencias de las Fuerzas y Cuerpos de Seguridad.",
+            "Al pasar a disposición judicial.",
+            "Inmediatamente.",
+            "Dentro de las primeras doce horas desde el momento de su detención."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520 LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: (...)"
+    },
+    {
+        "pregunta": "Según la LECrim, la manera en la que debe informarse a un detenido de sus derechos y las razones motivadoras de su privación de libertad, será:",
+        "opciones": [
+            "De manera comprensible y en la lengua oficial del lugar donde se produzca la detención.",
+            "Usando un lenguaje sencillo y accesible y en una lengua que comprenda.",
+            "Lenguaje estrictamente jurídico y en una lengua que comprenda.",
+            "Por escrito, de manera que le sea ininteligible y de manera inmediata."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520 LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: (...)"
+    },
+    {
+        "pregunta": "Según la LECrim, en la designación de abogado:",
+        "opciones": [
+            "La autoridad o agente podrán efectuar recomendaciones para su elección.",
+            "La autoridad o agente no podrán efectuar recomendaciones para su elección.",
+            "La autoridad o agente podrán efectuar recomendaciones para su elección si no existe precio o dádiva por la misma.",
+            "La autoridad o agente, únicamente podrán efectuar recomendaciones para la elección de abogado, si el detenido se tratare de un menor de edad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520. LECrim 5. El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio. Ninguna autoridad o agente le efectuará recomendación alguna sobre el abogado a designar más allá de informarle de su derecho."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, la resolución que pone fin al procedimiento de Habeas Corpus, adopta la forma de:",
+        "opciones": [
+            "Sentencia.",
+            "Auto.",
+            "Laudo.",
+            "Providencia."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, cuál de los siguientes NO es un derecho del detenido?:",
+        "opciones": [
+            "Derecho de acceso a los elementos de las actuaciones que sean esenciales.",
+            "Derecho a comunicarse telefónicamente con un tercero de su elección.",
+            "Derecho a ser visitado por un familiar o persona que designe en el lugar de custodia donde se halle.",
+            "Derecho a comunicarse y a mantener correspondencia con las autoridades consulares de su país."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520 LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: d) Derecho a acceder a los elementos de las actuaciones que sean esenciales para impugnar la legalidad de la detención o privación de libertad. f) Derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección. Esta comunicación se celebrará en presencia de un funcionario de policía o, en su caso, del funcionario que designen el juez o el fiscal, sin perjuicio de lo dispuesto en el artículo 527. g) Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas."
+    },
+    {
+        "pregunta": "¿Puede ser detenido un menor de edad?",
+        "opciones": [
+            "No.",
+            "Solo en delito flagrante.",
+            "Solo si es mayor de 14 años.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Cabe diferenciar entre: Los menores de 14 años: son INIMPUTABLES, dado que carecen de responsabilidad penal. Sí son responsables civilmente, pero dado que son menores de edad, responderán, en su lugar, sus padres, o Centro Educativos responsables del menor, que serán, los que van a sufrir la reparación del daño causado por el menor. Es decir, que el presunto delito cometido por un menor de 14 años, no se enjuiciará en un proceso judicial, ello sin perjuicio de que se adopten medidas de protección de ese menor y se reclamen a los padres indemnización por los perjuicios causados, procedimiento que se dirigirá frente a los padres o responsables del menor. Por el contrario, los menores de edad cuya edad está comprendida entre 14 y 18 años, sí son responsables penalmente, y será a partir de los 14 años, cuando se les pueda exigir responsabilidad penal, pero con arreglo a la L.O 5/2000, (reguladora de la responsabilidad penal del menor). Es decir que al igual que los adultos o personas mayores de edad, son responsables penalmente, pero a diferencia de estos, no se les aplicará el Código penal previsto en la L.O 10/1995, aplicable a los adultos, sino su propia normativa penal, dedicada a los menores de edad. ¿Se puede detener a un menor presuntamente responsable de la comisión de un hecho delictivo?, la respuesta es Sí, pudiendo ser detenidos de Oficio en los mismos casos que los previstos en las leyes para los mayores de edad, siempre y cuando, no resulten eficaces otras posibles soluciones y sea necesario para la protección del menor, la averiguación de los hechos, el aseguramiento de las pruebas o la protección de las víctimas. (Instrucción 1/2017, Protocolo de actuación policial con menores. Por último, a partir de la mayoría de edad, seremos responsables penalmente, con arreglo a lo dispuesto en la L.O 10/1995."
+    },
+    {
+        "pregunta": "De acuerdo con el Procedimiento de Habeas Corpus, señale la incorrecta:",
+        "opciones": [
+            "Se considerará persona ilegalmente detenida las que están ilícitamente internadas en cualquier establecimiento o lugar.",
+            "Será competente el Juez de instrucción.",
+            "Podrá instar el procedimiento cualquier persona a ruego del reo de interesado.",
+            "Deberá finalizar en 24 horas tras la incoación del Juez competente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo tercero. Procedimiento Habeas Corpus. Podrán instar el procedimiento de «Habeas Corpus» que esta ley establece: a) El privado de libertad, su cónyuge o persona unida por análoga relación de afectividad, descendientes, ascendientes, hermanos y, en su caso, respecto a los menores y personas incapacitadas, sus representantes legales. b) El Ministerio Fiscal. c) El Defensor del Pueblo. Asimismo, lo podrá iniciar, de oficio, el Juez competente a que se refiere el artículo anterior."
+    },
+    {
+        "pregunta": "Según la LECrim, la distribución de los detenidos, será:",
+        "opciones": [
+            "Aleatoria.",
+            "Por orden de ingreso en las dependencias correspondientes.",
+            "Se tendrán en cuenta el grado de educación, la naturaleza del delito y la edad.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal"
+    },
+    {
+        "pregunta": "Según la LECrim, a cuál de los siguientes derechos no puede renunciar una persona detenida?:",
+        "opciones": [
+            "A ser reconocido por un médico forense.",
+            "A guardar silencio no declarando.",
+            "A la asistencia de un abogado.",
+            "Derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 520 LECrim 5. El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio. Ninguna autoridad o agente le efectuará recomendación alguna sobre el abogado a designar más allá de informarle de su derecho. NOTA La única excepción es en aquellos delitos susceptibles de ser tipificados como delitos contra la seguridad del tráfico siempre que se le haya informado de manera clara y suficiente."
+    },
+    {
+        "pregunta": "Según el artículo 126 de la Constitución Española, la policía judicial:",
+        "opciones": [
+            "Depende de Jueces, Tribunales y Ministerio Fiscal.",
+            "Realiza funciones de averiguación del delito y descubrimiento y aseguramiento del delincuente.",
+            "Ninguna es correcta.",
+            "A y B son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "En la Constitución española, el artículo 126 establece que “la policía judicial depende de los Jueces, de los Tribunales y del Ministerio Fiscal en sus funciones de averiguación del delito y descubrimiento y aseguramiento del delincuente, en los términos que la Ley establezca."
+    },
+    {
+        "pregunta": "Según la LECrim, la prolongación de la detención por el tiempo necesario para los fines investigadores, en caso de una persona detenida como presunto partícipe de alguno de los delitos del artículo 384 bis, deberá ser solicitada dentro de:",
+        "opciones": [
+            "Primeras 12 horas desde la detención.",
+            "Primeras 24 horas desde la detención.",
+            "Primeras 48 horas desde la detención.",
+            "Primeras 72 horas desde la detención."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520 bis. LECrim 1. Toda persona detenida como presunto partícipe de alguno de los delitos a que se refiere el artículo 384 bis será puesta a disposición del Juez competente dentro de las setenta y dos horas siguientes a la detención. No obstante, podrá prolongarse la detención el tiempo necesario para los fines investigadores, hasta un límite máximo de otras cuarenta y ocho horas, siempre que, solicitada tal prórroga mediante comunicación motivada dentro de las primeras cuarenta y ocho horas desde la detención, sea autorizada por el Juez en las veinticuatro horas siguientes. Tanto la autorización cuanto la denegación de la prórroga se adoptarán en resolución motivada. 2. Detenida una persona por los motivos expresados en el número anterior, podrá solicitarse del Juez que decrete su incomunicación, el cual deberá pronunciarse sobre la misma, en resolución motivada, en el plazo de veinticuatro horas. Solicitada la incomunicación, el detenido quedará en todo caso incomunicado sin perjuicio del derecho de defensa que le asiste y de lo establecido en los artículos 520 y 527, hasta que el Juez hubiere dictado la resolución pertinente. 3. Durante la detención, el Juez podrá en todo momento requerir información y conocer, personalmente o mediante delegación en el Juez de Instrucción del partido o demarcación donde se encuentre el detenido, la situación de éste."
+    },
+    {
+        "pregunta": "Según la LECrim, la persona que intentare cometer un delito en el momento de ir a cometerlo:",
+        "opciones": [
+            "Podrá ser detenido por las FFCCS y deberá ser detenido por cualquier persona.",
+            "Deberá ser detenido por las FFCCS y podrá ser detenido por cualquier persona.",
+            "No podrá ser detenido hasta que el delito no haya sido consumado.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 490 LECrim Cualquier persona puede detener: (...) Artículo 492 LECrim La Autoridad o agente de Policía judicial tendrá obligación de detener (...)"
+    },
+    {
+        "pregunta": "Según la LECrim, las comunicaciones entre el abogado y el investigado:",
+        "opciones": [
+            "Serán supervisadas por un funcionario y tendrán lugar después de la declaración para evitar recomendaciones.",
+            "Serán confidenciales y tendrán lugar después de la declaración.",
+            "Serán confidenciales y podrán tener lugar incluso antes de que se le reciba declaración.",
+            "Se celebrarán en presencia de un funcionario de policía o, en su caso, del funcionario que designe el Juez o el Fiscal."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520 LECrim 7. Las comunicaciones entre el investigado o encausado y su abogado tendrán carácter confidencial en los mismos términos y con las mismas excepciones previstas en el apartado 4 del artículo 118."
+    },
+    {
+        "pregunta": "Los abogados de oficio que asisten en la asistencia letrada al detenido: Señale la INCORRECTA.",
+        "opciones": [
+            "Deben estar colegiados e inscritos en el turno de asistencia al detenido.",
+            "Deberán comparecer en el lugar donde se halle el detenido antes de las 72 horas desde la recepción de la llamada para la asistencia.",
+            "Asisten a los detenidos según el turno de guardias preestablecido por el Colegio de Abogados.",
+            "Si el abogado no comparece en el tiempo legal establecido, podrá procederse a la práctica de la declaración o reconocimiento del detenido o preso, si lo consintiere."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520 LECrim 5. El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio. Ninguna autoridad o agente le efectuará recomendación alguna sobre el abogado a designar más allá de informarle de su derecho. La autoridad que tenga bajo su custodia al detenido comunicará inmediatamente al Colegio de Abogados el nombre del designado por el detenido para asistirle a los efectos de su localización y transmisión del encargo profesional o, en su caso, le comunicará la petición de nombramiento de abogado de oficio. Si el detenido no hubiere designado abogado, o el elegido rehusare el encargo o no fuere hallado, el Colegio de Abogados procederá de inmediato al nombramiento de un abogado del turno de oficio. El abogado designado acudirá al centro de detención con la máxima premura, siempre dentro del plazo máximo de tres horas desde la recepción del encargo. Si en dicho plazo no compareciera, el Colegio de Abogados designará un nuevo abogado del turno de oficio que deberá comparecer a la mayor brevedad y siempre dentro del plazo indicado, sin perjuicio de la exigencia de la responsabilidad disciplinaria en que haya podido incurrir el incompareciente."
+    },
+    {
+        "pregunta": "En qué artículo de la LECrim vienen recogidos los derechos de una persona detenida:",
+        "opciones": [
+            "Artículo 520.1",
+            "Artículo 520.2.",
+            "Artículo 520 bis 1.",
+            "Artículo 520 bis 2."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520 LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: (...)"
+    },
+    {
+        "pregunta": "Según la LECrim, en los casos de detención de una persona extranjera:",
+        "opciones": [
+            "Deberá de comunicarse la detención a las Autoridades que designe.",
+            "Deberá de comunicarse al Ministro de Exteriores de su país de origen.",
+            "Deberá de comunicarse a la Oficina Consular de su país.",
+            "Deberá de comunicarse a la Embajada de su país."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520. LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: e) Derecho a que se ponga en conocimiento del familiar o persona que desee, sin demora injustificada, su privación de libertad y el lugar de custodia en que se halle en cada momento. Los extranjeros tendrán derecho a que las circunstancias anteriores se comuniquen a la oficina consular de su país."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

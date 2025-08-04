@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Los agentes podrán dar órdenes o indicaciones a los usuarios mientras hacen uso de la señal ____, a través de la megafonía o por cualquier otro medio. Indique la señal a la que hace referencia.",
+      "opciones": [
+        "V1",
+        "V2",
+        "V21",
+        "V22"
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 143.3 RGCir."
+    },
+    {
+      "pregunta": "2. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Los agentes podrán ordenar la detención de vehículos con una serie de toques de silbato: (Art. 143).",
+      "opciones": [
+        "Largo.",
+        "Cortos.",
+        "Cortos y frecuentes.",
+        "Largo y continuado."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo CAPÍTULO VI De los tipos y significados de las señales de circulación y marcas viales SECCIÓN 1 DE LAS SEÑALES Y ÓRDENES DE LOS AGENTES DE CIRCULACIÓN Artículo 143 Señales con el brazo y otras 1. Los agentes de la autoridad responsable del tráfico que estén regulando la circulación lo harán de forma que sean fácilmente reconocibles como tales a distancia, tanto de día como de noche, y sus señales, que han de ser visibles, y sus órdenes deben ser inmediatamente obedecidas por los usuarios de la vía. Tanto los agentes de la autoridad que regulen la circulación como la Policía Militar, el personal de obras y el de acompañamiento de los vehículos en régimen de transporte especial, que regulen el paso de vehículos y, en su caso, las patrullas escolares, el personal de protección civil y el de organizaciones de actividades deportivas o de cualquier otro acto, habilitado a los efectos contemplados en el apartado 4 de este artículo, deberán utilizar prendas de colores llamativos y dispositivos o elementos retrorreflectantes que permitan a los conductores y demás usuarios de la vía que se aproximen distinguirlos a una distancia mínima de 150 metros. 2. Como norma general, los agentes de la autoridad responsable del tráfico utilizarán las siguientes señales: a) Brazo levantado verticalmente: obliga a detenerse a todos los usuarios de la vía que se acerquen al agente, salvo a los conductores que no puedan hacerlo en condiciones de seguridad suficiente. Si esta señal se efectúa en una intersección, no obligará a detenerse a los conductores que hayan entrado ya en ella. La detención debe efectuarse ante la línea de detención más cercana o, en su defecto, inmediatamente antes del agente. En una intersección, la detención debe efectuarse antes de entrar en ella. Con posterioridad a esta señal, el agente podrá indicar, en su caso, el lugar donde debe efectuarse la detención. b) Brazo o brazos extendidos horizontalmente: obliga a detenerse a todos los usuarios de la vía que se acerquen al agente desde direcciones que corten la indicada por el brazo o los brazos extendidos y cualquiera que sea el sentido de su marcha. Esta señal permanece en vigor aunque el agente baje el brazo o los brazos, siempre que no cambie de posición o efectúe otra señal. c) Balanceo de una luz roja o amarilla: obliga a detenerse a los usuarios de la vía hacia los que el agente dirija la luz. d) Brazo extendido moviéndolo alternativamente de arriba abajo: esta señal obliga a disminuir la velocidad de su vehículo a los conductores que se acerquen al agente por el lado correspondiente al brazo que ejecuta la señal y perpendicularmente a dicho brazo. e) Otras señales: cuando las circunstancias así lo exijan, los agentes podrán utilizar cualquier otra indicación distinta a las anteriores realizada de forma clara. Los agentes podrán ordenar la detención de vehículos con una serie de toques de silbato cortos y frecuentes, y la reanudación de la marcha con un toque largo."
+    },
+    {
+      "pregunta": "3. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. En el caso de que las prescripciones indicadas por diferentes señales parezcan estar en contradicción entre sí: (Art. 133).",
+      "opciones": [
+        "Prevalecerá la más restrictiva, si se trata de señales del mismo tipo.",
+        "Prevalecerá la prioritaria.",
+        "Prevalecerá la que esté colocada más próxima el usuario de la vía.",
+        "Las respuestas a y b son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo CAPÍTULO II Prioridad entre señales Artículo 133 Orden de prioridad 1. El orden de prioridad entre los distintos tipos de señales de circulación es el siguiente: a) Señales y órdenes de los agentes de circulación. b) Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. c) Semáforos. d) Señales verticales de circulación. e) Marcas viales. 2. En el caso de que las prescripciones indicadas por diferentes señales parezcan estar en contradicción entre sí, prevalecerá la prioritaria, según el orden a que se refiere el apartado anterior, o la más restrictiva, si se trata de señales del mismo tipo (artículo 54.2 del texto articulado)."
+    },
+    {
+      "pregunta": "4. Señales con el brazo. ¿a qué bandera pertenece la siguiente definición? • Indica que a partir del paso del vehículo que la porta, la calzada queda temporalmente cerrada al tráfico.",
+      "opciones": [
+        "Bandera verde.",
+        "Bandera roja.",
+        "Bandera amarilla.",
+        "Bandera azul."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 143.3 RGCir. Señales con el brazo y otras"
+    },
+    {
+      "pregunta": "5. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la izquierda o seguir de frente, sólo deben obedecer. (Art. 132).",
+      "opciones": [
+        "Los situados inmediatamente a su izquierda.",
+        "Los situados inmediatamente a su derecha.",
+        "Los situados encima de su carril.",
+        "Ninguna es correcta."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 132 Obediencia de las señales 1. Todos los usuarios de las vías objeto de la ley están obligados a obedecer las señales de la circulación que establezcan una obligación o una prohibición y a adaptar su comportamiento al mensaje del resto de las señales reglamentarias que se encuentran en las vías por las que circulan. A estos efectos, cuando la señal imponga una obligación de detención, no podrá reanudar su marcha el conductor del vehículo así detenido hasta haber cumplido la prescripción que la señal establece. En los peajes dinámicos o telepeajes, los vehículos que los utilicen deberán estar provistos del medio técnico que posibilite su uso en condiciones operativas (artículo 53.1 del texto articulado). 2. Salvo circunstancias especiales que lo justifiquen, los usuarios deben obedecer las prescripciones indicadas por las señales, aun cuando parezcan estar en contradicción con las normas de comportamiento en la circulación (artículo 53.2 del texto articulado). 3. Los usuarios deben obedecer las indicaciones de los semáforos y de las señales verticales de circulación situadas inmediatamente a su derecha, encima de la calzada o encima de su carril, y si no existen en los citados emplazamientos y pretendan girar a la izquierda o seguir de frente, las de los situados inmediatamente a su izquierda. Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la izquierda o seguir de frente sólo deben obedecer las de los situados inmediatamente a su izquierda."
+    },
+    {
+      "pregunta": "6. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Según el artículo 143:",
+      "opciones": [
+        "Los agentes de la autoridad responsable del tráfico harán las señales de forma que sean fácilmente reconocibles como tales a distancia, tanto de día como de noche, y sus señales, que han de ser visibles, y sus órdenes deben ser inmediatamente obedecidas por los usuarios de la vía.",
+        "Los agentes de la autoridad responsable del tráfico que estén regulando la circulación lo harán de forma que sean fácilmente reconocibles como tales a distancia, tanto de día como de noche, y sus señales, que han de ser visibles, y sus órdenes deben ser obedecidas en la medida de lo posible por los usuarios de la vía.",
+        "Los agentes de la autoridad responsable del tráfico que estén regulando la circulación lo harán de forma que sean fácilmente reconocibles como tales a distancia, tanto de día como de noche, y sus señales, que han de ser visibles, y sus órdenes deben ser inmediatamente obedecidas por los usuarios de la vía.",
+        "Los agentes de la autoridad responsable del tráfico que estén regulando la circulación lo harán de forma que sean fácilmente reconocibles como tales a distancia, de día, y sus señales, que han de ser visibles, y sus órdenes deben ser inmediatamente obedecidas por los usuarios de la vía."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 143 Señales con el brazo y otras 1. Los agentes de la autoridad responsable del tráfico que estén regulando la circulación lo harán de forma que sean fácilmente reconocibles como tales a distancia, tanto de día como de noche, y sus señales, que han de ser visibles, y sus órdenes deben ser inmediatamente obedecidas por los usuarios de la vía."
+    },
+    {
+      "pregunta": "7. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. ¿Quiénes están obligados a obedecer las señales de la circulación que establezcan una obligación o una prohibición y a adaptar su comportamiento al mensaje del resto de las señales reglamentarias que se encuentran en las vías por las que circulan? (Art. 132).",
+      "opciones": [
+        "Sólo los conductores de vehículos.",
+        "Sólo los conductores de vehículos a motor y ciclomotores.",
+        "Sólo los conductores de vehículos y bicicletas.",
+        "Todos los usuarios de las vías."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 132 Obediencia de las señales 1. Todos los usuarios de las vías objeto de la ley están obligados a obedecer las señales de la circulación que establezcan una obligación o una prohibición y a adaptar su comportamiento al mensaje del resto de las señales reglamentarias que se encuentran en las vías por las que circulan. A estos efectos, cuando la señal imponga una obligación de detención, no podrá reanudar su marcha el conductor del vehículo así detenido hasta haber cumplido la prescripción que la señal establece."
+    },
+    {
+      "pregunta": "8. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Obliga a detenerse a todos los usuarios de la vía que se acerquen al agente, salvo a los conductores que no puedan hacerlo en condiciones de seguridad suficiente. Si esta señal se efectúa en una intersección, no obligará a detenerse a los conductores que hayan entrado ya en ella: (Art. 143).",
+      "opciones": [
+        "Brazo levantado verticalmente.",
+        "Brazo o brazos extendidos horizontalmente.",
+        "Brazo extendido moviéndolo alternativamente de arriba abajo.",
+        "Bandera roja."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo CAPÍTULO VI De los tipos y significados de las señales de circulación y marcas viales SECCIÓN 1 DE LAS SEÑALES Y ÓRDENES DE LOS AGENTES DE CIRCULACIÓN Artículo 143 Señales con el brazo y otras 1. Los agentes de la autoridad responsable del tráfico que estén regulando la circulación lo harán de forma que sean fácilmente reconocibles como tales a distancia, tanto de día como de noche, y sus señales, que han de ser visibles, y sus órdenes deben ser inmediatamente obedecidas por los usuarios de la vía. Tanto los agentes de la autoridad que regulen la circulación como la Policía Militar, el personal de obras y el de acompañamiento de los vehículos en régimen de transporte especial, que regulen el paso de vehículos y, en su caso, las patrullas escolares, el personal de protección civil y el de organizaciones de actividades deportivas o de cualquier otro acto, habilitado a los efectos contemplados en el apartado 4 de este artículo, deberán utilizar prendas de colores llamativos y dispositivos o elementos retrorreflectantes que permitan a los conductores y demás usuarios de la vía que se aproximen distinguirlos a una distancia mínima de 150 metros. 2. Como norma general, los agentes de la autoridad responsable del tráfico utilizarán las siguientes señales: a) Brazo levantado verticalmente: obliga a detenerse a todos los usuarios de la vía que se acerquen al agente, salvo a los conductores que no puedan hacerlo en condiciones de seguridad suficiente. Si esta señal se efectúa en una intersección, no obligará a detenerse a los conductores que hayan entrado ya en ella. La detención debe efectuarse ante la línea de detención más cercana o, en su defecto, inmediatamente antes del agente. En una intersección, la detención debe efectuarse antes de entrar en ella. Con posterioridad a esta señal, el agente podrá indicar, en su caso, el lugar donde debe efectuarse la detención."
+    },
+    {
+      "pregunta": "9. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Según el artículo 133, el orden de prioridad entre los distintos tipos de señales de circulación será el siguiente:",
+      "opciones": [
+        "Señales y órdenes de los agentes de circulación, señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo, semáforos, señales verticales y marcas viales.",
+        "Señales y órdenes de los agentes de circulación, señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo, señales verticales, semáforos y marcas viales.",
+        "Señales y órdenes de los agentes de circulación, semáforos, señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo, señales verticales y marcas viales.",
+        "Señales y órdenes de los agentes de circulación, semáforos, señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo, marcas viales y señales verticales."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo CAPÍTULO II Prioridad entre señales Artículo 133 Orden de prioridad 1. El orden de prioridad entre los distintos tipos de señales de circulación es el siguiente: a) Señales y órdenes de los agentes de circulación. b) Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. c) Semáforos. d) Señales verticales de circulación. e) Marcas viales. 2. En el caso de que las prescripciones indicadas por diferentes señales parezcan estar en contradicción entre sí, prevalecerá la prioritaria, según el orden a que se refiere el apartado anterior, o la más restrictiva, si se trata de señales del mismo tipo (artículo 54.2 del texto articulado)."
+    },
+    {
+      "pregunta": "10. Según el artículo 132, del RD 1428/2003 (RGCir), indique la respuesta incorrecta:",
+      "opciones": [
+        "Todos los usuarios de las vías objeto de la ley están obligados a obedecer las señales de la circulación que establezcan una obligación o una prohibición y a adaptar su comportamiento al mensaje del resto de las señales reglamentarias que se encuentran en las vías por las que circulan.",
+        "A estos efectos, cuando la señal imponga una obligación de detención, no podrá reanudar su marcha el conductor del vehículo así detenido hasta haber cumplido la prescripción que la señal establece.",
+        "En los peajes dinámicos o telepeajes, los vehículos que los utilicen deberán estar provistos del medio técnico que posibilite su uso en condiciones operativas (artículo 53.1 del texto articulado).",
+        "Sólo los conductores de vehículos a motor y ciclomotores que circulen por las vías objeto de la ley están obligados a obedecer las señales de la circulación que establezcan una obligación o una prohibición y a adaptar su comportamiento al mensaje del resto de las señales reglamentarias que se encuentran en las vías por las que circulan."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 132 Obediencia de las señales 1. Todos los usuarios de las vías objeto de la ley están obligados a obedecer las señales de la circulación que establezcan una obligación o una prohibición y a adaptar su comportamiento al mensaje del resto de las señales reglamentarias que se encuentran en las vías por las que circulan. A estos efectos, cuando la señal imponga una obligación de detención, no podrá reanudar su marcha el conductor del vehículo así detenido hasta haber cumplido la prescripción que la señal establece. En los peajes dinámicos o telepeajes, los vehículos que los utilicen deberán estar provistos del medio técnico que posibilite su uso en condiciones operativas (artículo 53.1 del texto articulado). 2. Salvo circunstancias especiales que lo justifiquen, los usuarios deben obedecer las prescripciones indicadas por las señales, aun cuando parezcan estar en contradicción con las normas de comportamiento en la circulación (artículo 53.2 del texto articulado). 3. Los usuarios deben obedecer las indicaciones de los semáforos y de las señales verticales de circulación situadas inmediatamente a su derecha, encima de la calzada o encima de su carril, y si no existen en los citados emplazamientos y pretendan girar a la izquierda o seguir de frente, las de los situados inmediatamente a su izquierda. Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la izquierda o seguir de frente sólo deben obedecer las de los situados inmediatamente a su izquierda."
+    },
+    {
+      "pregunta": "11. Según el artículo 143.2, del RD 1428/2003 (RGCir), obliga a detenerse a todos los usuarios de la vía que se acerquen al agente, salvo a los conductores que no puedan hacerlo en condiciones de seguridad suficiente. Si esta señal se efectúa en una intersección, no obligará a detenerse a los conductores que hayan entrado ya en ella. La detención debe efectuarse ante la línea de detención más cercana o, en su defecto, inmediatamente antes del agente. En una intersección, la detención debe efectuarse antes de entrar en ella:",
+      "opciones": [
+        "Brazo o brazos extendidos horizontalmente.",
+        "Brazo levantado verticalmente.",
+        "Brazo o brazos levantados verticalmente.",
+        "Balanceo de luz roja o amarilla."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 143 apartado 2. 2. Como norma general, los agentes de la autoridad responsable del tráfico utilizarán las siguientes señales: a) Brazo levantado verticalmente: obliga a detenerse a todos los usuarios de la vía que se acerquen al agente, salvo a los conductores que no puedan hacerlo en condiciones de seguridad suficiente. Si esta señal se efectúa en una intersección, no obligará a detenerse a los conductores que hayan entrado ya en ella.La detención debe efectuarse ante la línea de detención más cercana o, en su defecto, inmediatamente antes del agente. En una intersección, la detención debe efectuarse antes de entrar en ella. Con posterioridad a esta señal, el agente podrá indicar, en su caso, el lugar donde debe efectuarse la detención."
+    },
+    {
+      "pregunta": "12. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. ¿Qué título del reglamento general de circulación lleva el nombre “DE LA SEÑALIZACIÓN\"?",
+      "opciones": [
+        "Título II.",
+        "Título III.",
+        "Título V.",
+        "Título IV."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo a) Título II. De la circulación de vehículos. b) Título III. Otras normas de circulación. c) Título V. Señales en los vehículos. d) Título IV. De la señalización."
+    },
+    {
+      "pregunta": "13. Orden de prioridad de las señales. Aunque no esté completo, indique el orden correcto",
+      "opciones": [
+        "Semáforos, Señales y órdenes de los agentes de circulación, Señalización circunstancial.",
+        "Señales y órdenes de los agentes de circulación, Semáforos, Marcas viales.",
+        "Señales verticales de circulación, Marcas viales, Señalización circunstancial.",
+        "Señalización circunstancial, Semáforos, Señales Viales de circulación."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 133 del RGCir. Orden de prioridad entre señales. Documento adjunto Explicación detallada"
+    },
+    {
+      "pregunta": "14. Según al artículo 143 del RGC, en ausencia de Agentes de la circulación podrán regular el tráfico. Señala la incorrecta:",
+      "opciones": [
+        "La Policía Militar.",
+        "El personal de obras en la vía.",
+        "Los miembros de protección civil.",
+        "El personal de acompañamientos de los vehículos en régimen de transporte especial."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 143 apartado 4. 4. En ausencia de agentes de la circulación o para auxiliar a éstos, y en las circunstancias y condiciones establecidas en este reglamento, la Policía Militar podrá regular la circulación, y el personal de obras en la vía y el de acompañamiento de los vehículos en régimen de transporte especial podrá regular el paso de vehículos mediante el empleo de las señales verticales R-2 y R-400 incorporadas a una paleta, y, por este mismo medio, las patrullas escolares invitar a los usuarios de la vía a que detengan su marcha. Cuando la autoridad competente autorice la celebración de actividades deportivas o actos que aconsejen establecer limitaciones a la circulación en vías urbanas o interurbanas, la autoridad responsable del tráfico podrá habilitar al personal de protección civil o de la organización responsable para impedir el acceso de vehículos o peatones a la zona o itinerario afectados, en los términos del anexo II. Nota: El personal de protección civil no puede regular la circulación tal y como lo hacen los agentes de la circulación. En pruebas deportivas, únicamente pueden situarse en lugares señalados para impedir el acceso de vehículos y peatones a la zona donde se realiza la prueba deportiva."
+    },
+    {
+      "pregunta": "15. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. En ausencia de agentes de circulación o para auxiliar a éstos, no podrá regular la circulación: (Art. 143).",
+      "opciones": [
+        "La Policía Militar.",
+        "El personal de obras en la vía.",
+        "Las Fuerzas y Cuerpos de Seguridad del Estado, en el ámbito de sus funciones, cuando establezcan controles policiales de seguridad ciudadana.",
+        "El personal de protección civil."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 143 apartado 4. 4. En ausencia de agentes de la circulación o para auxiliar a éstos, y en las circunstancias y condiciones establecidas en este reglamento, la Policía Militar podrá regular la circulación, y el personal de obras en la vía y el de acompañamiento de los vehículos en régimen de transporte especial podrá regular el paso de vehículos mediante el empleo de las señales verticales R-2 y R-400 incorporadas a una paleta, y, por este mismo medio, las patrullas escolares invitar a los usuarios de la vía a que detengan su marcha. Cuando la autoridad competente autorice la celebración de actividades deportivas o actos que aconsejen establecer limitaciones a la circulación en vías urbanas o interurbanas, la autoridad responsable del tráfico podrá habilitar al personal de protección civil o de la organización responsable para impedir el acceso de vehículos o peatones a la zona o itinerario afectados, en los términos del anexo II. Nota: El personal de protección civil no puede regular la circulación tal y como lo hacen los agentes de la circulación. En pruebas deportivas, únicamente pueden situarse en lugares señalados para impedir el acceso de vehículos y peatones a la zona donde se realiza la prueba deportiva."
+    },
+    {
+      "pregunta": "16. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Los usuarios deben obedecer las prescripciones indicadas por las señales aún cuando parezcan estar en contradicción con las normas de comportamiento en la circulación:",
+      "opciones": [
+        "En todo caso.",
+        "Salvo circunstancias especiales que lo justifiquen.",
+        "En cualquier caso.",
+        "Salvo indicación en contrario."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 132 Obediencia de las señales 1. Todos los usuarios de las vías objeto de la ley están obligados a obedecer las señales de la circulación que establezcan una obligación o una prohibición y a adaptar su comportamiento al mensaje del resto de las señales reglamentarias que se encuentran en las vías por las que circulan. A estos efectos, cuando la señal imponga una obligación de detención, no podrá reanudar su marcha el conductor del vehículo así detenido hasta haber cumplido la prescripción que la señal establece. En los peajes dinámicos o telepeajes, los vehículos que los utilicen deberán estar provistos del medio técnico que posibilite su uso en condiciones operativas (artículo 53.1 del texto articulado). 2. Salvo circunstancias especiales que lo justifiquen, los usuarios deben obedecer las prescripciones indicadas por las señales, aun cuando parezcan estar en contradicción con las normas de comportamiento en la circulación (artículo 53.2 del texto articulado). 3. Los usuarios deben obedecer las indicaciones de los semáforos y de las señales verticales de circulación situadas inmediatamente a su derecha, encima de la calzada o encima de su carril, y si no existen en los citados emplazamientos y pretendan girar a la izquierda o seguir de frente, las de los situados inmediatamente a su izquierda. Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la izquierda o seguir de frente sólo deben obedecer las de los situados inmediatamente a su izquierda."
+    },
+    {
+      "pregunta": "17. Según el artículo 131 del RD 1428/2003 (RGCir), La señalización es el conjunto de señales y órdenes de los agentes de circulación, señales circunstanciales que modifican el régimen normal de utilización de la vía y señales de balizamiento fijo, semáforos, señales verticales de circulación y marcas viales: ¿Qué sigue a continuación? Indique la respuesta correcta.",
+      "opciones": [
+        "Destinadas a los conductores de vehículos y que tienen por misión advertir e informar a éstos u ordenar o reglamentar su comportamiento con la necesaria antelación de determinadas circunstancias de la vía o de la circulación.",
+        "Destinadas a los usuarios de la vía y que tienen por misión advertir e informar a éstos u ordenar o reglamentar su comportamiento con la necesaria antelación de determinadas circunstancias de la vía o de la circulación.",
+        "Destinadas a los conductores de vehículos a motor y ciclomotores y que tienen por misión advertir e informar a éstos u ordenar o reglamentar su comportamiento con la necesaria antelación de determinadas circunstancias de la vía o de la circulación.",
+        "Destinadas a los usuarios de la vía y que tienen por misión advertir e informar a éstos con la necesaria antelación de determinadas circunstancias de la vía o de la circulación."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 131 Concepto La señalización es el conjunto de señales y órdenes de los agentes de circulación, señales circunstanciales que modifican el régimen normal de utilización de la vía y señales de balizamiento fijo, semáforos, señales verticales de circulación y marcas viales, destinadas a los usuarios de la vía y que tienen por misión advertir e informar a éstos u ordenar o reglamentar su comportamiento con la necesaria antelación de determinadas circunstancias de la vía o de la circulación."
+    },
+    {
+      "pregunta": "18. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Según el artículo 132.2, los usuarios deben obedecer las prescripciones indicadas por las señales, aun cuando parezcan estar en contradicción con las normas de comportamiento en la circulación, salvo:",
+      "opciones": [
+        "Retenciones en la circulación.",
+        "Congestión del tráfico.",
+        "Circunstancias especiales que lo justifiquen.",
+        "Sin ninguna excepción."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 132 Obediencia de las señales 1. Todos los usuarios de las vías objeto de la ley están obligados a obedecer las señales de la circulación que establezcan una obligación o una prohibición y a adaptar su comportamiento al mensaje del resto de las señales reglamentarias que se encuentran en las vías por las que circulan. A estos efectos, cuando la señal imponga una obligación de detención, no podrá reanudar su marcha el conductor del vehículo así detenido hasta haber cumplido la prescripción que la señal establece. En los peajes dinámicos o telepeajes, los vehículos que los utilicen deberán estar provistos del medio técnico que posibilite su uso en condiciones operativas (artículo 53.1 del texto articulado). 2. Salvo circunstancias especiales que lo justifiquen, los usuarios deben obedecer las prescripciones indicadas por las señales, aun cuando parezcan estar en contradicción con las normas de comportamiento en la circulación (artículo 53.2 del texto articulado)."
+    },
+    {
+      "pregunta": "19. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Según el artículo 133.2, en el caso de que las prescripciones indicadas por diferentes señales parezcan estar en contradicción entre sí:",
+      "opciones": [
+        "Prevalecerá la prioritaria, según el orden a que se refiere el apartado anterior, o la más restrictiva, si se trata de señales del mismo tipo.",
+        "Prevalecerá la prohibitiva, según el orden a que se refiere el apartado anterior, o la más restrictiva, si se trata de señales del mismo tipo.",
+        "Prevalecerá la prioritaria, según el orden a que se refiere el apartado anterior, o la menos restrictiva, si se trata de señales del mismo tipo.",
+        "Prevalecerá la preventiva, según el orden a que se refiere el apartado anterior, o la menos restrictiva, si se trata de señales del mismo tipo."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 133 Orden de prioridad 1. El orden de prioridad entre los distintos tipos de señales de circulación es el siguiente: a) Señales y órdenes de los agentes de circulación. b) Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. c) Semáforos. d) Señales verticales de circulación. e) Marcas viales. 2. En el caso de que las prescripciones indicadas por diferentes señales parezcan estar en contradicción entre sí, prevalecerá la prioritaria, según el orden a que se refiere el apartado anterior, o la más restrictiva, si se trata de señales del mismo tipo (artículo 54.2 del texto articulado)."
+    },
+    {
+      "pregunta": "20. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Según el artículo 132.3, indique la respuesta correcta:",
+      "opciones": [
+        "Los usuarios deben obedecer las indicaciones de los semáforos y de las señales verticales de circulación situadas inmediatamente a su derecha, encima de la calzada o encima de su carril, y si no existen en los citados emplazamientos y pretendan girar a la izquierda o seguir de frente, las de los situados inmediatamente a su izquierda.",
+        "Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la izquierda o seguir de frente sólo deben obedecer las de los situados inmediatamente a su derecha.",
+        "Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la derecha o seguir de frente sólo deben obedecer las de los situados inmediatamente a su izquierda.",
+        "Las respuestas a y c son correctas."
+      ],
+      "correcta": 0,
+      "explicacion": "a) Los usuarios deben obedecer las indicaciones de los semáforos y de las señales verticales de circulación situadas inmediatamente a su derecha, encima de la calzada o encima de su carril, y si no existen en los citados emplazamientos y pretendan girar a la izquierda o seguir de frente, las de los situados inmediatamente a su izquierda. b) Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la izquierda o seguir de frente sólo deben obedecer las de los situados inmediatamente a su derecha. (Debería poner izquierda) c) Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la derecha (debería poner izquierda)o seguir de frente sólo deben obedecer las de los situados inmediatamente a su izquierda. d) Las respuestas a y c son correctas. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 132 apartado 3. 3. Los usuarios deben obedecer las indicaciones de los semáforos y de las señales verticales de circulación situadas inmediatamente a su derecha, encima de la calzada o encima de su carril, y si no existen en los citados emplazamientos y pretendan girar a la izquierda o seguir de frente, las de los situados inmediatamente a su izquierda. Si existen semáforos o señales verticales de circulación con indicaciones distintas a la derecha y a la izquierda, quienes pretendan girar a la izquierda o seguir de frente sólo deben obedecer las de los situados inmediatamente a su izquierda."
+    },
+    {
+      "pregunta": "21. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. ¿Qué señales son prioritarias sobre las demás?",
+      "opciones": [
+        "Señalización circunstancial que modifique el régimen normal de la vía.",
+        "Las señales y órdenes de los Agentes de circulación.",
+        "Las señales verticales.",
+        "Los semáforos."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo CAPÍTULO II Prioridad entre señales Artículo 133 Orden de prioridad 1. El orden de prioridad entre los distintos tipos de señales de circulación es el siguiente: a) Señales y órdenes de los agentes de circulación. b) Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. c) Semáforos. d) Señales verticales de circulación. e) Marcas viales. 2. En el caso de que las prescripciones indicadas por diferentes señales parezcan estar en contradicción entre sí, prevalecerá la prioritaria, según el orden a que se refiere el apartado anterior, o la más restrictiva, si se trata de señales del mismo tipo (artículo 54.2 del texto articulado)."
+    },
+    {
+      "pregunta": "22. En ausencia de agentes de la circulación o para auxiliar a éstos, y en las circunstancias y condiciones establecidas en este reglamento, la Policía Militar podrá regular la circulación, y el personal de obras en la vía y el de acompañamiento de los vehículos en régimen de transporte especial podrá regular el paso de vehículos mediante el empleo de las señales verticales __________ incorporadas a una paleta.",
+      "opciones": [
+        "P-2 y P-400.",
+        "R-4 y R-200.",
+        "P-4 y P-200.",
+        "R-2 y R-400."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 143.4 RGCir."
+    },
+    {
+      "pregunta": "23. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Según el artículo 133, el orden de prioridad entre los distintos tipos de señales de circulación es el siguiente:",
+      "opciones": [
+        "Señales y órdenes de los agentes de circulación. Semáforos. Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. Señales verticales de circulación. Marcas viales.",
+        "Señales y órdenes de los agentes de circulación. Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. Semáforos. Marcas viales. Señales verticales de circulación.",
+        "Semáforos. Señales y órdenes de los agentes de circulación. Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. Señales verticales de circulación. Marcas viales.",
+        "Señales y órdenes de los agentes de circulación. Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. Semáforos. Señales verticales de circulación. Marcas viales."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 133 Orden de prioridad 1. El orden de prioridad entre los distintos tipos de señales de circulación es el siguiente: a) Señales y órdenes de los agentes de circulación. b) Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. c) Semáforos. d) Señales verticales de circulación. e) Marcas viales. 2. En el caso de que las prescripciones indicadas por diferentes señales parezcan estar en contradicción entre sí, prevalecerá la prioritaria, según el orden a que se refiere el apartado anterior, o la más restrictiva, si se trata de señales del mismo tipo (artículo 54.2 del texto articulado). Añadir nota a la pregunta #94680 Texto AÑADIR Añadir nota a la pregunta #33265 Texto AÑADIR"
+    },
+    {
+      "pregunta": "26. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. El orden de prioridad entre los distintos tipos de señales de circulación es el siguiente: (Art. 133).",
+      "opciones": [
+        "Señales y órdenes de los agentes de circulación, semáforos, señales circunstanciales que modifiquen el régimen normal de utilización de la vía, marcas viales.",
+        "Señales y órdenes de los agentes de circulación, señales verticales, señales circunstanciales que modifiquen el régimen normal de utilización de la vía, marcas viales.",
+        "Señales y órdenes de los agentes de circulación, señales circunstanciales que modifiquen el régimen normal de utilización de la vía, semáforos, marcas viales.",
+        "Señales y órdenes de los agentes de circulación, señales circunstanciales que modifiquen el régimen normal de utilización de la vía, marcas viales, semáforos."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo CAPÍTULO II Prioridad entre señales Artículo 133 Orden de prioridad 1. El orden de prioridad entre los distintos tipos de señales de circulación es el siguiente: a) Señales y órdenes de los agentes de circulación. b) Señalización circunstancial que modifique el régimen normal de utilización de la vía y señales de balizamiento fijo. c) Semáforos. d) Señales verticales de circulación. e) Marcas viales. 2. En el caso de que las prescripciones indicadas por diferentes señales parezcan estar en contradicción entre sí, prevalecerá la prioritaria, según el orden a que se refiere el apartado anterior, o la más restrictiva, si se trata de señales del mismo tipo (artículo 54.2 del texto articulado)."
+    },
+    {
+      "pregunta": "27. Según el artículo 143, del RD 1428/2003 (RGCir), tanto los agentes de la autoridad que regulen la circulación como la Policía Militar, el personal de obras y el de acompañamiento de los vehículos en régimen de transporte especial, que regulen el paso de vehículos:",
+      "opciones": [
+        "Y, en su caso, las patrullas escolares, el personal de protección civil y el de organizaciones de actividades deportivas o de cualquier otro acto, habilitado a los efectos contemplados en el apartado 4 de este artículo, deberán utilizar prendas de colores llamativos y dispositivos o elementos retrorreflectantes que permitan a los conductores y demás usuarios de la vía que se aproximen distinguirlos a una distancia mínima de 150 metros.",
+        "Y, en su caso, las patrullas escolares, el personal de protección civil y el de organizaciones de actividades deportivas o de cualquier otro acto, habilitado a los efectos contemplados en el apartado 4 de este artículo, deberán utilizar prendas de colores llamativos y dispositivos o elementos retrorreflectantes que permitan a los conductores y demás usuarios de la vía que se aproximen distinguirlos a una distancia mínima de 100 metros.",
+        "Y, en su caso el de organizaciones de actividades deportivas o de cualquier otro acto, habilitado a los efectos contemplados en el apartado 4 de este artículo, deberán utilizar prendas de colores llamativos y dispositivos o elementos retrorreflectantes que permitan a los conductores y demás usuarios de la vía que se aproximen distinguirlos a una distancia mínima de 150 metros.",
+        "Y, en su caso, el de organizaciones de actividades deportivas o de cualquier otro acto, habilitado a los efectos contemplados en el apartado 4 de este artículo, deberán utilizar prendas de colores llamativos y dispositivos o elementos retrorreflectantes que permitan a los conductores y demás usuarios de la vía que se aproximen distinguirlos a una distancia mínima de 100 metros."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 143 Señales con el brazo y otras 1. Los agentes de la autoridad responsable del tráfico que estén regulando la circulación lo harán de forma que sean fácilmente reconocibles como tales a distancia, tanto de día como de noche, y sus señales, que han de ser visibles, y sus órdenes deben ser inmediatamente obedecidas por los usuarios de la vía. Tanto los agentes de la autoridad que regulen la circulación como la Policía Militar, el personal de obras y el de acompañamiento de los vehículos en régimen de transporte especial, que regulen el paso de vehículos y, en su caso, las patrullas escolares, el personal de protección civil y el de organizaciones de actividades deportivas o de cualquier otro acto, habilitado a los efectos contemplados en el apartado 4 de este artículo, deberán utilizar prendas de colores llamativos y dispositivos o elementos retrorreflectantes que permitan a los conductores y demás usuarios de la vía que se aproximen distinguirlos a una distancia mínima de 150 metros."
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

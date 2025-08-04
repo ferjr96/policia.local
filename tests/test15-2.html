@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Según el anexo II del RD 2822/1998. Señale la respuesta incorrecta.",
+      "opciones": [
+        "Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h.",
+        "Ciclomotor de tres ruedas: Vehículo de tres ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h.",
+        "Cuatriciclos ligeros: Vehículo cuya tara no sea superior a 35Okg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de dos ruedas.",
+        "Automóvil:Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Ciclomotor de dos ruedas Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. Ciclomotor de tres ruedas Vehículo de tres ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. Vehículo para personas de movilidad reducida Vehículo cuya tara no sea superior a 35O kg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de tres ruedas. Automóvil Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales. a) Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. b) Ciclomotor de tres ruedas: Vehículo de tres ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. c) Cuatriciclos ligeros: Vehículo cuya tara no sea superior a 35Okg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de dos ruedas. (esta definición corresponde a vehículo para personas de movilidad reducida). d) Automóvil: Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales."
+    },
+    {
+      "pregunta": "2. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la definición correspondiente a personas de movilidad reducida es:",
+      "opciones": [
+        "Vehículo especialmente construido para la conducción por una persona con algún defecto o incapacidad físicos.",
+        "Vehículo construido y no meramente adaptado para la conducción por una persona con algún defecto o incapacidad físicos.",
+        "Vehículo construido o modificado para el transporte de una persona con algún defecto o incapacidad físicos.",
+        "Vehículo construido o modificado para la conducción por una persona con algún defecto o incapacidad físicos."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos C. Clasificación por criterios de utilización (segundo grupo de cifras) 00 Sin especificar (Instrucción: se aplicará esta clave cuando el elemento a clasificar no esté encuadrado en ninguna de las clasificaciones siguientes). 01 Personas de movilidad reducida Vehículo construido o modificado para la conducción por una persona con algún defecto o incapacidad físicos."
+    },
+    {
+      "pregunta": "3. Según el anexo II del RD 2822/1998, señale la respuesta correcta:",
+      "opciones": [
+        "Vehículo de tracción animal: Vehículo arrastrado por animales.",
+        "Bicicleta: Ciclo de dos o más ruedas.",
+        "Ciclo: Vehículo de dos ruedas por lo menos, accionado por el esfuerzo muscular de las personas que lo ocupan, en particular mediante pedales o motor asistido.",
+        "Vehículo: Aparato apto para circular por las vías o terrenos a que se refiere el artículo 2 del Reglamento General de Circulación."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo II DEFINICIONES Y CATEGORÍAS DE LOS VEHÍCULOS A. Definiciones Vehículo Aparato apto para circular por las vías o terrenos a que se refiere el Artículo 2 de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Vehículo de tracción animal Vehículo arrastrado por animales. Ciclo Vehículo de dos ruedas por lo menos, accionado por el esfuerzo muscular de las personas que lo ocupan, en particular mediante pedales o manivelas. Bicicleta Ciclo de dos ruedas. NOTA: EN NEGRITA Y SUBRAYADO EL ERROR EN CADA OPCIÓN. a) Vehículo de tracción animal: Vehículo arrastrado por animales. b) Bicicleta: Ciclo de dos o más ruedas. c) Ciclo: Vehículo de dos ruedas por lo menos, accionado por el esfuerzo muscular de las personas que lo ocupan, en particular mediante pedales o motor asistido. d) Vehículo: Aparato apto para circular por las vías o terrenos a que se refiere el artículo 2 del Reglamento General de Circulación."
+    },
+    {
+      "pregunta": "4. Según el anexo II del RD 2822/1998, ¿qué dígitos tendría en la ficha técnica un turismo cuya utilización sea como taxi?",
+      "opciones": [
+        "1033.",
+        "1040.",
+        "1041.",
+        "1000."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 10 Turismo: Automóvil distinto de la motocicleta, especialmente concebido y construido para el transporte de personas y con capacidad hasta 9 plazas, incluido el conductor. 40 Taxi: Turismo destinado al servicio público de viajeros y provisto de aparato taxímetro. NOTA: 10 asignado a turismo por criterios por construcción y 40 asignado a taxi por criterios de utilización."
+    },
+    {
+      "pregunta": "5. Según el anexo II del RD 2822/1998, la definición de vehículo, autopropulsado o remolcado, concebido y construido para realizar obras o servicios determinados y que, por sus características, está exceptuado de cumplir alguna de las condiciones técnicas exigidas en este Reglamento o sobrepasa permanentemente los límites establecidos en el mismo para masas o dimensiones, así como la maquinaria agrícola y sus remolques, corresponde a:",
+      "opciones": [
+        "Tractor agrícola.",
+        "Motocultor.",
+        "Vehículo especial.",
+        "Vehículos todo terreno."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Tractor agrícola: Vehículo especial autopropulsado, de dos o más ejes, concebido y construido para arrastrar, empujar, llevar o accionar aperos, maquinaria o remolques agrícolas. Motocultor: Vehículo especial autopropulsado, de un eje, dirigible por manceras por un conductor que marche a pie. Ciertos motocultores pueden, también, ser dirigidos desde un asiento incorporado a un remolque o máquina agrícola o a un apero o bastidor auxiliar con ruedas. Vehículo especial: Vehículo, autopropulsado o remolcado, concebido y construido para realizar obras o servicios determinados y que, por sus características, está exceptuado de cumplir alguna de las condiciones técnicas exigidas en este Reglamento o sobrepasa permanentemente los límites establecidos en el mismo para masas o dimensiones, así como la maquinaria agrícola y sus remolques. Vehículos todo terreno: Cualquier vehículo automóvil se considerará Todo Terreno si cumple las definiciones que indica la Directiva 92/53 en su anexo II punto 4."
+    },
+    {
+      "pregunta": "6. Según el anexo II del RD 2822/1998, la definición automóvil de tres ruedas simétricas, provisto de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h, corresponde a:",
+      "opciones": [
+        "Motocicleta de tres ruedas.",
+        "Motocicleta de tres ruedas o con sidecar.",
+        "Vehículo de tres ruedas.",
+        "Ciclomotor de tres ruedas."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Motocicleta: Tienen la consideración de motocicletas los automóviles que se definen en los dos epígrafes siguientes: - Motocicletas de dos ruedas: Vehículos de dos ruedas sin sidecar, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h. - Motocicletas con sidecar: Vehículos de tres ruedas asimétricas respecto a su eje medio longitudinal, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h. Vehículo de tres ruedas: Automóvil de tres ruedas simétricas, provisto de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h."
+    },
+    {
+      "pregunta": "7. Según el anexo II del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Camión: automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina no está integrada en el resto de la carrocería y con un máximo de 9 plazas, incluido el conductor.",
+        "Furgón/furgoneta: automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo.",
+        "Tractomación: automóvil concebido y construido para realizar, principalmente, el arrastre de un remolque.",
+        "Autobús o autocar de dos pisos: autobús o autocar en el que los espacios destinados a los pasajeros están dispuestos, al menos parcialmente, en dos niveles superpuestos, de los cuales el superior dispone también de plazas sin asiento."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Autobús o autocar de dos pisos: Autobús o autocar en el que los espacios destinados a los pasajeros están dispuestos, al menos parcialmente, en dos niveles superpuestos, de los cuales el superior no dispone de plazas sin asiento. Camión: Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina no está integrada en el resto de la carrocería y con un máximo de 9 plazas, incluido el conductor. Furgón/furgoneta: Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina está integrada en el resto de la carrocería y con un máximo de 9 plazas, incluido el conductor. Tractocamión: Automóvil concebido y construido para realizar, principalmente, el arrastre de un semirremolque."
+    },
+    {
+      "pregunta": "8. Según el anexo II del RD 2822/1998, ¿cuál es la diferencia en las definiciones de camión y furgón/furgoneta?",
+      "opciones": [
+        "Que el camión, según su definición puede transportar un máximo de 5 personas incluido el conductor y el furgón/furgoneta un máximo de 9 incluido el conductor.",
+        "Que según su definición, la cabina del camión no está integrada en la carrocería y la del furgón/furgoneta sí.",
+        "Que el camión, según su definición puede transportar un máximo de 5 personas incluido el conductor y el furgón/furgoneta un máximo de 9 incluido el conductor, además que la cabina del camión no está integrada en la carrocería y la del furgón/furgoneta sí.",
+        "Que el camión, según su definición puede transportar un máximo de 5 personas incluido el conductor y el furgón/furgoneta un máximo de 9 incluido el conductor, además que la cabina del camión está integrada en la carrocería y la del furgón/furgoneta no."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Camión: Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina no está integrada en el resto de la carrocería y con un máximo de 9 plazas, incluido el conductor. Furgón/furgoneta: Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina está integrada en el resto de la carrocería y con un máximo de 9 plazas, incluido el conductor. Añadir nota a la pregunta #33739 Texto AÑADIR"
+    },
+    {
+      "pregunta": "10. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, ¿cuál de los siguientes tipos de vehículo pueden transportar viajeros de pie?",
+      "opciones": [
+        "El urbano y el de corto recorrido.",
+        "El urbano y el de largo recorrido en cortos recorridos.",
+        "El urbano y el de corto recorrido en cortos recorridos.",
+        "Únicamente el urbano."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 06 Urbano: Vehículo concebido y equipado para transporte urbano y suburbano; los vehículos de esta clase tienen asientos y plazas destinadas para viajeros de a pie y están acondicionados para permitir los desplazamientos de los viajeros en razón de sus frecuentes paradas. 07 Corto recorrido: Vehículo concebido y equipado para transporte interurbano; estos vehículos no disponen de plazas destinadas especialmente para viajeros de a pie, pero pueden transportar este tipo de viajeros en cortos recorridos en el pasillo de circulación. 08 Largo recorrido: Vehículo concebido y equipado para viajes a gran distancia; estos vehículos están acondicionados en forma que se asegura la comodidad de los viajeros sentados, y no transportan viajeros de pie."
+    },
+    {
+      "pregunta": "11. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la definición “vehículo concebido especialmente para el transporte de materias sólidas, pulverulentas o granuladas en depósito cerrado y con o sin medios auxiliares para su carga o descarga” corresponde a:",
+      "opciones": [
+        "Basculante.",
+        "Caja abierta.",
+        "Cisterna.",
+        "Silo."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 16 Silo: Vehículo concebido especialmente para el transporte de materias sólidas, pulverulentas o granulosas en depósito cerrado y con o sin medios auxiliares para su carga o descarga."
+    },
+    {
+      "pregunta": "12. Según el anexo II del RD 2822/1998, indique la definición correcta de cuatriciclo pesado:",
+      "opciones": [
+        "Cuatriciclo pesado: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L7e.",
+        "Cuatriciclo pesado: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L6e.",
+        "Cuatriciclo pesado: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L1e.",
+        "Cuatriciclo pesado: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 1428/2003 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L7e."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Cuatriciclo ligero: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L6e. Cuatriciclo pesado: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L7e."
+    },
+    {
+      "pregunta": "13. Según el anexo II del RD 2822/1998, la definición “autobús o autocar compuesto por dos partes rígidas unidas entre sí por una sección articulada. En este tipo de vehículos, los compartimentos para viajeros de cada una de ambas partes rígidas se comunican entre sí. La sección articulada permite la libre circulación de los viajeros entre las partes rígidas. La conexión y disyunción entre las dos partes únicamente podrá realizarse en el taller”, corresponde a:",
+      "opciones": [
+        "Autobús articulado.",
+        "Autocar articulado.",
+        "Autobús o autocar articulado.",
+        "Autobús o autocar mixto."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Autobús o autocar: Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas y sus equipajes. Se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles. Autobús o autocar articulado: Autobús o autocar compuesto por dos partes rígidas unidas entre sí por una sección articulada. En este tipo de vehículos, los compartimentos para viajeros de cada una de ambas partes rígidas se comunican entre sí. La sección articulada permite la libre circulación de los viajeros entre las partes rígidas. La conexión y disyunción entre las dos partes únicamente podrá realizarse en el taller. Autobús o autocar de dos pisos: Autobús o autocar en el que los espacios destinados a los pasajeros están dispuestos, al menos parcialmente, en dos niveles superpuestos, de los cuales el superior no dispone de plazas sin asiento."
+    },
+    {
+      "pregunta": "14. Según el anexo II del RD 2822/1998, la definición de turismo es:",
+      "opciones": [
+        "Automóvil destinado al transporte de personas que tenga no más de cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo.",
+        "Automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, cinco plazas como máximo.",
+        "Automóvil destinado al transporte de mercancías y personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo.",
+        "Automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Turismo: Automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo. NOTA: EN NEGRITA Y SUBRAYADO EL ERROR EN LA OPCIÓN: a) Automóvil destinado al transporte de personas que tenga no más de cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo. b) Automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, cinco plazas como máximo. c) Automóvil destinado al transporte de mercancías y personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo. d) Automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo."
+    },
+    {
+      "pregunta": "15. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la definición correcta de caja abierta es:",
+      "opciones": [
+        "Vehículo destinado al transporte de mercancías sobre una superficie plana cuyos laterales podrán ser abatibles o fijos.",
+        "Vehículo destinado al transporte de mercancías en un receptáculo abierto por la parte superior y los laterales. Los laterales serán fijos pero la parte trasera podrá ser abatible.",
+        "Vehículo destinado al transporte de mercancías en un receptáculo abierto por la parte superior. Los laterales podrán ser abatibles o fijos.",
+        "Vehículo destinado al transporte de mercancías en un receptáculo abierto por la parte superior. Los laterales deberán ser abatibles o fijos."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 11 Caja abierta: Vehículo destinado al transporte de mercancías en un receptáculo abierto por la parte superior. Los laterales podrán ser abatibles o fijos."
+    },
+    {
+      "pregunta": "16. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la definición correcta 06 urbano es:",
+      "opciones": [
+        "Vehículo concebido y equipado para transporte urbano y suburbano; los vehículos de esta clase tienen asientos y plazas destinadas para viajeros de a pie y están acondicionados para permitir los desplazamientos de los viajeros en razón de sus frecuentes paradas.",
+        "Vehículo concebido y equipado para transporte urbano y suburbano; los vehículos de esta clase tienen asientos no teniendo plazas destinadas para viajeros de a pie y están acondicionados para permitir los desplazamientos de los viajeros en razón de sus frecuentes paradas.",
+        "Vehículo concebido y equipado para viajes a gran distancia; estos vehículos están acondicionados en forma que se asegura la comodidad de los viajeros sentados, y no transportan viajeros de pie.",
+        "Vehículo concebido y equipado para transporte interurbano; estos vehículos no disponen de plazas destinadas especialmente para viajeros de a pie, pero pueden transportar este tipo de viajeros en cortos recorridos en el pasillo de circulación."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 06 Urbano: Vehículo concebido y equipado para transporte urbano y suburbano; los vehículos de esta clase tienen asientos y plazas destinadas para viajeros de a pie y están acondicionados para permitir los desplazamientos de los viajeros en razón de sus frecuentes paradas. 07 Corto recorrido: Vehículo concebido y equipado para transporte interurbano; estos vehículos no disponen de plazas destinadas especialmente para viajeros de a pie, pero pueden transportar este tipo de viajeros en cortos recorridos en el pasillo de circulación. 08 Largo recorrido: Vehículo concebido y equipado para viajes a gran distancia; estos vehículos están acondicionados en forma que se asegura la comodidad de los viajeros sentados, y no transportan viajeros de pie."
+    },
+    {
+      "pregunta": "17. Según el anexo II del RD 2822/1998, la definición correcta de conjunto de vehículos es:",
+      "opciones": [
+        "Automóvil constituido por un vehículo de motor acoplado a un remolque o semirremolque.",
+        "Automóvil constituido por un vehículo de motor acoplado a un semirremolque.",
+        "Un tren de carretera, o un vehículo articulado.",
+        "Automóvil constituido por un vehículo de motor enganchado a un remolque."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Vehículo articulado: Automóvil constituido por un vehículo de motor acoplado a un semirremolque. Tren de carretera: Automóvil constituido por un vehículo de motor enganchado a un remolque. Conjunto de vehículos: Un tren de carretera, o un vehículo articulado."
+    },
+    {
+      "pregunta": "18. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la cisterna construida con paredes aislantes que permiten limitar los intercambios de calor entre el interior y el exterior, es:",
+      "opciones": [
+        "Cisterna refrigerante.",
+        "Cisterna frigorífica.",
+        "Cisterna isoterma.",
+        "Cisterna calorífica."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 28 Cisterna isoterma: Cisterna construida con paredes aislantes que permiten limitar los intercambios de calor entre el interior y el exterior. 29 Cisterna refrigerante: Cisterna isoterma que, con ayuda de una fuente de frío, distinto de un equipo mecánico o de «absorción», permite bajar la temperatura en el interior de la cisterna y mantenerla. 30 Cisterna frigorífica: Cisterna isoterma provista de un dispositivo de producción de frío individual o colectivo para varios vehículos de transporte (grupo mecánico de compresión, máquina de absorción, etc.) que permite bajar la temperatura en el interior de la cisterna y mantenerla después de manera permanente en unos valores determinados. 31 Cisterna calorífica: Cisterna isoterma provista de un dispositivo de producción de calor que permite elevar la temperatura en el interior de la cisterna y mantenerla después a un valor prácticamente constante."
+    },
+    {
+      "pregunta": "19. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la definición “versión de un tipo de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos”, corresponde a:",
+      "opciones": [
+        "02 combi.",
+        "02 station wagon.",
+        "02 familiar.",
+        "01 familiar."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos C. Clasificación por criterios de utilización (segundo grupo de cifras) 00 Sin especificar (Instrucción: se aplicará esta clave cuando el elemento a clasificar no esté encuadrado en ninguna de las clasificaciones siguientes). 01 Personas de movilidad reducida Vehículo construido o modificado para la conducción por una persona con algún defecto o incapacidad físicos. 02 Familiar Versión de un tipo de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos."
+    },
+    {
+      "pregunta": "20. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, ¿cuál de los siguientes tipos de vehículo disponen de plazas destinadas para viajeros de a pie?",
+      "opciones": [
+        "El de corto recorrido y el urbano.",
+        "El urbano y el interurbano.",
+        "El de corto recorrido únicamente.",
+        "El urbano."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 06 Urbano: Vehículo concebido y equipado para transporte urbano y suburbano; los vehículos de esta clase tienen asientos y plazas destinadas para viajeros de a pie y están acondicionados para permitir los desplazamientos de los viajeros en razón de sus frecuentes paradas. 07 Corto recorrido: Vehículo concebido y equipado para transporte interurbano; estos vehículos no disponen de plazas destinadas especialmente para viajeros de a pie, pero pueden transportar este tipo de viajeros en cortos recorridos en el pasillo de circulación. 08 Largo recorrido: Vehículo concebido y equipado para viajes a gran distancia; estos vehículos están acondicionados en forma que se asegura la comodidad de los viajeros sentados, y no transportan viajeros de pie."
+    },
+    {
+      "pregunta": "21. Según el anexo II del RD 2822/1998, indique la respuesta incorrecta:",
+      "opciones": [
+        "Autobús o autocar de dos pisos: Autobús o autocar en el que los espacios destinados a los pasajeros están dispuestos, al menos parcialmente, en dos niveles superpuestos, de los cuales el superior no dispone de plazas sin asiento.",
+        "Camión: Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina no está integrada en el resto de la carrocería y con un máximo de 9 plazas, incluido el conductor.",
+        "Furgón/furgoneta: Automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo.",
+        "Tractocamión: Automóvil concebido y construido para realizar, principalmente, el arrastre de un semiremolque."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Autobús o autocar de dos pisos: Autobús o autocar en el que los espacios destinados a los pasajeros están dispuestos, al menos parcialmente, en dos niveles superpuestos, de los cuales el superior no dispone de plazas sin asiento. Camión: Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina no está integrada en el resto de la carrocería y con un máximo de 9 plazas, incluido el conductor. Furgón/furgoneta: Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina está integrada en el resto de la carrocería y con un máximo de 9 plazas, incluido el conductor. Tractocamión: Automóvil concebido y construido para realizar, principalmente, el arrastre de un semirremolque. NOTA: La definición en la opción C corresponde a turismo y no a furgón/furgoneta."
+    },
+    {
+      "pregunta": "22. Según el anexo II del RD 2822/1998, indique la definición correcta de ciclo de motor:",
+      "opciones": [
+        "Ciclo de motor: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L7-A.",
+        "Ciclo de motor: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L4-A.",
+        "Ciclo de motor: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L6-A.",
+        "Ciclo de motor: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L1e-A."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Cuatriciclo ligero: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L6e. Cuatriciclo pesado: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L7e. Ciclo de motor: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L1e-A."
+    },
+    {
+      "pregunta": "23. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, el automóvil dotado de tracción a dos o más ejes, especialmente dispuesto para circulación en terrenos difíciles, con transporte simultáneo de personas y mercancías pudiéndose sustituir la carga, eventualmente, parcial o totalmente, por personas, mediante la adición de asientos, especialmente diseñados para tal fin., es:",
+      "opciones": [
+        "Todo terreno.",
+        "Dúmper.",
+        "Pick-up.",
+        "Quad-ATV."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 33 Todo terreno: Automóvil dotado de tracción a dos o más ejes, especialmente dispuesto para circulación en terrenos difíciles, con transporte simultáneo de personas y mercancías pudiéndose sustituir la carga, eventualmente, parcial o totalmente, por personas, mediante la adición de asientos, especialmente diseñados para tal fin. 18 Dumper: Camión basculante de construcción muy reforzada, de gran maniobrabilidad y apto para todo terreno. 17 Pick-up: Vehículo cuya masa máxima no sea superior a 3.500 kg, en el que las plazas de asiento y la zona de carga no están situadas en un compartimento único y cuya altura no sea superior a 2 m. QUAD-ATV: Vehículo especial de cuatro o más ruedas fabricado para usos específicos muy concretos, con utilización fundamentalmente fuera de carretera, con sistema de dirección mediante manillar en el que el conductor va sentado a horcajadas y dotado de un sistema de tracción adecuado al uso fuera de carretera y cuya velocidad puede estar limitada en función de sus características técnicas o uso. Se exceptúan de esta definición los vehículos incluidos en las categorías definidas en las Directivas europeas 92/61/CEE del Consejo, de 30 de junio de 1992, relativa a la recepción de los vehículos a motor de dos o tres ruedas, y 2002/24/CE del Parlamento Europeo y del Consejo, de 18 de marzo de 2002, relativa a la homologación de los vehículos a motor de dos o tres ruedas."
+    },
+    {
+      "pregunta": "24. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la definición “Vehículos destinado al transporte de mercancías sobre una superficie plana sin protecciones laterales”, corresponde a:",
+      "opciones": [
+        "Caja abierta.",
+        "Plataforma.",
+        "Portacontenedores.",
+        "Góndola."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 10 Plataforma: Vehículo destinado al transporte de mercancías sobre una superficie plana sin protecciones laterales. 11 Caja abierta: Vehículo destinado al transporte de mercancías en un receptáculo abierto por la parte superior. Los laterales podrán ser abatibles o fijos."
+    },
+    {
+      "pregunta": "25. Según el anexo II del RD 2822/1998, ¿qué dígitos tendría en la ficha técnica un furgón de MMA inferior o igual a 3.500 kg y cuya utilización es sin especificar?",
+      "opciones": [
+        "2433.",
+        "2440.",
+        "2400.",
+        "2200."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 24 Furgón/furgoneta MMA ≤ 3.500 kg: Automóvil destinado al transporte de mercancías cuya cabina está integrada en el resto de la carrocería con masa máxima autorizada igual o inferior a 3.500 kg. 00 Sin especificar(Instrucción: se aplicará esta clave cuando el elemento a clasificar no esté encuadrado en ninguna de las clasificaciones siguientes). NOTA: 24 corresponde a criterios por construcción y 00 a criterios de utilización. Añadir nota a la pregunta #33740 Texto AÑADIR"
+    },
+    {
+      "pregunta": "27. Según el anexo II del RD 2822/1998, indique la respuesta incorrecta:",
+      "opciones": [
+        "Vehículo acondicionado: Cualquier vehículo cuyas superestructuras fijas o móviles estén especialmente equipadas para el transporte de mercancías a temperaturas dirigidas y en el que el espesor de cada pared lateral, incluido el aislamiento, sea de 45 mm, como mínimo.",
+        "Derivado de turismo: Automóvil destinado a servicios o a transporte exclusivo de mercancías, derivado de un turismo del cual no conserva la carrocería y dispone únicamente de una fila de asientos.",
+        "Vehículo mixto adaptable: Automóvil especialmente dispuesto para el transporte, simultáneo o no, de mercancías y personas hasta un máximo de 9, incluido el conductor, y en el que se puede sustituir eventualmente la carga, parcial o totalmente, por personas mediante la adición de asientos.",
+        "Autocaravana: Vehículo construido con propósito especial, incluyendo alojamiento vivienda y conteniendo, al menos, el equipo siguiente: asientos y mesa, camas o literas que puedan ser convertidos en asientos, cocina y armarios o similares. Este equipo estará rígidamente fijado al compartimento vivienda: los asientos y la mesa pueden ser diseñados para ser desmontados fácilmente."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Vehículo acondicionado: Cualquier vehículo cuyas superestructuras fijas o móviles estén especialmente equipadas para el transporte de mercancías a temperaturas dirigidas y en el que el espesor de cada pared lateral, incluido el aislamiento, sea de 45 mm, como mínimo. Derivado de turismo: Automóvil destinado a servicios o a transporte exclusivo de mercancías, derivado de un turismo del cual conserva la carrocería y dispone únicamente de una fila de asientos. Vehículo mixto adaptable: Automóvil especialmente dispuesto para el transporte, simultáneo o no, de mercancías y personas hasta un máximo de 9, incluido el conductor, y en el que se puede sustituir eventualmente la carga, parcial o totalmente, por personas mediante la adición de asientos. Autocaravana: Vehículo construido con propósito especial, incluyendo alojamiento vivienda y conteniendo, al menos, el equipo siguiente: asientos y mesa, camas o literas que puedan ser convertidos en asientos, cocina y armarios o similares. Este equipo estará rígidamente fijado al compartimento vivienda: los asientos y la mesa pueden ser diseñados para ser desmontados fácilmente."
+    },
+    {
+      "pregunta": "28. Según el anexo II del RD 2822/1998, señale la respuesta incorrecta:",
+      "opciones": [
+        "Tranvía: Vehículo que marcha por raíles instalados en la vía.",
+        "Vehículo para personas de movilidad reducida: Vehículo cuya tara no sea superior a 35Okg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de tres ruedas.",
+        "Automóvil: Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales y los vehículos para personas de movilidad reducida.",
+        "Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Ciclomotor de dos ruedas Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. Tranvía Vehículo que marcha por raíles instalados en la vía. Vehículo para personas de movilidad reducida Vehículo cuya tara no sea superior a 35O kg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de tres ruedas. Automóvil Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales. a) Tranvía: Vehículo que marcha por raíles instalados en la vía. b) Vehículo para personas de movilidad reducida: Vehículo cuya tara no sea superior a 35Okg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de tres ruedas. c) Automóvil: Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales y los vehículos para personas de movilidad reducida. (sobra en la definición, los vehículos para personas de movilidad reducida). d) Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h."
+    },
+    {
+      "pregunta": "29. Según el anexo II del RD 2822/1998, la definición: Remolque o semirremolque concebido y acondicionado para ser utilizado como vivienda móvil, permitiéndose el uso de su habitáculo cuando el vehículo se encuentra estacionado, corresponde a:",
+      "opciones": [
+        "Autocaravana.",
+        "Remolque.",
+        "Semirremolque.",
+        "Caravana."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Autocaravana: Vehículo construido con propósito especial, incluyendo alojamiento vivienda y conteniendo, al menos, el equipo siguiente: asientos y mesa, camas o literas que puedan ser convertidos en asientos, cocina y armarios o similares. Este equipo estará rígidamente fijado al compartimento vivienda: los asientos y la mesa pueden ser diseñados para ser desmontados fácilmente. Remolque: Vehículo no autopropulsado diseñado y concebido para ser remolcado por un vehículo de motor. Semirremolque: Vehículo no autopropulsado diseñado y concebido para ser acoplado a un automóvil, sobre el que reposará parte del mismo, transfiriéndole una parte sustancial de su masa. Caravana: Remolque o semirremolque concebido y acondicionado para ser utilizado como vivienda móvil, permitiéndose el uso de su habitáculo cuando el vehículo se encuentra estacionado."
+    },
+    {
+      "pregunta": "30. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, indique la respuesta incorrecta:",
+      "opciones": [
+        "05 Escuela de conductores: Automóvil destinado a las prácticas de conducción.",
+        "02 familiar: Versión de un tipo de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos.",
+        "09 derivado de camión: Versión de un camión especialmente equipado para el transporte de personas hasta un máximo de nueve, incluido el conductor.",
+        "01 personas de movilidad reducida: Vehículo construido o modificado para el transporte de una persona con algún defecto o incapacidad físicos."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 05 Escuela de conductores: Automóvil destinado a las prácticas de conducción. 02 Familiar: Versión de un tipo de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos 09 Derivado de camión: Versión de un camión especialmente equipado para el transporte de personas hasta un máximo de nueve, incluido el conductor. 01 Personas de movilidad reducida: Vehículo construido o modificado para la conducción por una persona con algún defecto o incapacidad físicos. a) 05 Escuela de conductores: Automóvil destinado a las prácticas de conducción. b) 02 familiar: Versión de un tipo de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos. c) 09 derivado de camión: Versión de un camión especialmente equipado para el transporte de personas hasta un máximo de nueve, incluido el conductor. d) 01 personas de movilidad reducida: Vehículo construido o modificado para el transporte de una persona con algún defecto o incapacidad físicos."
+    },
+    {
+      "pregunta": "31. Según el anexo II del RD 2822/1998, indique la definición correcta:",
+      "opciones": [
+        "Caravana: Remolque o semirremolque concebido y acondicionado para ser utilizado como vivienda móvil, permitiéndose el uso de su habitáculo cuando el vehículo se encuentra en movimiento o estacionado.",
+        "Vehículo articulado: Automóvil constituido por un vehículo de motor acoplado a un remolque o semirremolque.",
+        "Autocaravana: Vehículo no autopropulsado construido con propósito especial, incluyendo alojamiento vivienda y conteniendo, al menos, el equipo siguiente: asientos y mesa, camas o literas que puedan ser convertidos en asientos, cocina y armarios o similares. Este equipo estará rígidamente fijado al compartimento vivienda: los asientos y la mesa pueden ser diseñados para ser desmontados fácilmente.",
+        "Tren de carretera: Automóvil constituido por un vehículo de motor enganchado a un remolque."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Caravana: Remolque o semirremolque concebido y acondicionado para ser utilizado como vivienda móvil, permitiéndose el uso de su habitáculo cuando el vehículo se encuentra estacionado. Vehículo articulado: Automóvil constituido por un vehículo de motor acoplado a un semirremolque. Autocaravana: Vehículo autopropulsado construido con propósito especial, incluyendo alojamiento vivienda y conteniendo, al menos, el equipo siguiente: asientos y mesa, camas o literas que puedan ser convertidos en asientos, cocina y armarios o similares. Este equipo estará rígidamente fijado al compartimento vivienda: los asientos y la mesa pueden ser diseñados para ser desmontados fácilmente. Tren de carretera: Automóvil constituido por un vehículo de motor enganchado a un remolque."
+    },
+    {
+      "pregunta": "32. Según el anexo II del RD 2822/1998, tienen la consideración de ciclomotores los vehículos que se definen a continuación: Señale la respuesta correcta.",
+      "opciones": [
+        "Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h.",
+        "Ciclomotor de tres ruedas: Vehículo de tres ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción superior a 45 km/h.",
+        "Ciclomotor de tres ruedas: Vehículo de tres ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h.",
+        "Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción superior a 45 km/h."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Ciclomotor: Tienen la consideración de ciclomotores los vehículos que se definen a continuación: Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. Ciclomotor de tres ruedas: Vehículo de tres ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h."
+    },
+    {
+      "pregunta": "33. Según el anexo II del RD 2822/1998, indique la definición correcta de vehículo de movilidad personal:",
+      "opciones": [
+        "Vehículo de una o más ruedas dotado de una única plaza y propulsado por motores eléctricos o esfuerzo muscular que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 25km/h. Sólo puede estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013.",
+        "Vehículo de una o más ruedas dotado de una única plaza y propulsado exclusivamente por motores eléctricos que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 35km/h. Sólo puede estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013.",
+        "Vehículo de una o más ruedas dotado de una única plaza y propulsado exclusivamente por motores eléctricos que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 25km/h. Sólo puede estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013.",
+        "Vehículo de dos o más ruedas dotado de una única plaza y propulsado exclusivamente por motores eléctricos que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 25km/h. Sólo puede estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Vehículo de movilidad personal: Vehículo de una o más ruedas dotado de una única plaza y propulsado exclusivamente por motores eléctricos que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 25 km/h. Sólo pueden estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición los Vehículos sin sistema de autoequilibrado y con sillín, los vehículos concebidos para competición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013. NOTA: En negrita el fallo en cada una de las respuestas: a) Vehículo de una o más ruedas dotado de una única plaza y propulsado por motores eléctricos o esfuerzo muscular que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 25km/h. Sólo puede estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013. b) Vehículo de una o más ruedas dotado de una única plaza y propulsado exclusivamente por motores eléctricos que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 35km/h. Sólo puede estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013. c) Vehículo de una o más ruedas dotado de una única plaza y propulsado exclusivamente por motores eléctricos que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 25km/h. Sólo puede estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013. d) Vehículo de dos o más ruedas dotado de una única plaza y propulsado exclusivamente por motores eléctricos que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 25km/h. Sólo puede estar equipados con un asiento o sillín si están dotados de sistema de autoequilibrado. Se excluyen de esta definición, los vehículos para personas con movilidad reducida y los vehículos con una tensión de trabajo mayor a 100 VCC o 240 VAC, así como aquellos incluidos dentro del ámbito del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013."
+    },
+    {
+      "pregunta": "34. Según el anexo II del RD 2822/1998, señale la respuesta incorrecta:",
+      "opciones": [
+        "Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida y los vehículos especiales.",
+        "Ciclo: Vehículo de dos ruedas por lo menos, accionado por el esfuerzo muscular de las personas que lo ocupan, en particular mediante pedales o manivelas.",
+        "Bicicleta: Ciclo de dos ruedas.",
+        "Tranvía: Vehículo que marcha por raíles instalados en la vía."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida, bicicletas de pedales con pedaleo asistido y los vehículos de movilidad personal. Ciclo: Vehículo de dos ruedas por lo menos, accionado por el esfuerzo muscular de las personas que lo ocupan, en particular mediante pedales o manivelas. Bicicleta: Ciclo de dos ruedas. Tranvía: Vehículo que marcha por raíles instalados en la vía."
+    },
+    {
+      "pregunta": "35. Según el anexo II del RD 2822/1998, la definición vehículo es:",
+      "opciones": [
+        "Aparato apto para circular por las vías o terrenos a que se refiere el Artículo 1 de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial.",
+        "Aparato apto para circular por las vías o terrenos a que se refiere el Artículo 2 de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial.",
+        "Aparato apto para circular por las vías o terrenos a que se refiere el Artículo 3 de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial.",
+        "Aparato apto para circular por las vías o terrenos a que se refiere el artículo 2 del Reglamento General de Circulación."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo II DEFINICIONES Y CATEGORÍAS DE LOS VEHÍCULOS A. Definiciones Vehículo Aparato apto para circular por las vías o terrenos a que se refiere el Artículo 2 de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial."
+    },
+    {
+      "pregunta": "36. Según el anexo II del RD 2822/1998, señale la respuesta correcta:",
+      "opciones": [
+        "Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida, bicicletas de pedales con pedaleo asistido y los vehículos de movilidad personal.",
+        "Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida, bicicletas de pedales con pedaleo asistido, los vehículos de movilidad personal y los vehículos especiales.",
+        "Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida y bicicletas de pedales con pedaleo asistido.",
+        "Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los vehículos para personas de movilidad reducida, bicicletas de pedales con pedaleo asistido y los vehículos de movilidad personal."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida, bicicletas de pedales con pedaleo asistido y los vehículos de movilidad personal."
+    },
+    {
+      "pregunta": "37. Según el anexo II del RD 2822/1998, tienen la consideración de ciclomotores los vehículos que se definen a continuación: Señale la respuesta correcta.",
+      "opciones": [
+        "Cuatriciclos ligeros: Vehículo cuya tara no sea superior a 35Okg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de dos ruedas.",
+        "Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h.",
+        "Ciclomotor de tres ruedas: Vehículo de tres ruedas, provisto de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h.",
+        "Automóvil: Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se incluyen de esta definición los vehículos especiales."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Ciclomotor de dos ruedas Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. Ciclomotor de tres ruedas Vehículo de tres ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. Vehículo para personas de movilidad reducida Vehículo cuya tara no sea superior a 35O kg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de tres ruedas. Automóvil Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales. NOTA: EN NEGRITA Y SUBRAYADO EL ERROR EN CADA OPCIÓN: a) Cuatriciclos ligeros: Vehículo cuya tara no sea superior a 35Okg. y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equiparará a los ciclomotores de dos ruedas. b) Ciclomotor de dos ruedas: Vehículo de dos ruedas, provisto de un motor de cilindrada no superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. c) Ciclomotor de tres ruedas: Vehículo de tres ruedas, provisto de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y con una velocidad máxima por construcción no superior a 45 km/h. d) Automóvil: Vehículo de motor que sirve, normalmente, para el transporte de personas o cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se incluyen de esta definición los vehículos especiales. Añadir nota a la pregunta #33741 Texto AÑADIR"
+    },
+    {
+      "pregunta": "39. Según el anexo II del RD 2822/1998, indique la definición correcta de cuatriciclo ligero:",
+      "opciones": [
+        "Cuatriciclo ligero: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L7e.",
+        "Cuatriciclo ligero: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L6e.",
+        "Cuatriciclo ligero: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2003 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L6e.",
+        "Cuatriciclo ligero: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2003 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L7e."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Cuatriciclo ligero: Definido conforme a lo dispuesto en el anexo I del Reglamento (UE) n.º 168/2013 del Parlamento Europeo y del Consejo, de 15 de enero de 2013, para la categoría L6e."
+    },
+    {
+      "pregunta": "40. Según el anexo II del RD 2822/1998, ¿qué dígitos tendría en la ficha técnica un turismo catalogado como todoterreno?",
+      "opciones": [
+        "1033.",
+        "2400.",
+        "2433.",
+        "1140."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 10 Turismo: Automóvil distinto de la motocicleta, especialmente concebido y construido para el transporte de personas y con capacidad hasta 9 plazas, incluido el conductor. 33 Todo terreno: Automóvil dotado de tracción a dos o más ejes, especialmente dispuesto para circulación en terrenos difíciles, con transporte simultáneo de personas y mercancías pudiéndose sustituir la carga, eventualmente, parcial o totalmente, por personas, mediante la adición de asientos, especialmente diseñados para tal fin. NOTA: 10 asignado a turismo por criterios por construcción y 33 asignado a todo terreno por criterios de utilización."
+    },
+    {
+      "pregunta": "41. Según el anexo II del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Vehículo acondicionado: Cualquier vehículo cuyas superestructuras fijas o móviles estén especialmente equipadas para el transporte de mercancías a temperaturas dirigidas y en el que el espesor de cada pared lateral, sin incluir el aislamiento, sea de 45 mm., como mínimo.",
+        "Derivado de turismo: Automóvil destinado a servicios o a transporte exclusivo de mercancías, derivado de un turismo del cual conserva la carrocería y dispone únicamente de dos asientos.",
+        "Vehículo mixto adaptable: Automóvil especialmente dispuesto para el transporte, simultáneo, de mercancías y personas hasta un máximo de 9, incluido el conductor, y en el que se puede sustituir eventualmente la carga, parcial o totalmente, por personas mediante la adición de asientos.",
+        "Autocaravana: Vehículo construido con propósito especial, incluyendo alojamiento vivienda y conteniendo, al menos, el equipo siguiente: asientos y mesa, camas o literas que puedan ser convertidos en asientos, cocina y armarios o similares. Este equipo estará rígidamente fijado al compartimento vivienda: los asientos y la mesa pueden ser diseñados para ser desmontados fácilmente."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Vehículo acondicionado: Cualquier vehículo cuyas superestructuras fijas o móviles estén especialmente equipadas para el transporte de mercancías a temperaturas dirigidas y en el que el espesor de cada pared lateral, incluido el aislamiento, sea de 45 mm., como mínimo. Derivado de turismo: Automóvil destinado a servicios o a transporte exclusivo de mercancías, derivado de un turismo del cual conserva la carrocería y dispone únicamente de una fila de asientos. Vehículo mixto adaptable: Automóvil especialmente dispuesto para el transporte, simultáneo o no, de mercancías y personas hasta un máximo de 9, incluido el conductor, y en el que se puede sustituir eventualmente la carga, parcial o totalmente, por personas mediante la adición de asientos. Autocaravana: Vehículo construido con propósito especial, incluyendo alojamiento vivienda y conteniendo, al menos, el equipo siguiente: asientos y mesa, camas o literas que puedan ser convertidos en asientos, cocina y armarios o similares. Este equipo estará rígidamente fijado al compartimento vivienda: los asientos y la mesa pueden ser diseñados para ser desmontados fácilmente."
+    },
+    {
+      "pregunta": "42. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la definición “vehículo destinado exclusivamente para el transporte de escolares”, corresponde a:",
+      "opciones": [
+        "04 escolar.",
+        "04 escolar no exclusivo.",
+        "03 escolar no exclusivo.",
+        "03 escolar."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos C. Clasificación por criterios de utilización (segundo grupo de cifras) 00 Sin especificar (Instrucción: se aplicará esta clave cuando el elemento a clasificar no esté encuadrado en ninguna de las clasificaciones siguientes). 01 Personas de movilidad reducida Vehículo construido o modificado para la conducción por una persona con algún defecto o incapacidad físicos. 02 Familiar Versión de un tipo de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos. 03 Escolar Vehículo destinado exclusivamente para el transporte de escolares. 04 Escolar no exclusivo Vehículo para el transporte escolar, aunque no con exclusividad."
+    },
+    {
+      "pregunta": "43. Según el anexo II del RD 2822/1998, la definición: Remolque de al menos dos ejes y un eje de dirección como mínimo, provisto de un dispositivo de remolque que puede desplazarse verticalmente (en relación al remolque), que no transmita al vehículo de tracción una carga significativa (menos de 100 kg), corresponde a:",
+      "opciones": [
+        "Remolque de enganche o remolque completo.",
+        "Remolque.",
+        "Remolque con eje central.",
+        "Semirremolque."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Remolque de enganche o remolque completo: Remolque de al menos dos ejes y un eje de dirección como mínimo, provisto de un dispositivo de remolque que puede desplazarse verticalmente (en relación al remolque), que no transmita al vehículo de tracción una carga significativa (menos de 100 kg.) Remolque: Vehículo no autopropulsado diseñado y concebido para ser remolcado por un vehículo de motor. Remolque con eje central: Remolque provisto de un dispositivo de enganche que no puede desplazarse verticalmente (en relación al remolque) y cuyo(s) eje(s) esté(n) situado(s) próximo(s) al centro de gravedad del vehículo (cuando la carga esté repartida uniformemente) de forma que sólo se transmita al vehículo de tracción una pequeña carga estática vertical. Semirremolque: Vehículo no autopropulsado diseñado y concebido para ser acoplado a un automóvil, sobre el que reposará parte del mismo, transfiriéndole una parte sustancial de su masa."
+    },
+    {
+      "pregunta": "44. Según el anexo II del RD 2822/1998, señale la respuesta correcta:",
+      "opciones": [
+        "Bicicleta de pedales con pedaleo asistido: Bicicletas equipadas con un motor eléctrico auxiliar, de potencia nominal continua máxima inferior a 250W, cuya potencia disminuya progresivamente y que finalmente se interrumpa antes de que la velocidad del vehículo alcance los 25km/h o si el ciclista deja de pedalear.",
+        "Bicicleta de pedales con pedaleo asistido: Bicicletas equipadas con un motor eléctrico auxiliar, de potencia nominal continua máxima inferior o igual a 250W, cuya potencia disminuya progresivamente y que finalmente se interrumpa antes de que la velocidad del vehículo alcance los 25km/h y si el ciclista deja de pedalear.",
+        "Bicicleta de pedales con pedaleo asistido: Bicicletas equipadas con un motor eléctrico auxiliar, de potencia nominal continua máxima inferior o igual a 150W, cuya potencia disminuya progresivamente y que finalmente se interrumpa antes de que la velocidad del vehículo alcance los 25km/h o si el ciclista deja de pedalear.",
+        "Bicicleta de pedales con pedaleo asistido: Bicicletas equipadas con un motor eléctrico auxiliar, de potencia nominal continua máxima inferior o igual a 250W, cuya potencia disminuya progresivamente y que finalmente se interrumpa antes de que la velocidad del vehículo alcance los 25km/h o si el ciclista deja de pedalear."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Bicicleta de pedales con pedaleo asistido: Bicicletas equipadas con un motor eléctrico auxiliar, de potencia nominal continua máxima inferior o igual a 250 W, cuya potencia disminuya progresivamente y que finalmente se interrumpa antes de que la velocidad del vehículo alcance los 25 km/h o si el ciclista deja de pedalear."
+    },
+    {
+      "pregunta": "45. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, la definición correcta 07 corto recorrido es:",
+      "opciones": [
+        "Vehículo concebido y equipado para transporte urbano e interburbano; los vehículos de esta clase tienen asientos y plazas destinadas para viajeros de a pie y están acondicionados para permitir los desplazamientos de los viajeros en razón de sus frecuentes paradas.",
+        "Vehículo concebido y equipado para transporte interurbano; estos vehículos no disponen de plazas destinadas especialmente para viajeros de a pie, pero pueden transportar este tipo de viajeros en cortos recorridos en el pasillo de circulación.",
+        "Vehículo concebido y equipado para transporte urbano y suburbano; los vehículos de esta clase tienen asientos y plazas destinadas para viajeros de a pie y están acondicionados para permitir los desplazamientos de los viajeros en razón de sus frecuentes paradas.",
+        "Vehículo concebido y equipado para transporte interurbano; estos vehículos disponen de plazas destinadas especialmente para viajeros de a pie, pero pueden transportar este tipo de viajeros en cortos recorridos en el pasillo de circulación."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 06 Urbano: Vehículo concebido y equipado para transporte urbano y suburbano; los vehículos de esta clase tienen asientos y plazas destinadas para viajeros de a pie y están acondicionados para permitir los desplazamientos de los viajeros en razón de sus frecuentes paradas. 07 Corto recorrido: Vehículo concebido y equipado para transporte interurbano; estos vehículos no disponen de plazas destinadas especialmente para viajeros de a pie, pero pueden transportar este tipo de viajeros en cortos recorridos en el pasillo de circulación. 08 Largo recorrido: Vehículo concebido y equipado para viajes a gran distancia; estos vehículos están acondicionados en forma que se asegura la comodidad de los viajeros sentados, y no transportan viajeros de pie."
+    },
+    {
+      "pregunta": "46. Según el anexo II del RD 2822/1998, indique la definición incorrecta:",
+      "opciones": [
+        "Autobús o autocar de dos pisos: Autobús o autocar en el que los espacios destinados a los pasajeros están dispuestos, al menos parcialmente, en dos niveles superpuestos, de los cuales el superior no dispone de plazas sin asiento.",
+        "Remolque con eje central: Remolque provisto de un dispositivo de enganche que no puede desplazarse verticalmente (en relación al remolque) y cuyo(s) eje(s) esté(n) situado(s) próximo(s) al centro de gravedad del vehículo (cuando la carga esté repartida uniformemente) de forma que se transmita al vehículo de tracción una parte sustancial de la carga estática vertical.",
+        "Remolque: Vehículo no autopropulsado diseñado y concebido para ser remolcado por un vehículo de motor.",
+        "Remolque de enganche o remolque completo: Remolque de al menos dos ejes y un eje de dirección como mínimo, provisto de un dispositivo de remolque que puede desplazarse verticalmente (en relación al remolque), que no transmita al vehículo de tracción una carga significativa (menos de 100 kg.)"
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Autobús o autocar de dos pisos: Autobús o autocar en el que los espacios destinados a los pasajeros están dispuestos, al menos parcialmente, en dos niveles superpuestos, de los cuales el superior no dispone de plazas sin asiento. Remolque con eje central: Remolque provisto de un dispositivo de enganche que no puede desplazarse verticalmente (en relación al remolque) y cuyo(s) eje(s) esté(n) situado(s) próximo(s) al centro de gravedad del vehículo (cuando la carga esté repartida uniformemente) de forma que sólo se transmita al vehículo de tracción una pequeña carga estática vertical. Remolque: Vehículo no autopropulsado diseñado y concebido para ser remolcado por un vehículo de motor. Remolque de enganche o remolque completo: Remolque de al menos dos ejes y un eje de dirección como mínimo, provisto de un dispositivo de remolque que puede desplazarse verticalmente (en relación al remolque), que no transmita al vehículo de tracción una carga significativa (menos de 100 kg.)"
+    },
+    {
+      "pregunta": "47. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, indique la respuesta correcta:",
+      "opciones": [
+        "02 familiar: Versión de un tipo de derivado de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos.",
+        "03 escolar: Vehículo destinado exclusivamente o no para el transporte de escolares.",
+        "01 personas de movilidad reducida: Vehículo construido o modificado para la conducción por una persona con algún defecto o incapacidad físicos.",
+        "05 Escuela de conductores: Automóvil destinado a la realización de exámenes del permiso de conducción de cualquier clase."
+      ],
+      "correcta": 2,
+      "explicacion": "C. Clasificación por criterios de utilización (segundo grupo de cifras) 00 Sin especificar (Instrucción: se aplicará esta clave cuando el elemento a clasificar no esté encuadrado en ninguna de las clasificaciones siguientes). 01 Personas de movilidad reducida Vehículo construido o modificado para la conducción por una persona con algún defecto o incapacidad físicos. 02 Familiar Versión de un tipo de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos. 03 Escolar Vehículo destinado exclusivamente para el transporte de escolares. 04 Escolar no exclusivo Vehículo para el transporte escolar, aunque no con exclusividad. 05 Escuela de conductores Automóvil destinado a las prácticas de conducción. NOTA: EN NEGRITA Y SUBRAYADO, EL ERROR EN CADA OPCIÓN. a) 02 familiar: Versión de un tipo de derivado de turismo en el que se ha aumentado el volumen destinado al equipaje con el fin de aumentar su capacidad o colocar una tercera fila de asientos. b) 03 escolar: Vehículo destinado exclusivamente o no para el transporte de escolares. c) 01 personas de movilidad reducida: Vehículo construido o modificado para la conducción por una persona con algún defecto o incapacidad físicos. d) 05 Escuela de conductores: Automóvil destinado a la realización de exámenes del permiso de conducción de cualquier clase."
+    },
+    {
+      "pregunta": "48. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, indique la definición incorrecta:",
+      "opciones": [
+        "Refrigerante: Vehículo isotermo que, con ayuda de una fuente de frío, distinto de un equipo mecánico o de «absorción» permite bajar la temperatura en el interior de la caja y mantenerla.",
+        "Isotermo: Vehículo cuya caja está construida con paredes aislantes, con inclusión de puertas, piso y techo, las cuales permiten limitar los intercambios de calor entre el interior y el exterior de la caja.",
+        "Cisterna isoterma: Cisterna construida con paredes aislantes que permiten limitar los intercambios de calor entre el interior y el exterior.",
+        "Góndola: Vehículo autopropulsado cuya plataforma de carga tiene una altura muy reducida."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 23 Isotermo: Vehículo cuya caja está construida con paredes aislantes, con inclusión de puertas, piso y techo, las cuales permiten limitar los intercambios de calor entre el interior y el exterior de la caja. 24 Refrigerante: Vehículo isotermo que, con ayuda de una fuente de frío, distinto de un equipo mecánico o de «absorción» permite bajar la temperatura en el interior de la caja y mantenerla. 28 Cisterna isoterma: Cisterna construida con paredes aislantes que permiten limitar los intercambios de calor entre el interior y el exterior. 32 Góndola: Vehículo cuya plataforma de carga tiene una altura muy reducida. NOTA: La góndola no es un vehículo autopropulsado."
+    },
+    {
+      "pregunta": "49. Según el anexo II del RD 2822/1998, señale la respuesta incorrecta:",
+      "opciones": [
+        "Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida y los vehículos especiales.",
+        "Ciclo: Vehículo de dos ruedas por lo menos, accionado por el esfuerzo muscular de las personas que lo ocupan, en particular mediante pedales o manivelas.",
+        "Bicicleta: Ciclo de dos ruedas.",
+        "Tranvía: Vehículo que marcha por raíles instalados en la vía."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Ciclo Vehículo de dos ruedas por lo menos, accionado por el esfuerzo muscular de las personas que lo ocupan, en particular mediante pedales o manivelas. Bicicleta Ciclo de dos ruedas. Vehículo de motor Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida, bicicletas de pedales con pedaleo asistido y los vehículos de movilidad personal. Tranvía Vehículo que marcha por raíles instalados en la vía. a) Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías, los vehículos para personas de movilidad reducida y los vehículos especiales. (falta añadir bicicletas de pedales con pedaleo asistido y los vehículos de movilidad personal). b) Ciclo: Vehículo de dos ruedas por lo menos, accionado por el esfuerzo muscular de las personas que lo ocupan, en particular mediante pedales o manivelas. c) Bicicleta: Ciclo de dos ruedas. d) Tranvía: Vehículo que marcha por raíles instalados en la vía."
+    },
+    {
+      "pregunta": "50. Según el anexo II del RD 2822/1998, tienen la consideración de motocicletas los automóviles que se definen en los dos epígrafes siguientes: Señale la respuesta correcta.",
+      "opciones": [
+        "Motocicletas de dos ruedas: vehículos de dos ruedas sin sidecar, provistos de un motor de cilindrada igual o superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h.",
+        "Motocicletas con sidecar: vehículos de tres ruedas asimétricas respecto a su eje medio longitudinal, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h.",
+        "Motocicletas de dos ruedas: vehículos de dos ruedas sin sidecar, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción igual o superior a 45 km/h",
+        "Motocicletas de tres ruedas: automóvil de tres ruedas simétricas, provisto de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Motocicleta: Tienen la consideración de motocicletas los automóviles que se definen en los dos epígrafes siguientes: Motocicletas de dos ruedas: Vehículos de dos ruedas sin sidecar, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h. Motocicletas con sidecar: Vehículos de tres ruedas asimétricas respecto a su eje medio longitudinal, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h. NOTA: EN NEGRITA Y SUBRAYADO EL ERROR EN LA OPCIÓN. a) Motocicletas de dos ruedas: vehículos de dos ruedas sin sidecar, provistos de un motor de cilindrada igual o superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h. b) Motocicletas con sidecar: vehículos de tres ruedas asimétricas respecto a su eje medio longitudinal, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h. c) Motocicletas de dos ruedas: vehículos de dos ruedas sin sidecar, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción igual o superior a 45 km/h d) Motocicletas de tres ruedas: automóvil de tres ruedas simétricas, provisto de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h."
+    },
+    {
+      "pregunta": "51. Según el anexo II del RD 2822/1998, la definición de autobús o autocar es:",
+      "opciones": [
+        "Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas y sus equipajes. No se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles.",
+        "Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas y sus equipajes. Se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles.",
+        "Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas, sus equipajes y mercancías. Se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles.",
+        "Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas, sus equipajes y mercancías. No se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Autobús o autocar: Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas y sus equipajes. Se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles. NOTA: EN NEGRITA Y SUBRAYADO EL ERROR EN LA OPCIÓN: a) Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas y sus equipajes. No se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles. b) Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas y sus equipajes. Se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles. c) Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas, sus equipajes y mercancías. Se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles. d) Automóvil que tenga más de 9 plazas incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas, sus equipajes y mercancías. No se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles."
+    },
+    {
+      "pregunta": "52. Según el anexo II del RD 2822/1998, y según la clasificación por criterios de utilización, indique la definición correcta:",
+      "opciones": [
+        "Jaula: Vehículo especialmente adaptado para el transporte de animales vivos o muertos.",
+        "Botellero: Vehículo especialmente adaptado para el transporte de botellas o bombonas.",
+        "Caja cerrada: Vehículo destinado al transporte de mercancías en un receptáculo parcialmente cerrado.",
+        "Basculante: Vehículo provisto de mecanismo que permitan llevar y/o girar la caja para realizar la descarga trasera únicamente."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos 13 Jaula: Vehículo especialmente adaptado para el transporte de animales vivos. 14 Botellero: Vehículo especialmente adaptado para transporte de botellas o bombonas. 17 Basculante: Vehículo provisto de mecanismo que permitan llevar y/o girar la caja para realizar la descarga lateral o trasera. 20 Caja cerrada: Vehículo destinado al transporte de mercancías en un receptáculo totalmente cerrado."
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

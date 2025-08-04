@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. ¿Es posible dirigirse al responsable o encargado del tratamiento de los datos de una persona fallecida con el objeto de solicitar la supresión de los mismos?",
+        "opciones": [
+            "Sí, siempre.",
+            "No, nunca.",
+            "Sí, excepto que la persona fallecida lo hubiese prohibido expresamente.",
+            "No, excepto que la persona fallecida lo hubiera permitido expresamente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 3 | Datos de las personas fallecidas LOPD 1. Las personas vinculadas al fallecido por razones familiares o, de hecho, así como sus herederos podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales de aquella y, en su caso, su rectificación o supresión. Como excepción, las personas a las que se refiere el párrafo anterior no podrán acceder a los datos del causante, ni solicitar su rectificación o supresión, cuando la persona fallecida lo hubiese prohibido expresamente o así lo establezca una ley. Dicha prohibición no afectará al derecho de los herederos a acceder a los datos de carácter patrimonial del causante."
+    },
+    {
+        "pregunta": "De conformidad con el artículo 6 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, en relación con el artículo 4.11 del Reglamento (UE) 2016/679, se entiende por consentimiento del afectado:",
+        "opciones": [
+            "Toda manifestación de voluntad libre, informada e inequívoca por la que este acepta, mediante una declaración, el tratamiento de datos personales que le conciernen.",
+            "Toda manifestación de voluntad libre, específica e informada por la que este acepta, mediante una clara acción afirmativa, el tratamiento de datos personales que le conciernen.",
+            "Toda manifestación de voluntad libre, específica, informada e inequívoca por la que este acepta, ya sea mediante una declaración o una clara acción afirmativa, el tratamiento de datos personales que le conciernen.",
+            "Toda manifestación de voluntad libre, específica, informada e inequívoca por la que este acepta, ya sea mediante una declaración o una clara acción informativa, el tratamiento de datos personales y de carácter familiar."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6 | Tratamiento basado en el consentimiento del afectado LOPD 1. De conformidad con lo dispuesto en el artículo 4.11 del Reglamento (UE) 2016/679, se entiende por consentimiento del afectado toda manifestación de voluntad libre, específica, informada e inequívoca por la que este acepta, ya sea mediante una declaración o una clara acción afirmativa, el tratamiento de datos personales que le conciernen."
+    },
+    {
+        "pregunta": "De conformidad con el artículo 17 del Reglamento (UE) 2016/679, el interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la supresión de los datos personales que le conciernan, el cual estará obligado a suprimir sin dilación indebida los datos personales cuando concurra alguna de las circunstancias siguientes: Señale la opción que no es correcta.",
+        "opciones": [
+            "Los datos personales ya no sean necesarios en relación con los fines para los que fueron recogidos o tratados de otro modo.",
+            "Los datos personales hayan sido tratados lícitamente.",
+            "Los datos personales deban suprimirse para el cumplimiento de una obligación legal establecida en el Derecho de la Unión o de los Estados miembros que se aplique al responsable del tratamiento.",
+            "El interesado se oponga al tratamiento con arreglo al artículo 21, apartado 1, y no prevalezcan otros motivos legítimos para el tratamiento, o el interesado se oponga al tratamiento con arreglo al artículo 21, apartado 2."
+        ],
+        "correcta": 1,
+        "explicacion": "Reglamento (UE) 2016/679 - Artículo 17 Derecho de supresión. El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la supresión de los datos personales que le conciernan, el cual estará obligado a suprimir sin dilación indebida los datos personales cuando concurra alguna de las circunstancias siguientes: a) los datos personales ya no sean necesarios en relación con los fines para los que fueron recogidos o tratados de otro modo; b) el interesado retire el consentimiento en que se basa el tratamiento de conformidad con el artículo 6, apartado 1, letra a), o el artículo 9, apartado 2, letra a), y este no se base en otro fundamento jurídico; c) el interesado se oponga al tratamiento con arreglo al artículo 21, apartado 1, y no prevalezcan otros motivos legítimos para el tratamiento, o el interesado se oponga al tratamiento con arreglo al artículo 21, apartado 2; d) los datos personales hayan sido tratados ilícitamente; e) los datos personales deban suprimirse para el cumplimiento de una obligación legal establecida en el Derecho de la Unión o de los Estados miembros que se aplique al responsable del tratamiento; f) los datos personales se hayan obtenido en relación con la oferta de servicios de la sociedad de la información mencionados en el artículo 8, apartado 1. OJO Nos está pidiendo la respuesta INCORRECTA"
+    },
+    {
+        "pregunta": "¿Cuál de los siguientes derechos no se puede realizar con las personas fallecidas conforme al artículo 3.1 LO 3/2018?:",
+        "opciones": [
+            "Acceso.",
+            "Rectificación",
+            "Olvido",
+            "Oposición"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 3 LO 3/2018. Datos de las personas fallecidas 1. Las personas vinculadas al fallecido por razones familiares o, de hecho, así como sus herederos podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales de aquella y, en su caso, su rectificación o supresión. NOTA: el derecho de supresión y de olvido son el mismo conforme al artículo 15 de esta ley que nos deriva al artículo 17 del Reglamento (UE) 2016/679."
+    },
+    {
+        "pregunta": "Cuál de los siguientes no es un derecho aplicable al artículo 3 de la Ley Orgánica de Protección de Datos personales y garantía de los derechos digitales en relación a los datos de las personas fallecidas:",
+        "opciones": [
+            "Derecho de acceso",
+            "Derecho de rectificación",
+            "Derecho de supresión",
+            "Todos son derechos aplicables."
+        ],
+        "correcta": 3,
+        "explicacion": "LO 3/2018, de 5 de diciembre. Artículo 3. Datos de las personas fallecidas. 1. Las personas vinculadas al fallecido por razones familiares o de hecho así como sus herederos podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales de aquella y, en su caso, su rectificación o supresión."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Indique cuál de los siguientes no es un derecho que pueda ejercer un heredero sobre los datos de la persona fallecida: Señale la incorrecta.",
+        "opciones": [
+            "Derecho de portabilidad.",
+            "Derecho de supresión.",
+            "Derecho de cancelación.",
+            "Derecho de oposición."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 3 | Datos de las personas fallecidas LOPD 1. Las personas vinculadas al fallecido por razones familiares o, de hecho, así como sus herederos podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales de aquella y, en su caso, su rectificación o supresión. OJO, Nos piden cuál NO es... y señalar la INCORRECTA"
+    },
+    {
+        "pregunta": "¿En qué consiste el derecho de rectificación reconocido en el artículo 16 del Reglamento (UE) 2016/679?",
+        "opciones": [
+            "El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la rectificación de los datos personales inexactos que le conciernan.",
+            "El interesado tendrá derecho a que se completen los datos personales que sean incompletos, inclusive mediante una declaración adicional.",
+            "El interesado tendrá derecho a obtener una rectificación, previa compensación económica por parte del responsable, de los datos que sean inexactos.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Reglamento (UE) 2016/679 - Artículo 16 Derecho de rectificación. El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la rectificación de los datos personales inexactos que le conciernan. Teniendo en cuenta los fines del tratamiento, el interesado tendrá derecho a que se completen los datos personales que sean incompletos, inclusive mediante una declaración adicional."
+    },
+    {
+        "pregunta": "Los tratamientos a los que no sea directamente aplicable el Reglamento (UE) 2016/679 por afectar a actividades no comprendidas en el ámbito de aplicación del Derecho de la Unión Europea, se regirán por lo dispuesto:",
+        "opciones": [
+            "En su legislación específica si la hubiere y supletoriamente por lo establecido en el citado Reglamento y en la Ley Orgánica.",
+            "Por el citado reglamento y la presente ley orgánica y supletoriamente por su legislación específica si la hubiere.",
+            "En el Reglamento y su Ley Orgánica.",
+            "En su Ley Orgánica."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 2 | Ámbito de aplicación de los Títulos I a IX y de los artículos 89 a 94 LOPD 3. Los tratamientos a los que no sea directamente aplicable el Reglamento (UE) 2016/679 por afectar a actividades no comprendidas en el ámbito de aplicación del Derecho de la Unión Europea, se regirán por lo dispuesto en su legislación específica si la hubiere y supletoriamente por lo establecido en el citado reglamento y en la presente ley orgánica. Se encuentran en esta situación, entre otros, los tratamientos realizados al amparo de la legislación orgánica del régimen electoral general, los tratamientos realizados en el ámbito de instituciones penitenciarias y los tratamientos derivados del Registro Civil, los Registros de la Propiedad y Mercantiles."
+    },
+    {
+        "pregunta": "De conformidad con el apartado primero del artículo 8 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, el tratamiento de datos personales solo podrá considerarse fundado en el cumplimiento de una obligación legal exigible al responsable, en los términos previstos en el artículo 6.1.c) del Reglamento (UE) 2016/679, cuando:",
+        "opciones": [
+            "Así lo prevea una norma de Derecho de la Unión Europea.",
+            "Así lo prevea una norma con rango de ley.",
+            "Así lo prevea una norma con rango reglamentario.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 8 | Tratamiento de datos por obligación legal, interés público o ejercicio de poderes públicos LOPD 1. El tratamiento de datos personales solo podrá considerarse fundado en el cumplimiento de una obligación legal exigible al responsable, en los términos previstos en el artículo 6.1.c) del Reglamento (UE) 2016/679, cuando así lo prevea una norma de Derecho de la Unión Europea o una norma con rango de ley, que podrá determinar las condiciones generales del tratamiento y los tipos de datos objeto del mismo así como las cesiones que procedan como consecuencia del cumplimiento de la obligación legal. Dicha norma podrá igualmente imponer condiciones especiales al tratamiento, tales como la adopción de medidas adicionales de seguridad u otras establecidas en el capítulo IV del Reglamento (UE) 2016/679."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Tratamiento de datos de naturaleza penal. Artículo 10.3: Fuera de los supuestos señalados en los apartados anteriores, los tratamientos de datos referidos a condenas e infracciones penales, así como a procedimientos y medidas cautelares y de seguridad conexas solo serán posibles cuando:",
+        "opciones": [
+            "Sean llevados a cabo por abogados o procuradores y tengan por objeto recoger la información facilitada por sus clientes para el ejercicio de sus funciones.",
+            "Sean llevados a cabo por abogados y procuradores y tengan por objeto recoger la información facilitada por sus clientes para el ejercicio de sus funciones.",
+            "Sean llevados a cabo por abogados y procuradores y tengan por objeto recoger la información facilitada por los Juzgados y Tribunales de Justicia.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales Artículo 10 | Tratamiento de datos de naturaleza penal 3. Fuera de los supuestos señalados en los apartados anteriores, los tratamientos de datos referidos a condenas e infracciones penales, así como a procedimientos y medidas cautelares y de seguridad conexas solo serán posibles cuando sean llevados a cabo por abogados y procuradores y tengan por objeto recoger la información facilitada por sus clientes para el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "De conformidad con el artículo 13 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, el derecho de acceso del afectado se ejercitará de acuerdo a lo establecido en:",
+        "opciones": [
+            "El artículo 14 del Reglamento (UE) 2016/679.",
+            "El artículo 15 del Reglamento (UE) 2016/679.",
+            "El artículo 16 del Reglamento (UE) 2016/679.",
+            "El artículo 17 del Reglamento (UE) 2016/679."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 13 | Derecho de acceso LOPD 1. El derecho de acceso del afectado se ejercitará de acuerdo con lo establecido en el artículo 15 del Reglamento (UE) 2016/679."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. De conformidad a lo estipulado en el artículo 18: El derecho de___________________, así como los derechos relacionados con las decisiones individuales automatizadas, incluida la realización de perfiles, se ejercerán de acuerdo con lo establecido, respectivamente, en los artículos 21 y 22 del Reglamento (UE) 2016/679.",
+        "opciones": [
+            "A la portabilidad.",
+            "De oposición.",
+            "Derecho de supresión.",
+            "Derecho de rectificación."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales Artículo 18 | Derecho de oposición El derecho de oposición, así como los derechos relacionados con las decisiones individuales automatizadas, incluida la realización de perfiles, se ejercerán de acuerdo con lo establecido, respectivamente, en los artículos 21 y 22 del Reglamento (UE) 2016/679."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. De conformidad a lo estipulado en el artículo 18: El derecho de___________________, así como los derechos relacionados con las decisiones individuales automatizadas, incluida la realización de perfiles, se ejercerán de acuerdo con lo establecido, respectivamente, en los artículos 21 y 22 del Reglamento (UE) 2016/679.",
+        "opciones": [
+            "A la portabilidad.",
+            "De oposición.",
+            "Derecho de supresión.",
+            "Derecho de rectificación."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales Artículo 18 | Derecho de oposición El derecho de oposición, así como los derechos relacionados con las decisiones individuales automatizadas, incluida la realización de perfiles, se ejercerán de acuerdo con lo establecido, respectivamente, en los artículos 21 y 22 del Reglamento (UE) 2016/679."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. De conformidad a lo estipulado en el artículo 17: El derecho _____________________ se ejercerá de acuerdo con lo establecido en el artículo 20 del Reglamento (UE) 2016/679.",
+        "opciones": [
+            "De oposición.",
+            "Derecho de supresión.",
+            "A la portabilidad.",
+            "Derecho de rectificación."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales Artículo 17 | Derecho a la portabilidad El derecho a la portabilidad se ejercerá de acuerdo con lo establecido en el artículo 20 del Reglamento (UE) 2016/679."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Transparencia e información al afectado. Cuando los datos personales no hubieran sido obtenidos del afectado, el responsable podrá dar cumplimiento al deber de información establecido en el artículo 14 del Reglamento (UE) 2016/679 facilitando a aquel la información básica señalada en el apartado anterior, indicándole una dirección electrónica u otro medio que permita acceder de forma sencilla e inmediata a la restante información. En estos supuestos, la información básica incluirá también:",
+        "opciones": [
+            "Las categorías de datos objeto de tratamiento.",
+            "La información personal y sanitaria del afectado.",
+            "Las fuentes de las que procedieran los datos.",
+            "Las respuestas a) y c) son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales Artículo 11 | Transparencia e información al afectado 3. Cuando los datos personales no hubieran sido obtenidos del afectado, el responsable podrá dar cumplimiento al deber de información establecido en el artículo 14 del Reglamento (UE) 2016/679 facilitando a aquel la información básica señalada en el apartado anterior, indicándole una dirección electrónica u otro medio que permita acceder de forma sencilla e inmediata a la restante información. En estos supuestos, la información básica incluirá también: a) Las categorías de datos objeto de tratamiento. b) Las fuentes de las que procedieran los datos."
+    },
+    {
+        "pregunta": "¿Qué regula el Título III de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales?",
+        "opciones": [
+            "Disposiciones generales.",
+            "Principios de protección de datos.",
+            "Derechos de las personas.",
+            "Disposiciones aplicables a tratamientos concretos."
+        ],
+        "correcta": 2,
+        "explicacion": "ESTRUCTURA LOPD Título I. Disposiciones generales Título II. Principios de protección de datos Título III. Derechos de las personas Título IV. Disposiciones aplicables a tratamientos completos Título V. Responsable y encargado del tratamiento Título VI. Transferencias internacionales de datos Título VII. Autoridades de protección de datos Título VIII. Procedimientos en caso de posible vulneración de la normativa de protección de datos Título IX. Régimen sancionador Título X. Garantía de los derechos digitales"
+    },
+    {
+        "pregunta": "¿Qué día se aprobó la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales?",
+        "opciones": [
+            "El día 5 de diciembre de 2018.",
+            "El día 6 de diciembre de 2018.",
+            "El día 7 de diciembre de 2018.",
+            "El día 8 de diciembre de 2018."
+        ],
+        "correcta": 0,
+        "explicacion": "LOPD Aprobada el 5 de Diciembre Publicada en el BOE el 6 de Diciembre Entrada en vigor el 7 de Diciembre"
+    },
+    {
+        "pregunta": "De conformidad con el apartado segundo del artículo 7 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, el tratamiento de los datos de los menores de catorce años, fundado en el consentimiento:",
+        "opciones": [
+            "Será siempre lícito en todo caso.",
+            "Solo será lícito si consta el del titular de la patria potestad o tutela.",
+            "Solo será lícito si consta el del titular de la patria potestad o tutela, con el alcance que determinen los titulares de la patria potestad o tutela.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 7 | Consentimiento de los menores de edad LOPD 2. El tratamiento de los datos de los menores de catorce años, fundado en el consentimiento, solo será lícito si consta el del titular de la patria potestad o tutela, con el alcance que determinen los titulares de la patria potestad o tutela."
+    },
+    {
+        "pregunta": "De conformidad con el apartado primero del artículo 3 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, ¿quién podrán dirigirse al responsable o encargado del tratamiento de los datos personales de una persona fallecida?",
+        "opciones": [
+            "Únicamente los herederos.",
+            "Únicamente las personas vinculadas al fallecido por razones familiares.",
+            "Únicamente las personas vinculadas al fallecido por razones familiares o de hecho, así como sus legitimarios.",
+            "Las personas vinculadas al fallecido por razones familiares o de hecho, así como sus herederos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 3 | Datos de las personas fallecidas LOPD 1. Las personas vinculadas al fallecido por razones familiares o, de hecho, así como sus herederos podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales de aquella y, en su caso, su rectificación o supresión."
+    },
+    {
+        "pregunta": "De conformidad con el apartado tercero del artículo 2 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, los tratamientos a los que no sea directamente aplicable el Reglamento (UE) 2016/679 por afectar a actividades no comprendidas en el ámbito de aplicación del Derecho de la Unión Europea, se regirán:",
+        "opciones": [
+            "Por lo dispuesto en el citado reglamento y supletoriamente por lo dispuesto en su legislación específica.",
+            "Por lo dispuesto en su legislación específica si la hubiere y supletoriamente por lo establecido en el citado reglamento.",
+            "Por lo dispuesto en la presente ley orgánica y supletoriamente por lo dispuesto en su legislación específica.",
+            "Por lo dispuesto en su legislación específica si la hubiere y supletoriamente por lo establecido en el citado reglamento y en la presente Ley Orgánica."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2 | Ámbito de aplicación de los Títulos I a IX y de los artículos 89 a 94 LOPD 3. Los tratamientos a los que no sea directamente aplicable el Reglamento (UE) 2016/679 por afectar a actividades no comprendidas en el ámbito de aplicación del Derecho de la Unión Europea, se regirán por lo dispuesto en su legislación específica si la hubiere y supletoriamente por lo establecido en el citado reglamento y en la presente ley orgánica. Se encuentran en esta situación, entre otros, los tratamientos realizados al amparo de la legislación orgánica del régimen electoral general, los tratamientos realizados en el ámbito de instituciones penitenciarias y los tratamientos derivados del Registro Civil, los Registros de la Propiedad y Mercantiles."
+    },
+    {
+        "pregunta": "De conformidad con el apartado segundo del artículo 21 del Reglamento (UE) 2016/679, cuando el tratamiento de datos personales tenga por objeto la mercadotecnia directa:",
+        "opciones": [
+            "El interesado tendrá derecho a oponerse en todo momento al tratamiento de los datos personales que le conciernan.",
+            "El interesado tendrá derecho a oponerse en todo momento al tratamiento de los datos personales que le conciernan, incluida la elaboración de perfiles en la medida en que esté relacionada con la citada mercadotecnia.",
+            "El interesado tendrá derecho a oponerse en todo momento al tratamiento de los datos personales que le conciernan, no quedando incluida la elaboración de perfiles en la medida en que esté relacionada con la citada mercadotecnia.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Reglamento (UE) 2016/679 - Artículo 21 Derecho de oposición. (...) 2. Cuando el tratamiento de datos personales tenga por objeto la mercadotecnia directa, el interesado tendrá derecho a oponerse en todo momento al tratamiento de los datos personales que le conciernan, incluida la elaboración de perfiles en la medida en que esté relacionada con la citada mercadotecnia"
+    },
+    {
+        "pregunta": "¿Cómo podrán ejercerse los derechos reconocidos en los artículos 15 a 22 del Reglamento (UE) 2016/679?",
+        "opciones": [
+            "Directamente o por medio de representantes legal o voluntario.",
+            "Directamente o por medio de representante voluntario.",
+            "Por medio de representante legal.",
+            "Por medio de representante voluntario."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 12 | Disposiciones generales sobre ejercicio de los derechos LOPD 1. Los derechos reconocidos en los artículos 15 a 22 del Reglamento (UE) 2016/679, podrán ejercerse directamente o por medio de representante legal o voluntario."
+    },
+    {
+        "pregunta": "De conformidad con el apartado tercero del artículo 2 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, no es directamente aplicable el Reglamento (EU) 2016/679 por afectar a actividades no comprendidas en su ámbito de aplicación: Señale la opción que no es correcta.",
+        "opciones": [
+            "Los tratamientos realizados al amparo de la legislación orgánica del régimen electoral general.",
+            "Los tratamientos realizados en el ámbito de instituciones penitenciarias.",
+            "Los tratamientos derivados del Registro Civil, Registros de la Propiedad y Mercantiles.",
+            "Los tratamientos realizados con ocasión de la tramitación de los órganos judiciales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2 | Ámbito de aplicación de los Títulos I a IX y de los artículos 89 a 94 LOPD 3. Los tratamientos a los que no sea directamente aplicable el Reglamento (UE) 2016/679 por afectar a actividades no comprendidas en el ámbito de aplicación del Derecho de la Unión Europea, se regirán por lo dispuesto en su legislación específica si la hubiere y supletoriamente por lo establecido en el citado reglamento y en la presente ley orgánica. Se encuentran en esta situación, entre otros, los tratamientos realizados al amparo de la legislación orgánica del régimen electoral general, los tratamientos realizados en el ámbito de instituciones penitenciarias y los tratamientos derivados del Registro Civil, los Registros de la Propiedad y Mercantiles. OJO Nos piden señalar la opción incorrecta"
+    },
+    {
+        "pregunta": "¿En qué consiste el derecho de supresión reconocido en el artículo 17 del Reglamento (UE) 2016/679?",
+        "opciones": [
+            "El interesado tendrá derecho a obtener del responsable del tratamiento la supresión de los datos personales que le conciernan, el cual estará obligado a suprimir los datos personales cuando concurra alguna de las circunstancias establecidas en dicho precepto.",
+            "El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la modificación de los datos personales que le conciernan, el cual estará obligado a modificar sin dilación indebida los datos personales cuando concurra alguna de las circunstancias establecidas en dicho precepto.",
+            "El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la supresión de los datos personales que le conciernan, el cual estará obligado a suprimir sin dilación indebida los datos personales cuando concurra alguna de las circunstancias establecidas en dicho precepto.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Reglamento (UE) 2016/679 - Artículo 17 Derecho de supresión. El interesado tendrá derecho a obtener sin dilación indebida del responsable del tratamiento la supresión de los datos personales que le conciernan, el cual estará obligado a suprimir sin dilación indebida los datos personales cuando concurra alguna de las circunstancias siguientes (...)"
+    },
+    {
+        "pregunta": "De conformidad con el artículo 2 de la Ley Orgánica 3/2018, de 5 de diciembre, lo dispuesto en los Títulos I a IX y en los artículos 89 a 94 de la presente Ley Orgánica se aplica a:",
+        "opciones": [
+            "Cualquier tratamiento totalmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a no ser incluidos en un fichero.",
+            "A los tratamientos de datos de personas fallecidas, sin perjuicio de lo establecido en el artículo 3.",
+            "A los tratamientos sometidos a la normativa sobre protección de materias clasificadas.",
+            "Cualquier tratamiento total o parcialmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a ser incluidos en un fichero."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2 | Ámbito de aplicación de los Títulos I a IX y de los artículos 89 a 94 LOPD 1. Lo dispuesto en los Títulos I a IX y en los artículos 89 a 94 de la presente ley orgánica se aplica a cualquier tratamiento total o parcialmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a ser incluidos en un fichero."
+    },
+    {
+        "pregunta": "De conformidad con el artículo 5 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, tendrán el deber de confidencialidad:",
+        "opciones": [
+            "Los responsables y encargados del tratamiento de datos.",
+            "Los responsables y encargados del tratamiento de datos, así como todas las personas que intervengan en cualquier fase de este.",
+            "Los responsables y encargados del tratamiento de datos, así como todas las personas que intervengan en cualquier fase de este. La obligación no se mantendrá si hubiese finalizado la relación del obligado con el responsable o encargado del tratamiento.",
+            "Los responsables y encargados del tratamiento de datos, así como todas las personas que intervengan en cualquier fase de este. El deber de confidencialidad es incompatible con el deber de secreto profesional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 5 | Deber de confidencialidad LOPD 1. Los responsables y encargados del tratamiento de datos, así como todas las personas que intervengan en cualquier fase de este estarán sujetas al deber de confidencialidad al que se refiere el artículo 5.1.f) del Reglamento (UE) 2016/679."
+    },
+    {
+        "pregunta": "¿De cuántos capítulos se compone el Título III de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales?",
+        "opciones": [
+            "1.",
+            "2.",
+            "3.",
+            "4."
+        ],
+        "correcta": 1,
+        "explicacion": "ESTRUCTURA LOPD Título I. Disposiciones generales Título II. Principios de protección de datos Título III. Derechos de las personas Capítulo I: Transparencia e Información Capítulo II: Ejercicio de los derechos Título IV. Disposiciones aplicables a tratamientos completos Título V. Responsable y encargado del tratamiento Título VI. Transferencias internacionales de datos Título VII. Autoridades de protección de datos Título VIII. Procedimientos en caso de posible vulneración de la normativa de protección de datos Título IX. Régimen sancionador Título X. Garantía de los derechos digitales"
+    },
+    {
+        "pregunta": "De conformidad con el artículo 4 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, conforme al artículo 5.1.d) del Reglamento (UE) 2016/679: Señale la opción incorrecta.",
+        "opciones": [
+            "Los datos serán exactos y, si fuere necesario, actualizados.",
+            "No será imputable al responsable del tratamiento, siempre que este haya adoptado todas las medidas razonables para que se supriman o rectifiquen sin dilación, la inexactitud de los datos personales, con respecto a los fines para los que se tratan, cuando los datos inexactos no hubiesen sido obtenidos por el responsable directamente del afectado.",
+            "No será imputable al responsable del tratamiento, siempre que este haya adoptado todas las medidas razonables para que se supriman o rectifiquen sin dilación, la inexactitud de los datos personales, con respecto a los fines para los que se tratan, cuando los datos inexactos fuesen obtenidos de un registro público por el responsable.",
+            "No será imputable al responsable del tratamiento, siempre que este haya adoptado todas las medidas razonables para que se supriman o rectifiquen sin dilación, la inexactitud de los datos personales, con respecto a los fines para los que se tratan, cuando los datos inexactos fuesen sometidos a tratamiento por el responsable por haberlos recibido de otro responsable en virtud del ejercicio por el afectado del derecho a la portabilidad conforme al artículo 20 del Reglamento (UE) 2016/679 y lo previsto en esta ley orgánica."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 4 | Exactitud de los datos LOPD 1. Conforme al artículo 5.1.d) del Reglamento (UE) 2016/679 los datos serán exactos y, si fuere necesario, actualizados. 2. A los efectos previstos en el artículo 5.1.d) del Reglamento (UE) 2016/679, no será imputable al responsable del tratamiento, siempre que este haya adoptado todas las medidas razonables para que se supriman o rectifiquen sin dilación, la inexactitud de los datos personales, con respecto a los fines para los que se tratan, cuando los datos inexactos: a) Hubiesen sido obtenidos por el responsable directamente del afectado. b) Hubiesen sido obtenidos por el responsable de un mediador o intermediario en caso de que las normas aplicables al sector de actividad al que pertenezca el responsable del tratamiento establecieran la posibilidad de intervención de un intermediario o mediador que recoja en nombre propio los datos de los afectados para su transmisión al responsable. El mediador o intermediario asumirá las responsabilidades que pudieran derivarse en el supuesto de comunicación al responsable de datos que no se correspondan con los facilitados por el afectado. c) Fuesen sometidos a tratamiento por el responsable por haberlos recibido de otro responsable en virtud del ejercicio por el afectado del derecho a la portabilidad conforme al artículo 20 del Reglamento (UE) 2016/679 y lo previsto en esta ley orgánica. d) Fuesen obtenidos de un registro público por el responsable. OJO Nos piden la INCORRECTA"
+    },
+    {
+        "pregunta": "Según indica el Art. 6 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales, se entiende por consentimiento del afectado:",
+        "opciones": [
+            "Toda manifestación de voluntad libre, específica, informada, escrita e inequívoca.",
+            "Toda manifestación de voluntad clara, libre, específica, escrita e inequívoca.",
+            "Toda manifestación de voluntad libre, informada, escrita e inequívoca.",
+            "Toda manifestación de voluntad libre, específica, informada e inequívoca."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 6 | Tratamiento basado en el consentimiento del afectado LOPD 1. De conformidad con lo dispuesto en el artículo 4.11 del Reglamento (UE) 2016/679, se entiende por consentimiento del afectado toda manifestación de voluntad libre, específica, informada e inequívoca por la que este acepta, ya sea mediante una declaración o una clara acción afirmativa, el tratamiento de datos personales que le conciernen."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Datos de las personas fallecidas. ¿Quién podrá solicitar, con arreglo a las instrucciones recibidas, el acceso a los datos personales del fallecido y, en su caso, su rectificación o supresión?",
+        "opciones": [
+            "Las personas a las que el fallecido hubiese designado.",
+            "Las instituciones a las que el fallecido hubiese designado.",
+            "Las personas o instituciones a las que el fallecido hubiese designado expresamente para ello.",
+            "Las personas o instituciones a las que el fallecido hubiese designado."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Artículo 3 | Datos de las personas fallecidas 2. Las personas o instituciones a las que el fallecido hubiese designado expresamente para ello podrán también solicitar, con arreglo a las instrucciones recibidas, el acceso a los datos personales de este y, en su caso su rectificación o supresión. Mediante real decreto se establecerán los requisitos y condiciones para acreditar la validez y vigencia de estos mandatos e instrucciones y, en su caso, el registro de los mismos."
+    },
+    {
+        "pregunta": "¿Qué regula el Título I de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales?",
+        "opciones": [
+            "Disposiciones generales.",
+            "Principios de protección de datos.",
+            "Derechos de las personas.",
+            "Disposiciones aplicables a tratamientos concretos."
+        ],
+        "correcta": 0,
+        "explicacion": "ESTRUCTURA LOPD Título I. Disposiciones generales Título II. Principios de protección de datos Título III. Derechos de las personas Título IV. Disposiciones aplicables a tratamientos completos Título V. Responsable y encargado del tratamiento Título VI. Transferencias internacionales de datos Título VII. Autoridades de protección de datos Título VIII. Procedimientos en caso de posible vulneración de la normativa de protección de datos Título IX. Régimen sancionador Título X. Garantía de los derechos digitales"
+    },
+    {
+        "pregunta": "¿Qué derechos están recogidos los artículos 15 a 22 del Reglamento (UE) 2016/679?",
+        "opciones": [
+            "Acceso, subsanación, supresión, limitación del tratamiento, portabilidad de los datos y oposición.",
+            "Acceso, rectificación, supresión, limitación del tratamiento, portabilidad de los datos y oposición.",
+            "Acceso, subsanación, supresión, limitación del tratamiento, portabilidad de los responsables y oposición.",
+            "Acceso, cancelación, supresión, limitación de los responsables, portabilidad de los datos y oposición."
+        ],
+        "correcta": 1,
+        "explicacion": "Reglamento (UE) 2016/679 Art. 15: Derecho de acceso Art. 16: Derecho de rectificación Art. 17: Derecho de supresión Art. 18: Derecho a la limitación del tratamiento Art. 19: Obligación de notificación Art. 20: Derecho a la portabilidad Art. 21: Derecho de oposición Art. 22: Decisiones individuales automatizadas"
+    },
+    {
+        "pregunta": "¿Cuál es el objeto de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales?",
+        "opciones": [
+            "Adaptar el ordenamiento jurídico español al Reglamento (UE) 2016/679 del Parlamento Europeo y el Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de sus datos personales y a la libre circulación de estos datos, eliminando los preceptos del Reglamento europeo que contradigan lo estipulado en el ordenamiento jurídico español.",
+            "Adaptar el ordenamiento jurídico español al Reglamento (UE) 2016/679 del Parlamento Europeo y el Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de sus datos personales y a la libre circulación de estos datos, y completar sus disposiciones.",
+            "Garantizar los derechos digitales de la ciudadanía conforme al mandato establecido en el artículo 17.4 de la Constitución.",
+            "El derecho fundamental de las personas físicas a la protección de datos personales, amparado por el artículo 17.4 de la Constitución, se ejercerá con arreglo a lo establecido en el Reglamento (UE) 2016/679 y en esta ley orgánica."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 1 | Objeto de la ley LOPD La presente ley orgánica tiene por objeto: a) Adaptar el ordenamiento jurídico español al Reglamento (UE) 2016/679 del Parlamento Europeo y el Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de sus datos personales y a la libre circulación de estos datos, y completar sus disposiciones. El derecho fundamental de las personas físicas a la protección de datos personales, amparado por el artículo 18.4 de la Constitución, se ejercerá con arreglo a lo establecido en el Reglamento (UE) 2016/679 y en esta ley orgánica. b) Garantizar los derechos digitales de la ciudadanía conforme al mandato establecido en el artículo 18.4 de la Constitución. OJO: El artículo correcto de la CE es el artículo 18.4"
+    },
+    {
+        "pregunta": "¿Qué regula el Título II de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales?",
+        "opciones": [
+            "Disposiciones generales.",
+            "Principios de protección de datos.",
+            "Derechos de las personas.",
+            "Disposiciones aplicables a tratamientos concretos."
+        ],
+        "correcta": 1,
+        "explicacion": "ESTRUCTURA LOPD Título I. Disposiciones generales Título II. Principios de protección de datos Título III. Derechos de las personas Título IV. Disposiciones aplicables a tratamientos completos Título V. Responsable y encargado del tratamiento Título VI. Transferencias internacionales de datos Título VII. Autoridades de protección de datos Título VIII. Procedimientos en caso de posible vulneración de la normativa de protección de datos Título IX. Régimen sancionador Título X. Garantía de los derechos digitales"
+    },
+    {
+        "pregunta": "De conformidad con el artículo 13 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, cuando el afectado ejercite su derecho de acceso sin especificar si se refiere a todos o a una parte de los datos, el responsable:",
+        "opciones": [
+            "Deberá facilitarle todos los datos que se dispongan del afectado.",
+            "Podrá solicitarle, una vez facilitada la información, que para próximas solicitudes deberá especificar los datos o actividades de tratamiento a los que se refiere la solicitud.",
+            "Podrá negarse a facilitar los datos que se dispongan del afecta.",
+            "Podrá solicitarle, antes de facilitar la información, que el afectado especifique los datos o actividades de tratamiento a los que se refiere la solicitud."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 13 | Derecho de acceso LOPD 1. El derecho de acceso del afectado se ejercitará de acuerdo con lo establecido en el artículo 15 del Reglamento (UE) 2016/679. Cuando el responsable trate una gran cantidad de datos relativos al afectado y este ejercite su derecho de acceso sin especificar si se refiere a todos o a una parte de los datos, el responsable podrá solicitarle, antes de facilitar la información, que el afectado especifique los datos o actividades de tratamiento a los que se refiere la solicitud."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Categorías especiales de datos. Los tratamientos de datos contemplados en las letras g), h) e i) del artículo 9.2 del Reglamento (UE) 2016/679 fundados en el Derecho español deberán estar amparados en:",
+        "opciones": [
+            "Una norma con rango de ley, que podrá establecer requisitos adicionales relativos a su seguridad y confidencialidad.",
+            "Una norma con rango de ley, que podrá amparar el tratamiento de datos en el ámbito de la salud cuando así lo exija la gestión de los sistemas y servicios de asistencia sanitaria y social, pública y privada, o la ejecución de un contrato de seguro del que el afectado sea parte.",
+            "Una norma con rango de ley, que podrá amparar el tratamiento de datos en el ámbito de la ejecución de un contrato de seguro del que el afectado sea parte.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales Artículo 9 | Categorías especiales de datos 2. Los tratamientos de datos contemplados en las letras g), h) e i) del artículo 9.2 del Reglamento (UE) 2016/679 fundados en el Derecho español deberán estar amparados en una norma con rango de ley, que podrá establecer requisitos adicionales relativos a su seguridad y confidencialidad. En particular, dicha norma podrá amparar el tratamiento de datos en el ámbito de la salud cuando así lo exija la gestión de los sistemas y servicios de asistencia sanitaria y social, pública y privada, o la ejecución de un contrato de seguro del que el afectado sea parte."
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Tratamiento de datos por obligación legal, interés público o ejercicio de poderes públicos. El tratamiento de datos personales solo podrá considerarse fundado en:",
+        "opciones": [
+            "El cumplimiento de una misión realizada en interés público.",
+            "En el ejercicio de poderes públicos conferidos al responsable, en los términos previstos en el artículo 6.1 e) del Reglamento (UE) 2016/679.",
+            "Las respuestas a) o b) son correctas.",
+            "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales Artículo 8 | Tratamiento de datos por obligación legal, interés público o ejercicio de poderes públicos 2. El tratamiento de datos personales solo podrá considerarse fundado en el cumplimiento de una misión realizada en interés público o en el ejercicio de poderes públicos conferidos al responsable, en los términos previstos en el artículo 6.1 e) del Reglamento (UE) 2016/679, cuando derive de una competencia atribuida por una norma con rango de ley."
+    },
+    {
+        "pregunta": "El derecho al olvido establecido en el artículo 17 del Reglamento (UE) 2016/679, también se regula en el:",
+        "opciones": [
+            "Artículo 14. Derecho de rectificación.",
+            "Artículo 15. Derecho de supresión.",
+            "Artículo 16. Derecho a la limitación del tratamiento.",
+            "Artículo 18. Derecho de oposición."
+        ],
+        "correcta": 1,
+        "explicacion": "LO 3/2018, de 5 de diciembre.Artículo 15. Derecho de supresión. 1. El derecho de supresión se ejercerá de acuerdo con lo establecido en el artículo 17 del Reglamento (UE) 2016/679."
+    },
+    {
+        "pregunta": "La Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales, no será de aplicación: Señale la opción incorrecta.",
+        "opciones": [
+            "A los tratamientos excluidos del ámbito de aplicación del Reglamento general de protección de datos por su artículo 2.2, sin perjuicio de lo dispuesto en los apartados 3 y 4 de este artículo.",
+            "A cualquier tratamiento total o parcialmente automatizado de datos personales, así como al tratamiento no automatizado de datos personales contenidos o destinados a ser incluidos en un fichero.",
+            "A los tratamientos de datos de personas fallecidas, sin perjuicio de lo establecido en el artículo 3.",
+            "A los tratamientos sometidos a la normativa sobre protección de materias clasificadas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 2 | Ámbito de aplicación de los Títulos I a IX y de los artículos 89 a 94 LOPD 2. Esta ley orgánica no será de aplicación: a) A los tratamientos excluidos del ámbito de aplicación del Reglamento general de protección de datos por su artículo 2.2, sin perjuicio de lo dispuesto en los apartados 3 y 4 de este artículo. b) A los tratamientos de datos de personas fallecidas, sin perjuicio de lo establecido en el artículo 3. c) A los tratamientos sometidos a la normativa sobre protección de materias clasificadas. OJO Nos piden señalar la INCORRECTA"
+    },
+    {
+        "pregunta": "Cuál de los siguientes no forma parte de los principios de protección de datos:",
+        "opciones": [
+            "Exactitud de los datos.",
+            "Deber de confidencialidad.",
+            "Consentimiento de los menores de edad.",
+            "Datos de las personas fallecidas."
+        ],
+        "correcta": 3,
+        "explicacion": "PRINCIPIOS DE PROTECCIÓN DE DATOS El Título II de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales se rubrica “Principios de protección de datos” y está compuesto por los artículos 4 a 10, ambos inclusive."
+    },
+    {
+        "pregunta": "El tratamiento de datos personales relativos a medidas cautelares y de seguridad conexas para fines distintos de los de prevención, investigación, detección o enjuiciamiento de infracciones penales o de ejecución de sanciones penales, solo podrá llevarse a cabo cuando se lleve a cabo mediante:",
+        "opciones": [
+            "Una norma del Derecho de la Unión",
+            "En la Ley Orgánica 3/2018, de 5 de diciembre.",
+            "Las respuestas a y b son correctas",
+            "Ninguna respuesta es correcta"
+        ],
+        "correcta": 2,
+        "explicacion": "LO 3/2018, de 5 de diciembre. Artículo 10. Tratamiento de datos de naturaleza penal. 1. El tratamiento de datos personales relativos a condenas e infracciones penales, así como a procedimientos y medidas cautelares y de seguridad conexas, para fines distintos de los de prevención, investigación, detección o enjuiciamiento de infracciones penales o de ejecución de sanciones penales, solo podrá llevarse a cabo cuando se encuentre amparado en una norma de Derecho de la Unión, en esta ley orgánica o en otras normas de rango legal."
+    },
+    {
+        "pregunta": "El apartado primero del artículo 9 del Reglamento (UE) 2016/679 establece que quedan prohibidos el tratamiento de datos personales que revelen el origen étnico o racial, las opiniones políticas, las convicciones religiosas o filosóficas, o la afiliación sindical, y el tratamiento de datos genéticos, datos biométricos dirigidos a identificar de manera unívoca a una persona física, datos relativos a la salud o datos relativos a la vida sexual o la orientación sexual de una persona física. ¿Es posible levantar dicha prohibición?",
+        "opciones": [
+            "Sí, de conformidad con el artículo 9.1 de Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales.",
+            "Sí, con el mero consentimiento explícito del interesado.",
+            "No, el solo consentimiento del afectado no bastará para levantar la prohibición del tratamiento de datos de conformidad con el artículo 9.1 de Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales.",
+            "No, excepto que el interesado lo consienta explícitamente por escrito de conformidad con el artículo 9.1 de Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 9 | Categorías especiales de datos LOPD 1. A los efectos del artículo 9.2.a) del Reglamento (UE) 2016/679, a fin de evitar situaciones discriminatorias, el solo consentimiento del afectado no bastará para levantar la prohibición del tratamiento de datos cuya finalidad principal sea identificar su ideología, afiliación sindical, religión, orientación sexual, creencias u origen racial o étnico."
+    },
+    {
+        "pregunta": "La Ley Orgánica 3/2018 señala, con respecto al tratamiento de datos de carácter especial por referirse a ideología, religión, orientación sexual, origen racial, etc:",
+        "opciones": [
+            "No basta el solo desistimiento del afectado para imponer la prohibición de dicho tratamiento.",
+            "La norma ampara su tratamiento cuando así lo exija la gestión de los sistemas y servicios de asistencia sanitaria y social, pública y privada.",
+            "La anterior, pero no está amparado en la asistencia privada.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9 | Categorías especiales de datos LOPD 1. A los efectos del artículo 9.2.a) del Reglamento (UE) 2016/679, a fin de evitar situaciones discriminatorias, el solo consentimiento del afectado no bastará para levantar la prohibición del tratamiento de datos cuya finalidad principal sea identificar su ideología, afiliación sindical, religión, orientación sexual, creencias u origen racial o étnico. (...) En particular, dicha norma podrá amparar el tratamiento de datos en el ámbito de la salud cuando así lo exija la gestión de los sistemas y servicios de asistencia sanitaria y social, pública y privada, o la ejecución de un contrato de seguro del que el afectado sea parte."
+    },
+    {
+        "pregunta": "De conformidad con el apartado primero del artículo 21 del Reglamento (UE) 2016/679, el interesado tendrá derecho a oponerse en cualquier momento, por motivos relacionados con su situación particular, a que datos personales que le conciernan sean objeto de un tratamiento basado en lo dispuesto en el artículo 6, apartado 1, letras e) o f), incluida la elaboración de perfiles sobre la base de dichas disposiciones. ¿Qué consecuencia directa tiene el derecho de oposición?",
+        "opciones": [
+            "Que el responsable del tratamiento dejará de tratar los datos personales.",
+            "Que el responsable del tratamiento dejará de tratar los datos personales, salvo que acredite motivos legítimos imperiosos para el tratamiento que prevalezcan sobre los intereses, los derechos y las libertades del interesado.",
+            "Que el responsable del tratamiento dejará de tratar los datos personales, salvo que acredite motivos legítimos imperiosos para la formulación, el ejercicio o la defensa de reclamaciones.",
+            "Todas las anteriores respuestas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Reglamento (UE) 2016/679 - Artículo 21 Derecho de oposición. 1. El interesado tendrá derecho a oponerse en cualquier momento, por motivos relacionados con su situación particular, a que datos personales que le conciernan sean objeto de un tratamiento basado en lo dispuesto en el artículo 6, apartado 1, letras e) o f), incluida la elaboración de perfiles sobre la base de dichas disposiciones. El responsable del tratamiento dejará de tratar los datos personales, salvo que acredite motivos legítimos imperiosos para el tratamiento que prevalezcan sobre los intereses, los derechos y las libertades del interesado, o para la formulación, el ejercicio o la defensa de reclamaciones."
+    },
+    {
+        "pregunta": "El apartado primero del artículo 11 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, establece que cuando los datos personales sean obtenidos del afectado el responsable del tratamiento podrá dar cumplimiento al deber de información establecido en el artículo 13 del Reglamento (UE) 2016/679 facilitando al afectado la información básica e indicándole una dirección electrónica u otro medio que permita acceder de forma sencilla e inmediata a la restante información. ¿Qué deberá contener, al menos, la información básica? Señale la opción incorrecta:",
+        "opciones": [
+            "La identidad del responsable del tratamiento y de su representante, en su caso.",
+            "La finalidad del tratamiento.",
+            "La posibilidad de ejercer los derechos establecidos en los artículos 15 a 22 del Reglamento (UE) 2016/679.",
+            "Los datos de contacto del delegado de protección de datos, en su caso."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 11 | Transparencia e información al afectado LOPD 1. Cuando los datos personales sean obtenidos del afectado el responsable del tratamiento podrá dar cumplimiento al deber de información establecido en el artículo 13 del Reglamento (UE) 2016/679 facilitando al afectado la información básica a la que se refiere el apartado siguiente e indicándole una dirección electrónica u otro medio que permita acceder de forma sencilla e inmediata a la restante información. 2. La información básica a la que se refiere el apartado anterior deberá contener, al menos: a) La identidad del responsable del tratamiento y de su representante, en su caso. b) La finalidad del tratamiento. c) La posibilidad de ejercer los derechos establecidos en los artículos 15 a 22 del Reglamento (UE) 2016/679. OJO Nos piden la opción INCORRECTA"
+    },
+    {
+        "pregunta": "De conformidad con el artículo 18 del Reglamento (UE) 2016/679, el interesado tendrá derecho a obtener del responsable del tratamiento la limitación del tratamiento de los datos cuando se cumpla alguna de las condiciones siguientes: Señale la opción que no es correcta.",
+        "opciones": [
+            "El interesado impugne la exactitud de los datos personales, durante un plazo que permita al responsable verificar la exactitud de los mismos.",
+            "El tratamiento sea ilícito y el interesado se oponga a la supresión de los datos personales y solicite en su lugar la limitación de su uso.",
+            "El responsable necesite los datos personales para los fines del tratamiento, pero el interesado no los necesite para la formulación, el ejercicio o la defensa de reclamaciones.",
+            "El interesado se haya opuesto al tratamiento en virtud del artículo 21, apartado 1, mientras se verifica si los motivos legítimos del responsable prevalecen sobre los del interesado."
+        ],
+        "correcta": 2,
+        "explicacion": "Reglamento (UE) 2016/679 - Artículo 18 Derecho a la limitación del tratamiento. 1. El interesado tendrá derecho a obtener del responsable del tratamiento la limitación del tratamiento de los datos cuando se cumpla alguna de las condiciones siguientes: a) el interesado impugne la exactitud de los datos personales, durante un plazo que permita al responsable verificar la exactitud de los mismos; b) el tratamiento sea ilícito y el interesado se oponga a la supresión de los datos personales y solicite en su lugar la limitación de su uso; c) el responsable ya no necesite los datos personales para los fines del tratamiento, pero el interesado los necesite para la formulación, el ejercicio o la defensa de reclamaciones; d) el interesado se haya opuesto al tratamiento en virtud del artículo 21, apartado 1, mientras se verifica si los motivos legítimos del responsable prevalecen sobre los del interesado. OJO Nos están pidiendo la INCORRECTA"
+    },
+    {
+        "pregunta": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Tratamiento de datos por obligación legal, interés público o ejercicio de poderes públicos. El tratamiento de datos personales solo podrá considerarse fundado en el cumplimiento de una misión realizada en interés público o en el ejercicio de poderes públicos conferidos al responsable, en los términos previstos en el artículo 6.1 e) del Reglamento (UE) 2016/679, cuando:",
+        "opciones": [
+            "Derive de una competencia atribuida por una norma.",
+            "Derive de una competencia atribuida por una norma con rango reglamentario.",
+            "Derive de una competencia atribuida por una norma con rango de ley.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales y garantía de los derechos digitales. Artículo 8 | Tratamiento de datos por obligación legal, interés público o ejercicio de poderes públicos 2. El tratamiento de datos personales solo podrá considerarse fundado en el cumplimiento de una misión realizada en interés público o en el ejercicio de poderes públicos conferidos al responsable, en los términos previstos en el artículo 6.1 e) del Reglamento (UE) 2016/679, cuando derive de una competencia atribuida por una norma con rango de ley."
+    },
+    {
+        "pregunta": "De conformidad con el apartado primero del artículo 7 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, el tratamiento de los datos personales de un menor de edad:",
+        "opciones": [
+            "Únicamente podrá fundarse en su consentimiento cuando sea mayor de doce años.",
+            "Únicamente podrá fundarse en su consentimiento cuando sea mayor de catorce años.",
+            "Únicamente podrá fundarse en su consentimiento cuando sea mayor de dieciséis años.",
+            "Únicamente podrá fundarse en su consentimiento cuando sea mayor de dieciocho años."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 7 | Consentimiento de los menores de edad LOPD 1. El tratamiento de los datos personales de un menor de edad únicamente podrá fundarse en su consentimiento cuando sea mayor de catorce años."
+    },
+    {
+        "pregunta": "De conformidad con el apartado tercero del artículo 3 de la Ley Orgánica 3/2018, de 5 de diciembre, de protección de datos personales, en caso de fallecimiento de menores, podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales de aquella y, en su caso, su rectificación o supresión:",
+        "opciones": [
+            "Las personas vinculadas al fallecido por razones familiares o de hecho, así como sus herederos, sus representantes legales o, en el marco de sus competencias, el Ministerio Fiscal, que podrá actuar de oficio o a instancia de cualquier persona física o jurídica interesada.",
+            "Las personas vinculadas al fallecido por razones familiares o de hecho, así como sus herederos, sus representantes legales y, en el marco de sus competencias, el Ministerio Fiscal, que podrá actuar de oficio o a instancia de cualquier persona física o jurídica interesada.",
+            "Las personas vinculadas al fallecido por razones familiares o de hecho, así como sus herederos y únicamente sus representantes legales.",
+            "Las personas vinculadas al fallecido por razones familiares o de hecho, así como sus herederos y únicamente el Ministerio Fiscal, que podrá actuar de oficio o a instancia de cualquier persona física o jurídica interesada."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 3 | Datos de las personas fallecidas LOPD 1. Las personas vinculadas al fallecido por razones familiares o, de hecho, así como sus herederos podrán dirigirse al responsable o encargado del tratamiento al objeto de solicitar el acceso a los datos personales de aquella y, en su caso, su rectificación o supresión. (...) 3. En caso de fallecimiento de menores, estas facultades podrán ejercerse también por sus representantes legales o, en el marco de sus competencias, por el Ministerio Fiscal, que podrá actuar de oficio o a instancia de cualquier persona física o jurídica interesada."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

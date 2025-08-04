@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. La obediencia debida podrá amparar órdenes que entrañen la ejecución de actos que manifiestamente constituyan delito:",
+        "opciones": [
+            "En caso de fuerza mayor.",
+            "En ningún caso.",
+            "En caso de necesidad urgente.",
+            "En caso de peligro para la vida."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 5 LOFCS Son principios básicos de actuación de los miembros de las Fuerzas y Cuerpos de Seguridad los siguientes: 1. Adecuación al ordenamiento jurídico, especialmente: a) Ejercer su función con absoluto respeto a la Constitución y el resto del ordenamiento jurídico. b) Actuar, en el cumplimiento de sus funciones, con absoluta neutralidad política e imparcialidad y, en consecuencia, sin discriminación alguna por razón de raza, religión u opinión. c) Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente. d) Sujetarse en su actuación profesional a los principios de jerarquía y subordinación. En ningún caso la obediencia debida podrá amparar órdenes que entrañen la ejecución de actos que manifiestamente constituyan delito o sean contrarios a la Constitución o a las Leyes. e) Colaborar con la Administración de Justicia y auxiliarla en los términos establecidos en la Ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. La Jurisdicción competente para conocer los delitos que se cometan contra los miembros de las Fuerzas y Cuerpos de Seguridad, así como de los cometidos por éstos en el ejercicio de sus funciones, es:",
+        "opciones": [
+            "La jurisdicción militar.",
+            "La jurisdicción ordinaria.",
+            "La jurisdicción penal en todo caso.",
+            "En jurisdicción civil, en cualquier caso."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 8 | Procesamiento de los agentes. LOFCS 1. La jurisdicción ordinaria será la competente para conocer de los delitos que se cometan contra miembros de las Fuerzas y Cuerpos de Seguridad, así como de los cometidos por éstos en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Pueden crear Cuerpos de Policía propios:",
+        "opciones": [
+            "Los pueblos.",
+            "Las Entidades Locales.",
+            "Los Municipios.",
+            "Los vecinos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 51 | Cuerpos de policía local. LOFCS 1. Los municipios podrán crear cuerpos de policía propios, de acuerdo con lo previsto en la presente ley, en la Ley de Bases de Régimen Local y en la legislación autonómica. 2. En los municipios donde no exista policía municipal, los cometidos de ésta serán ejercidos por el personal que desempeñe funciones de custodia y vigilancia de bienes, servicios e instalaciones, con la denominación de guardas, vigilantes, agentes, alguaciles o análogos. 3. Dichos cuerpos sólo podrán actuar en el ámbito territorial del municipio respectivo, salvo en situaciones de emergencia y previo requerimiento de las autoridades competentes. No obstante, cuando ejerzan funciones de protección de autoridades de las corporaciones locales, podrán actuar fuera del término municipal respectivo, con autorización del Ministerio del Interior o de la correspondiente autoridad de la comunidad autónoma que cuente con cuerpo de policía autonómica, cuando desarrollen íntegramente esas actuaciones en el ámbito territorial de dicha comunidad autónoma."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. El sistema de responsabilidad de los miembros de las Fuerzas y Cuerpos de Seguridad es uno de los siguientes. Indique cuál:",
+        "opciones": [
+            "Son responsables personal e indirectamente por los actos que en su actuación profesional llevaron a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a los mismos.",
+            "Son responsables personales, pero no directamente, por los actos que en su actuación profesional llevaron a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas.",
+            "Son responsables personal y directamente por los actos que en su actuación profesional llevaron a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas.",
+            "Son responsables personal o directamente por los actos que en su actuación profesional llevaron a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas."
+        ],
+        "correcta": 2,
+        "explicacion": "Articulo 5 LOFCS 6. Responsabilidad. Son responsables personal y directamente por los actos que en su actuación profesional llevaren a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión y los principios enunciados anteriormente, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Cuerpos de las Policías Locales, tendrán derecho a una remuneración justa, que contemple su nivel de formación, régimen de incompatibilidades, movilidad por razones de servicio, dedicación y el riesgo que comporta su misión, así como la especificidad de los horarios de trabajo y:",
+        "opciones": [
+            "Su peculiar jerarquía.",
+            "Su peculiar estructura.",
+            "Su peculiar función.",
+            "Su peculiar ordenación."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6 | Formación y derechos LOFCS (...) 4. Tendrán derecho a una remuneración justa que contemple su nivel de formación, régimen de incompatibilidades, movilidad por razones de servicio, dedicación y el riesgo que comporta su misión, así como la especificidad de los horarios de trabajo y su peculiar estructura."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los puestos de servicio en las respectivas categorías se proveerán conforme a los principios de:",
+        "opciones": [
+            "Igualdad, libertad y capacidad.",
+            "Capacidad, mérito y libertad.",
+            "Mérito, capacidad y antigüedad.",
+            "Igualdad, mérito y capacidad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6 | Formación y derechos LOFCS (...) 6. Los puestos de servicio en las respectivas categorías se proveerán conforme a los principios de mérito, capacidad y antigüedad, a tenor de lo dispuesto en la correspondiente reglamentación."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. El régimen de horario de servicio de los Cuerpos de Policía Local se determina:",
+        "opciones": [
+            "Legalmente.",
+            "Reglamentariamente.",
+            "Por norma con rango de ley.",
+            "Por ordenación estatal."
+        ],
+        "correcta": 1,
+        "explicacion": "Articulo 6 LO"
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. La seguridad pública es:",
+        "opciones": [
+            "Una competencia compartida.",
+            "Una competencia concurrente.",
+            "Una competencia exclusiva del Estado.",
+            "Una competencia excluyente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 1 LOFCS 1 La Seguridad pública es competencia exclusiva del Estado. Su mantenimiento corresponde al Gobierno de la Nación. 2. Las Comunidades Autónomas participarán en el mantenimiento de la seguridad pública en los términos que establezcan los respectivos Estatutos y en el marco de esta Ley. 3. Las Corporaciones Locales participarán en el mantenimiento de la seguridad pública en los términos establecidos en la Ley reguladora de las Bases de Régimen Local y en el marco de esta Ley. 4. El mantenimiento de la seguridad pública se ejercerá por las distintas Administraciones Públicas a través de las Fuerzas y Cuerpos de Seguridad."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Las Corporaciones Locales participarán en el mantenimiento de la Seguridad Pública:",
+        "opciones": [
+            "En los términos que establezcan los respectivos Estatutos de las Comunidades Autónomas.",
+            "En los términos establecidos en sus propias normas.",
+            "En los términos establecidos en la L.O.F.C.S.",
+            "En los términos establecidos en la Ley reguladora de las Bases de Régimen Local y en el marco de esta Ley."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 1 LOFCS 1 La Seguridad pública es competencia exclusiva del Estado. Su mantenimiento corresponde al Gobierno de la Nación. 2. Las Comunidades Autónomas participarán en el mantenimiento de la seguridad pública en los términos que establezcan los respectivos Estatutos y en el marco de esta Ley. 3. Las Corporaciones Locales participarán en el mantenimiento de la seguridad pública en los términos establecidos en la Ley reguladora de las Bases de Régimen Local y en el marco de esta Ley. 4. El mantenimiento de la seguridad pública se ejercerá por las distintas Administraciones Públicas a través de las Fuerzas y Cuerpos de Seguridad."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los Poderes Públicos promoverán las condiciones más favorables para una adecuada promoción profesional, social y humana de los miembros de las Fuerzas y Cuerpos de Seguridad, de acuerdo con los principios de:",
+        "opciones": [
+            "Objetividad, capacidad e igualdad de oportunidades.",
+            "Objetividad, igualdad de oportunidades, mérito y capacidad.",
+            "Igualdad de oportunidades, objetividad y mérito.",
+            "Capacidad, objetividad y mérito."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6 | Formación y derechos LOFCS 1. Los Poderes Públicos promoverán las condiciones más favorables para una adecuada promoción profesional, social y humana de los miembros de las Fuerzas y Cuerpos de Seguridad, de acuerdo con los principios de objetividad, igualdad de oportunidades, mérito y capacidad."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. El órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial, es:",
+        "opciones": [
+            "El Alcalde.",
+            "El Pleno.",
+            "La Junta Local de Seguridad.",
+            "La Comunidad Autónoma."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 54 | Junta local de seguridad LOFCS 1. En los municipios que tengan Cuerpo de Policía propio, podrá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial. 2. La constitución de dichas Juntas y su composición se determinará reglamentariamente. La presidencia corresponderá al Alcalde, salvo que concurriera a sus sesiones el Gobernador civil de la provincia, en cuyo caso, la presidencia será compartida con éste."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Policías Locales deben regirse en su actuación por los principios de:",
+        "opciones": [
+            "Coordinación, jerarquía y colaboración.",
+            "Colaboración, amabilidad y esmero.",
+            "Jerarquía, coordinación y colaboración.",
+            "Congruencia, oportunidad y proporcionalidad"
+        ],
+        "correcta": 3,
+        "explicacion": "Articulo 5 LOFCS 2. Relaciones con la comunidad. Singularmente: a) Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral. b) Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas. c) En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance. d) Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. No es un principio básico de actuación de los miembros de las Fuerzas y Cuerpos de Seguridad:",
+        "opciones": [
+            "Adecuación al ordenamiento jurídico.",
+            "Ejercer su función con absoluto respeto a la Constitución y al resto del ordenamiento jurídico.",
+            "Actuar, en el cumplimiento de sus funciones, con absoluta neutralidad política e imparcialidad y, en consecuencia, sin discriminación alguna por razón de raza, religión u opinión.",
+            "Actuar con resolución."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 LOFCS Son principios básicos de actuación de los miembros de las Fuerzas y Cuerpos de Seguridad los siguientes: 1. Adecuación al ordenamiento jurídico, especialmente: a) Ejercer su función con absoluto respeto a la Constitución y el resto del ordenamiento jurídico. b) Actuar, en el cumplimiento de sus funciones, con absoluta neutralidad política e imparcialidad y, en consecuencia, sin discriminación alguna por razón de raza, religión u opinión. c) Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente. d) Sujetarse en su actuación profesional a los principios de jerarquía y subordinación. En ningún caso la obediencia debida podrá amparar órdenes que entrañen la ejecución de actos que manifiestamente constituyan delito o sean contrarios a la Constitución o a las Leyes. e) Colaborar con la Administración de Justicia y auxiliarla en los términos establecidos en la Ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. El régimen de horario de servicio que se adaptará a las peculiares características de la función policial, se establece por vía:",
+        "opciones": [
+            "Reglamentaria.",
+            "Legal.",
+            "Constitucional.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Articulo 6 LOFCS (...) 5. Reglamentariamente se determinará su régimen de horario de servicio que se adaptará a las peculiares características de la función policial."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. En su actuación profesional, los miembros de las Fuerzas y Cuerpos de Seguridad deben ajustarse a los principios de:",
+        "opciones": [
+            "Coordinación y subordinación.",
+            "Jerarquía y coordinación.",
+            "Subordinación y jerarquía.",
+            "Coordinación y colaboración."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5 LOFCS Son principios básicos de actuación de los miembros de las Fuerzas y Cuerpos de Seguridad los siguientes: 1. Adecuación al ordenamiento jurídico, especialmente: a) Ejercer su función con absoluto respeto a la Constitución y el resto del ordenamiento jurídico. b) Actuar, en el cumplimiento de sus funciones, con absoluta neutralidad política e imparcialidad y, en consecuencia, sin discriminación alguna por razón de raza, religión u opinión. c) Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente. d) Sujetarse en su actuación profesional a los principios de jerarquía y subordinación. En ningún caso la obediencia debida podrá amparar órdenes que entrañen la ejecución de actos que manifiestamente constituyan delito o sean contrarios a la Constitución o a las Leyes. e) Colaborar con la Administración de Justicia y auxiliarla en los términos establecidos en la Ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. El personal que desempeñe funciones de custodia y vigilancia de bienes, servicios e instalaciones, con la denominación de Guardas, Vigilantes, Agentes, Alguaciles o análogos, podrá actuar:",
+        "opciones": [
+            "En el ámbito territorial del municipio respectivo, salvo en situaciones de emergencia y previo requerimiento de las Autoridades competentes.",
+            "En su territorio respectivo exclusivamente.",
+            "En su ámbito territorial salvo requerimiento de los vecinos.",
+            "En ámbitos territoriales ajenos a requerimiento de sus superiores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 51 | Cuerpos de policía local. LOFCS 1. Los municipios podrán crear cuerpos de policía propios, de acuerdo con lo previsto en la presente ley, en la Ley de Bases de Régimen Local y en la legislación autonómica. 2. En los municipios donde no exista policía municipal, los cometidos de ésta serán ejercidos por el personal que desempeñe funciones de custodia y vigilancia de bienes, servicios e instalaciones, con la denominación de guardas, vigilantes, agentes, alguaciles o análogos. 3. Dichos cuerpos sólo podrán actuar en el ámbito territorial del municipio respectivo, salvo en situaciones de emergencia y previo requerimiento de las autoridades competentes. No obstante, cuando ejerzan funciones de protección de autoridades de las corporaciones locales, podrán actuar fuera del término municipal respectivo, con autorización del Ministerio del Interior o de la correspondiente autoridad de la comunidad autónoma que cuente con cuerpo de policía autonómica, cuando desarrollen íntegramente esas actuaciones en el ámbito territorial de dicha comunidad autónoma."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Es correcto que:",
+        "opciones": [
+            "La pertenencia a las Fuerzas y Cuerpos de Seguridad no es causa de incompatibilidad para el desempeño de cualquier otra actividad pública o privada, salvo aquellas actividades exceptuadas de la legislación sobre incompatibilidades.",
+            "La pertenencia a las Fuerzas y Cuerpos de Seguridad es causa de incompatibilidad para el desempeño de cualquier otra actividad pública, salvo aquellas actividades privadas no exceptuadas de la legislación sobre incompatibilidades.",
+            "La pertenencia a las Fuerzas y Cuerpos de Seguridad es causa de compatibilidad para el desempeño de cualquier otra actividad pública o privada, salvo aquellas actividades exceptuadas de la legislación sobre incompatibilidades.",
+            "La pertenencia a las Fuerzas y Cuerpos de Seguridad es causa de incompatibilidad para el desempeño de cualquier otra actividad pública o privada, salvo aquellas actividades exceptuadas de la legislación sobre incompatibilidades."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 6 | Formación y derechos LOFCS (...) 7. La pertenencia a las fuerzas y Cuerpos de Seguridad es causa de incompatibilidad para el desempeño de cualquier otra actividad pública o privada, salvo aquellas actividades exceptuadas de la legislación sobre incompatibilidades. (Ley 53/1984, de 26 de diciembre, de Incompatibilidades del Personal al Servicio de las Administraciones Públicas)"
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Policías Locales deberán jurar o prometer acatamiento a:",
+        "opciones": [
+            "La Constitución como norma única del Estado.",
+            "La Constitución como norma general del Estado.",
+            "La Constitución como norma orgánica del Estado.",
+            "La Constitución como norma fundamental del Estado."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 6 | Formación y derechos LOFCS (...) 3. Los miembros de las Fuerzas y Cuerpos de Seguridad deberán jurar o prometer acatamiento a la Constitución como norma fundamental del Estado."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones, los miembros de los Cuerpos de las Policías Locales, deberán:",
+        "opciones": [
+            "Guardar sigilo.",
+            "Guardar riguroso secreto.",
+            "Revelar sus conocimientos.",
+            "Informar a sus compañeros."
+        ],
+        "correcta": 1,
+        "explicacion": "Articulo 5 LOFCS 5. Secreto profesional. Deberán guardar riguroso secreto respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. No estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. La Guardia Civil tendrá consideración de fuerza armada:",
+        "opciones": [
+            "Sólo en el cumplimiento de las misiones de carácter militar que se le encomienden, de acuerdo con el ordenamiento jurídico.",
+            "En cualquier actuación pública.",
+            "En cualquier caso.",
+            "En ningún caso."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 7 | Agentes de la autoridad LOFCS 1. En el ejercicio de sus funciones, los miembros de las Fuerzas y Cuerpos de Seguridad tendrán a todos los efectos legales el carácter de agentes de la autoridad. 2. Cuando se cometa delito de atentado, empleando en su ejecución armas de fuego, explosivos u otros medios de agresión de análoga peligrosidad, que puedan poner en peligro grave la integridad física de los miembros de las Fuerzas y Cuerpos de Seguridad, tendrán al efecto de su protección penal la consideración de autoridad. 3. La Guardia Civil sólo tendrá consideración de fuerza armada en el cumplimiento de las misiones de carácter militar que se le encomienden, de acuerdo con el ordenamiento jurídico."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. La formación y perfeccionamiento de los miembros de las Fuerzas y Cuerpos de Seguridad:",
+        "opciones": [
+            "Tendrá carácter profesional pero no permanente.",
+            "Tendrá carácter profesional y permanente.",
+            "Tendrá carácter permanente y personal.",
+            "Tendrá carácter personal y permanente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6 | Formación y derechos LOFCS 1. Los Poderes Públicos promoverán las condiciones más favorables para una adecuada promoción profesional, social y humana de los miembros de las Fuerzas y Cuerpos de Seguridad, de acuerdo con los principios de objetividad, igualdad de oportunidades, mérito y capacidad. 2. La formación y perfeccionamiento de los miembros de las Fuerzas y Cuerpos de Seguridad se adecuará a los principios señalados en el artículo 5.º y se ajustarán a los siguientes criterios: a) Tendrá carácter profesional y permanente. b) Los estudios que se cursen en los centros de enseñanza dependientes de las diferentes Administraciones públicas podrán ser objeto de convalidación por el Ministerio de Educación y Ciencia, que a tal fin tendrá en cuenta las titulaciones exigidas para el acceso a cada uno de ellos y la naturaleza y duración de dichos estudios."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. No es una función asignada a los Cuerpos de Policía Local:",
+        "opciones": [
+            "Proteger a las autoridades de las Corporaciones Locales y vigilancia o custodia de sus edificios e instalaciones.",
+            "Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación.",
+            "Instruir atestados por accidentes de circulación dentro y fuera del casco urbano.",
+            "Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 53 | Funciones Policía Local 1. Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: a) Proteger a las autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones. b) Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación. c) Instruir atestados por accidentes de circulación dentro del casco urbano. d) Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia. e) Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley. f) La prestación de auxilio, en los casos de accidente, catástrofe o calamidad pública, participando, en la forma prevista en las Leyes, en la ejecución de los planes de Protección Civil. g) Efectuar diligencias de prevención y cuantas actuaciones tiendan a evitar la comisión de actos delictivos en el marco de colaboración establecido en las Juntas de Seguridad. h) Vigilar los espacios públicos y colaborar con las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas en la protección de las manifestaciones y el mantenimiento del orden en grandes concentraciones humanas, cuando sean requeridos para ello. i) Cooperar en la resolución de los conflictos privados cuando sean requeridos para ello. 2. Las actuaciones que practiquen los Cuerpos de Policía Local en el ejercicio de las funciones previstas en los apartados c) y g) precedentes deberán ser comunicadas a las Fuerzas y Cuerpos de Seguridad del Estado competentes."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de los Cuerpos de Policía Local deben intervenir en defensa de la Ley y de la seguridad ciudadana...",
+        "opciones": [
+            "Sólo cuando estén de servicio.",
+            "Siempre que se encuentren dentro de su ámbito territorial de actuación.",
+            "Siempre que se encuentren dentro de su horario de trabajo.",
+            "Siempre, en cualquier tiempo y lugar, se hallaren o no de servicio."
+        ],
+        "correcta": 3,
+        "explicacion": "Articulo 5 LOFCS 4. Dedicación profesional. Deberán llevar a cabo sus funciones con total dedicación, debiendo intervenir siempre, en cualquier tiempo y lugar, se hallaren o no de servicio, en defensa de la Ley y de la seguridad ciudadana."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. La Presidencia de la Junta Local de Seguridad corresponde:",
+        "opciones": [
+            "Al Alcalde, en cualquier caso.",
+            "Al Delegado del Gobierno en cualquier caso.",
+            "Al Subdelegado del Gobierno, en cualquier caso.",
+            "Al Alcalde, salvo cuando la presidencia sea compartida."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 54 | Junta local de seguridad LOFCS 1. En los municipios que tengan Cuerpo de Policía propio, podrá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial. 2. La constitución de dichas Juntas y su composición se determinará reglamentariamente. La presidencia corresponderá al Alcalde, salvo que concurriera a sus sesiones el Gobernador civil de la provincia, en cuyo caso, la presidencia será compartida con éste."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Cuando se cometa delito de atentado, empleando en su ejecución armas de fuego u otros medios de agresión de análoga peligrosidad, que puedan poner en peligro grave la integridad física de los miembros de las Fuerzas y Cuerpos de Seguridad, tendrán al efecto de su protección penal la consideración de:",
+        "opciones": [
+            "Funcionario público.",
+            "Aforado.",
+            "Agente de la autoridad.",
+            "Autoridad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 7 | Agentes de la autoridad LOFCS 1. En el ejercicio de sus funciones, los miembros de las Fuerzas y Cuerpos de Seguridad tendrán a todos los efectos legales el carácter de agentes de la autoridad. 2. Cuando se cometa delito de atentado, empleando en su ejecución armas de fuego, explosivos u otros medios de agresión de análoga peligrosidad, que puedan poner en peligro grave la integridad física de los miembros de las Fuerzas y Cuerpos de Seguridad, tendrán al efecto de su protección penal la consideración de autoridad. 3. La Guardia Civil sólo tendrá consideración de fuerza armada en el cumplimiento de las misiones de carácter militar que se le encomienden, de acuerdo con el ordenamiento jurídico."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. En la protección de manifestaciones y el mantenimiento del orden en grandes concentraciones humanas, cuando sean requeridos para ello, los Cuerpos de Policía Municipal colaboran con:",
+        "opciones": [
+            "Los vecinos del Municipio.",
+            "Las Autoridades del Municipio.",
+            "Las Autoridades estatales.",
+            "Las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 53 | Funciones Policía Local 1. Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: a) Proteger a las autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones. b) Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación. c) Instruir atestados por accidentes de circulación dentro del casco urbano. d) Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia. e) Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley. f) La prestación de auxilio, en los casos de accidente, catástrofe o calamidad pública, participando, en la forma prevista en las Leyes, en la ejecución de los planes de Protección Civil. g) Efectuar diligencias de prevención y cuantas actuaciones tiendan a evitar la comisión de actos delictivos en el marco de colaboración establecido en las Juntas de Seguridad. h) Vigilar los espacios públicos y colaborar con las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas en la protección de las manifestaciones y el mantenimiento del orden en grandes concentraciones humanas, cuando sean requeridos para ello. i) Cooperar en la resolución de los conflictos privados cuando sean requeridos para ello. 2. Las actuaciones que practiquen los Cuerpos de Policía Local en el ejercicio de las funciones previstas en los apartados c) y g) precedentes deberán ser comunicadas a las Fuerzas y Cuerpos de Seguridad del Estado competentes."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Fuerzas y Cuerpos de Seguridad tendrán a todos los efectos legales el carácter de Agentes de la Autoridad:",
+        "opciones": [
+            "En el ejercicio de sus funciones.",
+            "Sólo en supuestos legalmente previstos.",
+            "Sólo en supuestos reglamentariamente previstos.",
+            "En cualquier caso."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 7 | Agentes de la autoridad LOFCS 1. En el ejercicio de sus funciones, los miembros de las Fuerzas y Cuerpos de Seguridad tendrán a todos los efectos legales el carácter de agentes de la autoridad. 2. Cuando se cometa delito de atentado, empleando en su ejecución armas de fuego, explosivos u otros medios de agresión de análoga peligrosidad, que puedan poner en peligro grave la integridad física de los miembros de las Fuerzas y Cuerpos de Seguridad, tendrán al efecto de su protección penal la consideración de autoridad. 3. La Guardia Civil sólo tendrá consideración de fuerza armada en el cumplimiento de las misiones de carácter militar que se le encomienden, de acuerdo con el ordenamiento jurídico."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales:",
+        "opciones": [
+            "Antes de realizar una detención.",
+            "Tras realizar una detención.",
+            "En el momento de efectuar una detención.",
+            "Mientras realizan una detención."
+        ],
+        "correcta": 2,
+        "explicacion": "Articulo 5 LOFCS 3. Tratamiento de detenidos, especialmente: a) Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en el momento de efectuar una detención. b) Velarán por la vida e integridad física de las personas a quienes detuvieren o que se encuentren bajo su custodia y respetarán el honor y la dignidad de las personas. c) Darán cumplimiento y observarán con la debida diligencia los trámites, plazos y requisitos exigidos por el ordenamiento jurídico, cuando se proceda a la detención de una persona."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Policías Locales deberán utilizar las armas, rigiéndose por los principios de:",
+        "opciones": [
+            "Coordinación, jerarquía y colaboración.",
+            "Congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance.",
+            "Jerarquía, coordinación y colaboración.",
+            "Colaboración, amabilidad y esmero."
+        ],
+        "correcta": 1,
+        "explicacion": "Articulo 5 LOFCS 2. Relaciones con la comunidad. Singularmente: a) Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral. b) Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas. c) En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance. d) Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. La constitución de dichas Juntas y su composición se determinará:",
+        "opciones": [
+            "Mediante ordenanza local.",
+            "Reglamentariamente.",
+            "Legalmente.",
+            "Jerárquicamente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 54 | Junta local de seguridad LOFCS 1. En los municipios que tengan Cuerpo de Policía propio, podrá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial. 2. La constitución de dichas Juntas y su composición se determinará reglamentariamente. La presidencia corresponderá al Alcalde, salvo que concurriera a sus sesiones el Gobernador civil de la provincia, en cuyo caso, la presidencia será compartida con éste."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de los Cuerpos de Policía Municipal deben identificarse:",
+        "opciones": [
+            "A requerimiento de cualquier ciudadano seguridad ciudadana.",
+            "En el momento de practicar una detención.",
+            "Tras realizar una detención.",
+            "Antes de realizar una detención."
+        ],
+        "correcta": 1,
+        "explicacion": "Articulo 5 LOFCS 3. Tratamiento de detenidos, especialmente: a) Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en el momento de efectuar una detención. b) Velarán por la vida e integridad física de las personas a quienes detuvieren o que se encuentren bajo su custodia y respetarán el honor y la dignidad de las personas. c) Darán cumplimiento y observarán con la debida diligencia los trámites, plazos y requisitos exigidos por el ordenamiento jurídico, cuando se proceda a la detención de una persona."
+    },
+    {
+        "pregunta": "Los Cuerpos de Policía Local se rigen en cuanto a su régimen estatutario por los principios generales de la Ley Orgánica 2/1986, recogidos en su Título:",
+        "opciones": [
+            "I.",
+            "VI.",
+            "III.",
+            "IV."
+        ],
+        "correcta": 0,
+        "explicacion": "ESTRUCTURA LOFCS Titulo I. De los Cuerpos y Fuerzas de Seguridad               Capitulo I: Disposiciones generales               Capitulo II: Principios Básicos de Actuación               Capitulo III: Disposiciones Estatutarias Comunes Titulo II. De las Fuerzas y Cuerpos de Seguridad del Estado. Titulo III. De las Policías de las Comunidades Autónomas. Titulo IV. De la colaboración y coordinación entre el Estado y las Comunidades Autónomas. Titulo V. De las Policías Locales."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Fuerzas y Cuerpos de Seguridad deberán jurar o prometer:",
+        "opciones": [
+            "Fidelidad al Rey.",
+            "Acatamiento al Rey y a la Constitución.",
+            "Acatamiento a la Constitución como norma fundamental del Estado.",
+            "Acatamiento al ordenamiento jurídico."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6 | Formación y derechos LOFCS (...) 3. Los miembros de las Fuerzas y Cuerpos de Seguridad deberán jurar o prometer acatamiento a la Constitución como norma fundamental del Estado."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Fuerzas y Cuerpos de Seguridad proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de estas:",
+        "opciones": [
+            "Siempre que sean requeridos para ello por sus superiores.",
+            "Sólo sin son requeridos para ello por los ciudadanos interesados.",
+            "Solo a los ciudadanos interesados.",
+            "En todas sus intervenciones."
+        ],
+        "correcta": 3,
+        "explicacion": "Articulo 5 LOFCS 2. Relaciones con la comunidad. Singularmente: a) Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral. b) Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas. c) En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance. d) Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. En su actuación ante la comunidad, los miembros de las Fuerzas y Cuerpos de Seguridad deberán actuar bajo los principios de:",
+        "opciones": [
+            "Coordinación, oportunidad y congruencia.",
+            "Congruencia, coordinación y proporcionalidad.",
+            "Congruencia, oportunidad y proporcionalidad.",
+            "Proporcionalidad y congruencia."
+        ],
+        "correcta": 2,
+        "explicacion": "Articulo 5 LOFCS 2. Relaciones con la comunidad. Singularmente: a) Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral. b) Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas. c) En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance. d) Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. No es correcto que, los miembros de las Fuerzas y Cuerpos de Seguridad deban:",
+        "opciones": [
+            "Velar por la vida e integridad física de las personas a quienes detuvieron.",
+            "Velar por la vida de las personas que se encuentren bajo su custodia y respetarán el honor y la dignidad de las personas.",
+            "Dar cumplimiento a los trámites, plazos y requisitos exigidos por el ordenamiento jurídico, cuando se proceda a la detención de una persona.",
+            "Revelar las fuentes de información, en cualquier caso."
+        ],
+        "correcta": 3,
+        "explicacion": "Articulo 5 LOFCS 3. Tratamiento de detenidos, especialmente: a) Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en el momento de efectuar una detención. b) Velarán por la vida e integridad física de las personas a quienes detuvieren o que se encuentren bajo su custodia y respetarán el honor y la dignidad de las personas. c) Darán cumplimiento y observarán con la debida diligencia los trámites, plazos y requisitos exigidos por el ordenamiento jurídico, cuando se proceda a la detención de una persona. 5. Secreto profesional. Deberán guardar riguroso secreto respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. No estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera. OJO Nos piden la respuesta INCORRECTA"
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Las funciones de la Policía Municipal son ejercidas por el personal que desempeñe funciones de custodia y vigilancia de bienes, servicios e instalaciones, con la denominación de Guardas, Vigilantes, Agentes, Alguaciles o análogos, en:",
+        "opciones": [
+            "Cualquier caso.",
+            "Ningún caso.",
+            "Todo caso.",
+            "En los municipios donde no exista Policía Municipal."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 51 | Cuerpos de policía local. LOFCS 1. Los municipios podrán crear cuerpos de policía propios, de acuerdo con lo previsto en la presente ley, en la Ley de Bases de Régimen Local y en la legislación autonómica. 2. En los municipios donde no exista policía municipal, los cometidos de ésta serán ejercidos por el personal que desempeñe funciones de custodia y vigilancia de bienes, servicios e instalaciones, con la denominación de guardas, vigilantes, agentes, alguaciles o análogos. 3. Dichos cuerpos sólo podrán actuar en el ámbito territorial del municipio respectivo, salvo en situaciones de emergencia y previo requerimiento de las autoridades competentes. No obstante, cuando ejerzan funciones de protección de autoridades de las corporaciones locales, podrán actuar fuera del término municipal respectivo, con autorización del Ministerio del Interior o de la correspondiente autoridad de la comunidad autónoma que cuente con cuerpo de policía autonómica, cuando desarrollen íntegramente esas actuaciones en el ámbito territorial de dicha comunidad autónoma."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. No es un principio básico de actuación de los miembros de los Cuerpos de Policía Local:",
+        "opciones": [
+            "Colaborar con la Administración de Justicia y auxiliarla.",
+            "Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral.",
+            "Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos.",
+            "En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y con demora cuando de ello dependa evitar un daño grave."
+        ],
+        "correcta": 3,
+        "explicacion": "Articulo 5 LOFCS 2. Relaciones con la comunidad. Singularmente: a) Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral. b) Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas. c) En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance. d) Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior."
+    },
+    {
+        "pregunta": "Según la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad, no son Fuerzas y Cuerpos de Seguridad:",
+        "opciones": [
+            "Las Fuerzas y Cuerpos de Seguridad del Estado dependientes del Gobierno de la Nación.",
+            "Los Cuerpos de Policía dependientes de las Comunidades Autónomas.",
+            "Los Cuerpos de Policía dependientes de las Corporaciones Locales.",
+            "El personal de seguridad privada."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2 LOFCS Son Fuerzas y Cuerpos de Seguridad: a) Las Fuerzas y Cuerpos de Seguridad del Estado dependientes del Gobierno de la Nación. b) Los Cuerpos de Policía dependientes de las Comunidades Autónomas. c) Los Cuerpos de Policía dependientes de las Corporaciones Locales."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Señale en cuál de los siguientes municipios podrá constituirse una Junta Local de Seguridad:",
+        "opciones": [
+            "En todos los municipios.",
+            "En los municipios de gran población.",
+            "En los municipios donde exista cuerpo de policía propio.",
+            "En los municipios de más de 200.000 habitantes."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 54 | Junta local de seguridad LOFCS 1. En los municipios que tengan Cuerpo de Policía propio, podrá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial. 2. La constitución de dichas Juntas y su composición se determinará reglamentariamente. La presidencia corresponderá al Alcalde, salvo que concurriera a sus sesiones el Gobernador civil de la provincia, en cuyo caso, la presidencia será compartida con éste."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Fuerzas y Cuerpos de Seguridad deberán auxiliar y proteger a los ciudadanos:",
+        "opciones": [
+            "En cualquier caso.",
+            "Si las circunstancias lo aconsejan o fueren requeridos para ello.",
+            "Siempre que lo estimen oportuno.",
+            "Solo si son requeridos para ello."
+        ],
+        "correcta": 1,
+        "explicacion": "Articulo 5 LOFCS 2. Relaciones con la comunidad. Singularmente: a) Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral. b) Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas. c) En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance. d) Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. No es un principio básico de actuación de los miembros de las Fuerzas y Cuerpos de Seguridad, uno de los siguientes:",
+        "opciones": [
+            "Adecuación al ordenamiento jurídico.",
+            "Ejercer su función con absoluto respeto a la Constitución y al resto del ordenamiento jurídico.",
+            "Actuar, en el cumplimiento de sus funciones, con absoluta neutralidad política y parcialidad y, en consecuencia, sin discriminación alguna por razón de raza, religión u opinión.",
+            "Actuar con integridad y dignidad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5 LOFCS Son principios básicos de actuación de los miembros de las Fuerzas y Cuerpos de Seguridad los siguientes: 1. Adecuación al ordenamiento jurídico, especialmente: a) Ejercer su función con absoluto respeto a la Constitución y el resto del ordenamiento jurídico. b) Actuar, en el cumplimiento de sus funciones, con absoluta neutralidad política e imparcialidad y, en consecuencia, sin discriminación alguna por razón de raza, religión u opinión. c) Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente. d) Sujetarse en su actuación profesional a los principios de jerarquía y subordinación. En ningún caso la obediencia debida podrá amparar órdenes que entrañen la ejecución de actos que manifiestamente constituyan delito o sean contrarios a la Constitución o a las Leyes. e) Colaborar con la Administración de Justicia y auxiliarla en los términos establecidos en la Ley.  OJO Nos piden la respuesta INCORRECTA"
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Señale la respuesta correcta. El cumplimiento de la prisión preventiva y de las penas privativas de libertad por los miembros de las Fuerzas y Cuerpos de Seguridad se realizarán:",
+        "opciones": [
+            "En establecimientos penitenciarios especiales.",
+            "En establecimientos ordinarios sin ninguna particularidad.",
+            "En establecimientos ordinarios con separación del resto de detenidos.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 8 | Procesamiento de los agentes. LOFCS (...) 2. El cumplimiento de la prisión preventiva y de las penas privativas de libertad por los miembros de las Fuerzas y Cuerpos de Seguridad, se realizarán en establecimientos penitenciarios ordinarios, con separación del resto de detenidos o presos."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Fuerzas y Cuerpos de Seguridad deberán utilizar las armas:",
+        "opciones": [
+            "Solamente si existe un riesgo racionalmente grave para su vida o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana.",
+            "Solamente si existe un riesgo racionalmente grave para la vida de terceros o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana.",
+            "Solamente si existe un riesgo racionalmente grave para su integridad física o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana.",
+            "Solamente cuando exista un riesgo racionalmente grave para su vida, su integridad física o la de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana."
+        ],
+        "correcta": 3,
+        "explicacion": "Articulo 5 LOFCS 2. Relaciones con la comunidad. Singularmente: a) Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral. b) Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas. c) En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance. d) Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. No es una función asignada a los Cuerpos de Policía Local:",
+        "opciones": [
+            "Participar en las funciones de Policía Judicial.",
+            "La prestación de auxilio, en los casos de accidente, catástrofe o calamidad pública.",
+            "Efectuar diligencias de prevención y cuantas actuaciones tiendan a evitar la comisión de actos delictivos.",
+            "Cooperar en la resolución de los conflictos privados, en cualquier caso."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 53 | Funciones Policía Local 1. Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: a) Proteger a las autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones. b) Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación. c) Instruir atestados por accidentes de circulación dentro del casco urbano. d) Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia. e) Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley. f) La prestación de auxilio, en los casos de accidente, catástrofe o calamidad pública, participando, en la forma prevista en las Leyes, en la ejecución de los planes de Protección Civil. g) Efectuar diligencias de prevención y cuantas actuaciones tiendan a evitar la comisión de actos delictivos en el marco de colaboración establecido en las Juntas de Seguridad. h) Vigilar los espacios públicos y colaborar con las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas en la protección de las manifestaciones y el mantenimiento del orden en grandes concentraciones humanas, cuando sean requeridos para ello. i) Cooperar en la resolución de los conflictos privados cuando sean requeridos para ello. 2. Las actuaciones que practiquen los Cuerpos de Policía Local en el ejercicio de las funciones previstas en los apartados c) y g) precedentes deberán ser comunicadas a las Fuerzas y Cuerpos de Seguridad del Estado competentes."
+    },
+    {
+        "pregunta": "La Policía Local se encuentra regulada en la Ley Orgánica 2/1986, de 13 de marzo, en su Título:",
+        "opciones": [
+            "IV.",
+            "III.",
+            "II.",
+            "V."
+        ],
+        "correcta": 3,
+        "explicacion": "ESTRUCTURA LOFCS Titulo I. De los Cuerpos y Fuerzas de Seguridad Titulo II. De las Fuerzas y Cuerpos de Seguridad del Estado. Titulo III. De las Policías de las Comunidades Autónomas. Titulo IV. De la colaboración y coordinación entre el Estado y las Comunidades Autónomas. Titulo V. De las Policías Locales."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los Cuerpos de Policía Local son Institutos armados, de naturaleza:",
+        "opciones": [
+            "Civil.",
+            "Administrativa.",
+            "Pública.",
+            "Militar."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 52 | Definición. 1. Los Cuerpos de Policía Local son Institutos armados de naturaleza civil, con estructura y organización jerarquizada, rigiéndose, en cuanto a su régimen estatutario, por los principios generales de los capítulos II y III del título I y por la sección 4.ª del capítulo IV del título II de la presente Ley, con la adecuación que exija la dependencia de la Administración correspondiente, las disposiciones dictadas al respecto por las Comunidades Autónomas y los Reglamentos específicos para cada Cuerpo y demás normas dictadas por los correspondientes Ayuntamientos."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Los miembros de las Fuerzas y Cuerpos de seguridad:",
+        "opciones": [
+            "Podrán ejercer el derecho de huelga en los supuestos previstos constitucionalmente.",
+            "No podrán ejercer en ningún caso el derecho de huelga, ni acciones sustitutivas del mismo.",
+            "No podrán ejercer el derecho de huelga salvo en los casos previstos legalmente.",
+            "No podrán ejercer el derecho de huelga salvo en los casos previstos reglamentariamente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6 | Formación y derechos LOFCS (...) 8. Los miembros de las Fuerzas y Cuerpos de Seguridad no podrán ejercer en ningún caso el derecho de huelga, ni acciones sustitutivas del mismo o concertadas con el fin de alterar el normal funcionamiento de los servicios."
+    },
+    {
+        "pregunta": "Dentro del Título correspondiente de la Ley Orgánica 2/1986, resultan de aplicación a los Cuerpos de Policía Local el contenido de los principios generales de los Capítulos ... del Título I:",
+        "opciones": [
+            "I y II.",
+            "I y III.",
+            "III y IV.",
+            "II y III."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 52 | Definición. LOFCS 1. Los Cuerpos de Policía Local son Institutos armados de naturaleza civil, con estructura y organización jerarquizada, rigiéndose, en cuanto a su régimen estatutario, por los principios generales de los capítulos II y III del título I y por la sección 4.ª del capítulo IV del título II de la presente Ley, con la adecuación que exija la dependencia de la Administración correspondiente, las disposiciones dictadas al respecto por las Comunidades Autónomas y los Reglamentos específicos para cada Cuerpo y demás normas dictadas por los correspondientes Ayuntamientos."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. La responsabilidad de los miembros de los Cuerpos de Policía Local, por los actos que en su actuación profesional llevaron a cabo, infringiendo o vulnerando las normas legales es:",
+        "opciones": [
+            "Personal e indirecta.",
+            "Impersonal y directa.",
+            "Personal y directa.",
+            "Impersonal e indirecta."
+        ],
+        "correcta": 2,
+        "explicacion": "Articulo 5 LOFCS 6. Responsabilidad. Son responsables personal y directamente por los actos que en su actuación profesional llevaren a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión y los principios enunciados anteriormente, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

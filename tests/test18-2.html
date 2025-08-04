@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El nombramiento del jefe o de la jefa de cada Cuerpo de Policía Local corresponde a:",
+        "opciones": [
+            "Al regidor o regidora delegado.",
+            "Al alcalde o a la alcaldesa.",
+            "Al delegado de gobierno.",
+            "Al Instituto de Seguridad Pública de las Illes Balears."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 1. La jefatura del cuerpo de policía local es un puesto de trabajo de naturaleza funcionarial, que ha de figurar en la relación de puestos de trabajo correspondiente con la denominación «jefe o jefa del cuerpo de policía local 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial. Si se trata de personal de otras fuerzas y cuerpos de seguridad, se han de establecer reglamentariamente las equivalencias correspondientes."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Queda expresamente prohibido:",
+        "opciones": [
+            "Portar armas particulares durante el tiempo de servicio.",
+            "Portar armas reglamentarias fuera del tiempo de servicio.",
+            "Portar armas durante el tiempo de servicio.",
+            "Portar armas fuera del tiempo de servicio"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 24 | Armamento 6. Queda expresamente prohibido portar armas particulares durante el tiempo de servicio."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los Cuerpos de Policía Local de las Illes Balears se estructuran jerárquicamente, y a ellos les corresponde la escala técnica:",
+        "opciones": [
+            "Mayor.",
+            "Inspector.",
+            "Oficial.",
+            "Policía."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías (ver imagen)"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local vestirán el uniforme reglamentario cuando estén de servicio:",
+        "opciones": [
+            "Siempre.",
+            "Siempre excepto en los casos establecidos por la legislación vigente y previa autorización del alcalde o de la alcaldesa respectivo.",
+            "Nunca.",
+            "Siempre excepto en los casos establecidos por la legislación vigente y no es necesaria la autorización del alcalde o de la alcaldesa respectiva."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 26 | Uniformidad. 1. La uniformidad de los miembros de los cuerpos de policía local y de los policías de los ayuntamientos que no hayan constituido cuerpo de policía local será común para todos e incorporará los signos distintivos y de identificación que reglamentariamente se determinen. 2. Todos los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local vestirán el uniforme reglamentario cuando estén de servicio, excepto en los casos establecidos por la legislación vigente y previa autorización del alcalde o de la alcaldesa respectivo, caso en el que se identificarán con el documento de acreditación profesional. 3. Fuera del horario de servicio se prohíbe el uso del uniforme y material reglamentario, excepto en los casos previstos en la legislación vigente o los que sean autorizados por la jefatura del cuerpo, para asistir a las acciones formativas relacionadas con la función policial convocadas por las administraciones públicas y a los actos institucionales."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los Cuerpos de Policía Local de las Illes Balears se estructuran jerárquicamente, y a ellos les corresponde la escala básica:",
+        "opciones": [
+            "Mayor.",
+            "Subinspector o subinspectora.",
+            "Policía.",
+            "Intendente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías (ver imagen)"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Para ser nombrado jefe o jefa de un Cuerpo de Policía Local, debe en cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de:",
+        "opciones": [
+            "Inspector.",
+            "Subinspector.",
+            "Oficial.",
+            "Policía."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 1. La jefatura del cuerpo de policía local es un puesto de trabajo de naturaleza funcionarial, que ha de figurar en la relación de puestos de trabajo correspondiente con la denominación «jefe o jefa del cuerpo de policía local 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial. Si se trata de personal de otras fuerzas y cuerpos de seguridad, se han de establecer reglamentariamente las equivalencias correspondientes."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. En el caso de que se ocupe un puesto de trabajo que comporte la obligación de llevar arma de fuego, la retirada definitiva del arma implicará:",
+        "opciones": [
+            "La suspensión de funciones.",
+            "La pérdida de condición de funcionario.",
+            "El cambio de destino .",
+            "No implicará nada."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24 | Armamento 7. En el caso de que se ocupe un puesto de trabajo que comporte la obligación de llevar arma de fuego, la retirada definitiva del arma implicará el cambio de destino y la adecuación a las particularidades laborales y económicas del nuevo destino."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Se promoverá desde los ayuntamientos la creación de diferentes figuras de ________ cuya función será la de mediar y resolver los conflictos derivados de la convivencia entre los vecinos. Complete la frase:",
+        "opciones": [
+            "Policía de proximidad.",
+            "Policía tutor.",
+            "Policía comunitaria.",
+            "Policía de barrio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías: 2. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de policía de primera, oficial de primera y subinspector de primera, en los que se pueden integrar, respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido diez años de servicio activo como policía, cinco años de servicio activo como oficial o tres años de servicio activo como subinspector del respectivo municipio. Para la integración se requiere una valoración positiva del ayuntamiento, que ha de atender la trayectoria y actuación profesional del funcionario o la funcionaria, la calidad del trabajo realizado, los conocimientos adquiridos y el resultado de la evaluación del ejercicio profesional. Se pueden incluir otros méritos y aptitudes por razón de la especificidad de la función desarrollada y de la experiencia adquirida. 3. Los órganos competentes de los ayuntamientos pueden crear las especialidades que consideren oportunas para cada categoría partiendo de sus propias peculiaridades de organización y funcionamiento. Se promoverá desde los ayuntamientos la creación de diferentes figuras de policía de proximidad cuya función será la de mediar y resolver los conflictos derivados de la convivencia entre los vecinos. La provisión de los puestos de trabajo de estas especialidades se han de realizar preferentemente entre el personal funcionario de la categoría correspondiente y por los procedimientos de concurso de méritos o de concurso específico. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía. 5. En todo caso, la existencia de una categoría concreta supone, necesariamente, la de las inferiores."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Corresponde a _______ determinar los servicios en los que no se llevarán armas. Complete la frase:",
+        "opciones": [
+            "Al alcalde o a la alcaldesa de los municipios con cuerpo de policía local.",
+            "Al regidor o a la regidora en quien delegue de forma expresa.",
+            "Al jefe o a la jefa de policía por delegación expresa del alcalde o de la alcaldesa.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 24 | Armamento 1. Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones portarán el armamento reglamentario que se les asigne. Asimismo, dispondrán de los medios técnicos y operativos necesarios para cumplir sus funciones. Reglamentariamente se determinarán las prácticas de habilitación y uso del armamento que sean preceptivas para garantizar su correcta utilización. Corresponde al alcalde o a la alcaldesa de los municipios con cuerpo de policía local, al regidor o a la regidora en quien delegue de forma expresa o al jefe o a la jefa de policía por delegación expresa del alcalde o de la alcaldesa determinar los servicios en los que no se llevarán armas, procurando evitar la posesión de armas de fuego en aquellos casos en que no se considere estrictamente necesario."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. En el Documento de acreditación profesional constarán los siguientes datos:",
+        "opciones": [
+            "Al menos los datos relativos al municipio de pertenencia.",
+            "La identificación de la categoría profesional.",
+            "El número de registro individual.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 25 | Documento de acreditación profesional. 1. Todos los miembros de los cuerpos de policía local y los policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local llevarán un documento de acreditación profesional expedido por la consejería competente en materia de coordinación de policías locales, en que constarán al menos los datos relativos al municipio de pertenencia, la identificación de la categoría profesional y el número de registro individual. 2. El documento de acreditación profesional es propiedad de la consejería competente en materia de coordinación de policías locales y se devolverá en caso de baja o cambio de categoría en el cuerpo de policía al que pertenece."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Un policía puede ser nombrado jefe o jefa de un Cuerpo de Policía Local:",
+        "opciones": [
+            "Sí, siempre.",
+            "No, nunca.",
+            "Si es la máxima categoría.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 1. La jefatura del cuerpo de policía local es un puesto de trabajo de naturaleza funcionarial, que ha de figurar en la relación de puestos de trabajo correspondiente con la denominación «jefe o jefa del cuerpo de policía local 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial. Si se trata de personal de otras fuerzas y cuerpos de seguridad, se han de establecer reglamentariamente las equivalencias correspondientes."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El puesto de trabajo de jefe o jefa del Cuerpo de Policía Local se ha de ajustar a los siguientes criterios:",
+        "opciones": [
+            "En el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de tres años de antigüedad en la escala de procedencia.",
+            "En el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de cuatro años de antigüedad en la escala de procedencia.",
+            "En el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de dos años de antigüedad en la escala de procedencia.",
+            "En el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de cinco años de antigüedad en la escala de procedencia."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 3. El puesto de trabajo de jefe o jefa del cuerpo de policía local se ha de ajustar a los siguientes criterios: a) La categoría del puesto ha de coincidir con la máxima categoría del cuerpo de policía local del municipio. b) El procedimiento de provisión del puesto es la libre designación y puede ser con carácter definitivo o en comisión de servicios. Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser en comisión de servicios; si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de carrera podrá ser en comisión de servicios o con carácter definitivo, sin perjuicio de poder ser removido discrecionalmente de estas funciones. c) Solo puede ser ocupado por el personal funcionario de carrera al que hace referencia el apartado 2 de este artículo, siempre que esté en servicio activo; tenga la titulación exigida para acceder a la categoría a la cual está adscrito el puesto; cumpla los requisitos establecidos en la relación de puestos de trabajo; y, en el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de dos años de antigüedad en la escala de procedencia. d) El personal funcionario que ocupe este puesto de trabajo, con posterioridad al nombramiento ha de realizar el curso de capacitación para jefes de policía local que deberá promover la Escuela Balear de Administración Pública. Quedan eximidas de la realización de este curso las personas que ya lo hayan realizado o las que estén en posesión del curso de capacitación de la categoría correspondiente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias:",
+        "opciones": [
+            "Un comportamiento de inestabilidad emocional.",
+            "Un comportamiento de alteración psíquica del agente que racionalmente pueda hacer prever la posibilidad de correr un riesgo propio o ajeno.",
+            "La a y b son correctas.",
+            "La ay b son incorrectas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24 | Armamento 3. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias: a) Un comportamiento de inestabilidad emocional o de alteración psíquica del agente que racionalmente pueda hacer prever la posibilidad de correr un riesgo propio o ajeno. b) El informe psicotécnico emitido por un psicólogo colegiado o una psicóloga colegiada que recomiende la retirada del arma de fuego. c) La negligencia o la impericia grave evidenciada por una actuación durante el servicio. d) La no superación o negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento. e) La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas. f) Cuando mediante decisión judicial, ya sea cautelar o definitiva, se acuerde la retirada del arma."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La jefatura del Cuerpo de Policía Local ejerce:",
+        "opciones": [
+            "La máxima responsabilidad operativa en la policía local.",
+            "Tiene el mando inmediato sobre todas las unidades y los servicios en que se organice.",
+            "Lleva a cabo las funciones que se determinen legal y reglamentariamente.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 4. La jefatura del cuerpo de policía local ejerce la máxima responsabilidad operativa en la policía local, tiene el mando inmediato sobre todas las unidades y los servicios en que se organice y lleva a cabo las funciones que se determinen legal y reglamentariamente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El alcalde o la alcaldesa ha de designar entre los miembros que pertenezcan a la escala o categoría del cuerpo de policía de su municipio la persona o las personas que por orden de prelación han de sustituir al jefe o la jefa en casos de:",
+        "opciones": [
+            "Vacante.",
+            "Ausencia.",
+            "Enfermedad.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 5. El alcalde o la alcaldesa ha de designar entre los miembros que pertenezcan a la escala o categoría citadas en el apartado 2 anterior del cuerpo de policía de su municipio la persona o las personas que por orden de prelación han de sustituir al jefe o la jefa en casos de vacante, ausencia o enfermedad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los Cuerpos de Policía Local de las Illes Balears se estructuran jerárquicamente, y a ellos les corresponde la escala ejecutiva:",
+        "opciones": [
+            "Mayor.",
+            "Subinspector o subinspectora.",
+            "Oficial.",
+            "Intendente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías (ver imagen)"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La jefatura del Cuerpo de Policía Local es un puesto de trabajo de naturaleza funcionarial:",
+        "opciones": [
+            "Que ha de figurar en la relación de puestos de trabajo correspondiente con la denominación \"jefe o jefa del cuerpo de policía local”.",
+            "No es necesaria, al ser de libre designación.",
+            "Es suficiente que lo autorice el Instituto de Seguridad Pública de las Illes Balears.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 1. La jefatura del cuerpo de policía local es un puesto de trabajo de naturaleza funcionarial, que ha de figurar en la relación de puestos de trabajo correspondiente con la denominación \"jefe o jefa del cuerpo de policía local\"."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los órganos competentes de los ayuntamientos pueden crear las especialidades que consideren oportunas para cada categoría partiendo de sus propias peculiaridades de organización y funcionamiento:",
+        "opciones": [
+            "No se pueden crear.",
+            "No, depende del Instituto de Seguridad Pública de las Illes Balears.",
+            "Sí se pueden crear.",
+            "Sí se puede crear, pero depende del Instituto de Seguridad Pública de las Illes Balears."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías: 2. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de policía de primera, oficial de primera y subinspector de primera, en los que se pueden integrar, respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido diez años de servicio activo como policía, cinco años de servicio activo como oficial o tres años de servicio activo como subinspector del respectivo municipio. Para la integración se requiere una valoración positiva del ayuntamiento, que ha de atender la trayectoria y actuación profesional del funcionario o la funcionaria, la calidad del trabajo realizado, los conocimientos adquiridos y el resultado de la evaluación del ejercicio profesional. Se pueden incluir otros méritos y aptitudes por razón de la especificidad de la función desarrollada y de la experiencia adquirida. 3. Los órganos competentes de los ayuntamientos pueden crear las especialidades que consideren oportunas para cada categoría partiendo de sus propias peculiaridades de organización y funcionamiento. Se promoverá desde los ayuntamientos la creación de diferentes figuras de policía de proximidad cuya función será la de mediar y resolver los conflictos derivados de la convivencia entre los vecinos. La provisión de los puestos de trabajo de estas especialidades se han de realizar preferentemente entre el personal funcionario de la categoría correspondiente y por los procedimientos de concurso de méritos o de concurso específico. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía. 5. En todo caso, la existencia de una categoría concreta supone, necesariamente, la de las inferiores."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de subinspector de primera, oficial de primera, policía de primera respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido _______ años de servicio activo como policía de cualquier municipio. Complete la frase:",
+        "opciones": [
+            "Cinco.",
+            "Diez.",
+            "Quince.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías: 2. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de policía de primera, oficial de primera y subinspector de primera, en los que se pueden integrar, respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido diez años de servicio activo como policía, cinco años de servicio activo como oficial o tres años de servicio activo como subinspector del respectivo municipio. Para la integración se requiere una valoración positiva del ayuntamiento, que ha de atender la trayectoria y actuación profesional del funcionario o la funcionaria, la calidad del trabajo realizado, los conocimientos adquiridos y el resultado de la evaluación del ejercicio profesional. Se pueden incluir otros méritos y aptitudes por razón de la especificidad de la función desarrollada y de la experiencia adquirida. 3. Los órganos competentes de los ayuntamientos pueden crear las especialidades que consideren oportunas para cada categoría partiendo de sus propias peculiaridades de organización y funcionamiento. Se promoverá desde los ayuntamientos la creación de diferentes figuras de policía de proximidad cuya función será la de mediar y resolver los conflictos derivados de la convivencia entre los vecinos. La provisión de los puestos de trabajo de estas especialidades se han de realizar preferentemente entre el personal funcionario de la categoría correspondiente y por los procedimientos de concurso de méritos o de concurso específico. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía. 5. En todo caso, la existencia de una categoría concreta supone, necesariamente, la de las inferiores."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias:",
+        "opciones": [
+            "Cuando mediante decisión judicial, ya sea cautelar o definitiva, se acuerde la retirada del arma.",
+            "Cuando mediante decisión judicial cautelar se acuerde la retirada del arma.",
+            "Cuando mediante decisión judicial definitiva se acuerde la retirada del arma.",
+            "Cuando mediante decisión pericial, ya sea cautelar o definitiva, se acuerde la retirada del arma."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 24 | Armamento 3. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias: a) Un comportamiento de inestabilidad emocional o de alteración psíquica del agente que racionalmente pueda hacer prever la posibilidad de correr un riesgo propio o ajeno. b) El informe psicotécnico emitido por un psicólogo colegiado o una psicóloga colegiada que recomiende la retirada del arma de fuego. c) La negligencia o la impericia grave evidenciada por una actuación durante el servicio. d) La no superación o negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento. e) La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas. f) Cuando mediante decisión judicial, ya sea cautelar o definitiva, se acuerde la retirada del arma."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los o las Policías Locales de los ayuntamientos que no hayan constituido Cuerpo de Policía Local han de llevar:",
+        "opciones": [
+            "El alcalde o la alcaldesa puede determinar los servicios en los que se portarán armas de fuego.",
+            "El equipo básico de autoprotección.",
+            "Defensa que se determine reglamentariamente.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 24 | Armamento 2. Los o las policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local han de llevar el equipo básico de autoprotección y defensa que se determine reglamentariamente, pero el alcalde o la alcaldesa puede determinar los servicios en los que se portarán armas de fuego, siempre que hayan superado el correspondiente curso para la habilitación y el uso del armamento de la Escuela Balear de Administración Pública."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El código de ética profesional dirigido a las Policías Locales de las Illes Balears, tiene por objetivos:",
+        "opciones": [
+            "De promover las buenas prácticas.",
+            "Las actitudes y actividades adecuadas a la ética.",
+            "El trato correcto a las personas en el ámbito policial.",
+            "Todas las anteriores."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 23 | Principios de actuación. Ética y transparencia profesional 1. Los miembros de los cuerpos de policía local y policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local han de ejercer sus funciones en los términos que prevé esta ley y el resto de la normativa aplicable, y han de respetar en todo caso los principios básicos de actuación que prevé la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. 2. En el marco de los citados principios básicos de actuación, por acuerdo del Consejo de Gobierno se ha de aprobar un código de ética profesional dirigido a las policías locales de las Illes Balears, con el objetivo de promover las buenas prácticas y las actitudes y actividades adecuadas a la ética y el trato correcto a las personas en el ámbito policial."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los miembros de los Cuerpos de Policía Local en el ejercicio de sus funciones portarán:",
+        "opciones": [
+            "El armamento antirreglamentario que se les asigne.",
+            "El armamento reglamentario que puedan comprar.",
+            "El armamento reglamentario que se les asigne.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24 | Armamento 1. Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones portarán el armamento reglamentario que se les asigne. Asimismo, dispondrán de los medios técnicos y operativos necesarios para cumplir sus funciones. Reglamentariamente se determinarán las prácticas de habilitación y uso del armamento que sean preceptivas para garantizar su correcta utilización. Corresponde al alcalde o a la alcaldesa de los municipios con cuerpo de policía local, al regidor o a la regidora en quien delegue de forma expresa o al jefe o a la jefa de policía por delegación expresa del alcalde o de la alcaldesa determinar los servicios en los que no se llevarán armas, procurando evitar la posesión de armas de fuego en aquellos casos en que no se considere estrictamente necesario."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La existencia de una categoría concreta supone, necesariamente, la existencia de las inferiores:",
+        "opciones": [
+            "No es necesario.",
+            "Si es necesario.",
+            "Es lo más adecuado.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías: 2. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de policía de primera, oficial de primera y subinspector de primera, en los que se pueden integrar, respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido diez años de servicio activo como policía, cinco años de servicio activo como oficial o tres años de servicio activo como subinspector del respectivo municipio. Para la integración se requiere una valoración positiva del ayuntamiento, que ha de atender la trayectoria y actuación profesional del funcionario o la funcionaria, la calidad del trabajo realizado, los conocimientos adquiridos y el resultado de la evaluación del ejercicio profesional. Se pueden incluir otros méritos y aptitudes por razón de la especificidad de la función desarrollada y de la experiencia adquirida. 3. Los órganos competentes de los ayuntamientos pueden crear las especialidades que consideren oportunas para cada categoría partiendo de sus propias peculiaridades de organización y funcionamiento. Se promoverá desde los ayuntamientos la creación de diferentes figuras de policía de proximidad cuya función será la de mediar y resolver los conflictos derivados de la convivencia entre los vecinos. La provisión de los puestos de trabajo de estas especialidades se han de realizar preferentemente entre el personal funcionario de la categoría correspondiente y por los procedimientos de concurso de méritos o de concurso específico. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía. 5. En todo caso, la existencia de una categoría concreta supone, necesariamente, la de las inferiores."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Deberán existir unos lugares adecuados para custodiar el armamento asignado con las condiciones que prevé la normativa aplicable, y serán responsabilidad de:",
+        "opciones": [
+            "Los ayuntamientos.",
+            "Los policías.",
+            "Del jefe de policía.",
+            "Del responsable de armamento."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 24 | Armamento 5. Los ayuntamientos han de disponer de lugares adecuados para custodiar el armamento asignado con las condiciones que prevé la normativa aplicable."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El puesto de trabajo de jefe o jefa del Cuerpo de Policía Local se ha de ajustar a los siguientes criterios:",
+        "opciones": [
+            "Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser en carácter de interinidad.",
+            "Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser como funcionario de carrera.",
+            "Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser en comisión de servicios.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 3. El puesto de trabajo de jefe o jefa del cuerpo de policía local se ha de ajustar a los siguientes criterios: a) La categoría del puesto ha de coincidir con la máxima categoría del cuerpo de policía local del municipio. b) El procedimiento de provisión del puesto es la libre designación y puede ser con carácter definitivo o en comisión de servicios. Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser en comisión de servicios; si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de carrera podrá ser en comisión de servicios o con carácter definitivo, sin perjuicio de poder ser removido discrecionalmente de estas funciones. c) Solo puede ser ocupado por el personal funcionario de carrera al que hace referencia el apartado 2 de este artículo, siempre que esté en servicio activo; tenga la titulación exigida para acceder a la categoría a la cual está adscrito el puesto; cumpla los requisitos establecidos en la relación de puestos de trabajo; y, en el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de dos años de antigüedad en la escala de procedencia. d) El personal funcionario que ocupe este puesto de trabajo, con posterioridad al nombramiento ha de realizar el curso de capacitación para jefes de policía local que deberá promover la Escuela Balear de Administración Pública. Quedan eximidas de la realización de este curso las personas que ya lo hayan realizado o las que estén en posesión del curso de capacitación de la categoría correspondiente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias:",
+        "opciones": [
+            "informe psicotécnico emitido por un parapsicólogo colegiado o una parapsicóloga colegiada que recomiende la retirada del arma de fuego.",
+            "Que la retire un psicólogo colegiado o una psicóloga colegiada.",
+            "Al no superar el permiso de conducir.",
+            "Al informe psicotécnico emitido por un psicólogo colegiado o una psicóloga colegiada que recomiende la retirada del arma de fuego."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 24 | Armamento 3. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias: a) Un comportamiento de inestabilidad emocional o de alteración psíquica del agente que racionalmente pueda hacer prever la posibilidad de correr un riesgo propio o ajeno. b) El informe psicotécnico emitido por un psicólogo colegiado o una psicóloga colegiada que recomiende la retirada del arma de fuego. c) La negligencia o la impericia grave evidenciada por una actuación durante el servicio. d) La no superación o negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento. e) La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas. f) Cuando mediante decisión judicial, ya sea cautelar o definitiva, se acuerde la retirada del arma."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. ¿A quién corresponde proveer los puestos de libre designación a propuesta del jefe o jefa de Policía?",
+        "opciones": [
+            "Al delegado del gobierno de la CA correspondiente.",
+            "Al alcalde o la alcaldesa.",
+            "Al regidor delegado o a la regidora delegada.",
+            "La b y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías: 2. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de policía de primera, oficial de primera y subinspector de primera, en los que se pueden integrar, respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido diez años de servicio activo como policía, cinco años de servicio activo como oficial o tres años de servicio activo como subinspector del respectivo municipio. Para la integración se requiere una valoración positiva del ayuntamiento, que ha de atender la trayectoria y actuación profesional del funcionario o la funcionaria, la calidad del trabajo realizado, los conocimientos adquiridos y el resultado de la evaluación del ejercicio profesional. Se pueden incluir otros méritos y aptitudes por razón de la especificidad de la función desarrollada y de la experiencia adquirida. 3. Los órganos competentes de los ayuntamientos pueden crear las especialidades que consideren oportunas para cada categoría partiendo de sus propias peculiaridades de organización y funcionamiento. Se promoverá desde los ayuntamientos la creación de diferentes figuras de policía de proximidad cuya función será la de mediar y resolver los conflictos derivados de la convivencia entre los vecinos. La provisión de los puestos de trabajo de estas especialidades se han de realizar preferentemente entre el personal funcionario de la categoría correspondiente y por los procedimientos de concurso de méritos o de concurso específico. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía. 5. En todo caso, la existencia de una categoría concreta supone, necesariamente, la de las inferiores."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de subinspector de primera, oficial de primera, policía de primera respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido _______ años de servicio activo como policía del respectivo municipio. Complete la frase:",
+        "opciones": [
+            "Cinco.",
+            "Diez.",
+            "Quince.",
+            "Tres."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías: 2. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de policía de primera, oficial de primera y subinspector de primera, en los que se pueden integrar, respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido diez años de servicio activo como policía, cinco años de servicio activo como oficial o tres años de servicio activo como subinspector del respectivo municipio. Para la integración se requiere una valoración positiva del ayuntamiento, que ha de atender la trayectoria y actuación profesional del funcionario o la funcionaria, la calidad del trabajo realizado, los conocimientos adquiridos y el resultado de la evaluación del ejercicio profesional. Se pueden incluir otros méritos y aptitudes por razón de la especificidad de la función desarrollada y de la experiencia adquirida. 3. Los órganos competentes de los ayuntamientos pueden crear las especialidades que consideren oportunas para cada categoría partiendo de sus propias peculiaridades de organización y funcionamiento. Se promoverá desde los ayuntamientos la creación de diferentes figuras de policía de proximidad cuya función será la de mediar y resolver los conflictos derivados de la convivencia entre los vecinos. La provisión de los puestos de trabajo de estas especialidades se han de realizar preferentemente entre el personal funcionario de la categoría correspondiente y por los procedimientos de concurso de méritos o de concurso específico. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía. 5. En todo caso, la existencia de una categoría concreta supone, necesariamente, la de las inferiores."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los ayuntamientos podrán incluir en la escala facultativa técnica otros especialistas para la cobertura, el asesoramiento y el apoyo a las funciones policiales:",
+        "opciones": [
+            "Si pero solo para el asesoramiento.",
+            "No es posible.",
+            "Sí.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 bis | Escala facultativa técnica. 3. En las mismas circunstancias previstas en el apartado 1 anterior, y teniendo en cuenta criterios de eficacia en el cumplimiento de las funciones de la policía local no relacionadas con la criminalidad, los ayuntamientos podrán incluir en la escala facultativa técnica otros especialistas para la cobertura, el asesoramiento y el apoyo a las funciones policiales."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El documento de acreditación profesional es propiedad de:",
+        "opciones": [
+            "La consejería competente en materia de coordinación de policías locales y se devolverá en caso de baja o cambio de categoría en el cuerpo de policía al que pertenece.",
+            "Al agente.",
+            "Al cuerpo de policía al que pertenece.",
+            "Al ayuntamiento al que pertenece."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 25 | Documento de acreditación profesional. 1. Todos los miembros de los cuerpos de policía local y los policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local llevarán un documento de acreditación profesional expedido por la consejería competente en materia de coordinación de policías locales, en que constarán al menos los datos relativos al municipio de pertenencia, la identificación de la categoría profesional y el número de registro individual. 2. El documento de acreditación profesional es propiedad de la consejería competente en materia de coordinación de policías locales y se devolverá en caso de baja o cambio de categoría en el cuerpo de policía al que pertenece."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias:",
+        "opciones": [
+            "La incapacidad laboral permanente, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas.",
+            "La incapacidad laboral transitoria, cuando sea inferior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas.",
+            "La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas.",
+            "La incapacidad laboral revisable, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24 | Armamento 3. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias: a) Un comportamiento de inestabilidad emocional o de alteración psíquica del agente que racionalmente pueda hacer prever la posibilidad de correr un riesgo propio o ajeno. b) El informe psicotécnico emitido por un psicólogo colegiado o una psicóloga colegiada que recomiende la retirada del arma de fuego. c) La negligencia o la impericia grave evidenciada por una actuación durante el servicio. d) La no superación o negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento. e) La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas. f) Cuando mediante decisión judicial, ya sea cautelar o definitiva, se acuerde la retirada del arma."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El puesto de trabajo de jefe o jefa del Cuerpo de Policía Local se ha de ajustar a los siguientes criterios:",
+        "opciones": [
+            "El procedimiento de provisión del puesto es de designación directa y puede ser con carácter definitivo o en comisión de servicios.",
+            "El procedimiento de provisión del puesto es la libre designación y debe ser con carácter definitivo.",
+            "El procedimiento de provisión del puesto es la libre designación y debe ser en comisión de servicios.",
+            "El procedimiento de provisión del puesto es la libre designación y puede ser con carácter definitivo o en comisión de servicios."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 3. El puesto de trabajo de jefe o jefa del cuerpo de policía local se ha de ajustar a los siguientes criterios: a) La categoría del puesto ha de coincidir con la máxima categoría del cuerpo de policía local del municipio. b) El procedimiento de provisión del puesto es la libre designación y puede ser con carácter definitivo o en comisión de servicios. Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser en comisión de servicios; si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de carrera podrá ser en comisión de servicios o con carácter definitivo, sin perjuicio de poder ser removido discrecionalmente de estas funciones. c) Solo puede ser ocupado por el personal funcionario de carrera al que hace referencia el apartado 2 de este artículo, siempre que esté en servicio activo; tenga la titulación exigida para acceder a la categoría a la cual está adscrito el puesto; cumpla los requisitos establecidos en la relación de puestos de trabajo; y, en el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de dos años de antigüedad en la escala de procedencia. d) El personal funcionario que ocupe este puesto de trabajo, con posterioridad al nombramiento ha de realizar el curso de capacitación para jefes de policía local que deberá promover la Escuela Balear de Administración Pública. Quedan eximidas de la realización de este curso las personas que ya lo hayan realizado o las que estén en posesión del curso de capacitación de la categoría correspondiente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los Cuerpos de Policía Local de las Illes Balears se estructuran jerárquicamente, y a ellos les corresponde la escala básica:",
+        "opciones": [
+            "Mayor.",
+            "Subinspector o subinspectora.",
+            "Oficial.",
+            "Intendente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías (ver imagen)"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El nombramiento del jefe o jefa de cada Cuerpo de Policía Local es por:",
+        "opciones": [
+            "El procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior.",
+            "El procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior.",
+            "El procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio, siempre que pertenezca a la escala o categoría citadas o a una escala superior.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 1. La jefatura del cuerpo de policía local es un puesto de trabajo de naturaleza funcionarial, que ha de figurar en la relación de puestos de trabajo correspondiente con la denominación «jefe o jefa del cuerpo de policía local 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial. Si se trata de personal de otras fuerzas y cuerpos de seguridad, se han de establecer reglamentariamente las equivalencias correspondientes."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El puesto de trabajo de jefe o jefa del Cuerpos de Policía Local se ha de ajustar a los siguientes criterios:",
+        "opciones": [
+            "El personal funcionario que ocupe este puesto de trabajo, con posterioridad al nombramiento ha de realizar el curso de capacitación para jefes de policía local que deberá promover la Escuela Balear de Administración Pública.",
+            "Quedan eximidas de la realización del curso de capacitación para jefes de policía local las personas que ya lo hayan realizado.",
+            "Quedan eximidas de la realización del curso de capacitación para jefes de policía local las personas que estén en posesión del curso de capacitación de la categoría correspondiente.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 3. El puesto de trabajo de jefe o jefa del cuerpo de policía local se ha de ajustar a los siguientes criterios: a) La categoría del puesto ha de coincidir con la máxima categoría del cuerpo de policía local del municipio. b) El procedimiento de provisión del puesto es la libre designación y puede ser con carácter definitivo o en comisión de servicios. Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser en comisión de servicios; si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de carrera podrá ser en comisión de servicios o con carácter definitivo, sin perjuicio de poder ser removido discrecionalmente de estas funciones. c) Solo puede ser ocupado por el personal funcionario de carrera al que hace referencia el apartado 2 de este artículo, siempre que esté en servicio activo; tenga la titulación exigida para acceder a la categoría a la cual está adscrito el puesto; cumpla los requisitos establecidos en la relación de puestos de trabajo; y, en el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de dos años de antigüedad en la escala de procedencia. d) El personal funcionario que ocupe este puesto de trabajo, con posterioridad al nombramiento ha de realizar el curso de capacitación para jefes de policía local que deberá promover la Escuela Balear de Administración Pública. Quedan eximidas de la realización de este curso las personas que ya lo hayan realizado o las que estén en posesión del curso de capacitación de la categoría correspondiente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los Cuerpos de Policía Local de las Illes Balears se estructuran jerárquicamente, y a ellos les corresponde la escala técnica:",
+        "opciones": [
+            "Comisario o comisaria.",
+            "Inspector.",
+            "Oficial.",
+            "Policía."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías (ver imagen)"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El puesto de trabajo de jefe o jefa del Cuerpo de Policía Local se ha de ajustar a los siguientes criterios:",
+        "opciones": [
+            "Si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de carrera podrá ser en comisión de servicios.",
+            "Si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de carrera podrá ser con carácter definitivo.",
+            "Si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de eventual podrá ser con carácter definitivo.",
+            "La a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 3. El puesto de trabajo de jefe o jefa del cuerpo de policía local se ha de ajustar a los siguientes criterios: a) La categoría del puesto ha de coincidir con la máxima categoría del cuerpo de policía local del municipio. b) El procedimiento de provisión del puesto es la libre designación y puede ser con carácter definitivo o en comisión de servicios. Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser en comisión de servicios; si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de carrera podrá ser en comisión de servicios o con carácter definitivo, sin perjuicio de poder ser removido discrecionalmente de estas funciones. c) Solo puede ser ocupado por el personal funcionario de carrera al que hace referencia el apartado 2 de este artículo, siempre que esté en servicio activo; tenga la titulación exigida para acceder a la categoría a la cual está adscrito el puesto; cumpla los requisitos establecidos en la relación de puestos de trabajo; y, en el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de dos años de antigüedad en la escala de procedencia. d) El personal funcionario que ocupe este puesto de trabajo, con posterioridad al nombramiento ha de realizar el curso de capacitación para jefes de policía local que deberá promover la Escuela Balear de Administración Pública. Quedan eximidas de la realización de este curso las personas que ya lo hayan realizado o las que estén en posesión del curso de capacitación de la categoría correspondiente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los Cuerpos de Policía Local de las Illes Balears se estructuran jerárquicamente, y a ellos les corresponde la escala ejecutiva:",
+        "opciones": [
+            "Mayor.",
+            "Inspector o inspectora.",
+            "Oficial.",
+            "Intendente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías (ver imagen)"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los Cuerpos de Policía Local de las Illes Balears se estructuran jerárquicamente, y a ellos les corresponde la escala básica:",
+        "opciones": [
+            "El subgrupo C1.",
+            "El subgrupo C2.",
+            "El subgrupo D1.",
+            "El subgrupo D2."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías (ver imagen)"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El puesto de trabajo de jefe o jefa del Cuerpo de Policía Local se ha de ajustar a los siguientes criterios:",
+        "opciones": [
+            "La categoría del puesto ha de coincidir con la mínima categoría del cuerpo de policía local del municipio.",
+            "La categoría del puesto NO ha de coincidir con la máxima categoría del cuerpo de policía local del municipio.",
+            "La categoría del puesto",
+            "La categoría del puesto puede coincidir con la máxima categoría del cuerpo de policía local del municipio."
+        ],
+        "correcta": null,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 3. El puesto de trabajo de jefe o jefa del cuerpo de policía local se ha de ajustar a los siguientes criterios: a) La categoría del puesto ha de coincidir con la máxima categoría del cuerpo de policía local del municipio. b) El procedimiento de provisión del puesto es la libre designación y puede ser con carácter definitivo o en comisión de servicios. Si se accede a una categoría superior a la cual se pertenece como funcionario de carrera, deberá ser en comisión de servicios; si se accede a la misma categoría o a una inferior a la cual se pertenece como funcionario de carrera podrá ser en comisión de servicios o con carácter definitivo, sin perjuicio de poder ser removido discrecionalmente de estas funciones. c) Solo puede ser ocupado por el personal funcionario de carrera al que hace referencia el apartado 2 de este artículo, siempre que esté en servicio activo; tenga la titulación exigida para acceder a la categoría a la cual está adscrito el puesto; cumpla los requisitos establecidos en la relación de puestos de trabajo; y, en el caso de que pertenezca a otro ayuntamiento, acredite un mínimo de dos años de antigüedad en la escala de procedencia. d) El personal funcionario que ocupe este puesto de trabajo, con posterioridad al nombramiento ha de realizar el curso de capacitación para jefes de policía local que deberá promover la Escuela Balear de Administración Pública. Quedan eximidas de la realización de este curso las personas que ya lo hayan realizado o las que estén en posesión del curso de capacitación de la categoría correspondiente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Para portar armas de fuego deberán siempre:",
+        "opciones": [
+            "Superar el correspondiente curso de uso del armamento de la Escuela Balear de Administración Pública.",
+            "Superar el correspondiente curso para la habilitación y el uso del armamento de la Escuela Balear de Administración Pública.",
+            "Superar el correspondiente curso para la habilitación del armamento de la Escuela Balear de Administración Pública.",
+            "No es necesario superar ningún curso, sólo un psicotécnico."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 24 | Armamento 2. Los o las policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local han de llevar el equipo básico de autoprotección y defensa que se determine reglamentariamente, pero el alcalde o la alcaldesa puede determinar los servicios en los que se portarán armas de fuego, siempre que hayan superado el correspondiente curso para la habilitación y el uso del armamento de la Escuela Balear de Administración Pública."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento, se puede llevar a cabo en los casos individuales, en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias:",
+        "opciones": [
+            "La superación de las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento.",
+            "La superación y negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento.",
+            "La no superación o negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento.",
+            "La superación y querer realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24 | Armamento 3. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias: a) Un comportamiento de inestabilidad emocional o de alteración psíquica del agente que racionalmente pueda hacer prever la posibilidad de correr un riesgo propio o ajeno. b) El informe psicotécnico emitido por un psicólogo colegiado o una psicóloga colegiada que recomiende la retirada del arma de fuego. c) La negligencia o la impericia grave evidenciada por una actuación durante el servicio. d) La no superación o negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento. e) La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas. f) Cuando mediante decisión judicial, ya sea cautelar o definitiva, se acuerde la retirada del arma."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los miembros de los Cuerpos de Policía Local pertenecen a un:",
+        "opciones": [
+            "Instituto armado.",
+            "Instituto desarmado.",
+            "Instituto municipal.",
+            "Instituto de Seguridad Pública de las Illes Balears."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 24 | Armamento 1. Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones portarán el armamento reglamentario que se les asigne. Asimismo, dispondrán de los medios técnicos y operativos necesarios para cumplir sus funciones. Reglamentariamente se determinarán las prácticas de habilitación y uso del armamento que sean preceptivas para garantizar su correcta utilización. Corresponde al alcalde o a la alcaldesa de los municipios con cuerpo de policía local, al regidor o a la regidora en quien delegue de forma expresa o al jefe o a la jefa de policía por delegación expresa del alcalde o de la alcaldesa determinar los servicios en los que no se llevarán armas, procurando evitar la posesión de armas de fuego en aquellos casos en que no se considere estrictamente necesario."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados:",
+        "opciones": [
+            "Policía de primera.",
+            "Policía de segunda.",
+            "Policía de tercera.",
+            "Policía preferente."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 20 | Estructura de los cuerpos de la policía local. 1. Los cuerpos de policía local de las Illes Balears se estructuran jerárquicamente en los siguientes grupos, subgrupos, escalas y categorías: 2. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de policía de primera, oficial de primera y subinspector de primera, en los que se pueden integrar, respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido diez años de servicio activo como policía, cinco años de servicio activo como oficial o tres años de servicio activo como subinspector del respectivo municipio. Para la integración se requiere una valoración positiva del ayuntamiento, que ha de atender la trayectoria y actuación profesional del funcionario o la funcionaria, la calidad del trabajo realizado, los conocimientos adquiridos y el resultado de la evaluación del ejercicio profesional. Se pueden incluir otros méritos y aptitudes por razón de la especificidad de la función desarrollada y de la experiencia adquirida. 3. Los órganos competentes de los ayuntamientos pueden crear las especialidades que consideren oportunas para cada categoría partiendo de sus propias peculiaridades de organización y funcionamiento. Se promoverá desde los ayuntamientos la creación de diferentes figuras de policía de proximidad cuya función será la de mediar y resolver los conflictos derivados de la convivencia entre los vecinos. La provisión de los puestos de trabajo de estas especialidades se han de realizar preferentemente entre el personal funcionario de la categoría correspondiente y por los procedimientos de concurso de méritos o de concurso específico. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía. 5. En todo caso, la existencia de una categoría concreta supone, necesariamente, la de las inferiores."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias:",
+        "opciones": [
+            "La negligencia o la impericia grave evidenciada por una actuación fuera del servicio.",
+            "La negligencia o la impericia leve evidenciada por una actuación durante el servicio.",
+            "La negligencia o la impericia grave evidenciada por una actuación durante el servicio.",
+            "La negligencia o la pericia evidenciada por una actuación durante el servicio."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24 | Armamento 3. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias: a) Un comportamiento de inestabilidad emocional o de alteración psíquica del agente que racionalmente pueda hacer prever la posibilidad de correr un riesgo propio o ajeno. b) El informe psicotécnico emitido por un psicólogo colegiado o una psicóloga colegiada que recomiende la retirada del arma de fuego. c) La negligencia o la impericia grave evidenciada por una actuación durante el servicio. d) La no superación o negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento. e) La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas. f) Cuando mediante decisión judicial, ya sea cautelar o definitiva, se acuerde la retirada del arma."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. La titulación académica exigible para el acceso a las diferentes categorías en que se estructuran los cuerpos de policía local es la que establece:",
+        "opciones": [
+            "La legislación básica estatal para cada subgrupo.",
+            "La legislación de las CCAA.",
+            "La normativa municipal.",
+            "Los presupuestos generales del estado."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 21. Titulación. La titulación académica exigible para el acceso a las diferentes categorías en que se estructuran los cuerpos de policía local es la que establece la legislación básica estatal para cada subgrupo, sin perjuicio de la obligación de superar los cursos de capacitación profesional que determine la consejería competente en materia de coordinación de policías locales."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. El Gobierno de las Illes Balears, mediante el Instituto de Seguridad Pública de las Illes Balears, promoverá estudios de evolución de la delincuencia y la criminalidad, así como análisis de la evolución y coyunturas, que servirán de base para la realización de las políticas de mejora y orientación en la prestación de los servicios, así como otros trabajos que permitan elaborar estudios de prevención, contando con miembros de la escala facultativa técnica de los cuerpos de policía local de las Illes Balears:",
+        "opciones": [
+            "Sí, pero solo para el asesoramiento.",
+            "No es posible.",
+            "Sí.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 bis | Escala facultativa técnica. 5. El Gobierno de las Illes Balears, mediante el Instituto de Seguridad Pública de las Illes Balears, promoverá estudios de evolución de la delincuencia y la criminalidad, así como análisis de la evolución y coyunturas, que servirán de base para la realización de las políticas de mejora y orientación en la prestación de los servicios, así como otros trabajos que permitan elaborar estudios de prevención, contando con miembros de la escala facultativa técnica de los cuerpos de policía local de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Corresponde a la escala facultativa técnica bajo la dependencia directa del jefe del Cuerpo de Policía Local las tareas de:",
+        "opciones": [
+            "Cobertura y asesoramiento.",
+            "Formación.",
+            "Estudio y apoyo a las funciones policiales en la especialidad de criminología y/o seguridad.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 bis | Escala facultativa técnica. 1. Los ayuntamientos de los municipios de más de 25.000 habitantes, y los de aquellos otros municipios donde se determine por parte de la consejería competente, teniendo en cuenta criterios de aumento de criminalidad o especial transcendencia para la seguridad pública, podrán crear la escala facultativa técnica, a la que corresponderá ejercer, bajo la dependencia directa del jefe del cuerpo, tareas de cobertura, asesoramiento, formación, estudio y apoyo a las funciones policiales en la especialidad de criminología y/o seguridad. La citada escala quedará adscrita al cuerpo de policía local. Asimismo, podrá colaborar con el Consejo de Coordinación Policial al que pertenezca su ayuntamiento de procedencia, para realizar las mismas tareas descritas anteriormente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Los ayuntamientos de los municipios de más de 25.000 habitantes, y los de aquellos otros municipios donde se determine por parte de la consejería competente, teniendo en cuenta criterios de aumento de criminalidad o especial transcendencia para la seguridad pública:",
+        "opciones": [
+            "Podrán crear la escala ejecutiva.",
+            "Podrán crear la escala facultativa técnica.",
+            "Podrán crear la escala básica.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22 bis | Escala facultativa técnica. 1. Los ayuntamientos de los municipios de más de 25.000 habitantes, y los de aquellos otros municipios donde se determine por parte de la consejería competente, teniendo en cuenta criterios de aumento de criminalidad o especial transcendencia para la seguridad pública, podrán crear la escala facultativa técnica, a la que corresponderá ejercer, bajo la dependencia directa del jefe del cuerpo, tareas de cobertura, asesoramiento, formación, estudio y apoyo a las funciones policiales en la especialidad de criminología y/o seguridad. La citada escala quedará adscrita al cuerpo de policía local. Asimismo, podrá colaborar con el Consejo de Coordinación Policial al que pertenezca su ayuntamiento de procedencia, para realizar las mismas tareas descritas anteriormente."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

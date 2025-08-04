@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Dónde queda regulado el permiso internacional para conducir?",
+      "opciones": [
+        "En la sección 2ª del capítulo III del título I del RD 818/2003.",
+        "En la sección 2ª del capítulo III del título I del RDL 818/2009.",
+        "En la sección 2ª del capítulo III del título I del RD 818/2009.",
+        "En la sección 2ª del capítulo III del título II del RD 818/2009."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 2 Competencia para expedir los permisos y las licencias de conducción Los permisos y licencias de conducción, así como las autorizaciones administrativas que provisionalmente los sustituyan, serán expedidos por las Jefaturas Provinciales de Tráfico, con excepción de los que autorizan a conducir vehículos de las Fuerzas Armadas o de la Dirección General de Policía y de la Guardia Civil. Asimismo, será expedido por las Jefaturas Provinciales de Tráfico el permiso internacional para conducir regulado en la sección 2.ª del capítulo III del título I."
+    },
+    {
+      "pregunta": "2. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Una persona que obtiene el permiso de la clase A con 21 años cumplidos, ¿cuándo podrá conducir triciclos de motor cuya potencia máxima exceda de 15kW?",
+      "opciones": [
+        "Desde que obtiene el permiso A.",
+        "Deberá tener una antigüedad de 3 años del permiso de la clase A.",
+        "Deberá tener una antigüedad superior a 3 años del permiso de la clase A.",
+        "Los triciclos de motor no se pueden conducir con el permiso de la clase A."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase A: Motocicletas y triciclos de motor. Edad mínima de obtención: 20 años cumplidos. Hasta los 21 años cumplidos no autorizará a conducir triciclos de motor cuya potencia máxima exceda de 15 kW."
+    },
+    {
+      "pregunta": "3. Según el artículo 13 del RD 818/2009, los titulares de un permiso o licencia de conducción expedidos en España que en la fecha de vencimiento de su vigencia se encuentren en el extranjero, bien en otro Estado miembro de la Unión Europea o en un Estado parte del Acuerdo sobre el Espacio Económico Europeo en los que no hayan adquirido la residencia normal, o bien en un país tercero:",
+      "opciones": [
+        "Podrán solicitar la prórroga de su vigencia en el consulado del país donde se hallen, en la forma y con los requisitos que se indican en el anexo III.",
+        "Podrán solicitar la prórroga de su vigencia de cualquier Jefatura Provincial de Tráfico, en la forma y con los requisitos que se indican en el anexo II.",
+        "Podrán solicitar la prórroga de su vigencia de cualquier Jefatura Provincial de Tráfico, en la forma y con los requisitos que se indican en el anexo III.",
+        "Podrán solicitar la prórroga de su vigencia en el consulado del país donde se hallen, en la forma y con los requisitos que se indican en el anexo II."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 13 Solicitud de prórroga de la vigencia 1. La vigencia de los permisos y licencias de conducción podrá ser prorrogada, por los períodos respectivamente señalados en el artículo anterior, por las Jefaturas Provinciales de Tráfico, previa solicitud de los interesados, en el modelo oficial establecido, y una vez hayan acreditado que conservan las aptitudes psicofísicas exigidas para obtener el permiso o licencia de que se trate. La prórroga de vigencia de un permiso de conducción de las clases correspondientes al grupo 2, según la clasificación establecida en el artículo 45, implicará la de las autorizaciones del grupo 1 de las que sea titular el interesado, por los plazos que a éstas correspondan. La solicitud de prórroga de vigencia del permiso o licencia podrá presentarse con una antelación máxima de tres meses a su fecha de caducidad, computándose desde esta última fecha el nuevo período de vigencia de la autorización. En supuestos excepcionales debidamente justificados, se podrá solicitar con una antelación mayor, computándose el nuevo período de vigencia en estos casos desde la fecha en que se haya presentado la solicitud. 2. A la solicitud de modelo oficial, que deberá estar suscrita por el interesado, se acompañarán los documentos que se indican en el anexo III. 3. El titular de un permiso o licencia de conducción caducados podrá solicitar su prórroga acompañando los documentos a que se refiere el apartado anterior. 4. Los titulares de un permiso o licencia de conducción expedidos en España que en la fecha de vencimiento de su vigencia se encuentren en el extranjero, bien en otro Estado miembro de la Unión Europea o en un Estado parte del Acuerdo sobre el Espacio Económico Europeo en los que no hayan adquirido la residencia normal, o bien en un país tercero, podrán solicitar la prórroga de su vigencia de cualquier Jefatura Provincial de Tráfico, en la forma y con los requisitos que se indican en el anexo III."
+    },
+    {
+      "pregunta": "4. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta respecto a la conducción de motocicletas con o sin sidecar:",
+      "opciones": [
+        "El permiso de las clases B, B+E, C1, C1+E, C, C + E, D1, D1+E, D y D+E autoriza a conducir motocicletas con o sin sidecar. No obstante, las personas que estén en posesión del permiso de la clase B en vigor, con una antigüedad superior a dos años, podrán conducir dentro del territorio nacional las motocicletas cuya conducción autoriza el permiso de la clase A1.",
+        "El permiso de las clases B, B+E, C1, C1+E, C, C+E, D1, D1+E, D y D+E no autoriza a conducir motocicletas con o sin sidecar. No obstante, las personas que estén en posesión del permiso de la clase B en vigor, con una antigüedad superior a tres años, podrán conducir dentro del territorio nacional las motocicletas cuya conducción autoriza el permiso de la clase A1.",
+        "El permiso de las clases B, B+E, C1, C1+E, C, C+E, D1, D1+E, D y D+E no autoriza a conducir motocicletas con o sin sidecar. No obstante, las personas que estén en posesión del permiso de la clase B en vigor, con una antigüedad superior a tres años, podrán conducir dentro del territorio nacional las motocicletas cuya conducción autoriza el permiso de la clase A2.",
+        "El permiso de las clases B, B+E, C1, C1+E, C, C+E, D1, D1+E, D y D+E no autoriza a conducir motocicletas con o sin sidecar. No obstante, las personas que estén en posesión del permiso de la clase B en vigor, con una antigüedad superior a tres años, podrán conducir dentro y fuera del territorio nacional las motocicletas cuya conducción autoriza el permiso de la clase A1."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 5: 7. El permiso de las clases B, B+E, C1, C1+E, C, C+E, D1, D1+E, D y D+E no autoriza a conducir motocicletas con o sin sidecar En el supuesto de que el permiso de la clase B en vigor, con una antigüedad superior a tres años, esté sometido a adaptaciones, restricciones u otras limitaciones en personas, vehículos o de circulación, para poder conducir dentro del territorio nacional las motocicletas cuya conducción autoriza el permiso de la clase A1, deberán hacerse constar previamente por la Jefatura Provincial de Tráfico en el permiso las adaptaciones o restricciones que correspondan."
+    },
+    {
+      "pregunta": "5. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. El titular de un permiso o licencia de conducción al que se le hubiera expedido duplicado por sustracción o extravío deberá:",
+      "opciones": [
+        "Devolver el duplicado, a la Jefatura Provincial de Tráfico que lo hubiere expedido.",
+        "Devolver el original de éste, cuando lo encuentre, a cualquier Jefatura Provincial de Tráfico.",
+        "Devolver el original de éste, cuando lo encuentre, a la Jefatura Provincial de Tráfico que lo hubiere expedido.",
+        "Proceder a su inmediata destrucción."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 11 Duplicados 1. Las Jefaturas Provinciales de Tráfico, previa solicitud de los interesados en el modelo oficial suscrito por el interesado, podrán expedir duplicados del permiso o la licencia de conducción en caso de sustracción, extravío o deterioro del original. También deberán expedir duplicados cuando los titulares comuniquen haber variado los datos a que se refiere el artículo anterior. 2. A la solicitud de duplicado se acompañarán los documentos que se indican en el anexo III. 3. El titular de un permiso o licencia de conducción al que se le hubiera expedido duplicado por sustracción o extravío deberá devolver el original de éste, cuando lo encuentre, a la Jefatura Provincial de Tráfico que lo hubiere expedido. 4. La posesión del permiso o licencia original y de un duplicado de éstos dará lugar a la recogida inmediata del original para su remisión a la Jefatura Provincial de Tráfico que, de resultar falsa la causa alegada para obtener el duplicado, dará cuenta del hecho a la autoridad judicial por si pudiera ser determinante de responsabilidad penal."
+    },
+    {
+      "pregunta": "6. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. El permiso de la clase D1+E autoriza a conducir: Señale la correcta.",
+      "opciones": [
+        "Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D1 y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. La edad mínima para obtenerlo será de veinticuatro años cumplidos.",
+        "Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. La edad mínima para obtenerlo será de veinticuatro años cumplidos.",
+        "Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D1 y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. La edad mínima para obtenerlo será de veintiún años cumplidos.",
+        "Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada no exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. La edad mínima para obtenerlo será de veinticuatro años cumplidos."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D1+E Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D1 y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. Edad mínima de obtención: 21 años cumplidos."
+    },
+    {
+      "pregunta": "7. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta:",
+      "opciones": [
+        "Para conducir vehículos especiales no agrícolas o sus conjuntos cuya velocidad máxima autorizada no exceda de 40 km/h, y su masa máxima autorizada no exceda de 3.500 kg, se requerirá permiso de la clase B. Si excede de cualquiera de estos límites, se requerirá el permiso de conducción que corresponda a su masa máxima autorizada.",
+        "Para conducir vehículos especiales no agrícolas o sus conjuntos que transporten personas se requerirá permiso de la clase B cuando el número de personas transportadas, incluido el conductor, no exceda de nueve, de la clase D1 cuando exceda de nueve y no exceda de diecisiete y de la clase D cuando exceda de diecisiete.",
+        "Los vehículos especiales agrícolas autopropulsados o sus conjuntos cuya masa o dimensiones máximas autorizadas no excedan de los límites establecidos en la reglamentación de vehículos para los vehículos ordinarios, se podrán conducir con el permiso de la clase B, o con la licencia de conducción a que se refiere el artículo 6.1.b).",
+        "Para conducir vehículos especiales agrícolas autopropulsados o sus conjuntos, que tengan una masa o dimensiones máximas autorizadas superiores a las indicadas en el párrafo anterior o cuya velocidad máxima por construcción exceda de 45 km/h, se requerirá permiso de la clase B o con la licencia de conducción a que se refiere el artículo 6.1.b)."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 5: 9. Los vehículos especiales agrícolas autopropulsados o sus conjuntos cuya masa o dimensiones máximas autorizadas no excedan de los límites establecidos en la reglamentación de vehículos para los vehículos ordinarios, se podrán conducir con el permiso de la clase B, o con la licencia de conducción a que se refiere el artículo 6.1.b). Para conducir vehículos especiales agrícolas autopropulsados o sus conjuntos, que tengan una masa o dimensiones máximas autorizadas superiores a las indicadas en el párrafo anterior o cuya velocidad máxima por construcción exceda de 45 km/h, se requerirá permiso de la clase B en todo caso."
+    },
+    {
+      "pregunta": "8. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase C1:",
+      "opciones": [
+        "Automóviles distintos de los que autoriza a conducir el permiso de las clases D1 o D, cuya masa máxima autorizada exceda de 3.500 kg y no sobrepase los 7.500 kg, diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor.",
+        "Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg.",
+        "La edad mínima de obtención será de 18 años.",
+        "La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase C1: Automóviles distintos de los que autoriza a conducir el permiso de las clases D1 o D, cuya masa máxima autorizada exceda de 3.500 kg y no sobrepase los 7.500 kg, diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 18 años cumplidos. NOTA: Para la obtención del permiso C1 antes de los 18 años no hay excepción ninguna."
+    },
+    {
+      "pregunta": "9. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. El permiso y la licencia de conducción se expedirán conforme a los modelos que se recogen en los anexos:",
+      "opciones": [
+        "II y III, respectivamente, y contendrán los datos que en los mismos se indican.",
+        "I y II, respectivamente, y contendrán los datos que en los mismos se indican.",
+        "II y III, respectivamente, y podrán contener los datos que en los mismos se indican.",
+        "I y II, respectivamente, y podrán contener los datos que en los mismos se indican."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 9 Modelo del permiso y de la licencia de conducción El permiso y la licencia de conducción se expedirán conforme a los modelos que se recogen en los anexos I y II, respectivamente, y contendrán los datos que en los mismos se indican."
+    },
+    {
+      "pregunta": "10. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta:",
+      "opciones": [
+        "El permiso de la clase A sólo podrá expedirse a conductores que ya sean titulares de un permiso en vigor de la clase A2 con, al menos, dos años de antigüedad.",
+        "El permiso de las clases C1 y C, sólo podrá expedirse a conductores que ya sean titulares de un permiso en vigor de la clase B.",
+        "El permiso de las clases D1 y D, sólo podrá expedirse a conductores que ya sean titulares de un permiso en vigor de la clase B.",
+        "El permiso de la clase A2 sólo podrá expedirse a conductores que ya sean titulares de un permiso en vigor de la clase A1 con, al menos, dos años de antigüedad."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 5: 2. La obtención de los permisos de conducción que a continuación se indican implicará la concesión de los siguientes: a) La del permiso de la clase A1 implica la concesión del de la clase AM. b) La del permiso de la clase A2 implica la concesión del de la clase A1. c) La del permiso de las clases C y D implica la concesión del de las clases C1 y D1, respectivamente. d) La del permiso de las clases C1 + E, C + E, D1 + E o D + E implica la concesión del de la clase B + E. e) La del permiso de la clase C + E implica la concesión del de la clase C1 + E. f) La del permiso de la clase C + E implica la concesión del de la clase D + E cuando su titular posea el de la clase D. NOTA: El permiso de clase A1 no es un requisito para obtener el permiso A2. El permiso A2 se puede obtener sin estar en posesión del A1."
+    },
+    {
+      "pregunta": "11. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con qué edad mínima se puede obtener el permiso de la clase C si el titular del CAP obtenido por la modalidad de cualificación acelerada?",
+      "opciones": [
+        "No existe la posibilidad de obtener el permiso de la clase C antes de los 21 habiendo obtenido el CAP mediante dicha modalidad.",
+        "18.",
+        "19.",
+        "20."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase C: Automóviles distintos de los que autoriza a conducir el permiso de las clases D1 o D, cuya masa máxima autorizada exceda de 3.500 kg que estén diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 21años cumplidos. La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. NOTA: No existe excepción para obtenerlo a los 20 años teniendo el CAP por la modalidad acelerada."
+    },
+    {
+      "pregunta": "12. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Señale la respuesta correcta respecto a la edad mínima de obtención del permiso de la clase D cuando el titular del CAP lo ha obtenido por la modalidad de cualificación inicial ordinaria y pueda conducir estos vehículos fuera del territorio nacional:",
+      "opciones": [
+        "21.",
+        "18.",
+        "20.",
+        "23."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "13. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. El permiso de conducción de la clase D1 autoriza para conducir automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima no exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. La edad mínima para obtenerlo será de veintiún años cumplidos. ¿Es correcto el enunciado?",
+      "opciones": [
+        "No, la longitud del vehículo no puede exceder de 7 metros.",
+        "Sí, es correcto.",
+        "No, los pasajeros no pueden superar los diecisiete además del conductor.",
+        "Sí, pero la edad mínima para obtenerlo será de veinticuatro años."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D1: Automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima no exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 21 años cumplidos."
+    },
+    {
+      "pregunta": "14. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta:",
+      "opciones": [
+        "La obtención del permiso de la clase AM implica la concesión de la licencia para conducir vehículos agrícolas.",
+        "La obtención del permiso de la clase C+E implica la concesión del de la clase D+E.",
+        "La obtención del permiso de la clase A2 implica la concesión del de la clase A1.",
+        "La obtención del permiso de las clases C y D implica la concesión del de las clases C1, D1 y B, respectivamente."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 5: 2. La obtención de los permisos de conducción que a continuación se indican implicará la concesión de los siguientes: a) La del permiso de la clase A1 implica la concesión del de la clase AM. b) La del permiso de la clase A2 implica la concesión del de la clase A1. c) La del permiso de las clases C y D implica la concesión del de las clases C1 y D1, respectivamente. d) La del permiso de las clases C1 + E, C + E, D1 + E o D + E implica la concesión del de la clase B + E. e) La del permiso de la clase C + E implica la concesión del de la clase C1 + E. f) La del permiso de la clase C + E implica la concesión del de la clase D + E cuando su titular posea el de la clase D."
+    },
+    {
+      "pregunta": "15. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Los permisos de las clases AM, A1, A2, A, B y B+E, además de las licencias de conducción, tendrán una validez de:",
+      "opciones": [
+        "Diez años mientras su titular no cumpla los setenta y cinco años y de cinco años a partir de esa edad.",
+        "Diez años mientras su titular no cumpla los sesenta y cinco años y de cinco años a partir de esa edad.",
+        "Diez años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad.",
+        "Cinco años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 12 Vigencia del permiso y de la licencia de conducción 1. El permiso de conducción de las clases C1, C1 + E, C, C + E, D1, D1 + E, D y D + E tendrá un período de vigencia de cinco años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad. 2. El permiso de las clases restantes y la licencia de conducción, cualquiera que sea su clase, tendrán un período de vigencia de diez años mientras su titular no cumpla los sesenta y cinco años y de cinco años a partir de esa edad."
+    },
+    {
+      "pregunta": "16. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con qué permiso se podrán conducir dentro del territorio nacional, automóviles sin remolque impulsados por combustibles alternativos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kg pero que no exceda los 4.250 kg, siempre que la masa que supere los 3.500 kg provenga exclusivamente del exceso de masa del sistema de propulsión respecto al sistema de propulsión de un vehículo de las mismas dimensiones que esté equipado con un motor convencional de combustión interna con encendido por chispa o por compresión, y siempre que no se incremente la capacidad de carga respecto al mismo vehículo?",
+      "opciones": [
+        "Con el permiso de la clase C1.",
+        "Con el permiso de la clase B con una antigüedad superior a dos años.",
+        "Con el permiso de la clase B con más de un año de antigüedad.",
+        "Con el permiso de la clase B."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase B: Se podrán conducir dentro del territorio nacional con el permiso de la clase B, con una antigüedad superior a dos años, automóviles sin remolque impulsados por combustibles alternativos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kg pero que no exceda los 4.250 kg, siempre que la masa que supere los 3.500 kg provenga exclusivamente del exceso de masa del sistema de propulsión respecto al sistema de propulsión de un vehículo de las mismas dimensiones que esté equipado con un motor convencional de combustión interna con encendido por chispa o por compresión, y siempre que no se incremente la capacidad de carga respecto al mismo vehículo (1)"
+    },
+    {
+      "pregunta": "17. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Señale la respuesta correcta respecto a la edad mínima de obtención del permiso de la clase D cuando el titular del CAP lo ha obtenido por la modalidad de cualificación inicial acelerada y pueda conducir estos vehículos fuera del territorio nacional y sin ningún tipo de restricción:",
+      "opciones": [
+        "21.",
+        "20.",
+        "18.",
+        "23."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "18. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta respecto al permiso de la clase D:",
+      "opciones": [
+        "Autoriza para conducir automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. La edad mínima para obtenerlo será de veintiún años cumplidos.",
+        "Autoriza para conducir automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. La edad mínima para obtenerlo será de veinticuatro años cumplidos.",
+        "Autoriza para conducir conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. La edad mínima para obtenerlo será de veintiún años cumplidos.",
+        "Autoriza para conducir conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. La edad mínima para obtenerlo será de veinticuatro años cumplidos."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos."
+    },
+    {
+      "pregunta": "19. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con cuáles de las siguientes autorizaciones administrativas se puede conducir un cuatriciclo?",
+      "opciones": [
+        "Con el permiso de la clase A.",
+        "Con el permiso de la clase B.",
+        "Con la licencia para conducir vehículos especiales agrícolas.",
+        "Con el permiso de la clase A2."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase B: 1. Automóviles cuya masa máxima autorizada no exceda de 3.500 kg que estén diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. 2. Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase B y un remolque cuya masa máxima autorizada exceda de 750 kg, siempre que la masa máxima autorizada del conjunto no exceda de 4.250 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. 3. Triciclos y cuatriciclos de motor. 4. Ciclomotores. 5. Vehículos para personas de movilidad reducida"
+    },
+    {
+      "pregunta": "20. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta en lo referente al plazo de vigencia del permiso y la licencia de conducción:",
+      "opciones": [
+        "El permiso de conducción de las clases C1, C1+E, C, C+E, D1, D1+E, D, D+E y B+E tendrá un período de vigencia de cinco años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad.",
+        "El permiso de conducción de las clases C1, C1+E, C, C+E, D1, D1+E, D y D+E tendrá un período de vigencia de cinco años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad.",
+        "El permiso de conducción de las clases C1, C1+E, C, C+E, D1, D1+E, D y D+E tendrá un período de vigencia de diez años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad.",
+        "El permiso de conducción de las clases C1, C1+E, C, C+E, D1, D1+E, D y D+E tendrá un período de vigencia de cinco años mientras su titular no cumpla los sesenta y cinco años y de dos años a partir de esa edad."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 12 Vigencia del permiso y de la licencia de conducción 1. El permiso de conducción de las clases C1, C1 + E, C, C + E, D1, D1 + E, D y D + E tendrá un período de vigencia de cinco años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad."
+    },
+    {
+      "pregunta": "21. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con cuál de las siguientes autorizaciones administrativas se puede conducir un vehículo para personas de movilidad reducida? Señale la incorrecta:",
+      "opciones": [
+        "Con el permiso A2.",
+        "Con el permiso A1.",
+        "Con la licencia para conducir vehículos para personas de movilidad reducida.",
+        "Con la licencia para conducir vehículos especiales agrícolas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso AM: 1. Ciclomotores de dos o tres ruedas y cuatriciclos ligeros. Podrá estar limitado a la conducción de ciclomotores de tres ruedas y cuatriciclos ligeros. 2. Vehículos para personas de movilidad reducida. Artículo 5 Condiciones de expedición de los permisos de conducción .11. Los vehículos para personas de movilidad reducida se podrán conducir con permiso de las clases A1 y B o con la licencia de conducción a que se refiere el artículo 6.1 párrafo a). Artículo 6 Clases de licencia de conducción y edad requerida para obtenerla 1. La licencia de conducción, teniendo en cuenta los vehículos cuya conducción autoriza, será de las siguientes clases: a) Para conducir vehículos para personas de movilidad reducida.La edad mínima para obtenerla será de catorce años cumplidos. No obstante, hasta los dieciséis años cumplidos no autorizará a transportar pasajeros en el vehículo. No se exigirá esta licencia a quien sea titular de un permiso de conducción de las clases A1 o B en vigor y en el caso de que su titular obtenga un permiso de alguna de estas clases, la licencia de conducción dejará de ser válida. b) Para conducir vehículos especiales agrícolas autopropulsados y sus conjuntos cuya masa o dimensiones máximas autorizadas no excedan de los límites establecidos para los vehículos ordinarios o cuya velocidad máxima por construcción no exceda de 45 km/h. La edad mínima para obtenerla será de dieciséis años cumplidos."
+    },
+    {
+      "pregunta": "22. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Cualquier variación de los datos que figuran en el permiso o licencia de conducción:",
+      "opciones": [
+        "Deberá ser comunicada por el titular del documento dentro del plazo de quince días, contados desde la fecha en que se produzca, a la Jefatura Provincial de Tráfico. También la variación de su domicilio.",
+        "Podrá ser comunicada por el titular del documento dentro del plazo de quince días, contados desde la fecha en que se produzca, a la Jefatura Provincial de Tráfico. También la variación de su domicilio.",
+        "Deberá ser comunicada por el titular del documento dentro del plazo de quince días, contados desde la fecha en que se produzca, a la Jefatura Central de Tráfico. También la variación de su domicilio.",
+        "Podrá ser comunicada por el titular del documento dentro del plazo de quince días, contados desde la fecha en que se produzca, a la Jefatura Central de Tráfico. También la variación de su domicilio."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 10 Variación de datos Cualquier variación de los datos que figuran en el permiso o licencia de conducción, así como la del domicilio de su titular, deberá ser comunicada por éste dentro del plazo de quince días, contados desde la fecha en que se produzca, a la Jefatura Provincial de Tráfico."
+    },
+    {
+      "pregunta": "23. ¿En qué anexo del RD 818/2009 vienen recogidas de forma codificada las limitaciones o restricciones que pueden figurar en el permiso o licencia de conducción?",
+      "opciones": [
+        "En el anexo I.",
+        "En el anexo II.",
+        "En el anexo III.",
+        "En el anexo XVIII."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 3 Deberes de los titulares de un permiso o de una licencia de conducción 1. El titular de un permiso o de una licencia de conducción, así como de cualquier otra autorización o documento que habilite para conducir, deberá hacerlo con sujeción a las menciones, adaptaciones, restricciones y otras limitaciones respecto de las personas, vehículos o de circulación que, en su caso, figuren en el permiso o licencia de conducción, de forma codificada según se determina en el anexo I. 2. El conductor de un vehículo queda obligado a estar en posesión y llevar consigo su permiso o licencia de conducción, así como cualquier otro documento o autorización que, de acuerdo con la normativa vigente, necesite para poder conducir. Estos documentos deberán ser válidos, estar vigentes y se deberán exhibir ante los agentes de la autoridad que lo soliciten."
+    },
+    {
+      "pregunta": "24. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con qué edad mínima se puede obtener el permiso de la clase C+E si el titular del CAP obtenido por la modalidad de cualificación ordinaria?",
+      "opciones": [
+        "21.",
+        "18.",
+        "20.",
+        "19."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase C+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase C y un remolque o semirremolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. Edad mínima de obtención: 21 años cumplidos. La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "25. Indique la respuesta incorrecta según el artículo 12 del RD 818/2009:",
+      "opciones": [
+        "El permiso o licencia de conducción cuya vigencia hubiese vencido no autoriza a su titular a conducir y su utilización dará lugar a su intervención inmediata por la autoridad o sus agentes, que lo remitirán a la Jefatura Provincial de Tráfico correspondiente.",
+        "La vigencia del permiso y de la licencia de conducción, además, estará condicionada a que su titular no haya perdido totalmente la asignación inicial de puntos.",
+        "Asimismo, con independencia de lo dispuesto en los apartados anteriores, la vigencia de los permisos y las licencias de conducción estará subordinada a que su titular mantenga los requisitos exigidos para su otorgamiento.",
+        "Asimismo, con independencia de lo dispuesto en los apartados anteriores, la vigencia de los permisos y las licencias de conducción no estará subordinada a que su titular mantenga los requisitos exigidos para su otorgamiento."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 12 Vigencia del permiso y de la licencia de conducción 1. El permiso de conducción de las clases C1, C1 + E, C, C + E, D1, D1 + E, D y D + E tendrá un período de vigencia de cinco años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad. 2. El permiso de las clases restantes y la licencia de conducción, cualquiera que sea su clase, tendrán un período de vigencia de diez años mientras su titular no cumpla los sesenta y cinco años y de cinco años a partir de esa edad. 3. El período de vigencia de las diversas clases de permiso y licencia de conducción señalado en los apartados anteriores podrá reducirse si, al tiempo de su concesión o de la prórroga de su vigencia, se comprueba que su titular padece enfermedad o deficiencia que, si bien de momento no impide aquélla, es susceptible de agravarse. 4. El permiso o licencia de conducción cuya vigencia hubiese vencido no autoriza a su titular a conducir y su utilización dará lugar a su intervención inmediata por la autoridad o sus agentes, que lo remitirán a la Jefatura Provincial de Tráfico correspondiente. 5. La vigencia del permiso y de la licencia de conducción, además, estará condicionada a que su titular no haya perdido totalmente la asignación inicial de puntos. 6. Asimismo, con independencia de lo dispuesto en los apartados anteriores, la vigencia de los permisos y las licencias de conducción estará subordinada a que su titular mantenga los requisitos exigidos para su otorgamiento"
+    },
+    {
+      "pregunta": "26. Indique la respuesta incorrecta según el artículo 6.1.a del RD 818/09:",
+      "opciones": [
+        "La edad mínima para conducir vehículos para personas de movilidad reducida será de 16 años cumplidos.",
+        "Hasta los 16 años cumplidos no autorizará a transportar pasajeros en el vehículo.",
+        "No se exigirá esta licencia a quien sea titular de un permiso de conducción de la clase A1.",
+        "No se exigirá esta licencia a quien sea titular de un permiso de conducción de la clase B."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 6 Clases de licencia de conducción y edad requerida para obtenerla 1. La licencia de conducción, teniendo en cuenta los vehículos cuya conducción autoriza, será de las siguientes clases: a) Para conducir vehículos para personas de movilidad reducida.La edad mínima para obtenerla será de catorce años cumplidos. No obstante, hasta los dieciséis años cumplidos no autorizará a transportar pasajeros en el vehículo. No se exigirá esta licencia a quien sea titular de un permiso de conducción de las clases A1 o B en vigor y en el caso de que su titular obtenga un permiso de alguna de estas clases, la licencia de conducción dejará de ser válida."
+    },
+    {
+      "pregunta": "27. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta respecto a la expedición del duplicado del permiso o licencia de conducción.",
+      "opciones": [
+        "Las Jefaturas Centrales de Tráfico, previa solicitud de los interesados en el modelo oficial suscrito por el interesado, podrán expedir duplicados del permiso o la licencia de conducción en caso de sustracción, extravío o deterioro del original. También deberán expedir duplicados cuando los titulares comuniquen haber variado los datos a que se refiere el artículo anterior.",
+        "Las Jefaturas Provinciales de Tráfico, de oficio, podrán expedir duplicados del permiso o la licencia de conducción en caso de sustracción, extravío o deterioro del original. También deberán expedir duplicados cuando los titulares comuniquen haber variado los datos a que se refiere el artículo anterior.",
+        "Las Jefaturas Centrales de Tráfico, de oficio, podrán expedir duplicados del permiso o la licencia de conducción en caso de sustracción, extravío o deterioro del original. También deberán expedir duplicados cuando los titulares comuniquen haber variado los datos a que se refiere el artículo anterior.",
+        "Las Jefaturas Provinciales de Tráfico, previa solicitud de los interesados en el modelo oficial suscrito por el interesado, podrán expedir duplicados del permiso o la licencia de conducción en caso de sustracción, extravío o deterioro del original. También deberán expedir duplicados cuando los titulares comuniquen haber variado los datos a que se refiere el artículo anterior."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 11 Duplicados 1. Las Jefaturas Provinciales de Tráfico, previa solicitud de los interesados en el modelo oficial suscrito por el interesado, podrán expedir duplicados del permiso o la licencia de conducción en caso de sustracción, extravío o deterioro del original. También deberán expedir duplicados cuando los titulares comuniquen haber variado los datos a que se refiere el artículo anterior. 2. A la solicitud de duplicado se acompañarán los documentos que se indican en el anexo III. 3. El titular de un permiso o licencia de conducción al que se le hubiera expedido duplicado por sustracción o extravío deberá devolver el original de éste, cuando lo encuentre, a la Jefatura Provincial de Tráfico que lo hubiere expedido. 4. La posesión del permiso o licencia original y de un duplicado de éstos dará lugar a la recogida inmediata del original para su remisión a la Jefatura Provincial de Tráfico que, de resultar falsa la causa alegada para obtener el duplicado, dará cuenta del hecho a la autoridad judicial por si pudiera ser determinante de responsabilidad penal."
+    },
+    {
+      "pregunta": "28. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta sobre el permiso de la clase D1:",
+      "opciones": [
+        "Automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima no exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg.",
+        "La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, podrán conducir estos vehículos dentro y fuera del territorio nacional cuando el titular del permiso tenga 20 años cumplidos.",
+        "La edad mínima de obtención será de 21 años cumplidos.",
+        "La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 21 años cumplidos."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D1: Automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima no exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 21 años cumplidos. La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 21 años cumplidos."
+    },
+    {
+      "pregunta": "29. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con cuáles de los siguientes permisos se puede conducir un triciclo de motor de potencia máxima de 15kW?",
+      "opciones": [
+        "Con el permiso de la clase A.",
+        "Con el permiso de la clase A1.",
+        "Con el permiso de la clase B.",
+        "Todas son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase A: Motocicletas y triciclos de motor. Edad mínima de obtención: 20 años cumplidos. Hasta los 21 años cumplidos no autorizará a conducir triciclos de motor cuya potencia máxima exceda de 15 kW. Permiso de la clase A1: 1. Motocicletas con una cilindrada máxima de 125 cm3, una potencia máxima de 11 kW y una relación potencia/peso máxima de 0,1 kW/kg y triciclos de motor cuya potencia máxima no exceda de 15 kW. 2. Vehículos para personas de movilidad reducida Permiso de la clase B: 1. Automóviles cuya masa máxima autorizada no exceda de 3.500 kg que estén diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. 2. Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase B y un remolque cuya masa máxima autorizada exceda de 750 kg, siempre que la masa máxima autorizada del conjunto no exceda de 4.250 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. 3. Triciclos y cuatriciclos de motor. 4. Ciclomotores. 5. Vehículos para personas de movilidad reducida. Hasta los 21 años cumplidos no autorizará a conducir triciclos de motor cuya potencia máxima exceda de 15 kW."
+    },
+    {
+      "pregunta": "30. Indique la respuesta correcta según el artículo 6.1.b del RD 818/09:",
+      "opciones": [
+        "Para conducir vehículos especiales agrícolas autopropulsados cuya masa o dimensiones máximas autorizadas no excedan de los límites establecidos para los vehículos ordinarios se necesitará la correspondiente licencia de conducción, en el caso de que se trate de conjunto de vehículos, además se requerirá el permiso de la clase E.",
+        "La edad mínima para obtener dicha licencia será de dieciséis años cumplidos.",
+        "No se exigirá esta licencia a quien sea titular de un permiso de conducción de la clase A.",
+        "No se exigirá esta licencia a quien sea titular de un permiso de conducción de la clase B con un año de antigüedad."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 6 Clases de licencia de conducción y edad requerida para obtenerla 1. La licencia de conducción, teniendo en cuenta los vehículos cuya conducción autoriza, será de las siguientes clases: a) Para conducir vehículos para personas de movilidad reducida. La edad mínima para obtenerla será de catorce años cumplidos. No obstante, hasta los dieciséis años cumplidos no autorizará a transportar pasajeros en el vehículo. No se exigirá esta licencia a quien sea titular de un permiso de conducción de las clases A1 o B en vigor y en el caso de que su titular obtenga un permiso de alguna de estas clases, la licencia de conducción dejará de ser válida. b) Para conducir vehículos especiales agrícolas autopropulsados y sus conjuntos cuya masa o dimensiones máximas autorizadas no excedan de los límites establecidos para los vehículos ordinarios o cuya velocidad máxima por construcción no exceda de 45 km/h. La edad mínima para obtenerla será de dieciséis años cumplidos. No se exigirá esta licencia a quien sea titular de un permiso de conducción de la clase B en vigor y en el caso de que su titular obtenga un permiso de esta clase, la licencia de conducción dejará de ser válida."
+    },
+    {
+      "pregunta": "31. Según el artículo 7.2 del RD 818/2009, señale la respuesta correcta:",
+      "opciones": [
+        "Los que padezcan enfermedad o deficiencia orgánica o funcional que les incapacite para obtener permiso o licencia de conducción de carácter ordinario no podrán obtener un permiso o licencia de conducción.",
+        "Los que padezcan enfermedad o deficiencia orgánica o funcional que les incapacite para obtener permiso o licencia de conducción de carácter ordinario no podrán obtener un permiso o licencia de conducción extraordinarios sujetos a las condiciones restrictivas que en cada caso procedan.",
+        "Los que padezcan enfermedad o deficiencia orgánica o funcional que les incapacite para obtener permiso o licencia de conducción de carácter ordinario podrán obtener un permiso o licencia de conducción extraordinarios no sujetos a condiciones restrictivas.",
+        "Los que padezcan enfermedad o deficiencia orgánica o funcional que les incapacite para obtener permiso o licencia de conducción de carácter ordinario podrán obtener un permiso o licencia de conducción extraordinarios sujetos a las condiciones restrictivas que en cada caso procedan."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 7 Requisitos para obtener un permiso o una licencia de conducción 1. Para obtener un permiso o una licencia de conducción se requerirá: a) En el caso de extranjeros, acreditar la situación de residencia normal o estancia por estudios en España de, al menos, seis meses y haber cumplido la edad requerida. b) No estar privado por resolución judicial del derecho a conducir vehículos de motor y ciclomotores, ni hallarse sometido a suspensión o intervención administrativa del permiso o licencia de conducción que se posea. c) Que haya transcurrido el plazo legalmente establecido, una vez declarada la pérdida de vigencia del permiso o licencia de conducción del que fuera titular como consecuencia de la pérdida total de los puntos asignados. d) Reunir las aptitudes psicofísicas requeridas en relación con la clase del permiso o licencia de conducción que se solicite. e) Ser declarado apto por la Jefatura Provincial de Tráfico en las pruebas teóricas y prácticas que, en relación con cada clase de permiso o licencia de conducción, se determinan en el título II. f) No ser titular de un permiso de conducción expedido en otro Estado miembro de la Unión Europea o en otro Estado parte del Acuerdo sobre el Espacio Económico Europeo, ni haber sido restringido, suspendido o anulado en otro Estado miembro el permiso de conducción que poseyese. 2. Los que padezcan enfermedad o deficiencia orgánica o funcional que les incapacite para obtener permiso o licencia de conducción de carácter ordinario podrán obtener un permiso o licencia de conducción extraordinarios sujetos a las condiciones restrictivas que en cada caso procedan."
+    },
+    {
+      "pregunta": "32. Según el artículo 8 del RD 818/2009, la expedición del permiso o la licencia de conducción:",
+      "opciones": [
+        "Se solicitará de la Jefatura Central de Tráfico en la que se desee obtener, en el modelo oficial suscrito por el interesado, acompañando los documentos que se indican en el anexo III.",
+        "Se solicitará de la Jefatura Provincial de Tráfico en la que se desee obtener, en el modelo oficial suscrito por el interesado, acompañando los documentos que se indican en el anexo I.",
+        "Se solicitará de la Jefatura Provincial de Tráfico en la que se desee obtener, en el modelo oficial suscrito por el interesado, acompañando los documentos que se indican en el anexo III.",
+        "Se solicitará de la Jefatura Central de Tráfico en la que se desee obtener, en el modelo oficial suscrito por el interesado, acompañando los documentos que se indican en el anexo I."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 8 Solicitud del permiso o de la licencia de conducción. Documentación a presentar 1. La expedición del permiso o la licencia de conducción, se solicitará de la Jefatura Provincial de Tráfico en la que se desee obtener, en el modelo oficial suscrito por el interesado, acompañando los documentos que se indican en el anexo III. 2. Si el solicitante es titular de un permiso o de una licencia de conducción, ya sea expedido en España, en otro Estado miembro de la Unión Europea o en un Estado parte del Acuerdo sobre el Espacio Económico Europeo, éste perderá su validez cuando su titular obtenga el permiso solicitado. Dicho documento deberá ser entregado en la Jefatura Provincial de Tráfico con carácter previo a la emisión del permiso y será, en su caso, remitido al Estado que lo hubiera expedido."
+    },
+    {
+      "pregunta": "33. Según el artículo 13 del RD 818/2009, la solicitud de prórroga de vigencia del permiso o licencia podrá presentarse con una antelación máxima de:",
+      "opciones": [
+        "Tres meses a su fecha de caducidad, computándose desde la fecha de renovación el nuevo período de vigencia de la autorización. En supuestos excepcionales debidamente justificados, se podrá solicitar con una antelación mayor, computándose el nuevo período de vigencia en estos casos desde la fecha en que se haya presentado la solicitud.",
+        "Tres meses a su fecha de caducidad, computándose desde esta última fecha el nuevo período de vigencia de la autorización. En supuestos excepcionales debidamente justificados, se podrá solicitar con una antelación mayor, computándose el nuevo período de vigencia en estos casos desde la fecha en que se haya presentado la solicitud.",
+        "Seis meses a su fecha de caducidad, computándose desde esta última fecha el nuevo período de vigencia de la autorización. En supuestos excepcionales debidamente justificados, se podrá solicitar con una antelación mayor, computándose el nuevo período de vigencia en estos casos desde la fecha en que se haya presentado la solicitud.",
+        "Seis meses a su fecha de caducidad, computándose desde la fecha de renovación el nuevo período de vigencia de la autorización. En supuestos excepcionales debidamente justificados, se podrá solicitar con una antelación mayor, computándose el nuevo período de vigencia en estos casos desde la fecha en que se haya presentado la solicitud."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 13 Solicitud de prórroga de la vigencia 1. La vigencia de los permisos y licencias de conducción podrá ser prorrogada, por los períodos respectivamente señalados en el artículo anterior, por las Jefaturas Provinciales de Tráfico, previa solicitud de los interesados, en el modelo oficial establecido, y una vez hayan acreditado que conservan las aptitudes psicofísicas exigidas para obtener el permiso o licencia de que se trate. La prórroga de vigencia de un permiso de conducción de las clases correspondientes al grupo 2, según la clasificación establecida en el artículo 45, implicará la de las autorizaciones del grupo 1 de las que sea titular el interesado, por los plazos que a éstas correspondan. La solicitud de prórroga de vigencia del permiso o licencia podrá presentarse con una antelación máxima de tres meses a su fecha de caducidad, computándose desde esta última fecha el nuevo período de vigencia de la autorización. En supuestos excepcionales debidamente justificados, se podrá solicitar con una antelación mayor, computándose el nuevo período de vigencia en estos casos desde la fecha en que se haya presentado la solicitud."
+    },
+    {
+      "pregunta": "34. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. En el supuesto de que el permiso de la clase B en vigor, con una antigüedad superior a dos años, esté sometido a adaptaciones, restricciones u otras limitaciones en personas, vehículos o de circulación, para poder conducir dentro del territorio nacional las motocicletas cuya conducción autoriza el permiso de la clase A1, deberán hacerse constar previamente por la Jefatura Central de Tráfico en el permiso las adaptaciones o restricciones que correspondan. ¿Es correcta esta afirmación?",
+      "opciones": [
+        "No, la antigüedad del permiso de la clase B debe ser superior a tres años y las adaptaciones, restricciones u otras limitaciones en personas, vehículos o de circulación se deberán hacer constar por la Jefatura Provincial de Tráfico.",
+        "Sí, pero la antigüedad del permiso de la clase B debe ser superior a tres años.",
+        "Sí, es correcta esa afirmación.",
+        "No, ya que puede conducir también fuera del territorio nacional."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 5: 7. El permiso de las clases B, B+E, C1, C1+E, C, C+E, D1, D1+E, D y D+E no autoriza a conducir motocicletas con o sin sidecar En el supuesto de que el permiso de la clase B en vigor, con una antigüedad superior a tres años, esté sometido a adaptaciones, restricciones u otras limitaciones en personas, vehículos o de circulación, para poder conducir dentro del territorio nacional las motocicletas cuya conducción autoriza el permiso de la clase A1, deberán hacerse constar previamente por la Jefatura Provincial de Tráfico en el permiso las adaptaciones o restricciones que correspondan."
+    },
+    {
+      "pregunta": "35. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Puede reducirse el período de vigencia de las diversas clases de permiso y licencia de conducción?",
+      "opciones": [
+        "Sí, si al tiempo de su concesión o de la prórroga de su vigencia, se comprueba que su titular padece enfermedad o deficiencia que, si bien de momento no impide aquélla, es susceptible de agravarse.",
+        "Sí, pero únicamente si al tiempo de su concesión o de la prórroga de su vigencia, se comprueba que su titular padece enfermedad o deficiencia que le afecta en ese momento.",
+        "No, nunca.",
+        "Sí, siempre y cuando sea dictada resolución por la Jefatura Central de Tráfico."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 12 Vigencia del permiso y de la licencia de conducción 1. El permiso de conducción de las clases C1, C1 + E, C, C + E, D1, D1 + E, D y D + E tendrá un período de vigencia de cinco años mientras su titular no cumpla los sesenta y cinco años y de tres años a partir de esa edad. Número 1 del artículo 12 redactado por el apartado cuatro del artículo único del R.D. 1055/2015, de 20 de noviembre, por el que se modifica el Reglamento General de Conductores, aprobado por R.D. 818/2009, de 8 de mayo («B.O.E.» 21 noviembre).Vigencia: 31 diciembre 2015 2. El permiso de las clases restantes y la licencia de conducción, cualquiera que sea su clase, tendrán un período de vigencia de diez años mientras su titular no cumpla los sesenta y cinco años y de cinco años a partir de esa edad. 3. El período de vigencia de las diversas clases de permiso y licencia de conducción señalado en los apartados anteriores podrá reducirse si, al tiempo de su concesión o de la prórroga de su vigencia, se comprueba que su titular padece enfermedad o deficiencia que, si bien de momento no impide aquélla, es susceptible de agravarse."
+    },
+    {
+      "pregunta": "36. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta sobre el permiso de la clase D1:",
+      "opciones": [
+        "Automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima no exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg.",
+        "La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 21 años cumplidos.",
+        "La edad mínima de obtención será de 21 años cumplidos.",
+        "La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial acelerada, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 21 años cumplidos."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D1: Automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima no exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 21 años cumplidos. La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 21 años cumplidos."
+    },
+    {
+      "pregunta": "37. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Una persona que obtiene el permiso de la clase B con 21 años cumplidos, ¿cuándo podrá conducir triciclos de motor cuya potencia máxima exceda de 15kW?",
+      "opciones": [
+        "Desde que obtiene el permiso B.",
+        "Deberá tener una antigüedad de 3 años del permiso de la clase B.",
+        "Deberá tener una antigüedad superior a 3 años del permiso de la clase B.",
+        "Los triciclos de motor no se pueden conducir con el permiso de la clase B."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase B: 1. Automóviles cuya masa máxima autorizada no exceda de 3.500 kg que estén diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. 2. Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase B y un remolque cuya masa máxima autorizada exceda de 750 kg, siempre que la masa máxima autorizada del conjunto no exceda de 4.250 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. 3. Triciclos y cuatriciclos de motor. 4. Ciclomotores. 5. Vehículos para personas de movilidad reducida. Hasta los 21 años cumplidos no autorizará a conducir triciclos de motor cuya potencia máxima exceda de 15 kW."
+    },
+    {
+      "pregunta": "38. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con qué edad podrá conducir una persona un triciclo de motor cuya potencia máxima exceda de 15kW y esté en posesión del permiso de la clase B?",
+      "opciones": [
+        "Con 21 años cumplidos.",
+        "No puede, necesita el permiso de la clase A y tener 21 años cumplidos.",
+        "Con 20 años cumplidos.",
+        "Con más de 21 años."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase B: 1. Automóviles cuya masa máxima autorizada no exceda de 3.500 kg que estén diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. 2. Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase B y un remolque cuya masa máxima autorizada exceda de 750 kg, siempre que la masa máxima autorizada del conjunto no exceda de 4.250 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. 3. Triciclos y cuatriciclos de motor. 4. Ciclomotores. 5. Vehículos para personas de movilidad reducida. Hasta los 21 años cumplidos no autorizará a conducir triciclos de motor cuya potencia máxima exceda de 15 kW."
+    },
+    {
+      "pregunta": "39. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con cuál de las siguientes autorizaciones administrativas no se puede conducir un vehículo para personas de movilidad reducida?",
+      "opciones": [
+        "Con el permiso AM.",
+        "Con la licencia para conducir vehículos especiales agrícolas.",
+        "Con el permiso A1.",
+        "Con el permiso B."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso AM: 1. Ciclomotores de dos o tres ruedas y cuatriciclos ligeros. Podrá estar limitado a la conducción de ciclomotores de tres ruedas y cuatriciclos ligeros. 2. Vehículos para personas de movilidad reducida. Artículo 5 Condiciones de expedición de los permisos de conducción 1. La expedición de los permisos de conducción que a continuación se indican estará supeditada a las condiciones siguientes: a) El permiso de la clase A sólo podrá expedirse a conductores que ya sean titulares de un permiso en vigor de la clase A2 con, al menos, dos años de antigüedad. b) El permiso de las clases C1, C, D1 y D sólo podrá expedirse a conductores que ya sean titulares de un permiso en vigor de la clase B. c) El permiso de las clases B + E, C1 + E, C + E, D1 + E y D + E sólo podrá expedirse a conductores que ya sean titulares de un permiso en vigor de las clases B, C1, C, D1 o D, respectivamente. 2. La obtención de los permisos de conducción que a continuación se indican implicará la concesión de los siguientes: a) La del permiso de la clase A1 implica la concesión del de la clase AM. b) La del permiso de la clase A2 implica la concesión del de la clase A1. c) La del permiso de las clases C y D implica la concesión del de las clases C1 y D1, respectivamente. d) La del permiso de las clases C1 + E, C + E, D1 + E o D + E implica la concesión del de la clase B + E. e) La del permiso de la clase C + E implica la concesión del de la clase C1 + E. f) La del permiso de la clase C + E implica la concesión del de la clase D + E cuando su titular posea el de la clase D. g)... h) La del permiso de la clase D+E implica la concesión del de la clase D1+E. 3. Para obtener el permiso de la clase A2, el aspirante deberá superar las pruebas de control de conocimientos y de control de aptitudes y comportamientos que se indican en los artículos 47 a 49. Esta autorización podrá también obtenerse si el aspirante es titular de permiso de conducción de la clase A1 con una experiencia mínima de dos años en la conducción de las motocicletas que autoriza a conducir dicho permiso, y supera la prueba de control de aptitudes y comportamientos que se indica en el artículo 49.2. Esta prueba podrá sustituirse por la superación de una formación en los términos que se establezcan mediante Orden del Ministro del Interior. 4. Para obtener el permiso de la clase A, el aspirante, además de ser titular de un permiso de conducción de la clase A2 con una experiencia mínima de dos años en la conducción de las motocicletas que autoriza a conducir dicho permiso, deberá superar una formación en los términos que se establezcan mediante Orden del Ministro del Interior. 5. Para conducir un conjunto formado por un vehículo tractor de la categoría B y un remolque cuya masa máxima autorizada sea superior a 750 kg, en el caso de que el conjunto así formado exceda de 3.500 kg, será necesario superar la prueba de control de aptitudes y comportamientos que se indica en los artículos 48.2 y 49.2. Esta prueba podrá sustituirse por la superación de una formación en los términos que se establezcan mediante Orden del Ministro del Interior. 6.... 7. El permiso de las clases B, B+E, C1, C1+E, C, C+E, D1, D1+E, D y D+E no autoriza a conducir motocicletas con o sin sidecarPárrafo primero del número 7 del artículo 5 redactado por el apartado dos del artículo único del R.D. 971/2020, de 10 de noviembre, por el que se modifica el Reglamento General de Conductores, aprobado por R.D. 818/2009, de 8 de mayo («B.O.E.» 11 noviembre).Vigencia: 12 noviembre 2020 En el supuesto de que el permiso de la clase B en vigor, con una antigüedad superior a tres años, esté sometido a adaptaciones, restricciones u otras limitaciones en personas, vehículos o de circulación, para poder conducir dentro del territorio nacional las motocicletas cuya conducción autoriza el permiso de la clase A1, deberán hacerse constar previamente por la Jefatura Provincial de Tráfico en el permiso las adaptaciones o restricciones que correspondan. 8. Para conducir vehículos especiales no agrícolas o sus conjuntos cuya velocidad máxima autorizada no exceda de 40 km/h, y su masa máxima autorizada no exceda de 3.500 kg, se requerirá permiso de la clase B. Si excede de cualquiera de estos límites, se requerirá el permiso de conducción que corresponda a su masa máxima autorizada. Para conducir vehículos especiales no agrícolas o sus conjuntos que transporten personas se requerirá permiso de la clase B cuando el número de personas transportadas, incluido el conductor, no exceda de nueve, de la clase D1 cuando exceda de nueve y no exceda de diecisiete y de la clase D cuando exceda de diecisiete. 9. Los vehículos especiales agrícolas autopropulsados o sus conjuntos cuya masa o dimensiones máximas autorizadas no excedan de los límites establecidos en la reglamentación de vehículos para los vehículos ordinarios, se podrán conducir con el permiso de la clase B, o con la licencia de conducción a que se refiere el artículo 6.1.b). Para conducir vehículos especiales agrícolas autopropulsados o sus conjuntos, que tengan una masa o dimensiones máximas autorizadas superiores a las indicadas en el párrafo anterior o cuya velocidad máxima por construcción exceda de 45 km/h, se requerirá permiso de la clase B en todo caso. 10. Los ciclomotores también se podrán conducir con permiso de la clase B. 11. Los vehículos para personas de movilidad reducida se podrán conducir con permiso de las clases A1 y B o con la licencia de conducción a que se refiere el artículo 6.1 párrafo a). Artículo 6 Clases de licencia de conducción y edad requerida para obtenerla 1. La licencia de conducción, teniendo en cuenta los vehículos cuya conducción autoriza, será de las siguientes clases: a) Para conducir vehículos para personas de movilidad reducida.La edad mínima para obtenerla será de catorce años cumplidos. No obstante, hasta los dieciséis años cumplidos no autorizará a transportar pasajeros en el vehículo. No se exigirá esta licencia a quien sea titular de un permiso de conducción de las clases A1 o B en vigor y en el caso de que su titular obtenga un permiso de alguna de estas clases, la licencia de conducción dejará de ser válida. b) Para conducir vehículos especiales agrícolas autopropulsados y sus conjuntos cuya masa o dimensiones máximas autorizadas no excedan de los límites establecidos para los vehículos ordinarios o cuya velocidad máxima por construcción no exceda de"
+    },
+    {
+      "pregunta": "40. Según el artículo 13 del RD 818/2009, la vigencia de los permisos y licencias de conducción podrá ser prorrogada, por los períodos respectivamente señalados en el artículo 12: Señale la correcta.",
+      "opciones": [
+        "Por las Jefaturas Centrales de Tráfico, previa solicitud de los interesados, en el modelo oficial establecido, y una vez hayan acreditado que conservan las aptitudes psicofísicas exigidas para obtener el permiso o licencia de que se trate.",
+        "Por la Dirección General de Tráfico, previa solicitud de los interesados, en el modelo oficial establecido, y una vez hayan acreditado que conservan las aptitudes psicofísicas exigidas para obtener el permiso o licencia de que se trate.",
+        "Por las Jefaturas Provinciales de Tráfico, de oficio, en el modelo oficial establecido, y una vez hayan acreditado que conservan las aptitudes psicofísicas exigidas para obtener el permiso o licencia de que se trate.",
+        "Por las Jefaturas Provinciales de Tráfico, previa solicitud de los interesados, en el modelo oficial establecido, y una vez hayan acreditado que conservan las aptitudes psicofísicas exigidas para obtener el permiso o licencia de que se trate."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 13 Solicitud de prórroga de la vigencia 1. La vigencia de los permisos y licencias de conducción podrá ser prorrogada, por los períodos respectivamente señalados en el artículo anterior, por las Jefaturas Provinciales de Tráfico, previa solicitud de los interesados, en el modelo oficial establecido, y una vez hayan acreditado que conservan las aptitudes psicofísicas exigidas para obtener el permiso o licencia de que se trate. La prórroga de vigencia de un permiso de conducción de las clases correspondientes al grupo 2, según la clasificación establecida en el artículo 45, implicará la de las autorizaciones del grupo 1 de las que sea titular el interesado, por los plazos que a éstas correspondan. La solicitud de prórroga de vigencia del permiso o licencia podrá presentarse con una antelación máxima de tres meses a su fecha de caducidad, computándose desde esta última fecha el nuevo período de vigencia de la autorización. En supuestos excepcionales debidamente justificados, se podrá solicitar con una antelación mayor, computándose el nuevo período de vigencia en estos casos desde la fecha en que se haya presentado la solicitud."
+    },
+    {
+      "pregunta": "41. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase C+E:",
+      "opciones": [
+        "Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase C y un remolque o semirremolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos.",
+        "La edad mínima de obtención será de 21 años cumplidos.",
+        "La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial acelerada."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase C+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase C y un remolque o semirremolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. Edad mínima de obtención: 21 años cumplidos. La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "42. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase C:",
+      "opciones": [
+        "Automóviles distintos de los que autoriza a conducir el permiso de las clases D1 o D, cuya masa máxima autorizada exceda de 3.500 kg que estén diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg.",
+        "La edad mínima de obtención será de 21 años cumplidos.",
+        "La edad mínima será de 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial acelerada.",
+        "La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase C: Automóviles distintos de los que autoriza a conducir el permiso de las clases D1 o D, cuya masa máxima autorizada exceda de 3.500 kg que estén diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 21años cumplidos. La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. NOTA: No existe excepción para obtenerlo a los 20 años teniendo el CAP por la modalidad acelerada."
+    },
+    {
+      "pregunta": "43. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Para conducir un vehículo dedicado al transporte de mercancías, impulsado por combustibles alternativos con una masa máxima autorizada que no supere los 4.250 kg, ¿qué permiso de conducción se necesita?",
+      "opciones": [
+        "El permiso de la clase C1.",
+        "El permiso de la clase B.",
+        "El permiso de la clase B con una antigüedad de más de dos años.",
+        "El permiso de la clase B con una antigüedad de más de un año."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase B: Se podrán conducir dentro del territorio nacional con el permiso de la clase B, con una antigüedad superior a dos años, automóviles sin remolque impulsados por combustibles alternativos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kg pero que no exceda los 4.250 kg, siempre que la masa que supere los 3.500 kg provenga exclusivamente del exceso de masa del sistema de propulsión respecto al sistema de propulsión de un vehículo de las mismas dimensiones que esté equipado con un motor convencional de combustión interna con encendido por chispa o por compresión, y siempre que no se incremente la capacidad de carga respecto al mismo vehículo (1)"
+    },
+    {
+      "pregunta": "44. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Señale la respuesta correcta respecto a la edad mínima de obtención del permiso de la clase D1 cuando el titular del CAP lo ha obtenido por la modalidad de cualificación inicial ordinaria:",
+      "opciones": [
+        "19.",
+        "18.",
+        "20.",
+        "21."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D1: Automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima no exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 21 años cumplidos. La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 21 años cumplidos."
+    },
+    {
+      "pregunta": "45. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta sobre el permiso de la clase D1:",
+      "opciones": [
+        "Automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg.",
+        "La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 20 años cumplidos.",
+        "La edad mínima de obtención será de 20 años cumplidos.",
+        "La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 21 años cumplidos."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D1: Automóviles diseñados y construidos para el transporte de no más de dieciséis pasajeros además del conductor y cuya longitud máxima no exceda de ocho metros. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 21 años cumplidos. La edad mínima será 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria, si bien sólo podrán conducir estos vehículos dentro del territorio nacional hasta que el titular del permiso tenga 21 años cumplidos."
+    },
+    {
+      "pregunta": "46. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta:",
+      "opciones": [
+        "Se podrán conducir dentro del territorio nacional con el permiso de la clase B, con una antigüedad superior a dos años, automóviles sin remolque impulsados por combustibles alternativos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kg pero que no exceda los 4.250 kg, siempre que la masa que supere los 3.500 kg provenga exclusivamente del exceso de masa del sistema de propulsión respecto al sistema de propulsión de un vehículo de las mismas dimensiones que esté equipado con un motor convencional de combustión interna con encendido por chispa o por compresión, y siempre que no se incremente la capacidad de carga respecto al mismo vehículo.",
+        "Se podrán conducir dentro del territorio nacional con el permiso de la clase B, con una antigüedad superior a dos años, automóviles sin remolque impulsados por combustibles alternativos destinados al transporte de mercancías o personas con una masa máxima autorizada superior a 3.500 kg pero que no exceda los 4.250 kg, siempre que la masa que supere los 3.500 kg provenga exclusivamente del exceso de masa del sistema de propulsión respecto al sistema de propulsión de un vehículo de las mismas dimensiones que esté equipado con un motor convencional de combustión interna con encendido por chispa o por compresión, y siempre que no se incremente la capacidad de carga respecto al mismo vehículo.",
+        "Se podrán conducir dentro del territorio nacional con el permiso de la clase B, con una antigüedad superior a dos años, automóviles sin remolque impulsados por combustibles alternativos destinados al transporte de personas con una masa máxima autorizada superior a 3.500 kg pero que no exceda los 4.250 kg, siempre que la masa que supere los 3.500 kg provenga exclusivamente del exceso de masa del sistema de propulsión respecto al sistema de propulsión de un vehículo de las mismas dimensiones que esté equipado con un motor convencional de combustión interna con encendido por chispa o por compresión, y siempre que no se incremente la capacidad de carga respecto al mismo vehículo.",
+        "Se podrán conducir dentro del territorio nacional con el permiso de la clase B, automóviles sin remolque impulsados por combustibles alternativos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kg pero que no exceda los 4.250 kg, siempre que la masa que supere los 3.500 kg provenga exclusivamente del exceso de masa del sistema de propulsión respecto al sistema de propulsión de un vehículo de las mismas dimensiones que esté equipado con un motor convencional de combustión interna con encendido por chispa o por compresión, y siempre que no se incremente la capacidad de carga respecto al mismo vehículo."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase B: Se podrán conducir dentro del territorio nacional con el permiso de la clase B, con una antigüedad superior a dos años, automóviles sin remolque impulsados por combustibles alternativos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kg pero que no exceda los 4.250 kg, siempre que la masa que supere los 3.500 kg provenga exclusivamente del exceso de masa del sistema de propulsión respecto al sistema de propulsión de un vehículo de las mismas dimensiones que esté equipado con un motor convencional de combustión interna con encendido por chispa o por compresión, y siempre que no se incremente la capacidad de carga respecto al mismo vehículo (1)"
+    },
+    {
+      "pregunta": "47. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Con qué edad podrá conducir una persona un triciclo de motor cuya potencia máxima exceda de 15kW y esté en posesión del permiso de la clase A?",
+      "opciones": [
+        "Con 20 años cumplidos.",
+        "No puede, necesita el permiso de la clase B y tener 21 años cumplidos.",
+        "Con 21 años cumplidos.",
+        "Con más de 21 años."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase A: Motocicletas y triciclos de motor. Edad mínima de obtención: 20 años cumplidos. Hasta los 21 años cumplidos no autorizará a conducir triciclos de motor cuya potencia máxima exceda de 15 kW."
+    },
+    {
+      "pregunta": "48. Según el artículo 7 del RD 818/2009, ¿cuál de los siguientes requisitos es necesario para obtener un permiso o una licencia de conducción? Señale la incorrecta:",
+      "opciones": [
+        "En el caso de extranjeros, acreditar la situación de residencia normal o estancia por estudios en España de, al menos, seis meses y haber cumplido la edad requerida.",
+        "Reunir las aptitudes psicofísicas requeridas en relación con la clase del permiso o licencia de conducción que se solicite.",
+        "Ser titular de un permiso de conducción expedido en otro Estado miembro de la Unión Europea o en otro Estado parte del Acuerdo sobre el Espacio Económico Europeo, ni haber sido restringido, suspendido o anulado en otro Estado miembro el permiso de conducción que poseyese.",
+        "Ser declarado apto por la Jefatura Provincial de Tráfico en las pruebas teóricas y prácticas que, en relación con cada clase de permiso o licencia de conducción, se determinan en el título II."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 7 Requisitos para obtener un permiso o una licencia de conducción 1. Para obtener un permiso o una licencia de conducción se requerirá: a) En el caso de extranjeros, acreditar la situación de residencia normal o estancia por estudios en España de, al menos, seis meses y haber cumplido la edad requerida. b) No estar privado por resolución judicial del derecho a conducir vehículos de motor y ciclomotores, ni hallarse sometido a suspensión o intervención administrativa del permiso o licencia de conducción que se posea. c) Que haya transcurrido el plazo legalmente establecido, una vez declarada la pérdida de vigencia del permiso o licencia de conducción del que fuera titular como consecuencia de la pérdida total de los puntos asignados. d) Reunir las aptitudes psicofísicas requeridas en relación con la clase del permiso o licencia de conducción que se solicite. e) Ser declarado apto por la Jefatura Provincial de Tráfico en las pruebas teóricas y prácticas que, en relación con cada clase de permiso o licencia de conducción, se determinan en el título II. f) No ser titular de un permiso de conducción expedido en otro Estado miembro de la Unión Europea o en otro Estado parte del Acuerdo sobre el Espacio Económico Europeo, ni haber sido restringido, suspendido o anulado en otro Estado miembro el permiso de conducción que poseyese."
+    },
+    {
+      "pregunta": "49. Según el artículo 14 del RD 818/2009, serán competentes para la resolución del procedimiento de renovación del permiso o licencia de conducción:",
+      "opciones": [
+        "Las Jefaturas Provinciales de Tráfico.",
+        "Las Jefaturas Centrales de Tráfico.",
+        "El Ministerio del Interior.",
+        "La Dirección General de Tráfico."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 14 Actuación de la Jefatura Provincial de Tráfico 1. Serán competentes para la resolución de este procedimiento las Jefaturas Provinciales de Tráfico. 2. En todo caso, la privación por resolución judicial del derecho a conducir vehículos de motor y ciclomotores, la declaración de pérdida de vigencia a que se refiere el artículo 37, la intervención, medida cautelar o suspensión del permiso o licencia que se posea, tanto se hayan acordado en vía judicial o administrativa, serán causa para denegar el trámite solicitado, que no procederá hasta que se haya cumplido la pena o sanción, levantado la intervención o medida cautelar, o hayan transcurrido los plazos o acreditado los requisitos legalmente establecidos, según el trámite de que se trate."
+    },
+    {
+      "pregunta": "50. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta respecto a la edad mínima de obtención del permiso de la clase C:",
+      "opciones": [
+        "La edad mínima será de 19 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial acelerada.",
+        "La edad mínima será de 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase C: Automóviles distintos de los que autoriza a conducir el permiso de las clases D1 o D, cuya masa máxima autorizada exceda de 3.500 kg que estén diseñados y construidos para el transporte de no más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 21años cumplidos. La edad mínima será de 18 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

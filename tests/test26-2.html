@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El tenor literal del artículo 382 establece que, cuando con los actos sancionados en los artículos _______________ se ocasionare, además del riesgo prevenido, un resultado lesivo constitutivo de delito, cualquiera que sea su gravedad, los Jueces o Tribunales apreciarán tan sólo la infracción____________________, aplicando la pena en su ___________________y condenando, en todo caso, al resarcimiento de la responsabilidad civil que se hubiera originado. (Complete los espacios en blanco con la respuesta correcta):",
+        "opciones": [
+            "379, 380 y 381; menos gravemente penada; mitad superior.",
+            "380, 380.1 y 381; más gravemente penada; mitad superior.",
+            "379, 380 y 381; más gravemente penada; mitad superior.",
+            "379, 380.1 y 381.1; más gravemente penada; inferior en grado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 382 | Resultado lesivo en los tres artículos anteriores Cuando con los actos sancionados en los artículos 379, 380 y 381 se ocasionare, además del riesgo prevenido, un resultado lesivo constitutivo de delito, cualquiera que sea su gravedad, los Jueces o Tribunales apreciarán tan sólo la infracción más gravemente penada, aplicando la pena en su mitad superior y condenando, en todo caso, al resarcimiento de la responsabilidad civil que se hubiera originado. Cuando el resultado lesivo concurra con un delito del artículo 381, se impondrá en todo caso la pena de privación del derecho a conducir vehículos a motor y ciclomotores prevista en este precepto en su mitad superior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula el delito de negativa a someterse a las pruebas de presencia de drogas tóxicas o estupefacientes?",
+        "opciones": [
+            "Artículo 383 CP.",
+            "Artículo 383.1 CP.",
+            "Artículo 383.2 CP.",
+            "Artículo 384 CP."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 383 | Delito de negativa a someterse a las pruebas de alcoholemia y drogas El conductor que, requerido por un agente de la autoridad, se negare a someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores, será castigado con la pena de prisión de seis meses a un año y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado primero del artículo 379 del Código Penal, será castigado con la pena de prisión de tres a seis meses o con la de multa de seis a doce meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días, y, en cualquier caso, con la de privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años:",
+        "opciones": [
+            "El que condujere un vehículo de motor a velocidad superior en sesenta kilómetros por hora en vía urbana y en ochenta kilómetros por hora en vía interurbana a la permitida reglamentariamente.",
+            "El que condujere un vehículo de motor o un ciclomotor a velocidad superior en ochenta kilómetros por hora en vía urbana o en sesenta kilómetros por hora en vía interurbana a la permitida reglamentariamente.",
+            "El que condujere un vehículo de motor o un ciclomotor a velocidad superior en ochenta kilómetros por hora en vía urbana o en sesenta kilómetros por hora en vía interurbana a la permitida legalmente.",
+            "El que condujere un vehículo de motor o un ciclomotor a velocidad superior en sesenta kilómetros por hora en vía urbana o en ochenta kilómetros por hora en vía interurbana a la permitida reglamentariamente."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 379 | Delito de conducción con exceso de velocidad punible 1. El que condujere un vehículo de motor o un ciclomotor a velocidad superior en sesenta kilómetros por hora (60Km/h) en vía urbana o en ochenta kilómetros por hora (80Km/h) en vía interurbana a la permitida reglamentariamente, será castigado con la pena de prisión de tres a seis meses o con la de multa de seis a doce meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días, y, en cualquier caso, con la de privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo estipulado en el artículo 384, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días: Señale la opción incorrecta:",
+        "opciones": [
+            "El que condujere un vehículo o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida parcial de los puntos asignados legalmente, tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial o sin haber obtenido nunca permiso o licencia de conducción.",
+            "El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente.",
+            "El que condujere un vehículo de motor o ciclomotor tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial.",
+            "El que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 384 | Delito de conducción sin permiso de conducción El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. La misma pena se impondrá al que realizare la conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial y al que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula el delito de conducción sin haber obtenido nunca permiso o licencia de conducción?",
+        "opciones": [
+            "Artículo 384 CP.",
+            "Artículo 384 CP, párrafo primero.",
+            "Artículo 384 CP, párrafo segundo.",
+            "Artículo 384.2 CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 384 | Delito de conducción sin permiso de conducción El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. La misma pena se impondrá al que realizare la conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial y al que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula el delito de negativa a someterse a las pruebas de alcoholemia?",
+        "opciones": [
+            "Artículo 383 CP.",
+            "Artículo 383.1 CP.",
+            "Artículo 383.2 CP.",
+            "Artículo 384 CP."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 383 | Delito de negativa a someterse a las pruebas de alcoholemia y drogas El conductor que, requerido por un agente de la autoridad, se negare a someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores, será castigado con la pena de prisión de seis meses a un año y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años."
+    },
+    {
+        "pregunta": "Juan conduce un turismo por la Ma-10. En un momento dado es adelantado por un camión conducido por Luis. Luis no se percata a tiempo de una estrechez en la vía y da un volantazo golpeando el coche de Juan, que queda siniestro. Juan es atendido por una ambulancia debido a que ha sufrido una lesión cervical y requiere seguimiento facultativo. Luis, abandonó el lugar del accidente y días después fue localizado, procediéndose a imputarle un delito de abandono del lugar del accidente.",
+        "opciones": [
+            "Dado que ha ocasionado un accidente con resultado de lesiones, la imputación es correcta.",
+            "Dado que ha ocasionado un accidente con resultado de lesiones y se ha marchado del lugar, la imputación es correcta.",
+            "Al ser un lesiones excluidas del 147.1, aunque haya abandonado el lugar del accidente, se le denunciaría administrativamente por ausentarse del lugar.",
+            "Al ser un lesiones excluidas del 147.1, aunque haya abandonado el lugar del accidente, procede la imputación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 382 bis CP 1. El conductor de un vehículo a motor o de un ciclomotor que, fuera de los casos contemplados en el artículo 195, voluntariamente y sin que concurra riesgo propio o de terceros, abandone el lugar de los hechos tras causar un accidente en el que fallecieren una o varias personas o en el que se les causare alguna de las lesiones a que se refieren los artículos 147.1, 149 y 150, será castigado como autor de un delito de abandono del lugar del accidente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. A los efectos de los artículos 127 y 128 del Código Penal, el vehículo a motor o ciclomotor utilizado en los hechos previsto en el Capítulo IV del Título XVII del mismo cuerpo legal, se considerará:",
+        "opciones": [
+            "Instrumento del delito, de conformidad con el artículo 385 bis CP.",
+            "Instrumento del delincuente, de conformidad con el artículo 385 bis CP.",
+            "Instrumento del tipo, de conformidad con el artículo 385 ter CP.",
+            "Instrumento del delito, de conformidad con el artículo 385 ter CP."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 385 bis | Vehículo como instrumento del delito El vehículo a motor o ciclomotor utilizado en los hechos previstos en este Capítulo se considerará instrumento del delito a los efectos de los artículos 127 y 128. Artículo 127: Toda pena que se imponga por un delito doloso llevará consigo la pérdida de los efectos que de él provengan y de los bienes, medios o instrumentos con que se haya preparado o ejecutado, así como de las ganancias provenientes del delito, cualesquiera que sean las transformaciones que hubieren podido experimentar. Artículo 128: Cuando los referidos efectos e instrumentos sean de lícito comercio y su valor no guarde proporción con la naturaleza o gravedad de la infracción penal, o se hayan satisfecho completamente las responsabilidades civiles, podrá el Juez o Tribunal no decretar el decomiso, o decretarlo parcialmente. Se debe entender, entonces, que ante la comisión de un delito contra la seguridad vial, los agentes de la Autoridad han de intervenir el vehículo y ponerlo a disposición de la Autoridad Judicial con objeto de que decida sobre su decomiso o restitución a su propietario."
+    },
+    {
+        "pregunta": "Cuál de los siguientes no es un elemento del delito de abandono del lugar del accidente tipificado en el artículo 382 bis del Código Penal:",
+        "opciones": [
+            "El abandono voluntario",
+            "La causación de un accidente con uno o varios fallecidos",
+            "La causación de lesiones recogidas los artículos 147.2, 148 y 151.",
+            "No son elementos del delito de abandono del lugar del accidente."
+        ],
+        "correcta": 2,
+        "explicacion": "Código Penal. Artículo 382 bis. 1. El conductor de un vehículo a motor o de un ciclomotor que, fuera de los casos contemplados en el artículo 195, voluntariamente y sin que concurra riesgo propio o de terceros, abandone el lugar de los hechos tras causar un accidente en el que fallecieren una o varias personas o en el que se les causare alguna de las lesiones a que se refieren los artículos 147.1, 149 y 150, será castigado como autor de un delito de abandono del lugar del accidente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según el tenor literal del artículo 383, será castigado con la penas de prisión de seis meses a un año y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años:",
+        "opciones": [
+            "El conductor que se negare a someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores.",
+            "El conductor que, requerido por un agente de la autoridad, se negare a someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores.",
+            "El conductor que, requerido por un agente de la autoridad, se negare a someterse a las pruebas legalmente establecidas para la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores.",
+            "El conductor que, requerido por un agente de la autoridad, aceptare someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 383 | Delito de negativa a someterse a las pruebas de alcoholemia y drogas El conductor que, requerido por un agente de la autoridad, se negare a someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores, será castigado con la pena de prisión de seis meses a un año y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentran regulados los delitos contra la seguridad vial dentro del Código Penal?",
+        "opciones": [
+            "En el Libro II, Título XVII, Capítulo IV, artículos 378 a 385 ter.",
+            "En el Libro II, Título XVI, Capítulo VI, artículos 379 a 385 ter.",
+            "En el Libro III, Título XVII, Capítulo IV, artículos 379 a 385.",
+            "En el Libro II, Título XVII, Capítulo IV, artículos 379 a 385 ter."
+        ],
+        "correcta": 3,
+        "explicacion": "CÓDIGO PENAL Libro Segundo: Delitos y sus penas - Título XVII: De los delitos contra la seguridad colectiva • Capítulo Cuarto: De los delitos contra la Seguridad Vial → artículo 379 a 385 ter"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula el delito de ocasionar grave riesgo para la circulación no restableciendo la seguridad de la vía, cuando haya obligación de hacerlo?",
+        "opciones": [
+            "Artículo 385 CP.",
+            "Artículo 385 CP, párrafo segundo.",
+            "Artículo 385.2 CP.",
+            "Artículo 385.2ª CP."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 385 | Grave riesgo para la circulación Será castigado con la pena de prisión de seis meses a dos años o a las de multa de doce a veinticuatro meses y trabajos en beneficio de la comunidad de diez a cuarenta días, el que originare un grave riesgo para la circulación de alguna de las siguientes formas: 1ª Colocando en la vía obstáculos imprevisibles, derramando sustancias deslizantes o inflamables o mutando, sustrayendo o anulando la señalización o por cualquier otro medio. 2ª No restableciendo la seguridad de la vía, cuando haya obligación de hacerlo."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Un conductor sin permiso de conducción ha ingerido grandes cantidades de alcohol y de camino a su domicilio ha tenido un accidente en una curva cerrada, puesto que iba a gran velocidad y se ha empotrado contra un muro. En dicho accidente no ha intervenido ningún otro vehículo, y ha abandonado el lugar del accidente dejando su vehículo en medio de la calzada tras una curva cerrada. Mientras caminaba hacia su domicilio por la calzada, una patrulla de la Policía Local le ha dado el alto, le ha preguntado si el vehículo abandonado era suyo y le ha ordenado someterse a la prueba de alcoholemia, negándose el conductor a realizarla. El conductor presentaba síntomas de embriaguez. ¿Qué delitos ha cometido el conductor?",
+        "opciones": [
+            "Un delito de conducción bajo la influencia de bebidas alcohólicas del artículo 380 CP; un delito de negativa a someterse a las pruebas de alcoholemia del artículo 382 CP; un delito de conducir un vehículo de motor sin permiso de conducción del artículo 383 CP; y un delito de colocación en la vía de obstáculos imprevisibles sin señalización del artículo 385 CP.",
+            "Un delito de negativa a someterse a las pruebas de alcoholemia del artículo 383 CP; un delito de conducir un vehículo de motor sin permiso de conducción del artículo 384 CP; y un delito de colocación en la vía de obstáculos imprevisibles sin señalización del artículo 385 CP.",
+            "Un delito de conducción bajo la influencia de bebidas alcohólicas del artículo 379 CP; un delito de negativa a someterse a las pruebas de alcoholemia del artículo 383 CP; un delito de conducir un vehículo de motor sin permiso de conducción del artículo 384 CP; y un delito de colocación en la vía de obstáculos imprevisibles sin señalización del artículo 385 CP.",
+            "Un delito de conducción bajo la influencia de bebidas alcohólicas del artículo 379 CP; un delito de negativa a someterse a las pruebas de alcoholemia del artículo 383 CP; un delito de conducir un vehículo de motor sin permiso de conducción del artículo 384 CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 379 CP 1. El que condujere un vehículo de motor o un ciclomotor a velocidad superior en sesenta kilómetros por hora en vía urbana o en ochenta kilómetros por hora en vía interurbana a la permitida reglamentariamente, será castigado con la pena de prisión de tres a seis meses o con la de multa de seis a doce meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días, y, en cualquier caso, con la de privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años. 2. Con las mismas penas será castigado el que condujere un vehículo de motor o ciclomotor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro. Artículo 383 CP El conductor que, requerido por un agente de la autoridad, se negare a someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores, será castigado con la penas de prisión de seis meses a un año y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años. Artículo 384 CP El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. La misma pena se impondrá al que realizare la conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial y al que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción. Artículo 385 CP Será castigado con la pena de prisión de seis meses a dos años o a las de multa de doce a veinticuatro meses y trabajos en beneficio de la comunidad de diez a cuarenta días, el que originare un grave riesgo para la circulación de alguna de las siguientes formas: 1.ª Colocando en la vía obstáculos imprevisibles, derramando sustancias deslizantes o inflamables o mutando, sustrayendo o anulando la señalización o por cualquier otro medio. 2.ª No restableciendo la seguridad de la vía, cuando haya obligación de hacerlo."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula la conducción de un vehículo a motor a velocidad superior en sesenta kilómetros por hora en vía urbana a la permitida reglamentariamente?",
+        "opciones": [
+            "Artículo 379 CP.",
+            "Artículo 379.1 CP.",
+            "Artículo 379.2 CP.",
+            "Artículo 379.3 CP."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 379 | Delito de conducción con exceso de velocidad punible 1. El que condujere un vehículo de motor o un ciclomotor a velocidad superior en sesenta kilómetros por hora (60Km/h) en vía urbana o en ochenta kilómetros por hora (80Km/h) en vía interurbana a la permitida reglamentariamente, será castigado con la pena de prisión de tres a seis meses o con la de multa de seis a doce meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días, y, en cualquier caso, con la de"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Juan ha consumido cocaína y alcohol durante el festival de música electrónica celebrado el domingo en un recinto ferial de Palma y a la hora de marcharse se subió en su vehículo y comenzó a conducirlo. En la rotonda de la salida del recinto ferial, estaba la Policía Local de Palma realizando un control de alcoholemia y drogas. El agente de Policía Local le comunica a Juan que va a proceder a realizarle la prueba de alcoholemia, negándose rotundamente éste. ¿Comete Juan algún tipo delictivo recogido en el Código Penal?",
+        "opciones": [
+            "Sí, comete un delito de conducción bajo los efectos de alcohol y drogas.",
+            "Sí, comete un delito de conducción bajo los efectos de alcohol y drogas, siendo posible la aplicación de atenuante o eximente de embriaguez.",
+            "Sí, comete delito de negativa a realizar pruebas de alcoholemia, siendo posible la aplicación de atenuante o eximente de embriaguez.",
+            "Sí, comete delito por conducción bajo los efectos de alcohol y drogas además de cometer un delito de negativa a realizar pruebas de alcoholemia, siendo posible la aplicación de atenuante o eximente de embriaguez para el último caso."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 379 | Delito de conducción con exceso de velocidad punible 2. Con las mismas penas será castigado el que condujere un vehículo de motor o ciclomotor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro. Artículo 383 | Delito de negativa a someterse a las pruebas de alcoholemia y drogas El conductor que, requerido por un agente de la autoridad, se negare a someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores, será castigado con la pena de prisión de seis meses a un año y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años. Artículo 385 ter | Reducción de la punibilidad En los delitos previstos en los artículos 379, 383, 384 y 385, el Juez o Tribunal, razonándolo en sentencia, podrá rebajar en un grado la pena de prisión en atención a la menor entidad del riesgo causado y a las demás circunstancias del hecho."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado segundo del artículo 379 del Código Penal, será castigado con la pena de prisión de tres a seis meses o con la de multa de seis a doce meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días, y, en cualquier caso, con la de privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años:",
+        "opciones": [
+            "El que condujere un vehículo de motor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire inspirado superior a 0,80 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro.",
+            "El que condujere un vehículo de motor o ciclomotor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro.",
+            "El que condujere un vehículo bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro.",
+            "El que condujere un vehículo de motor o ciclomotor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 gramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por mililitro."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 379 | Delito de conducción con exceso de velocidad punible 2. Con las mismas penas será castigado el que condujere un vehículo de motor o ciclomotor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Existe un tipo atenuado del delito de conducción con manifiesto desprecio por la vida de los demás del apartado primero del artículo 381 del Código Penal?",
+        "opciones": [
+            "No, no existe.",
+            "Sí, el apartado segundo del artículo 381 CP.",
+            "Sí, el apartado tercero del artículo 381 CP.",
+            "Sí, la remisión al apartado primero del artículo 380 CP."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 381 | Delito de conducción con manifiesto desprecio por la vida de los demás. Se conoce como delito de conducción homicida 1. Será castigado con las penas de prisión de dos a cinco años, multa de doce a veinticuatro meses y privación del derecho a conducir vehículos a motor y ciclomotores durante un período de seis a diez años el que, con manifiesto desprecio por la vida de los demás, realizare la conducta descrita en el artículo anterior. 2. Cuando no se hubiere puesto en concreto peligro la vida o la integridad de las personas, las penas serán de prisión de uno a dos años, multa de seis a doce meses y privación del derecho a conducir vehículos a motor y ciclomotores por el tiempo previsto en el párrafo anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula el delito de abandono del lugar del accidente?",
+        "opciones": [
+            "Artículo 382.1 CP.",
+            "Artículo 382.2 CP.",
+            "Artículo 382.1 bis CP.",
+            "Artículo 382.1 ter CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 382 bis | Delito de abandono del lugar del accidente 1. El conductor de un vehículo a motor o de un ciclomotor que, fuera de los casos contemplados en el artículo 195, voluntariamente y sin que concurra riesgo propio o de terceros, abandone el lugar de los hechos tras causar un accidente en el que fallecieran una o varias personas o en el que se le causare lesión constitutiva de un delito del artículo 152.2, será castigado como autor de un delito de abandono del lugar del accidente. 2. Los hechos contemplados en este artículo que tuvieran su origen en una acción imprudente del conductor, serán castigados con la pena de prisión de seis meses a cuatro años y privación del derecho a conducir vehículos a motor y ciclomotores de uno a cuatro años. 3. Si el origen de los hechos que dan lugar al abandono fuera fortuito le corresponderá una pena de tres a seis meses de prisión y privación del derecho a conducir vehículos a motor y ciclomotores de seis meses a dos años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. \"El Christian\" y \"el Jonatan\" realizaron una carrera ilegal con sus coches por el Paseo Marítimo de la ciudad de Palma la primera noche después del confinamiento por el COVID-19. Ese día había mucha gente por la calle y condujeron sus vehículos a más de 100 km/hora no respetando los semáforos ni los pasos de cebra, zigzagueando para evitar un accidente. ¿Cometieron algún delito?",
+        "opciones": [
+            "Sí, un delito de conducción con temeridad manifiesta, ya que pusieron en peligro la vida y la integridad física del resto de conductores y viandantes.",
+            "Sí, un delito de conducción a velocidad superior a 60Km/h en vía urbana.",
+            "No, será únicamente una sanción administrativa.",
+            "Sí, un delito de conducción con manifiesto desprecio por la vida de los demás."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 380 | Delito de conducción temeraria 1. El que condujere un vehículo a motor o un ciclomotor con temeridad manifiesta y pusiere en concreto peligro la vida o la integridad de las personas será castigado con las penas de prisión de seis meses a dos años y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta seis años. 2. A los efectos del presente precepto se reputará manifiestamente temeraria la conducción en la que concurrieren las circunstancias previstas en el apartado primero y en el inciso segundo del apartado segundo del artículo anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Qué establece el apartado tercero del artículo 381 del Código Penal?",
+        "opciones": [
+            "El vehículo a motor o ciclomotor utilizado en los hechos previstos en el presente precepto se considerará instrumento del delito a los efectos del artículo 127 de este Código.",
+            "El vehículo a motor o ciclomotor utilizado en los hechos previstos en el presente precepto se considerará instrumento del delito a los efectos del artículo 125 de este Código.",
+            "El vehículo a motor o ciclomotor utilizado en los hechos previstos en el presente precepto se considerará instrumento del delito a los efectos del artículo 128 de este Código.",
+            "El apartado tercero fue suprimido por la LO 5/2010, de 22 de junio."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 381 CP 1. Será castigado con las penas de prisión de dos a cinco años, multa de doce a veinticuatro meses y privación del derecho a conducir vehículos a motor y ciclomotores durante un período de seis a diez años el que, con manifiesto desprecio por la vida de los demás, realizare la conducta descrita en el artículo anterior. 2. Cuando no se hubiere puesto en concreto peligro la vida o la integridad de las personas, las penas serán de prisión de uno a dos años, multa de seis a doce meses y privación del derecho a conducir vehículos a motor y ciclomotores por el tiempo previsto en el párrafo anterior."
+    },
+    {
+        "pregunta": "¿Cuándo se podrá imputar a una persona por el artículo 384 del Código Penal?",
+        "opciones": [
+            "Cuando condujere bajo la influencia de drogas o alcohol.",
+            "Cuando se negase a ser sometido a las practica de pruebas de detección alcohólica.",
+            "Cuando condujere un vehículo a motor o ciclomotor tras privación cautelar del mismo por decisión judicial.",
+            "Al que causare un grave riesgo a la circulación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 384 Código Penal. Delito de conducción sin permiso de conducción El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. La misma pena se impondrá al que realizare la conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial y al que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula el delito de conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial?",
+        "opciones": [
+            "Artículo 384 CP.",
+            "Artículo 384 CP, párrafo primero.",
+            "Artículo 384 CP, párrafo segundo.",
+            "Artículo 384.2 CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 384 | Delito de conducción sin permiso de conducción El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. La misma pena se impondrá al que realizare la conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial y al que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción."
+    },
+    {
+        "pregunta": "Un conductor es requerido por un agente de la autoridad para someterse a la prueba de alcoholemia, ante la cual se niega, ¿comete algún delito?",
+        "opciones": [
+            "Si, recogido en el artículo 383 CP.",
+            "No, ya que no está obligado a realizar la prueba.",
+            "Si, recogido en el artículo 385 CP.",
+            "Si, con la pena de prisión de dos meses a seis meses."
+        ],
+        "correcta": 0,
+        "explicacion": "Según DGT: Los vehículos de movilidad personal, tal y como establece el Reglamento General de Vehículos son vehículos de una o más ruedas dotadas de una única plaza y propulsados exclusivamente por motores eléctricos que pueden proporcionar al vehículo una velocidad máxima por diseño comprendida entre 6 y 25 km/h. Solamente pueden estar equipados con un asiento o sillín si están dotados de sistema de auto equilibrado. Esta definición excluye a los vehículos para personas con movilidad reducida. https://www.dgt.es/muevete-con-seguridad/viaja-seguro/en-patinete/ Este VMP, por definición y características, pasa a considerarse ciclomotor, ante el cual el conductor puede incurrir en un delito del 383 CP."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Un vehículo ha ocasionado un accidente múltiple en el que han fallecido dos personas y cuatro han resultado gravemente heridas. Los hechos ocurrieron la madrugada del sábado. El vehículo circulaba en sentido contrario por la autopista de Palma-Inca, a una velocidad de 190km/h, y con las luces apagadas. El conductor sobrevivió y declaró ante la Policía que quería quitarse la vida y le daba igual si mataba a alguien más por el camino. ¿Cómo deberá castigarse esta conducta?",
+        "opciones": [
+            "Se castigará la conducción con manifiesto desprecio por la vida de los demás del artículo 381.1 CP más dos delitos de homicidio doloso y cuatro delitos de lesiones dolosas. La suma de todas las penas será el tiempo que deberá permanecer privado de libertad.",
+            "Se castigará la conducción con manifiesto desprecio por la vida de los demás del artículo 381.1 CP más dos delitos de homicidio imprudente y cuatro delitos de lesiones imprudentes. La suma de todas las penas será el tiempo que deberá permanecer privado de libertad.",
+            "Se castigará la conducción con manifiesto desprecio por la vida de los demás del artículo 380.1 CP más dos delitos de homicidio doloso y cuatro delitos de lesiones dolosas. De conformidad con el artículo 382 CP, los Jueces o Tribunales apreciarán tan sólo la infracción más gravemente penada, aplicando la pena en su mitad superior y condenando, en todo caso, al resarcimiento de la responsabilidad civil que se hubiera originado. Además, se impondrá la pena de privación del derecho a conducir vehículos a motor y ciclomotores prevista en este precepto en su mitad superior.",
+            "Se castigará la conducción con manifiesto desprecio por la vida de los demás del artículo 381.1 CP más dos delitos de homicidio doloso y cuatro delitos de lesiones dolosas. No obstante, y de conformidad con el artículo 382 CP, los Jueces o Tribunales apreciarán tan sólo la infracción más gravemente penada, aplicando la pena en su mitad superior y condenando, en todo caso, al resarcimiento de la responsabilidad civil que se hubiera originado."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 381 | Delito de conducción con manifiesto desprecio por la vida de los demás. Se conoce como delito de conducción homicida 1. Será castigado con las penas de prisión de dos a cinco años, multa de doce a veinticuatro meses y privación del derecho a conducir vehículos a motor y ciclomotores durante un período de seis a diez años el que, con manifiesto desprecio por la vida de los demás, realizare la conducta descrita en el artículo anterior. 2. Cuando no se hubiere puesto en concreto peligro la vida o la integridad de las personas, las penas serán de prisión de uno a dos años, multa de seis a doce meses y privación del derecho a conducir vehículos a motor y ciclomotores por el tiempo previsto en el párrafo anterior. Artículo 382 | Resultado lesivo en los tres artículos anteriores Cuando con los actos sancionados en los artículos 379, 380 y 381 se ocasionare, además del riesgo prevenido, un resultado lesivo constitutivo de delito, cualquiera que sea su gravedad, los Jueces o Tribunales apreciarán tan sólo la infracción más gravemente penada, aplicando la pena en su mitad superior y condenando, en todo caso, al resarcimiento de la responsabilidad civil que se hubiera originado. Cuando el resultado lesivo concurra con un delito del artículo 381, se impondrá en todo caso la pena de privación del derecho a conducir vehículos a motor y ciclomotores prevista en este precepto en su mitad superior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. En relación con el tipo penal del art. 385 bis del Código Penal:",
+        "opciones": [
+            "El vehículo a motor o ciclomotor utilizado se considerará como instrumento del delito a los efectos de su decomiso.",
+            "El vehículo a motor o ciclomotor utilizado se considerará como instrumento peligroso, a los efectos agravatorios oportunos.",
+            "El vehículo a motor o ciclomotor utilizado se destinará a la satisfacción de las responsabilidades civiles, aunque pertenezcan a un tercero no responsable del delito.",
+            "El vehículo a motor o ciclomotor utilizado se destinará a la satisfacción de las costas procesales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 385 bis | Vehículo como instrumento del delito El vehículo a motor o ciclomotor utilizado en los hechos previstos en este Capítulo se considerará instrumento del delito a los efectos de los artículos 127 y 128. Artículo 127: Toda pena que se imponga por un delito doloso llevará consigo la pérdida de los efectos que de él provengan y de los bienes, medios o instrumentos con que se haya preparado o ejecutado, así como de las ganancias provenientes del delito, cualesquiera que sean las transformaciones que hubieren podido experimentar. Artículo 128: Cuando los referidos efectos e instrumentos sean de lícito comercio y su valor no guarde proporción con la naturaleza o gravedad de la infracción penal, o se hayan satisfecho completamente las responsabilidades civiles, podrá el Juez o Tribunal no decretar el decomiso, o decretarlo parcialmente. Se debe entender, entonces, que ante la comisión de un delito contra la seguridad vial, los agentes de la Autoridad han de intervenir el vehículo y ponerlo a disposición de la Autoridad Judicial con objeto de que decida sobre su decomiso o restitución a su propietario."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El tipo penal del art. 381 del Código Penal, relativo a la conducción temeraria agravada:",
+        "opciones": [
+            "Admite tanto la comisión dolosa como culposa.",
+            "Sólo admite la comisión culposa cuando ésta sea calificada de temeraria.",
+            "Sólo admite su comisión por dolo, sea directo o eventual.",
+            "Sólo admite su comisión por dolo directo."
+        ],
+        "correcta": 2,
+        "explicacion": "Como se desprende de la propia literalidad del precepto y han tenido ocasión de subrayar doctrina y jurisprudencia (SSTS 341/98, de 5 de marzo, 877/99, de 2 de junio, 1461/2000, de 27 de septiembre, 1039/2001, de 29 de mayo, 2251/2001, de 29 de noviembre y 561/2002, de 1 de abril) el tipo objetivo del art. 381 exige un doble elemento: la conducción con temeridad manifiesta y la puesta en concreto peligro de la vida o integridad de las personas, mientras que el tipo subjetivo exige el dolo."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula el delito de ocasionar grave riesgo para la circulación colocando en la vía obstáculos imprevisibles, derramando sustancias deslizantes o inflamables o mutando, sustrayendo o anulando la señalización?",
+        "opciones": [
+            "Artículo 385 CP.",
+            "Artículo 385 CP, párrafo primero.",
+            "Artículo 385.1 CP.",
+            "Artículo 385.1ª CP."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 385 | Grave riesgo para la circulación Será castigado con la pena de prisión de seis meses a dos años o a las de multa de doce a veinticuatro meses y trabajos en beneficio de la comunidad de diez a cuarenta días, el que originare un grave riesgo para la circulación de alguna de las siguientes formas: 1ª Colocando en la vía obstáculos imprevisibles, derramando sustancias deslizantes o inflamables o mutando, sustrayendo o anulando la señalización o por cualquier otro medio. 2ª No restableciendo la seguridad de la vía, cuando haya obligación de hacerlo."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El artículo 379.2 del Código Penal castiga:",
+        "opciones": [
+            "Al que condujere con una tasa de alcohol en aire espirado superior a 0,40 miligramos por litro o con una tasa de alcohol en sangre superior a 0,8 gramos por litro.",
+            "Al que condujere con una tasa de alcohol en aire espirado superior a 0,80 miligramos por litro o con una tasa de alcohol en sangre superior a 1,6 gramos por litro.",
+            "Al que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro.",
+            "Ninguna de las conductas descritas está sancionada por el artículo 379.2 del CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 379 | Delito de conducción con exceso de velocidad punible 2. Con las mismas penas será castigado el que condujere un vehículo de motor o ciclomotor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Indique cuál de las siguientes conductas no está descrita en el artículo 384 del Código Penal:",
+        "opciones": [
+            "Conducir un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente.",
+            "Conducir tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial.",
+            "Conducir sin ser titular de permiso o licencia de conducción vigente.",
+            "Todas las conductas anteriores son integradoras del tipo del artículo 384 del CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 384 | Delito de conducción sin permiso de conducción El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. La misma pena se impondrá al que realizare la conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial y al que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción."
+    },
+    {
+        "pregunta": "El delito recogido en el artículo 381 podrá contemplarse aunque no exista:",
+        "opciones": [
+            "La conducción de un vehículo a motor o un ciclomotor con temeridad manifiesta.",
+            "Un concreto peligro para la vida o la integridad de las personas.",
+            "Un manifiesto desprecio por la vida de los demás.",
+            "Todos son elementos necesarios para que concurra el artículo 381."
+        ],
+        "correcta": 1,
+        "explicacion": "Codigo Penal. Artículo 381. 1. Será castigado con las penas de prisión de dos a cinco años, multa de doce a veinticuatro meses y privación del derecho a conducir vehículos a motor y ciclomotores durante un período de seis a diez años el que, con manifiesto desprecio por la vida de los demás, realizare la conducta descrita en el artículo anterior. 2. Cuando no se hubiere puesto en concreto peligro la vida o la integridad de las personas, las penas serán de prisión de uno a dos años, multa de seis a doce meses y privación del derecho a conducir vehículos a motor y ciclomotores por el tiempo previsto en el párrafo anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula la conducción de un vehículo a motor con manifiesto desprecio por la vida de los demás?",
+        "opciones": [
+            "Artículo 380.1 CP.",
+            "Artículo 380.2 CP.",
+            "Artículo 381.1 CP.",
+            "Artículo 381.2 CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 381 | Delito de conducción con manifiesto desprecio por la vida de los demás. Se conoce como delito de conducción homicida 1. Será castigado con las penas de prisión de dos a cinco años, multa de doce a veinticuatro meses y privación del derecho a conducir vehículos a motor y ciclomotores durante un período de seis a diez años el que, con manifiesto desprecio por la vida de los demás, realizare la conducta descrita en el artículo anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula la conducción de un vehículo a motor con temeridad manifiesta poniendo en concreto peligro la vida o la integridad física de personas?",
+        "opciones": [
+            "Artículo 380.1 CP.",
+            "Artículo 380.2 CP.",
+            "Artículo 381.1 CP.",
+            "Artículo 381.2 CP."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 380 | Delito de conducción temeraria 1. El que condujere un vehículo a motor o un ciclomotor con temeridad manifiesta y pusiere en concreto peligro la vida o la integridad de las personas será castigado con las penas de prisión de seis meses a dos años y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta seis años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Ramón, harto de las fiestas populares de su pueblo, cogió su camión y comenzó a conducirlo por la vía peatonal del pueblo a gran velocidad hasta llegar a la plaza principal del mismo, durante los conciertos de la verbena popular, lugar que estaba plagado de personas celebrando las fiestas. ¿Es punible la acción cometida por Ramón?",
+        "opciones": [
+            "Sí, comete delito de conducción con temeridad manifiesta del artículo 380.1 CP.",
+            "Sí, comete delito de conducción con manifiesto desprecio por la vida de los demás del artículo 381.1 CP.",
+            "Sí, comete delito de conducción con manifiesto desprecio por la vida de los demás del artículo 381.2 CP.",
+            "No, únicamente se le impondría una sanción administrativa."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 381 | Delito de conducción con manifiesto desprecio por la vida de los demás. Se conoce como delito de conducción homicida 1. Será castigado con las penas de prisión de dos a cinco años, multa de doce a veinticuatro meses y privación del derecho a conducir vehículos a motor y ciclomotores durante un período de seis a diez años el que, con manifiesto desprecio por la vida de los demás, realizare la conducta descrita en el artículo anterior. 2. Cuando no se hubiere puesto en concreto peligro la vida o la integridad de las personas, las penas serán de prisión de uno a dos años, multa de seis a doce meses y privación del derecho a conducir vehículos a motor y ciclomotores por el tiempo previsto en el párrafo anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el art. 382 cuando además del riesgo prevenido en los arts. 379, 380 y 381 se ocasionara un resultado lesivo:",
+        "opciones": [
+            "Se sancionarán ambas infracciones por separado.",
+            "Se sancionarán conforme a las normas del concurso ideal.",
+            "Se impondrá la pena superior en grado a la señalada por la Ley para el delito más grave.",
+            "Sólo se sancionará la infracción más gravemente penada, aplicando la pena en su mitad superior."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 382 | Resultado lesivo en los tres artículos anteriores Cuando con los actos sancionados en los artículos 379, 380 y 381 se ocasionare, además del riesgo prevenido, un resultado lesivo constitutivo de delito, cualquiera que sea su gravedad, los Jueces o Tribunales apreciarán tan sólo la infracción más gravemente penada, aplicando la pena en su mitad superior y condenando, en todo caso, al resarcimiento de la responsabilidad civil que se hubiera originado. Cuando el resultado lesivo concurra con un delito del artículo 381, se impondrá en todo caso la pena de privación del derecho a conducir vehículos a motor y ciclomotores prevista en este precepto en su mitad superior"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El artículo 384 establece que el que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. ¿Qué tipo de delito es?",
+        "opciones": [
+            "Delito de riesgo concreto.",
+            "Delito de peligro abstracto.",
+            "Delito de resultado.",
+            "Delito de peligro concreto."
+        ],
+        "correcta": 1,
+        "explicacion": "Todos los delitos contra la seguridad vial son delitos de mera actividad, de peligro, abstracto o concreto, según el delito de que se trate, en los que la consumación se produce con la realización de la acción y la puesta en peligro del bien jurídico protegido. Cuando los hechos cometidos al amparo de estos delitos ocasionen, además del riesgo prevenido, un resultado lesivo constitutivo de delito, cualquiera que sea su gravedad, se producirá un concurso de normas (Concurso ideal de delitos)."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Un conductor que ha consumido alcohol y estupefacientes va conduciendo y observa que hay un control de la Policía Local. Para evitar que lo paren, hace un cambio de sentido brusco y se salta un semáforo en rojo e invade el sentido contrario de la vía. Una patrulla de la Policía Local sigue al vehículo hasta que consigue que se pare y le ordena realizar la prueba de alcoholemia, negándose el conductor rotundamente a hacérsela. ¿Qué delitos a cometido el conductor?",
+        "opciones": [
+            "Un delito de negativa a someterse a las pruebas de alcoholemia tipificado en el artículo 383 CP.",
+            "Un delito de conducción temeraria tipificado en el artículo 380 CP.",
+            "Un delito de negativa a someterse a las pruebas de alcoholemia tipificado en el artículo 383 CP y otro delito de conducción temeraria tipificado en el artículo 380 CP.",
+            "Un delito de negativa a someterse a las pruebas de alcoholemia tipificado en el artículo 383 CP y otro delito de conducción con manifiesto desprecio por la vida de los demás tipificado en el artículo 381 CP."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 380 | Delito de conducción temeraria 1. El que condujere un vehículo a motor o un ciclomotor con temeridad manifiesta y pusiere en concreto peligro la vida o la integridad de las personas será castigado con las penas de prisión de seis meses a dos años y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta seis años. 2. A los efectos del presente precepto se reputará manifiestamente temeraria la conducción en la que concurrieren las circunstancias previstas en el apartado primero y en el inciso segundo del apartado segundo del artículo anterior. Artículo 383 | Delito de negativa a someterse a las pruebas de alcoholemia y drogas El conductor que, requerido por un agente de la autoridad, se negare a someterse a las pruebas legalmente establecidas para la comprobación de las tasas de alcoholemia y la presencia de las drogas tóxicas, estupefacientes y sustancias psicotrópicas a que se refieren los artículos anteriores, será castigado con la pena de prisión de seis meses a un año y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula la conducción de un vehículo a motor bajo la influencia de bebidas alcohólicas?",
+        "opciones": [
+            "Artículo 379 CP.",
+            "Artículo 379.1 CP.",
+            "Artículo 379.2 CP.",
+            "Artículo 379.3 CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 379 | Delito de conducción con exceso de velocidad punible 2. Con las mismas penas será castigado el que condujere un vehículo de motor o ciclomotor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula el delito de conducción en los casos de pérdida de vigencia del permiso o licencia por pérdida de los puntos asignados legalmente?",
+        "opciones": [
+            "Artículo 384 CP.",
+            "Artículo 384 CP, párrafo primero.",
+            "Artículo 384 CP, párrafo segundo.",
+            "Artículo 384.1 CP."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 384 | Delito de conducción sin permiso de conducción El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. La misma pena se impondrá al que realizare la conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial y al que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El artículo 379.1 del Código Penal castiga:",
+        "opciones": [
+            "Al que condujere un vehículo de motor o un ciclomotor a velocidad superior al doble a la permitida reglamentariamente.",
+            "Al que condujere un vehículo de motor o un ciclomotor a velocidad superior en sesenta kilómetros por hora en vía urbana o en ochenta kilómetros por hora en vía interurbana a la permitida regla mentariamente.",
+            "Al que condujere un vehículo de motor o un ciclomotor a velocidad superior en cuarenta kilómetros por hora en vía urbana o en sesenta kilómetros por hora en vía interurbana a la permitida regla mentariamente.",
+            "Ninguna de las anteriores conductas se sanciona en el artículo 379.1 del CP."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 379 | Delito de conducción con exceso de velocidad punible 1. El que condujere un vehículo de motor o un ciclomotor a velocidad superior en sesenta kilómetros por hora (60Km/h) en vía urbana o en ochenta kilómetros por hora (80Km/h) en vía interurbana a la permitida reglamentariamente, será castigado con la pena de prisión de tres a seis meses o con la de multa de seis a doce meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días, y, en cualquier caso, con la de privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta cuatro años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuántos artículos forman el Capítulo IV del Título XVII del Libro II del Código Penal?",
+        "opciones": [
+            "8 artículos.",
+            "9 artículos.",
+            "10 artículos.",
+            "11 artículos."
+        ],
+        "correcta": 2,
+        "explicacion": "CÓDIGO PENAL Libro Segundo: Delitos y sus penas - Título XVII: De los delitos contra la seguridad colectiva • Capítulo Cuarto: De los delitos contra la Seguridad Vial → artículo 379 a 385 ter (TOTAL 10 artículos)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según el tenor literal del artículo 385 ter, en los delitos previstos en los artículos______________________, el Juez o Tribunal, razonándolo en sentencia, podrá rebajar en __________________________en atención a ______________________y a las demás circunstancias del hecho. Complete los espacios en blanco con la respuesta correcta:",
+        "opciones": [
+            "379, 383, 384 y 385; una su mitad inferior la pena de prisión; la entidad del riesgo causado.",
+            "379, 383, 384 y 385; un grado la pena de prisión; la menor entidad del riesgo causado.",
+            "379, 382, 384 y 385; una su mitad inferior la pena de prisión; la menor entidad del riesgo causado.",
+            "379, 383, 384 y 385; un grado la pena de prisión; la mayor entidad del riesgo causado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 385 ter | Reducción de la punibilidad En los delitos previstos en los artículos 379, 383, 384 y 385, el Juez o Tribunal, razonándolo en sentencia, podrá rebajar en un grado la pena de prisión en atención a la menor entidad del riesgo causado y a las demás circunstancias del hecho."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Qué requisitos se deben cumplir para ser autor de un delito de abandono del lugar del accidente recogido en el artículo 382 bis del Código Penal? Señale la opción incorrecta:",
+        "opciones": [
+            "Ser conductor de un vehículo a motor o de un ciclomotor.",
+            "Voluntariamente y sin que concurra riesgo propio o de terceros abandone el lugar de los hechos.",
+            "El conductor de positivo en un control de alcoholemia o de sustancias estupefacientes.",
+            "Cause un accidente en el que fallecieran una o varias personas o que se le causen lesiones constitutivas de delito."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 382 bis | Delito de abandono del lugar del accidente 1. El conductor de un vehículo a motor o de un ciclomotor que, fuera de los casos contemplados en el artículo 195, voluntariamente y sin que concurra riesgo propio o de terceros, abandone el lugar de los hechos tras causar un accidente en el que fallecieran una o varias personas o en el que se le causare lesión constitutiva de un delito del artículo 152.2, será castigado como autor de un delito de abandono del lugar del accidente. 2. Los hechos contemplados en este artículo que tuvieran su origen en una acción imprudente del conductor, serán castigados con la pena de prisión de seis meses a cuatro años y privación del derecho a conducir vehículos a motor y ciclomotores de uno a cuatro años. 3. Si el origen de los hechos que dan lugar al abandono fuera fortuito le corresponderá una pena de tres a seis meses de prisión y privación del derecho a conducir vehículos a motor y ciclomotores de seis meses a dos años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Estipula el apartado primero del artículo 380 del Código Penal que será castigado con las penas de prisión de seis meses a dos años y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta seis años:",
+        "opciones": [
+            "El que condujere un vehículo a motor y un ciclomotor con temeridad manifiesta y pusiere en concreto peligro la vida o la integridad de las personas.",
+            "El que condujere un vehículo con temeridad manifiesta y pusiere en concreto peligro la vida o la integridad de las personas.",
+            "El que condujere un vehículo a motor o un ciclomotor con temeridad manifiesta y pusiere en concreto peligro la vida o la integridad de las personas.",
+            "El que condujere un vehículo a motor o un ciclomotor con temeridad manifiesta y pusiere en concreto peligro la vida de las personas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 380 | Delito de conducción temeraria 1. El que condujere un vehículo a motor o un ciclomotor con temeridad manifiesta y pusiere en concreto peligro la vida o la integridad de las personas será castigado con las penas de prisión de seis meses a dos años y privación del derecho a conducir vehículos a motor y ciclomotores por tiempo superior a uno y hasta seis años. 2. A los efectos del presente precepto se reputará manifiestamente temeraria la conducción en la que concurrieren las circunstancias previstas en el apartado primero y en el inciso segundo del apartado segundo del artículo anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El tipo penal de conducción con manifiesto desprecio por la vida de los demás del artículo 381 del Código Penal, ¿puede cometerse de manera imprudente?",
+        "opciones": [
+            "Sí.",
+            "Sí, si el sujeto activo no pretendía cometer la infracción penal.",
+            "Sí, todos los delitos pueden cometerse de manera dolosa o imprudente.",
+            "No, en ningún caso."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 381 | Delito de conducción con manifiesto desprecio por la vida de los demás. Se conoce como delito de conducción homicida 1. Será castigado con las penas de prisión de dos a cinco años, multa de doce a veinticuatro meses y privación del derecho a conducir vehículos a motor y ciclomotores durante un período de seis a diez años el que, con manifiesto desprecio por la vida de los demás, realizare la conducta descrita en el artículo anterior. 2. Cuando no se hubiere puesto en concreto peligro la vida o la integridad de las personas, las penas serán de prisión de uno a dos años, multa de seis a doce meses y privación del derecho a conducir vehículos a motor y ciclomotores por el tiempo previsto en el párrafo anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cómo se rubrica el Capítulo IV del Título XVII del Código Penal?",
+        "opciones": [
+            "De los delitos contra la seguridad del tráfico.",
+            "De los delitos de seguridad vial.",
+            "De los delitos contra la seguridad vial.",
+            "De los delitos de seguridad del tráfico."
+        ],
+        "correcta": 2,
+        "explicacion": "CÓDIGO PENAL Libro Segundo: Delitos y sus penas - Título XVII: De los delitos contra la seguridad colectiva • Capítulo Cuarto: De los delitos contra la Seguridad Vial → artículo 379 a 385 ter"
+    },
+    {
+        "pregunta": "Se reputará conducción manifiestamente temeraria:",
+        "opciones": [
+            "Cuando concurrieren las circunstancias previstas en el artículo 379.1 CP y en el inciso segundo del artículo 379.2 CP.",
+            "Cuando concurrieren las circunstancias previstas en el artículo 379.1 CP y en el inciso primero del artículo 379.2 CP.",
+            "Cuando concurrieren las circunstancias previstas en el artículo 379.1 CP y en el inciso tercero del artículo 379.2 CP.",
+            "Cuando concurrieren las circunstancias previstas en el artículo 379.1 CP y en el artículo 379.2 CP."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 380 | Delito de conducción temeraria 2. A los efectos del presente precepto se reputará manifiestamente temeraria la conducción en la que concurrieren las circunstancias previstas en el apartado primero y en el inciso segundo del apartado segundo del artículo anterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué artículo del Código Penal se regula la conducción de un vehículo a motor bajo la influencia de drogas tóxicas o estupefacientes?",
+        "opciones": [
+            "Artículo 379 CP.",
+            "Artículo 379.1 CP.",
+            "Artículo 379.2 CP.",
+            "Artículo 379.3 CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 379 | Delito de conducción con exceso de velocidad punible 2. Con las mismas penas será castigado el que condujere un vehículo de motor o ciclomotor bajo la influencia de drogas tóxicas, estupefacientes, sustancias psicotrópicas o de bebidas alcohólicas. En todo caso será condenado con dichas penas el que condujere con una tasa de alcohol en aire espirado superior a 0,60 miligramos por litro o con una tasa de alcohol en sangre superior a 1,2 gramos por litro."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

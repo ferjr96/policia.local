@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Señale cuál de las siguientes conductas está penada con pena de prisión en el Código Penal:",
+        "opciones": [
+            "El particular encargado de un servicio privado que deniegue a una persona una prestación a la que tenga derecho por razón de su ideología.",
+            "El particular encargado de un servicio público que deniegue a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia o raza, su origen nacional, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad.",
+            "El particular encargado de un servicio público que deniegue a una persona una prestación a la que no tenga derecho por razón de su origen nacional.",
+            "El particular encargado de un servicio público que conceda a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia o raza, su origen nacional, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 511 CP 1. Incurrirá en la pena de prisión de seis meses a dos años y multa de doce a veinticuatro meses e inhabilitación especial para empleo o cargo público por tiempo de uno a tres años el particular encargado de un servicio público que deniegue a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia o raza, su origen nacional, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad. 2. Las mismas penas serán aplicables cuando los hechos se cometan contra una asociación, fundación, sociedad o corporación o contra sus miembros por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia o raza, su origen nacional, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad. 3. Los funcionarios públicos que cometan alguno de los hechos previstos en este artículo, incurrirán en las mismas penas en su mitad superior y en la de inhabilitación especial para empleo o cargo público por tiempo de dos a cuatro años. 4. En todos los casos se impondrá además la pena de inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre uno y tres años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito y a las circunstancias que concurran en el delincuente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Son reuniones y manifestaciones ilícitas:",
+        "opciones": [
+            "Las que se realizan con el fin de cometer algún delito.",
+            "Aquellas en que concurran personas con objetos contundentes.",
+            "Las que se realizan con el fin de no cometer algún delito.",
+            "Son correctas la a y b."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 513 CP Son punibles las reuniones o manifestaciones ilícitas, y tienen tal consideración: 1.º Las que se celebren con el fin de cometer algún delito. 2.º Aquéllas a las que concurran personas con armas, artefactos explosivos u objetos contundentes o de cualquier otro modo peligroso."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Conforme al artículo 520 del Código Penal, en los supuestos de asociaciones ilícitas del artículo 515 del Código Penal, los jueces o tribunales:",
+        "opciones": [
+            "Podrán acordar la suspensión de sus actividades.",
+            "Podrán acordar la suspensión de sus actividades o la disolución de la asociación ilícita y, en su caso, cualquier otra de las consecuencias accesorias del art. 129.",
+            "Acordarán la disolución de la asociación ilícita y, en su caso, cualquier otra de las consecuencias accesorias del art. 129.",
+            "Ninguna de dichas previsiones está contemplada en el artículo 520 del CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520 CP Los Jueces o Tribunales, en los supuestos previstos en el artículo 515, acordarán la disolución de la asociación ilícita y, en su caso, cualquier otra de las consecuencias accesorias del artículo 129 de este Código."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. En estos delitos cuando el reo fuese autoridad, agente de esta o funcionario público se le impondrá la pena de:",
+        "opciones": [
+            "Inhabilitación especial diez a quince años.",
+            "Inhabilitación parcial diez a quince años.",
+            "Inhabilitación absoluta de diez a quince años",
+            "Se le impondrá cualquiera de la tres según los casos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 521 CP En el delito de asociación ilícita, si el reo fuera autoridad, agente de ésta o funcionario público, se le impondrá, además de las penas señaladas, la de inhabilitación absoluta de diez a quince años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con lo dispuesto en el artículo 518 del Código Penal, los que con su __________________________ o de cualquier otra clase, en todo caso relevante, favorezcan la fundación, organización o actividad de las asociaciones comprendidas en los números 1.º y 3.º al 6.º del artículo 515, incurrirán en la pena de prisión de uno a tres años, multa de doce a veinticuatro meses, e inhabilitación para empleo o cargo público por tiempo de uno a cuatro años. Complete el espacio en blanco con la opción correcta:",
+        "opciones": [
+            "Cooperación social.",
+            "Cooperación monetaria.",
+            "Cooperación económica.",
+            "Cooperación humanitaria."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 518 CP Los que con su cooperación económica o de cualquier otra clase, en todo caso relevante, favorezcan la fundación, organización o actividad de las asociaciones comprendidas en los números 1.o y 3.o al 6.o del artículo 515(*), incurrirán en la pena de prisión de uno a tres años, multa de doce a veinticuatro meses, e inhabilitación para empleo o cargo público por tiempo de uno a cuatro años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Con respecto al delito de asociación ilícita, el Código Penal considera responsables y castiga con penas de prisión a:",
+        "opciones": [
+            "Los fundadores, directores y presidentes.",
+            "Además de la anterior, también sus miembros.",
+            "Además de: a) (presidentes, fundadores y directores) sus miembros activos, tal y como se establece en el artículo 517 CP.",
+            "La anterior, aunque a los miembros activos no se les impone pena de prisión."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 517 CP En los casos previstos en los números 1.º y 3.º al 6.º del artículo 515 (*) se impondrán las siguientes penas: 1.º A los fundadores, directores y presidentes de las asociaciones, las de prisión de dos a cuatro años, multa de doce a veinticuatro meses e inhabilitación especial para empleo o cargo público por tiempo de seis a doce años. 2.º A los miembros activos, las de prisión de uno a tres años y multa de doce a veinticuatro meses."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el artículo 512 del Código Penal, los que en el ejercicio de sus actividades profesionales o empresariales denegaren a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad, incurrirán en la pena de:",
+        "opciones": [
+            "Prisión de seis meses a dos años y multa de doce a veinticuatro meses e inhabilitación especial para empleo o cargo público por tiempo de uno a tres años.",
+            "Inhabilitación especial para el ejercicio de profesión, oficio, industria o comercio e inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre por un periodo de uno a cuatro años.",
+            "Prisión de seis meses a dos años y multa de doce a veinticuatro meses e inhabilitación especial para el ejercicio de profesión, oficio, industria o comercio e inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre por un periodo de uno a cuatro años.",
+            "Inhabilitación absoluta para el ejercicio de profesión, oficio, industria o comercio e inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre por un periodo de uno a cuatro años."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 512 CP Los que en el ejercicio de sus actividades profesionales o empresariales denegaren a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad, incurrirán en la pena de inhabilitación especial para el ejercicio de profesión, oficio, industria o comercio e inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre por un periodo de uno a cuatro años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según establece el apartado segundo del artículo 510 del Código Penal, serán castigados con la pena de prisión de seis meses a dos años y multa de seis a doce meses:",
+        "opciones": [
+            "Quienes enaltezcan o justifiquen por cualquier medio de expresión pública o de difusión los delitos que hubieran sido cometidos contra un grupo, una parte del mismo, o contra una persona determinada por razón de su pertenencia a aquél por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, o a quienes hayan participado en su ejecución.",
+            "Quienes enaltezcan o justifiquen por cualquier medio de expresión privada delitos que hubieran sido cometidos contra un grupo, una parte del mismo, o contra una persona determinada por razón de su pertenencia a aquél por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, o a quienes hayan participado en su ejecución.",
+            "Quienes enaltezcan o justifiquen por cualquier medio de expresión pública o de difusión los delitos que hubieran sido cometidos solamente contra un grupo por razón de su pertenencia a aquél por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, o a quienes hayan participado en su ejecución.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 510 CP 2. Serán castigados con la pena de prisión de seis meses a dos años y multa de seis a doce meses: b) Quienes enaltezcan o justifiquen por cualquier medio de expresión pública o de difusión los delitos que hubieran sido cometidos contra un grupo, una parte del mismo, o contra una persona determinada por razón de su pertenencia a aquél por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, o a quienes hayan participado en su ejecución."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de las siguientes normas no es común para todas las asociaciones ilícitas?",
+        "opciones": [
+            "La provocación, la conspiración y la proposición para cometer el delito de asociación ilícita se castigarán con la pena inferior en uno o dos grados.",
+            "Los afiliados a una asociación ilícita perderán el derecho a obtener subvenciones públicas.",
+            "Los Jueces o Tribunales acordarán la disolución de la asociación ilícita",
+            "Si el reo fuera autoridad, agente de ésta o funcionario público se le impondrá, además, la pena de inhabilitación absoluta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 519 CP La provocación, la conspiración y la proposición para cometer el delito de asociación ilícita se castigarán con la pena inferior en uno o dos grados a la que corresponda, respectivamente, a los hechos previstos en los artículos anteriores. Artículo 520 CP Los Jueces o Tribunales, en los supuestos previstos en el artículo 515, acordarán la disolución de la asociación ilícita y, en su caso, cualquier otra de las consecuencias accesorias del artículo 129 de este Código. Artículo 521 CP En el delito de asociación ilícita, si el reo fuera autoridad, agente de ésta o funcionario público, se le impondrá, además de las penas señaladas, la de inhabilitación absoluta de diez a quince años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según establece el apartado sexto del artículo 510 del Código Penal, ¿Qué podrá acordar el Juez o Tribunal? Señale la opción incorrecta:",
+        "opciones": [
+            "La destrucción, borrado o inutilización de los libros, archivos, documentos, artículos y cualquier clase de soporte objeto del delito a que se refieren los apartados anteriores o por medio de los cuales se hubiera cometido.",
+            "Cuando el delito se hubiera cometido a través de tecnologías de la información y la comunicación, se acordará la retirada de los contenidos.",
+            "En los casos en los que, a través de un portal de acceso a internet o servicio de la sociedad de la información, se difundan exclusiva o preponderantemente los contenidos a que se refiere el apartado anterior, se ordenará el bloqueo del acceso o la interrupción de la prestación del mismo.",
+            "Que el presunto delincuente tenga la oportunidad de retrotraerse en sus actuaciones pidiendo disculpas al colectivo afectado en público utilizando el mismo sistema empleado para la comisión del delito."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 510 CP 6. El juez o tribunal acordará la destrucción, borrado o inutilización de los libros, archivos, documentos, artículos y cualquier clase de soporte objeto del delito a que se refieren los apartados anteriores o por medio de los cuales se hubiera cometido. Cuando el delito se hubiera cometido a través de tecnologías de la información y la comunicación, se acordará la retirada de los contenidos. En los casos en los que, a través de un portal de acceso a internet o servicio de la sociedad de la información, se difundan exclusiva o preponderantemente los contenidos a que se refiere el apartado anterior, se ordenará el bloqueo del acceso o la interrupción de la prestación del mismo."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El art. 515 del Código Penal señala que son punibles las asociaciones ilícitas:",
+        "opciones": [
+            "Las que tengan por objeto cometer algún delito.",
+            "Las Organizaciones que no sean de carácter paramilitar.",
+            "Las que promuevan, fomenten o no inciten al odio.",
+            "Son correctas la a y b."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 515 CP Son punibles las asociaciones ilícitas, teniendo tal consideración: 1.º Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión. 2.º Las que, aun teniendo por objeto un fin lícito, empleen medios violentos o de alteración o control de la personalidad para su consecución. 3.º Las organizaciones de carácter paramilitar. 4.º Las que fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra personas, grupos o asociaciones por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, enfermedad o discapacidad."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo establecido en el Código Penal, ¿puede una persona jurídica ser sujeto activo de los delitos cometidos con ocasión del ejercicio de los derechos fundamentales y de las libertades públicas garantizados por la Constitución?",
+        "opciones": [
+            "No, en ningún caso.",
+            "Sí, de conformidad a lo estipulado en el artículo 510 bis CP.",
+            "Sí, de conformidad a lo estipulado en el artículo 510 CP.",
+            "Sí, de conformidad a lo estipulado en el artículo 510 ter CP."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 510 bis CP Cuando de acuerdo con lo establecido en el artículo 31 bis una persona jurídica sea responsable de los delitos comprendidos en los dos artículos anteriores, se le impondrá la pena de multa de dos a cinco años. Atendidas las reglas establecidas en el artículo 66 bis, los jueces y tribunales podrán asimismo imponer las penas recogidas en las letras b) a g) del apartado 7 del artículo 33. En este caso será igualmente aplicable lo dispuesto en el número 3 del artículo 510 del Código Penal."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Los delitos relativos al ejercicio de los derechos fundamentales y libertades públicas se regulan:",
+        "opciones": [
+            "Titulo XIX.",
+            "Titulo XXI.",
+            "Titulo XXII.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Código Penal Libro Segundo: Delitos y sus penas - Título XXI: Delitos contra la Constitución Capítulo Cuarto: De los delitos relativos al ejercicio de los derechos fundamentales y libertades públicas"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según establece la letra b) del apartado segundo del artículo 510 del Código Penal, ¿con qué pena se castigará cuando se promueva o favorezca un clima de violencia, hostilidad, odio o discriminación con los grupos mencionados en dicho precepto?",
+        "opciones": [
+            "Los hechos serán castigados con una pena de dos a cuatro años de prisión y multa de seis a doce meses.",
+            "Los hechos serán castigados con una pena de uno a tres años de prisión y multa de seis a doce meses.",
+            "Los hechos serán castigados con una pena de uno a cuatro años de prisión y multa de seis a doce meses.",
+            "Los hechos serán castigados con una pena de uno a cuatro años de prisión y multa de ocho a doce meses."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 510 CP 2. Serán castigados con la pena de prisión de seis meses a dos años y multa de seis a doce meses: b) Quienes enaltezcan o justifiquen por cualquier medio de expresión pública o de difusión los delitos que hubieran sido cometidos contra un grupo, una parte del mismo, o contra una persona determinada por razón de su pertenencia a aquél por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, o a quienes hayan participado en su ejecución."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según el tenor literal de la letra c) del apartado primero del artículo 510 del Código Penal, serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses:",
+        "opciones": [
+            "Quienes públicamente fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad.",
+            "Quienes produzcan, elaboren, posean con la finalidad de distribuir, faciliten a terceras personas el acceso, distribuyan, difundan o vendan escritos o cualquier otra clase de material o soportes que por su contenido sean idóneos para fomentar, promover, o incitar directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo, o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad.",
+            "Públicamente nieguen, trivialicen gravemente o enaltezcan los delitos de genocidio, de lesa humanidad o contra las personas y bienes protegidos en caso de conflicto armado, o enaltezcan a sus autores, cuando se hubieran cometido contra un grupo o una parte del mismo, o contra una persona determinada por razón de su pertenencia al mismo, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, la situación familiar o la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, cuando de este modo se promueva o favorezca un clima de violencia, hostilidad, odio o discriminación contra los mismos.",
+            "Quienes enaltezcan o justifiquen por cualquier medio de expresión pública o de difusión los delitos que hubieran sido cometidos contra un grupo, una parte del mismo, o contra una persona determinada por razón de su pertenencia a aquél por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, o a quienes hayan participado en su ejecución."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 510 CP 1. Serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses: c) Públicamente nieguen, trivialicen gravemente o enaltezcan los delitos de genocidio, de lesa humanidad o contra las personas y bienes protegidos en caso de conflicto armado, o enaltezcan a sus autores, cuando se hubieran cometido contra un grupo o una parte del mismo, o contra una persona determinada por razón de su pertenencia al mismo, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, la situación familiar o la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, cuando de este modo se promueva o favorezca un clima de violencia, hostilidad, odio o discriminación contra los mismos."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Si la víctima de un acto discriminatorio es una asociación de marroquíes:",
+        "opciones": [
+            "No es delito.",
+            "No es correcta la a.",
+            "Depende de si han nacido en Marruecos o han sido nacionalizados.",
+            "Es un delito de xenofobia."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 510 CP 1. Serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses: a) Quienes públicamente fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad. (...)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Es delito denegar a una persona por razón de su ideología una prestación a la que tenga derecho?",
+        "opciones": [
+            "Sí.",
+            "Sólo si quien lo hace es funcionario público.",
+            "No.",
+            "Solo en algunos casos."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 511 CP 1. Incurrirá en la pena de prisión de seis meses a dos años y multa de doce a veinticuatro meses e inhabilitación especial para empleo o cargo público por tiempo de uno a tres años el particular encargado de un servicio público que deniegue a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia o raza, su origen nacional, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad. 2. Las mismas penas serán aplicables cuando los hechos se cometan contra una asociación, fundación, sociedad o corporación o contra sus miembros por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia o raza, su origen nacional, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad. 3. Los funcionarios públicos que cometan alguno de los hechos previstos en este artículo, incurrirán en las mismas penas en su mitad superior y en la de inhabilitación especial para empleo o cargo público por tiempo de dos a cuatro años. 4. En todos los casos se impondrá además la pena de inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre uno y tres años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito y a las circunstancias que concurran en el delincuente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Pueden ser sujetos pasivos del delito de xenofobia previsto en el art. 510. 1º Código Penal:",
+        "opciones": [
+            "Únicamente grupos o asociaciones.",
+            "Únicamente miembros de grupos o asociaciones.",
+            "Un grupo, una parte del mismo o una persona determinada.",
+            "Los particulares."
+        ],
+        "correcta": 2,
+        "explicacion": "Circular 7/2019, de 14 de mayo, de la Fiscalía General del Estado, sobre pautas para interpretar los delitos de odio tipificados en el artículo 510 del Código Penal Sujeto pasivo de los delitos de odio Los delitos de odio afectan a un sujeto pasivo que presenta unas características propias que diferencian estas conductas de otras idénticas o similares. Una agresión o una vejación se configuran como delito de odio si se dirigen contra un determinado grupo o individuo, precisamente por formar parte del mismo. Ello enlaza con la motivación discriminatoria que, en realidad, es lo que define la esencia del delito de odio y que será objeto de análisis en el apartado siguiente. Lo que interesa destacar, por su relevancia a estos efectos, es que la conducta delictiva ha de realizarse frente a un «grupo, una parte del mismo o contra una persona determinada por razón de su pertenencia a aquél», según el tenor literal del vigente art. 510 CP."
+    },
+    {
+        "pregunta": "Juan ha robado a Pedro su iPhone de 400€ únicamente por el hecho de que Pedro es gitano y homosexual. ¿Qué delito o delitos ha cometido Juan?",
+        "opciones": [
+            "Delito de robo y delito de odio",
+            "Delito de odio y delito de hurto",
+            "Delito de robo con agravante discriminatorio.",
+            "Delito de robo agravado en su especifico del 235 CP."
+        ],
+        "correcta": 2,
+        "explicacion": "El delito concreto es la acción dolosa de robar que tendrá un agravante discriminatorio del artículo 22 CP debido a la motivación del autor."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Carlos ha entregado una carta de invitación a su amigo David, el cual no es consumidor habitual de marihuana, para que se inscriba como miembro en la Asociación de Cannabis de las Illes Balears, asociación que permite el consumo compartido de Cannabis y sus derivados (hachís) entre sus asociados. David es fumador social, por lo que únicamente consume Cannabis en ocasiones puntuales y siempre con amistades. Los fundadores de la asociación se encargan de distribuir el Cannabis entre todos sus asociados a cambio de un precio que éstos pagan por cada gramo de sustancia que desean, sin fijar ningún límite al respecto. ¿Se trata de una asociación ilícita según el Código Penal?",
+        "opciones": [
+            "Sí, ya que las asociaciones de consumo de cannabis están totalmente prohibidas en España.",
+            "No, ya que no se encuentra bajo ninguno de los supuestos del artículo 515 del Código Penal.",
+            "Sí, ya que dicha asociación encaja en el 1º supuesto del artículo 515 CP: Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión.",
+            "No, ya que las asociaciones de consumo de cannabis están permitidas en España."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 515. Son punibles las asociaciones ilícitas, teniendo tal consideración: 1.º Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión. 2.º Las que, aun teniendo por objeto un fin lícito, empleen medios violentos o de alteración o control de la personalidad para su consecución. 3.º Las organizaciones de carácter paramilitar. 4.º Las que fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra personas, grupos o asociaciones por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, enfermedad o discapacidad."
+    },
+    {
+        "pregunta": "Cual de las siguientes opciones es la correcta o más correcta, respecto al tipo establecido en el artículo 521 del Código Penal:",
+        "opciones": [
+            "En cualquier caso, en el delito de asociación ilícita se impondrá la pena de inhabilitación absoluta de diez a quince años.",
+            "En el delito de asociación ilícita, si el reo fuera autoridad, agente de esta o funcionario público, se le impondrá, además de las penas señaladas, la de inhabilitación absoluta de cinco a quince años.",
+            "En el delito de asociación ilícita, si el reo fuera autoridad, agente de esta o funcionario público, se le impondrá, además de las penas señaladas, la de inhabilitación absoluta de diez a quince años.",
+            "En el delito de asociación ilícita, si el reo fuera autoridad, agente de esta o funcionario público, se le impondrá la pena de inhabilitación absoluta de diez a quince años."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 521 Código Penal. En el delito de asociación ilícita, si el reo fuera autoridad, agente de esta o funcionario público, se le impondrá, además de las penas señaladas, la de inhabilitación absoluta de diez a quince años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo estipulado por el apartado segundo del artículo 514 del Código Penal, los asistentes a una reunión o manifestación que porten armas u otros medios igualmente peligrosos serán castigados con la pena de prisión de uno a dos años y multa de seis a doce meses. ¿Pueden los Jueces o Tribunales rebajar la pena?",
+        "opciones": [
+            "No, en ningún caso.",
+            "Sí, en su mitad inferior en todo caso.",
+            "Sí, atendiendo a los antecedentes del sujeto, circunstancias del caso y características del arma o instrumento portado, podrán rebajar en un grado la pena señalada.",
+            "Sí, atendiendo a los antecedentes del sujeto, circunstancias del caso y características del arma o instrumento portado, podrán rebajar en su mitad inferior la pena señalada."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 514 CP 1. Los promotores o directores de cualquier reunión o manifestación comprendida en el número 1.º del artículo anterior y los que, en relación con el número 2.º del mismo, no hayan tratado de impedir por todos los medios a su alcance las circunstancias en ellos mencionadas, incurrirán en las penas de prisión de uno a tres años y multa de doce a veinticuatro meses. A estos efectos, se reputarán directores o promotores de la reunión o manifestación los que las convoquen o presidan. 2. Los asistentes a una reunión o manifestación que porten armas u otros medios igualmente peligrosos serán castigados con la pena de prisión de uno a dos años y multa de seis a doce meses. Los Jueces o Tribunales, atendiendo a los antecedentes del sujeto, circunstancias del caso y características del arma o instrumento portado, podrán rebajar en un grado la pena señalada. 3. Las personas que, con ocasión de la celebración de una reunión o manifestación, realicen actos de violencia contra la autoridad, sus agentes, personas o propiedades públicas o privadas, serán castigadas con la pena que a su delito corresponda, en su mitad superior. 4. Los que impidieren el legítimo ejercicio de las libertades de reunión o manifestación, o perturbaren gravemente el desarrollo de una reunión o manifestación lícita serán castigados con la pena de prisión de dos a tres años si los hechos se realizaran con violencia, y con la pena de prisión de tres a seis meses o multa de seis a 12 meses si se cometieren mediante vías de hecho o cualquier otro procedimiento ilegítimo. 5. Los promotores o directores de cualquier reunión o manifestación que convocaren, celebraren o intentaren celebrar de nuevo una reunión o manifestación que hubiese sido previamente suspendida o prohibida, y siempre que con ello pretendieran subvertir el orden constitucional o alterar gravemente la paz pública, serán castigados con las penas de prisión de seis meses a un año y multa de seis a doce meses, sin perjuicio de la pena que pudiera corresponder, en su caso, conforme a los apartados precedentes."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. A efectos del Código Penal, se reputarán directores o promotores de reuniones o manifestaciones:",
+        "opciones": [
+            "Los que la convoquen.",
+            "Los que la presidan.",
+            "Los que la convoquen y presidan.",
+            "Los que la convoquen o presidan."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 514 CP 1. Los promotores o directores de cualquier reunión o manifestación comprendida en el número 1.º del artículo anterior y los que, en relación con el número 2.º del mismo, no hayan tratado de impedir por todos los medios a su alcance las circunstancias en ellos mencionadas, incurrirán en las penas de prisión de uno a tres años y multa de doce a veinticuatro meses. A estos efectos, se reputarán directores o promotores de la reunión o manifestación los que las convoquen o presidan."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo tipificado en el artículo 520 del Código Penal, ¿qué podrán acordar los Jueces o Tribunales, en los supuestos previstos en el artículo 515?",
+        "opciones": [
+            "La disolución de la asociación ilícita.",
+            "Las consecuencias accesorias del artículo 129 de este Código.",
+            "La disolución de la asociación ilícita y, en su caso, cualquier otra de las consecuencias accesorias del artículo 129 de este Código.",
+            "La disolución de la asociación lícita y, en su caso, cualquier otra de las consecuencias accesorias del artículo 129 de este Código."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520 CP Los Jueces o Tribunales, en los supuestos previstos en el artículo 515, acordarán la disolución de la asociación ilícita y, en su caso, cualquier otra de las consecuencias accesorias del artículo 129 de este Código."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Toda persona detenida está obligada a declarar sobre su ideología:",
+        "opciones": [
+            "Cierto, pero sólo cuando se trate de delitos políticos.",
+            "Cierto, pero sólo cuando se trate de delitos cometidos contra la Constitución.",
+            "Falso, en todo caso.",
+            "Todas son falsas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 16 Constitución Española 1. Se garantiza la libertad ideológica, religiosa y de culto de los individuos y las comunidades sin más limitación, en sus manifestaciones, que la necesaria para el mantenimiento del orden público protegido por la ley. 2. Nadie podrá ser obligado a declarar sobre su ideología, religión o creencias. 3. Ninguna confesión tendrá carácter estatal. Los poderes públicos tendrán en cuenta las creencias religiosas de la sociedad española y mantendrán las consiguientes relaciones de cooperación con la Iglesia Católica y las demás confesiones."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Conforme al artículo 510 del Código Penal, no es punible:",
+        "opciones": [
+            "La producción y elaboración de escritos o cualquier otra clase de material o soportes que por sucontenido sean idóneos para fomentar, promover, o incitar directa o indirectamente al odio, hostilidad, discriminación o violencia contra los sujetos y por la razones contenidas en el tipo.",
+            "La difusión de escritos o cualquier otra clase de material o soportes que por su contenido sean idóneos para fomentar, promover, o incitar directa o indirectamente al odio, hostilidad, discriminación o violencia contra los sujetos y por la razones contenidas en el tipo.",
+            "La posesión de escritos o cualquier otra clase de material o soportes que por su contenido sean idóneos para fomentar, promover, o incitar directa o indirectamente al odio, hostilidad, discriminación o violencia contra los sujetos y por la razones contenidas en el tipo.",
+            "Las tres conductas están sancionadas en el precepto."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 510 CP 1. Serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses: b) Quienes produzcan, elaboren, posean con la finalidad de distribuir, faciliten a terceras personas el acceso, distribuyan, difundan o vendan escritos o cualquier otra clase de material o soportes que por su contenido sean idóneos para fomentar, promover, o incitar directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo, o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Las penas previstas en los apartados primero y segundo del artículo 510 del Código Penal se impondrán en su mitad superior cuando:",
+        "opciones": [
+            "Los hechos se hubieran llevado a cabo utilizando violencia, hostilidad, odio o discriminación contra los grupos mencionados.",
+            "Los hechos se hubieran llevado a cabo a través de un medio de comunicación social, por medio de internet o mediante el uso de tecnologías de la información, de modo que, aquel se hiciera accesible a un elevado número de personas.",
+            "Los hechos se hubieran llevado a cabo en presencia de menores de edad o de personas con la capacidad modificada judicialmente.",
+            "Los hechos se hubieren llevado a cabo por un grupo criminal o banda organizada."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 510 CP 1. Serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses: (...) 2. Serán castigados con la pena de prisión de seis meses a dos años y multa de seis a doce meses: (...) 3. Las penas previstas en los apartados anteriores se impondrán en su mitad superior cuando los hechos se hubieran llevado a cabo a través de un medio de comunicación social, por medio de internet o mediante el uso de tecnologías de la información, de modo que, aquel se hiciera accesible a un elevado número de personas."
+    },
+    {
+        "pregunta": "Rubén acaba de ser añadido a un grupo de whatsapp rubricado bajo el nombre “Extrema Izquierda Independentista”, quienes están convocando a todos los participantes del grupo a una manifestación en la Plaza Catalunya del término municipal de Palma, informándoles de que asistan con armas blancas como navajas, cuchillos, pinchos y demás objetos contundentes por si la Policía intenta deshacer la manifestación, ya que no van a permitir que nadie les calle y están dispuestos a agredir a quien lo intente. ¿Cree que dicha manifestación es punible de conformidad con el Código Penal?",
+        "opciones": [
+            "Sí, puesto que se considera manifestación ilícita de conformidad con el artículo 513 CP.",
+            "No, siempre y cuando se haya comunicado al Ayuntamiento de Palma.",
+            "Sí, puesto que se considera manifestación ilegal de conformidad con el artículo 513 LECrim.",
+            "No, siempre y cuando el Ayuntamiento de Palma la haya autorizado."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 513 CP Son punibles las reuniones o manifestaciones ilícitas, y tienen tal consideración: 1.º Las que se celebren con el fin de cometer algún delito. 2.º Aquéllas a las que concurran personas con armas, artefactos explosivos u objetos contundentes o de cualquier otro modo peligroso."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Un comerciante que se niega a vender un pantalón a una mujer por portar un llavero con la bandera española comete:",
+        "opciones": [
+            "Delito, tipificado en el Art. 513.4",
+            "No es delito puesto que prevalece su derecho de admisión.",
+            "La anterior, si bien la mujer puede interponer una hoja de reclamaciones.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Es un delito tipificado en el Artículo 512 CP Los que en el ejercicio de sus actividades profesionales o empresariales denegaren a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad, incurrirán en la pena de inhabilitación especial para el ejercicio de profesión, oficio, industria o comercio e inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre por un periodo de uno a cuatro años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado primero del artículo 510 del Código Penal, serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses: Señale la opción incorrecta.",
+        "opciones": [
+            "Quienes públicamente fomenten directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad.",
+            "Quienes públicamente promuevan directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad.",
+            "Quienes públicamente aleguen directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad.",
+            "Quienes públicamente inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 510 CP 1. Serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses: a) Quienes públicamente fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad."
+    },
+    {
+        "pregunta": "Cuando el delito recogido en el artículo 510 del Código Penal, conocido como delito de odio, hubiera sido cometido a través de las tecnologías de la información y la comunicación:",
+        "opciones": [
+            "El juez o tribunal acordará la destrucción de cualquier clase de soporte objeto del delito.",
+            "El juez o tribunal acordará el borrado de los archivos, documentos y cualquier clase de soporte objeto del delito.",
+            "El juez o tribunal acordará la inutilización de los libros, archivos, documentos, artículos y cualquier clase de soporte objeto del delito.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Código Penal. Artículo 510 6. El juez o tribunal acordará la destrucción, borrado o inutilización de los libros, archivos, documentos, artículos y cualquier clase de soporte objeto del delito a que se refieren los apartados anteriores o por medio de los cuales se hubiera cometido. Cuando el delito se hubiera cometido a través de tecnologías de la información y la comunicación, se acordará la retirada de los contenidos."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Un particular que se niega a prestar sus servicios profesionales a alguien por razón de su raza u orientación sexual:",
+        "opciones": [
+            "Está cometiendo un delito.",
+            "Está cometiendo una infracción que puede ser sancionada por el colegio profesional correspondiente.",
+            "No comete ninguna infracción.",
+            "Comete delito en ciertos casos."
+        ],
+        "correcta": 0,
+        "explicacion": "Recogido en el Artículo 512 CP Los que en el ejercicio de sus actividades profesionales o empresariales denegaren a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad, incurrirán en la pena de inhabilitación especial para el ejercicio de profesión, oficio, industria o comercio e inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre por un periodo de uno a cuatro años."
+    },
+    {
+        "pregunta": "Conforme al artículo que recoge las asociaciones ilícitas en el Código Penal, tendrán tal consideración (señale la incorrecta):",
+        "opciones": [
+            "Las organizaciones de carácter paramilitar.",
+            "Las que fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra personas, grupos o asociaciones por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, enfermedad o discapacidad.",
+            "Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión.",
+            "Aquellas a las que concurran personas con armas, artefactos explosivos u objetos contundentes o de cualquier otro modo peligroso."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 515 CP Son punibles las asociaciones ilícitas, teniendo tal consideración: 1. Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión. 2. Las que, aun teniendo por objeto un fin lícito, empleen medios violentos o de alteración o control de la personalidad para su consecución. 3. Las organizaciones de carácter paramilitar. 4. Las que fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra personas, grupos o asociaciones por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, enfermedad o discapacidad."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Una asociación que se dedica a ayudar a minusválidos se financia blanqueando dinero. Esta asociación:",
+        "opciones": [
+            "Es perfectamente lícita, el fin justifica los medios.",
+            "Depende de la cantidad de dinero que blanquee.",
+            "Es una asociación ilegal.",
+            "Está prohibida."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 515 CP Son punibles las asociaciones ilícitas, teniendo tal consideración: 1.º Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión. 2.º Las que, aun teniendo por objeto un fin lícito, empleen medios violentos o de alteración o control de la personalidad para su consecución. 3.º Las organizaciones de carácter paramilitar. 4.º Las que fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra personas, grupos o asociaciones por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, enfermedad o discapacidad."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de los siguientes no es sujeto activo del delito de asociación ilícita?",
+        "opciones": [
+            "Los integrantes de organizaciones terroristas.",
+            "Las respuestas c) y d) son correctas.",
+            "Los miembros activos.",
+            "Los directores de la asociación."
+        ],
+        "correcta": 0,
+        "explicacion": "El Código Penal establece las siguientes penas con respecto a las asociaciones ilícitas y sus sujetos activos: - A los fundadores, directores y presidentes de las asociaciones, las de prisión de dos a cuatro años, multa de doce a veinticuatro meses e inhabilitación especial para empleo o cargo público por tiempo de seis a doce años (artículo 517.2º CP). - A los miembros activos, las de prisión de uno a tres años y multa de doce a veinticuatro meses (artículo 517.2º CP). - Los que con su cooperación económica o de cualquier otra clase, en todo caso relevante, favorezcan la fundación, organización o actividad de estas asociaciones, incurrirán en la pena de prisión de uno a tres años, multa de doce a veinticuatro meses, e inhabilitación para empleo o cargo público por tiempo de uno a cuatro años (artículo 518 CP)."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según el art. 514 del Código Penal, ¿quiénes se reputarán directores o promotores de una reunión o manifestación?",
+        "opciones": [
+            "Los que las convoquen.",
+            "Los que participen de modo activo a su desarrollo.",
+            "Los que las presidan.",
+            "Las respuestas a) y c) son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 514. 1. Los promotores o directores de cualquier reunión o manifestación comprendida en el número 1.º del artículo anterior y los que, en relación con el número 2.º del mismo, no hayan tratado de impedir por todos los medios a su alcance las circunstancias en ellos mencionadas, incurrirán en las penas de prisión de uno a tres años y multa de doce a veinticuatro meses. A estos efectos, se reputarán directores o promotores de la reunión o manifestación los que las convoquen o presidan."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según el tenor literal del apartado quinto del artículo 510 del Código Penal establece que en todos los casos, además de las penas establecidas en los apartados anteriores, se impondrá la pena de:",
+        "opciones": [
+            "Inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente.",
+            "Inhabilitación absoluta para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente.",
+            "Inhabilitación absoluta y especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente.",
+            "Inhabilitación absoluta o especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 510 CP 5. En todos los casos, se impondrá además la pena de inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. En los delitos relativos al ejercicio de los derechos fundamentales y libertades publicas:",
+        "opciones": [
+            "Puede castigarse la tentativa.",
+            "Solo se castiga el delito consumando.",
+            "Solo cabe el delito consumando y no la tentativa.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Delitos contra los derechos fundamentales y las libertades públicas Son delitos de actividad, bastando la realización de la conducta prohibida para entender producido (consumado) el delito, aunque en otros casos se requiere la obtención de un resultado. Así, es ilícita una reunión o manifestación con el fin de cometer un hecho delictivo, aunque éste no se produzca. En cambio, es delito de resultado, en su modalidad de omitir una conducta debida, el denegar una prestación por razones o causas discriminatorias, por lo que si no se logra dicho resultado no se habrá consumado el delito pero podrá castigarse como tentativa, que tiene una pena inferior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de los siguientes no es sujeto activo del delito de reunión ilícita?",
+        "opciones": [
+            "Los directores o promotores de la reunión.",
+            "Los convocantes de la reunión.",
+            "Los que perturbaren el desarrollo de una manifestación ilícita.",
+            "Los asistentes que no hayan tratado de impedir que otros asistentes portaren armas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 514 CP 1. Los promotores o directores de cualquier reunión o manifestación comprendida en el número 1.º del artículo anterior y los que, en relación con el número 2.º del mismo, no hayan tratado de impedir por todos los medios a su alcance las circunstancias en ellos mencionadas, incurrirán en las penas de prisión de uno a tres años y multa de doce a veinticuatro meses. A estos efectos, se reputarán directores o promotores de la reunión o manifestación los que las convoquen o presidan. 2. Los asistentes a una reunión o manifestación que porten armas u otros medios igualmente peligrosos serán castigados con la pena de prisión de uno a dos años y multa de seis a doce meses. Los Jueces o Tribunales, atendiendo a los antecedentes del sujeto, circunstancias del caso y características del arma o instrumento portado, podrán rebajar en un grado la pena señalada. 3. Las personas que, con ocasión de la celebración de una reunión o manifestación, realicen actos de violencia contra la autoridad, sus agentes, personas o propiedades públicas o privadas, serán castigadas con la pena que a su delito corresponda, en su mitad superior. 4. Los que impidieren el legítimo ejercicio de las libertades de reunión o manifestación, o perturbaren gravemente el desarrollo de una reunión o manifestación lícita serán castigados con la pena de prisión de dos a tres años si los hechos se realizaran con violencia, y con la pena de prisión de tres a seis meses o multa de seis a 12 meses si se cometieren mediante vías de hecho o cualquier otro procedimiento ilegítimo. 5. Los promotores o directores de cualquier reunión o manifestación que convocaren, celebraren o intentaren celebrar de nuevo una reunión o manifestación que hubiese sido previamente suspendida o prohibida, y siempre que con ello pretendieran subvertir el orden constitucional o alterar gravemente la paz pública, serán castigados con las penas de prisión de seis meses a un año y multa de seis a doce meses, sin perjuicio de la pena que pudiera corresponder, en su caso, conforme a los apartados precedentes."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. En los delitos de asociación ilícita relativos al ejercicio de los derechos fundamentales y libertades públicas se castiga:",
+        "opciones": [
+            "Solo la provocación.",
+            "Solo la conspiración.",
+            "Solo proposición.",
+            "Las tres conductas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 519 CP La provocación, la conspiración y la proposición para cometer el delito de asociación ilícita se castigarán con la pena inferior en uno o dos grados a la que corresponda, respectivamente, a los hechos previstos en los artículos anteriores."
+    },
+    {
+        "pregunta": "Según el artículo 513 CP son punibles las reuniones o manifestaciones ilícitas, y tienen tal consideración:",
+        "opciones": [
+            "Las que tuvieren carácter paramilitar.",
+            "Las que, aún teniendo por objeto un fin lícito, empleen medios violentos o de alteración o control de la personalidad para su consecución",
+            "Las respuestas A y B son correctas",
+            "Ninguna respuesta es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "Código Penal. Artículo 513. Son punibles las reuniones o manifestaciones ilícitas, y tienen tal consideración: 1.º Las que se celebren con el fin de cometer algún delito. 2.º Aquéllas a las que concurran personas con armas, artefactos explosivos u objetos contundentes o de cualquier otro modo peligroso."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Provocar a la discriminación por motivos racistas:",
+        "opciones": [
+            "No es un delito contra los derechos fundamentales.",
+            "Es un delito contra los derechos fundamentales.",
+            "Ninguna es correcta.",
+            "Solo en algunos casos."
+        ],
+        "correcta": 1,
+        "explicacion": "De los delitos relativos al ejercicio de los derechos fundamentales y libertades públicas"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Indique en cuál de los siguientes delitos está expresamente prevista la responsabilidad penal de las personas jurídicas:",
+        "opciones": [
+            "Delitos contra la libertad de conciencia y los sentimientos religiosos.",
+            "Delitos cometidos con ocasión del ejercicio de los derechos fundamentales y de las libertades públicas garantizados por la Constitución.",
+            "Delitos de incitación al odio y a la violencia del artículo 510 bis del CP.",
+            "En ninguno de los tres anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 510 bis CP Cuando de acuerdo con lo establecido en el artículo 31 bis una persona jurídica sea responsable de los delitos comprendidos en los dos artículos anteriores, se le impondrá la pena de multa de dos a cinco años. Atendidas las reglas establecidas en el artículo 66 bis, los jueces y tribunales podrán asimismo imponer las penas recogidas en las letras b) a g) del apartado 7 del artículo 33. En este caso será igualmente aplicable lo dispuesto en el número 3 del artículo 510 del Código Penal."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. En los delitos de incitación al odio y a la violencia previstos en el artículo 510 del Código Penal:",
+        "opciones": [
+            "Podrá imponerse además la pena de inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente.",
+            "En las modalidades agravadas previstas en los apartados 3 y 4 podrán imponerse además la pena de inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente.",
+            "En todos los casos, se impondrá además la pena de inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente.",
+            "La inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre no está especialmente prevista en este precepto."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 510 CP 5. En todos los casos, se impondrá además la pena de inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre tres y diez años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito, el número de los cometidos y a las circunstancias que concurran en el delincuente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. En la Sección 1ª del Capítulo IV, Título XXI, bajo la denominación “De los delitos cometidos con ocasión del ejercicio de los derechos fundamentales y de las libertades públicas garantizados por la Constitución” se recogen un total de:",
+        "opciones": [
+            "15 artículos que van desde el artículo 510 hasta el artículo 521 bis CP.",
+            "14 artículos que van desde el artículo 510 hasta el artículo 521 CP.",
+            "14 artículos que van desde el artículo 510 hasta el artículo 521 bis CP.",
+            "15 artículos que van desde el artículo 510 hasta el artículo 522 bis CP."
+        ],
+        "correcta": 2,
+        "explicacion": "Dentro del Título XXI del CP, rubricado “Delitos contra la Constitución”, se recogen en el Capítulos IV “de los delitos relativos al ejercicio de los derechos fundamentales y libertades públicas”, en la Sección 1ª “De los delitos cometidos con ocasión del ejercicio de los derechos fundamentales y de las libertades públicas garantizados por la Constitución” 14 artículos que van desde el artículo 510 hasta el artículo 521 bis CP."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo establecido en el artículo 519 del Código Penal, la provocación, la conspiración y la proposición para cometer el delito de asociación ilícita se castigarán con la pena:",
+        "opciones": [
+            "Inferior en un grado a la que corresponda, respectivamente, a los hechos previstos en los artículos anteriores.",
+            "Inferior en dos grados a la que corresponda, respectivamente, a los hechos previstos en los artículos anteriores.",
+            "Inferior en uno o dos grados a la que corresponda, respectivamente, a los hechos previstos en los artículos anteriores.",
+            "Inferior en uno y dos grados a la que corresponda, respectivamente, a los hechos previstos en los artículos anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 519 CP La provocación, la conspiración y la proposición para cometer el delito de asociación ilícita se castigarán con la pena inferior en uno o dos grados a la que corresponda, respectivamente, a los hechos previstos en los artículos anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo establecido en el artículo 521 del Código Penal, en el delito de asociación ilícita, si el reo fuera autoridad, agente de ésta o funcionario público, ¿Qué pena se le impondrá además de las penas señaladas?",
+        "opciones": [
+            "La de inhabilitación especial de diez a quince años.",
+            "La de inhabilitación absoluta o especial de diez a quince años.",
+            "La de inhabilitación absoluta de diez a quince años.",
+            "La de inhabilitación absoluta y especial de diez a quince años."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 521 CP En el delito de asociación ilícita, si el reo fuera autoridad, agente de ésta o funcionario público, se le impondrá, además de las penas señaladas, la de inhabilitación absoluta de diez a quince años."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según el apartado quinto del artículo 514 del Código Penal, serán castigados con las penas de prisión de seis meses a un año y multa de seis a doce meses, sin perjuicio de la pena que pudiera corresponder, en su caso, conforme a los apartados precedentes: Señale la opción incorrecta.",
+        "opciones": [
+            "Los promotores o directores de cualquier reunión o manifestación que convocaren una reunión o manifestación que hubiese sido previamente suspendida o prohibida, y siempre que con ello pretendieran subvertir el orden constitucional o alterar gravemente la paz pública.",
+            "Los promotores o directores de cualquier reunión o manifestación que paralizaren una reunión o manifestación que hubiese sido previamente suspendida o prohibida.",
+            "Los promotores o directores de cualquier reunión o manifestación que celebraren una reunión o manifestación que hubiese sido previamente suspendida o prohibida, y siempre que con ello pretendieran subvertir el orden constitucional o alterar gravemente la paz pública.",
+            "Los promotores o directores de cualquier reunión o manifestación que intentaren celebrar de nuevo una reunión o manifestación que hubiese sido previamente suspendida o prohibida, y siempre que con ello pretendieran subvertir el orden constitucional o alterar gravemente la paz pública."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 514 CP 1. Los promotores o directores de cualquier reunión o manifestación comprendida en el número 1.º del artículo anterior y los que, en relación con el número 2.º del mismo, no hayan tratado de impedir por todos los medios a su alcance las circunstancias en ellos mencionadas, incurrirán en las penas de prisión de uno a tres años y multa de doce a veinticuatro meses. A estos efectos, se reputarán directores o promotores de la reunión o manifestación los que las convoquen o presidan. 2. Los asistentes a una reunión o manifestación que porten armas u otros medios igualmente peligrosos serán castigados con la pena de prisión de uno a dos años y multa de seis a doce meses. Los Jueces o Tribunales, atendiendo a los antecedentes del sujeto, circunstancias del caso y características del arma o instrumento portado, podrán rebajar en un grado la pena señalada. 3. Las personas que, con ocasión de la celebración de una reunión o manifestación, realicen actos de violencia contra la autoridad, sus agentes, personas o propiedades públicas o privadas, serán castigadas con la pena que a su delito corresponda, en su mitad superior. 4. Los que impidieren el legítimo ejercicio de las libertades de reunión o manifestación, o perturbaren gravemente el desarrollo de una reunión o manifestación lícita serán castigados con la pena de prisión de dos a tres años si los hechos se realizaran con violencia, y con la pena de prisión de tres a seis meses o multa de seis a 12 meses si se cometieren mediante vías de hecho o cualquier otro procedimiento ilegítimo. 5. Los promotores o directores de cualquier reunión o manifestación que convocaren, celebraren o intentaren celebrar de nuevo una reunión o manifestación que hubiese sido previamente suspendida o prohibida, y siempre que con ello pretendieran subvertir el orden constitucional o alterar gravemente la paz pública, serán castigados con las penas de prisión de seis meses a un año y multa de seis a doce meses, sin perjuicio de la pena que pudiera corresponder, en su caso, conforme a los apartados precedentes."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentran regulados los delitos cometidos con ocasión del ejercicio de los derechos fundamentales y de las libertades públicas garantizados por la Constitución dentro del Código Penal?",
+        "opciones": [
+            "Libro II, Título XXII, Capítulo IV, Sección Segunda, artículos 510 a 521.",
+            "Libro II, Título XXI, Capítulo IV, Sección Primera, artículos 522 a 534.",
+            "Libro II, Título XXI, Capítulo VI, Sección Segunda, artículos 510 a 521.",
+            "Libro II, Título XXI, Capítulo IV, Sección Primera, artículos 510 a 521."
+        ],
+        "correcta": 3,
+        "explicacion": "Dentro del Título XXI del CP, rubricado “Delitos contra la Constitución”, se recogen en el Capítulos IV “de los delitos relativos al ejercicio de los derechos fundamentales y libertades públicas”, en la Sección 1ª “De los delitos cometidos con ocasión del ejercicio de los derechos fundamentales y de las libertades públicas garantizados por la Constitución” 14 artículos que van desde el artículo 510 hasta el artículo 521 bis CP."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La última reforma de los delitos relativos al ejercicio de los derechos fundamentales se establece con la reforma:",
+        "opciones": [
+            "Ley Orgánica 1/2011.",
+            "Ley Orgánica 1/2003.",
+            "Ley Orgánica 1/2015.",
+            "Ley Orgánica 1/2007."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 1/2015, de 30 de marzo, por la que se modifica la Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Desaparecen las faltas penales, derivando en delitos leves, así como hechos punibles civilmente y/o administrativamente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El art. 510 del Código Penal castiga a quienes:",
+        "opciones": [
+            "Públicamente fomenten, promuevan e inciten directamente al odio, hostilidad, discriminación o violencia contra un grupo por motivos antisemitas u otros referentes a la ideología, religión o aficiones.",
+            "Posean con la finalidad de distribuir escritos que por su contenido sean idóneos para incitar al odio, hostilidad, discriminación o violencia contra una persona determinada por su origen nacional.",
+            "Públicamente nieguen, trivialicen gravemente o enaltezcan los delitos de homicidio, de lesa humanidad o contra las personas y bienes protegidos en caso de conflicto armado, y enaltezcan a sus autores, cuando se hubieran cometido contra un grupo por la pertenencia de sus miembros a una etnia, raza o nación.",
+            "Todas son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 510 CP 1. Serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses: b) Quienes produzcan, elaboren, posean con la finalidad de distribuir, faciliten a terceras personas el acceso, distribuyan, difundan o vendan escritos o cualquier otra clase de material o soportes que por su contenido sean idóneos para fomentar, promover, o incitar directa o indirectamente al odio, hostilidad, discriminación o violencia contra un grupo, una parte del mismo, o contra una persona determinada por razón de su pertenencia a aquél, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, situación familiar, la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Los delitos de discriminación se recogen en el Código Penal bajo tipos delictivos tales como:",
+        "opciones": [
+            "Incitación al odio.",
+            "Denegación de una prestación publica.",
+            "Denegación de una prestación profesional o empresarial.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Analicemos cada una de las respuestas: a) Incitación al odio. Artículo 510 CP b) Denegación de una prestación publica. Artículo 511 CP c) Denegación de una prestación profesional o empresarial. Artículo 512 CP"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de las siguientes aseveraciones, relativa al delito de discriminación del art. 511 Código Penal, no es correcta?",
+        "opciones": [
+            "Sujeto activo es el particular encargado de cualquier servicio.",
+            "El delito puede ser perpetrado contra una persona individual, o contra una asociación, fundación, sociedad, o contra los miembros de las mismas.",
+            "La acción consiste en denegar una prestación a la que se tenga derecho.",
+            "Si el hecho es cometido por funcionario público, se agravarán las penas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 511 CP 1. Incurrirá en la pena de prisión de seis meses a dos años y multa de doce a veinticuatro meses e inhabilitación especial para empleo o cargo público por tiempo de uno a tres años el particular encargado de un servicio público que deniegue a una persona una prestación a la que tenga derecho por razón de su ideología, religión o creencias, su pertenencia a una etnia o raza, su origen nacional, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad. 2. Las mismas penas serán aplicables cuando los hechos se cometan contra una asociación, fundación, sociedad o corporación o contra sus miembros por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia o raza, su origen nacional, su sexo, orientación sexual, situación familiar, por razones de género, enfermedad o discapacidad. 3. Los funcionarios públicos que cometan alguno de los hechos previstos en este artículo, incurrirán en las mismas penas en su mitad superior y en la de inhabilitación especial para empleo o cargo público por tiempo de dos a cuatro años. 4. En todos los casos se impondrá además la pena de inhabilitación especial para profesión u oficio educativos, en el ámbito docente, deportivo y de tiempo libre, por un tiempo superior entre uno y tres años al de la duración de la pena de privación de libertad impuesta en su caso en la sentencia, atendiendo proporcionalmente a la gravedad del delito y a las circunstancias que concurran en el delincuente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado primero del artículo 510 del Código Penal, ¿con qué pena serán castigados quienes públicamente enaltezcan los delitos de genocidio?",
+        "opciones": [
+            "Pena de prisión de uno a cuatro meses y multa de seis a doce meses.",
+            "Pena de prisión de uno a tres años y multa de seis a doce meses.",
+            "Pena de prisión de dos a cuatro años y multa de seis a doce meses.",
+            "Pena de prisión de uno a cuatro años y multa de seis a doce meses."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 510 CP 1. Serán castigados con una pena de prisión de uno a cuatro años y multa de seis a doce meses: c) Públicamente nieguen, trivialicen gravemente o enaltezcan los delitos de genocidio, de lesa humanidad o contra las personas y bienes protegidos en caso de conflicto armado, o enaltezcan a sus autores, cuando se hubieran cometido contra un grupo o una parte del mismo, o contra una persona determinada por razón de su pertenencia al mismo, por motivos racistas, antisemitas u otros referentes a la ideología, religión o creencias, la situación familiar o la pertenencia de sus miembros a una etnia, raza o nación, su origen nacional, su sexo, orientación o identidad sexual, por razones de género, enfermedad o discapacidad, cuando de este modo se promueva o favorezca un clima de violencia, hostilidad, odio o discriminación contra los mismos."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de las siguientes no se recoge en el tipo básico de las asociaciones ilícitas del art. 515 del Código Penal?",
+        "opciones": [
+            "Las que empleen medios violentos para solicitar la convocatoria de elecciones para cargos públicos.",
+            "Las organizaciones de carácter paramilitar.",
+            "Las que promuevan la comisión de delitos leves de forma organizada, coordinada y reiterada.",
+            "Las bandas armadas, organizaciones o grupos terroristas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 515 CP Son punibles las asociaciones ilícitas, teniendo tal consideración: 1.º Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión. 2.º Las que, aun teniendo por objeto un fin lícito, empleen medios violentos o de alteración o control de la personalidad para su consecución. 3.º Las organizaciones de carácter paramilitar. 4.º Las que fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra personas, grupos o asociaciones por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, enfermedad o discapacidad."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de las siguientes reuniones es punible conforme al art. 513 del Código Penal?",
+        "opciones": [
+            "Las que se celebren para agredir a un detenido por delito de asesinato.",
+            "Las que se celebren para presentar una petición al Congreso de los Diputados.",
+            "Las que se celebren para solicitar la revocación de una ley.",
+            "Las que se celebren para solicitar la convocatoria de elecciones para cargos públicos."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 513 CP Son punibles las reuniones o manifestaciones ilícitas, y tienen tal consideración: 1.º Las que se celebren con el fin de cometer algún delito. 2.º Aquéllas a las que concurran personas con armas, artefactos explosivos u objetos contundentes o de cualquier otro modo peligroso."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El próximo sábado día 4 de julio de 2021 se celebrará el Madrid el mayor acto reivindicativo del mundo en materia LGTBI convocado por COGAM y FELGTB durante el transcurso de las Fiestas del Orgullo. Un grupo de radicales de extrema derecha está reuniéndose en secreto para impedir que se desarrolle dicha manifestación. En caso de que decidan hacerlo, ¿sería reprochable penalmente su acción?",
+        "opciones": [
+            "No, la acción de impedir el legítimo ejercicio de las libertades de reunión o manifestación no constituye delito.",
+            "Sí, el Código Penal castiga a los que impidieren el legítimo ejercicio de las libertades de reunión o manifestación.",
+            "Sí, el Código Penal castiga a los que perturbaren gravemente el desarrollo de una reunión o manifestación lícita.",
+            "Las respuestas b y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 514 CP 1. Los promotores o directores de cualquier reunión o manifestación comprendida en el número 1.º del artículo anterior y los que, en relación con el número 2.º del mismo, no hayan tratado de impedir por todos los medios a su alcance las circunstancias en ellos mencionadas, incurrirán en las penas de prisión de uno a tres años y multa de doce a veinticuatro meses. A estos efectos, se reputarán directores o promotores de la reunión o manifestación los que las convoquen o presidan. 2. Los asistentes a una reunión o manifestación que porten armas u otros medios igualmente peligrosos serán castigados con la pena de prisión de uno a dos años y multa de seis a doce meses. Los Jueces o Tribunales, atendiendo a los antecedentes del sujeto, circunstancias del caso y características del arma o instrumento portado, podrán rebajar en un grado la pena señalada. 3. Las personas que, con ocasión de la celebración de una reunión o manifestación, realicen actos de violencia contra la autoridad, sus agentes, personas o propiedades públicas o privadas, serán castigadas con la pena que a su delito corresponda, en su mitad superior. 4. Los que impidieren el legítimo ejercicio de las libertades de reunión o manifestación, o perturbaren gravemente el desarrollo de una reunión o manifestación lícita serán castigados con la pena de prisión de dos a tres años si los hechos se realizaran con violencia, y con la pena de prisión de tres a seis meses o multa de seis a 12 meses si se cometieren mediante vías de hecho o cualquier otro procedimiento ilegítimo. 5. Los promotores o directores de cualquier reunión o manifestación que convocaren, celebraren o intentaren celebrar de nuevo una reunión o manifestación que hubiese sido previamente suspendida o prohibida, y siempre que con ello pretendieran subvertir el orden constitucional o alterar gravemente la paz pública, serán castigados con las penas de prisión de seis meses a un año y multa de seis a doce meses, sin perjuicio de la pena que pudiera corresponder, en su caso, conforme a los apartados precedentes."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Los delitos relativos al ejercicio de los derechos fundamentales y libertades públicas se regulan conductas como:",
+        "opciones": [
+            "Las que supone discriminar a personas.",
+            "Las que implican un ejercicio ilegal de los derechos de reunión y manifestación.",
+            "Las que implican un ejercicio ilegal de los derechos de asociación, reunión y manifestación",
+            "Son correctas la a y c."
+        ],
+        "correcta": 3,
+        "explicacion": "En los siguientes artículos, entre otros, del CP, se recogen los delitos asociados: Art 510 Discriminación Art 513 Reuniones y manifestaciones Art 515 Asociaciones"
+    },
+    {
+        "pregunta": "Cual de las siguientes NO esta tipificado en los delitos de asociación ilícita (515 y ss. CP):",
+        "opciones": [
+            "Las asociaciones militares tendrán la consideración de asociación ilícita",
+            "Serán castigados quienes cooperen económicamente con una asociación ilícita.",
+            "La conspiración para crear una asociación ilícita será punible.",
+            "Si un funcionario público cometiera un delito del 515 se le impondrá, además, la pena de inhabilitación absoluta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 515 CP Son punibles las asociaciones ilícitas, teniendo tal consideración: 1.º Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión. 2.º Las que, aun teniendo por objeto un fin lícito, empleen medios violentos o de alteración o control de la personalidad para su consecución. 3.º Las organizaciones de carácter paramilitar."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El delito de actos de xenofobia quedó recogido en nuestro ordenamiento jurídico a través de:",
+        "opciones": [
+            "Una Ley Ordinaria.",
+            "Una Ley Internacional.",
+            "Un Tratado Europeo.",
+            "Una Ley Orgánica."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según establece el apartado primero del artículo 514 del Código Penal, serán castigados con las penas de prisión de uno a tres años y multa de doce a veinticuatro meses: Señale la opción que no es correcta.",
+        "opciones": [
+            "Los promotores o directores de cualquier reunión o manifestación que se celebre con el fin de cometer alguna infracción.",
+            "Los promotores de cualquier reunión o manifestación que no hayan tratado de impedir por todos los medios a su alcance las circunstancias de que concurran personas con armas, artefactos explosivos u objetos contundentes o de cualquier otro modo peligroso.",
+            "Los directores de cualquier reunión o manifestación que no hayan tratado de impedir por todos los medios a su alcance las circunstancias de que concurran personas con armas, artefactos explosivos u objetos contundentes o de cualquier otro modo peligroso.",
+            "Los promotores o directores de cualquier reunión o manifestación que se celebre con el fin de cometer algún delito."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 514. 1. Los promotores o directores de cualquier reunión o manifestación comprendida en el número 1.º del artículo anterior y los que, en relación con el número 2.º del mismo, no hayan tratado de impedir por todos los medios a su alcance las circunstancias en ellos mencionadas, incurrirán en las penas de prisión de uno a tres años y multa de doce a veinticuatro meses. A estos efectos, se reputarán directores o promotores de la reunión o manifestación los que las convoquen o presidan. 2. Los asistentes a una reunión o manifestación que porten armas u otros medios igualmente peligrosos serán castigados con la pena de prisión de uno a dos años y multa de seis a doce meses. Los Jueces o Tribunales, atendiendo a los antecedentes del sujeto, circunstancias del caso y características del arma o instrumento portado, podrán rebajar en un grado la pena señalada. 3. Las personas que, con ocasión de la celebración de una reunión o manifestación, realicen actos de violencia contra la autoridad, sus agentes, personas o propiedades públicas o privadas, serán castigadas con la pena que a su delito corresponda, en su mitad superior. 4. Los que impidieren el legítimo ejercicio de las libertades de reunión o manifestación, o perturbaren gravemente el desarrollo de una reunión o manifestación lícita serán castigados con la pena de prisión de dos a tres años si los hechos se realizaran con violencia, y con la pena de prisión de tres a seis meses o multa de seis a 12 meses si se cometieren mediante vías de hecho o cualquier otro procedimiento ilegítimo. 5. Los promotores o directores de cualquier reunión o manifestación que convocaren, celebraren o intentaren celebrar de nuevo una reunión o manifestación que hubiese sido previamente suspendida o prohibida, y siempre que con ello pretendieran subvertir el orden constitucional o alterar gravemente la paz pública, serán castigados con las penas de prisión de seis meses a un año y multa de seis a doce meses, sin perjuicio de la pena que pudiera corresponder, en su caso, conforme a los apartados precedentes."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Johnny quiere entrar a formar parte del grupo “Latin Kings Mallorca”, asociación de personas naturales de Sudamérica que tienen un reparto de funciones determinado, que respetan sus propios principios ideológicos y que es conocido por emplear la violencia e intimidación en la mayoría de ocasiones. ¿Estamos ante una asociación ilícita según el Código Penal?",
+        "opciones": [
+            "No, en ningún caso.",
+            "Sí, ya que cumple con lo tipificado en el artículo 515 del Código Penal.",
+            "No, no cumple con lo tipificado en el artículo 515 del Código Penal.",
+            "Sí, ya que cumple con lo tipificado en el artículo 514 del Código Penal."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 515 CP Son punibles las asociaciones ilícitas, teniendo tal consideración: 1.º Las que tengan por objeto cometer algún delito o, después de constituidas, promuevan su comisión. 2.º Las que, aun teniendo por objeto un fin lícito, empleen medios violentos o de alteración o control de la personalidad para su consecución. 3.º Las organizaciones de carácter paramilitar. 4.º Las que fomenten, promuevan o inciten directa o indirectamente al odio, hostilidad, discriminación o violencia contra personas, grupos o asociaciones por razón de su ideología, religión o creencias, la pertenencia de sus miembros o de alguno de ellos a una etnia, raza o nación, su sexo, orientación sexual, situación familiar, enfermedad o discapacidad."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

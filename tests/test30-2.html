@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Maite trabaja desde hace 10 años en una empresa de paquetería. Acaba de casarse con María y se ha reincorporado al trabajo tras su licencia por matrimonio. Esa mañana Maite se va a hacer un café como hace todos los días y le dicen que vaya a ver al jefe que quiere hablar con ella. Cuando va a su despacho el jefe le comunica que la vacante en un puesto superior se ha cubierto mientras ella estaba de vacaciones y que va a abrir un expediente para revisar su trabajo ya que considera que su productividad ha bajado. María nunca había recibido quejas sobre su trabajo, siempre la habían considerado una persona trabajadora y por eso optaba a un ascenso. ¿Qué situación es está?",
+        "opciones": [
+            "Discriminación directa",
+            "Discriminación indirecta",
+            "Represalia discriminatoria",
+            "Discriminación por error."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la A. En este caso Maite podría estar siendo discriminada de forma directa por el hecho de haber contraído matrimonio con una persona del mismo sexo. Hasta ese momento Maite nunca había tenido problemas en el trabajo y se había valorado su forma de trabajar, sin embargo sin motivo alguno y tras irse de luna de miel el trato y la consideración cambian drásticamente. La definición de discriminación directa que la Ley 8/2016 señala: situación en que se encuentra una persona que es, ha sido o puede ser tratada, por razón de la orientación sexual, la identidad de género o la expresión de género, de una manera menos favorable que otra en una situación análoga."
+    },
+    {
+        "pregunta": "La ley que regula la garantía de los derechos del colectivo LGTBI menciona en su artículo 2 la finalidad de dicha ley.",
+        "opciones": [
+            "Establecer las condiciones para que las personas LGTBI puedan ejercer sus derechos con libertad e igualdad sin ningún tipo de discriminación.",
+            "Garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social",
+            "Contribuir a la superación de los estereotipos que afectan negativamente la percepción social de estas personas; y establecer medidas concretas para lograr una sociedad más justa, libre, basada en la igualdad de trato y de oportunidades de las personas LGTBI y donde la diversidad sea valorada positivamente.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "El artículo 2 de la Ley 8/2016 señala la finalidad de la ley siendo todas ellas incluidas en este artículo."
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI. ¿Qué significan las siglas LGTBI?",
+        "opciones": [
+            "Se refieren a las personas lesbianas, gays, transexuales, transgéneros, bisexuales e intersexuales",
+            "Se refieren a las personas lesbianas, gays, transexuales, bisexuales e intersexuales, así como al resto de personas que no se identifican exactamente con estos términos pero que sufren discriminación y violencia por su orientación sexual, identidad de género o expresión de género. En este sentido, se tienen que sentir representadas también otras realidades de la diversidad sexual y de género que están fuera del heteronormativismo",
+            "Se refieren a las personas lesbianas, gays, transexuales, transgéneros, bisexuales e intersexuales, así como al resto de personas que no se identifican exactamente con estos términos pero que sufren discriminación y violencia por su orientación sexual, identidad de género o expresión de género. En este sentido, se tienen que sentir representadas también otras realidades de la diversidad sexual y de género que están fuera del heteronormativismo",
+            "Se refieren a las personas lesbianas, gays, transexuales, transgéneros, bisexuales e intersexuales, así como al resto de personas que no se identifican exactamente con estos términos pero que sufren discriminación y violencia por su orientación sexual, identidad de género o expresión de género. En este sentido, se tienen que sentir representadas también otras realidades de la diversidad sexual y de género que están fuera del heteropatriarcado"
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la letra c). La presente ley da un sentido a las siglas LGTBI más allá del mero acrónimo, ya que en él se deben sentir integrados y representadas todas las realidades de diversidad sexual. Esta definición la encontraréis en el artículo 4."
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI, la tutela judicial y administrativa ante conculcaciones del derecho a la igualdad de las personas LGTBI, comprenderá según el caso (indica cual es la incorrecta en este caso):",
+        "opciones": [
+            "La adopción de todas las medidas dirigidas al cese inmediato de la discriminación.",
+            "La adopción de medidas cautelares",
+            "La prevención de violaciones inminentes o ulteriores.",
+            "La indemnización de los daños y perjuicios en los casos de discriminación grave o muy grave"
+        ],
+        "correcta": 3,
+        "explicacion": "En este caso debemos sleccionar la opción que sea incorrecta siendo en este caso la d). El artículo 24 de la ley 8/2016 de 30 de mayo señala: La tutela judicial y administrativa ante las conculcaciones del derecho a la igualdad de las personas LGTBI comprenderá, según el caso, la adopción de todas las medidas necesarias dirigidas al cese inmediato de la discriminación, la adopción de medidas cautelares, la prevención de violaciones inminentes o ulteriores, la indemnización de los daños y perjuicios causados y el restablecimiento de la persona perjudicada en el pleno ejercicio de su derecho”"
+    },
+    {
+        "pregunta": "¿Qué es la discriminación?",
+        "opciones": [
+            "La discriminación consiste en diferenciar o dar un trato menos favorable cuando no existen diferencias relevantes entre las personas o las situaciones, así como dar un trato idéntico a situaciones que en realidad son diferentes.",
+            "La discriminación consiste cuando una disposición, un criterio, una interpretación o una práctica pretendidamente neutros puede ocasionar a lesbianas, gays, transexuales, transgéneros, bisexuales y/o intersexuales una desventaja particular respecto de personas que no lo son.",
+            "La discriminación consiste en diferenciar o dar un trato menos favorable cuando no existen diferencias relevantes entre las personas o las situaciones.",
+            "La discriminación consiste cuando una persona que es, ha sido o puede ser tratada, por razón de la orientación sexual, la identidad de género o la expresión de género, de una manera menos favorable que otra en una situación análoga."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a. Debemos leer bien los enunciados, en este caso estamos preguntando únicamente la definición de discriminación sin asociarla solamente con la discriminación que sufre el colectivo LGTBI. Debemos recordar que la ley 11/2016 también habla de la discriminación que sufren las mujeres. La intención con esta pregunta que tengamos el concepto claro de discriminación y nos centremos en el contenido correcto de las preguntas para no abalanzarnos a responder lo que sale en cada ley. El temario es amplio y pueden hacerse preguntas globales que relacionen diferentes conceptos que aparezcan en diferentes temas."
+    },
+    {
+        "pregunta": "Laura, una chica cisgénero y lesbiana está buscando trabajo como azafata de congresos después de haber finalizado un curso impartido por la CAIB. Cuando acude a una entrevista, el responsable de recursos humanos le dice que en esa empresa las azafatas tienen que tener un título universitario (sin mencionar que en verdad no acepta a Laura por su condición y de tal forma evitar una denuncia) y que por tanto queda fuera del proceso de selección. ¿Qué tipo de discriminación es según la Ley 8/2016?",
+        "opciones": [
+            "Discriminación directa",
+            "Discriminación indirecta",
+            "Discriminación por error",
+            "Discriminación múltiple"
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la B. Aunque aparentemente esta práctica no es discriminatoria de forma directa, sí lo es de forma indirecta porque le exigen una titulación que no es necesaria para el trabajo que va a desarrollar, pero lo usan para evitar seleccionar a personas que no cumplen con la imagen heteronormativa."
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI ¿Qué es la discriminación por asociación?",
+        "opciones": [
+            "Situación en que una persona es objeto de discriminación por orientación sexual, identidad de género o expresión de género como consecuencia de su relación con una persona o un grupo LGTBI.",
+            "Situación en que una persona o un grupo de personas son objeto de discriminación por orientación sexual, identidad de género o expresión de género como consecuencia de una apreciación errónea.",
+            "Situación en que una disposición, un criterio, una interpretación o una práctica pretendidamente neutros puede ocasionar a lesbianas, gays, transexuales, transgéneros, bisexuales y/o intersexuales una desventaja particular respecto de personas que no lo son.",
+            "Situación en que se encuentra una persona que es, ha sido o puede ser tratada, por razón de la orientación sexual, la identidad de género o la expresión de género, de una manera menos favorable que otra en una situación análoga"
+        ],
+        "correcta": 0,
+        "explicacion": "En este caso la opción correcta es la a, ya que la opción b) se trata de la definición de discriminación por error, la opción c) se trata de la discriminación indirecta y la opción c) de trata de discriminación directa"
+    },
+    {
+        "pregunta": "Ana es una mujer transexual que esta haciendo la transición. Está en una plaza con un grupo de amigos pasándoselo bien y en un momento dado, se separa del grupo para hablar por teléfono. En ese momento aparece una patrulla de la Policía y la identifica, sin haber ningún motivo aparente e instándola a que abandone el lugar. Ana siente que ha sido identificada por ser transexual. ¿puede la policía hacer este tipo de identificaciones?",
+        "opciones": [
+            "La policía puede identificar a las personas en cualquier momento y por cualquier motivo para garantizar la seguridad ciudadana",
+            "La policía practicará las identificaciones cuando sea par imponer una sanción o cuando se considere necesario para prevenir la comisión de un delito.",
+            "La policía practicará las identificaciones que sean necesarias cuando vean a sujetos que tengan un perfil de delincuente",
+            "Ninguna es correcta"
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta crrecta es la b). La Ley orgánica 4/2015 para la Protección de la seguridad ciudadana señala en su artículo 16: “En el cumplimiento de sus funciones de indagación y prevención delictiva, así como para la sanción de infracciones penales y administrativas, los agentes de las Fuerzas y Cuerpos de Seguridad podrán requerir la identificación de las personas en los siguientes supuestos: a) Cuando existan indicios de que han podido participar en la comisión de una infracción. b) Cuando, en atención a las circunstancias concurrentes, se considere razonablemente necesario que acrediten su identidad para prevenir la comisión de un delito. En estos supuestos, los agentes podrán realizar las comprobaciones necesarias en la vía pública o en el lugar donde se hubiese hecho el requerimiento, incluida la identificación de las personas cuyo rostro no sea visible total o parcialmente por utilizar cualquier tipo de prenda u objeto que lo cubra, impidiendo o dificultando la identificación, cuando fuere preciso a los efectos indicados. En la práctica de la identificación se respetarán estrictamente los principios de proporcionalidad, igualdad de trato y no discriminación por razón de nacimiento, nacionalidad, origen racial o étnico, sexo, religión o creencias, edad, discapacidad, orientación o identidad sexual, opinión o cualquier otra condición o circunstancia personal o social.”"
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI. ¿Qué significan las siglas LGTBI?",
+        "opciones": [
+            "Se refieren a las personas lesbianas, gays, transexuales, transgéneros, bisexuales e intersexuales",
+            "Se refieren a las personas lesbianas, gays, transexuales, bisexuales e intersexuales, así como al resto de personas que no se identifican exactamente con estos términos pero que sufren discriminación y violencia por su orientación sexual, identidad de género o expresión de género. En este sentido, se tienen que sentir representadas también otras realidades de la diversidad sexual y de género que están fuera del heteronormativismo",
+            "Se refieren a las personas lesbianas, gays, transexuales, transgéneros, bisexuales e intersexuales, así como al resto de personas que no se identifican exactamente con estos términos pero que sufren discriminación y violencia por su orientación sexual, identidad de género o expresión de género. En este sentido, se tienen que sentir representadas también otras realidades de la diversidad sexual y de género que están fuera del heteronormativismo",
+            "Se refieren a las personas lesbianas, gays, transexuales, transgéneros, bisexuales e intersexuales, así como al resto de personas que no se identifican exactamente con estos términos pero que sufren discriminación y violencia por su orientación sexual, identidad de género o expresión de género. En este sentido, se tienen que sentir representadas también otras realidades de la diversidad sexual y de género que están fuera del heteropatriarcado"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La opción correcta es la letra c). La presente ley da un sentido a las siglas LGTBI más allá del mero acrónimo, ya que en él se deben sentir integrados y representadas todas las realidades de diversidad sexual. Esta definición la encontraréis en el artículo 4."
+    },
+    {
+        "pregunta": "Acudís a un aviso donde dos chicas os relatan que no las han dejado pasar a una iglesia porque el sacerdote alega que no desea “mujeres que no siguen las normas de la naturaleza y para las que están destinadas en su iglesia”. Ambas señalan que solo son amigas y que se ha sentido discriminadas. ¿Qué tipo de discriminación es?",
+        "opciones": [
+            "Discriminación múltiple.",
+            "Discriminación indirecta.",
+            "Discriminación por asociación.",
+            "Discriminación por error."
+        ],
+        "correcta": 3,
+        "explicacion": "En este caso no debemos fijar bien en el enunciado, puesto que las denunciantes señalan que son amigas y no manifiestan tener un tipo de relación sentimental, sin embargo por el hecho de ir juntas, el sacerdote ha dado por sentado que se trataba de una pareja lesbiana, siendo discriminadas de forma errónea siendo correcta la opción d."
+    },
+    {
+        "pregunta": "Según el artículo 11 de la Ley 8/2016 para garantizar los derechos del colectivo LGTBI ¿qué profesionales son los que están obligados a poner en conocimiento cualquier situación de riesgo o sospecha fundamentada de discriminación o violencia por razón de orientación sexual, identidad de género o expresión?",
+        "opciones": [
+            "Los profesionales que realizan tareas de prevención, detección , atención y asistencia",
+            "Los profesionales del ámbito laboral, educación, salud, servicios sociales, religiosos, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación.",
+            "Los profesionales que realizan tareas de prevención, detección , atención y asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación.",
+            "Los profesionales que realizan tareas de prevención, detección , atención y asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia, consulados y los cuerpos de seguridad, del deporte y el ocio y de la comunicación."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). Señalar que el artículo 11 hace mención a los profesionales del artículo 10 el cual dice lo siguiente: Las administraciones públicas de las Illes Balears garantizarán la formación y la sensibilización adecuada de los profesionales que realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación."
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI, el interesado puede solicitar el resarcimiento del daño moral el cual se valorará atendiendo a las circunstancias del caso y la gravedad de la lesión ¿En que casos?",
+        "opciones": [
+            "Cuando la discriminación quede acreditada en casos graves",
+            "Cuando la discriminación quede acreditada",
+            "Cuando la discriminación quede acreditada en casos graves y siempre en casos con resultado de muerte",
+            "Esta ley no contempla el resarcimiento del daño moral"
+        ],
+        "correcta": 1,
+        "explicacion": "La opción correcta es la b). El artículo 24 cita lo siguiente “Cuando la discriminación quede acreditada, el daño moral se valorará atendiendo las circunstancias del caso y la gravedad de la lesión efectivamente producida.” No especifica que nivel de discriminación ( si debe ser leve, grave o muy grave) ni de que tipo (directa, indirecta, múltiple…) sino que debe ser acreditada, es decir que sea pruebe que ha existido."
+    },
+    {
+        "pregunta": "Según con los principios orientadores de la ley que regula los derechos del colectivo LGTBI. Son principios de actuación de los poderes públicos, (señala la incorrecta):",
+        "opciones": [
+            "Asegurará la cooperación interadministrativa.",
+            "Asegurará el derecho a la privacidad de todas las personas, sin injerencias arbitrarias o ilegales en su vida privada, incluyendo el derecho a optar para revelar, o no, la propia orientación sexual, diversidad corporal o identidad de género.",
+            "Garantizará el respeto de la pluralidad de identidades por orientación afectiva y sexual, mediante el reconocimiento de la personalidad: toda persona tiene derecho a construirse una autodefinición con respecto a su cuerpo, sexo, género y orientación sexual.",
+            "La adopción de las medidas específicas destinadas a eliminar las desigualdades de hecho por razón de sexo que puedan existir en los diferentes ámbitos."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta que se debe marcar es la d) ya que se pide que se indique la opción INCORRECTA."
+    },
+    {
+        "pregunta": "Las entidades, asociaciones y los sindicatos de la pregunta anterior están legitimados para defender los derechos y los intereses de las personas afiliadas o asociadas en los procesos:",
+        "opciones": [
+            "Civil y contencioso administrativo.",
+            "Civil, contencioso administrativo y social",
+            "Civil, contencioso administrativo, penal y social",
+            "Civil, contencioso administrativo, penal, militar y social"
+        ],
+        "correcta": 1,
+        "explicacion": "La opción correcta es la b) para ello debemos irnos al final del artículo 25 de la Ley 8/2016 de 30 de mayo ya que señala: “las entidades, las asociaciones, las organizaciones y los sindicatos a que hace referencia el apartado 1 anterior están legitimados para defender los derechos y los intereses de las personas afiliadas o asociadas que así lo deseen en procesos judiciales civiles, contenciosos administrativos y sociales”"
+    },
+    {
+        "pregunta": "¿Cuál es el ámbito de aplicación de la Ley 8/2016?",
+        "opciones": [
+            "El ámbito territorial de las Comunidad autónoma de las Illes Balears, a cualquier persona, física o jurídica, independientemente de su situación administrativa o personal y de su domicilio o residencia.",
+            "El ámbito territorial de la comunidad autónoma de las Illes Balears, a cualquier persona, física o jurídica, de derecho público o privado, independientemente de su situación administrativa o personal y de su domicilio o residencia.",
+            "El ámbito territorial de la comunidad autónoma de las Illes Balears, a cualquier persona, física o jurídica, de derecho público o privado, independientemente de su situación administrativa o personal",
+            "El ámbito territorial de la comunidad autónoma de las Illes Balears, a cualquier persona, independientemente de su situación administrativa o personal y de su domicilio o residencia."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El artículo 3 señala: Esta ley se aplica, en el ámbito territorial de la comunidad autónoma de las Illes Balears, a cualquier persona, física o jurídica, de derecho público o privado, independientemente de su situación administrativa o personal y de su domicilio o residencia, sin perjuicio de lo que establecen la legislación en materia de extranjería, los tratados internacionales aplicables y la otra legislación vigente."
+    },
+    {
+        "pregunta": "En el ámbito laboral, ¿en que momentos se puede producir discriminación?",
+        "opciones": [
+            "En la contratación y en el despido",
+            "En la entrevista, en la contratación y en el despido.",
+            "En las ofertas de empleo, en la selección, en las condiciones de trabajo, en el desempeño, promoción, retiro y/o despido",
+            "En la contratación, en el despido y en el retiro"
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). Debemos tener en cuenta que la discriminación se puede sufrir tanto en el ámbito público como privado y en cualquier devenir de nuestra vida. En el caso laboral este se extrapola a todas las contingencias de su de curso."
+    },
+    {
+        "pregunta": "¿Cuál es la definición de persona transexual?",
+        "opciones": [
+            "Término usado algunas veces en literatura médica o por algunas personas transgénero, para describir a aquellos que han hecho la transición a través de intervenciones médicas.",
+            "Personas que han nacido con los dos órganos reproductores",
+            "Personas que, siendo hombre visten como mujeres o mujeres que visten como hombres",
+            "Ninguna de las definiciones es correcta"
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a). Debemos tener en cuenta que en el caso de las personas trans se hace referencia a dos cosas: el sexo biológico (pene o vulva) y a la identidad de género (me siento hombre o me siento mujer) En este caso el sexo biológico no coincide con la identidad de género por lo que la persona decide hacer un tratamiento para hacer coincidir su sexo biológico con su identidad de género. Lo vital aquí es distinguir que las personas transexuales sienten que han nacido con el sexo físico equivocado."
+    },
+    {
+        "pregunta": "¿Qué es la identidad sexual?",
+        "opciones": [
+            "Se trata de la forma individual e interna de vivir el género, la cual puede corresponder o no con el sexo biológico. Es la forma en que cada persona se percibe a sí misma, independientemente de cómo la perciben las demás.",
+            "Es la capacidad de sentir atracción física, sexual, emocional, erótica, afectiva y/o espiritual por otras personas según su expresión de género, ya que es muy difícil determinar la identidad de género o sexo a primera vista",
+            "Es la forma en la que exteriorizamos nuestra identidad de género al mundo. Comprende distintas expresiones, como nuestro nombre, la forma de vestir, los comportamientos y las tendencias de interacción, etc.",
+            "Personas fuera del espectro masculino- femenino, que no se identifican como mujer ni como hombre."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). debemos tener en cuenta que la poción b) habla de la orientación sexual, la opción c) de la expresión de género y la opción d) de las personas queer."
+    },
+    {
+        "pregunta": "¿En qué artículo se enumeran los principios orientadores de la actuación de los poderes públicos en la Ley 8/2016?",
+        "opciones": [
+            "En el artículo 3",
+            "En el artículo 4",
+            "En el artículo 5",
+            "En el artículo 6"
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). El Título Preliminar de la Ley 8/2016 abarca los artículo 1 al 6, siendo el último de ellos el que habla de los principios generales."
+    },
+    {
+        "pregunta": "Según el artículo 25 de la Ley 8/2016 Las entidades las entidades, las asociaciones, las organizaciones y los sindicatos están legitimados para defender los derechos y los intereses de las personas afiliadas o asociadas que así lo deseen en:",
+        "opciones": [
+            "Procesos civiles y penales",
+            "Procesos civiles, penales y administrativos",
+            "Procesos civiles, sociales y contenciosos administrativos",
+            "Procesos civiles, penales, sociales, militares y contenciosos administrativos"
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es a c). EL artículo 25.2 dice los siguiente: De acuerdo con los términos establecidos por las leyes procesales, las entidades, las asociaciones, las organizaciones y los sindicatos a que hace referencia el apartado 1 anterior están legitimados para defender los derechos y los intereses de las personas afiliadas o asociadas que así lo deseen en procesos judiciales civiles, contenciosos administrativos y sociales."
+    },
+    {
+        "pregunta": "¿Qué significa orientación sexual?",
+        "opciones": [
+            "Significa si eres gay o lesbiana",
+            "La forma en que una persona caracteriza su atracción emocional y sexual hacia otros",
+            "La intensidad de los sentimientos que una persona tiene hacia otra, estos pueden ir de pueden ir de menos intensidad a mucha intensidad",
+            "Describe a una persona cuya identidad de género no es fija. Una persona con género fluido quizá se sienta siempre como una mezcla de los dos géneros tradicionales, pero puede que se sienta más como un género unos días, y como otro género otros días."
+        ],
+        "correcta": 1,
+        "explicacion": "La opción correcta es la b) ya que la a) es un opción simplista puesto que hemos visto que la orientación sexual tiene más connotaciones (bisexual, pansexual asexual…). La c) es una opción sin ninguna lógica, puesto que no se habla nunca de un nivel de sentimientos y la opción d) habla sobre el género fluido."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016 ¿quién impulsará la formación del personal tanto funcionario como laboral propio de la comunidad, y promoverá́ convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal?",
+        "opciones": [
+            "El Gobierno de las Islas Baleares a través del Instituto de Seguridad Pública de las I.B (ISPIB)",
+            "El Consell Insular a través de la Escuela Balear de Administración Pública (EBAP)",
+            "El Gobierno de las I.B a través de la Escuela Balear de Administración Pública (EBAP)",
+            "El Gobierno y los Consells insulares a través de la Escuela Balear de Administración Pública (EBAP)"
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la C. El artículo 10.2 de la Ley 8/2016 señala: El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá́ convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal."
+    },
+    {
+        "pregunta": "¿Qué artículo de la ley 8/2016 para garantizar los derechos del colectivo LGTBI recoge la clausula general antidiscriminatoria?",
+        "opciones": [
+            "El artículo 5",
+            "El artículo 15",
+            "El artículo 25",
+            "El artículo 35"
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). El Título I Disposiciones Generales recoge los artículo del 1 al 6. Siendo el artículo 5 el correspondiente a “Cláusula general antidiscriminatoria”"
+    },
+    {
+        "pregunta": "Según la ley 8/2016 ¿sobre que quien o quienes se garantiza el derecho a la no discriminación?",
+        "opciones": [
+            "Sobre las mujeres",
+            "Sobre las mujeres, Gays Transexuales y Bisexuales",
+            "Sobre las personas lesbianas, Gays Trans, Bisexuales e Intersexuales.",
+            "Sobre la no discriminación entre hombres y mujeres"
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). Tanto el propio título de la ley como su artículo 1 hacen mención sobre quienes se busca garantizar los derechos. Como vemos el artículo 1 de la Ley 8/2016 señala: “Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI)”"
+    },
+    {
+        "pregunta": "¿Qué significa el término Queer?",
+        "opciones": [
+            "Un término que algunos usan para describir a las personas cuyas identidades de género u orientación sexual se encuentran fuera de las normas sociales, con un término general que las abarque a todas. Algunas personas piensan que el término queer es más fluido e incluyente que las categorías tradicionales para orientación sexual e identidad de género.",
+            "La caracterización de uno o múltiples géneros frente a un público. A aquellos que la llevan a cabo se les llama transformistas.",
+            "Este término no existe.",
+            "Describe a una persona cuya identidad de género no es fija. Una persona con género fluido quizá se sienta siempre como una mezcla de los dos géneros tradicionales, pero puede que se sienta más como un género unos días, y como otro género otros días."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a) ya que la opción b) define a Drag King o Drag Queens, la opción c) es errónea y la opción d) define el género fluido."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016 ¿Quién impulsará la formación del personal tanto funcionario como laboral de la comunidad?",
+        "opciones": [
+            "El Gobierno de las I.B",
+            "El Consell Insular respectivo",
+            "El ayuntamiento correspondiente",
+            "El Minsterio de Educación."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). El artículo 10.2 de la Ley 8/2016 señala: El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal”"
+    },
+    {
+        "pregunta": "Según la ley 8/2016 ¿Quién velará por el derecho a la no discriminación, con independencia de la orientación sexual, identidad de género o la expresión de género o del grupo familiar a que pertenezca?",
+        "opciones": [
+            "Los poderes públicos de las I.B",
+            "La Administración de la CCAA IB",
+            "Las instituciones públicas de las I.B",
+            "El Govern de las I.B"
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la C. El artículo 5 señala: Las instituciones públicas de las Illes Balears velarán por el derecho a la no discriminación, con independencia de la orientación sexual, identidad de género o la expresión de género o del grupo familiar a que pertenezca"
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI ¿Quién impulsará la formación del personal?",
+        "opciones": [
+            "Los respectivos Consejos Insulares",
+            "Los respectivos ayuntamientos",
+            "El Gobierno de las Islas Baleares",
+            "El Ebap"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La opción correcta es la c) artículo 10.2 “El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal”"
+    },
+    {
+        "pregunta": "Los profesionales a los que se refiere la pregunta anterior, en el caso de conocer una situación de riesgo o sospecha fundamentada de discriminación o violencia por razón de orientación sexual, identidad de género o expresión de género:",
+        "opciones": [
+            "Tienen el deber de comunicarlo a las fuerzas y cuerpos de seguridad.",
+            "Tienen el deber de actuar de inmediato y presentar una denuncia formal.",
+            "Tienen el deber de comunicarlo a las fuerzas y cuerpos de seguridad y al órgano competente",
+            "Pueden comunicarlo a las fuerzas y cuerpos de seguridad y al órgano competente"
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la c) ya que el artículo 11.1 señala que los profesionales del artículo 10 (de la pregunta anterior) tienen el DEBER de COMUNICARLO tanto a la Policía como a la Guardia Civil y también al órgano que competa. Por ejemplo si un profesor es conocedor de que un alumno sufre discriminación por razón de sexo, orientación sexual o identidad sexual, éste deberá comunicarlo al policía tutor o policía de barrio (por ejemplo) y a la vez al director del centro de estudios."
+    },
+    {
+        "pregunta": "Los padres de Valentina se han mudado a vivir a Palma. Valentina tiene 17 años y tiene que cambiarse de instituto y acabar el último año en un colegio que no conoce. Valentina se define como queer y su expresión de género tiene un estilo fluido entre el femenino, masculino y el andrógino. Este tipo de expresión ha hecho que en el instituto empiecen a hablar mal de ella y a cuchichear en los pasillos sobre su forma de vestir. Le está costando hacer amigos y amigas por esta razón. ¿Qué tipo de discriminación es?",
+        "opciones": [
+            "Discriminación por error.",
+            "Acoso discriminatorio",
+            "Discriminación por asociación.",
+            "Represalia discriminatoria."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El acoso discriminatorio es: Conducta no deseada asociada a motivos por los que se prohíbe la discriminación, con el objetivo o el efecto de menoscabar la dignidad de una persona y de crear un entorno intimidante, hostil, degradante, humillante u ofensivo de manera intencionada o no."
+    },
+    {
+        "pregunta": "Los padres de Valentina se han mudado a vivir a Palma. Valentina tiene 17 años y tiene que cambiarse de instituto y acabar el último año en un colegio que no conoce. Valentina se define como queer y su expresión de género tiene un estilo fluido entre el femenino, masculino y el andrógino. Este tipo de expresión ha hecho que en el instituto empiecen a hablar mal de ella y a cuchichear en los pasillos sobre su forma de vestir. Le está costando hacer amigos y amigas por esta razón. ¿Qué tipo de discriminación es?",
+        "opciones": [
+            "Discriminación por error.",
+            "Acoso discriminatorio",
+            "Discriminación por asociación.",
+            "Represalia discriminatoria."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El acoso discriminatorio es: Conducta no deseada asociada a motivos por los que se prohíbe la discriminación, con el objetivo o el efecto de menoscabar la dignidad de una persona y de crear un entorno intimidante, hostil, degradante, humillante u ofensivo de manera intencionada o no."
+    },
+    {
+        "pregunta": "¿Qué artículo de la Constitución Española está relacionado directamente con la igualdad y la no discriminación?",
+        "opciones": [
+            "El artículo 14",
+            "El artículo 5",
+            "El artículo 24",
+            "El artículo 3"
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). El artículo 14 de la CE dice «Los españoles son iguales ante la ley, sin que pueda prevalecer discriminación alguna por razón de nacimiento, raza, sexo religión, opinión o cualquier otra condición o circunstancia personal o social»"
+    },
+    {
+        "pregunta": "¿Cual es el objeto de la ley 8/2016 para garantizar la igualdad de las personas LGTBI?",
+        "opciones": [
+            "Establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas LGTBI",
+            "Establecer las condiciones para que las personas LGTBI puedan ejercer sus derechos con libertad e igualdad sin ningún tipo de discriminación.",
+            "Garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social de las personas LGTBI.",
+            "Establecer medidas concretas para lograr una sociedad más justa, libre, basada en la igualdad de trato y de oportunidades de las personas LGTBI y donde la diversidad sea valorada positivamente."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). El artículo 1 regula el obejto de aplicación de la ley el cual dice Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI)”. Las otras opciones habla sobre la finalidad de la ley."
+    },
+    {
+        "pregunta": "¿Qué es el acoso LGTBIfóbico?",
+        "opciones": [
+            "Cualquier comportamiento basado en la orientación sexual de una persona que tenga la finalidad de atentar contra su dignidad o su integridad física o psíquica.",
+            "Cualquier comportamiento basado en la orientación sexual, la identidad de género y/o la expresión de género de una persona que tenga la finalidad o provoque el efecto de atentar contra su dignidad o su integridad física o psíquica o de crearle un entorno intimidador, hostil, degradante, humillante, ofensivo o molesto",
+            "Cualquier comportamiento basado en la orientación sexual, la identidad de género de una persona que tenga la finalidad o provoque el efecto de atentar contra su dignidad o su integridad física o psíquica o de crearle un entorno intimidador, hostil, degradante, humillante, ofensivo o molesto",
+            "Cualquier comportamiento ejercido por la persona varón basado en la orientación sexual, la identidad de género y/o la expresión de género de una persona que tenga la finalidad o provoque el efecto de atentar contra su dignidad o su integridad física o psíquica o de crearle un entorno intimidador, hostil, degradante, humillante, ofensivo o molesto"
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). La definición se basa en el manual de Guía de recomendaciones de buen trato de las personas LGTBI en el entorno laboral elaborado por el GOIB. El enlace al documento es el siguiente: https://www.caeb.es/recomendaciones-para-el-buen-trato-de-las-personas-lgtbi-en-el-ambito-laboral/"
+    },
+    {
+        "pregunta": "Según el artículo 5 de la Ley 8/2016 el derecho a la no discriminación como principio informador del ordenamiento jurídico Balear vincula:",
+        "opciones": [
+            "A los poderes públicos",
+            "A los poderes públicos y a los particulares",
+            "A los poderes públicos y a las personas físicas y jurídicas",
+            "A los poderes públicos a las personas físicas y jurídicas y a las empresas que tengan convenios con la administración."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la B. El artículo 5.2 señala: El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. Este derecho vincula tanto a los poderes públicos como a los particulares."
+    },
+    {
+        "pregunta": "¿Qué rango de ley tiene la Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia?",
+        "opciones": [
+            "Decreto legislativo",
+            "Ley Marco",
+            "Ley Autonómica",
+            "Ley Orgánica"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La repsuesta correcta es la d). En este caso estamos hablando de una ley que se aplica en las Islas Baleares y que ha dictado el propio parlamento Balear"
+    },
+    {
+        "pregunta": "En base a la Ley 8/2016 ¿Quién impulsará la formación del personal tanto funcionario como laboral propio como de la comunidad y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal?",
+        "opciones": [
+            "El Gobierno de las Illes Balears a través del EBAP",
+            "El Gobierno de las Illes Balears a través de la EMF",
+            "La CAIB a través del EBAP",
+            "La CAIB a través del ISPIB"
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la A. El artículo 10 señala: El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal."
+    },
+    {
+        "pregunta": "¿Qué es la homofobia liberal?",
+        "opciones": [
+            "Tipo de homofobia que consiste en tolerar benevolentemente a las personas LGTBI, siempre que se silencie la condición homosexual o transexual, y se asimile y se acepte la «normalidad» del modelo heterocentrista",
+            "Tipo de homofobia que consiste en tapar esa condición haciendo alarde de que tienen amigos o conocidos que son personas LGTBI pero en realidad no los toleran.",
+            "Hostilidad general, psicológica y social, respecto de las personas que se supone que desean a individuos de su propio sexo o tienen prácticas sexuales con dichos individuos.",
+            "Ese término no existe"
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). Si bien es cierto que no es una pregunta que se plantee en el temario, es posible que os puedan hacer preguntas “indirectas” con respecto a él. La Ley 8/2016 no solo busca garantizar los derechos de las personas LGTBI sino que también (tal como dice el título de la Ley) buscar erradicar la LGTBI fobia y, para ello, es necesario saber qué es la LGTBI fobia en todas sus variantes. En el material complementario que se os adjunta en la asignatura, encontraréis la referencia a este término acuñado por Daniel Bordillo (2001). Podéis encontrar el siguiente documento es el siguiente enlace: https://www.caeb.es/recomendaciones-para-el-buen-trato-de-las-personas-lgtbi-en-el-ambito-laboral/ La referencia del documento es la siguiente: Solá García, M., & Surt. Fundació de Dones. (2019). Guía de recomendaciones para el buen trato de las personas LGTBI en el entorno laboral."
+    },
+    {
+        "pregunta": "Dentro de la finalidad de la Ley 8/2016 de garantía de los derechos LGTBI establece:",
+        "opciones": [
+            "Garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social.",
+            "Garantizar las mismas oportunidades y representación en todos los ámbitos y etapas de la vida",
+            "Establecer medidas para conseguir una sociedad libre, respetuosa donde se valore la diversidad.",
+            "Todas son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la A. El artículo 2 señala: La finalidad de esta ley es establecer las condiciones para que las personas LGTBI puedan ejercer sus derechos con libertad e igualdad sin ningún tipo de discriminación; garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social; contribuir a la superación de los estereotipos que afectan negativamente la percepción social de estas personas; y establecer medidas concretas para lograr una sociedad más justa, libre, basada en la igualdad de trato y de oportunidades de las personas LGTBI y donde la diversidad sea valorada positivamente."
+    },
+    {
+        "pregunta": "¿Cuál es el ámbito de aplicación de la ley que regula las garantías de los derechos del colectivo LGTBI?",
+        "opciones": [
+            "Se aplica en el ámbito territorial de la Comunidad Autónoma de las Islas Baleares, a cualquier persona física o jurídica de derecho público o privado, independientemente de su situación administrativa o personal y de su domicilio o residencia, sin perjuicio de lo que establecen la legislación en materia de extranjería, los tratados internacionales aplicables y la otra legislación vigente.",
+            "Se aplica en el ámbito territorial de la Comunidad Autónoma de las Islas Baleares, a cualquier persona física o jurídica, independientemente de su situación administrativa o personal y de su domicilio o residencia, sin perjuicio de lo que establecen la legislación en materia de extranjería, los tratados internacionales aplicables y la otra legislación vigente.",
+            "Se aplica en el ámbito territorial de Mallorca, a cualquier persona física o jurídica de derecho público o privado, independientemente de su situación administrativa o personal y de su domicilio o residencia, sin perjuicio de lo que establecen la legislación en materia de extranjería, los tratados internacionales aplicables y la otra legislación vigente.",
+            "Se aplica en el ámbito territorial de la Comunidad Autónoma de las Islas Baleares, a cualquier persona física de derecho público o privado, independientemente de su situación administrativa o personal y de su domicilio o residencia, sin perjuicio de lo que establecen la legislación en materia de extranjería, los tratados internacionales aplicables y la otra legislación vigente."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a) la cual la podéis encontrar en el artículo 3.1 de la Ley 8/2016. Lo que debemos tener en cuenta es que esta ley es de ámbito autonómico, por lo que se aplicará en todo el territorio insular. Además será de aplicación a cualquier persona física o jurídica de derecho público (regula una relación jurídica en la que interviene un sujeto investido de potestad pública) o privado (cuando regula relaciones entre sujetos particulares)"
+    },
+    {
+        "pregunta": "Carlos es un hombre gay de 25 años que ha estudiado mecánica. Uno de sus sueños es abrir su propio taller, sin embargo antes de emprenderse en esa aventura decide trabajar coger experiencia en el sector y empieza a trabajar en un taller como empleado. Empieza a trabajar sin problemas hasta que un día, Diego, su compañero de trabajo le enseña una de las nóminas. Carlos ve que su sueldo es hasta casi 300 euros inferior que el de Diego y ambos hacen las mismas funciones y llevan el mismo tiempo trabajando juntos. ¿Qué tipo de discriminación es?",
+        "opciones": [
+            "Discriminación directa por orientación sexual",
+            "Discriminación indirecta por orientación sexual",
+            "Discriminación directa por identidad de género",
+            "Discriminación indirecta por identidad de género"
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). Nos encontramos ante una discriminación directa ya que situación en que se encuentra una persona que es, ha sido o puede ser tratada, por razón de la orientación sexual de una manera menos favorable que otra (en este caso Diego) en una situación análoga. Así mismo es por orientación sexual, porque en el inicio del enunciado habla únicamente de su orientación, es decir por que género (hombre o mujer) siente atracción sexual o sentimental. La identidad se refiere a como uno se identifica como género (si me siento hombre, mujer, las dos cosas o ninguna…etc)"
+    },
+    {
+        "pregunta": "¿Qué significa demisexual?",
+        "opciones": [
+            "Se refiere a una persona que puede sentirse atraída emocionalmente o sexualmente por personas de diferente sexo",
+            "Persona que no experimenta atracción sexual a menos que establezca una fuerte conexión emocional con alguien.",
+            "Se refiere a una persona cuya expresión de género se basa en la vestimenta con vaqueros (denim)",
+            "Persona que no siente atracción sexual hacia otras personas o la siente de muy baja intensidad."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). LA opción a habla de las personas bisexuales, la opción c) es una invención y la opción d) habla de las personas asexuales."
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI ¿Quiénes tienen la consideración de interesado/a en los procedimientos administrativos en los que se haya de pronunciar respecto a una situación de discriminación?",
+        "opciones": [
+            "La persona o personas afectadas.",
+            "La persona o personas afectadas. Asi mismo si poseen la autorización de las personas o persona afectas también los serán: las entidades , asociaciones y organizaciones legalmente constituidas que tengan como finalidad la defensa y la promoción de los derechos humanos",
+            "La persona o personas afectadas. Asi mismo si poseen la autorización de las personas o persona afectas también los serán: las entidades , asociaciones y organizaciones legalmente constituidas que tengan como finalidad la defensa y la promoción de los derechos humanos, los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios.",
+            "La persona o personas afectadas, las entidades , asociaciones y organizaciones legalmente constituidas que tengan como finalidad la defensa y la promoción de los derechos humanos."
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la c) ya que si atendemos al artículo 25.1 “Tienen la consideración de interesado e interesada en los procedimientos administrativos en qué haya que pronunciarse respecto a una situación de discriminación, y siempre con la autorización de la persona o las personas afectadas, las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos. Tienen la misma consideración los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios”"
+    },
+    {
+        "pregunta": "¿Cuáles son las entidades de defensa de los derechos LGTBI que forman parte del Pleno del Consejo de LGTBI de las Islas Baleares?",
+        "opciones": [
+            "El Instituto Balear de la Mujer, las unidades de igualdad y el Observatorio para la igualdad",
+            "Ben Amics; Colectivo la Llave del Armario; Chrysallis Illes Balears.",
+            "Nosostrxs; Diversos; Arcoiris",
+            "No hay ningún consejo LGTBI en las Islas Baleares."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). La Ley 8/2016 contempla el Consejo LGTBI de las Islas Baleares. El artículo 7 (que no entra en el temario) hace mención a este dato. Lo que interesa aquí es que os suenen este tipo de entidades para evitar que en un examen tipo test os pillen desprevenidos. El apartado b, nombra las entidades que luchan por la defensa de los derechos LGTBI y en el siguiente enlace https://www.caeb.es/recomendaciones-para-el-buen-trato-de-las-personas-lgtbi-en-el-ambito-laboral/ podrás encontrar los sindicatos y otros organismos que forman parte de este consejo."
+    },
+    {
+        "pregunta": "Una pareja gay acude a una discoteca y les ponen problemas para poder acceder al local por el hecho de ser pareja alegando los denunciantes que han escuchado a uno de los trabajadores \"con tanto aceite nos vamos a resbalar\". Tras hablar con el encargado y pedirle la hoja de reclamaciones, éste el cual se muestra con una actitud conciliadora y les deja entrar a la discoteca, y acto seguido la pareja observa como el encargado habla con el trabajador que ha hecho el comentario homofóbico. Una vez dentro de la discoteca, la pareja va a consumir a la barra y se encuentran con el mismo trabajador el cual se retrasa de forma intencionada en servir a la pareja ¿Ante qué nos encontramos?",
+        "opciones": [
+            "Orden de discriminar",
+            "Discriminación múltiple",
+            "Represalia discriminatoria",
+            "Victimización secundaria"
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la c) puesto que estamos ante un caso en el que se exige por parte de la pareja que se les preste el servicio bajo los mismos derechos que a cualquier otro ciudadano, sin embargo no es hasta que solicitan la hoja de reclamaciones cuando el encargado es el que accede a que éstos entren en el local. Una vez dentro la pareja desea consumir por lo que no se les niega el servicio pero si que les aplican una tarifa de precios abusiva y discriminatoria. También debéis observar que las otras opciones pueden ser descartadas ya que no encajan en el caso práctico tal como podréis corroborar en las definiciones del artículo 4."
+    },
+    {
+        "pregunta": "¿Qué significa identidad de género?",
+        "opciones": [
+            "La percepción interna que una persona tiene de ser niño/hombre/género masculino, niña/mujer/género femenino, otro género o de ningún género.",
+            "Una orientación sexual que describe a una persona que siente atracción sexual y emocional hacia otras personas, independientemente de sus géneros.",
+            "Describe a una persona cuya identidad de género no es fija. Una persona con género fluido quizá se sienta siempre como una mezcla de los dos géneros tradicionales, pero puede que se sienta más como un género unos días, y como otro género otros días.",
+            "Una orientación sexual que describe a una persona que se siente atraída emocional y sexualmente tanto hacia personas de su propio género como hacia personas de otros géneros."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a) ya que la b) habla de pansexuales, la opción c) habla del género fluido y la opción d) habla de bisexuales."
+    },
+    {
+        "pregunta": "Según la ley 8/2016 ¿que es discriminación indirecta?",
+        "opciones": [
+            "Situación en que una disposición, un criterio, una interpretación o una práctica pretendidamente neutros puede ocasionar a lesbianas, gays, transexuales, transgéneros, bisexuales y/o intersexuales una desventaja particular respecto de personas que no lo son.",
+            "Situación en que una disposición, un criterio, una interpretación o una práctica puede ocasionar a lesbianas, gays, transexuales, transgéneros, bisexuales y/o intersexuales una desventaja particular respecto de personas que no lo son.",
+            "Situación en que se encuentra una persona que es, ha sido o puede ser tratada, por razón de la orientación sexual, la identidad de género o la expresión de género, de una manera menos favorable que otra en una situación análoga.",
+            "Situación en que una persona es objeto de discriminación por orientación sexual, identidad de género o expresión de género como consecuencia de su relación con una persona o un grupo LGTBI."
+        ],
+        "correcta": 0,
+        "explicacion": "JUSTIFICACIÓN: La respuesta correcta es la a). Dentro de las definiciones que pide la ley 8/2016 la discrminiación indirecta se define como: situación en que una disposición, un criterio, una interpretación o una práctica pretendidamente neutros puede ocasionar a lesbianas, gays, transexuales, transgéneros, bisexuales y/o intersexuales una desventaja particular respecto de personas que no lo son."
+    },
+    {
+        "pregunta": "La ley 8/2016 contempla el daño moral de las víctimas de discriminación?",
+        "opciones": [
+            "Si, en su artículo 24",
+            "Sí en su artículo 14",
+            "No, contempla el restablecimiento en su artículo 24",
+            "Ninguna es correcta"
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). El artículo 24 señala: “La tutela judicial y administrativa ante las conculcaciones del derecho a la igualdad de las personas LGTBI comprenderá, según el caso, la adopción de todas las medidas necesarias dirigidas al cese inmediato de la discriminación, la adopción de medidas cautelares, la prevención de violaciones inminentes o ulteriores, la indemnización de los daños y perjuicios causados y el restablecimiento de la persona perjudicada en el pleno ejercicio de su derecho. Cuando la discriminación quede acreditada, el daño moral se valorará atendiendo las circunstancias del caso y la gravedad de la lesión efectivamente producida”"
+    },
+    {
+        "pregunta": "Cuando hablamos de una persona y decimos que usa prendas de ropa mayoritariamente masculinas ¿A que estamos haciendo mención?",
+        "opciones": [
+            "A su identidad de género",
+            "A su expresión de género",
+            "A su orientación sexual",
+            "A su género biológico"
+        ],
+        "correcta": 1,
+        "explicacion": "La opción correcta es la b) ya que la expresión de género se define como: “La manera en que una persona actúa, viste, habla y se comporta para comunicar su género al mundo (o sea, femenina, masculina o andrógina). La expresión de género es fluida y no corresponde necesariamente al sexo asignado al nacer o a la identidad de género”"
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI ¿Quién impulsará la formación del personal?",
+        "opciones": [
+            "Los respectivos Consejos Insulares",
+            "Los respectivos ayuntamientos",
+            "El Gobierno de las Islas Baleares",
+            "El Ebap"
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la c) artículo 10.2 “El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal”"
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI, se deberá garantizar una formación y sensibilización adecuada de los profesionales que:",
+        "opciones": [
+            "Realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, civil, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación.",
+            "Realizan tareas de prevención, en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación.",
+            "Realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación.",
+            "Realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación así como a los responsables de los lugares de culto."
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la c) ya que el artículo 10.1 señala “Las administraciones públicas de las Illes Balears garantizarán la formación y la sensibilización adecuada de los profesionales que realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación”. Este apartado es importante ya que está vinculado con el artículo 11.1 de esta ley"
+    },
+    {
+        "pregunta": "Según la ley 8/2016 ¿quién puede tener la condición de interesado e interesada en los procedimientos administrativos en qué haya que pronunciarse respecto a una situación de discriminación?",
+        "opciones": [
+            "Las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos. También los tienen los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios sin necesidad de autorización de la persona o personas afectadas.",
+            "Las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos, los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios.",
+            "Las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos, los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios, siempre con la autorización de la persona o personas afectadas.",
+            "Las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos, los sindicatos y las organizaciones de consumidores y usuarios."
+        ],
+        "correcta": 2,
+        "explicacion": "JUSTIFICACIÓN: La respuesta correcta es la c). El artículo 25 de la ley 8/2016 señala: Tienen la consideración de interesado e interesada en los procedimientos administrativos en qué haya que pronunciarse respecto a una situación de discriminación, y siempre con la autorización de la persona o las personas afectadas, las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos. Tienen la misma consideración los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios."
+    },
+    {
+        "pregunta": "¿Cuál es el objeto de la ley que garantiza los derechos del colectivo LGTBI?",
+        "opciones": [
+            "Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias.",
+            "Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en el ámbito público sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias.",
+            "Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, tiene competencias.",
+            "Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares tienen competencias."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a) ya que es la más correcta y completa de las 4 puesto que debemos ceñirnos al artículo 1, aparatado 1. En la opción b) se ha obviado la que dicha ley es aplicable a los ámbitos públicos y privados. En la opción c) y d) no se ha especificado que no solo el Gobierno de las Islas Baleares tiene competencias sino también los consejos insulares y los entes locales"
+    },
+    {
+        "pregunta": "Indica cuales de los siguientes principios está incluido en la Ley 8/2016",
+        "opciones": [
+            "Velará por la sensibilización en este ámbito, por la prevención y la detección de la discriminación, por la atención a las personas que la sufran, por la recuperación de estas personas y por la garantía de su derecho a la reparación.",
+            "Hará efectivo el reconocimiento de la diversidad del hecho familiar en el Derecho Civil de las Illes Balears, tanto público como privado, en la práctica judicial y administrativa y en todas las actuaciones del Gobierno de las Illes Balears.",
+            "Establecer un sistema integral de tutela institucional en el que la Administración General del Estado, a través de la Delegación Especial del Gobierno contra la Violencia sobre la Mujer, en colaboración con el Observatorio Estatal de la Violencia sobre la Mujer, impulse la creación de políticas públicas dirigidas a ofrecer tutela a las víctimas de la violencia contemplada en la presente Ley.",
+            "A y b son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). En este caso nos encontramos antes el artículo 6 de la Ley 8/2016 y los principios de los apartados h) y k. La respuesta c concierne a los principios generales de la Ley de Violencia de Género."
+    },
+    {
+        "pregunta": "¿Cuál es la definición de transgénero?",
+        "opciones": [
+            "Describe a la persona cuya identidad de género y sexo asignado al nacer no corresponden.",
+            "Término usado algunas veces en literatura médica o por algunas personas transgénero, para describir a aquellos que han hecho la transición a través de intervenciones médicas.",
+            "Personas que han nacido con los dos órganos reproductores",
+            "Transexual y transgénero es lo mismo"
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a). En este caso, el sexo biológico tampoco coincide con la identidad de género sin embargo en este caso no se hace una transición o cambio de sexo biológico ya que se trata de un sentimiento a pertenecer al sexo opuesto"
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI. El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. ¿A quién o quienes vinculan este derecho?",
+        "opciones": [
+            "A los poderes públicos",
+            "A la administración de justicia y a los poderes públicos",
+            "A los poderes públicos y a los particulares",
+            "A la administración de justicia y a los particulares"
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la c) tal como podréis comprobar en el artículo 5. 2 “El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. Este derecho vincula tanto a los poderes públicos como a los particulares”"
+    },
+    {
+        "pregunta": "El propietario de una discoteca ordena a su equipo de control de accesos que solo dejen entrar a hombres y mujeres heterosexuales ya que “esos” tienen sus propias discotecas. ¿Qué tipo de discriminación es?",
+        "opciones": [
+            "Orden de discriminar.",
+            "Discriminación múltiple",
+            "Discriminación indirecta",
+            "Discriminación por asociación"
+        ],
+        "correcta": 0,
+        "explicacion": "En este caso la opción correcta es la a) ya que existe una orden por parte del encargado de no dejar entrar a un tipo de personas concretas. Se podría decir que también es una discriminación directa, pero al no estar ninguna de estas opciones la orden de discriminar es la correcta."
+    },
+    {
+        "pregunta": "¿Cuáles son los mecanismos para garantizar el derecho a la igualdad según la Ley 8/2016?",
+        "opciones": [
+            "La tutela judicial efectiva de las personas LGTBI y la identificación de situaciones de violencia hacia las personas LGTBI",
+            "La legitimación para la defensa de los derechos del colectivo LGTBI de la CAIB y la seguridad jurídica de las personas LGTBI",
+            "La tutela judicial y administrativa del derecho a la igualdad de las personas LGTBI y Legitimación para la defensa del derecho a la igualdad de las personas LGTBI",
+            "La ley 8/2016 no habla de mecanismos de garantías de derechos ala igualdad, eso se trata en la Ley 11/2016"
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c. El Título V de la ley 8/2016 en su Capítulo I señala 2 artículos el 24: La tutela judicial y administrativa del derecho a la igualdad de las personas LGTBI y el 25: Legitimación para la defensa del derecho a la igualdad de las personas LGTBI"
+    },
+    {
+        "pregunta": "¿A qué afecta las medidas que establece la ley 8/2016 para hacer efectivo el derechos de las personas LGTBI?",
+        "opciones": [
+            "A cualquier ámbito de la vida social y en particular las áreas civil, laboral, social, sanitaria, educativa, económica y cultural.",
+            "A todas las etapas de la vida y a todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación, la privación de libertad o la muerte.",
+            "A el ámbito de la vida social, laboral y sanitario, especialmente para las personas que desean hacerse una reasignación de sexo.",
+            "La a y la b son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). El artículo 1.2 señala: Las medidas que establece esta ley para hacer efectivo el derecho de las personas lesbianas, gays, bisexuales, transexuales, transgéneros e intersexuales a la igualdad y a la no discriminación a que hace referencia el apartado 1 afectan: a) A cualquier ámbito de la vida social y en particular las áreas civil, laboral, social, sanitaria, educativa, económica y cultural. b) A todas las etapas de la vida y a todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación, la privación de libertad o la muerte."
+    },
+    {
+        "pregunta": "¿Qué significa cisexual?",
+        "opciones": [
+            "Orientación sexual de una persona que no siente atracción sexual hacia otras personas o la siente de muy baja intensidad",
+            "Persona que puede sentirse atraída emocionalmente o sexualmente por personas de diferente sexo",
+            "Persona que no es trans, es decir, que se identifica con la identidad de género que le ha sido asignada en el momento de nacer.",
+            "Ese término no existe."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). La opción a) hace referencia a las personas asexuales, la opción b) habla de las personas bisexuales."
+    },
+    {
+        "pregunta": "Según la ley que regula los derechos del colectivo LGTBI. El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. ¿A quién o quienes vinculan este derecho?",
+        "opciones": [
+            "A los poderes públicos",
+            "A la administración de justicia y a los poderes públicos",
+            "A los poderes públicos y a los particulares",
+            "A la administración de justicia y a los particulares"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La opción correcta es la c) tal como podréis comprobar en el artículo 5. 2 “El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. Este derecho vincula tanto a los poderes públicos como a los particulares”"
+    },
+    {
+        "pregunta": "Según la ley 8/2016 para garantizar los derechos del colectivo LGTBI ¿Quiénes están legitimados para defender el derecho a la igualdad de las personas LGTBI?",
+        "opciones": [
+            "La persona o personas afectadas.",
+            "Las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos",
+            "Las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos, los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios",
+            "La a y la c son correctas siempre y cuando las entidades a las que se refiere c tengan la autorización de las personas del a)"
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). El artículo 25 dice: “Tienen la consideración de interesado e interesada en los procedimientos administrativos en qué haya que pronunciarse respecto a una situación de discriminación, y siempre con la autorización de la persona o las personas afectadas, las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos. Tienen la misma consideración los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios”"
+    },
+    {
+        "pregunta": "Según la ley 8/2016 cuando la discriminación queda acreditada:",
+        "opciones": [
+            "El daño moral se valorará atendiendo a las circunstancias del caso y la gravedad de la lesión efectivamente producida.",
+            "El daño moral se valorará atendiendo a la gravedad de los hechos",
+            "El daño moral solo se valorará en casos de discriminación directa",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la A. El artículo 24 señala: La tutela judicial y administrativa ante las conculcaciones del derecho a la igualdad de las personas LGTBI comprenderá, según el caso, la adopción de todas las medidas necesarias dirigidas al cese inmediato de la discriminación, la adopción de medidas cautelares, la prevención de violaciones inminentes o ulteriores, la indemnización de los daños y perjuicios causados y el restablecimiento de la persona perjudicada en el pleno ejercicio de su derecho. Cuando la discriminación quede acreditada, el daño moral se valorará atendiendo las circunstancias del caso y la gravedad de la lesión efectivamente producida."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

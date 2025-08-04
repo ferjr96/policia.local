@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, por acuerdo del Pleno se podrá modificar o alterar:",
+        "opciones": [
+            "El himno y el escudo.",
+            "El himno, el escudo y la bandera.",
+            "El himno, el escudo, la bandera del municipio y su denominación.",
+            "El escudo y la bandera."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 10. Identificación. 1. Cada municipio se identifica por su nombre oficial y puede tener un escudo o distintivo, una bandera y un himno municipal. 2. Por acuerdo de la mayoría absoluta del pleno se puede aprobar o modificar el escudo, el himno o la bandera del municipio, o alterar su denominación, debiendo seguirse un procedimiento específico que se regulará reglamentariamente. Los cambios de denominación sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de les Illes Balears. 3. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, la corporación determinará, con el quórum de la mayoría absoluta del número legal de miembros del pleno, aquél en el que tenga que radicar el ayuntamiento."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. ¿Dónde existe la junta de gobierno local?:",
+        "opciones": [
+            "En los municipios de más de 5.000 habitantes.",
+            "En los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento.",
+            "En los municipios de mas de 10.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento.",
+            "En los municipios de más de 2.500 habitantes."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "La normativa municipal y de régimen local de las Illes Balears es:",
+        "opciones": [
+            "Ley 20/2006, de 15 de noviembre.",
+            "Ley 20/2006, de 15 de diciembre.",
+            "Ley 2/2006, de 15 de noviembre.",
+            "Ley 2/2006, de 15 de diciembre."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears  Publicado en el «BOE» el de 30 de enero de 2007"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. ¿A quién debe dar cuenta el alcalde o la alcaldesa de la designación y el cese de los miembros de la junta local?:",
+        "opciones": [
+            "A nadie ya que son cesados y designados libremente por el alcalde o la alcaldesa.",
+            "Al pleno.",
+            "A la Diputación Permanente.",
+            "A los vecinos del municipio."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "En relación con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, dónde viene regulada la organización municipal:",
+        "opciones": [
+            "En el Capítulo Cuarto del Título II.",
+            "En el Capítulo Primero del Título II.",
+            "En el Capítulo Sexto del Título II.",
+            "En el Capítulo Tercero del Título II."
+        ],
+        "correcta": 0,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Teniendo en cuenta la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, señale la respuesta incorrecta:",
+        "opciones": [
+            "El derecho a disfrutar de los servicios públicos esenciales, se ejercerá sin ningún tipo de discriminación fundada en la etnia, el género, la religión, la opinión o cualquier otra condición o circunstancia personal o social.",
+            "Los municipios podrán regular su desarrollo mediante disposición reglamentaria.",
+            "Son derechos y obligaciones de la vecindad los establecidos en la legislación básica de régimen local y en esta ley.",
+            "Las personas extranjeras con permiso de residencia y empadronamiento en el municipio tienen los derechos y deberes propios de la vecindad, incluido el derecho a sufragio activo y pasivo según lo dispuesto en la presente ley."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 18. Interdicción de la discriminación. 1. Los derechos reconocidos a la población del municipio, en especial el derecho a disfrutar de los servicios públicos esenciales, se ejercerán sin ningún tipo de discriminación fundada en la etnia, el género, la religión, la opinión o cualquier otra condición o circunstancia personal o social. 2. Son derechos y obligaciones de la vecindad los establecidos en la legislación básica de régimen local y en esta ley. Los municipios podrán regular su desarrollo mediante disposición reglamentaria. 3. Las personas extranjeras con permiso de residencia y empadronadas en el municipio tienen los derechos y deberes propios de la vecindad, y los demás derechos reconocidos en las leyes. En cuanto al derecho de sufragio activo y pasivo, se estará a lo dispuesto en la legislación electoral."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. De cuántos artículos consta el Capítulo dedicado a la población municipal:",
+        "opciones": [
+            "1.",
+            "2.",
+            "3.",
+            "4."
+        ],
+        "correcta": 2,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. El Ayuntamiento tendrá la obligación de mantener el padrón municipal actualizado de manera que sus datos:",
+        "opciones": [
+            "Sean ciertos.",
+            "Sean reales.",
+            "Concuerden con la realidad.",
+            "Sean exactos y puestos al día."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal"
+    },
+    {
+        "pregunta": "El Capítulo Sexto del Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, lleva por rúbrica:",
+        "opciones": [
+            "Competencias.",
+            "Regímenes especiales.",
+            "Mancomunidades.",
+            "La población municipal."
+        ],
+        "correcta": 0,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)            Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Quién designa y cesa a los miembros de la junta local:",
+        "opciones": [
+            "El alcalde o la alcaldesa.",
+            "El Pleno del ayuntamiento.",
+            "El alcalde o alcaldesa previa autorización de la mayoría absoluta del pleno.",
+            "El Pleno del ayuntamiento previa autorización del alcalde o la alcaldesa"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, el consejo social:",
+        "opciones": [
+            "Es un órgano consultivo de gobierno con representación de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos.",
+            "Es un órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas.",
+            "Es un órgano de decisión de gobierno con representación mixta de todos los grupos políticos y las entidades ciudadanas mas representativas.",
+            "Es un órgano de decisión de gobierno con representación mixta de todos los grupos políticos y las entidades ciudadanas menos representativas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 24. Órganos de consulta, estudio y control. 1. En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal. 2. En los municipios donde así lo acuerde el pleno de la corporación existirá un consejo social o cualquier otro órgano consultivo que establezca el reglamento orgánico municipal, como órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas, con la finalidad de garantizar la participación ciudadana en la gestión municipal, al que le corresponde el estudio y la propuesta en materia de desarrollo económico y social, la planificación estratégica del municipio y los grandes proyectos urbanos. Su composición, competencias y funcionamiento se rigen por lo que se establece en el respectivo reglamento orgánico municipal. 3. También podrá existir una comisión especial de sugerencias y reclamaciones cuando así lo determine el reglamento orgánico o lo acuerde el pleno con el voto favorable de la mayoría absoluta del número legal de miembros de la corporación."
+    },
+    {
+        "pregunta": "En relación con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, cuál de las siguientes materias viene regulada en un artículo único:",
+        "opciones": [
+            "La población municipal.",
+            "La organización municipal.",
+            "Los elementos del municipio. Identificación.",
+            "Competencias."
+        ],
+        "correcta": 3,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. ¿Quién integra el ayuntamiento?:",
+        "opciones": [
+            "El alcalde o alcaldesa y el pleno.",
+            "El alcalde o alcaldesa, el pleno y la junta de gobierno local. allí donde exista.",
+            "El alcalde o alcaldesa, los concejales y concejalas, el pleno y la junta de gobierno local, allí donde exista.",
+            "El alcalde o alcaldesa, los concejales y concejalas, los tenientes de alcalde, el pleno y la junta de gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 20. Organización municipal. El gobierno y la administración municipal corresponden al ayuntamiento integrado por el pleno, el alcalde o la alcaldesa y la junta de gobierno local, allí donde exista."
+    },
+    {
+        "pregunta": "Según lo establecido en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, el municipio es:",
+        "opciones": [
+            "La entidad local esencial de la organización territorial de la comunidad autónoma de las Illes Balears.",
+            "La entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears.",
+            "La entidad local principal de la organización territorial de la comunidad autónoma de las Illes Balears.",
+            "La entidad local propia de la organización territorial de la comunidad autónoma de las Illes Balears."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Según lo tipificado en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. ¿Quién preside la junta de gobierno local?:",
+        "opciones": [
+            "El alcalde o alcaldesa.",
+            "Presidente de la junta de gobierno local elegido entre los miembros de la corporación.",
+            "El Presidente de la Diputación Provincial.",
+            "Es un órgano colegiado que funciona sin presidencia."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, se exigirá:",
+        "opciones": [
+            "Quórum de la mayoría de 2/3 partes del número legal de miembros del pleno.",
+            "Quórum de la mayoría absoluta del número legal de miembros del pleno.",
+            "Quórum de la mayoría absoluta del número legal de miembros del ayuntamiento.",
+            "Quórum de la mayoría de 2/3 partes del número legal de miembros del ayuntamiento."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 10. Identificación. 1. Cada municipio se identifica por su nombre oficial y puede tener un escudo o distintivo, una bandera y un himno municipal. 2. Por acuerdo de la mayoría absoluta del pleno se puede aprobar o modificar el escudo, el himno o la bandera del municipio, o alterar su denominación, debiendo seguirse un procedimiento específico que se regulará reglamentariamente. Los cambios de denominación sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de les Illes Balears. 3. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, la corporación determinará, con el quórum de la mayoría absoluta del número legal de miembros del pleno, aquél en el que tenga que radicar el ayuntamiento."
+    },
+    {
+        "pregunta": "De cuántos artículos consta el Capítulo Primero del Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares:",
+        "opciones": [
+            "2.",
+            "3.",
+            "4.",
+            "5."
+        ],
+        "correcta": 0,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las comisiones integradas por representantes de todos los grupos políticos y cuya finalidad es facilitar el ejercicio de la gestión municipal son:",
+        "opciones": [
+            "Comisiones extraordinarias de control y consultivas.",
+            "Comisiones informativas y de sugerencias.",
+            "Comisiones consultivas y de reclamaciones.",
+            "Comisiones informativas y de control."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 24. Órganos de consulta, estudio y control. 1. En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal. 2. En los municipios donde así lo acuerde el pleno de la corporación existirá un consejo social o cualquier otro órgano consultivo que establezca el reglamento orgánico municipal, como órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas, con la finalidad de garantizar la participación ciudadana en la gestión municipal, al que le corresponde el estudio y la propuesta en materia de desarrollo económico y social, la planificación estratégica del municipio y los grandes proyectos urbanos. Su composición, competencias y funcionamiento se rigen por lo que se establece en el respectivo reglamento orgánico municipal. 3. También podrá existir una comisión especial de sugerencias y reclamaciones cuando así lo determine el reglamento orgánico o lo acuerde el pleno con el voto favorable de la mayoría absoluta del número legal de miembros de la corporación."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los departamentos en los que puede estructurarse la administración municipal serán dirigidos:",
+        "opciones": [
+            "Por un concejal o una concejala delegados del alcalde.",
+            "Por un o una teniente de alcalde o por un concejal o una concejala delegados del alcalde.",
+            "Por un o una teniente de alcalde.",
+            "Por un concejal o una concejala delegados o por un o una teniente de alcalde delegados del alcalde."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 25. Estructura orgánica de la administración municipal. La administración municipal puede estructurarse en departamentos dirigidos por un o una teniente de alcalde o por un concejal o una concejala delegados del alcalde, que actúan por delegación del alcalde o de la alcaldesa en las materias que se les atribuyen expresamente."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las disposiciones comunes a las entidades locales vienen reguladas en:",
+        "opciones": [
+            "Título II.",
+            "Título III.",
+            "Título IV.",
+            "Título V."
+        ],
+        "correcta": 3,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Cada municipio se identifica por su nombre oficial y:",
+        "opciones": [
+            "Deberá tener un escudo, una bandera y un himno municipal.",
+            "Deberá tener un escudo o distintivo, una bandera y un himno municipal.",
+            "Puede tener un escudo, una bandera y un himno municipal.",
+            "Puede tener un escudo o distintivo, una bandera y un himno municipal."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 10. Identificación. 1. Cada municipio se identifica por su nombre oficial y puede tener un escudo o distintivo, una bandera y un himno municipal. 2. Por acuerdo de la mayoría absoluta del pleno se puede aprobar o modificar el escudo, el himno o la bandera del municipio, o alterar su denominación, debiendo seguirse un procedimiento específico que se regulará reglamentariamente. Los cambios de denominación sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de les Illes Balears. 3. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, la corporación determinará, con el quórum de la mayoría absoluta del número legal de miembros del pleno, aquél en el que tenga que radicar el ayuntamiento."
+    },
+    {
+        "pregunta": "El Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, lleva por rúbrica:",
+        "opciones": [
+            "Los Consejos.",
+            "Los Municipios.",
+            "Otras entidades locales.",
+            "Disposiciones comunes a las entidades locales."
+        ],
+        "correcta": 1,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. El gobierno y la administración municipal corresponden:",
+        "opciones": [
+            "El gobierno al Ayuntamiento y la administración al pleno.",
+            "El gobierno al pleno y la administración al ayuntamiento.",
+            "Al alcalde o alcaldesa y a los concejales y concejalas.",
+            "Al Ayuntamiento."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20. Organización municipal. El gobierno y la administración municipal corresponden al ayuntamiento integrado por el pleno, el alcalde o la alcaldesa y la junta de gobierno local, allí donde exista."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares el ámbito en el que el ayuntamiento ejerce sus competencias se denomina:",
+        "opciones": [
+            "Término municipal.",
+            "Territorio municipal.",
+            "Demarcación municipal.",
+            "Demarcación competencial municipal."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los municipios tienen personalidad jurídica:",
+        "opciones": [
+            "Propia.",
+            "Plena.",
+            "Subsidiaria.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Son órganos municipales en todos los ayuntamientos:",
+        "opciones": [
+            "El pleno, el alcalde o alcaldesa y los o las tenientes de alcalde.",
+            "El pleno, el alcalde o alcaldesa, los o las teniente de alcalde y la comisión especial de cuentas.",
+            "El pleno, el alcalde o alcaldesa, los o las tenientes de alcalde, la junta de gobierno y la comisión especial de cuentas.",
+            "El pleno, el alcalde o alcaldesa, los o las tenientes de alcalde y la junta de gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22. Órganos municipales de carácter obligatorio. Son órganos municipales en todos los ayuntamientos: el pleno, el alcalde o la alcaldesa y los o las tenientes de alcalde. También existe en todos los ayuntamientos una comisión especial de cuentas."
+    },
+    {
+        "pregunta": "De conformidad con lo dispuesto en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, constituyen la población del municipio:",
+        "opciones": [
+            "Las personas, mayores de edad, inscritas en el padrón municipal de habitantes.",
+            "Conjunto de personas inscritas en el padrón municipal de habitantes y con titularidad de una vivienda en el municipio.",
+            "Conjunto de personas inscritas en el padrón municipal de habitantes.",
+            "Conjunto de personas inscritas en el padrón municipal de habitantes, que van en el municipio con carácter permanente o estacional."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los elementos del municipio y su identificación vienen recogidos en:",
+        "opciones": [
+            "Título I Capítulo Primero.",
+            "Título I Capítulo Segundo.",
+            "Título II Capítulo Primero.",
+            "Título II Capítulo Segundo."
+        ],
+        "correcta": 2,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Final"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los acuerdos del pleno para la creación de una comisión especial de sugerencias y reclamaciones deberán contar con:",
+        "opciones": [
+            "El voto favorable de la mayoría de 2/3 partes del número legal de miembros de la corporación.",
+            "El voto favorable de la mayoría simple del número legal de miembros de la corporación.",
+            "El voto favorable de la mayoría absoluta del número legal de miembros de la corporación.",
+            "El voto favorable de la mayoría de 3/5 partes del número legal de miembros de la corporación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24. Órganos de consulta, estudio y control. 1. En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal. 2. En los municipios donde así lo acuerde el pleno de la corporación existirá un consejo social o cualquier otro órgano consultivo que establezca el reglamento orgánico municipal, como órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas, con la finalidad de garantizar la participación ciudadana en la gestión municipal, al que le corresponde el estudio y la propuesta en materia de desarrollo económico y social, la planificación estratégica del municipio y los grandes proyectos urbanos. Su composición, competencias y funcionamiento se rigen por lo que se establece en el respectivo reglamento orgánico municipal. 3. También podrá existir una comisión especial de sugerencias y reclamaciones cuando así lo determine el reglamento orgánico o lo acuerde el pleno con el voto favorable de la mayoría absoluta del número legal de miembros de la corporación."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, quiénes componen el Ayuntamiento:",
+        "opciones": [
+            "El alcalde o alcaldesa, los concejales y las concejalas y los tenientes de alcalde.",
+            "El alcalde o alcaldesa, los concejales y las concejalas y el Pleno.",
+            "El alcalde o alcaldesa.",
+            "El alcalde o alcaldesa y los concejales y las concejalas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. El acuerdo del pleno del ayuntamiento que acuerde la creación de la junta de gobierno:",
+        "opciones": [
+            "Será siempre mediante un reglamento orgánico.",
+            "Será siempre mediante un acuerdo independiente.",
+            "Será mediante un reglamento orgánico o un acuerdo independiente.",
+            "Será por reglamento orgánico en los municipios entre 2.500 y 5.000 habitantes y mediante acuerdo independiente en los demás supuestos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, quién elige al alcalde o alcaldesa:",
+        "opciones": [
+            "Los vecinos del municipio, en los términos que establece la ley.",
+            "Los concejales y las concejalas o la vecindad, en los términos que establece la ley.",
+            "Los concejales y las concejalas, en los términos que establece la ley.",
+            "La vecindad mediante sufragio universal, libre igual, directo y secreto."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, los Reglamentos, Ordenanzas y Bandos, aparecen regulados en",
+        "opciones": [
+            "Capítulo Primero del Título V.",
+            "Capítulo Segundo del Título V.",
+            "Capítulo Tercero del Título V.",
+            "Capítulo Cuarto del Título V."
+        ],
+        "correcta": 2,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123)           Capitulo Primero: Estatuto de los miembros de las corporaciones locales (arts 69-78)           Capitulo Segundo: Régimen de funcionamiento (arts 79-99)           Capitulo Tercero: Reglamentos, ordenanzas y bandos (arts 100-104)           Capitulo Cuarto:  Régimen jurídico de los actos, acuerdos y recursos(arts 105-108)           Capitulo Quinto:  Conflictos de atribuciones y de competencias (arts 109,110)           Capitulo Sexto:  Impugnación de actos y de acuerdos locales y ejercicio de acciones (arts 111-115)           Capitulo Séptimo:  Información y participación ciudadanas (arts 116-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Cuál de los siguientes NO es un órgano municipal de carácter obligatorio:",
+        "opciones": [
+            "Los o las tenientes de alcalde.",
+            "El pleno.",
+            "Comisión especial de cuentas.",
+            "Junta de gobierno."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22. Órganos municipales de carácter obligatorio. Son órganos municipales en todos los ayuntamientos: el pleno, el alcalde o la alcaldesa y los o las tenientes de alcalde. También existe en todos los ayuntamientos una comisión especial de cuentas."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La planificación estratégica del municipio y los grandes proyectos urbanos corresponde a:",
+        "opciones": [
+            "Consejo social.",
+            "Consejo municipal.",
+            "Comisión informativa de los órganos ejecutivos municipales.",
+            "Comisión de control de los órganos ejecutivos municipales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 24. Órganos de consulta, estudio y control. 1. En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal. 2. En los municipios donde así lo acuerde el pleno de la corporación existirá un consejo social o cualquier otro órgano consultivo que establezca el reglamento orgánico municipal, como órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas, con la finalidad de garantizar la participación ciudadana en la gestión municipal, al que le corresponde el estudio y la propuesta en materia de desarrollo económico y social, la planificación estratégica del municipio y los grandes proyectos urbanos. Su composición, competencias y funcionamiento se rigen por lo que se establece en el respectivo reglamento orgánico municipal. 3. También podrá existir una comisión especial de sugerencias y reclamaciones cuando así lo determine el reglamento orgánico o lo acuerde el pleno con el voto favorable de la mayoría absoluta del número legal de miembros de la corporación."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. En qué momento se adquiere la condición de residente:",
+        "opciones": [
+            "En el momento de practicarse la inscripción en el padrón municipal de habitantes.",
+            "Al residir en el municipio de manera permanente.",
+            "Por resolución del Ayuntamiento a petición del interesado.",
+            "En todos los casos anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, son elementos del municipio:",
+        "opciones": [
+            "El territorio, la población y el Padrón municipal.",
+            "El territorio, la población y el Ayuntamiento.",
+            "El territorio, la población y la organización.",
+            "El territorio, la población y las instituciones municipales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Quiénes conforman la población de un municipio:",
+        "opciones": [
+            "Todos los habitantes del municipio.",
+            "Las personas residentes en el municipio.",
+            "Los vecinos del municipio.",
+            "Las personas, mayores de edad, residentes en el municipio."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Señale la respuesta incorrecta:",
+        "opciones": [
+            "El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio.",
+            "Las personas inscritas en el padrón municipal tienen la condición de vecino o vecina.",
+            "Los extranjeros pueden inscribirse en el padrón municipal.",
+            "Los municipios podrán crear un registro de la población estacional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La formación, el mantenimiento, la revisión y la custodia del padrón municipal corresponde a:",
+        "opciones": [
+            "Ayuntamiento.",
+            "Instituto Nacional de Estadística.",
+            "Diputación Provincial.",
+            "Administración General del Estado."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal."
+    },
+    {
+        "pregunta": "De conformidad con lo dispuesto en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, la organización básica del municipio radica:",
+        "opciones": [
+            "En el Ayuntamiento.",
+            "En el Alcalde o Alcaldesa.",
+            "En el Alcalde o Alcaldesa y los concejales y concejalas.",
+            "En el Ayuntamiento y su Alcalde o Alcaldesa."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "El Capítulo Tercero del Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., regula:",
+        "opciones": [
+            "La organización municipal.",
+            "Los elementos del municipio.",
+            "Las competencias.",
+            "La población municipal."
+        ],
+        "correcta": 3,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, por acuerdo del Pleno se podrá modificar o alterar:",
+        "opciones": [
+            "El himno y el escudo.",
+            "El himno, el escudo y la bandera.",
+            "El himno, el escudo, la bandera del municipio y su denominación.",
+            "El escudo y la bandera."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. ¿Dónde existe la junta de gobierno local?:",
+        "opciones": [
+            "En los municipios de más de 5.000 habitantes.",
+            "En los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento.",
+            "En los municipios de mas de 10.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento.",
+            "En los municipios de más de 2.500 habitantes."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "La normativa municipal y de régimen local de las Illes Balears es:",
+        "opciones": [
+            "Ley 20/2006, de 15 de noviembre.",
+            "Ley 20/2006, de 15 de diciembre.",
+            "Ley 2/2006, de 15 de noviembre.",
+            "Ley 2/2006, de 15 de diciembre."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears  Publicado en el «BOE» el de 30 de enero de 2007"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. ¿A quién debe dar cuenta el alcalde o la alcaldesa de la designación y el cese de los miembros de la junta local?:",
+        "opciones": [
+            "A nadie ya que son cesados y designados libremente por el alcalde o la alcaldesa.",
+            "Al pleno.",
+            "A la Diputación Permanente.",
+            "A los vecinos del municipio."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "En relación con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, dónde viene regulada la organización municipal:",
+        "opciones": [
+            "En el Capítulo Cuarto del Título II.",
+            "En el Capítulo Primero del Título II.",
+            "En el Capítulo Sexto del Título II.",
+            "En el Capítulo Tercero del Título II."
+        ],
+        "correcta": 0,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Teniendo en cuenta la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, señale la respuesta incorrecta:",
+        "opciones": [
+            "El derecho a disfrutar de los servicios públicos esenciales, se ejercerá sin ningún tipo de discriminación fundada en la etnia, el género, la religión, la opinión o cualquier otra condición o circunstancia personal o social.",
+            "Los municipios podrán regular su desarrollo mediante disposición reglamentaria.",
+            "Son derechos y obligaciones de la vecindad los establecidos en la legislación básica de régimen local y en esta ley.",
+            "Las personas extranjeras con permiso de residencia y empadronamiento en el municipio tienen los derechos y deberes propios de la vecindad, incluido el derecho a sufragio activo y pasivo según lo dispuesto en la presente ley."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 18. Interdicción de la discriminación. 1. Los derechos reconocidos a la población del municipio, en especial el derecho a disfrutar de los servicios públicos esenciales, se ejercerán sin ningún tipo de discriminación fundada en la etnia, el género, la religión, la opinión o cualquier otra condición o circunstancia personal o social. 2. Son derechos y obligaciones de la vecindad los establecidos en la legislación básica de régimen local y en esta ley. Los municipios podrán regular su desarrollo mediante disposición reglamentaria. 3. Las personas extranjeras con permiso de residencia y empadronadas en el municipio tienen los derechos y deberes propios de la vecindad, y los demás derechos reconocidos en las leyes. En cuanto al derecho de sufragio activo y pasivo, se estará a lo dispuesto en la legislación electoral."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. De cuántos artículos consta el Capítulo dedicado a la población municipal:",
+        "opciones": [
+            "1.",
+            "2.",
+            "3.",
+            "4."
+        ],
+        "correcta": 2,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. El Ayuntamiento tendrá la obligación de mantener el padrón municipal actualizado de manera que sus datos:",
+        "opciones": [
+            "Sean ciertos.",
+            "Sean reales.",
+            "Concuerden con la realidad.",
+            "Sean exactos y puestos al día."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal"
+    },
+    {
+        "pregunta": "El Capítulo Sexto del Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, lleva por rúbrica:",
+        "opciones": [
+            "Competencias.",
+            "Regímenes especiales.",
+            "Mancomunidades.",
+            "La población municipal."
+        ],
+        "correcta": 0,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)            Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Quién designa y cesa a los miembros de la junta local:",
+        "opciones": [
+            "El alcalde o la alcaldesa.",
+            "El Pleno del ayuntamiento.",
+            "El alcalde o alcaldesa previa autorización de la mayoría absoluta del pleno.",
+            "El Pleno del ayuntamiento previa autorización del alcalde o la alcaldesa"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, el consejo social:",
+        "opciones": [
+            "Es un órgano consultivo de gobierno con representación de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos.",
+            "Es un órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas.",
+            "Es un órgano de decisión de gobierno con representación mixta de todos los grupos políticos y las entidades ciudadanas mas representativas.",
+            "Es un órgano de decisión de gobierno con representación mixta de todos los grupos políticos y las entidades ciudadanas menos representativas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 24. Órganos de consulta, estudio y control. 1. En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal. 2. En los municipios donde así lo acuerde el pleno de la corporación existirá un consejo social o cualquier otro órgano consultivo que establezca el reglamento orgánico municipal, como órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas, con la finalidad de garantizar la participación ciudadana en la gestión municipal, al que le corresponde el estudio y la propuesta en materia de desarrollo económico y social, la planificación estratégica del municipio y los grandes proyectos urbanos. Su composición, competencias y funcionamiento se rigen por lo que se establece en el respectivo reglamento orgánico municipal. 3. También podrá existir una comisión especial de sugerencias y reclamaciones cuando así lo determine el reglamento orgánico o lo acuerde el pleno con el voto favorable de la mayoría absoluta del número legal de miembros de la corporación."
+    },
+    {
+        "pregunta": "En relación con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, cuál de las siguientes materias viene regulada en un artículo único:",
+        "opciones": [
+            "La población municipal.",
+            "La organización municipal.",
+            "Los elementos del municipio. Identificación.",
+            "Competencias."
+        ],
+        "correcta": 3,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. ¿Quién integra el ayuntamiento?:",
+        "opciones": [
+            "El alcalde o alcaldesa y el pleno.",
+            "El alcalde o alcaldesa, el pleno y la junta de gobierno local. allí donde exista.",
+            "El alcalde o alcaldesa, los concejales y concejalas, el pleno y la junta de gobierno local, allí donde exista.",
+            "El alcalde o alcaldesa, los concejales y concejalas, los tenientes de alcalde, el pleno y la junta de gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 20. Organización municipal. El gobierno y la administración municipal corresponden al ayuntamiento integrado por el pleno, el alcalde o la alcaldesa y la junta de gobierno local, allí donde exista."
+    },
+    {
+        "pregunta": "Según lo establecido en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, el municipio es:",
+        "opciones": [
+            "La entidad local esencial de la organización territorial de la comunidad autónoma de las Illes Balears.",
+            "La entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears.",
+            "La entidad local principal de la organización territorial de la comunidad autónoma de las Illes Balears.",
+            "La entidad local propia de la organización territorial de la comunidad autónoma de las Illes Balears."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Según lo tipificado en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. ¿Quién preside la junta de gobierno local?:",
+        "opciones": [
+            "El alcalde o alcaldesa.",
+            "Presidente de la junta de gobierno local elegido entre los miembros de la corporación.",
+            "El Presidente de la Diputación Provincial.",
+            "Es un órgano colegiado que funciona sin presidencia."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, se exigirá:",
+        "opciones": [
+            "Quórum de la mayoría de 2/3 partes del número legal de miembros del pleno.",
+            "Quórum de la mayoría absoluta del número legal de miembros del pleno.",
+            "Quórum de la mayoría absoluta del número legal de miembros del ayuntamiento.",
+            "Quórum de la mayoría de 2/3 partes del número legal de miembros del ayuntamiento."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 10. Identificación. 1. Cada municipio se identifica por su nombre oficial y puede tener un escudo o distintivo, una bandera y un himno municipal. 2. Por acuerdo de la mayoría absoluta del pleno se puede aprobar o modificar el escudo, el himno o la bandera del municipio, o alterar su denominación, debiendo seguirse un procedimiento específico que se regulará reglamentariamente. Los cambios de denominación sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de les Illes Balears. 3. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, la corporación determinará, con el quórum de la mayoría absoluta del número legal de miembros del pleno, aquél en el que tenga que radicar el ayuntamiento."
+    },
+    {
+        "pregunta": "De cuántos artículos consta el Capítulo Primero del Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares:",
+        "opciones": [
+            "2.",
+            "3.",
+            "4.",
+            "5."
+        ],
+        "correcta": 0,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las comisiones integradas por representantes de todos los grupos políticos y cuya finalidad es facilitar el ejercicio de la gestión municipal son:",
+        "opciones": [
+            "Comisiones extraordinarias de control y consultivas.",
+            "Comisiones informativas y de sugerencias.",
+            "Comisiones consultivas y de reclamaciones.",
+            "Comisiones informativas y de control."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 24. Órganos de consulta, estudio y control. 1. En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal. 2. En los municipios donde así lo acuerde el pleno de la corporación existirá un consejo social o cualquier otro órgano consultivo que establezca el reglamento orgánico municipal, como órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas, con la finalidad de garantizar la participación ciudadana en la gestión municipal, al que le corresponde el estudio y la propuesta en materia de desarrollo económico y social, la planificación estratégica del municipio y los grandes proyectos urbanos. Su composición, competencias y funcionamiento se rigen por lo que se establece en el respectivo reglamento orgánico municipal. 3. También podrá existir una comisión especial de sugerencias y reclamaciones cuando así lo determine el reglamento orgánico o lo acuerde el pleno con el voto favorable de la mayoría absoluta del número legal de miembros de la corporación."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los departamentos en los que puede estructurarse la administración municipal serán dirigidos:",
+        "opciones": [
+            "Por un concejal o una concejala delegados del alcalde.",
+            "Por un o una teniente de alcalde o por un concejal o una concejala delegados del alcalde.",
+            "Por un o una teniente de alcalde.",
+            "Por un concejal o una concejala delegados o por un o una teniente de alcalde delegados del alcalde."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 25. Estructura orgánica de la administración municipal. La administración municipal puede estructurarse en departamentos dirigidos por un o una teniente de alcalde o por un concejal o una concejala delegados del alcalde, que actúan por delegación del alcalde o de la alcaldesa en las materias que se les atribuyen expresamente."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las disposiciones comunes a las entidades locales vienen reguladas en:",
+        "opciones": [
+            "Título II.",
+            "Título III.",
+            "Título IV.",
+            "Título V."
+        ],
+        "correcta": 3,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Cada municipio se identifica por su nombre oficial y:",
+        "opciones": [
+            "Deberá tener un escudo, una bandera y un himno municipal.",
+            "Deberá tener un escudo o distintivo, una bandera y un himno municipal.",
+            "Puede tener un escudo, una bandera y un himno municipal.",
+            "Puede tener un escudo o distintivo, una bandera y un himno municipal."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 10. Identificación. 1. Cada municipio se identifica por su nombre oficial y puede tener un escudo o distintivo, una bandera y un himno municipal. 2. Por acuerdo de la mayoría absoluta del pleno se puede aprobar o modificar el escudo, el himno o la bandera del municipio, o alterar su denominación, debiendo seguirse un procedimiento específico que se regulará reglamentariamente. Los cambios de denominación sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de les Illes Balears. 3. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, la corporación determinará, con el quórum de la mayoría absoluta del número legal de miembros del pleno, aquél en el que tenga que radicar el ayuntamiento."
+    },
+    {
+        "pregunta": "El Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, lleva por rúbrica:",
+        "opciones": [
+            "Los Consejos.",
+            "Los Municipios.",
+            "Otras entidades locales.",
+            "Disposiciones comunes a las entidades locales."
+        ],
+        "correcta": 1,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. El gobierno y la administración municipal corresponden:",
+        "opciones": [
+            "El gobierno al Ayuntamiento y la administración al pleno.",
+            "El gobierno al pleno y la administración al ayuntamiento.",
+            "Al alcalde o alcaldesa y a los concejales y concejalas.",
+            "Al Ayuntamiento."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20. Organización municipal. El gobierno y la administración municipal corresponden al ayuntamiento integrado por el pleno, el alcalde o la alcaldesa y la junta de gobierno local, allí donde exista."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares el ámbito en el que el ayuntamiento ejerce sus competencias se denomina:",
+        "opciones": [
+            "Término municipal.",
+            "Territorio municipal.",
+            "Demarcación municipal.",
+            "Demarcación competencial municipal."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los municipios tienen personalidad jurídica:",
+        "opciones": [
+            "Propia.",
+            "Plena.",
+            "Subsidiaria.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Son órganos municipales en todos los ayuntamientos:",
+        "opciones": [
+            "El pleno, el alcalde o alcaldesa y los o las tenientes de alcalde.",
+            "El pleno, el alcalde o alcaldesa, los o las teniente de alcalde y la comisión especial de cuentas.",
+            "El pleno, el alcalde o alcaldesa, los o las tenientes de alcalde, la junta de gobierno y la comisión especial de cuentas.",
+            "El pleno, el alcalde o alcaldesa, los o las tenientes de alcalde y la junta de gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22. Órganos municipales de carácter obligatorio. Son órganos municipales en todos los ayuntamientos: el pleno, el alcalde o la alcaldesa y los o las tenientes de alcalde. También existe en todos los ayuntamientos una comisión especial de cuentas."
+    },
+    {
+        "pregunta": "De conformidad con lo dispuesto en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, constituyen la población del municipio:",
+        "opciones": [
+            "Las personas, mayores de edad, inscritas en el padrón municipal de habitantes.",
+            "Conjunto de personas inscritas en el padrón municipal de habitantes y con titularidad de una vivienda en el municipio.",
+            "Conjunto de personas inscritas en el padrón municipal de habitantes.",
+            "Conjunto de personas inscritas en el padrón municipal de habitantes, que van en el municipio con carácter permanente o estacional."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los elementos del municipio y su identificación vienen recogidos en:",
+        "opciones": [
+            "Título I Capítulo Primero.",
+            "Título I Capítulo Segundo.",
+            "Título II Capítulo Primero.",
+            "Título II Capítulo Segundo."
+        ],
+        "correcta": 2,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Final"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los acuerdos del pleno para la creación de una comisión especial de sugerencias y reclamaciones deberán contar con:",
+        "opciones": [
+            "El voto favorable de la mayoría de 2/3 partes del número legal de miembros de la corporación.",
+            "El voto favorable de la mayoría simple del número legal de miembros de la corporación.",
+            "El voto favorable de la mayoría absoluta del número legal de miembros de la corporación.",
+            "El voto favorable de la mayoría de 3/5 partes del número legal de miembros de la corporación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24. Órganos de consulta, estudio y control. 1. En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal. 2. En los municipios donde así lo acuerde el pleno de la corporación existirá un consejo social o cualquier otro órgano consultivo que establezca el reglamento orgánico municipal, como órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas, con la finalidad de garantizar la participación ciudadana en la gestión municipal, al que le corresponde el estudio y la propuesta en materia de desarrollo económico y social, la planificación estratégica del municipio y los grandes proyectos urbanos. Su composición, competencias y funcionamiento se rigen por lo que se establece en el respectivo reglamento orgánico municipal. 3. También podrá existir una comisión especial de sugerencias y reclamaciones cuando así lo determine el reglamento orgánico o lo acuerde el pleno con el voto favorable de la mayoría absoluta del número legal de miembros de la corporación."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, quiénes componen el Ayuntamiento:",
+        "opciones": [
+            "El alcalde o alcaldesa, los concejales y las concejalas y los tenientes de alcalde.",
+            "El alcalde o alcaldesa, los concejales y las concejalas y el Pleno.",
+            "El alcalde o alcaldesa.",
+            "El alcalde o alcaldesa y los concejales y las concejalas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. El acuerdo del pleno del ayuntamiento que acuerde la creación de la junta de gobierno:",
+        "opciones": [
+            "Será siempre mediante un reglamento orgánico.",
+            "Será siempre mediante un acuerdo independiente.",
+            "Será mediante un reglamento orgánico o un acuerdo independiente.",
+            "Será por reglamento orgánico en los municipios entre 2.500 y 5.000 habitantes y mediante acuerdo independiente en los demás supuestos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, quién elige al alcalde o alcaldesa:",
+        "opciones": [
+            "Los vecinos del municipio, en los términos que establece la ley.",
+            "Los concejales y las concejalas o la vecindad, en los términos que establece la ley.",
+            "Los concejales y las concejalas, en los términos que establece la ley.",
+            "La vecindad mediante sufragio universal, libre igual, directo y secreto."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, los Reglamentos, Ordenanzas y Bandos, aparecen regulados en",
+        "opciones": [
+            "Capítulo Primero del Título V.",
+            "Capítulo Segundo del Título V.",
+            "Capítulo Tercero del Título V.",
+            "Capítulo Cuarto del Título V."
+        ],
+        "correcta": 2,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123)           Capitulo Primero: Estatuto de los miembros de las corporaciones locales (arts 69-78)           Capitulo Segundo: Régimen de funcionamiento (arts 79-99)           Capitulo Tercero: Reglamentos, ordenanzas y bandos (arts 100-104)           Capitulo Cuarto:  Régimen jurídico de los actos, acuerdos y recursos(arts 105-108)           Capitulo Quinto:  Conflictos de atribuciones y de competencias (arts 109,110)           Capitulo Sexto:  Impugnación de actos y de acuerdos locales y ejercicio de acciones (arts 111-115)           Capitulo Séptimo:  Información y participación ciudadanas (arts 116-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Cuál de los siguientes NO es un órgano municipal de carácter obligatorio:",
+        "opciones": [
+            "Los o las tenientes de alcalde.",
+            "El pleno.",
+            "Comisión especial de cuentas.",
+            "Junta de gobierno."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22. Órganos municipales de carácter obligatorio. Son órganos municipales en todos los ayuntamientos: el pleno, el alcalde o la alcaldesa y los o las tenientes de alcalde. También existe en todos los ayuntamientos una comisión especial de cuentas."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La planificación estratégica del municipio y los grandes proyectos urbanos corresponde a:",
+        "opciones": [
+            "Consejo social.",
+            "Consejo municipal.",
+            "Comisión informativa de los órganos ejecutivos municipales.",
+            "Comisión de control de los órganos ejecutivos municipales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 24. Órganos de consulta, estudio y control. 1. En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal. 2. En los municipios donde así lo acuerde el pleno de la corporación existirá un consejo social o cualquier otro órgano consultivo que establezca el reglamento orgánico municipal, como órgano consultivo de gobierno con representación de la vecindad y de las entidades ciudadanas más representativas, con la finalidad de garantizar la participación ciudadana en la gestión municipal, al que le corresponde el estudio y la propuesta en materia de desarrollo económico y social, la planificación estratégica del municipio y los grandes proyectos urbanos. Su composición, competencias y funcionamiento se rigen por lo que se establece en el respectivo reglamento orgánico municipal. 3. También podrá existir una comisión especial de sugerencias y reclamaciones cuando así lo determine el reglamento orgánico o lo acuerde el pleno con el voto favorable de la mayoría absoluta del número legal de miembros de la corporación."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. En qué momento se adquiere la condición de residente:",
+        "opciones": [
+            "En el momento de practicarse la inscripción en el padrón municipal de habitantes.",
+            "Al residir en el municipio de manera permanente.",
+            "Por resolución del Ayuntamiento a petición del interesado.",
+            "En todos los casos anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, son elementos del municipio:",
+        "opciones": [
+            "El territorio, la población y el Padrón municipal.",
+            "El territorio, la población y el Ayuntamiento.",
+            "El territorio, la población y la organización.",
+            "El territorio, la población y las instituciones municipales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Quiénes conforman la población de un municipio:",
+        "opciones": [
+            "Todos los habitantes del municipio.",
+            "Las personas residentes en el municipio.",
+            "Los vecinos del municipio.",
+            "Las personas, mayores de edad, residentes en el municipio."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Señale la respuesta incorrecta:",
+        "opciones": [
+            "El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio.",
+            "Las personas inscritas en el padrón municipal tienen la condición de vecino o vecina.",
+            "Los extranjeros pueden inscribirse en el padrón municipal.",
+            "Los municipios podrán crear un registro de la población estacional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La formación, el mantenimiento, la revisión y la custodia del padrón municipal corresponde a:",
+        "opciones": [
+            "Ayuntamiento.",
+            "Instituto Nacional de Estadística.",
+            "Diputación Provincial.",
+            "Administración General del Estado."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal."
+    },
+    {
+        "pregunta": "De conformidad con lo dispuesto en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, la organización básica del municipio radica:",
+        "opciones": [
+            "En el Ayuntamiento.",
+            "En el Alcalde o Alcaldesa.",
+            "En el Alcalde o Alcaldesa y los concejales y concejalas.",
+            "En el Ayuntamiento y su Alcalde o Alcaldesa."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "El Capítulo Tercero del Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., regula:",
+        "opciones": [
+            "La organización municipal.",
+            "Los elementos del municipio.",
+            "Las competencias.",
+            "La población municipal."
+        ],
+        "correcta": 3,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. El número de concejales y/o concejalas que conforman la junta de gobierno local:",
+        "opciones": [
+            "No podrá ser superior al del número legal de los mismos.",
+            "No podrá ser superior al tercio del número legal de los mismos.",
+            "No podrá ser superior a la mitad del número legal de los mismos.",
+            "No podrá ser superior a los dos tercios del número legal de los mismos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 23. La junta de gobierno local. La junta de gobierno local existe en los municipios de más de 5.000 habitantes y en los que así lo acuerde el pleno del ayuntamiento a través del reglamento orgánico o mediante acuerdo independiente. La junta de gobierno local, con las funciones que le atribuye la legislación básica de régimen local, está presidida por el alcalde o la alcaldesa y formada por un número de concejales y/o concejalas no superior al tercio del número legal de los mismos, designados y cesados libremente por el alcalde o la alcaldesa que debe dar cuenta de ello al pleno."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La inscripción de la población estacional regular o la población vinculada al municipio por estancias periódicas:",
+        "opciones": [
+            "Es obligatoria.",
+            "Es voluntaria.",
+            "Es obligatoria si se es titular de una vivienda en el territorio del municipio.",
+            "Es voluntaria para la población vinculada al municipio por estancias periódicas y obligatoria para la población estacional regular."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 19. Registro de la población estacional. Los municipios pueden organizar un registro donde se inscriba voluntariamente la población estacional regular o la población vinculada al municipio por estancias periódicas y por la titularidad de una vivienda, al objeto de hacerle llegar información y ofrecerle el trámite de audiencia en relación con los asuntos que puedan afectarla."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La inscripción de personas extranjeras en el padrón municipal:",
+        "opciones": [
+            "Es prueba suficiente para acreditar su residencia legal en España.",
+            "Permitirá la opción de un permiso de trabajo temporal.",
+            "No le confiere ningún derecho que no les confiera la legislación vigente.",
+            "Las respuestas a y c son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17. Definición 1. El conjunto de personas inscritas en el padrón municipal de habitantes constituye la población del municipio. Cada una de estas personas que reside habitualmente en el municipio tiene la condición de vecino o vecina. 2. La inscripción de personas extranjeras en el padrón municipal no prueba la residencia legal en España ni les confiere ningún derecho que no les confiera la legislación vigente, especialmente en materia de derechos y libertades de las personas extranjeras en España. 3. Corresponde al ayuntamiento la formación, el mantenimiento, la revisión y la custodia del padrón municipal, así como la obligación de mantenerlo actualizado de manera que sus datos concuerden con la realidad. Mediante el reglamento municipal, las corporaciones locales pueden especificar el modo de acreditar las condiciones de inscripción en el padrón municipal, conforme a lo establecido en la legislación estatal."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los cambios de denominación:",
+        "opciones": [
+            "Sólo tendrán carácter oficial cuando se publiquen en el Boletín Oficial del Estado.",
+            "Sólo tendrán carácter oficial cuando se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de las Illes Balears.",
+            "Sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado.",
+            "Sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de las Illes Balears."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 10. Identificación. 1. Cada municipio se identifica por su nombre oficial y puede tener un escudo o distintivo, una bandera y un himno municipal. 2. Por acuerdo de la mayoría absoluta del pleno se puede aprobar o modificar el escudo, el himno o la bandera del municipio, o alterar su denominación, debiendo seguirse un procedimiento específico que se regulará reglamentariamente. Los cambios de denominación sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de les Illes Balears. 3. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, la corporación determinará, con el quórum de la mayoría absoluta del número legal de miembros del pleno, aquél en el que tenga que radicar el ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. El sufragio universal, libre, igual, directo y secreto es para la elección de:",
+        "opciones": [
+            "El alcalde o alcaldesa y los concejales y las concejalas.",
+            "El alcalde o alcaldesa.",
+            "Los concejales y las concejalas.",
+            "El alcalde o alcaldesa, los concejales y las concejalas y los Tenientes de alcalde."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 9. Elementos del municipio. 1. El municipio es la entidad local básica de la organización territorial de la comunidad autónoma de las Illes Balears. El municipio tiene personalidad jurídica y, como tal, plena capacidad de obrar en la defensa y la gestión de los intereses que le son propios. Son elementos del municipio el territorio, la población y la organización. 2. El término municipal es el ámbito en el que el ayuntamiento ejerce sus competencias, sin perjuicio de las potestades que conforme a las leyes pueda ejercer fuera del término municipal. 3. Las personas residentes en un municipio constituyen su población. La condición de residente se adquiere en el momento de practicarse la inscripción en el padrón municipal de habitantes. 4. La organización básica del municipio radica en el ayuntamiento, compuesto por el alcalde o la alcaldesa y los concejales y las concejalas. Los concejales y las concejalas son elegidos por sufragio universal, libre, igual, directo y secreto; y el alcalde o la alcaldesa son elegidos por los concejales y las concejalas o por la vecindad, en los términos que establece la ley."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La aprobación o modificación del escudo, el himno o la bandera del municipio, o la alteración de su denominación requerirá:",
+        "opciones": [
+            "Acuerdo de la mayoría absoluta del pleno.",
+            "Acuerdo de la mayoría de 2/3 partes del pleno.",
+            "Acuerdo de la mayoría simple del pleno.",
+            "Acuerdo de la mayoría de 2/3 partes de la Junta de Gobierno."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 10. Identificación. 1. Cada municipio se identifica por su nombre oficial y puede tener un escudo o distintivo, una bandera y un himno municipal. 2. Por acuerdo de la mayoría absoluta del pleno se puede aprobar o modificar el escudo, el himno o la bandera del municipio, o alterar su denominación, debiendo seguirse un procedimiento específico que se regulará reglamentariamente. Los cambios de denominación sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de les Illes Balears. 3. Para modificar la capitalidad del municipio, en el caso de existencia de varios núcleos de población en el término municipal, la corporación determinará, con el quórum de la mayoría absoluta del número legal de miembros del pleno, aquél en el que tenga que radicar el ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Son competencias de los órganos municipales:",
+        "opciones": [
+            "Las que se determinen en la presente ley.",
+            "Las que se determinen reglamentariamente.",
+            "Las que determina la legislación básica del régimen local.",
+            "Las que se determinen constitucionalmente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 21. Competencias orgánicas. Son competencias de los órganos municipales las que determina la legislación básica de régimen local."
+    },
+    {
+        "pregunta": "Cuántos artículos conforman el Capítulo Cuarto del Título II de la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares:",
+        "opciones": [
+            "6.",
+            "7.",
+            "8.",
+            "9."
+        ],
+        "correcta": 1,
+        "explicacion": "ESTRUCTURA Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Illes Balears TITULO Preliminar (arts 1-5) TITULO I: LOS CONSEJOS (arts 6-8) TITULO II: LOS MUNICIPIOS (arts 9-29)           Capitulo Primero: Los elementos del municipio. Identificación (arts 9,10)           Capitulo Segundo: La alteración de términos municipales (arts 11-16)           Capitulo Tercero: La población municipal (arts 17-19)           Capitulo Cuarto: La organización municipal (arts 20-26)           Capitulo Quinto: Regímenes especiales (arts 27,28)           Capitulo Sexto: Competencias (art 29) TITULO III: OTRAS ENTIDADES LOCALES (arts 30-57) TITULO IV: RELACIONES INTERADMINISTRATIVAS (arts 58-68) TITULO V: DISPOSICIONES COMUNES A LAS ENTIDADES LOCALES (arts 69-123) TITULO VI: BIENES DE LAS ENTIDADES LOCALES (arts 124-147) TITULO VII: OBRAS, SERVICIOS Y ACTIVIDAD ECONÓMICA DE LAS ENTIDADES LOCALES (arts 148-174) TITULO VIII: INTERVENCIÓN ADMINISTRATIVA EN LA ACTIVIDAD PRIVADA (arts 175-186) TITULO IX: CONTRATACIÓN (arts 187,188) TITULO X: RÉGIMEN DEL PERSONAL DE LAS ENTIDADES LOCALES DE LAS ISLAS BALEARES (arts 189-201) TITULO XI: HACIENDAS LOCALES (arts 202-208) 3 Disposiciones Adicionales 2 Disposiciones Transitorias 1 Disposición Derogatoria 3 Disposiciones Finales"
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 82, criterios generales de utilización del aerosol de defensa. Señale la incorrecta.",
+        "opciones": [
+            "El aerosol de defensa debe servir solo como elemento de autodefensa ante personas con una actitud agresiva que hayan amenazado o provocado con antelación a los policías, para evitar altercados graves, peleas tumultuarias o situaciones similares.",
+            "La utilización del aerosol debe realizarse sin causar daños innecesarios y cesará inmediatamente cuando se haya reducido el agresor o los agresores.",
+            "El encargado de dar las órdenes debe autorizar su uso.",
+            "En caso de que haya un mando presente, debe autorizar su uso."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20  Artículo 82 | Criterios generales de utilización del aerosol de defensa 1. El aerosol de defensa debe servir solo como elemento de autodefensa ante personas con una actitud agresiva que hayan amenazado o provocado con antelación a los policías, para evitar altercados graves, peleas tumultuarias o situaciones similares. 2. La utilización del aerosol debe realizarse sin causar daños innecesarios y cesará inmediatamente cuando se haya reducido el agresor o los agresores. 3. En caso de que haya un mando presente, debe autorizar su uso. Lo que nos puede confundir aquí es la diferencia con el bastón extensible o defensa (artículo 80.1), donde era “el encargado de dar las órdenes”, aquí es “un mando presente”."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 103, equipo básico de autodefensa y protección. Señale la incorrecta. El armamento incluye…",
+        "opciones": [
+            "Un arma de fuego",
+            "Una defensa o bastón extensible.",
+            "Un aerosol defensivo.",
+            "Un arma larga de fuego."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 103 | Equipo básico de autodefensa y protección 2. El armamento incluye un arma de fuego, una defensa o bastón extensible y un aerosol defensivo con las correspondientes fundas."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 90, Elementos de identificación externa. Los únicos elementos de identificación externa son…",
+        "opciones": [
+            "La placa, la tarjeta profesional y los escudos previstos en el anexo 1 de este reglamento.",
+            "La placa, la tarjeta profesional y los emblemas previstos en el anexo 2 de este reglamento.",
+            "La placa, la tarjeta profesional y los escudos previstos en el anexo 2 de esta Ley.",
+            "La placa, la tarjeta profesional y los emblemas previstos en el anexo 1 de esta Ley."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 90 | Elementos de identificación externa Los únicos elementos de identificación externa son la placa, la tarjeta profesional y los escudos previstos en el anexo 1 de este reglamento."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 49, Armamento y equipamiento básico. El armamento de los miembros de los cuerpos de policía local y de las policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, que debe ajustarse a lo dispuesto en la normativa vigente en materia de armas, es…",
+        "opciones": [
+            "El arma corta de fuego, el bastón extensible y la defensa.",
+            "El arma de fuego, el bastón extensible o defensa, el aerosol.",
+            "El arma de fuego, el bastón o defensa y el aerosol.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 3. El armamento de los miembros de los cuerpos de policía local y de las policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, que debe ajustarse a lo dispuesto en la normativa vigente en materia de armas, es el arma corta de fuego, el bastón extensible o defensa y el aerosol defensivo."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 103, equipo básico de autodefensa y protección. Señale la incorrecta. El equipamiento básico incluye:",
+        "opciones": [
+            "El silbato y el cordón, que deben ser de color de metal o negro.",
+            "Los grilletes o las esposas, que deben llevarse dentro de las fundas correspondientes, que deben ser de color negro.",
+            "Guantes anticortes.",
+            "Guantes blancos."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20   Artículo 103 | Equipo básico de autodefensa y protección 3. El equipamiento básico incluye: a) El silbato y el cordón, que deben ser de color de metal o negro. b) Los grilletes o las esposas, que deben llevarse dentro de las fundas correspondientes, que deben ser de color negro. c) Un equipo reflector homologado. El chaleco debe tener las características que se indican en la figura 14 del anexo 1 de este reglamento. d) Guantes anticortes. A pesar de ser muy útiles y obligatorios, no salen en la normativa, y éste es el detalle que se debe tener en cuenta."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 125, uso de otro material y del teléfono móvil. ¿Puede un agente de policía local usar el teléfono móvil particular estando de servicio?",
+        "opciones": [
+            "Sí, en todo caso.",
+            "No, nunca.",
+            "Sí, pero sólo durante el descanso.",
+            "Sí, en situaciones de urgencia motivada y en el periodo de descanso reglamentario, y queda prohibido el uso abusivo."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 125 | Uso de otro material y del teléfono móvil 1. Los agentes de la policía local no pueden llevar ni usar, excepto autorización expresa, material que no se les haya facilitado como dotación general o particular. 2. Queda prohibido el uso abusivo del teléfono móvil particular, excepto en situaciones de urgencia motivada y en el periodo de descanso reglamentario. Se entiende que se hace un uso abusivo cuando los agentes omiten el cumplimiento de sus deberes en las relaciones con la ciudadanía."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 97, distintivos. Señale la categoría que corresponde a la siguiente definición: Dentro de un recuadro dorado debe haber una barra dorada de forma rectangular. Debe estar situada en el extremo exterior y centrado verticalmente.",
+        "opciones": [
+            "Intendente.",
+            "Subinspector.",
+            "Oficial.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 97 | Distintivos f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. Muy importante, la categoría de oficial no tiene una barra, sino un galón (a pesar de tener las mismas características que las demás barras de las diferentes categorías)."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 126, obligación de saludar. Señale la incorrecta. Específicamente, es obligatorio el saludo…",
+        "opciones": [
+            "A las autoridades locales, insulares, autonómicas y estatales.",
+            "A los símbolos e himnos oficiales en los actos de carácter oficial.",
+            "A los ciudadanos a quienes se dirijan o viceversa, a los que debe dispensarse un trato educado y cortés, haciendo uso siempre del tratamiento de usted y evitando actitudes o gestos ajenos al carácter de agente de la autoridad. En este caso, el saludo debe hacerse tanto al principio de la conversación como al acabarla.",
+            "A las personas jerárquicamente superiores, las cuales devuelven el saludo sólo a los de la misma categoría o superior."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 126 | Obligación de saludar 2. Específicamente es obligatorio el saludo: a) A las autoridades locales, insulares, autonómicas y estatales. b) A los símbolos e himnos oficiales en los actos de carácter oficial. c) A los ciudadanos a quienes se dirijan o viceversa, a los que debe dispensarse un trato educado y cortés, haciendo uso siempre del tratamiento de usted y evitando actitudes o gestos ajenos al carácter de agente de la autoridad. En este caso, el saludo debe hacerse tanto al principio de la conversación como al acabarla. d) A las personas jerárquicamente superiores, las cuales deben devolver obligatoriamente el saludo."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 96, identificación personal. Señale la correcta.",
+        "opciones": [
+            "La identificación personal consta de una placa de pecho y una placa separada con el número que consta en la tarjeta de identificación profesional.",
+            "La placa de pecho debe llevarse en la parte superior derecha del pecho. Debe llevar en el centro el escudo del municipio, en la parte superior la inscripción POLICÍA LOCAL y debajo del escudo la denominación del municipio.",
+            "En una placa separada, con unas medidas de 4 x 1,5 cm, que debe situarse en la parte inferior de la placa que se describe en el punto anterior, y a 1 cm de esta, en letras blancas sobre un fondo azul marino, debe figurar el número de identificación personal.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 96 | Identificación personal 1. La identificación personal consta de una placa de pecho y una placa separada con el número que consta en la tarjeta de identificación profesional. El diseño y las características se muestran en la figura 2 del anexo 1 de este reglamento. 2. La placa de pecho debe llevarse en la parte superior derecha del pecho. Debe llevar en el centro el escudo del municipio, en la parte superior la inscripción POLICÍA LOCAL y debajo del escudo la denominación del municipio. 3. En una placa separada, con unas medidas de 4 x 1,5 cm, que debe situarse en la parte inferior de la placa que se describe en el punto anterior, y a 1 cm de esta, en letras blancas sobre un fondo azul marino, debe figurar el número de identificación personal."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 93, fechas de cambio de vestuario. Señale la correcta.",
+        "opciones": [
+            "Las fechas en las que debe cambiarse el vestuario por razón de las condiciones meteorológicas, debe determinarlas el jefe o jefa del correspondiente cuerpo de policía local, y el alcalde o alcaldesa determinará los casos en los que debe utilizarse la uniformidad de gala.",
+            "Las fechas en las que debe cambiarse el vestuario por razón de las condiciones meteorológicas, debe determinarlas el alcalde o alcaldesa, y el jefe o jefa del correspondiente cuerpo de policía local determinará los casos en los que debe utilizarse la uniformidad de gala.",
+            "Las fechas en las que debe cambiarse el vestuario por razón de las condiciones meteorológicas, así como determinar los casos en los que debe utilizarse la uniformidad de gala corresponde al jefe o jefa del correspondiente cuerpo de policía local.",
+            "Las fechas en las que debe cambiarse el vestuario por razón de las condiciones meteorológicas, así como determinar los casos en los que debe utilizarse la uniformidad de gala corresponde al alcalde o alcaldesa."
+        ],
+        "correcta": 0,
+        "explicacion": "D. º Policial - Tema 20  Artículo 93 | Fechas de cambio de vestuario 1. Las fechas en las que debe cambiarse el vestuario por razón de las condiciones meteorológicas, debe determinarlas el jefe o jefa del correspondiente cuerpo de policía local. 2. El alcalde o alcaldesa determinará los casos en los que debe utilizarse la uniformidad de gala."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 80, utilización en servicios colectivos. Del uso de la defensa y del bastón extensible. Señale la correcta.",
+        "opciones": [
+            "En los casos de servicios colectivos, quien debe asumir la iniciativa y responsabilidad es el encargado de dar las órdenes, en primer lugar, de sacar el bastón extensible, después, de utilizarlo, y, finalmente, de guardarlo.",
+            "Ningún policía debe llevar a cabo estas acciones sin una orden previa, excepto si es estrictamente necesario.",
+            "Quien ejerza el mando debe someterse en todo momento a los criterios de estas normas.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 80 | Utilización en servicios colectivos 1. En los casos de servicios colectivos, quien debe asumir la iniciativa y responsabilidad es el encargado de dar las órdenes, en primer lugar, de sacar el bastón extensible, después, de utilizarlo, y, finalmente, de guardarlo. Ningún policía debe llevar a cabo estas acciones sin una orden previa, excepto si es estrictamente necesario. 2. Quien ejerza el mando debe someterse en todo momento a los criterios de estas normas."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 124, normas de apariencia externa y presentación personal. Señale la correcta. Mientras prestan servicio…",
+        "opciones": [
+            "Deben presentarse al servicio incorrectamente uniformados y aseados.",
+            "El uniforme debe llevarse abrochado y en un estado correcto de limpieza y presentación, y deben llevar siempre puesta la pieza de cabeza cuando se encuentren en la vía pública, excepto en casos justificados.",
+            "Deben llevar las manos en los bolsillos, fumar o masticar cualquier cosa, excepto en el periodo de descanso reglamentario.",
+            "Cuando se dirigen a la ciudadanía, los agentes deben tener la cara cubierta y deben levantarse, en su caso, las gafas de sol."
+        ],
+        "correcta": 1,
+        "explicacion": "D.º Policial - Tema 20  2. Mientras prestan servicio: b) Deben presentarse al servicio correctamente uniformados y aseados. e) El uniforme debe llevarse abrochado y en un estado correcto de limpieza y presentación, y deben llevar siempre puesta la pieza de cabeza cuando se encuentren en la vía pública, excepto en casos justificados. f) Deben abstenerse de llevar las manos en los bolsillos, fumar o masticar cualquier cosa, excepto en el periodo de descanso reglamentario. j) Cuando se dirigen a la ciudadanía, los agentes deben tener la cara descubierta y deben levantarse, en su caso, las gafas de sol."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículos 94 y 95, de los emblemas. Señale la correcta.",
+        "opciones": [
+            "Los emblemas de las diferentes unidades de los servicios deben llevarse en la manga derecha, a 10 cm de la costura del hombro, y los emblemas de la comunidad autónoma y municipal deben llevarse en la manga izquierda a 5 cm de la costura del hombro.",
+            "Los emblemas de las diferentes unidades de los servicios deben llevarse en la manga izquierda, a 10 cm de la costura del hombro, y los emblemas de la comunidad autónoma y municipal deben llevarse en la manga derecha, a 5 cm de la costura del hombro.",
+            "Los emblemas de las diferentes unidades de los servicios deben llevarse en la manga derecha, a 5 cm de la costura del hombro, y los emblemas de la comunidad autónoma y municipal deben llevarse en la manga izquierda a 5 cm de la costura del hombro.",
+            "Los emblemas de las diferentes unidades de los servicios deben llevarse en la manga izquierda, a 5 cm de la costura del hombro, y los emblemas de la comunidad autónoma y municipal deben llevarse en la manga derecha, a 5 cm de la costura del hombro."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º  Policial - Tema 20  Artículo 94 | Emblemas 1. Los emblemas tienen como finalidad la identificación externa de las personas que forman parte del colectivo de la policía local. 2. Los emblemas deben referirse exclusivamente a la identificación de cada una de las personas miembros de la policía local, a la diferenciación de los cuerpos de policía de los diferentes municipios, a la identificación de los cuerpos de policía local de las Illes Balears y a las diferentes unidades de los servicios, cuando figuren constituidas en el organigrama del cuerpo de policía local aprobado por el órgano competente. 3. Cuando la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales, autorice un emblema que no prevea este reglamento, identificativo de una determinada unidad de un cuerpo de policía local, debe llevarse en la manga derecha, a 5 cm de la costura del hombro. Artículo 95 | Emblema de la Comunidad Autónoma y municipal El emblema debe contener el escudo de la Comunidad Autónoma de las Illes Balears y el escudo municipal, que debe tener las características de la figura 1 del anexo 1 de este reglamento. Debe llevarse en la manga izquierda, a 5 cm de la costura del hombro."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 105, automóviles. Señale la correcta. ¿Qué se debe llevar en el capó delantero de un vehículo?",
+        "opciones": [
+            "Centrado, debe llevar el escudo municipal, de un máximo 35 cm de altura y la palabra POLICÍA en la parte superior.",
+            "Centrado, debe llevar el escudo municipal, de un máximo 35 cm de altura y la palabra POLICÍA en la parte inferior.",
+            "Centrado, debe llevar el escudo municipal, de un máximo 35 cm de altura y la palabra POLICÍA LOCAL en la parte superior.",
+            "Centrado, debe llevar el escudo municipal, de un máximo 35 cm de altura y la palabra POLICÍA LOCAL en la parte inferior."
+        ],
+        "correcta": 1,
+        "explicacion": "D.º Policial - Tema 20 Artículo 105 | Automóviles 7. En el capó delantero, centrado, debe llevar el escudo municipal, de un máximo 35 cm de altura y la palabra POLICÍA en la parte inferior."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 107, bicicletas y otros vehículos de movilidad personal. Señale la correcta.",
+        "opciones": [
+            "Las bicicletas que utilice la policía local deben ser de color azul. Deben llevar la inscripción POLICÍA LOCAL y una franja de color azul con cuadros blancos.",
+            "Las bicicletas que utilice la policía local deben ser de color azul. Deben llevar la inscripción POLICÍA y una franja de color azul con cuadros blancos.",
+            "Las bicicletas que utilice la policía local deben ser de color negro. Deben llevar la inscripción POLICÍA LOCAL y una franja de color azul con cuadros blancos.",
+            "Las bicicletas que utilice la policía local deben ser de color negro. Deben llevar la inscripción POLICÍA y una franja de color azul con cuadros blancos."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20  Artículo 107 | Bicicletas y otros vehículos de movilidad personal 1. Las bicicletas que utilice la policía local deben ser de color negro. Deben llevar la inscripción POLICÍA LOCAL y una franja de color azul con cuadros blancos, tal y como se indica en la figura 35 del anexo 1 de este reglamento."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 97, distintivos. Señale la categoría que corresponde a la siguiente definición: Dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente.",
+        "opciones": [
+            "Intendente.",
+            "Subinspector",
+            "Oficial.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "D.º Policial - Tema 20"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 90, elementos de identificación externa. Señale la incorrecta. Los únicos elementos de identificación externa son:",
+        "opciones": [
+            "La placa.",
+            "La tarjeta profesional.",
+            "Los emblemas.",
+            "Los escudos."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20  Artículo 90 | Elementos de identificación externa Los únicos elementos de identificación externa son la placa, la tarjeta profesional y los escudos previstos en el anexo 1 de este reglamento."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 89, competencia municipal. Los ayuntamientos, en el ejercicio de sus competencias, deben respetar las normas que este reglamento establece sobre los signos externos de identificación de las policías locales y no utilizar en ningún caso piezas, elementos de uniformidad, insignias identificativas y distintivos que no estén previstos, a excepción que lo autorice…",
+        "opciones": [
+            "El jefe/a de policía.",
+            "El alcalde o alcaldesa.",
+            "La Consejería de Hacienda y Administraciones Públicas, competente en materia de policías locales.",
+            "Cualquiera de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20   Artículo 89 | Competencia municipal Los ayuntamientos, en el ejercicio de sus competencias, deben respetar las normas que este reglamento establece sobre los signos externos de identificación de las policías locales y no utilizar en ningún caso piezas, elementos de uniformidad, insignias identificativas y distintivos que no estén previstos, con las excepciones que la Consejería de Hacienda y Administraciones Públicas, competente en materia de policías locales, autorice."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 78, obligación de llevar la defensa o el bastón extensible. Señale la correcta.",
+        "opciones": [
+            "Todos los policías que prestan servicios uniformados fuera de las dependencias policiales deben llevar encima de la defensa o el bastón extensible dentro de la funda correspondiente, sujeto al cinturón.",
+            "En el interior de los vehículos automóviles pueden deshacerse de la defensa o el bastón extensible y deben llevarlo nuevamente al salir.",
+            "Para tener asignado el bastón extensible debe hacerse el correspondiente curso de habilitación. En el supuesto de no tener este curso, el bastón extensible se puede sustituir por una defensa policial y su uso debe ajustarse a lo previsto en esta sección.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 78 | Obligación de llevar la defensa o el bastón extensible 1. Todos los policías que prestan servicios uniformados fuera de las dependencias policiales deben llevar encima de la defensa o el bastón extensible dentro de la funda correspondiente, sujeto al cinturón. 2. En el interior de los vehículos automóviles pueden deshacerse de la defensa o el bastón extensible y deben llevarlo nuevamente al salir. 3. Para tener asignado el bastón extensible debe hacerse el correspondiente curso de habilitación. En el supuesto de no tener este curso, el bastón extensible se puede sustituir por una defensa policial y su uso debe ajustarse a lo previsto en esta sección."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 97, distintivos. Señale la categoría que corresponde a la siguiente definición: Dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro.",
+        "opciones": [
+            "Intendente.",
+            "Subinspector.",
+            "Oficial.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 97 | Distintivos d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. La definición descrita en el enunciado corresponde a Inspector o Inspectora (3 barras)."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 91, apariencia externa. Señale la incorrecta. Las piezas y los efectos de uniforme y equipo de las policías locales de las Illes Balears se consideran agrupados en las siguientes clases:",
+        "opciones": [
+            "Vestuario y emblemas.",
+            "Vestuario y escudos.",
+            "Distintivos y medallas.",
+            "Equipo y armamento."
+        ],
+        "correcta": 1,
+        "explicacion": "D.º Policial - Tema 20  Artículo 91 | Apariencia externa 2. Las piezas y los efectos de uniforme y de equipo de las policías locales de las Illes Balears se consideran agrupados en las siguientes clases: a) Vestuario b) Emblemas c) distintivos y medallas  d) equipo y armamento"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 97, distintivos. Señale la categoría que corresponde a la siguiente definición: Dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro.",
+        "opciones": [
+            "Intendente.",
+            "Subinspector.",
+            "Oficial.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "D.º Policial - Tema 20 Artículo 97 | Distintivos e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 101, distintivo de policías locales en prácticas. Señale la correcta.",
+        "opciones": [
+            "Los opositores y opositoras que, una vez superado el proceso selectivo, sean nombrados como personal funcionario en prácticas de la categoría correspondiente en los respectivos ayuntamientos, deben vestir el mismo uniforme con la hombrera de color violeta, tal y como se indica en la figura 8 del anexo 1 de este reglamento, hasta que sean nombrados personal funcionario de carrera.",
+            "Los opositores y opositoras que, una vez superado el proceso selectivo, sean nombrados como personal funcionario en prácticas de la categoría correspondiente en los respectivos ayuntamientos, deben vestir el mismo uniforme con la hombrera de color morado, tal y como se indica en la figura 8 del anexo 1 de este reglamento, hasta que sean nombrados personal funcionario de carrera.",
+            "Los opositores y opositoras que, una vez superado el proceso selectivo, sean nombrados como personal funcionario en prácticas de la categoría correspondiente en los respectivos ayuntamientos, deben vestir el mismo uniforme con la hombrera de color morado vino, tal y como se indica en la figura 8 del anexo 1 de este reglamento, hasta que sean nombrados personal funcionario de carrera.",
+            "Los opositores y opositoras que, una vez superado el proceso selectivo, sean nombrados como personal funcionario en prácticas de la categoría correspondiente en los respectivos ayuntamientos, deben vestir el mismo uniforme con la hombrera de color rosa, tal y como se indica en la figura 8 del anexo 1 de este reglamento, hasta que sean nombrados personal funcionario de carrera."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20  Artículo 101 | Distintivo de policías locales en prácticas Los opositores y opositoras que, una vez superado el proceso selectivo, sean nombrados como personal funcionario en prácticas de la categoría correspondiente en los respectivos ayuntamientos, deben vestir el mismo uniforme con la hombrera de color morado vino, tal y como se indica en la figura 8 del anexo 1 de este reglamento, hasta que sean nombrados personal funcionario de carrera."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La Comunidad Autónoma ostenta competencias de desarrollo legislativo y ejecución respecto de:",
+        "opciones": [
+            "Gestión de museos, bibliotecas y archivos de titularidad estatal que no se reserve el Estado.",
+            "Vertidos industriales y contaminados en las aguas territoriales del Estado correspondientes al litoral de las Illes Balears.",
+            "Normas procesales derivadas de las peculiaridades del derecho sustantivo de las Illes Balears.",
+            "Productos farmacéuticos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 31. Competencias de desarrollo legislativo y ejecución. En el marco de la legislación básica del Estado, corresponden a la Comunidad Autónoma de las Illes Balears el desarrollo legislativo y la ejecución de las siguientes materias: 2. Normas procesales derivadas de las peculiaridades del derecho sustantivo de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La realización de obras públicas en el territorio de la Comunidad Autónoma, siempre que no sean de interés general del Estado:",
+        "opciones": [
+            "Es competencia ejecutiva.",
+            "Es competencia de desarrollo legislativo.",
+            "Es competencia exclusiva.",
+            "Es competencia de desarrollo legislativo y ejecución."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 30. Competencias exclusivas. La Comunidad Autónoma tiene la competencia exclusiva en las siguientes materias, sin perjuicio de lo dispuesto en el artículo 149.1 de la Constitución: 4. Obras públicas en el territorio de la Comunidad Autónoma que no sean de interés general del Estado."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Quiénes pueden ser electores:",
+        "opciones": [
+            "Todos los ciudadanos de las Illes Balears.",
+            "Todos los españoles, siempre que sean mayores de edad.",
+            "Todos los ciudadanos españoles mayores de edad que figuren en el censo electoral de las Illes Balears.",
+            "Todos los ciudadanos mayores de edad que figuren en el censo electoral de las Illes Balears."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 43. Electores. Serán electores todos los ciudadanos españoles mayores de edad que figuren en el censo electoral de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Dentro de las competencias ejecutivas que ostenta la Comunidad Autónoma NO se encuentra;",
+        "opciones": [
+            "Ordenación y planificación de la actividad económica de las Illes Balears.",
+            "Expropiación forzosa.",
+            "Planes establecidos por el Estado para la implantación o la reestructuración de sectores económicos.",
+            "Puertos y aeropuertos con calificación de interés general, cuando el Estado no se reserve su gestión."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 32. Competencias ejecutivas. Corresponde a la Comunidad Autónoma de las Illes Balears, en los términos que se establezcan en las leyes y normas reglamentarias que, en desarrollo de su legislación, dicte el Estado, la función ejecutiva en las siguientes materias: 1. Expropiación forzosa. 7. Planes establecidos por el Estado para la implantación o la reestructuración de sectores económicos. 15. Puertos y aeropuertos con calificación de interés general, cuando el Estado no se reserve su gestión. La Comunidad Autónoma puede participar en la gestión de estos puertos y aeropuertos de conformidad con lo previsto en las leyes del Estado."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Qué mayoría se exige al Parlamento para la elección del Síndico:",
+        "opciones": [
+            "Mayoría favorable de dos terceras partes de los Diputados de la Cámara.",
+            "Mayoría favorable de dos quintas partes de los Diputados de la Cámara.",
+            "Mayoría favorable de tres quintas partes de los Diputados de la Cámara.",
+            "Mayoría simple de los Diputados de la Cámara."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 51. Sindicatura de Greuges. El Parlamento, mediante ley, creará la institución de la Sindicatura de Greuges para la defensa de las libertades y de los derechos fundamentales de los ciudadanos, así como para supervisar e investigar las actividades de la Administración de la Comunidad Autónoma de las Illes Balears. El Síndico será elegido por el Parlamento, por la mayoría favorable de las tres quintas partes de los Diputados de la Cámara. El Síndico actuará como Alto Comisionado del Parlamento y le rendirá cuentas de su actividad. El Síndico coordinará su actuación con el Defensor del Pueblo."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Quién elige al Presidente de las Illes Balears:",
+        "opciones": [
+            "Por el Parlamento de entre sus miembros.",
+            "Los ciudadanos que estén en el ejercicio del derecho de sufragio activo.",
+            "Por el Pleno de entre los miembros del Parlamento.",
+            "Por el Parlamento entre los que gocen de la cualidad de elegibles."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 54. Elección del Presidente de las Illes Balears. 1. El Presidente de las Illes Balears será elegido por el Parlamento de entre sus miembros y nombrado por el Rey. 2. El candidato propuesto presentará al Parlamento el programa político del Gobierno que pretenda formar y, previo debate, solicitará su confianza. 3. Si el Parlamento, por el voto de la mayoría absoluta de sus miembros, otorga la confianza al candidato, será nombrado Presidente, de acuerdo con lo que se prevé en el apartado 1 de este mismo artículo. Si no se consigue esta mayoría, la misma propuesta se someterá a nueva votación cuarenta y ocho horas después de la anterior y la confianza será otorgada por mayoría simple. 4. Si en estas votaciones no se otorga la confianza del Parlamento, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. En el caso de que hayan transcurrido sesenta días a partir de la primera votación para la investidura y ningún candidato haya obtenido la confianza del Parlamento, éste quedará disuelto y se convocarán nuevas elecciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La aprobación y la reforma del Reglamento del Parlamento requerirán:",
+        "opciones": [
+            "Mayoría simple de los componentes del Parlamento.",
+            "Mayoría absoluta de los componentes del Parlamento.",
+            "Mayoría de dos terceras partes de los componentes del Parlamento.",
+            "Mayoría de tres quintas partes de los componentes del Parlamento."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 45. Organización y funcionamiento. 1. El Parlamento tendrá un Presidente, una Mesa y una Diputación Permanente. El Reglamento regulará su composición y sus reglas de elección. 2. El Parlamento funcionará en Pleno y en Comisiones. Las Comisiones permanentes podrán elaborar y aprobar leyes por delegación expresa del Pleno, sin perjuicio de la facultad del mismo para reclamar su debate y aprobación en cualquier momento del proceso legislativo. Quedan exceptuadas de dicha delegación las leyes de bases y los Presupuestos de la Comunidad Autónoma. 3. El Parlamento podrá crear Comisiones especiales de investigación. 4. El Parlamento se reunirá durante ocho meses al año, en dos períodos de sesiones comprendidos entre septiembre y diciembre, el primero, y entre febrero y junio, el segundo. El Parlamento se reunirá en sesión extraordinaria, a petición del Gobierno o por acuerdo de la Diputación Permanente o del Pleno, a propuesta de una quinta parte de los Diputados. La sesión extraordinaria acabará una vez finalizado el orden del día determinado para el que fue convocada. 5. Los acuerdos, sean en el Pleno, sean en las Comisiones, para que sean válidos, deberán ser adoptados en sesiones convocadas reglamentariamente, con la asistencia de la mayoría de sus componentes y por aprobación de la mayoría de los presentes, excepto en aquellos casos en que la ley o el reglamento exijan un quórum más elevado. 6. El Parlamento debe establecer su propio Reglamento que regulará los períodos de sesiones, el régimen y el lugar de las sesiones, la formación de Grupos Parlamentarios y su intervención en el proceso legislativo, las funciones de la Junta de Portavoces, y demás cuestiones necesarias o pertinentes para el buen funcionamiento del Parlamento. La aprobación y la reforma del Reglamento requerirán la mayoría absoluta de los componentes del Parlamento."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Los Decretos leyes quedarán derogados:",
+        "opciones": [
+            "Si en el plazo improrrogable de treinta días subsiguientes a su promulgación no son convalidados expresamente por el Parlamento.",
+            "Si en el plazo improrrogable de veinte días subsiguientes a su promulgación no son convalidados expresamente por el Parlamento.",
+            "Si en el plazo improrrogable de quince días subsiguientes a su promulgación no son convalidados expresamente por el Parlamento.",
+            "Si en el plazo improrrogable de diez días subsiguientes a su promulgación no son convalidados expresamente por el Parlamento."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 49. Decretos leyes. 1. En caso de extraordinaria y urgente necesidad, el Consejo de Gobierno podrá dictar medidas legislativas provisionales en forma de Decretos leyes que no podrán afectar a los derechos establecidos en este Estatuto, a las materias objeto de leyes de desarrollo básico del Estatuto de Autonomía, a los presupuestos generales de la Comunidad Autónoma, a la reforma del Estatuto, al régimen electoral ni al ordenamiento de las instituciones básicas de la Comunidad Autónoma de las Illes Balears. 2. Los Decretos leyes quedarán derogados si en el plazo improrrogable de treinta días subsiguientes a su promulgación no son convalidados expresamente por el Parlamento después de un debate y una votación de totalidad. Durante el plazo establecido en el párrafo anterior, el Parlamento podrá acordar la tramitación de los Decretos leyes como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál de las siguientes NO es una función que corresponda al Parlamento:",
+        "opciones": [
+            "Remitir proposiciones de ley a la Mesa del Congreso de los Diputados y nombrar un máximo de dos Diputados encargados de defenderlas.",
+            "Solicitar del Gobierno del Estado la adopción de un proyecto de ley.",
+            "Interponer el recurso de inconstitucionalidad ante el Tribunal Constitucional en los casos previstos en la legislación vigente.",
+            "Aprobar y decidir transferencias o delegaciones de competencias a favor de los Consejos Insulares y demás entes locales de la Comunidad Autónoma."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 50. Funciones. Corresponde también al Parlamento: 2. Remitir proposiciones de ley a la Mesa del Congreso de los Diputados y nombrar un máximo de tres Diputados encargados de defenderlas, de acuerdo con lo que permite el artículo 87.2 de la Constitución. 3. Solicitar del Gobierno del Estado la adopción de un proyecto de ley. 4. Interponer el recurso de inconstitucionalidad ante el Tribunal Constitucional en los casos previstos en la legislación vigente. 6. Aprobar y decidir transferencias o delegaciones de competencias a favor de los Consejos Insulares y demás entes locales de la Comunidad Autónoma."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las reuniones extraordinarias del Parlamento:",
+        "opciones": [
+            "A petición del Gobierno o por acuerdo del Pleno, a propuesta de una quinta parte de los Diputados.",
+            "A petición del Gobierno o por acuerdo de la Diputación Permanente o del Pleno, a propuesta de dos terceras partes de los Diputados.",
+            "A petición del Gobierno o por acuerdo del Pleno, a propuesta de dos terceras partes de los Diputados.",
+            "A petición del Gobierno o por acuerdo de la Diputación Permanente o del Pleno, a propuesta de una quinta parte de los Diputados."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 45. Organización y funcionamiento. 1. El Parlamento tendrá un Presidente, una Mesa y una Diputación Permanente. El Reglamento regulará su composición y sus reglas de elección. 2. El Parlamento funcionará en Pleno y en Comisiones. Las Comisiones permanentes podrán elaborar y aprobar leyes por delegación expresa del Pleno, sin perjuicio de la facultad del mismo para reclamar su debate y aprobación en cualquier momento del proceso legislativo. Quedan exceptuadas de dicha delegación las leyes de bases y los Presupuestos de la Comunidad Autónoma. 3. El Parlamento podrá crear Comisiones especiales de investigación. 4. El Parlamento se reunirá durante ocho meses al año, en dos períodos de sesiones comprendidos entre septiembre y diciembre, el primero, y entre febrero y junio, el segundo. El Parlamento se reunirá en sesión extraordinaria, a petición del Gobierno o por acuerdo de la Diputación Permanente o del Pleno, a propuesta de una quinta parte de los Diputados. La sesión extraordinaria acabará una vez finalizado el orden del día determinado para el que fue convocada. 5. Los acuerdos, sean en el Pleno, sean en las Comisiones, para que sean válidos, deberán ser adoptados en sesiones convocadas reglamentariamente, con la asistencia de la mayoría de sus componentes y por aprobación de la mayoría de los presentes, excepto en aquellos casos en que la ley o el reglamento exijan un quórum más elevado. 6. El Parlamento debe establecer su propio Reglamento que regulará los períodos de sesiones, el régimen y el lugar de las sesiones, la formación de Grupos Parlamentarios y su intervención en el proceso legislativo, las funciones de la Junta de Portavoces, y demás cuestiones necesarias o pertinentes para el buen funcionamiento del Parlamento. La aprobación y la reforma del Reglamento requerirán la mayoría absoluta de los componentes del Parlamento."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuántos miembros como máximo podrán delegar los Consejos Insulares para la defensa de la adopción de un proyecto de ley:",
+        "opciones": [
+            "2.",
+            "3.",
+            "4",
+            "5."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 47. Iniciativa de la potestad legislativa. 1. La iniciativa para el ejercicio de la potestad legislativa corresponde a los Diputados y al Gobierno de las Islas. 2. Los Consejos Insulares podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Parlamento una proposición de ley, delegando ante dicha cámara a un máximo de tres miembros encargados de su defensa. 3. La iniciativa popular se ejercerá en la forma y las condiciones que establezca la ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El Reglamento de la Comisión General de Consejos Insulares deberá ser aprobada por:",
+        "opciones": [
+            "Mayoría absoluta de sus miembros.",
+            "Dos terceras partes de sus miembros.",
+            "Tres quintas partes de sus miembros.",
+            "Dos quintas partes de sus miembros."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 53. Comisión General de Consejos Insulares. Se crea en el seno del Parlamento la Comisión General de Consejos Insulares, de composición paritaria Parlamento-Consejos Insulares. Dicha comisión elaborará su propio reglamento que debe ser aprobado por las dos terceras partes de sus miembros, y regulará su composición, organización y funciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Quiénes podrán ser elegidos Diputados del Parlamento Balear:",
+        "opciones": [
+            "Los ciudadanos españoles residentes en el territorio de las Illes Balears.",
+            "Los ciudadanos españoles residentes en las Illes Balears e inscritos en el censo electoral.",
+            "Los ciudadanos nacidos y residentes en las Illes Balears e inscritos en el censo electoral.",
+            "Los ciudadanos españoles residentes en las Illes Balears e inscritos en el censo electoral de éstas, siempre que sean mayores de edad y se hallen en pleno ejercicio de sus derechos civiles y políticos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 42. Elegibles. Podrán ser elegidos Diputados del Parlamento los ciudadanos españoles residentes en las Illes Balears e inscritos en el censo electoral de éstas, siempre que sean mayores de edad y se hallen en pleno ejercicio de sus derechos civiles y políticos."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El órgano encargado de velar por el poder del Parlamento cuando éste no se halle reunido, haya sido disuelto o haya expirado su mandato es:",
+        "opciones": [
+            "El Pleno.",
+            "Sindicatura de Greuges.",
+            "Diputación Permanente.",
+            "Comisión General Extraordinaria."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 46. Diputación Permanente. 1. El Parlamento elegirá una Diputación Permanente, en la que estarán representados todos los Grupos Parlamentarios, en proporción a su respectiva importancia numérica. Estará presidida por el Presidente del Parlamento. 2. La Diputación Permanente tendrá por función velar por el poder del Parlamento cuando éste no se halle reunido, haya sido disuelto o haya expirado su mandato. En estos dos últimos casos, seguirá ejerciendo sus funciones hasta que se constituya el nuevo Parlamento, al que rendirá cuentas de la gestión realizada."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Corresponde a las Illes Balears la creación y organización de un cuerpo de policía propio:",
+        "opciones": [
+            "En el marco de la legislación estatal.",
+            "En coordinación con la legislación estatal.",
+            "Con independencia de la legislación estatal.",
+            "El EAIB no prevé la creación de un cuerpo de policía propio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 33. Policía de las Illes Balears. 1. Es competencia de las Illes Balears la creación y la organización de un cuerpo de policía propio en el marco de la legislación estatal. En los mismos términos, corresponde a la Comunidad Autónoma el mando de la policía de las Illes Balears que llevará a cabo sus funciones bajo la directa dependencia de las instituciones de las Illes Balears. 2. Las funciones de la policía de las Illes Balears se fijan en su ley de creación de acuerdo con la legislación estatal."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las agencias de transporte y alquiler de vehículos se considera una competencia:",
+        "opciones": [
+            "De desarrollo legislativo y de ejecución.",
+            "De desarrollo legislativo.",
+            "Exclusiva de la Comunidad Autónoma.",
+            "Ejecutiva de la Comunidad Autónoma."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 31. Competencias de desarrollo legislativo y ejecución. En el marco de la legislación básica del Estado, corresponden a la Comunidad Autónoma de las Illes Balears el desarrollo legislativo y la ejecución de las siguientes materias: 16. Agencias de transportes. Alquiler de vehículos."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La defensa de las libertades y de los derechos fundamentales de los ciudadanos corresponde a:",
+        "opciones": [
+            "Tribunal Superior de Justicia de las Illes Balears.",
+            "Sindicatura de Greuges.",
+            "Gobierno de las Illes Balears.",
+            "Diputación Permanente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 51. Sindicatura de Greuges. El Parlamento, mediante ley, creará la institución de la Sindicatura de Greuges para la defensa de las libertades y de los derechos fundamentales de los ciudadanos, así como para supervisar e investigar las actividades de la Administración de la Comunidad Autónoma de las Illes Balears. El Síndico será elegido por el Parlamento, por la mayoría favorable de las tres quintas partes de los Diputados de la Cámara. El Síndico actuará como Alto Comisionado del Parlamento y le rendirá cuentas de su actividad. El Síndico coordinará su actuación con el Defensor del Pueblo."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El Parlamento tendrá, en relación a su organización:",
+        "opciones": [
+            "Un Presidente, dos Vicepresidentes, una Mesa y una Diputación Permanente.",
+            "Un Presidente, dos Vicepresidentes, un Secretario, una Mesa y una Diputación Permanente",
+            "Un Presidente, una Mesa y una Diputación Permanente.",
+            "Un Presidente y una Diputación Permanente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 45. Organización y funcionamiento. 1. El Parlamento tendrá un Presidente, una Mesa y una Diputación Permanente. El Reglamento regulará su composición y sus reglas de elección. 2. El Parlamento funcionará en Pleno y en Comisiones. Las Comisiones permanentes podrán elaborar y aprobar leyes por delegación expresa del Pleno, sin perjuicio de la facultad del mismo para reclamar su debate y aprobación en cualquier momento del proceso legislativo. Quedan exceptuadas de dicha delegación las leyes de bases y los Presupuestos de la Comunidad Autónoma. 3. El Parlamento podrá crear Comisiones especiales de investigación. 4. El Parlamento se reunirá durante ocho meses al año, en dos períodos de sesiones comprendidos entre septiembre y diciembre, el primero, y entre febrero y junio, el segundo. El Parlamento se reunirá en sesión extraordinaria, a petición del Gobierno o por acuerdo de la Diputación Permanente o del Pleno, a propuesta de una quinta parte de los Diputados. La sesión extraordinaria acabará una vez finalizado el orden del día determinado para el que fue convocada. 5. Los acuerdos, sean en el Pleno, sean en las Comisiones, para que sean válidos, deberán ser adoptados en sesiones convocadas reglamentariamente, con la asistencia de la mayoría de sus componentes y por aprobación de la mayoría de los presentes, excepto en aquellos casos en que la ley o el reglamento exijan un quórum más elevado. 6. El Parlamento debe establecer su propio Reglamento que regulará los períodos de sesiones, el régimen y el lugar de las sesiones, la formación de Grupos Parlamentarios y su intervención en el proceso legislativo, las funciones de la Junta de Portavoces, y demás cuestiones necesarias o pertinentes para el buen funcionamiento del Parlamento. La aprobación y la reforma del Reglamento requerirán la mayoría absoluta de los componentes del Parlamento."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuánto dura el mandato de los Diputados?",
+        "opciones": [
+            "Dos años.",
+            "Tres años.",
+            "Cuatro años.",
+            "Cinco años"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 41. Composición y régimen electoral. 1. El Parlamento estará formado por los Diputados del territorio autónomo, elegidos por sufragio universal, igual, libre, directo y secreto, mediante un sistema de representación proporcional que asegurará una adecuada representación de todas las zonas del territorio. 2. La duración del mandato de los Diputados será de cuatro años. 3. Las circunscripciones electorales son las de Mallorca, Menorca, Ibiza y Formentera. 4. Una ley del Parlamento, aprobada por mayoría cualificada de dos tercios, regulará el total de Diputados que deben integrarlo, el número de Diputados que debe corresponder elegir en cada una de las circunscripciones electorales y las causas de inelegibilidad y de incompatibilidad que les afecten. 5. El Parlamento se constituirá en el plazo máximo de treinta días después de la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Durante cuánto tiempo se reunirá el Parlamento:",
+        "opciones": [
+            "8 meses al año.",
+            "9 meses al año.",
+            "10 meses al año.",
+            "7 meses al año."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 45. Organización y funcionamiento. 1. El Parlamento tendrá un Presidente, una Mesa y una Diputación Permanente. El Reglamento regulará su composición y sus reglas de elección. 2. El Parlamento funcionará en Pleno y en Comisiones. Las Comisiones permanentes podrán elaborar y aprobar leyes por delegación expresa del Pleno, sin perjuicio de la facultad del mismo para reclamar su debate y aprobación en cualquier momento del proceso legislativo. Quedan exceptuadas de dicha delegación las leyes de bases y los Presupuestos de la Comunidad Autónoma. 3. El Parlamento podrá crear Comisiones especiales de investigación. 4. El Parlamento se reunirá durante ocho meses al año, en dos períodos de sesiones comprendidos entre septiembre y diciembre, el primero, y entre febrero y junio, el segundo. El Parlamento se reunirá en sesión extraordinaria, a petición del Gobierno o por acuerdo de la Diputación Permanente o del Pleno, a propuesta de una quinta parte de los Diputados. La sesión extraordinaria acabará una vez finalizado el orden del día determinado para el que fue convocada. 5. Los acuerdos, sean en el Pleno, sean en las Comisiones, para que sean válidos, deberán ser adoptados en sesiones convocadas reglamentariamente, con la asistencia de la mayoría de sus componentes y por aprobación de la mayoría de los presentes, excepto en aquellos casos en que la ley o el reglamento exijan un quórum más elevado. 6. El Parlamento debe establecer su propio Reglamento que regulará los períodos de sesiones, el régimen y el lugar de las sesiones, la formación de Grupos Parlamentarios y su intervención en el proceso legislativo, las funciones de la Junta de Portavoces, y demás cuestiones necesarias o pertinentes para el buen funcionamiento del Parlamento. La aprobación y la reforma del Reglamento requerirán la mayoría absoluta de los componentes del Parlamento."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El ejercicio de todas las competencias de la Comunidad Autónoma se realizará de acuerdo con los términos que dispone:",
+        "opciones": [
+            "La Constitución.",
+            "El presente Estatuto de Autonomía.",
+            "El Reglamento de desarrollo de la presente ley.",
+            "Todas las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 37. Ejercicio de las competencias de la Comunidad Autónoma. El ejercicio de todas las competencias de la Comunidad Autónoma se realizará de acuerdo con los términos que dispone la Constitución."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál de las siguientes NO es una competencia exclusiva de la Comunidad Autónoma:",
+        "opciones": [
+            "Tercera edad.",
+            "Políticas de género.",
+            "Casinos, juegos y apuestas, con exclusión de las apuestas mutuas deportivo-benéficas.",
+            "Productos farmacéuticos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 30. Competencias exclusivas. La Comunidad Autónoma tiene la competencia exclusiva en las siguientes materias, sin perjuicio de lo dispuesto en el artículo 149.1 de la Constitución: 14. Tercera edad. 17. Políticas de género. 29. Casinos, juegos y apuestas, con exclusión de las apuestas mutuas deportivo-benéficas."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Los Pesos y medidas y el contraste de metales, es una competencia:",
+        "opciones": [
+            "Exclusiva de la Comunidad Autónoma.",
+            "Ejecutiva de la Comunidad Autónoma.",
+            "De desarrollo legislativo y de ejecución de la Comunidad Autónoma.",
+            "De desarrollo de la Comunidad Autónoma."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 32. Competencias ejecutivas. Corresponde a la Comunidad Autónoma de las Illes Balears, en los términos que se establezcan en las leyes y normas reglamentarias que, en desarrollo de su legislación, dicte el Estado, la función ejecutiva en las siguientes materias: 6. Pesos y medidas. Contraste de metales."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Fuera del ámbito territorial de la Comunidad Autónoma de las Illes Balears, la responsabilidad penal de los Diputados, será exigible ante:",
+        "opciones": [
+            "La Audiencia Provincial.",
+            "La Sala de lo Penal del Tribunal Supremo.",
+            "La Sala de lo Penal de la Audiencia Nacional.",
+            "El Tribunal Superior de Justicia."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 44. Estatuto de los Diputados. 1. Los Diputados del Parlamento de las Illes Balears no estarán vinculados por mandato imperativo alguno y gozarán, aun después de haber cesado en su mandato, de inviolabilidad por las opiniones manifestadas y por los votos emitidos en el ejercicio de su cargo. Durante su mandato no podrán ser detenidos ni retenidos, salvo en caso de flagrante delito, en todo caso, corresponderá decidir su inculpación, prisión, procesamiento y juicio al Tribunal Superior de Justicia de las Illes Balears. Fuera del ámbito territorial de la Comunidad Autónoma, la responsabilidad penal les será exigible en los mismos términos ante la Sala de lo Penal del Tribunal Supremo. 2. El voto de los Diputados es personal e indelegable."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Qué plazo habrá de transcurrir desde la primera votación hasta la disolución del Parlamento y convocatoria de nuevas elecciones, si ningún candidato ha obtenido la confianza del Parlamento para su investidura:",
+        "opciones": [
+            "30 días.",
+            "50 días.",
+            "60 días.",
+            "90 días."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 54. Elección del Presidente de las Illes Balears. 1. El Presidente de las Illes Balears será elegido por el Parlamento de entre sus miembros y nombrado por el Rey. 2. El candidato propuesto presentará al Parlamento el programa político del Gobierno que pretenda formar y, previo debate, solicitará su confianza. 3. Si el Parlamento, por el voto de la mayoría absoluta de sus miembros, otorga la confianza al candidato, será nombrado Presidente, de acuerdo con lo que se prevé en el apartado 1 de este mismo artículo. Si no se consigue esta mayoría, la misma propuesta se someterá a nueva votación cuarenta y ocho horas después de la anterior y la confianza será otorgada por mayoría simple. 4. Si en estas votaciones no se otorga la confianza del Parlamento, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. En el caso de que hayan transcurrido sesenta días a partir de la primera votación para la investidura y ningún candidato haya obtenido la confianza del Parlamento, éste quedará disuelto y se convocarán nuevas elecciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Si la primera propuesta para otorgar la confianza al candidato propuesto a Presidente:",
+        "opciones": [
+            "La misma propuesta se someterá a nueva votación 48 horas después de la anterior y requerirá mayoría absoluta.",
+            "La misma propuesta se someterá a nueva votación 24 horas después de la anterior y requerirá mayoría simple.",
+            "La misma propuesta se someterá a nueva votación 48 horas después de la anterior y requerirá mayoría simple.",
+            "La misma propuesta se someterá a nueva votación 24 horas después de la anterior y requerirá mayoría absoluta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 54. Elección del Presidente de las Illes Balears. 1. El Presidente de las Illes Balears será elegido por el Parlamento de entre sus miembros y nombrado por el Rey. 2. El candidato propuesto presentará al Parlamento el programa político del Gobierno que pretenda formar y, previo debate, solicitará su confianza. 3. Si el Parlamento, por el voto de la mayoría absoluta de sus miembros, otorga la confianza al candidato, será nombrado Presidente, de acuerdo con lo que se prevé en el apartado 1 de este mismo artículo. Si no se consigue esta mayoría, la misma propuesta se someterá a nueva votación cuarenta y ocho horas después de la anterior y la confianza será otorgada por mayoría simple. 4. Si en estas votaciones no se otorga la confianza del Parlamento, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. En el caso de que hayan transcurrido sesenta días a partir de la primera votación para la investidura y ningún candidato haya obtenido la confianza del Parlamento, éste quedará disuelto y se convocarán nuevas elecciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El reconocimiento de la personalidad de origen de las comunidades baleares establecidas fuera del territorio de la Comunidad Autónoma:",
+        "opciones": [
+            "Se efectuará mediante una ley del Parlamento de las Illes Balears, que implica la concesión de derechos políticos.",
+            "Se efectuará mediante una ley del Parlamento de las Illes Balears que, en ningún caso, implicará la concesión de derechos políticos.",
+            "Se efectuará mediante una ley de las Cortes Generales, previa audiencia del Parlamento de las Illes Balears que, en ningún caso, implicará la concesión de derechos políticos.",
+            "Se efectuará mediante una ley de las Cortes Generales, previa aprobación del Parlamento de las Illes Balears que, en ningún caso, implicará la concesión de derechos políticos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 11. Comunidades isleñas fuera del territorio. 1. Las comunidades baleares establecidas fuera del territorio de la Comunidad Autónoma podrán solicitar como tales el reconocimiento de su personalidad de origen, entendida como el derecho a colaborar y compartir la vida social y cultural de las islas. Una ley del Parlamento de las Illes Balears regulará, sin perjuicio de las competencias del Estado, el alcance y contenido del reconocimiento mencionado que, en ningún caso, implicará la concesión de derechos políticos. 2. La Comunidad Autónoma podrá solicitar del Estado español que, para facilitar la disposición anterior, celebre, en su caso, los pertinentes tratados internacionales."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Respecto a la protección y el fomento de la cultura autóctona y del legado histórico de las Illes Balears, la Comunidad Autónoma tiene:",
+        "opciones": [
+            "Ejecutiva.",
+            "De desarrollo legislativo.",
+            "De desarrollo legislativo y ejecución.",
+            "Exclusiva."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 34. Protección y fomento de la cultura. 1. La Comunidad Autónoma tiene competencia exclusiva respecto de la protección y el fomento de la cultura autóctona y del legado histórico de las Illes Balears. 2. En el desarrollo de esta competencia podrá crear los organismos adecuados."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La Comunidad Autónoma tiene competencia exclusiva:",
+        "opciones": [
+            "Expropiación forzosa.",
+            "Crédito, banca y seguros.",
+            "Montes, aprovechamientos forestales, vías pecuarias y pastos.",
+            "Ordenación del sector pesquero."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 30. Competencias exclusivas. La Comunidad Autónoma tiene la competencia exclusiva en las siguientes materias, sin perjuicio de lo dispuesto en el artículo 149.1 de la Constitución: 9. Montes, aprovechamientos forestales, vías pecuarias y pastos. Tratamiento especial de las zonas de montaña."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. NO corresponde a la Comunidad Autónoma la competencia de ejecución en la siguiente materia:",
+        "opciones": [
+            "Ferias internacionales.",
+            "Propiedad industrial.",
+            "Seguridad privada, cuando así lo establezca la legislación del Estado.",
+            "Publicidad, sin perjuicio de la legislación mercantil."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 32. Competencias ejecutivas. Corresponde a la Comunidad Autónoma de las Illes Balears, en los términos que se establezcan en las leyes y normas reglamentarias que, en desarrollo de su legislación, dicte el Estado, la función ejecutiva en las siguientes materias: 3. Ferias internacionales. 9. Propiedad industrial. 19. Seguridad privada, cuando así lo establezca la legislación del Estado."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En cuál de las siguientes materias tiene la Comunidad Autónoma competencias ejecutivas?",
+        "opciones": [
+            "Legislación laboral. Formación profesional continua.",
+            "Régimen local.",
+            "Actividades clasificadas.",
+            "Denominaciones de origen y demás indicaciones de procedencia relativas a los productos de la Comunidad Autónoma."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 32. Competencias ejecutivas. Corresponde a la Comunidad Autónoma de las Illes Balears, en los términos que se establezcan en las leyes y normas reglamentarias que, en desarrollo de su legislación, dicte el Estado, la función ejecutiva en las siguientes materias: 11. Legislación laboral. Formación profesional continua."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Es competencia exclusiva de la Comunidad Autónoma:",
+        "opciones": [
+            "La protección civil.",
+            "Corporaciones de derecho público, representativas de intereses económicos y profesionales.",
+            "La protección de menores.",
+            "Estatuto de los funcionarios de la Administración de la Comunidad Autónoma y de la administración local."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 30. Competencias exclusivas. La Comunidad Autónoma tiene la competencia exclusiva en las siguientes materias, sin perjuicio de lo dispuesto en el artículo 149.1 de la Constitución: 39. Protección de menores."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Qué institución representa al pueblo de las Illes Balears:",
+        "opciones": [
+            "El Presidente de la Comunidad Autónoma.",
+            "El Parlamento.",
+            "El Presidente del Parlamento.",
+            "El Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 40. Funciones y sede del Parlamento. 1. El Parlamento representa al pueblo de las Illes Balears, ejerce la potestad legislativa, aprueba los presupuestos de la Comunidad Autónoma, controla la acción de gobierno y ejerce todas las competencias que le atribuyen este Estatuto, las leyes del Estado y las del mismo Parlamento. 2. El Parlamento es inviolable y sólo podrá ser disuelto en los supuestos previstos en este Estatuto. 3. La sede del Parlamento de las Illes Balears radica en la ciudad de Palma."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál es la sede permanente del Parlamento:",
+        "opciones": [
+            "La ciudad de Palma.",
+            "Maó.",
+            "La ciudad de Palma, sin perjuicio de que pueda reunirse en otros lugares de las Illes Balears.",
+            "Ibiza."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 7. Capital de las Illes Balears. La capital de las Illes Balears es la ciudad de Palma, que es la sede permanente del Parlamento, de la Presidencia del Gobierno y del Gobierno, sin perjuicio de que el Parlamento y el Gobierno puedan reunirse en otros lugares de las Illes Balears, de acuerdo con lo que establecen, respectivamente, el Reglamento del Parlamento y la ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál de las siguientes NO forma parte del sistema institucional de la Comunidad Autónoma:",
+        "opciones": [
+            "El Gobierno.",
+            "El Presidente del Parlamento.",
+            "El Presidente de la Comunidad Autónoma.",
+            "Los Consejos Insulares."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 39. Las instituciones. El sistema institucional autonómico está integrado por el Parlamento, el Gobierno, el Presidente de la Comunidad Autónoma y los Consejos Insulares de Mallorca, Menorca, Ibiza y Formentera sin perjuicio de su autonomía constitucionalmente garantizada."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las modalidades insulares del catalán, de Mallorca, Menoría, Ibiza y Formentera serán:",
+        "opciones": [
+            "Objeto de estudio y protección, sin perjuicio de la unidad de la lengua.",
+            "Objeto de estudio, sin perjuicio de la unidad de la lengua.",
+            "Objeto de protección, sin perjuicio de la unidad de la lengua.",
+            "Objeto de estudio, protección y salvaguarda, sin perjuicio de la unidad de la lengua."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 35. Enseñanza de la lengua propia. La Comunidad Autónoma tiene competencia exclusiva para la enseñanza de la lengua catalana, propia de las Illes Balears, de acuerdo con la tradición literaria autóctona. Normalizarla será un objetivo de los poderes públicos de la Comunidad Autónoma. Las modalidades insulares del catalán¸ de Mallorca, Menorca, Ibiza y Formentera serán objeto de estudio y protección, sin perjuicio de la unidad de la lengua. La institución oficial consultiva para todo lo que se refiere a la lengua catalana será la Universidad de las Illes Balears. La Comunidad Autónoma de las Illes Balears podrá participar en una institución dirigida a salvaguardar la unidad lingüística, formada por todas las comunidades que reconozcan la cooficialidad de la lengua catalana."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La institución de gobierno de las islas es:",
+        "opciones": [
+            "Cabildos Insulares.",
+            "Ayuntamientos.",
+            "Consejos Insulares.",
+            "Concejos Insulares."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 8. La organización territorial. 1. La Comunidad Autónoma articula su organización territorial en islas y en municipios. Las instituciones de gobierno de las islas son los Consejos Insulares, y las de los municipios, los Ayuntamientos. 2. Esta organización será regulada, en el marco de la legislación básica del Estado, por ley del Parlamento de las Illes Balears, de acuerdo con este Estatuto y con los principios de eficacia, jerarquía, descentralización, desconcentración, delegación y coordinación entre los organismos administrativos y de autonomía en sus ámbitos respectivos."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las leyes del Parlamento serán promulgadas en nombre del Rey por:",
+        "opciones": [
+            "Presidente de la Comunidad Autónoma, quien ordenará su publicación en el BOIB, en el plazo de los diez días siguientes a su aprobación.",
+            "Presidente del Parlamento, quien ordenará su publicación en el BOIB, en el plazo de los diez días siguientes a su aprobación.",
+            "Presidente del Parlamento, quien ordenará su publicación en el BOIB, en el plazo de los quince días siguientes a su aprobación.",
+            "Presidente de la Comunidad Autónoma, quien ordenará su publicación en el BOIB, en el plazo de los quince días siguientes a su aprobación."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 48. Potestad legislativa. 1. El Parlamento, mediante la elaboración de leyes, ejerce la potestad legislativa. El Parlamento podrá delegar en el Gobierno de la Comunidad Autónoma la potestad de dictar normas con rango de ley, en los mismos términos y supuestos de delegación previstos en la Constitución. No podrán ser objeto de delegación la aprobación de las leyes que necesitan, para ser aprobadas, una mayoría especial. 2. Las leyes del Parlamento serán promulgadas en nombre del Rey por el Presidente de la Comunidad Autónoma, quien ordenará su publicación en el Butlletí Oficial de les Illes Balears, en el plazo de los quince días siguientes a su aprobación, así como también en el «Boletín Oficial del Estado». Al efecto de la entrada en vigor de las mismas, regirá la fecha de publicación en el Butlletí Oficial de les Illes Balears. La versión oficial castellana será la que la Presidencia de la Comunidad Autónoma enviará."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Los Decretos leyes dictados por el Consejo de Gobierno NO podrán afectar a:",
+        "opciones": [
+            "La reforma del Estatuto.",
+            "Los derechos establecidos en el Estatuto.",
+            "Presupuestos Generales de la Comunidad Autónoma.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 49. Decretos leyes. 1. En caso de extraordinaria y urgente necesidad, el Consejo de Gobierno podrá dictar medidas legislativas provisionales en forma de Decretos leyes que no podrán afectar a los derechos establecidos en este Estatuto, a las materias objeto de leyes de desarrollo básico del Estatuto de Autonomía, a los presupuestos generales de la Comunidad Autónoma, a la reforma del Estatuto, al régimen electoral ni al ordenamiento de las instituciones básicas de la Comunidad Autónoma de las Illes Balears. 2. Los Decretos leyes quedarán derogados si en el plazo improrrogable de treinta días subsiguientes a su promulgación no son convalidados expresamente por el Parlamento después de un debate y una votación de totalidad. Durante el plazo establecido en el párrafo anterior, el Parlamento podrá acordar la tramitación de los Decretos leyes como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En cuál de las siguientes materias tiene la Comunidad Autónoma competencias de desarrollo legislativo y ejecución?",
+        "opciones": [
+            "Pesca marítima en las aguas de las Illes Balears.",
+            "Sanidad vegetal y animal.",
+            "Servicio meteorológico de la Comunidad Autónoma.",
+            "Propiedad industrial."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 31. Competencias de desarrollo legislativo y ejecución. En el marco de la legislación básica del Estado, corresponden a la Comunidad Autónoma de las Illes Balears el desarrollo legislativo y la ejecución de las siguientes materias: 4. Salud y sanidad. Formación sanitaria especializada. Sanidad vegetal y animal."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La ley del Parlamento que regula el total de Diputados que deben integrarlo deberá ser aprobada por:",
+        "opciones": [
+            "Mayoría absoluta.",
+            "Mayoría simple.",
+            "Mayoría cualificada de dos tercios.",
+            "Unanimidad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 41. Composición y régimen electoral. 1. El Parlamento estará formado por los Diputados del territorio autónomo, elegidos por sufragio universal, igual, libre, directo y secreto, mediante un sistema de representación proporcional que asegurará una adecuada representación de todas las zonas del territorio. 2. La duración del mandato de los Diputados será de cuatro años. 3. Las circunscripciones electorales son las de Mallorca, Menorca, Ibiza y Formentera. 4. Una ley del Parlamento, aprobada por mayoría cualificada de dos tercios, regulará el total de Diputados que deben integrarlo, el número de Diputados que debe corresponder elegir en cada una de las circunscripciones electorales y las causas de inelegibilidad y de incompatibilidad que les afecten. 5. El Parlamento se constituirá en el plazo máximo de treinta días después de la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La inculpación, prisión, procesamiento y juicio de los Diputados del Parlamento de las Illes Balears corresponde:",
+        "opciones": [
+            "Sala de lo Penal del Tribunal Supremo.",
+            "Sala de lo Penal de la Audiencia Nacional.",
+            "Tribunal Superior de Justicia de las Illes Balears.",
+            "Jurisdicción Ordinaria. Juzgado instrucción."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 44. Estatuto de los Diputados. 1. Los Diputados del Parlamento de las Illes Balears no estarán vinculados por mandato imperativo alguno y gozarán, aun después de haber cesado en su mandato, de inviolabilidad por las opiniones manifestadas y por los votos emitidos en el ejercicio de su cargo. Durante su mandato no podrán ser detenidos ni retenidos, salvo en caso de flagrante delito, en todo caso, corresponderá decidir su inculpación, prisión, procesamiento y juicio al Tribunal Superior de Justicia de las Illes Balears. Fuera del ámbito territorial de la Comunidad Autónoma, la responsabilidad penal les será exigible en los mismos términos ante la Sala de lo Penal del Tribunal Supremo. 2. El voto de los Diputados es personal e indelegable."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La potestad legislativa será ejercida por:",
+        "opciones": [
+            "El Parlamento y la Comisión Permanente.",
+            "El Parlamento.",
+            "Gobierno.",
+            "Los Diputados y el Gobierno de las Islas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 48. Potestad legislativa. 1. El Parlamento, mediante la elaboración de leyes, ejerce la potestad legislativa. El Parlamento podrá delegar en el Gobierno de la Comunidad Autónoma la potestad de dictar normas con rango de ley, en los mismos términos y supuestos de delegación previstos en la Constitución. No podrán ser objeto de delegación la aprobación de las leyes que necesitan, para ser aprobadas, una mayoría especial. 2. Las leyes del Parlamento serán promulgadas en nombre del Rey por el Presidente de la Comunidad Autónoma, quien ordenará su publicación en el Butlletí Oficial de les Illes Balears, en el plazo de los quince días siguientes a su aprobación, así como también en el «Boletín Oficial del Estado». Al efecto de la entrada en vigor de las mismas, regirá la fecha de publicación en el Butlletí Oficial de les Illes Balears. La versión oficial castellana será la que la Presidencia de la Comunidad Autónoma enviará."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La programación y la coordinación del sistema universitario, la competencia de la Comunidad Autónoma es:",
+        "opciones": [
+            "De desarrollo legislativo.",
+            "De desarrollo legislativo y ejecución.",
+            "Ejecutiva.",
+            "Exclusiva."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 36. Enseñanza. De acuerdo con lo que dispone el artículo 27 y el número 30 del apartado 1 del artículo 149 de la Constitución en materia de enseñanza, corresponde a la Comunidad Autónoma de las Illes Balears: 1. En materia de enseñanza no universitaria, la competencia exclusiva en la creación, la organización y el régimen de los centros públicos; régimen de becas y ayudas con fondos propios, la formación y el perfeccionamiento del personal docente; servicios educativos y actividades extraescolares complementarias en relación con los centros públicos y privados sostenidos con fondos públicos, en colaboración con los órganos de participación de los padres y las madres de sus alumnos. 2. Corresponde a la Comunidad Autónoma de las Illes Balears la competencia de desarrollo legislativo y de ejecución de la enseñanza en toda su extensión, niveles y grados, modalidades y especialidades. 3. En materia de enseñanza no universitaria, la competencia ejecutiva sobre la expedición y la homologación de los títulos académicos y profesionales estatales. 4. En materia de enseñanza universitaria, la Comunidad Autónoma de las Illes Balears tiene competencia exclusiva, sin perjuicio de la autonomía universitaria, en la programación y la coordinación del sistema universitario, en la financiación propia de las universidades y en la regulación y la gestión del sistema propio de becas y ayudas."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La primera propuesta para otorgar la confianza al candidato propuesto a Presidente, deberá ser aceptada por:",
+        "opciones": [
+            "El Parlamento por mayoría simple de sus miembros.",
+            "El Parlamento por mayoría de dos tercios de sus miembros.",
+            "El Parlamento por mayoría absoluta de sus miembros.",
+            "El Parlamento por mayoría de tres quintas partes de sus miembros."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 54. Elección del Presidente de las Illes Balears. 1. El Presidente de las Illes Balears será elegido por el Parlamento de entre sus miembros y nombrado por el Rey. 2. El candidato propuesto presentará al Parlamento el programa político del Gobierno que pretenda formar y, previo debate, solicitará su confianza. 3. Si el Parlamento, por el voto de la mayoría absoluta de sus miembros, otorga la confianza al candidato, será nombrado Presidente, de acuerdo con lo que se prevé en el apartado 1 de este mismo artículo. Si no se consigue esta mayoría, la misma propuesta se someterá a nueva votación cuarenta y ocho horas después de la anterior y la confianza será otorgada por mayoría simple. 4. Si en estas votaciones no se otorga la confianza del Parlamento, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. En el caso de que hayan transcurrido sesenta días a partir de la primera votación para la investidura y ningún candidato haya obtenido la confianza del Parlamento, éste quedará disuelto y se convocarán nuevas elecciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La sesión constitutiva del Parlamento tendrá lugar dentro de un plazo máximo de:",
+        "opciones": [
+            "30 días después de la celebración de las elecciones.",
+            "20 días después de la celebración de las elecciones.",
+            "15 días después de la celebración de las elecciones.",
+            "10 días después de la celebración de las elecciones."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 41. Composición y régimen electoral. 1. El Parlamento estará formado por los Diputados del territorio autónomo, elegidos por sufragio universal, igual, libre, directo y secreto, mediante un sistema de representación proporcional que asegurará una adecuada representación de todas las zonas del territorio. 2. La duración del mandato de los Diputados será de cuatro años. 3. Las circunscripciones electorales son las de Mallorca, Menorca, Ibiza y Formentera. 4. Una ley del Parlamento, aprobada por mayoría cualificada de dos tercios, regulará el total de Diputados que deben integrarlo, el número de Diputados que debe corresponder elegir en cada una de las circunscripciones electorales y las causas de inelegibilidad y de incompatibilidad que les afecten. 5. El Parlamento se constituirá en el plazo máximo de treinta días después de la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El voto de los Diputados es:",
+        "opciones": [
+            "Personal y secreto.",
+            "Personal e intransferible.",
+            "Personal y delegable.",
+            "Personal e indelegable."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 44. Estatuto de los Diputados. 1. Los Diputados del Parlamento de las Illes Balears no estarán vinculados por mandato imperativo alguno y gozarán, aun después de haber cesado en su mandato, de inviolabilidad por las opiniones manifestadas y por los votos emitidos en el ejercicio de su cargo. Durante su mandato no podrán ser detenidos ni retenidos, salvo en caso de flagrante delito, en todo caso, corresponderá decidir su inculpación, prisión, procesamiento y juicio al Tribunal Superior de Justicia de las Illes Balears. Fuera del ámbito territorial de la Comunidad Autónoma, la responsabilidad penal les será exigible en los mismos términos ante la Sala de lo Penal del Tribunal Supremo. 2. El voto de los Diputados es personal e indelegable."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La institución oficial consultiva para todo lo que se refiere a la lengua catalana será:",
+        "opciones": [
+            "Instituto Balear de la Lengua.",
+            "Universidad de las Illes Balears.",
+            "Instituto Oficial Balear de la Lengua.",
+            "Academia Balear de la Lengua."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 35. Enseñanza de la lengua propia. La Comunidad Autónoma tiene competencia exclusiva para la enseñanza de la lengua catalana, propia de las Illes Balears, de acuerdo con la tradición literaria autóctona. Normalizarla será un objetivo de los poderes públicos de la Comunidad Autónoma. Las modalidades insulares del catalán¸ de Mallorca, Menorca, Ibiza y Formentera serán objeto de estudio y protección, sin perjuicio de la unidad de la lengua. La institución oficial consultiva para todo lo que se refiere a la lengua catalana será la Universidad de las Illes Balears. La Comunidad Autónoma de las Illes Balears podrá participar en una institución dirigida a salvaguardar la unidad lingüística, formada por todas las comunidades que reconozcan la cooficialidad de la lengua catalana."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En materia de enseñanza no universitaria, en relación con la expedición y la homologación de los títulos académicos y profesionales estatales, corresponde a la Comunidad Autónoma, la competencia de:",
+        "opciones": [
+            "Exclusiva.",
+            "De desarrollo legislativo.",
+            "De desarrollo legislativo y de ejecución.",
+            "Ejecutiva."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 36. Enseñanza. De acuerdo con lo que dispone el artículo 27 y el número 30 del apartado 1 del artículo 149 de la Constitución en materia de enseñanza, corresponde a la Comunidad Autónoma de las Illes Balears: 1. En materia de enseñanza no universitaria, la competencia exclusiva en la creación, la organización y el régimen de los centros públicos; régimen de becas y ayudas con fondos propios, la formación y el perfeccionamiento del personal docente; servicios educativos y actividades extraescolares complementarias en relación con los centros públicos y privados sostenidos con fondos públicos, en colaboración con los órganos de participación de los padres y las madres de sus alumnos. 2. Corresponde a la Comunidad Autónoma de las Illes Balears la competencia de desarrollo legislativo y de ejecución de la enseñanza en toda su extensión, niveles y grados, modalidades y especialidades. 3. En materia de enseñanza no universitaria, la competencia ejecutiva sobre la expedición y la homologación de los títulos académicos y profesionales estatales. 4. En materia de enseñanza universitaria, la Comunidad Autónoma de las Illes Balears tiene competencia exclusiva, sin perjuicio de la autonomía universitaria, en la programación y la coordinación del sistema universitario, en la financiación propia de las universidades y en la regulación y la gestión del sistema propio de becas y ayudas."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las Comisiones permanentes podrán elaborar y aprobar leyes por delegación expresa del Pleno:",
+        "opciones": [
+            "Sí, exceptuando las leyes de bases.",
+            "Sí, exceptuando las leyes de bases y los Presupuestos de la Comunidad Autónoma.",
+            "Sí, exceptuando las leyes marco y los Presupuestos de la Comunidad Autónoma.",
+            "Las Comisiones permanentes no pueden elaborar ni aprobar leyes por delegación."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 45. Organización y funcionamiento. 1. El Parlamento tendrá un Presidente, una Mesa y una Diputación Permanente. El Reglamento regulará su composición y sus reglas de elección. 2. El Parlamento funcionará en Pleno y en Comisiones. Las Comisiones permanentes podrán elaborar y aprobar leyes por delegación expresa del Pleno, sin perjuicio de la facultad del mismo para reclamar su debate y aprobación en cualquier momento del proceso legislativo. Quedan exceptuadas de dicha delegación las leyes de bases y los Presupuestos de la Comunidad Autónoma. 3. El Parlamento podrá crear Comisiones especiales de investigación. 4. El Parlamento se reunirá durante ocho meses al año, en dos períodos de sesiones comprendidos entre septiembre y diciembre, el primero, y entre febrero y junio, el segundo. El Parlamento se reunirá en sesión extraordinaria, a petición del Gobierno o por acuerdo de la Diputación Permanente o del Pleno, a propuesta de una quinta parte de los Diputados. La sesión extraordinaria acabará una vez finalizado el orden del día determinado para el que fue convocada. 5. Los acuerdos, sean en el Pleno, sean en las Comisiones, para que sean válidos, deberán ser adoptados en sesiones convocadas reglamentariamente, con la asistencia de la mayoría de sus componentes y por aprobación de la mayoría de los presentes, excepto en aquellos casos en que la ley o el reglamento exijan un quórum más elevado. 6. El Parlamento debe establecer su propio Reglamento que regulará los períodos de sesiones, el régimen y el lugar de las sesiones, la formación de Grupos Parlamentarios y su intervención en el proceso legislativo, las funciones de la Junta de Portavoces, y demás cuestiones necesarias o pertinentes para el buen funcionamiento del Parlamento. La aprobación y la reforma del Reglamento requerirán la mayoría absoluta de los componentes del Parlamento."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

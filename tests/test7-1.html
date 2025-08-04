@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+    <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+
+    <script>
+        const preguntas = [{
+                "pregunta": "1. Según el anexo I del RDL 6/2015. Tienen la condición de ciclomotores los vehículos que se definen a continuación. Señale la correcta:",
+                "opciones": [
+                    "Vehículo de dos ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor de cilindrada inferior o igual a 50 cm3, si es de combustión interna, o bien con una potencia continua nominal máxima inferior o igual a 0,4 kW si es de motor eléctrico.",
+                    "Vehículo de tres ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor cuya cilindrada sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o bien cuya potencia máxima neta sea inferior o igual a 4 kW para los demás motores de combustión interna, o bien cuya potencia continua nominal máxima sea inferior o igual a 4 kW para los motores eléctricos.",
+                    "Vehículos de cuatro ruedas, cuya masa en vacío sea inferior o igual a 350 kilogramos incluida la masa de baterías para los vehículos eléctricos, cuya velocidad máxima por construcción sea inferior o igual a 45 km/h, y cuya cilindrada del motor sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o cuya potencia máxima neta sea inferior o igual a 0,4 kW para los demás motores de combustión interna, o cuya potencia continua nominal máxima sea inferior o igual a 0,4 kW para los motores eléctricos.",
+                    "Vehículo de tres ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor cuya cilindrada sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o bien cuya potencia máxima neta sea inferior o igual a 0,4 kW para los demás motores de combustión interna, o bien cuya potencia continua nominal máxima sea inferior o igual a 0,4 kW para los motores eléctricos."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I a) Vehículo de dos ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor de cilindrada inferior o igual a 50 cm3, si es de combustión interna, o bien con una potencia continua nominal máxima inferior o igual a 0,4 kW (son 4 kW) si es de motor eléctrico. b) Vehículo de tres ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor cuya cilindrada sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o bien cuya potencia máxima neta sea inferior o igual a 4 kW para los demás motores de combustión interna, o bien cuya potencia continua nominal máxima sea inferior o igual a 4 kW para los motores eléctricos. c) Vehículos de cuatro ruedas, cuya masa en vacío sea inferior o igual a 350 kilogramos incluida la masa de baterías para los vehículos eléctricos, cuya velocidad máxima por construcción sea inferior o igual a 45 km/h, y cuya cilindrada del motor sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o cuya potencia máxima neta sea inferior o igual a 0,4 kW (son 4 kW) para los demás motores de combustión interna, o cuya potencia continua nominal máxima sea inferior o igual a 0,4 kW (son 4 kW) para los motores eléctricos. d) Vehículo de tres ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor cuya cilindrada sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o bien cuya potencia máxima neta sea inferior o igual a 0,4 kW (son 4 kW) para los demás motores de combustión interna, o bien cuya potencia continua nominal máxima sea inferior o igual a 0,4 kW (son 4 kW) para los motores eléctricos."
+            },
+            {
+                "pregunta": "2. Según el artículo 1 del RDL 6/2015, ¿qué regula dicha ley? Señale la incorrecta:",
+                "opciones": [
+                    "El ejercicio de las competencias que, de acuerdo con la Constitución Española y los estatutos de autonomía, corresponden en tales materias a la Administración General del Estado y a las comunidades autónomas que hayan recibido el traspaso de funciones y servicios en esta materia, así como la determinación de las que corresponden en todo caso a las entidades locales.",
+                    "Los elementos de seguridad activa y pasiva y su régimen de utilización, así como las condiciones técnicas de los vehículos y de las actividades industriales que afectan de manera directa a la seguridad vial.",
+                    "Las autorizaciones que, para garantizar la seguridad y fluidez de la circulación, otorga la Administración con carácter previo a la realización de actividades relacionadas con la circulación de vehículos, especialmente a motor, así como las medidas cautelares que adopte con el mismo fin.",
+                    "Las infracciones derivadas del incumplimiento de las normas establecidas y las sanciones aplicables a las mismas, excepto el procedimiento sancionador en esta materia."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 1 2. A tal efecto regula: a) El ejercicio de las competencias que, de acuerdo con la Constitución Española y los estatutos de autonomía, corresponden en tales materias a la Administración General del Estado y a las comunidades autónomas que hayan recibido el traspaso de funciones y servicios en esta materia, así como la determinación de las que corresponden en todo caso a las entidades locales. b) Las normas de circulación para los vehículos, así como las que por razón de seguridad vial rigen para la circulación de peatones y animales por las vías de utilización general, estableciéndose a tal efecto los derechos y obligaciones de los usuarios de dichas vías. c) Los elementos de seguridad activa y pasiva y su régimen de utilización, así como las condiciones técnicas de los vehículos y de las actividades industriales que afectan de manera directa a la seguridad vial. d) Los criterios de señalización de las vías de utilización general. e) Las autorizaciones que, para garantizar la seguridad y fluidez de la circulación, otorga la Administración con carácter previo a la realización de actividades relacionadas con la circulación de vehículos, especialmente a motor, así como las medidas cautelares que adopte con el mismo fin. f) Las infracciones derivadas del incumplimiento de las normas establecidas y las sanciones aplicables a las mismas, así como el procedimiento sancionador en esta materia."
+            },
+            {
+                "pregunta": "3. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera:",
+                "opciones": [
+                    "Senda ciclable.",
+                    "Pista-bici.",
+                    "Acera-bici.",
+                    "Carril-bici protegido."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "4. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. ¿Cuál de las siguientes competencias pertenece a los municipios? Señale la incorrecta:",
+                "opciones": [
+                    "La regulación, ordenación, gestión, vigilancia y disciplina, por medio de agentes propios, del tráfico en las vías urbanas de su titularidad, así como la denuncia de las infracciones que se cometan en dichas vías y la sanción de las mismas cuando no esté expresamente atribuida a otra Administración.",
+                    "La regulación mediante ordenanza municipal de circulación, de los usos de las vías urbanas, haciendo compatible la equitativa distribución de los aparcamientos entre todos los usuarios con la necesaria fluidez del tráfico rodado y con el uso peatonal de las calles, así como el establecimiento de medidas de estacionamiento limitado, con el fin de garantizar la rotación de los aparcamientos, prestando especial atención a las necesidades de las personas con discapacidad que tienen reducida su movilidad y que utilizan vehículos, todo ello con el fin de favorecer su integración social.",
+                    "La inmovilización de los vehículos en vías urbanas cuando no dispongan de título que habilite el estacionamiento en zonas limitadas en tiempo o excedan de la autorización concedida, hasta que se logre la identificación de su titular.",
+                    "La realización de las pruebas a que alude el artículo 5.o) en las vías urbanas, en los términos que reglamentariamente se determine."
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 7 Competencias de los municipios Corresponde a los municipios: a) La regulación, ordenación, gestión, vigilancia y disciplina, por medio de agentes propios, del tráfico en las vías urbanas de su titularidad, así como la denuncia de las infracciones que se cometan en dichas vías y la sanción de las mismas cuando no esté expresamente atribuida a otra Administración. b) La regulación mediante ordenanza municipal de circulación, de los usos de las vías urbanas, haciendo compatible la equitativa distribución de los aparcamientos entre todos los usuarios con la necesaria fluidez del tráfico rodado y con el uso peatonal de las calles, así como el establecimiento de medidas de estacionamiento limitado, con el fin de garantizar la rotación de los aparcamientos, prestando especial atención a las necesidades de las personas con discapacidad que tienen reducida su movilidad y que utilizan vehículos, todo ello con el fin de favorecer su integración social. c) La inmovilización de los vehículos en vías urbanas cuando no dispongan de título que habilite el estacionamiento en zonas limitadas en tiempo o excedan de la autorización concedida, hasta que se logre la identificación de su conductor. La retirada de los vehículos de las vías urbanas y su posterior depósito cuando obstaculicen, dificulten o supongan un peligro para la circulación, o se encuentren incorrectamente aparcados en las zonas de estacionamiento restringido, en las condiciones previstas para la inmovilización en este mismo artículo. Las bicicletas sólo podrán ser retiradas y llevadas al correspondiente depósito si están abandonadas o si, estando amarradas, dificultan la circulación de vehículos o personas o dañan el mobiliario urbano. Igualmente, la retirada de vehículos en las vías interurbanas y el posterior depósito de éstos, en los términos que reglamentariamente se determine. d) La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, exceptuadas las travesías. e) La realización de las pruebas a que alude el artículo 5.o) en las vías urbanas, en los términos que reglamentariamente se determine. f) El cierre de vías urbanas cuando sea necesario. g) La restricción de la circulación a determinados vehículos en vías urbanas por motivos medioambientales."
+            },
+            {
+                "pregunta": "5. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Indique de las siguientes definiciones cual es correcta:",
+                "opciones": [
+                    "Motocicletas con sidecar. Automóvil de tres ruedas simétricas respecto a su eje medio longitudinal, provistas de un motor de cilindrada superior a 50 cm³, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h.",
+                    "Turismo. Automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, nueve plazas como máximo.",
+                    "Autobús o autocar. Automóvil que tenga más de nueve plazas, incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas y sus equipajes.",
+                    "Camión. Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina está integrada en el resto de la carrocería y con un máximo de nueve plazas, incluido el conductor."
+                ],
+                "correcta": 2,
+                "explicacion": "Anexo I del RDL 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Motocicletas con sidecar. Automóvil de tres ruedas asimétricas respecto a su eje medio longitudinal, provistos de un motor de cilindrada superior a 50 cm3, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h. Turismo. Automóvil destinado al transporte de personas que tenga, por lo menos, cuatro ruedas y que tenga, además del asiento del conductor, ocho plazas como máximo. Autobús o autocar. Automóvil que tenga más de nueve plazas, incluida la del conductor, destinado, por su construcción y acondicionamiento, al transporte de personas y sus equipajes. Se incluye en este término el trolebús, es decir, el vehículo conectado a una línea eléctrica y que no circula por raíles. Camión. Automóvil con cuatro ruedas o más, concebido y construido para el transporte de mercancías, cuya cabina no está integrada en el resto de la carrocería y con un máximo de nueve plazas, incluido el conductor."
+            },
+            {
+                "pregunta": "6. Definición de estacionamiento:",
+                "opciones": [
+                    "Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario.",
+                    "Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo.",
+                    "Inmovilización de un vehículo que no se encuentra en situación de detención o parada.",
+                    "Inmovilización de un vehículo durante un tiempo superior a dos minutos, sin que el conductor pueda abandonarlo."
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 80. Detención. Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario. 81. Parada. Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo. 82. Estacionamiento. Inmovilización de un vehículo que no se encuentra en situación de detención o parada."
+            },
+            {
+                "pregunta": "7. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Esta ley tiene por objeto regular el tráfico, la circulación de vehículos a motor y la seguridad vial. A tal efecto regula: Indique la respuesta correcta.",
+                "opciones": [
+                    "Los criterios de señalización de las vías de utilización general.",
+                    "Las normas de circulación para los vehículos, así como las que por razón de seguridad vial rigen para la circulación de peatones y animales por las vías de utilización general, estableciéndose a tal efecto los derechos y obligaciones de los usuarios de dichas vías.",
+                    "Las infracciones derivadas del incumplimiento de las normas establecidas y las sanciones aplicables a las mismas, así como el procedimiento sancionador en esta materia.",
+                    "Todas son correctas"
+                ],
+                "correcta": 3,
+                "explicacion": "RDL 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Artículo 1 Objeto 1. Esta ley tiene por objeto regular el tráfico, la circulación de vehículos a motor y la seguridad vial. 2. A tal efecto regula: a) El ejercicio de las competencias que, de acuerdo con la Constitución Española y los estatutos de autonomía, corresponden en tales materias a la Administración General del Estado y a las comunidades autónomas que hayan recibido el traspaso de funciones y servicios en esta materia, así como la determinación de las que corresponden en todo caso a las entidades locales. b) Las normas de circulación para los vehículos, así como las que por razón de seguridad vial rigen para la circulación de peatones y animales por las vías de utilización general, estableciéndose a tal efecto los derechos y obligaciones de los usuarios de dichas vías. c) Los elementos de seguridad activa y pasiva y su régimen de utilización, así como las condiciones técnicas de los vehículos y de las actividades industriales que afectan de manera directa a la seguridad vial. d) Los criterios de señalización de las vías de utilización general. e) Las autorizaciones que, para garantizar la seguridad y fluidez de la circulación, otorga la Administración con carácter previo a la realización de actividades relacionadas con la circulación de vehículos, especialmente a motor, así como las medidas cautelares que adopte con el mismo fin. f) Las infracciones derivadas del incumplimiento de las normas establecidas y las sanciones aplicables a las mismas, así como el procedimiento sancionador en esta materia."
+            },
+            {
+                "pregunta": "8. Indique la definición correcta de vehículo para personas de movilidad reducida según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Vehículo cuya masa máxima autorizada no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas.",
+                    "Vehículo cuya masa en carga no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas.",
+                    "Vehículo cuya tara no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas.",
+                    "Vehículo cuya tara no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido o adaptado para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas."
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I a) Vehículo cuya masa máxima autorizada (debería ser tara) no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas. b) Vehículo cuya masa en carga (debería ser tara) no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas. c) Vehículo cuya tara no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas. d) Vehículo cuya tara no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido o adaptado (debería poner \"y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas."
+            },
+            {
+                "pregunta": "9. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques:",
+                "opciones": [
+                    "Senda ciclable.",
+                    "Pista-bici.",
+                    "Acera-bici.",
+                    "Carril-bibi."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "10. Indique la definición correcta de conductor según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Persona que, con las excepciones del párrafo segundo del punto 4 maneja el mecanismo de dirección o va al mando de un vehículo, o a cuyo cargo está un animal o animales. En vehículos que circulen en función de aprendizaje de la conducción, tiene la consideración de conductor la persona que está a cargo de los mandos adicionales.",
+                    "Persona que, contando con el permiso o licencia de conducción necesarios, inscrito en el Registro de Conductores e Infractores y previo su consentimiento, se comunica por el titular del vehículo o, en su caso, por el arrendatario a largo plazo al Registro de Vehículos, por ser aquella que de manera usual o con mayor frecuencia conduce dicho vehículo.",
+                    "Persona provista de la correspondiente autorización administrativa para conducir, cuya actividad laboral principal sea la conducción de vehículos a motor dedicados al transporte de mercancías o de personas, extremo que se acreditará mediante certificación expedida por la empresa para la que ejerza aquella actividad, acompañada de la correspondiente documentación acreditativa de la cotización a la Seguridad Social como trabajador de dicha empresa. Si se trata de un empresario autónomo, la certificación a que se hace referencia en el párrafo anterior será sustituida por una declaración del propio empresario.",
+                    "Persona que, con las excepciones del párrafo segundo del punto 4 maneja el mecanismo de dirección o va al mando de un vehículo, o a cuyo cargo está un animal o animales o conduce a pie un ciclomotor de dos ruedas. En vehículos que circulen en función de aprendizaje de la conducción, tiene la consideración de conductor la persona que está a cargo de los mandos adicionales."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Conductor. Persona que, con las excepciones del párrafo segundo del punto 4 maneja el mecanismo de dirección o va al mando de un vehículo, o a cuyo cargo está un animal o animales. En vehículos que circulen en función de aprendizaje de la conducción, tiene la consideración de conductor la persona que está a cargo de los mandos adicionales. Conductor habitual. Persona que, contando con el permiso o licencia de conducción necesarios, inscrito en el Registro de Conductores e Infractores y previo su consentimiento, se comunica por el titular del vehículo o, en su caso, por el arrendatario a largo plazo al Registro de Vehículos, por ser aquella que de manera usual o con mayor frecuencia conduce dicho vehículo. Conductor profesional. Persona provista de la correspondiente autorización administrativa para conducir, cuya actividad laboral principal sea la conducción de vehículos a motor dedicados al transporte de mercancías o de personas, extremo que se acreditará mediante certificación expedida por la empresa para la que ejerza aquella actividad, acompañada de la correspondiente documentación acreditativa de la cotización a la Seguridad Social como trabajador de dicha empresa. Si se trata de un empresario autónomo, la certificación a que se hace referencia en el párrafo anterior será sustituida por una declaración del propio empresario. Este concepto sólo será de aplicación en lo que se refiere al sistema del permiso de conducción por puntos. Persona que, con las excepciones del párrafo segundo del punto 4 maneja el mecanismo de dirección o va al mando de un vehículo, o a cuyo cargo está un animal o animales o conduce a pie un ciclomotor de dos ruedas (En este caso se considera peatón y no conductor). En vehículos que circulen en función de aprendizaje de la conducción, tiene la consideración de conductor la persona que está a cargo de los mandos adicionales."
+            },
+            {
+                "pregunta": "11. RDL 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Ámbito de aplicación: Indique la respuesta correcta.",
+                "opciones": [
+                    "Los preceptos de esta ley son aplicables en todo el territorio nacional y obligan a los titulares y usuarios de las vías y terrenos públicos aptos para la circulación, tanto urbanos como interurbanos.",
+                    "A los de las vías y terrenos que, sin tener tal aptitud, sean de uso común.",
+                    "En defecto de otras normas, a los titulares de las vías y terrenos privados que sean utilizados por una colectividad indeterminada de usuarios.",
+                    "Todas son correctas."
+                ],
+                "correcta": 3,
+                "explicacion": "RDL 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Artículo 2 Ámbito de aplicación. Los preceptos de esta ley son aplicables en todo el territorio nacional y obligan a los titulares y usuarios de las vías y terrenos públicos aptos para la circulación, tanto urbanos como interurbanos, a los de las vías y terrenos que, sin tener tal aptitud, sean de uso común y, en defecto de otras normas, a los titulares de las vías y terrenos privados que sean utilizados por una colectividad indeterminada de usuarios."
+            },
+            {
+                "pregunta": "12. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. El cierre de vías urbanas cuando sea necesario. Es competencia de:",
+                "opciones": [
+                    "Administración General del Estado",
+                    "Ministerio del Interior",
+                    "Organismo autónomo Jefatura Central de Tráfico",
+                    "Competencia de los municipios"
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 7 Competencias de los municipios f) El cierre de vías urbanas cuando sea necesario."
+            },
+            {
+                "pregunta": "13. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Peatón: Persona que, sin ser conductor, transita a pie por las vías o terrenos a que se refiere el artículo 2. También tienen la consideración de peatones… Señale la respuesta incorrecta:",
+                "opciones": [
+                    "Quienes empujan o arrastran un coche de niño o de una persona con discapacidad",
+                    "Cualquier otro vehículo sin motor de pequeñas dimensiones",
+                    "Los que conducen un ciclo o ciclomotor de dos ruedas",
+                    "Las personas con discapacidad que circulan al paso en una silla de ruedas, con o sin motor"
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Peatón. Persona que, sin ser conductor, transita a pie por las vías o terrenos a que se refiere el artículo 2. También tienen la consideración de peatones quienes empujan o arrastran un coche de niño o de una persona con discapacidad o cualquier otro vehículo sin motor de pequeñas dimensiones, los que conducen a pie un ciclo o ciclomotor de dos ruedas, y las personas con discapacidad que circulan al paso en una silla de ruedas, con o sin motor."
+            },
+            {
+                "pregunta": "14. ¿En qué anexo del RDL 6/2015 se recogen los conceptos básicos?",
+                "opciones": [
+                    "En el anexo II.",
+                    "En el anexo I.",
+                    "En el anexo III.",
+                    "En el Título IV."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 3 Conceptos básicos A los efectos de esta ley y sus disposiciones complementarias, los conceptos básicos sobre vehículos, vías públicas y usuarios de las mismas son los previstos en su anexo I."
+            },
+            {
+                "pregunta": "15. Indique la definición correcta según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Vehículo de motor. Vehículo provisto de motor para su propulsión. Se incluyen en esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida.",
+                    "Automóvil. Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales.",
+                    "Tranvía. Vehículo que marcha por carriles instalados en la vía.",
+                    "Vehículo para personas de movilidad reducida. Vehículo cuya tara no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de dos ruedas."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I a) Vehículo de motor. Vehículo provisto de motor para su propulsión. Se incluyen (excluyen) en esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida. b) Automóvil. Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales. c) Tranvía. Vehículo que marcha por carriles (railes) instalados en la vía. d) Vehículo para personas de movilidad reducida. Vehículo cuya tara no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de dos ruedas. (de tres ruedas)."
+            },
+            {
+                "pregunta": "16. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Vehículo de motor: Vehículo provisto de motor para su propulsión. Se excluyen de esta definición:",
+                "opciones": [
+                    "Los ciclomotores",
+                    "Los tranvías",
+                    "Los vehículos para personas de movilidad reducida",
+                    "Todas son correctas"
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Vehículo de motor. Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida."
+            },
+            {
+                "pregunta": "17. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Tienen la condición de conjunto de vehículos:",
+                "opciones": [
+                    "Vehículo articulado. Automóvil constituido por un vehículo de motor acoplado a un remolque",
+                    "Tren de carretera. Automóvil constituido por un vehículo de motor enganchado a un remolque",
+                    "a y b son correctos",
+                    "a y b son incorrectos"
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Conjunto de vehículos. Tienen la condición de conjunto de vehículos: a) Vehículo articulado. Automóvil constituido por un vehículo de motor acoplado a un semirremolque. b) Tren de carretera. Automóvil constituido por un vehículo de motor enganchado a un remolque."
+            },
+            {
+                "pregunta": "18. Indique la definición correcta de peatón según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Peatón. Persona que, sin ser conductor, transita a pie por las vías o terrenos a que se refiere el artículo 2. También tienen la consideración de peatones quienes empujan o arrastran un coche de niño o de una persona con discapacidad o cualquier otro vehículo sin motor de pequeñas dimensiones, los que conducen a pie un ciclo o ciclomotor de dos ruedas, y las personas con discapacidad que circulan al paso en una silla de ruedas, sin motor.",
+                    "Peatón. Persona que, sin ser conductor, transita a pie por las vías o terrenos a que se refiere el artículo 1. También tienen la consideración de peatones quienes empujan o arrastran un coche de niño o de una persona con discapacidad o cualquier otro vehículo sin motor de pequeñas dimensiones, los que conducen a pie un ciclo o ciclomotor de dos ruedas, y las personas con discapacidad que circulan al paso en una silla de ruedas, con o sin motor.",
+                    "Peatón. Persona que, sin ser conductor, transita a pie por las vías o terrenos a que se refiere el artículo 2. También tienen la consideración de peatones quienes empujan o arrastran un coche de niño o de una persona con discapacidad o cualquier otro vehículo sin motor de pequeñas dimensiones, los que conducen a pie un ciclo o ciclomotor de dos ruedas, y las personas con discapacidad que circulan al paso en una silla de ruedas, con o sin motor.",
+                    "Peatón. Persona que, sin ser conductor, transita a pie por las vías o terrenos a que se refiere el artículo 2. También tienen la consideración de peatones quienes empujan o arrastran un coche de niño o de una persona con discapacidad o cualquier otro vehículo sin motor de pequeñas dimensiones, los que conducen a pie un ciclo, ciclomotor o motocicleta de dos ruedas, y las personas con discapacidad que circulan al paso en una silla de ruedas, con o sin motor."
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Peatón. Persona que, sin ser conductor, transita a pie por las vías o terrenos a que se refiere el artículo 2. También tienen la consideración de peatones quienes empujan o arrastran un coche de niño o de una persona con discapacidad o cualquier otro vehículo sin motor de pequeñas dimensiones, los que conducen a pie un ciclo o ciclomotor de dos ruedas, y las personas con discapacidad que circulan al paso en una silla de ruedas, con o sin motor. La opción A no es correcta debido a que dice que las personas con discapacidad que circulan al paso en una silla de ruedas sin motor son peatones y faltaría añadir aquellos que van en una silla de ruedas con motor y que también se consideran peatones. En la opción B indica : Persona que, sin ser conductor, transita a pie por las vías o terrenos a que se refiere el artículo 1, y debería poner artículo 2. En la opción D, los que conducen a pie una motocicleta no se consideran peatones si no, conductores."
+            },
+            {
+                "pregunta": "19. Definición de carril bici:",
+                "opciones": [
+                    "Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+                    "Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+                    "Vía ciclista señalizada sobre la acera.",
+                    "Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "20. Definición de detención:",
+                "opciones": [
+                    "Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario.",
+                    "Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo.",
+                    "Inmovilización de un vehículo que no se encuentra en situación de detención o parada.",
+                    "Inmovilización de un vehículo durante un tiempo superior a dos minutos, sin que el conductor pueda abandonarlo."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 80. Detención. Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario. 81. Parada. Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo. 82. Estacionamiento. Inmovilización de un vehículo que no se encuentra en situación de detención o parada."
+            },
+            {
+                "pregunta": "21. Indique la definición correcta de conductor profesional según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Persona provista de la correspondiente autorización administrativa para conducir, cuya actividad laboral principal sea la conducción de vehículos a motor dedicados al transporte de mercancías o de personas, extremo que se acreditará mediante certificación expedida por la empresa para la que ejerza aquella actividad, acompañada de la correspondiente documentación acreditativa de la cotización a la Seguridad Social como trabajador de dicha empresa. Si se trata de un empresario autónomo, la certificación a que se hace referencia en el párrafo anterior será sustituida por una declaración del propio empresario. Este concepto sólo será de aplicación en lo que se refiere al sistema del permiso de conducción por puntos.",
+                    "Persona que, contando con el permiso o licencia de conducción necesarios, inscrito en el Registro de Conductores e Infractores y previo su consentimiento, se comunica por el titular del vehículo o, en su caso, por el arrendatario a largo plazo al Registro de Vehículos, por ser aquella que de manera usual o con mayor frecuencia conduce dicho vehículo.",
+                    "Persona que, con las excepciones del párrafo segundo del punto 4 maneja el mecanismo de dirección o va al mando de un vehículo, o a cuyo cargo está un animal o animales. En vehículos que circulen en función de aprendizaje de la conducción, tiene la consideración de conductor la persona que está a cargo de los mandos adicionales.",
+                    "Persona provista de la correspondiente autorización administrativa para conducir, cuya actividad laboral principal sea la conducción de vehículos a motor dedicados al transporte de mercancías o de personas, extremo que se acreditará mediante certificación expedida por la empresa para la que ejerza aquella actividad, acompañada de la correspondiente documentación acreditativa de la cotización a la Seguridad Social como trabajador de dicha empresa. Si se trata de un empresario autónomo, la certificación a que se hace referencia en el párrafo anterior será sustituida por una declaración del propio empresario. Este concepto será de aplicación en lo que se refiere al sistema del permiso de conducción por puntos y para el canje del permiso de conducción."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I Conductor profesional. Persona provista de la correspondiente autorización administrativa para conducir, cuya actividad laboral principal sea la conducción de vehículos a motor dedicados al transporte de mercancías o de personas, extremo que se acreditará mediante certificación expedida por la empresa para la que ejerza aquella actividad, acompañada de la correspondiente documentación acreditativa de la cotización a la Seguridad Social como trabajador de dicha empresa. Si se trata de un empresario autónomo, la certificación a que se hace referencia en el párrafo anterior será sustituida por una declaración del propio empresario. Este concepto sólo será de aplicación en lo que se refiere al sistema del permiso de conducción por puntos."
+            },
+            {
+                "pregunta": "22. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido:",
+                "opciones": [
+                    "Senda ciclable.",
+                    "Pista-bici.",
+                    "Acera-bici.",
+                    "Carril-bici."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "23. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. ¿Cuál de las siguientes competencias pertenece a los municipios?",
+                "opciones": [
+                    "La autorización de pruebas deportivas que tengan que celebrarse utilizando en todo o parte del recorrido carreteras estatales o travesías, previo informe de las Administraciones titulares de las vías públicas afectadas, e informar, con carácter vinculante, las que vayan a conceder otros órganos autonómicos o municipales, cuando tengan que circular por vías públicas o de uso público en que la Administración General del Estado tiene atribuida la ordenación, gestión, control y vigilancia del tráfico.",
+                    "La realización de las pruebas, reglamentariamente establecidas, para determinar el grado de intoxicación alcohólica, o por drogas, de los conductores que circulen por las vías públicas en las que tiene atribuida la ordenación, gestión, control y vigilancia del tráfico.",
+                    "La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, exceptuadas las travesías.",
+                    "La garantía de igualdad de oportunidades, no discriminación y accesibilidad universal de las personas con discapacidad, especialmente en su calidad de conductores, en todos los ámbitos regulados en esta ley."
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Artículo 7 Competencias de los municipios Corresponde a los municipios: a) La regulación, ordenación, gestión, vigilancia y disciplina, por medio de agentes propios, del tráfico en las vías urbanas de su titularidad, así como la denuncia de las infracciones que se cometan en dichas vías y la sanción de las mismas cuando no esté expresamente atribuida a otra Administración. b) La regulación mediante ordenanza municipal de circulación, de los usos de las vías urbanas, haciendo compatible la equitativa distribución de los aparcamientos entre todos los usuarios con la necesaria fluidez del tráfico rodado y con el uso peatonal de las calles, así como el establecimiento de medidas de estacionamiento limitado, con el fin de garantizar la rotación de los aparcamientos, prestando especial atención a las necesidades de las personas con discapacidad que tienen reducida su movilidad y que utilizan vehículos, todo ello con el fin de favorecer su integración social. c) La inmovilización de los vehículos en vías urbanas cuando no dispongan de título que habilite el estacionamiento en zonas limitadas en tiempo o excedan de la autorización concedida, hasta que se logre la identificación de su conductor.La retirada de los vehículos de las vías urbanas y su posterior depósito cuando obstaculicen, dificulten o supongan un peligro para la circulación, o se encuentren incorrectamente aparcados en las zonas de estacionamiento restringido, en las condiciones previstas para la inmovilización en este mismo artículo. Las bicicletas sólo podrán ser retiradas y llevadas al correspondiente depósito si están abandonadas o si, estando amarradas, dificultan la circulación de vehículos o personas o dañan el mobiliario urbano. Igualmente, la retirada de vehículos en las vías interurbanas y el posterior depósito de éstos, en los términos que reglamentariamente se determine. d) La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, exceptuadas las travesías. e) La realización de las pruebas a que alude el artículo 5.o) en las vías urbanas, en los términos que reglamentariamente se determine. f) El cierre de vías urbanas cuando sea necesario. g) La restricción de la circulación a determinados vehículos en vías urbanas por motivos medioambientales."
+            },
+            {
+                "pregunta": "24. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. ¿Cuál de las siguientes competencias pertenece a los municipios? Señale la incorrecta:",
+                "opciones": [
+                    "La restricción de la circulación a determinados vehículos en vías urbanas y travesías por motivos medioambientales.",
+                    "El cierre de vías urbanas cuando sea necesario.",
+                    "La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, exceptuadas las travesías.",
+                    "La restricción de la circulación a determinados vehículos en vías urbanas por motivos medioambientales."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 7 Competencias de los municipios Corresponde a los municipios: a) La regulación, ordenación, gestión, vigilancia y disciplina, por medio de agentes propios, del tráfico en las vías urbanas de su titularidad, así como la denuncia de las infracciones que se cometan en dichas vías y la sanción de las mismas cuando no esté expresamente atribuida a otra Administración. b) La regulación mediante ordenanza municipal de circulación, de los usos de las vías urbanas, haciendo compatible la equitativa distribución de los aparcamientos entre todos los usuarios con la necesaria fluidez del tráfico rodado y con el uso peatonal de las calles, así como el establecimiento de medidas de estacionamiento limitado, con el fin de garantizar la rotación de los aparcamientos, prestando especial atención a las necesidades de las personas con discapacidad que tienen reducida su movilidad y que utilizan vehículos, todo ello con el fin de favorecer su integración social. c) La inmovilización de los vehículos en vías urbanas cuando no dispongan de título que habilite el estacionamiento en zonas limitadas en tiempo o excedan de la autorización concedida, hasta que se logre la identificación de su conductor. La retirada de los vehículos de las vías urbanas y su posterior depósito cuando obstaculicen, dificulten o supongan un peligro para la circulación, o se encuentren incorrectamente aparcados en las zonas de estacionamiento restringido, en las condiciones previstas para la inmovilización en este mismo artículo. Las bicicletas sólo podrán ser retiradas y llevadas al correspondiente depósito si están abandonadas o si, estando amarradas, dificultan la circulación de vehículos o personas o dañan el mobiliario urbano. Igualmente, la retirada de vehículos en las vías interurbanas y el posterior depósito de éstos, en los términos que reglamentariamente se determine. d) La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, exceptuadas las travesías. e) La realización de las pruebas a que alude el artículo 5.o) en las vías urbanas, en los términos que reglamentariamente se determine. f) El cierre de vías urbanas cuando sea necesario. g) La restricción de la circulación a determinados vehículos en vías urbanas por motivos medioambientales."
+            },
+            {
+                "pregunta": "25. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Catadióptrico: Dispositivo utilizado para indicar la presencia del vehículo mediante la reflexión de la luz procedente de una fuente luminosa independiente de dicho vehículo, hallándose el observador cerca de la fuente. No se considerarán catadióptricos:",
+                "opciones": [
+                    "Las placas de matrícula retro reflectantes",
+                    "Las señales retro reflectantes mencionadas en el ADR",
+                    "Las demás placas y señales retro reflectantes que deban llevarse para cumplir la reglamentación vigente sobre la utilización de determinadas categorías de vehículos o de determinados modos de funcionamiento.",
+                    "Todas las anteriores"
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Catadióptrico. Dispositivo utilizado para indicar la presencia del vehículo mediante la reflexión de la luz procedente de una fuente luminosa independiente de dicho vehículo, hallándose el observador cerca de la fuente. No se considerarán catadióptricos: – Las placas de matrícula retrorreflectantes. – Las señales retrorreflectantes mencionadas en el ADR. – Las demás placas y señales retrorreflectantes que deban llevarse para cumplir la reglamentación vigente sobre la utilización de determinadas categorías de vehículos o de determinados modos de funcionamiento."
+            },
+            {
+                "pregunta": "26. Indique la definición correcta de vehículo según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Vehículo. Aparato apto para circular por las vías o terrenos a que se refiere el artículo 1.",
+                    "Vehículo. Aparato apto para circular por las vías o terrenos a que se refiere el artículo 2.",
+                    "Vehículo. Aparato autopropulsado apto para circular por las vías o terrenos a que se refiere el artículo 2.",
+                    "Vehículo. Aparato autopropulsado apto para circular por las vías o terrenos a que se refiere el artículo 1."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I Vehículo. Aparato apto para circular por las vías o terrenos a que se refiere el artículo 2. En la definición de vehículo incluye tanto los autopropulsados como los remolcados. Por lo tanto, incluir únicamente los autopropulsados es erróneo."
+            },
+            {
+                "pregunta": "27. Según el artículo 2 del RDL 6/2015, indique la respuesta correcta:",
+                "opciones": [
+                    "Los preceptos de esta ley son aplicables en todo el territorio nacional y obligan a los titulares y usuarios de las vías y terrenos públicos aptos para la circulación, tanto urbanos como interurbanos, a los de las vías y terrenos que, sin tener tal aptitud, sean de uso común y, en defecto de otras normas, a los titulares de las vías y terrenos privados que sean utilizados por una colectividad indeterminada de usuarios.",
+                    "Los preceptos de esta ley son aplicables en todo el territorio nacional y obligan a los titulares y usuarios de las vías y terrenos públicos aptos para la circulación, tanto urbanos como interurbanos, a los de las vías y terrenos que, sin tener tal aptitud, sean de uso común. Excepto a los titulares de las vías y terrenos privados que sean utilizados por una colectividad indeterminada de usuarios.",
+                    "Los preceptos de esta ley no son aplicables en todo el territorio nacional, obligan únicamente a los titulares y usuarios de las vías y terrenos públicos aptos para la circulación, tanto urbanos como interurbanos, a los de las vías y terrenos que, sin tener tal aptitud, sean de uso común.",
+                    "Los preceptos de esta ley son aplicables en todo el territorio nacional y obligan a los titulares y usuarios de las vías y terrenos públicos aptos para la circulación, tanto urbanos como interurbanos, a los de las vías y terrenos que, sin tener tal aptitud, sean de uso común y, en defecto de otras normas, a los titulares de las vías y terrenos privados que sean utilizados por una colectividad determinada de usuarios."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 2 Ámbito de aplicación Los preceptos de esta ley son aplicables en todo el territorio nacional y obligan a los titulares y usuarios de las vías y terrenos públicos aptos para la circulación, tanto urbanos como interurbanos, a los de las vías y terrenos que, sin tener tal aptitud, sean de uso común y, en defecto de otras normas, a los titulares de las vías y terrenos privados que sean utilizados por una colectividad indeterminada de usuarios."
+            },
+            {
+                "pregunta": "28. Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo:",
+                "opciones": [
+                    "Detención.",
+                    "Parada.",
+                    "Estacionamiento.",
+                    "Inmovilización."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 80. Detención. Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario. 81. Parada. Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo. 82. Estacionamiento. Inmovilización de un vehículo que no se encuentra en situación de detención o parada."
+            },
+            {
+                "pregunta": "29. Vía ciclista señalizada sobre la acera:",
+                "opciones": [
+                    "Senda ciclable.",
+                    "Pista-bici.",
+                    "Acera-bici.",
+                    "Carril-bici."
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "30. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas:",
+                "opciones": [
+                    "Plataforma",
+                    "Carril",
+                    "Arcén",
+                    "Calzada"
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas."
+            },
+            {
+                "pregunta": "31. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras:",
+                "opciones": [
+                    "Senda ciclable.",
+                    "Pista-bici.",
+                    "Acera-bici.",
+                    "Carril-bici."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "32. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Indique la definición incorrecta:",
+                "opciones": [
+                    "Acera: zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones",
+                    "Refugio: zona peatonal situada fuera de la calzada y protegida del tránsito rodado",
+                    "Intersección: nudo de la red viaria en el que todos los cruces de trayectorias posibles de los vehículos que lo utilizan se realizan a nivel",
+                    "Todas son correctas"
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. Intersección. Nudo de la red viaria en el que todos los cruces de trayectorias posibles de los vehículos que lo utilizan se realizan a nivel."
+            },
+            {
+                "pregunta": "33. Definición de senda ciclable:",
+                "opciones": [
+                    "Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+                    "Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+                    "Vía ciclista señalizada sobre la acera.",
+                    "Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "34. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. ¿Cuál de las siguientes competencias pertenece a los municipios? Señale la incorrecta:",
+                "opciones": [
+                    "La regulación, ordenación, gestión, vigilancia y disciplina, por medio de agentes propios, del tráfico en las vías urbanas de su titularidad, así como la denuncia de las infracciones que se cometan en dichas vías y la sanción de las mismas cuando no esté expresamente atribuida a otra Administración.",
+                    "El cierre de vías urbanas y travesías cuando sea necesario.",
+                    "La restricción de la circulación a determinados vehículos en vías urbanas por motivos medioambientales.",
+                    "La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, exceptuadas las travesías."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 7 Competencias de los municipios Corresponde a los municipios: a) La regulación, ordenación, gestión, vigilancia y disciplina, por medio de agentes propios, del tráfico en las vías urbanas de su titularidad, así como la denuncia de las infracciones que se cometan en dichas vías y la sanción de las mismas cuando no esté expresamente atribuida a otra Administración. b) La regulación mediante ordenanza municipal de circulación, de los usos de las vías urbanas, haciendo compatible la equitativa distribución de los aparcamientos entre todos los usuarios con la necesaria fluidez del tráfico rodado y con el uso peatonal de las calles, así como el establecimiento de medidas de estacionamiento limitado, con el fin de garantizar la rotación de los aparcamientos, prestando especial atención a las necesidades de las personas con discapacidad que tienen reducida su movilidad y que utilizan vehículos, todo ello con el fin de favorecer su integración social. c) La inmovilización de los vehículos en vías urbanas cuando no dispongan de título que habilite el estacionamiento en zonas limitadas en tiempo o excedan de la autorización concedida, hasta que se logre la identificación de su conductor. La retirada de los vehículos de las vías urbanas y su posterior depósito cuando obstaculicen, dificulten o supongan un peligro para la circulación, o se encuentren incorrectamente aparcados en las zonas de estacionamiento restringido, en las condiciones previstas para la inmovilización en este mismo artículo. Las bicicletas sólo podrán ser retiradas y llevadas al correspondiente depósito si están abandonadas o si, estando amarradas, dificultan la circulación de vehículos o personas o dañan el mobiliario urbano. Igualmente, la retirada de vehículos en las vías interurbanas y el posterior depósito de éstos, en los términos que reglamentariamente se determine. d) La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, exceptuadas las travesías. e) La realización de las pruebas a que alude el artículo 5.o) en las vías urbanas, en los términos que reglamentariamente se determine. f) El cierre de vías urbanas cuando sea necesario. g) La restricción de la circulación a determinados vehículos en vías urbanas por motivos medioambientales."
+            },
+            {
+                "pregunta": "35. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Autopista: Carretera especialmente proyectada, construida y señalizada como tal para la exclusiva circulación de automóviles y que tiene las siguientes características: Indique la opción incorrecta.",
+                "opciones": [
+                    "Tener acceso limitado a ella las propiedades colindantes",
+                    "No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna",
+                    "Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación o, en casos excepcionales, por otros medios",
+                    "No tener acceso a la misma las propiedades colindantes."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Autopista. Carretera especialmente proyectada, construida y señalizada como tal para la exclusiva circulación de automóviles y que tiene las siguientes características: a) No tener acceso a la misma las propiedades colindantes. b) No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna. c) Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación o, en casos excepcionales, por otros medios."
+            },
+            {
+                "pregunta": "36. Según el artículo 2 del RDL 6/2015, los preceptos de la Ley de Tráfico son aplicables:",
+                "opciones": [
+                    "En todo el territorio peninsular.",
+                    "En todo el territorio nacional.",
+                    "En todo el territorio europeo.",
+                    "En todo el territorio nacional excepto vías de titularidad privada utilizada por una colectividad indeterminada de usuarios."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 2 Ámbito de aplicación Los preceptos de esta ley son aplicables en todo el territorio nacional y obligan a los titulares y usuarios de las vías y terrenos públicos aptos para la circulación, tanto urbanos como interurbanos, a los de las vías y terrenos que, sin tener tal aptitud, sean de uso común y, en defecto de otras normas, a los titulares de las vías y terrenos privados que sean utilizados por una colectividad indeterminada de usuarios."
+            },
+            {
+                "pregunta": "37. Definición de parada:",
+                "opciones": [
+                    "Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario.",
+                    "Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo.",
+                    "Inmovilización de un vehículo que no se encuentra en situación de detención o parada.",
+                    "Inmovilización de un vehículo durante un tiempo superior a dos minutos, sin que el conductor pueda abandonarlo."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 80. Detención. Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario. 81. Parada. Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo. 82. Estacionamiento. Inmovilización de un vehículo que no se encuentra en situación de detención o parada."
+            },
+            {
+                "pregunta": "38. Indique la definición correcta de conductor habitual según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Persona provista de la correspondiente autorización administrativa para conducir, cuya actividad laboral principal sea la conducción de vehículos a motor dedicados al transporte de mercancías o de personas, extremo que se acreditará mediante certificación expedida por la empresa para la que ejerza aquella actividad, acompañada de la correspondiente documentación acreditativa de la cotización a la Seguridad Social como trabajador de dicha empresa.",
+                    "Persona que, no contando con el permiso o licencia de conducción necesarios, inscrito en el Registro de Conductores e Infractores y previo su consentimiento, se comunica por el titular del vehículo o, en su caso, por el arrendatario a largo plazo al Registro de Vehículos, por ser aquella que de manera usual o con mayor frecuencia conduce dicho vehículo.",
+                    "Persona que, con las excepciones del párrafo segundo del punto 4 maneja el mecanismo de dirección o va al mando de un vehículo, o a cuyo cargo está un animal o animales. En vehículos que circulen en función de aprendizaje de la conducción, tiene la consideración de conductor la persona que está a cargo de los mandos adicionales.",
+                    "Persona que, contando con el permiso o licencia de conducción necesarios, inscrito en el Registro de Conductores e Infractores y previo su consentimiento, se comunica por el titular del vehículo o, en su caso, por el arrendatario a largo plazo al Registro de Vehículos, por ser aquella que de manera usual o con mayor frecuencia conduce dicho vehículo."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I Conductor profesional. Persona provista de la correspondiente autorización administrativa para conducir, cuya actividad laboral principal sea la conducción de vehículos a motor dedicados al transporte de mercancías o de personas, extremo que se acreditará mediante certificación expedida por la empresa para la que ejerza aquella actividad, acompañada de la correspondiente documentación acreditativa de la cotización a la Seguridad Social como trabajador de dicha empresa. Si se trata de un empresario autónomo, la certificación a que se hace referencia en el párrafo anterior será sustituida por una declaración del propio empresario. Este concepto sólo será de aplicación en lo que se refiere al sistema del permiso de conducción por puntos. Conductor. Persona que, con las excepciones del párrafo segundo del punto 4 maneja el mecanismo de dirección o va al mando de un vehículo, o a cuyo cargo está un animal o animales. En vehículos que circulen en función de aprendizaje de la conducción, tiene la consideración de conductor la persona que está a cargo de los mandos adicionales. Conductor habitual. Persona que, contando con el permiso o licencia de conducción necesarios, inscrito en el Registro de Conductores e Infractores y previo su consentimiento, se comunica por el titular del vehículo o, en su caso, por el arrendatario a largo plazo al Registro de Vehículos, por ser aquella que de manera usual o con mayor frecuencia conduce dicho vehículo."
+            },
+            {
+                "pregunta": "39. Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. ¿Cuál de las siguientes competencias pertenece a los municipios? Señale la incorrecta:",
+                "opciones": [
+                    "La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, incluidas las travesías.",
+                    "La restricción de la circulación a determinados vehículos en vías urbanas por motivos medioambientales.",
+                    "La retirada de los vehículos de las vías urbanas y su posterior depósito cuando obstaculicen, dificulten o supongan un peligro para la circulación, o se encuentren incorrectamente aparcados en las zonas de estacionamiento restringido, en las condiciones previstas para la inmovilización en este mismo artículo. Las bicicletas sólo podrán ser retiradas y llevadas al correspondiente depósito si están abandonadas o si, estando amarradas, dificultan la circulación de vehículos o personas o dañan el mobiliario urbano.",
+                    "Igualmente, la retirada de vehículos en las vías interurbanas y el posterior depósito de éstos, en los términos que reglamentariamente se determine."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Artículo 7 Competencias de los municipios Corresponde a los municipios: a) La regulación, ordenación, gestión, vigilancia y disciplina, por medio de agentes propios, del tráfico en las vías urbanas de su titularidad, así como la denuncia de las infracciones que se cometan en dichas vías y la sanción de las mismas cuando no esté expresamente atribuida a otra Administración. b) La regulación mediante ordenanza municipal de circulación, de los usos de las vías urbanas, haciendo compatible la equitativa distribución de los aparcamientos entre todos los usuarios con la necesaria fluidez del tráfico rodado y con el uso peatonal de las calles, así como el establecimiento de medidas de estacionamiento limitado, con el fin de garantizar la rotación de los aparcamientos, prestando especial atención a las necesidades de las personas con discapacidad que tienen reducida su movilidad y que utilizan vehículos, todo ello con el fin de favorecer su integración social. c) La inmovilización de los vehículos en vías urbanas cuando no dispongan de título que habilite el estacionamiento en zonas limitadas en tiempo o excedan de la autorización concedida, hasta que se logre la identificación de su conductor.La retirada de los vehículos de las vías urbanas y su posterior depósito cuando obstaculicen, dificulten o supongan un peligro para la circulación, o se encuentren incorrectamente aparcados en las zonas de estacionamiento restringido, en las condiciones previstas para la inmovilización en este mismo artículo. Las bicicletas sólo podrán ser retiradas y llevadas al correspondiente depósito si están abandonadas o si, estando amarradas, dificultan la circulación de vehículos o personas o dañan el mobiliario urbano. Igualmente, la retirada de vehículos en las vías interurbanas y el posterior depósito de éstos, en los términos que reglamentariamente se determine. d) La autorización de pruebas deportivas cuando discurran íntegra y exclusivamente por el casco urbano, exceptuadas las travesías. (La competencia para la realización de pruebas deportivas en travesías corresponde al Ministerio del interior) e) La realización de las pruebas a que alude el artículo 5.o) en las vías urbanas, en los términos que reglamentariamente se determine. f) El cierre de vías urbanas cuando sea necesario. g) La restricción de la circulación a determinados vehículos en vías urbanas por motivos medioambientales."
+            },
+            {
+                "pregunta": "40. Indique la definición incorrecta según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Vehículo de motor. Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida.",
+                    "Automóvil. Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales.",
+                    "Tranvía. Vehículo que marcha por raíles instalados en la vía.",
+                    "Vehículo para personas de movilidad reducida. Vehículo cuya masa máxima autorizada no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I a) Vehículo de motor. Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida. b) Automóvil. Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales. c) Tranvía. Vehículo que marcha por raíles instalados en la vía. d) Vehículo para personas de movilidad reducida. Vehículo cuya masa máxima autorizada (debería poner tara) no sea superior a 350 kilogramos y que, por construcción, no puede alcanzar en llano una velocidad superior a 45 km/h, proyectado y construido especialmente (y no meramente adaptado) para el uso de personas con alguna disfunción o incapacidad física. En cuanto al resto de sus características técnicas se les equipara a los ciclomotores de tres ruedas."
+            },
+            {
+                "pregunta": "41. Definición de acera-bici:",
+                "opciones": [
+                    "Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+                    "Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+                    "Vía ciclista señalizada sobre la acera.",
+                    "Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "42. Inmovilización de un vehículo que no se encuentra en situación de detención o parada:",
+                "opciones": [
+                    "Detención.",
+                    "Parada.",
+                    "Estacionamiento.",
+                    "Inmovilización."
+                ],
+                "correcta": 2,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 80. Detención. Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario. 81. Parada. Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo. 82. Estacionamiento. Inmovilización de un vehículo que no se encuentra en situación de detención o parada. NOTA: NO HAY DEFINICIÓN DE INMOVILIZACIÓN EN EL ANEXO I"
+            },
+            {
+                "pregunta": "43. Indique la definición correcta de automóvil según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se incluyen de esta definición los vehículos especiales.",
+                    "Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales.",
+                    "Vehículo de motor no autopropulsado que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales.",
+                    "Vehículo de motor que sirve, exclusivamente, para el transporte de personas, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I a) Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se incluyen (excluyen) de esta definición los vehículos especiales. b) Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales. c) Vehículo de motor no autopropulsado (esto no aparece en la definición) que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales. d) Vehículo de motor que sirve, exclusivamente, para el transporte de personas (para el transporte de personas o de cosas, o de ambas a la vez), o para la tracción de otros vehículos con aquel fin. Se excluyen de esta definición los vehículos especiales."
+            },
+            {
+                "pregunta": "44. Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario:",
+                "opciones": [
+                    "Detención.",
+                    "Parada.",
+                    "Estacionamiento.",
+                    "Inmovilización."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 80. Detención. Inmovilización de un vehículo por emergencia, por necesidades de la circulación o para cumplir algún precepto reglamentario. 81. Parada. Inmovilización de un vehículo durante un tiempo inferior a dos minutos, sin que el conductor pueda abandonarlo. 82. Estacionamiento. Inmovilización de un vehículo que no se encuentra en situación de detención o parada."
+            },
+            {
+                "pregunta": "45. Según el anexo I del RDL 6/2015. Tienen la condición de ciclomotores los vehículos que se definen a continuación. Señale la incorrecta:",
+                "opciones": [
+                    "Vehículo de dos ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor de cilindrada inferior o igual a 50 cm3, si es de combustión interna, o bien con una potencia continua nominal máxima inferior o igual a 4 kW si es de motor eléctrico.",
+                    "Vehículo de tres ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor cuya cilindrada sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o bien cuya potencia máxima neta sea inferior o igual a 4 kW para los demás motores de combustión interna, o bien cuya potencia continua nominal máxima sea inferior o igual a 4 kW para los motores eléctricos.",
+                    "Vehículos de cuatro ruedas, cuya masa en vacío sea inferior o igual a 350 kilogramos no incluida la masa de baterías para los vehículos eléctricos, cuya velocidad máxima por construcción sea inferior o igual a 45 km/h, y cuya cilindrada del motor sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o cuya potencia máxima neta sea inferior o igual a 4 kW para los demás motores de combustión interna, o cuya potencia continua nominal máxima sea inferior o igual a 4 kW para los motores eléctricos.",
+                    "Vehículo de tres ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor cuya cilindrada sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o bien cuya potencia máxima neta sea inferior o igual a 0,4 kW para los demás motores de combustión interna, o bien cuya potencia continua nominal máxima sea inferior o igual a 0,4 kW para los motores eléctricos."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I d) Vehículo de tres ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor cuya cilindrada sea inferior o igual a 50 cm3 para los motores de encendido por chispa (positiva), o bien cuya potencia máxima neta sea inferior o igual a 0,4 kW (son 4 kW) para los demás motores de combustión interna, o bien cuya potencia continua nominal máxima sea inferior o igual a 0,4 kW (son 4 kW para los motores eléctricos."
+            },
+            {
+                "pregunta": "46. Según el artículo 1 del RDL 6/2015, ¿cuál es el objeto de dicha ley?",
+                "opciones": [
+                    "Esta ley tiene por objeto regular el tráfico, la circulación de vehículos a motor y la seguridad vial únicamente en vías interurbanas.",
+                    "Esta ley no tiene por objeto regular el tráfico, la circulación de vehículos a motor y la seguridad vial.",
+                    "Esta ley tiene por objeto regular el tráfico, la circulación de vehículos a motor y la seguridad fiscal.",
+                    "Esta ley tiene por objeto regular el tráfico, la circulación de todos los vehículos y la seguridad vial."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Artículo 1 Objeto 1. Esta ley tiene por objeto regular el tráfico, la circulación de vehículos a motor y la seguridad vial."
+            },
+            {
+                "pregunta": "47. Definición de pista bici:",
+                "opciones": [
+                    "Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+                    "Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+                    "Vía ciclista señalizada sobre la acera.",
+                    "Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+                ],
+                "correcta": 1,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+            },
+            {
+                "pregunta": "48. Indique la definición correcta de vehículo de motor según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida.",
+                    "Vehículo provisto de motor para su propulsión. Se incluyen de esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida.",
+                    "Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, excepto los tranvías y los vehículos para personas de movilidad reducida.",
+                    "Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores y los tranvías, excepto los vehículos para personas de movilidad reducida."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I a) Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida. b) Vehículo provisto de motor para su propulsión. Se incluyen (excluyen) de esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida. c) Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, excepto los tranvías y los vehículos para personas de movilidad reducida. (los tranvías y los vehículos para personas de movilidad reducida también se excluyen de la definición de vehículo de motor.) d) Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores y los tranvías, excepto los vehículos para personas de movilidad reducida. (los vehículos para personas de movilidad reducida también se excluyen de la definición de vehículo de motor.)"
+            },
+            {
+                "pregunta": "49. Indique la definición correcta según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Titular de vehículo. Persona a cuyo nombre figura inscrito el vehículo en el registro oficial correspondiente.",
+                    "Vehículo. Aparato apto para circular por las vías o terrenos a que se refiere el artículo 1.",
+                    "Titular de vehículo. Persona a cuyo nombre figura inscrito el vehículo en el registro oficial correspondiente del Ayuntamiento.",
+                    "Vehículo. Aparato apto para circular por las vías o terrenos a que se refiere el artículo 3."
+                ],
+                "correcta": 0,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial. Anexo I Vehículo. Aparato apto para circular por las vías o terrenos a que se refiere el artículo 2. En la opción B dice \"artículo 1\". Titular de vehículo. Persona a cuyo nombre figura inscrito el vehículo en el registro oficial correspondiente. En la opción C sobra \"del Ayuntamiento\", ya que el registro de todos los vehículos matriculados lo lleva la Jefatura Central de Tráfico. Vehículo. Aparato apto para circular por las vías o terrenos a que se refiere el artículo 2. En la opción D dice \"artículo 3\"."
+            },
+            {
+                "pregunta": "50. Indique la definición correcta de ciclo según el anexo I del RDL 6/2015:",
+                "opciones": [
+                    "Vehículo provisto de dos ruedas y propulsado exclusiva o principalmente por la energía muscular de la persona o personas que están sobre el vehículo, en particular por medio de pedales. Se incluyen en esta definición los ciclos de pedaleo asistido.",
+                    "Vehículo provisto de, al menos, dos ruedas y propulsado exclusivamente por la energía muscular de la persona o personas que están sobre el vehículo, en particular por medio de pedales. Se incluyen en esta definición los ciclos de pedaleo asistido.",
+                    "Vehículo provisto de, al menos, dos ruedas y propulsado exclusiva o principalmente por la energía muscular de la persona o personas que están sobre el vehículo, en particular por medio de pedales. Se excluyen en esta definición los ciclos de pedaleo asistido.",
+                    "Vehículo provisto de, al menos, dos ruedas y propulsado exclusiva o principalmente por la energía muscular de la persona o personas que están sobre el vehículo, en particular por medio de pedales. Se incluyen en esta definición los ciclos de pedaleo asistido."
+                ],
+                "correcta": 3,
+                "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial Anexo I a) Vehículo provisto de dos ruedas (provisto de al menos dos ruedas) y propulsado exclusiva o principalmente por la energía muscular de la persona o personas que están sobre el vehículo, en particular por medio de pedales. Se incluyen en esta definición los ciclos de pedaleo asistido. b) Vehículo provisto de, al menos, dos ruedas y propulsado exclusivamente (exclusiva o principalmente) por la energía muscular de la persona o personas que están sobre el vehículo, en particular por medio de pedales. Se incluyen en esta definición los ciclos de pedaleo asistido. c) Vehículo provisto de, al menos, dos ruedas y propulsado exclusiva o principalmente por la energía muscular de la persona o personas que están sobre el vehículo, en particular por medio de pedales. Se excluyen (incluyen) en esta definición los ciclos de pedaleo asistido. d) Vehículo provisto de, al menos, dos ruedas y propulsado exclusiva o principalmente por la energía muscular de la persona o personas que están sobre el vehículo, en particular por medio de pedales. Se incluyen en esta definición los ciclos de pedaleo asistido."
+            }
+        ];
+    </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+
+</html>

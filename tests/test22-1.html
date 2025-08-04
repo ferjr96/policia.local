@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Podemos decir que la detención es:",
+        "opciones": [
+            "Una medida cautelar de carácter personal.",
+            "La limitación del derecho a la libertad del imputado.",
+            "Una medida constitucionalmente limitada a un espacio de tiempo.",
+            "Todas las opciones son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "LA DETENCIÓN. La detención es una limitación de la libertad personal realizada provisionalmente y cuya finalidad es poner a una persona a disposición del juez competente. Estamos por tanto ante una limitación de un derecho fundamental, que es el derecho a la libertad, que puede tener una limitación por exigencia de la justicia penal con estricto respeto a lo establecido en la Constitución y en la Ley de Enjuiciamiento Criminal. Se dice por ello que es un derecho no absoluto. La detención es una medida cautelar, quiere decir además que es una medida que se adopta con una finalidad determinada, la de poner al detenido a disposición de la autoridad judicial para que decida, en una primera comparecencia, sobre la situación personal del detenido en espera de juicio."
+    },
+    {
+        "pregunta": "El presupuesto material del procedimiento de Habeas Corpus lo ha de constituir:",
+        "opciones": [
+            "Una detención ilegal cometida por un particular.",
+            "Una detención ilegal cometida por la policía.",
+            "Una detención ilegal cometida por el Juez.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, las obligaciones de la Policía y los derechos del detenido nacen:",
+        "opciones": [
+            "Una vez que el detenido pasa a disposición judicial.",
+            "En el mismo momento de la detención.",
+            "Cuando es asistido por el abogado.",
+            "Cuando es trasladado a la Comisaría."
+        ],
+        "correcta": 1,
+        "explicacion": "El origen surge desde el mismo momento en que la detención se practica, esto es, desde el instante en que se le priva de libertad deambulatoria al ciudadano. A partir de este momento nacen las obligaciones de la policía y los derechos del detenido, explicados en el artículo 520 de la LECrim, entre otros."
+    },
+    {
+        "pregunta": "Según la LECrim ¿Quiénes tienen la obligación, en su caso, de practicar la detención?",
+        "opciones": [
+            "Los funcionarios de la policía judicial.",
+            "Además otras autoridades expresamente autorizadas por la Ley.",
+            "Cualquier persona.",
+            "La a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 492. LECrim La Autoridad o agente de Policía judicial tendrá obligación de detener: 1.º A cualquiera que se halle en alguno de los casos del artículo 490. 2.º Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional. 3.º Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad judicial. Se exceptúa de lo dispuesto en el párrafo anterior al procesado que preste en el acto fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente. 4.º Al que estuviere en el caso del número anterior, aunque todavía no se hallase procesado, con tal que concurran las dos circunstancias siguientes: 1.ª Que la Autoridad o agente tenga motivos racionalmente bastantes para creer en la existencia de un hecho que presente los caracteres de delito. 2.ª Que los tenga también bastantes para creer que la persona a quien intente detener tuvo participación en él."
+    },
+    {
+        "pregunta": "El procedimiento de Habeas Corpus en caso de detención ilegal se encuentra regulado:",
+        "opciones": [
+            "Ley Orgánica 4/1984.",
+            "Ley Orgánica 6/1984.",
+            "Ley Orgánica 6/1985.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "LEY ORGÁNICA 6/1984, DE 24 DE MAYO, REGULADORA DEL PROCEDIMIENTO DE HABEAS CORPUS"
+    },
+    {
+        "pregunta": "Según la LO 6/1984, No podrá instar el procedimiento de Habeas Corpus:",
+        "opciones": [
+            "El privado de libertad.",
+            "El Ministerio Fiscal.",
+            "El Defensor del Pueblo.",
+            "El Juez de Vigilancia Penitenciaria."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo tercero. Podrán instar el procedimiento de «Habeas Corpus» que esta ley establece: a) El privado de libertad, su cónyuge o persona unida por análoga relación de afectividad, descendientes, ascendientes, hermanos y, en su caso, respecto a los menores y personas incapacitadas, sus representantes legales. b) El Ministerio Fiscal. c) El Defensor del Pueblo. Asimismo, lo podrá iniciar, de oficio, el Juez competente a que se refiere el artículo anterior."
+    },
+    {
+        "pregunta": "Se podrá obtener la inmediata puesta a disposición de la Autoridad judicial competente, de cualquier persona detenida ilegalmente, mediante el procedimiento:",
+        "opciones": [
+            "Sumario.",
+            "De Habeas Corpus.",
+            "De urgencia.",
+            "De comparecencia."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo primero. Mediante el procedimiento del «Habeas Corpus», regulado en la presente ley, se podrá obtener la inmediata puesta a disposición de la Autoridad judicial competente, de cualquier persona detenida ilegalmente."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, promovida la solicitud de Habeas Corpus, el Juez dará traslado de esta a:",
+        "opciones": [
+            "El detenido.",
+            "El Ministerio Fiscal.",
+            "La autoridad gubernativa.",
+            "Los familiares del detenido."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, el letrado podrá entrevistarse reservadamente con el detenido:",
+        "opciones": [
+            "Al término de la práctica de la diligencia en que haya intervenido.",
+            "Con anterioridad a la práctica de la declaración.",
+            "En el momento que estime oportuno.",
+            "Las dos primeras son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 520. LECrim 6. La asistencia del abogado consistirá en: a) Solicitar, en su caso, que se informe al detenido o preso de los derechos establecidos en el apartado 2 y que se proceda, si fuera necesario, al reconocimiento médico señalado en su letra i). b) Intervenir en las diligencias de declaración del detenido, en las diligencias de reconocimiento de que sea objeto y en las de reconstrucción de los hechos en que participe el detenido. El abogado podrá solicitar al juez o funcionario que hubiesen practicado la diligencia en la que haya intervenido, una vez terminada ésta, la declaración o ampliación de los extremos que considere convenientes, así como la consignación en el acta de cualquier incidencia que haya tenido lugar durante su práctica. c) Informar al detenido de las consecuencias de la prestación o denegación de consentimiento a la práctica de diligencias que se le soliciten. Si el detenido se opusiera a la recogida de las muestras mediante frotis bucal, conforme a las previsiones de la Ley Orgánica 10/2007, de 8 de octubre, reguladora de la base de datos policial sobre identificadores obtenidos a partir del ADN, el juez de instrucción, a instancia de la Policía Judicial o del Ministerio Fiscal, podrá imponer la ejecución forzosa de tal diligencia mediante el recurso a las medidas coactivas mínimas indispensables, que deberán ser proporcionadas a las circunstancias del caso y respetuosas con su dignidad. d) Entrevistarse reservadamente con el detenido, incluso antes de que se le reciba declaración por la policía, el fiscal o la autoridad judicial, sin perjuicio de lo dispuesto en el artículo 527."
+    },
+    {
+        "pregunta": "Según la LECrim, la detención puede ser adoptada:",
+        "opciones": [
+            "Por la Policía.",
+            "Por un particular.",
+            "Por la autoridad judicial.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Clases de detenciones • Detención por particulares: entrega a la Policía para su puesta a disposición judicial, aunque nada obsta a la directa puesta a disposición judicial por parte del particular. (art 490 LECrim) • Detención policial: puesta a disposición judicial. (art 492 LECrim) • Detención judicial: elevación de la detención a prisión o puesta en libertad con o sin fianza. (art 494, 509 y 763 LECrim)"
+    },
+    {
+        "pregunta": "Según la Constitución Española y la LO 6/1984, NO se consideran detenidos ilegalmente:",
+        "opciones": [
+            "Los que lo fueren por una autoridad, sin que concurran los supuestos legales.",
+            "Los que estén ilícitamente internados en cualquier establecimiento o lugar.",
+            "Los que lo estuvieran por plazo superior al señalado en las Leyes.",
+            "Los que sean puestos en libertad tras una detención preventiva de 70 horas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 17 CE 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, no es necesario que conste en el escrito de iniciación del procedimiento de Habeas Corpus:",
+        "opciones": [
+            "El nombre y circunstancias personales del solicitante y de la persona para la que se solicita el amparo judicial.",
+            "El lugar en que se halle el privado de libertad, autoridad o persona, bajo cuya custodia se encuentre, si fueren conocidos, y todas aquellas otras circunstancias que pudieran resultar relevantes.",
+            "El motivo concreto por el que se solicita el Habeas Corpus.",
+            "El delito cometido."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo cuarto. El procedimiento se iniciará, salvo cuando se incoe de oficio, por medio de escrito o comparecencia, no siendo preceptiva la intervención de Abogado ni de Procurador. En dicho escrito o comparecencia deberán constar: a) El nombre y circunstancias personales del solicitante y de la persona para la que se solicita el amparo judicial regulado en esta ley. b) El lugar en que se halle el privado de libertad, autoridad o persona, bajo cuya custodia se encuentre, si fueren conocidos, y todas aquellas otras circunstancias que pudieran resultar relevantes. c) El motivo concreto por el que se solicita el «Habeas Corpus»."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, la solicitud de Habeas Corpus formulada por la persona privada de libertad que se encuentre bajo la custodia de un funcionario público obligará a éste a:",
+        "opciones": [
+            "Poner inmediatamente en conocimiento del Letrado de la Administración de Justicia dicha solicitud.",
+            "Poner inmediatamente en conocimiento del Juez competente dicha solicitud.",
+            "Poner inmediatamente a disposición judicial a la persona detenida.",
+            "Poner en el plazo de 24 horas en conocimiento del Juez competente dicha solicitud."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Su pretensión es establecer remedios eficaces y rápidos para los eventuales supuestos de detenciones de la persona no justificados legalmente o que transcurran en condiciones ilegales:",
+        "opciones": [
+            "Procedimiento abreviado.",
+            "Procedimiento de urgencia.",
+            "Procedimiento de “Habeas Corpus”.",
+            "Procedimiento de solicitud de libertad reglada."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» La pretensión del «Habeas Corpus» es establecer remedios eficaces y rápidos para los eventuales supuestos de detenciones de la persona no justificados legalmente, o que transcurran en condiciones ilegales. Por consiguiente, el «Habeas Corpus» se configura como una comparecencia del detenido ante el Juez; comparecencia de la que proviene etimológicamente la expresión que da nombre al procedimiento, y que permite al ciudadano, privado de libertad, exponer sus alegaciones contra las causas de la detención o las condiciones de la misma, al objeto de que el Juez resuelva, en definitiva, sobre la conformidad a Derecho de la detención"
+    },
+    {
+        "pregunta": "Según la LO 6/1984, el plazo para realizar todas las actuaciones a que haya lugar en el procedimiento de Habeas Corpus, desde que se dicte la resolución de incoación es de:",
+        "opciones": [
+            "24 horas.",
+            "48 horas.",
+            "72 horas.",
+            "96 horas."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, si el detenido es menor de edad o incapacitado se notificará el hecho de la detención y el lugar de custodia a:",
+        "opciones": [
+            "Quienes ejerzan la patria potestad, tutela o guarda de hecho.",
+            "Al Ministerio Fiscal, si no fueran halladas las anteriores.",
+            "Al Cónsul de su país, si fuera extranjero.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 520. LECrim 4. Si se tratare de un menor, será puesto a disposición de las Secciones de Menores de la Fiscalía y se comunicará el hecho y el lugar de custodia a quienes ejerzan la patria potestad, la tutela o la guarda de hecho del mismo, tan pronto se tenga constancia de la minoría de edad. En caso de conflicto de intereses con quienes ejerzan la patria potestad, la tutela o la guarda de hecho del menor, se le nombrará un defensor judicial a quien se pondrá en conocimiento del hecho y del lugar de detención. Si el detenido tuviere su capacidad modificada judicialmente, la información prevista en el apartado 2 de este artículo se comunicará a quienes ejerzan la tutela o guarda de hecho del mismo, dando cuenta al Ministerio Fiscal. Si el detenido menor o con capacidad modificada judicialmente fuera extranjero, el hecho de la detención se notificará de oficio al Cónsul de su país."
+    },
+    {
+        "pregunta": "Las interrupciones momentáneas de la libertad deambulatoria, tales como las de controles de alcoholemia, cacheos, inmovilización de vehículos, etc. ¿Se consideran detenciones?",
+        "opciones": [
+            "Sí, en todo caso.",
+            "Depende de la circunstancia.",
+            "Sólo en los controles de alcoholemia.",
+            "No."
+        ],
+        "correcta": 3,
+        "explicacion": "NO se consideran detenciones las interrupciones momentáneas de libertad deambulatoria, tales como las derivadas de los controles de alcoholemia, los \"cacheos\" y las resultantes de las inmovilizaciones de vehículos."
+    },
+    {
+        "pregunta": "¿En qué artículo de la Constitución se hace referencia al Habeas Corpus?",
+        "opciones": [
+            "En el artículo 17.",
+            "En el artículo 18.",
+            "En el artículo 19.",
+            "En el artículo 20."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17 CE 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "El plazo máximo de la detención preventiva lo fija la Constitución Española en su artículo:",
+        "opciones": [
+            "17.2.",
+            "17.1.",
+            "24.",
+            "21."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17 CE 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, es competente para conocer la solicitud de Habeas Corpus:",
+        "opciones": [
+            "El Juez de Primera Instancia.",
+            "El Juez de Instrucción.",
+            "El Juez de Vigilancia Penitenciaria.",
+            "El Juez de lo Social."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "De conformidad con lo dispuesto en la Ley Orgánica 6/1984, en el procedimiento de Habeas Corpus el solicitante será, en todo caso, condenado al pago de las costas del procedimiento:",
+        "opciones": [
+            "Si se apreciase temeridad.",
+            "Si se apreciase mala fe.",
+            "Ambas respuestas son correctas.",
+            "La anterior, aunque no está obligado el juez a imponerle dichas costas."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Derechos del detenido. Según el artículo 17 de la CE y el articulo 520 de la LECrim, ¿Cuál de las siguientes afirmaciones es falsa?",
+        "opciones": [
+            "Toda persona detenida no podrá ser obligada a declarar.",
+            "Toda persona detenida se le informará en el plazo máximo de veinticuatro horas de sus derechos.",
+            "Se garantiza la asistencia de abogado al detenido en las diligencias policiales.",
+            "Toda persona detenida tiene derecho a no declarar contra si mismo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 17 CE 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, en el procedimiento de Habeas Corpus:",
+        "opciones": [
+            "No se admite la presentación de pruebas.",
+            "El Juez no está obligado a admitir las pruebas.",
+            "Sólo podrá presentar pruebas el detenido ilegalmente.",
+            "No se admitirá la presentación de pruebas por parte de los funcionarios encargados de la custodia del detenido."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LO 6/1984, Contra la resolución que acuerde la incoación del procedimiento de Habeas Corpus, cabrá la interposición del recurso de:",
+        "opciones": [
+            "Súplica.",
+            "Queja.",
+            "Casación.",
+            "No cabrá recurso alguno."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según el artículo 17 de la Constitución Española toda persona:",
+        "opciones": [
+            "Tiene derecho a la vida.",
+            "Tiene derecho a la tutela judicial efectiva.",
+            "Tiene derecho a la libertad y seguridad.",
+            "Los detenidos estarán separados los unos de los otros."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17 CE 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, Estarán obligados a poner inmediatamente en conocimiento del Juez competente la solicitud de Habeas Corpus, formulada por la persona privada de libertad que se encuentre bajo su custodia:",
+        "opciones": [
+            "Cualquier autoridad que tenga conocimiento de ello.",
+            "La autoridad gubernativa, agente de esta o funcionario público.",
+            "Exclusivamente los funcionarios públicos presentes en su formulación.",
+            "Exclusivamente los funcionarios públicos que practicaran la detención."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, el detenido o preso podrá renunciar a la preceptiva asistencia de letrado:",
+        "opciones": [
+            "Siempre que así lo manifieste.",
+            "En los supuestos de imputación de delito contra la seguridad vial.",
+            "En los supuestos de imputación de cualquier delito.",
+            "Si es mayor de edad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520. LECrim 8. No obstante, el detenido o preso podrá renunciar a la preceptiva asistencia de abogado si su detención lo fuere por hechos susceptibles de ser tipificados exclusivamente como delitos contra la seguridad del tráfico, siempre que se le haya facilitado información clara y suficiente en un lenguaje sencillo y comprensible sobre el contenido de dicho derecho y las consecuencias de la renuncia. El detenido podrá revocar su renuncia en cualquier momento."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, una vez practicadas todas las actuaciones del procedimiento de habeas corpus, el Juez competente dictará:",
+        "opciones": [
+            "Resolución.",
+            "Auto.",
+            "Sentencia.",
+            "Providencia."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "El derecho a guardar silencio, no declarando si no quiere, o a no contestar a las preguntas que se le formulen, o a declarar sólo ante el Juez, se recoge en:",
+        "opciones": [
+            "El art. 520.2.a) de la LECrim.",
+            "El 24.2 de la CE.",
+            "En ambos preceptos.",
+            "En ninguno de los anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 520. LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: a) Derecho a guardar silencio no declarando si no quiere, a no contestar alguna o algunas de las preguntas que le formulen, o a manifestar que sólo declarará ante el juez. b) Derecho a no declarar contra sí mismo y a no confesarse culpable. c) Derecho a designar abogado, sin perjuicio de lo dispuesto en el apartado 1.a) del artículo 527 y a ser asistido por él sin demora injustificada. En caso de que, debido a la lejanía geográfica no sea posible de inmediato la asistencia de letrado, se facilitará al detenido comunicación telefónica o por videoconferencia con aquél, salvo que dicha comunicación sea imposible. d) Derecho a acceder a los elementos de las actuaciones que sean esenciales para impugnar la legalidad de la detención o privación de libertad. e) Derecho a que se ponga en conocimiento del familiar o persona que desee, sin demora injustificada, su privación de libertad y el lugar de custodia en que se halle en cada momento. Los extranjeros tendrán derecho a que las circunstancias anteriores se comuniquen a la oficina consular de su país. f) Derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección. Esta comunicación se celebrará en presencia de un funcionario de policía o, en su caso, del funcionario que designen el juez o el fiscal, sin perjuicio de lo dispuesto en el artículo 527. g) Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas. h) Derecho a ser asistido gratuitamente por un intérprete, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate, o de personas sordas o con discapacidad auditiva, así como de otras personas con dificultades del lenguaje. i) Derecho a ser reconocido por el médico forense o su sustituto legal y, en su defecto, por el de la institución en que se encuentre, o por cualquier otro dependiente del Estado o de otras Administraciones Públicas. j) Derecho a solicitar asistencia jurídica gratuita, procedimiento para hacerlo y condiciones para obtenerla."
+    },
+    {
+        "pregunta": "Según la CE ¿Existe algún supuesto en el que se establezcan plazos extraordinarios de duración de la detención?",
+        "opciones": [
+            "5 días en los supuestos de terrorismo.",
+            "10 días máximos en el estado de sitio.",
+            "La a y b son correctas.",
+            "No, no existen plazos extraordinarios"
+        ],
+        "correcta": 2,
+        "explicacion": "Excepciones al plazo máximo de duración de la detención La Constitución española recoge la posibilidad de extender el plazo máximo de la detención en dos supuestos concretos: Art. 55.1: (Duración máxima de 10 días). Cuando se acuerde la declaración del estado de excepción o de sitio en los términos previstos en la Constitución. Art. 55.2: (Duración máxima de 5 días). En relación con las investigaciones correspondientes a la actuación de bandas armadas o elementos terroristas."
+    },
+    {
+        "pregunta": "La retención de un detenido más allá de los límites de tiempo establecidos legalmente, puede originar:",
+        "opciones": [
+            "Un delito de detención ilegal.",
+            "La procedencia del recurso de habeas corpus.",
+            "Un delito de retención.",
+            "La a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "LEY ORGÁNICA 6/1984, DE 24 DE MAYO, REGULADORA DEL PROCEDIMIENTO DE HABEAS CORPUS El objetivo de esta ley es establecer remedios eficaces y rápidos ante posibles detenciones ilegales o que transcurran en condiciones ilegales que permitan al privado de libertad exponer sus alegaciones ante el Juez para que este resuelva sobre la conformidad a Derecho de la detención. A los efectos de esta ley se consideran personas ilegalmente detenidas: a) Las que lo fueren por una autoridad, agente de la misma, funcionario público o particular, sin que concurran los supuestos legales, o sin haberse cumplido las formalidades prevenidas y requisitos exigidos por las leyes. b) Las que estén ilícitamente internadas en cualquier establecimiento o lugar. c) Las que lo estuvieran por plazo superior al señalado en las leyes, si transcurrido el mismo, no fuesen puestas en libertad o entregadas al Juez más próximo al lugar de la detención. d) Las privadas de libertad a quienes no les sean respetados los derechos que la Constitución y las leyes procesales garantizan a toda persona detenida."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, puede iniciar de oficio el procedimiento de Habeas Corpus:",
+        "opciones": [
+            "El privado de libertad.",
+            "El Ministerio Fiscal.",
+            "El Defensor del Pueblo.",
+            "El Juez de Instrucción competente."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo tercero. Podrán instar el procedimiento de «Habeas Corpus» que esta ley establece: a) El privado de libertad, su cónyuge o persona unida por análoga relación de afectividad, descendientes, ascendientes, hermanos y, en su caso, respecto a los menores y personas incapacitadas, sus representantes legales. b) El Ministerio Fiscal. c) El Defensor del Pueblo. Asimismo, lo podrá iniciar, de oficio, el Juez competente a que se refiere el artículo anterior."
+    },
+    {
+        "pregunta": "Según la LO 6/1984 ¿El Habeas Corpus, lo puede solicitar únicamente?",
+        "opciones": [
+            "El Defensor del Pueblo.",
+            "El propio detenido.",
+            "El ministerio fiscal.",
+            "Ninguna respuesta es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo tercero. Podrán instar el procedimiento de «Habeas Corpus» que esta ley establece: a) El privado de libertad, su cónyuge o persona unida por análoga relación de afectividad, descendientes, ascendientes, hermanos y, en su caso, respecto a los menores y personas incapacitadas, sus representantes legales. b) El Ministerio Fiscal. c) El Defensor del Pueblo. Asimismo, lo podrá iniciar, de oficio, el Juez competente a que se refiere el artículo anterior."
+    },
+    {
+        "pregunta": "Según la LO 6/1984 de Habeas Corpus , el Juez competente ordenará la incoación del procedimiento mediante:",
+        "opciones": [
+            "Resolución.",
+            "Auto.",
+            "Sentencia.",
+            "Providencia."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, en el ámbito de la Jurisdicción Militar será competente para conocer de la solicitud de Habeas Corpus:",
+        "opciones": [
+            "El Juez Togado Militar de Instrucción constituido en la cabecera de la circunscripción jurisdiccional en la que se efectúo la detención.",
+            "El Juez de Instrucción en todo caso.",
+            "El Juez de Primera Instancia en todo caso.",
+            "El Juez de Vigilancia Penitenciaria del lugar en que se practicare la detención."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, ¿Cuál de los siguientes no es un derecho del detenido?",
+        "opciones": [
+            "Derecho a guardar silencio.",
+            "Derecho a realizar una llamada.",
+            "Derecho a designar abogado.",
+            "Derecho a no declarar contra sí mismo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520. LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: a) Derecho a guardar silencio no declarando si no quiere, a no contestar alguna o algunas de las preguntas que le formulen, o a manifestar que sólo declarará ante el juez. b) Derecho a no declarar contra sí mismo y a no confesarse culpable. c) Derecho a designar abogado, sin perjuicio de lo dispuesto en el apartado 1.a) del artículo 527 y a ser asistido por él sin demora injustificada. En caso de que, debido a la lejanía geográfica no sea posible de inmediato la asistencia de letrado, se facilitará al detenido comunicación telefónica o por videoconferencia con aquél, salvo que dicha comunicación sea imposible. d) Derecho a acceder a los elementos de las actuaciones que sean esenciales para impugnar la legalidad de la detención o privación de libertad. e) Derecho a que se ponga en conocimiento del familiar o persona que desee, sin demora injustificada, su privación de libertad y el lugar de custodia en que se halle en cada momento. Los extranjeros tendrán derecho a que las circunstancias anteriores se comuniquen a la oficina consular de su país. f) Derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección. Esta comunicación se celebrará en presencia de un funcionario de policía o, en su caso, del funcionario que designen el juez o el fiscal, sin perjuicio de lo dispuesto en el artículo 527. g) Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas. h) Derecho a ser asistido gratuitamente por un intérprete, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate, o de personas sordas o con discapacidad auditiva, así como de otras personas con dificultades del lenguaje. i) Derecho a ser reconocido por el médico forense o su sustituto legal y, en su defecto, por el de la institución en que se encuentre, o por cualquier otro dependiente del Estado o de otras Administraciones Públicas. j) Derecho a solicitar asistencia jurídica gratuita, procedimiento para hacerlo y condiciones para obtenerla."
+    },
+    {
+        "pregunta": "Según la LECrim, ¿Puede un ciudadano privar de libertad deambulatoria a otro?",
+        "opciones": [
+            "No, en ningún caso.",
+            "Sólo si tras llamar a la Policía esta no comparece.",
+            "Sí, en los casos de delito flagrante o de fuga o rebeldía del imputado.",
+            "Todas son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Detención por particulares Es la detención que pueden llevar a cabo los particulares en supuestos de flagrante delito, fuga o rebeldía del detenido, preso o condenado. Engloba tanto a éstos como a los funcionarios públicos que no actúan en ejercicio de su cargo y al personal de seguridad privada. Se recogen en el artículo 490 de la LECrim"
+    },
+    {
+        "pregunta": "Según se establece en el art. 3 de la Ley Orgánica del Procedimiento de Habeas Corpus, no se encuentra legitimado para instar el procedimiento:",
+        "opciones": [
+            "El letrado que asiste al detenido.",
+            "El detenido.",
+            "El Ministerio Fiscal.",
+            "El Defensor del Pueblo."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo tercero. Podrán instar el procedimiento de «Habeas Corpus» que esta ley establece: a) El privado de libertad, su cónyuge o persona unida por análoga relación de afectividad, descendientes, ascendientes, hermanos y, en su caso, respecto a los menores y personas incapacitadas, sus representantes legales. b) El Ministerio Fiscal. c) El Defensor del Pueblo. Asimismo, lo podrá iniciar, de oficio, el Juez competente a que se refiere el artículo anterior."
+    },
+    {
+        "pregunta": "El procedimiento de Habeas Corpus puede ser calificado como:",
+        "opciones": [
+            "Ordinario.",
+            "Especial y preferente.",
+            "Rutinario.",
+            "Formalista."
+        ],
+        "correcta": 1,
+        "explicacion": "El Habeas Corpus es una de las garantías jurisdiccionales especiales de protección a los derechos humanos, pertenece a la esfera del control difuso de los derechos fundamentales. Su regulación debe provenir de un mandato constitucional, por tanto constituye un compromiso de los poderes públicos ante los ciudadanos. Es el Habeas Corpus, un proceso especial y preferente, por el que se solicita del órgano jurisdiccional competente el restablecimiento del derecho constitucional a la libertad, vulnerado por la comisión de cualquier detención ilegal que pueda ser dispuesta por persona no encuadrada dentro del poder judicial."
+    },
+    {
+        "pregunta": "La protección del Habeas Corpus alcanza a los supuestos de:",
+        "opciones": [
+            "Detención ilegal.",
+            "Prolongación de la detención ilegalmente.",
+            "Detención en que no se respetan los derecho de la Constitución.",
+            "Todos los supuestos anteriores."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la LECrim, si el letrado designado por el detenido no fuera hallado, no compareciere, o no aceptare el encargo:",
+        "opciones": [
+            "Se tomará declaración al detenido sin la asistencia letrada.",
+            "El Colegio de Abogados nombrará abogado de oficio.",
+            "No se recibirá declaración al detenido.",
+            "El detenido sólo declarará ante el juez."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520. LECrim 5. El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio. Ninguna autoridad o agente le efectuará recomendación alguna sobre el abogado a designar más allá de informarle de su derecho. La autoridad que tenga bajo su custodia al detenido comunicará inmediatamente al Colegio de Abogados el nombre del designado por el detenido para asistirle a los efectos de su localización y transmisión del encargo profesional o, en su caso, le comunicará la petición de nombramiento de abogado de oficio. Si el detenido no hubiere designado abogado, o el elegido rehusare el encargo o no fuere hallado, el Colegio de Abogados procederá de inmediato al nombramiento de un abogado del turno de oficio. El abogado designado acudirá al centro de detención con la máxima premura, siempre dentro del plazo máximo de tres horas desde la recepción del encargo. Si en dicho plazo no compareciera, el Colegio de Abogados designará un nuevo abogado del turno de oficio que deberá comparecer a la mayor brevedad y siempre dentro del plazo indicado, sin perjuicio de la exigencia de la responsabilidad disciplinaria en que haya podido incurrir el incompareciente."
+    },
+    {
+        "pregunta": "El procedimiento de Habeas Corpus se halla enunciado en el _____ de la Constitución Española. Complete la frase:",
+        "opciones": [
+            "Art. 17.1",
+            "Art. 17.2",
+            "Art. 17.3",
+            "Art. 17.4"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 17 CE 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la CE, ¿Cuánto debe durar la detención preventiva?",
+        "opciones": [
+            "72 horas.",
+            "El tiempo estrictamente necesario.",
+            "Nunca más de 72 horas.",
+            "La b y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 17 CE 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, en el procedimiento de Habeas Corpus no es necesario:",
+        "opciones": [
+            "Escrito de interposición o comparecencia para el inicio.",
+            "Abogado.",
+            "Abogado o procurador.",
+            "Procurador."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo cuarto. El procedimiento se iniciará, salvo cuando se incoe de oficio, por medio de escrito o comparecencia, no siendo preceptiva la intervención de Abogado ni de Procurador. En dicho escrito o comparecencia deberán constar: a) El nombre y circunstancias personales del solicitante y de la persona para la que se solicita el amparo judicial regulado en esta ley. b) El lugar en que se halle el privado de libertad, autoridad o persona, bajo cuya custodia se encuentre, si fueren conocidos, y todas aquellas otras circunstancias que pudieran resultar relevantes. c) El motivo concreto por el que se solicita el «Habeas Corpus»."
+    },
+    {
+        "pregunta": "¿En qué artículo de la Constitución Española se establece el derecho a la libertad y a la seguridad?",
+        "opciones": [
+            "En el 21.",
+            "En el 17.1.",
+            "En el 17.2.",
+            "En el 24."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 17 CE 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, cuando el procedimiento de Habeas Corpus no sea iniciado de oficio, se iniciará:",
+        "opciones": [
+            "Por medio de escrito o comparecencia, siendo facultativa la intervención de Abogado y de Procurador.",
+            "Por medio de escrito o comparecencia, siendo facultativa la intervención de Abogado y preceptiva la de Procurador.",
+            "Por medio de escrito o comparecencia, siendo preceptiva la intervención de Abogado y de Procurador.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según el RD 769/1987, constituyen las Unidades Orgánicas de la Policía Judicial:",
+        "opciones": [
+            "Los Cuerpos de Policía de las Comunidades Autónomas entre otras.",
+            "Los Cuerpos de Policía Local entre otros.",
+            "Los Cuerpos y Fuerzas de Seguridad del Estado.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 769/1987, de 19 de junio, sobre regulación de la Policía Judicial. Art. 7.º Constituyen la Policía Judicial en sentido estricto las Unidades Orgánicas previstas en el artículo 30.1 de la Ley Orgánica de Fuerzas y Cuerpos de Seguridad integradas por miembros del Cuerpo Nacional de Policía y de la Guardia Civil. (FCSE)"
+    },
+    {
+        "pregunta": "El derecho de defensa que posee toda persona a quien se le impute un acto punible, se reconoce en:",
+        "opciones": [
+            "El artículo 520 de la LECrim.",
+            "El Código Penal.",
+            "El art. 17 de la CE.",
+            "La a y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 118. LECrim 1. Toda persona a quien se atribuya un hecho punible podrá ejercitar el derecho de defensa, interviniendo en las actuaciones, desde que se le comunique su existencia, haya sido objeto de detención o de cualquier otra medida cautelar o se haya acordado su procesamiento, a cuyo efecto se le instruirá, sin demora injustificada, de los siguientes derechos: (...) Artículo 520. LECrim - derechos del detenido"
+    },
+    {
+        "pregunta": "El procedimiento de Habeas Corpus se halla regulado en la:",
+        "opciones": [
+            "Ley Orgánica 1/92, de 21 de febrero.",
+            "Ley Orgánica 6/1984, de 24 de mayo.",
+            "Ley Orgánica 6/85, de1 de julio.",
+            "Ley Orgánica 5/85, de 19 de junio."
+        ],
+        "correcta": 1,
+        "explicacion": "LEY ORGÁNICA 6/1984, DE 24 DE MAYO, REGULADORA DEL PROCEDIMIENTO DE HABEAS CORPUS"
+    },
+    {
+        "pregunta": "La Ley de Enjuiciamiento Criminal fue aprobada por el:",
+        "opciones": [
+            "Real Decreto de 14 de octubre de 1887.",
+            "Real Decreto de 14 de septiembre de 1882.",
+            "Real Decreto de 14 de septiembre de 1887.",
+            "Real Decreto de 14 de octubre de 1882."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal. Publicado en el BOE, de 17/09/1882."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

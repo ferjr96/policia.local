@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. Cuando no haya herederos, las Cortes Generales a la hora de proveer la sucesión, lo harán:",
+        "opciones": [
+            "En la forma establecida en la ley de sucesión.",
+            "En la forma que más beneficie a la monarquía.",
+            "En la forma que más convenga a los intereses de España.",
+            "En la forma que determine el Gobierno de la nación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey al ser proclamado ante las Cortes Generales prestará juramento:",
+        "opciones": [
+            "De guardar y hacer guardar la Constitución y las leyes.",
+            "De respetar los derechos de los ciudadanos.",
+            "De respetar los derechos de las CCAA.",
+            "Las tres respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La Regencia se ejercerá:",
+        "opciones": [
+            "Por las Cortes Generales.",
+            "Por los parientes de más edad del Rey menor.",
+            "Hasta que se nombre un nuevo Rey.",
+            "Durante la minoría de edad del Rey."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Mediante qué norma se regularán las tramitaciones de las Proposiciones de Ley?:",
+        "opciones": [
+            "Mediante una Ley ordinaria.",
+            "Mediante una Ley orgánica.",
+            "Mediante los Reglamentos de las cámaras.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 89 1. La tramitación de las proposiciones de ley se regulará por los Reglamentos de las Cámaras, sin que la prioridad debida a los proyectos de ley impida el ejercicio de la iniciativa legislativa en los términos regulados por el artículo 87. 2. Las proposiciones de ley que, de acuerdo con el artículo 87, tome en consideración el Senado, se remitirán al Congreso para su trámite en éste como tal proposición."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale de los siguientes casos aquellos en que se reúnen en sesión conjunta las Cortes Generales:",
+        "opciones": [
+            "Para una moción de censura.",
+            "Para nombrar al Presidente del Gobierno.",
+            "Para recibir el juramento del Rey.",
+            "La a y la b son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El actual Rey de España utiliza el título de:",
+        "opciones": [
+            "Felipe V.",
+            "Felipe VI.",
+            "Felipe I.",
+            "Juan Carlos I."
+        ],
+        "correcta": 1,
+        "explicacion": "Felipe VI de España es el actual rey de España, título por el que ostenta la Jefatura del Estado y el mando supremo de las Fuerzas Armadas. Fue proclamado ante las Cortes Generales el 19 de junio de 2014, tras hacerse efectiva la abdicación de su padre.​"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La prestación por parte del Estado para obligarse por medio de tratados Internacionales (Art. 94.1 CE), ¿en qué cámara de las Cortes Generales se iniciará el proceso?",
+        "opciones": [
+            "Congreso.",
+            "Senado.",
+            "Depende del tipo de convenio.",
+            "Se aprueban en la Unión Europea."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 94 1. La prestación del consentimiento del Estado para obligarse por medio de tratados o convenios requerirá la previa autorización de las Cortes Generales, en los siguientes casos: a) Tratados de carácter político. b) Tratados o convenios de carácter militar. c) Tratados o convenios que afecten a la integridad territorial del Estado o a los derechos y deberes fundamentales establecidos en el Título I. d) Tratados o convenios que impliquen obligaciones financieras para la Hacienda Pública. e) Tratados o convenios que supongan modificación o derogación de alguna ley o exijan medidas legislativas para su ejecución. 2. El Congreso y el Senado serán inmediatamente informados de la conclusión de los restantes tratados o convenios."
+    },
+    {
+        "pregunta": "¿En qué artículo de la Constitución Española vienen recogidos aquellos aspectos que no podrán regular las Leyes de Bases?",
+        "opciones": [
+            "Art. 85.",
+            "Art. 87.",
+            "Art. 88.",
+            "Art. 83."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 83 Las leyes de bases no podrán en ningún caso: a) Autorizar la modificación de la propia ley de bases. b) Facultar para dictar normas con carácter retroactivo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si no hay ningún heredero en derecho, la sucesión a la Corona será propuesta por:",
+        "opciones": [
+            "El Congreso por mayoría de 3/5.",
+            "Las Cortes Generales.",
+            "El Gobierno.",
+            "La Familia Real."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién controla la potestad reglamentaria y la legalidad de la actuación administrativa?",
+        "opciones": [
+            "Las Cortes Generales.",
+            "Los Tribunales.",
+            "El Congreso.",
+            "El Defensor del Pueblo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 106 1. Los Tribunales controlan la potestad reglamentaria y la legalidad de la actuación administrativa, así como el sometimiento de ésta a los fines que la justifican. 2. Los particulares, en los términos establecidos por la ley, tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo en los casos de fuerza mayor, siempre que la lesión sea consecuencia del funcionamiento de los servicios públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué plazo se tiene que transcurrir a partir de la primera votación de investidura del candidato a Presidente del Gobierno, si no hubiere obtenido la confianza del congreso, para que el Rey disuelva ambas cámaras?",
+        "opciones": [
+            "Tres meses.",
+            "48 horas.",
+            "Dos meses.",
+            "Un mes."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Quien ejerza como tutor del Rey no podrá:",
+        "opciones": [
+            "Ser representante político.",
+            "Ostentar cargo alguno de naturaleza política.",
+            "Ser miembro de la Casa Real.",
+            "Son correctas las respuestas a y b."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Pueden delegar las Cortes Generales en el Gobierno, legislación delegada que afecte a la reforma de la Ley electoral general?",
+        "opciones": [
+            "No.",
+            "Sí.",
+            "Sí, cuando se vayan a disolver las cámaras por elecciones generales.",
+            "Solo cuando se refiera a las elecciones de las Comunidades Autónomas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 81 1. Son leyes orgánicas las relativas al desarrollo de los derechos fundamentales y de las libertades públicas, las que aprueben los Estatutos de Autonomía y el régimen electoral general y las demás previstas en la Constitución."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué tipo de mayoría se necesita en el senado para vetar la totalidad de un proyecto de ley orgánica?",
+        "opciones": [
+            "2/3 partes.",
+            "Absoluta.",
+            "Simple.",
+            "3/4 partes."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 90 1. Aprobado un proyecto de ley ordinaria u orgánica por el Congreso de los Diputados, su Presidente dará inmediata cuenta del mismo al Presidente del Senado, el cual lo someterá a la deliberación de éste. 2. El Senado en el plazo de dos meses, a partir del día de la recepción del texto, puede, mediante mensaje motivado, oponer su veto o introducir enmiendas al mismo. El veto deberá ser aprobado por mayoría absoluta. El proyecto no podrá ser sometido al Rey para sanción sin que el Congreso ratifique por mayoría absoluta, en caso de veto, el texto inicial, o por mayoría simple, una vez transcurridos dos meses desde la interposición del mismo, o se pronuncie sobre las enmiendas, aceptándolas o no por mayoría simple. 3. El plazo de dos meses de que el Senado dispone para vetar o enmendar el proyecto se reducirá al de veinte días naturales en los proyectos declarados urgentes por el Gobierno o por el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La sucesión al trono seguirá el orden de:",
+        "opciones": [
+            "Ninguna es correcta.",
+            "Mayoría de edad.",
+            "Primogenitura y representación.",
+            "Igualdad de género."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si una persona con derecho a la sucesión, contrae matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedará:",
+        "opciones": [
+            "Excluído de la Familia Real.",
+            "Como última persona en el orden sucesorio.",
+            "Excluído de la sucesión a la Corona.",
+            "A resultas de la decisión del Tribunal Constitucional."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey asume la más alta representación del Estado español en:",
+        "opciones": [
+            "Las relaciones con la Unión Europea.",
+            "Las relaciones internacionales.",
+            "Las relaciones con la ONU.",
+            "Todo el territorio nacional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién será tutor del Rey menor?",
+        "opciones": [
+            "A quien hubiese nombrado el Rey en su testamento siempre que sea español de nacimiento.",
+            "A quien hubiese nombrado el Rey en su testamento siempre que sea mayor de edad.",
+            "Ninguna respuesta es correcta.",
+            "La persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Príncipe o Princesa herederos, desde su nacimiento tendrán la dignidad de:",
+        "opciones": [
+            "Príncipe/Princesa de Asturias.",
+            "Príncipe/Princesa heredero/heredera de la Zarzuela.",
+            "Príncipe/Princesa de Madrid.",
+            "Príncipe/Princesa de la monarquía Borbónica."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La Reina Consorte:",
+        "opciones": [
+            "Nunca podrá asumir la Regencia.",
+            "Asumirá la Regencia sólo por el tiempo imprescindible.",
+            "Actuará como Reina y madre del Rey menor de edad.",
+            "Podrá ser Regente."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 58 La Reina consorte o el consorte de la Reina no podrán asumir funciones constitucionales, salvo lo dispuesto para la Regencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey ejerce las funciones que le atribuyen expresamente:",
+        "opciones": [
+            "La Constitución.",
+            "La Constitución y las leyes.",
+            "Las leyes españolas.",
+            "La Constitución y los estatutos de autonomía de las CCAA."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué títulos le corresponden al Rey de España?",
+        "opciones": [
+            "El de Su Majestad y los que el Gobierno le otorga al nombrarlo.",
+            "El de Rey de España y los propios de la monarquía.",
+            "Todos los que existan en el estado español.",
+            "El de Rey de España y los que le correspondan a la Corona."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Cuando el Rey fuera menor de edad ejercerá la Regencia, en primer lugar:",
+        "opciones": [
+            "El padre del Rey.",
+            "La madre del Rey.",
+            "A quien designen las Cortes Generales.",
+            "Son correctas las respuestas a y b."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para ser Regente es necesario:",
+        "opciones": [
+            "Ser español.",
+            "Ser mayor de edad.",
+            "Ser familiar del Rey.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los actos del Rey deberán ser siempre:",
+        "opciones": [
+            "Firmados por el Presidente del Gobierno.",
+            "Autorizados por el Gobierno.",
+            "Refrendados con las excepciones que determine la Constitución.",
+            "Validados por el Gobierno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La persona del Rey:",
+        "opciones": [
+            "No responde de sus actuaciones políticas.",
+            "Responde de acuerdo con el Código Penal.",
+            "No está sometida al referendo.",
+            "No está sujeta a responsabilidad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si un acto del Rey no está refrendado:",
+        "opciones": [
+            "Es nulo de pleno derecho.",
+            "Carece de validez.",
+            "Es un acto jurídicamente inexistente.",
+            "No tiene eficacia hasta su convalidación."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey:",
+        "opciones": [
+            "Representa al Gobierno en otros países.",
+            "Arbitra el funcionamiento regular de las instituciones.",
+            "Dirige las instituciones monárquicas.",
+            "Utiliza los símbolos del Estado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El título que utiliza el Rey es el de:",
+        "opciones": [
+            "Rey de la Orden del Toisón de Oro.",
+            "Rey de todos los españoles.",
+            "Rey de España.",
+            "Rey de la monarquía Borbónica."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué artículos comprende el Título II CE?",
+        "opciones": [
+            "55 a 63.",
+            "56 a 65.",
+            "57 a 64.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "La regulación de la Corona se lleva a cabo en el Título II de la Constitución española de 1978, artículos 56 a 65, ambos incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cómo se denomina la iniciativa legislativa que pueda presentar la Asamblea de una Comunidad Autónoma ante la mesa del Congreso?",
+        "opciones": [
+            "Proyecto de Ley.",
+            "Proposición de Ley.",
+            "Decreto Ley.",
+            "Decreto Legislativo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 87 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. 2. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa. 3. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién dirige la acción del Gobierno?",
+        "opciones": [
+            "El Rey.",
+            "El Presidente.",
+            "Las Cortes Generales.",
+            "El Congreso mediante las sesiones de control."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 98 1. El Gobierno se compone del Presidente, de los Vicepresidentes, en su caso, de los Ministros y de los demás miembros que establezca la ley. 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión. 3. Los miembros del Gobierno no podrán ejercer otras funciones representativas que las propias del mandato parlamentario, ni cualquier otra función pública que no derive de su cargo, ni actividad profesional o mercantil alguna. 4. La ley regulará el estatuto e incompatibilidades de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Cuando la Regencia tenga que proveerse por las Cortes Generales, se compondrá de:",
+        "opciones": [
+            "Una, tres o cinco personas.",
+            "Una, dos o tres personas.",
+            "Dos personas.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Está permitido legalmente que las cámaras puedan recibir peticiones que sean presentadas directamente por una manifestación ciudadana?",
+        "opciones": [
+            "Sí.",
+            "Sí, siempre que no sean relativas a una Ley Orgánica.",
+            "No.",
+            "Si la manifestación no está prohibida, sí."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 77 1. Las Cámaras pueden recibir peticiones individuales y colectivas, siempre por escrito, quedando prohibida la presentación directa por manifestaciones ciudadanas. 2. Las Cámaras pueden remitir al Gobierno las peticiones que reciban. El Gobierno está obligado a explicarse sobre su contenido, siempre que las Cámaras lo exijan."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién aprueba los Proyectos de Ley?",
+        "opciones": [
+            "Las Cortes Generales.",
+            "El Congreso.",
+            "El Senado.",
+            "El Consejo de Ministros."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 88 Los proyectos de ley serán aprobados en Consejo de Ministros, que los someterá al Congreso, acompañados de una exposición de motivos y de los antecedentes necesarios para pronunciarse sobre ellos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién puede nombrar las comisiones de investigación?",
+        "opciones": [
+            "Congreso.",
+            "Senado.",
+            "Ambas cámaras conjuntamente.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 76 1. El Congreso y el Senado, y, en su caso, ambas Cámaras conjuntamente, podrán nombrar Comisiones de investigación sobre cualquier asunto de interés público. Sus conclusiones no serán vinculantes para los Tribunales, ni afectarán a las resoluciones judiciales, sin perjuicio de que el resultado de la investigación sea comunicado al Ministerio Fiscal para el ejercicio, cuando proceda, de las acciones oportunas. 2. Será obligatorio comparecer a requerimiento de las Cámaras. La ley regulará las sanciones que puedan imponerse por incumplimiento de esta obligación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El cargo de tutor del Rey menor de edad se podrá acumular al de Regente solamente si los ejerce:",
+        "opciones": [
+            "La madre del Rey.",
+            "Un ascendiente directo del Rey.",
+            "El padre del Rey.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey al ser proclamado ante las Cortes Generales:",
+        "opciones": [
+            "Se comprometerá a respetar la Constitución y demás leyes.",
+            "Jurará desempeñar fielmente sus funciones.",
+            "Se comprometerá a respetar la Constitución.",
+            "Prometerá desempeñar fielmente sus funciones."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Nuestra Constitución dispone que el Rey es:",
+        "opciones": [
+            "Símbolo de la Corona.",
+            "Símbolo de la Casa Real.",
+            "Símbolo de la unidad y permanencia del Estado.",
+            "Símbolo de la monarquía."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Príncipe heredero, al alcanzar la mayoría de edad, prestará juramento de:",
+        "opciones": [
+            "Fidelidad al Rey.",
+            "Fidelidad a la Corona.",
+            "Fidelidad a los españoles.",
+            "Fidelidad a las Cortes Generales"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Cuando el objeto de la delegación legislativa, sea la formación de textos articulados, se realizará mediante:",
+        "opciones": [
+            "Una Ley Ordinaria.",
+            "Un Real Decreto Ley.",
+            "Un Decreto Ley.",
+            "Una Ley de bases."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál es el número mínimo de diputados o senadores que formarán parte de la Diputación permanente?",
+        "opciones": [
+            "20.",
+            "21.",
+            "30.",
+            "50."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 78 1. En cada Cámara habrá una Diputación Permanente compuesta por un mínimo de veintiún miembros, que representarán a los grupos parlamentarios, en proporción a su importancia numérica. 2. Las Diputaciones Permanentes estarán presididas por el Presidente de la Cámara respectiva y tendrán como funciones la prevista en el artículo 73, la de asumir las facultades que correspondan a las Cámaras, de acuerdo con los artículos 86 y 116, en caso de que éstas hubieren sido disueltas o hubiere expirado su mandato y la de velar por los poderes de las Cámaras cuando éstas no estén reunidas. 3. Expirado el mandato o en caso de disolución, las Diputaciones Permanentes seguirán ejerciendo sus funciones hasta la constitución de las nuevas Cortes Generales. 4. Reunida la Cámara correspondiente, la Diputación Permanente dará cuenta de los asuntos tratados y de sus decisiones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La Corona de España es hereditaria en los sucesores de:",
+        "opciones": [
+            "La Dinastía Borbónica.",
+            "Su Majestad Don Felipe VI de Borbón.",
+            "Los Reyes Católicos.",
+            "Su Majestad Don Juan Carlos I de Borbón."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué artículo regula la audiencia de los ciudadanos en las disposiciones administrativas que les afecten?",
+        "opciones": [
+            "Art. 101.",
+            "Art. 105.",
+            "Art. 103.",
+            "Art. 104."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si el Rey difunto no hubiera nombrado tutor en su testamento, ni pudieran serlo ni el padre o la madre del Rey menor, lo harán:",
+        "opciones": [
+            "El consejo de la Corona.",
+            "Las Cortes Generales.",
+            "El Consejo de la Familia Real.",
+            "El Consejo de sucesión."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Una vez aprobado un proyecto de Ley Ordinaria en el congreso, ¿a quién dará inmediata cuenta el Presidente de dicha cámara?",
+        "opciones": [
+            "Al Presidente del Gobierno.",
+            "Al Rey.",
+            "Al Presidente del Senado.",
+            "Al Defensor del Pueblo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 90 1. Aprobado un proyecto de ley ordinaria u orgánica por el Congreso de los Diputados, su Presidente dará inmediata cuenta del mismo al Presidente del Senado, el cual lo someterá a la deliberación de éste. 2. El Senado en el plazo de dos meses, a partir del día de la recepción del texto, puede, mediante mensaje motivado, oponer su veto o introducir enmiendas al mismo. El veto deberá ser aprobado por mayoría absoluta. El proyecto no podrá ser sometido al Rey para sanción sin que el Congreso ratifique por mayoría absoluta, en caso de veto, el texto inicial, o por mayoría simple, una vez transcurridos dos meses desde la interposición del mismo, o se pronuncie sobre las enmiendas, aceptándolas o no por mayoría simple. 3. El plazo de dos meses de que el Senado dispone para vetar o enmendar el proyecto se reducirá al de veinte días naturales en los proyectos declarados urgentes por el Gobierno o por el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién convoca un referéndum para una decisión política de especial trascendencia?",
+        "opciones": [
+            "El Presidente del Gobierno.",
+            "El Presidente del Congreso.",
+            "El Rey.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 92 1. Las decisiones políticas de especial trascendencia podrán ser sometidas a referéndum consultivo de todos los ciudadanos. 2. El referéndum será convocado por el Rey, mediante propuesta del Presidente del Gobierno, previamente autorizada por el Congreso de los Diputados. 3. Una ley orgánica regulará las condiciones y el procedimiento de las distintas modalidades de referéndum previstas en esta Constitución."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para que el padre o la madre del Rey puedan ser tutores, es necesario que éstos:",
+        "opciones": [
+            "Sean españoles de nacimiento.",
+            "Permanezcan casados.",
+            "Sean mayores de 25 años.",
+            "Permanezcan viudos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál es el supremo órgano consultivo del Gobierno?",
+        "opciones": [
+            "Defensor del Pueblo.",
+            "El Consejo de Ministros.",
+            "Las Cortes Generales.",
+            "El Consejo de Estado."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 107 El Consejo de Estado es el supremo órgano consultivo del Gobierno. Una ley orgánica regulará su composición y competencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona, deberá ser resuelta por:",
+        "opciones": [
+            "El Pleno del Tribunal Supremo.",
+            "Ley Orgánica.",
+            "Ley de sucesión.",
+            "El Tribunal Constitucional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

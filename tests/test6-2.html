@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las disposiciones generales aprobadas por las entidades locales cuyo objeto sea regular el funcionamiento de la entidad local se denominan:",
+        "opciones": [
+            "Decretos.",
+            "Reglamentos.",
+            "Ordenanzas.",
+            "Bandos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 101. Reglamentos y ordenanzas. 1. Las disposiciones generales aprobadas por las entidades locales en el ejercicio de la potestad reglamentaria y en el ámbito de su competencia adoptan la denominación de reglamentos, si tienen por objeto regular la organización, el funcionamiento de la entidad local y la prestación de los servicios públicos, y, de lo contrario, la de ordenanzas. 2. Las ordenanzas y los reglamentos de las entidades locales se integran en el ordenamiento jurídico con sujeción a los principios de jerarquía normativa y de competencia. 3. Lo dispuesto en las ordenanzas y los reglamentos vincula por igual a los ciudadanos y a las ciudadanas y a la entidad local, sin que ésta pueda dispensar individualmente de su observancia."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las disposiciones generales aprobadas por las entidades locales cuyo objeto NO sea regular la organización, el funcionamiento de la entidad local y la prestación de los servicios públicos, se denominan:",
+        "opciones": [
+            "Decretos.",
+            "Reglamentos.",
+            "Ordenanzas.",
+            "Bandos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 101. Reglamentos y ordenanzas. 1. Las disposiciones generales aprobadas por las entidades locales en el ejercicio de la potestad reglamentaria y en el ámbito de su competencia adoptan la denominación de reglamentos, si tienen por objeto regular la organización, el funcionamiento de la entidad local y la prestación de los servicios públicos, y, de lo contrario, la de ordenanzas. 2. Las ordenanzas y los reglamentos de las entidades locales se integran en el ordenamiento jurídico con sujeción a los principios de jerarquía normativa y de competencia. 3. Lo dispuesto en las ordenanzas y los reglamentos vincula por igual a los ciudadanos y a las ciudadanas y a la entidad local, sin que ésta pueda dispensar individualmente de su observancia."
+    },
+    {
+        "pregunta": "Las delegaciones de funciones de los municipios, según el art. 26 de la Ley 20/2006 de 15 de diciembre, se atenderán a lo que establece:",
+        "opciones": [
+            "La Ley.",
+            "Una Ley del Parlamento.",
+            "La legislación básica.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 26 | La gerencia municipal especializada. Los municipios, para optimizar la gestión de sus recursos y servicios, pueden crear, con el acuerdo previo del pleno que establezca los requisitos mínimos de selección y previa la modificación de la relación de puestos de trabajo, como órgano ejecutivo bajo la dependencia inmediata del alcalde o de la alcaldesa o de un o una teniente de alcalde o de un concejal o una concejala delegados, una o más gerencias municipales especializadas, con funciones delegadas o instrumentales. En cualquier caso, las delegaciones de funciones se atenderán a lo que establece la normativa básica."
+    },
+    {
+        "pregunta": "La planificación, programación y gestión de vivienda pública y participación en la planificación en el suelo municipal de la vivienda de protección oficial, viene regulada.",
+        "opciones": [
+            "La Constitución.",
+            "El EAIB.",
+            "El art. 29 de la Ley 20/2006.",
+            "El art. 100 de la Ley 20/2006."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según el art. 10 de la Ley 20/2006 de 15 de diciembre, será válido el cambio de denominación de un municipio cuando sea aprobado en el pleno por mayoría absoluta y publicado en el tablón de anuncios.",
+        "opciones": [
+            "Si.",
+            "Solo cuando sea publicado en el BOIB e inscrito en el registro.",
+            "Solo cuando sea publicado en el BOE e inscrito en el registro.",
+            "La b y la c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 10 | Identificación. 2. Por acuerdo de la mayoría absoluta del pleno se puede aprobar o modificar el escudo, el himno o la bandera del municipio, o alterar su denominación, debiendo seguirse un procedimiento específico que se regulará reglamentariamente. Los cambios de denominación sólo tendrán carácter oficial cuando sean inscritos en el registro correspondiente y se publiquen en el Boletín Oficial del Estado y en el Butlletí Oficial de les Illes Balears."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, ____________________________ entrarán en vigor cuando se haya publicado íntegramente el acuerdo definitivo y el texto de las mismas en el Butlletí Oficial de las Illes Balears, a no ser que se demore su aplicación a una fecha posterior:",
+        "opciones": [
+            "Los Reglamentos urbanísticos.",
+            "Las ordenanzas fiscales.",
+            "Los Reglamentos fiscales.",
+            "Las ordenanzas urbanísticas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 103. Entrada en vigor. 1. Los reglamentos y las ordenanzas, incluidos los contenidos normativos de los planes urbanísticos, no entran en vigor hasta que no se hayan publicado íntegramente en el Butlletí Oficial de les Illes Balears, y hasta que no haya transcurrido el plazo que señala el artículo 113 de esta ley. 2. Las ordenanzas fiscales entran en vigor cuando se hayan publicado íntegramente el acuerdo definitivo y el texto de las mismas en el citado boletín, a no ser que se demore su aplicación a una fecha posterior."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Normas cuya finalidad es exhortar a la ciudadanía a la observancia de las obligaciones y los deberes establecidos en la leyes, se denominan:",
+        "opciones": [
+            "Bandos.",
+            "Ordenanzas.",
+            "Reglamentos.",
+            "Directivas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 104. Bandos. Los bandos dictados por los alcaldes o las alcaldesas tienen como finalidad exhortar a la ciudadanía a la observancia de las obligaciones y los deberes establecidos en las leyes y en las ordenanzas y los reglamentos municipales, recordarle el contenido preciso de dichas obligaciones y los plazos establecidos para su cumplimiento, así como efectuar convocatorias populares con motivo de acontecimientos ciudadanos. Se publicarán conforme a los usos y costumbres de la localidad, si bien en los casos de catástrofe o infortunio públicos o riesgo grave, los alcaldes o las alcaldesas pueden adoptar las medidas necesarias y adecuadas, pero dando cuenta al pleno inmediatamente."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Si no se presentaren reclamaciones o sugerencias al acuerdo inicialmente adoptado:",
+        "opciones": [
+            "Se requerirá un nuevo acuerdo expreso por parte del pleno para su aprobación.",
+            "Se requerirá un nuevo acuerdo expreso cuyo quórum deberá ser de mayoría simple del pleno.",
+            "No se requerirá un nuevo acuerdo expreso por parte del pleno para su aprobación.",
+            "Se requerirá un nuevo acuerdo expreso cuyo quórum deberá ser de mayoría absoluta del pleno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 102. Procedimiento de elaboración de reglamentos y ordenanzas. La aprobación de ordenanzas y de reglamentos locales se ajustará al siguiente procedimiento: a) Aprobación inicial por el pleno de la entidad local. b) Información pública, previo anuncio en la sección correspondiente del Butlletí Oficial de les Illes Balears y en el tablón de anuncios de la entidad del acuerdo de aprobación inicial, por el plazo mínimo de treinta días, en que la vecindad y las personas legítimamente interesadas pueden examinar el expediente y formular reclamaciones, reparos u observaciones. c) Audiencia previa a las asociaciones vecinales y de defensa de las personas consumidoras y usuarias establecidas en su ámbito territorial que estén inscritas en el registro municipal de asociaciones vecinales y cuyos fines guarden relación directa con el objeto de la disposición. d) Resolución de las reclamaciones, reparos u observaciones y aprobación definitiva por el pleno. Si no se ha presentado ninguna reclamación o sugerencia, el acuerdo inicialmente adoptado se entenderá definitivamente aprobado sin necesidad de nuevo acuerdo expreso. e) Para la modificación de las ordenanzas y los reglamentos deberán seguirse los mismos trámites que para su aprobación."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, la potestad normativa reglamentaria está limitada por los principios de:",
+        "opciones": [
+            "Constitucionalidad y jerarquía normativa.",
+            "Jerarquía normativa y legalidad.",
+            "Legalidad y constitucionalidad.",
+            "Jerarquía normativa y competencia."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 100. Potestad normativa reglamentaria. Los municipios tienen potestad normativa reglamentaria, como expresión del principio democrático en el cual se fundamentan, en el ámbito de sus competencias. Esta potestad está limitada por los principios de jerarquía normativa y de competencia."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los reglamentos y ordenanzas no entran en vigor:",
+        "opciones": [
+            "Hasta que no se hayan publicado íntegramente en el BOE",
+            "Hasta que no se hayan publicado íntegramente en el Butlletí Oficial de las Illes Balears, y hasta que no haya transcurrido el plazo que señala el artículo 113 de esta ley, excepto los contenidos normativos de los planes urbanísticos.",
+            "Hasta que no se hayan publicado íntegramente en el Butlletí Oficial de las Illes Balears, y hasta que no haya transcurrido el plazo que señala el artículo 113 de esta ley, incluidos los contenidos normativos de los planes urbanísticos.",
+            "Hasta que no se hayan publicado íntegramente en el Butlletí Oficial de las Illes Balears, excepto los contenidos normativos de los planes urbanísticos, cuyo plazo se regula en el artículo 113 de esta ley."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La gerencia municipal especializada estará bajo la dependencia inmediata de:",
+        "opciones": [
+            "El alcalde o la alcaldesa.",
+            "El alcalde o la alcaldesa o de un o una teniente de alcalde o de un concejal o una concejala delegados.",
+            "El alcalde o la alcaldesa o de un o una teniente de alcalde.",
+            "El alcalde o la alcaldesa o de un concejal o una concejala delegados."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 26. La gerencia municipal especializada. Los municipios, para optimizar la gestión de sus recursos y servicios, pueden crear, con el acuerdo previo del pleno que establezca los requisitos mínimos de selección y previa la modificación de la relación de puestos de trabajo, como órgano ejecutivo bajo la dependencia inmediata del alcalde o de la alcaldesa o de un o una teniente de alcalde o de un concejal o una concejala delegados, una o más gerencias municipales especializadas, con funciones delegadas o instrumentales. En cualquier caso las delegaciones de funciones se atenderán a lo que establece la normativa básica."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las disposiciones generales aprobadas por las entidades locales cuyo objeto sea regular la prestación de los servicios públicos se denominan:",
+        "opciones": [
+            "Decretos.",
+            "Reglamentos.",
+            "Ordenanzas.",
+            "Bandos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 101. Reglamentos y ordenanzas. 1. Las disposiciones generales aprobadas por las entidades locales en el ejercicio de la potestad reglamentaria y en el ámbito de su competencia adoptan la denominación de reglamentos, si tienen por objeto regular la organización, el funcionamiento de la entidad local y la prestación de los servicios públicos, y, de lo contrario, la de ordenanzas. 2. Las ordenanzas y los reglamentos de las entidades locales se integran en el ordenamiento jurídico con sujeción a los principios de jerarquía normativa y de competencia. 3. Lo dispuesto en las ordenanzas y los reglamentos vincula por igual a los ciudadanos y a las ciudadanas y a la entidad local, sin que ésta pueda dispensar individualmente de su observancia."
+    },
+    {
+        "pregunta": "Que tipo de potestad normativa tienen los municipios.",
+        "opciones": [
+            "Municipal",
+            "Jerárquica",
+            "Territorial",
+            "Reglamentaria"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 100 | Potestad normativa reglamentaria Los municipios tienen potestad normativa reglamentaria, como expresión del principio democrático en el cual se fundamentan, en el ámbito de sus competencias. Esta potestad está limitada por los principios de jerarquía normativa y de competencia."
+    },
+    {
+        "pregunta": "Según el art. 21 de la Ley 20/2006 de 15 de diciembre, que tipo de norma regulará las competencias de los órganos municipales:",
+        "opciones": [
+            "La Ley.",
+            "Una Ley del Parlamento.",
+            "La legislación básica de régimen local.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 21 | Competencias orgánicas. Son competencias de los órganos municipales las que determina la legislación básica de régimen local."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las disposiciones generales aprobadas por las entidades locales en el ámbito de su competencia cuyo objeto sea regular la organización de la entidad local se denominan:",
+        "opciones": [
+            "Decretos.",
+            "Ordenanzas.",
+            "Reglamentos.",
+            "Bandos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 101. Reglamentos y ordenanzas. 1. Las disposiciones generales aprobadas por las entidades locales en el ejercicio de la potestad reglamentaria y en el ámbito de su competencia adoptan la denominación de reglamentos, si tienen por objeto regular la organización, el funcionamiento de la entidad local y la prestación de los servicios públicos, y, de lo contrario, la de ordenanzas. 2. Las ordenanzas y los reglamentos de las entidades locales se integran en el ordenamiento jurídico con sujeción a los principios de jerarquía normativa y de competencia. 3. Lo dispuesto en las ordenanzas y los reglamentos vincula por igual a los ciudadanos y a las ciudadanas y a la entidad local, sin que ésta pueda dispensar individualmente de su observancia."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, el plazo de información pública de los reglamentos y ordenanzas, en el tablón de anuncios de la entidad, se realizará por un plazo mínimo de:",
+        "opciones": [
+            "Diez días.",
+            "Quince días.",
+            "Veinte días.",
+            "Treinta días."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 102. Procedimiento de elaboración de reglamentos y ordenanzas. La aprobación de ordenanzas y de reglamentos locales se ajustará al siguiente procedimiento: a) Aprobación inicial por el pleno de la entidad local. b) Información pública, previo anuncio en la sección correspondiente del Butlletí Oficial de les Illes Balears y en el tablón de anuncios de la entidad del acuerdo de aprobación inicial, por el plazo mínimo de treinta días, en que la vecindad y las personas legítimamente interesadas pueden examinar el expediente y formular reclamaciones, reparos u observaciones. c) Audiencia previa a las asociaciones vecinales y de defensa de las personas consumidoras y usuarias establecidas en su ámbito territorial que estén inscritas en el registro municipal de asociaciones vecinales y cuyos fines guarden relación directa con el objeto de la disposición. d) Resolución de las reclamaciones, reparos u observaciones y aprobación definitiva por el pleno. Si no se ha presentado ninguna reclamación o sugerencia, el acuerdo inicialmente adoptado se entenderá definitivamente aprobado sin necesidad de nuevo acuerdo expreso. e) Para la modificación de las ordenanzas y los reglamentos deberán seguirse los mismos trámites que para su aprobación."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La distribución de las responsabilidades administrativas en las materias del artículo 29.2 se regirá por las leyes aprobadas por:",
+        "opciones": [
+            "La Administración General del Estado.",
+            "Los Ayuntamientos municipales.",
+            "El Parlamento de las Illes Balears.",
+            "La Diputación Permanente de las Illes Balears."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 29. Competencias. 1. Además de las competencias derivadas de la legislación básica del Estado y del ejercicio de las que puedan ser delegadas por el Estado, por la comunidad autónoma, por los consejos y por otras administraciones, esta ley garantiza a los municipios un núcleo de competencias propias que serán ejercidas por estas entidades con plena autonomía, solamente sujeta al control de constitucionalidad y legalidad. 2. Los municipios de las Illes Balears, en el marco de las leyes, tienen en todo caso competencias propias en las siguientes materias: (...) 3. La distribución de las responsabilidades administrativas en las materias a que se refiere el apartado anterior entre las diversas administraciones locales tendrá en cuenta la capacidad de gestión y se regirá por las leyes aprobadas por el Parlamento de las Illes Balears, observando en todo caso el principio de subsidiariedad, de acuerdo con lo establecido en la Carta europea de la autonomía local, el principio de diferenciación, las características que presenta la realidad municipal y el principio de suficiencia financiera."
+    },
+    {
+        "pregunta": "Que tipo de órganos , estarán integrados por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal.",
+        "opciones": [
+            "Las comisiones informativas",
+            "Comisiones de control",
+            "Junta de Gobierno",
+            "La la a y la b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 24 | Órganos de consulta, estudio y control En los municipios referidos en el artículo anterior donde se constituya una junta de gobierno local o así se acuerde por el pleno de la corporación municipal, existirán las comisiones informativas y de control de los órganos ejecutivos municipales que acuerde el pleno de la corporación o el reglamento orgánico, integradas por representantes de todos los grupos políticos en proporción al número de los miembros de cada uno de éstos, con la finalidad de facilitar el ejercicio de la gestión municipal."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Los reglamentos y ordenanzas de las entidades locales se integran en el ordenamiento jurídico con sujeción a los principios de:",
+        "opciones": [
+            "Jerarquía normativa y competencia.",
+            "Subsidiariedad y competencia.",
+            "Subsidiariedad y legalidad.",
+            "Legalidad y competencia."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 101. Reglamentos y ordenanzas. 1. Las disposiciones generales aprobadas por las entidades locales en el ejercicio de la potestad reglamentaria y en el ámbito de su competencia adoptan la denominación de reglamentos, si tienen por objeto regular la organización, el funcionamiento de la entidad local y la prestación de los servicios públicos, y, de lo contrario, la de ordenanzas. 2. Las ordenanzas y los reglamentos de las entidades locales se integran en el ordenamiento jurídico con sujeción a los principios de jerarquía normativa y de competencia. 3. Lo dispuesto en las ordenanzas y los reglamentos vincula por igual a los ciudadanos y a las ciudadanas y a la entidad local, sin que ésta pueda dispensar individualmente de su observancia."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La aprobación inicial de los reglamentos y ordenanzas corresponde:",
+        "opciones": [
+            "Al alcalde o la alcaldesa.",
+            "Al ayuntamiento de la entidad local.",
+            "A la Junta de Gobierno de la entidad local.",
+            "Al Pleno de la entidad local."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 102. Procedimiento de elaboración de reglamentos y ordenanzas. La aprobación de ordenanzas y de reglamentos locales se ajustará al siguiente procedimiento: a) Aprobación inicial por el pleno de la entidad local. b) Información pública, previo anuncio en la sección correspondiente del Butlletí Oficial de les Illes Balears y en el tablón de anuncios de la entidad del acuerdo de aprobación inicial, por el plazo mínimo de treinta días, en que la vecindad y las personas legítimamente interesadas pueden examinar el expediente y formular reclamaciones, reparos u observaciones. c) Audiencia previa a las asociaciones vecinales y de defensa de las personas consumidoras y usuarias establecidas en su ámbito territorial que estén inscritas en el registro municipal de asociaciones vecinales y cuyos fines guarden relación directa con el objeto de la disposición. d) Resolución de las reclamaciones, reparos u observaciones y aprobación definitiva por el pleno. Si no se ha presentado ninguna reclamación o sugerencia, el acuerdo inicialmente adoptado se entenderá definitivamente aprobado sin necesidad de nuevo acuerdo expreso. e) Para la modificación de las ordenanzas y los reglamentos deberán seguirse los mismos trámites que para su aprobación."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. La distribución de las responsabilidades administrativas en las materias del artículo 29.2 deberán observar el principio de:",
+        "opciones": [
+            "Legalidad.",
+            "Subsidiariedad.",
+            "Solidaridad.",
+            "Jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 29. Competencias. 1. Además de las competencias derivadas de la legislación básica del Estado y del ejercicio de las que puedan ser delegadas por el Estado, por la comunidad autónoma, por los consejos y por otras administraciones, esta ley garantiza a los municipios un núcleo de competencias propias que serán ejercidas por estas entidades con plena autonomía, solamente sujeta al control de constitucionalidad y legalidad. 2. Los municipios de las Illes Balears, en el marco de las leyes, tienen en todo caso competencias propias en las siguientes materias: (...) 3. La distribución de las responsabilidades administrativas en las materias a que se refiere el apartado anterior entre las diversas administraciones locales tendrá en cuenta la capacidad de gestión y se regirá por las leyes aprobadas por el Parlamento de las Illes Balears, observando en todo caso el principio de subsidiariedad, de acuerdo con lo establecido en la Carta europea de la autonomía local, el principio de diferenciación, las características que presenta la realidad municipal y el principio de suficiencia financiera."
+    },
+    {
+        "pregunta": "Según lo dispuesto en la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, ¿Quién dicta los bandos municipales?:",
+        "opciones": [
+            "El Pleno del ayuntamiento.",
+            "El alcalde o la alcaldesa.",
+            "El alcalde o la alcaldesa previa autorización del pleno.",
+            "Los o las tenientes de alcalde."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 104. Bandos. Los bandos dictados por los alcaldes o las alcaldesas tienen como finalidad exhortar a la ciudadanía a la observancia de las obligaciones y los deberes establecidos en las leyes y en las ordenanzas y los reglamentos municipales, recordarle el contenido preciso de dichas obligaciones y los plazos establecidos para su cumplimiento, así como efectuar convocatorias populares con motivo de acontecimientos ciudadanos. Se publicarán conforme a los usos y costumbres de la localidad, si bien en los casos de catástrofe o infortunio públicos o riesgo grave, los alcaldes o las alcaldesas pueden adoptar las medidas necesarias y adecuadas, pero dando cuenta al pleno inmediatamente."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Las gerencias municipales especializadas son un órgano:",
+        "opciones": [
+            "Consultivo.",
+            "De control.",
+            "De mediación.",
+            "Ejecutivo."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 26. La gerencia municipal especializada. Los municipios, para optimizar la gestión de sus recursos y servicios, pueden crear, con el acuerdo previo del pleno que establezca los requisitos mínimos de selección y previa la modificación de la relación de puestos de trabajo, como órgano ejecutivo bajo la dependencia inmediata del alcalde o de la alcaldesa o de un o una teniente de alcalde o de un concejal o una concejala delegados, una o más gerencias municipales especializadas, con funciones delegadas o instrumentales. En cualquier caso las delegaciones de funciones se atenderán a lo que establece la normativa básica."
+    },
+    {
+        "pregunta": "Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares. Lo dispuesto en las ordenanzas y los reglamentos vinculan por igual a:",
+        "opciones": [
+            "Los ciudadanos y ciudadanas sin que la entidad local pueda dispensar individualmente de su observancia.",
+            "Los ciudadanos y ciudadanas y a la entidad local, pudiendo ésta dispensar individualmente de su observancia.",
+            "Los ciudadanos y ciudadanas y a la entidad local, sin que ésta pueda dispensar individualmente de su observancia.",
+            "Los ciudadanos y ciudadanas, pudiendo la entidad local dispensar individualmente de su observancia."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 101. Reglamentos y ordenanzas. 1. Las disposiciones generales aprobadas por las entidades locales en el ejercicio de la potestad reglamentaria y en el ámbito de su competencia adoptan la denominación de reglamentos, si tienen por objeto regular la organización, el funcionamiento de la entidad local y la prestación de los servicios públicos, y, de lo contrario, la de ordenanzas. 2. Las ordenanzas y los reglamentos de las entidades locales se integran en el ordenamiento jurídico con sujeción a los principios de jerarquía normativa y de competencia. 3. Lo dispuesto en las ordenanzas y los reglamentos vincula por igual a los ciudadanos y a las ciudadanas y a la entidad local, sin que ésta pueda dispensar individualmente de su observancia."
+    },
+    {
+        "pregunta": "Según la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares, los bandos se publicarán:",
+        "opciones": [
+            "Según lo establecido en la presente ley.",
+            "Según lo establecido reglamentariamente.",
+            "Según lo establecido estatutariamente.",
+            "Según los usos y costumbres de la localidad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 104. Bandos. Los bandos dictados por los alcaldes o las alcaldesas tienen como finalidad exhortar a la ciudadanía a la observancia de las obligaciones y los deberes establecidos en las leyes y en las ordenanzas y los reglamentos municipales, recordarle el contenido preciso de dichas obligaciones y los plazos establecidos para su cumplimiento, así como efectuar convocatorias populares con motivo de acontecimientos ciudadanos. Se publicarán conforme a los usos y costumbres de la localidad, si bien en los casos de catástrofe o infortunio públicos o riesgo grave, los alcaldes o las alcaldesas pueden adoptar las medidas necesarias y adecuadas, pero dando cuenta al pleno inmediatamente."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 29. Competencias. 1. Además de las competencias derivadas de la legislación básica del Estado y del ejercicio de las que puedan ser delegadas por el Estado, por la comunidad autónoma, por los consejos y por otras administraciones, esta ley garantiza a los municipios un núcleo de competencias propias que serán ejercidas por estas entidades con plena autonomía, solamente sujeta al control de constitucionalidad y legalidad. 2. Los municipios de las Illes Balears, en el marco de las leyes, tienen en todo caso competencias propias en las siguientes materias: (...) 3. La distribución de las responsabilidades administrativas en las materias a que se refiere el apartado anterior entre las diversas administraciones locales tendrá en cuenta la capacidad de gestión y se regirá por las leyes aprobadas por el Parlamento de las Illes Balears, observando en todo caso el principio de subsidiariedad, de acuerdo con lo establecido en la Carta europea de la autonomía local, el principio de diferenciación, las características que presenta la realidad municipal y el principio de suficiencia financiera."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 29. Competencias. 1. Además de las competencias derivadas de la legislación básica del Estado y del ejercicio de las que puedan ser delegadas por el Estado, por la comunidad autónoma, por los consejos y por otras administraciones, esta ley garantiza a los municipios un núcleo de competencias propias que serán ejercidas por estas entidades con plena autonomía, solamente sujeta al control de constitucionalidad y legalidad. 2. Los municipios de las Illes Balears, en el marco de las leyes, tienen en todo caso competencias propias en las siguientes materias: (...) 3. La distribución de las responsabilidades administrativas en las materias a que se refiere el apartado anterior entre las diversas administraciones locales tendrá en cuenta la capacidad de gestión y se regirá por las leyes aprobadas por el Parlamento de las Illes Balears, observando en todo caso el principio de subsidiariedad, de acuerdo con lo establecido en la Carta europea de la autonomía local, el principio de diferenciación, las características que presenta la realidad municipal y el principio de suficiencia financiera."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 29. Competencias. 1. Además de las competencias derivadas de la legislación básica del Estado y del ejercicio de las que puedan ser delegadas por el Estado, por la comunidad autónoma, por los consejos y por otras administraciones, esta ley garantiza a los municipios un núcleo de competencias propias que serán ejercidas por estas entidades con plena autonomía, solamente sujeta al control de constitucionalidad y legalidad. 2. Los municipios de las Illes Balears, en el marco de las leyes, tienen en todo caso competencias propias en las siguientes materias: (...) 3. La distribución de las responsabilidades administrativas en las materias a que se refiere el apartado anterior entre las diversas administraciones locales tendrá en cuenta la capacidad de gestión y se regirá por las leyes aprobadas por el Parlamento de las Illes Balears, observando en todo caso el principio de subsidiariedad, de acuerdo con lo establecido en la Carta europea de la autonomía local, el principio de diferenciación, las características que presenta la realidad municipal y el principio de suficiencia financiera."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 29. Competencias. 1. Además de las competencias derivadas de la legislación básica del Estado y del ejercicio de las que puedan ser delegadas por el Estado, por la comunidad autónoma, por los consejos y por otras administraciones, esta ley garantiza a los municipios un núcleo de competencias propias que serán ejercidas por estas entidades con plena autonomía, solamente sujeta al control de constitucionalidad y legalidad. 2. Los municipios de las Illes Balears, en el marco de las leyes, tienen en todo caso competencias propias en las siguientes materias: (...) 3. La distribución de las responsabilidades administrativas en las materias a que se refiere el apartado anterior entre las diversas administraciones locales tendrá en cuenta la capacidad de gestión y se regirá por las leyes aprobadas por el Parlamento de las Illes Balears, observando en todo caso el principio de subsidiariedad, de acuerdo con lo establecido en la Carta europea de la autonomía local, el principio de diferenciación, las características que presenta la realidad municipal y el principio de suficiencia financiera."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 29. Competencias. 1. Además de las competencias derivadas de la legislación básica del Estado y del ejercicio de las que puedan ser delegadas por el Estado, por la comunidad autónoma, por los consejos y por otras administraciones, esta ley garantiza a los municipios un núcleo de competencias propias que serán ejercidas por estas entidades con plena autonomía, solamente sujeta al control de constitucionalidad y legalidad. 2. Los municipios de las Illes Balears, en el marco de las leyes, tienen en todo caso competencias propias en las siguientes materias: (...) 3. La distribución de las responsabilidades administrativas en las materias a que se refiere el apartado anterior entre las diversas administraciones locales tendrá en cuenta la capacidad de gestión y se regirá por las leyes aprobadas por el Parlamento de las Illes Balears, observando en todo caso el principio de subsidiariedad, de acuerdo con lo establecido en la Carta europea de la autonomía local, el principio de diferenciación, las características que presenta la realidad municipal y el principio de suficiencia financi"
+    },
+    {
+        "pregunta": "De conformidad con la Ley 20/2006, de 15 de diciembre, municipal y de régimen local de las Islas Baleares., las competencias municipales serán ejercidas sujetas al control de:",
+        "opciones": [
+            "Constitucionalidad.",
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y jerarquía.",
+            "Constitucionalidad, legalidad y jerarquía."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "En las placas de matrícula de los vehículos de las Organizaciones Internacionales, el segundo grupo de guarismos, un número de orden, que corresponderá a los vehículos propiedad de la organización internacional o de sus miembros será a:",
+        "opciones": [
+            "A propuesta de dichas Organizaciones.",
+            "A propuesta de las Misiones Diplomáticas.",
+            "A propuesta de las Oficinas Consulares.",
+            "A propuesta del Ministerio de Asuntos Exteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de caracteres de las placas de matrícula turísticas estará constituido por la letra:",
+        "opciones": [
+            "S.",
+            "T.",
+            "V.",
+            "C."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "Para vehículos del Personal técnico-administrativo:",
+        "opciones": [
+            "El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color gris mate.",
+            "El fondo de las placas será retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color negro mate.",
+            "El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color negro mate.",
+            "El fondo de las placas será retrorreflectante, de color gris. Los caracteres estampados en relieve irán pintados en color negro mate."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "De las opciones que a continuación se indican, señala la respuesta correcta respecto a las placas de matrícula temporales para particulares de ciclomotores.",
+        "opciones": [
+            "En las placas de matrícula de los ciclomotores se inscribirán tres grupos de caracteres constituidas, la primera, por la letra P y la cifra correspondiente a las unidades de millar de un número que irá desde el 0000 al 9999; la segunda, por las tres cifras restantes de este número; y la tercera, por tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales.",
+            "En las placas de matrícula de los ciclomotores se inscribirán tres filas de caracteres constituidas, la primera, por la letra P y la cifra correspondiente a las unidades de millar de un número que irá desde el 0000 al 9999; la segunda, por las tres cifras restantes de este número; y la tercera, por tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales.",
+            "En las placas de matrícula de los ciclomotores se inscribirán tres grupos de caracteres constituidas, la primera, por la letra C y la cifra correspondiente a las unidades de millar de un número que irá desde el 0000 al 9999; la segunda, por las tres cifras restantes de este número; y la tercera, por tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales.",
+            "En las placas de matrícula de los ciclomotores se inscribirán tres grupos de caracteres constituidas, la primera, por la letra T y la cifra correspondiente a las unidades de millar de un número que irá desde el 0000 al 9999; la segunda, por las tres cifras restantes de este número; y la tercera, por tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El fondo de las placas de matrícula de los vehículos amparados por permisos temporales para particulares será:",
+        "opciones": [
+            "De color verde. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+            "Retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color gris mate.",
+            "Retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color negro mate.",
+            "Retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color blanco mate."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de caracteres de las placas de matrícula de los vehículos amparados por permisos temporales para particulares estará constituido por la letra:",
+        "opciones": [
+            "P.",
+            "T.",
+            "V.",
+            "H."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Qué grupo de guarismos de las placas de matrícula pertenecientes a los vehículos del Cuerpo Diplomático corresponde a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión diplomática?",
+        "opciones": [
+            "El tercero.",
+            "El primero.",
+            "El cuarto.",
+            "El segundo."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Qué caracteres se inscribirán en las placas de matrícula de las Oficinas Consulares?",
+        "opciones": [
+            "CD.",
+            "OI.",
+            "CC.",
+            "VE."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "La contraseña para vehículos al servicio de los Cuarteles Generales Militares Internacionales de la OTAN matriculados en España será:",
+        "opciones": [
+            "OTAN.",
+            "FAR.",
+            "FAO.",
+            "FAE."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "La contraseña para vehículos pertenecientes al Ministerio de Defensa, correspondientes al Ejército de Tierra, Armada y Ejército del Aire, será:",
+        "opciones": [
+            "ET, FN y EA.",
+            "ET, EN y EA.",
+            "ET, PGC y EA.",
+            "PGC, ET y EA."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "La contraseña para vehículos pertenecientes al Parque del Ministerio de Fomento será:",
+        "opciones": [
+            "MDF.",
+            "MF.",
+            "MFOM.",
+            "MDFOM."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Con qué tipo de caracteres se indicará el mes de caducidad de las placas de matrícula turísticas?",
+        "opciones": [
+            "Árabes.",
+            "Romanos.",
+            "Hispanos.",
+            "Ingleses."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El fondo de las placas de matrícula de los vehículos históricos será:",
+        "opciones": [
+            "Retrorreflectante, de color negro. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+            "Retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color gris mate.",
+            "Retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color negro mate.",
+            "Retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Dónde se consignará la validez de la placa de matrícula turística?",
+        "opciones": [
+            "En la placa de matrícula.",
+            "En una banda en la placa de matrícula.",
+            "En una banda horizontal en la placa de matrícula.",
+            "En una banda vertical en la placa de matrícula."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos   b) Matrícula turística: El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color negro mate. La banda vertical en donde se consignan el mes y el año en que caducan, expresándose el primero en caracteres romanos y el segundo en caracteres de tipo árabe, será retrorreflectante de color rojo. Los caracteres que en ella se consignan serán adhesivos de color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres. El primero lo constituirá la letra T; el segundo un número, que irá desde el 0000 al 9999; y el tercero tres letras, empezando por las letras BBB y terminando con las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente y las letras CH y LL por incompatibilidad con el diseño de la placa de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+    },
+    {
+        "pregunta": "El primer grupo de caracteres de las placas de matrícula de los ciclomotores amparados por permisos temporales para empresas estará constituido por las letras:",
+        "opciones": [
+            "V o S.",
+            "S.",
+            "T.",
+            "V."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "La contraseña para vehículos especiales pertenecientes al Parque Móvil del Estado, al Ministerio de Fomento, al Ministerio de Medio Ambiente, entre otros, será:",
+        "opciones": [
+            "En el caso de vehículos especiales, figurarán las contraseñas correspondientes y, separadas por un guión, las letras VE.",
+            "Únicamente las letras VE.",
+            "Se matricularán con las contraseñas correspondientes al departamento al que pertenezcan.",
+            "No tendrán contraseña específica."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Cuál de los grupos de guarismos de la placa de matrícula de los vehículos pertenecientes al Cuerpo Diplomático será un prefijo invariable?",
+        "opciones": [
+            "El segundo.",
+            "El primero.",
+            "El tercero.",
+            "El cuarto."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "La contraseña para vehículos pertenecientes al Parque Móvil del Estado será:",
+        "opciones": [
+            "ME.",
+            "PEM.",
+            "PMOE.",
+            "PME."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Qué caracteres se consignarán en la primera fila de la placa de matrícula temporal para particulares de los ciclos de motor?",
+        "opciones": [
+            "La letra P.",
+            "La letra P y la cifra correspondiente a las unidades de millar.",
+            "La letra P y los cuatro números.",
+            "La letra P y dos cifras."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de guarismos de las placas de matrícula de los vehículos del Personal técnico-administrativo será:",
+        "opciones": [
+            "Identificativo de la Misión Diplomática, Organización Internacional u Oficina Consular.",
+            "Identificativo de la Misión Diplomática, no pudiendo tener asignado este grupo, aquellos que no dependan de ninguna Misión.",
+            "Identificativo de la Oficina Consular únicamente.",
+            "Identificativo de la Organización Internacional únicamente."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de guarismos de las placas de matrícula de los vehículos del Personal técnico-administrativo será:",
+        "opciones": [
+            "Identificativo de la Misión Diplomática, Organización Internacional u Oficina Consular.",
+            "Identificativo de la Misión Diplomática, no pudiendo tener asignado este grupo, aquellos que no dependan de ninguna Misión.",
+            "Identificativo de la Oficina Consular únicamente.",
+            "Identificativo de la Organización Internacional únicamente."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El fondo de las placas de matrícula turística será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color negro mate:",
+        "opciones": [
+            "La banda vertical en donde se consignan el mes y el año en que caducan, expresándose el primero en caracteres romanos y el segundo en caracteres de tipo árabe, será retrorreflectante de color rojo. Los caracteres que en ella se consignan serán adhesivos de color blanco mate.",
+            "La banda vertical en donde se consignan el mes y el año en que caducan, expresándose el primero en caracteres árabes y el segundo en caracteres de tipo romano, será retrorreflectante de color rojo. Los caracteres que en ella se consignan serán adhesivos de color blanco mate.",
+            "La banda vertical en donde se consignan el mes y el año en que caducan, expresándose el primero en caracteres romanos y el segundo en caracteres de tipo árabe, será retrorreflectante de color blanco. Los caracteres que en ella se consignan serán adhesivos de color negro mate.",
+            "La banda vertical en donde se consignan el mes y el año en que caducan, expresándose el primero en caracteres romanos y el segundo en caracteres de tipo árabe, será retrorreflectante de color rojo. Los caracteres que en ella se consignan serán adhesivos de color gris mate."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "Cuando una Oficina Consular dependa de una Misión Diplomática, ¿cuál será el primer grupo de guarismos?",
+        "opciones": [
+            "CC.",
+            "CD.",
+            "VE.",
+            "El prefijo correspondiente a la Misión Diplomática de la que dependa la Oficina Consular."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "La contraseña para vehículos pertenecientes al Parque del Ministerio de Medio Ambiente será:",
+        "opciones": [
+            "MA.",
+            "PMMA.",
+            "MMA.",
+            "ROMA."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "La placa de matrícula de los vehículos con matrícula turística será:",
+        "opciones": [
+            "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate.",
+            "El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate.",
+            "El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color negro mate.",
+            "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color gris mate."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "Cuando una Oficina Consular no dependa de una Misión Diplomática, ¿cuál será el primer grupo de guarismos?",
+        "opciones": [
+            "Se le atribuirá prefijo al Estado correspondiente.",
+            "CD.",
+            "VE.",
+            "El prefijo correspondiente a la Misión Diplomática de la que dependa la Oficina Consular."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Qué letras irán en el primer grupo de caracteres de la placa de matrícula del Personal técnico-administrativo?",
+        "opciones": [
+            "OI.",
+            "CC.",
+            "PTA.",
+            "TA."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El fondo de las placas de matrícula de los vehículos amparados por permisos temporales para empresas será:",
+        "opciones": [
+            "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color gris mate.",
+            "El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+            "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate.",
+            "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "En las placas de matrícula de los vehículos de las Organizaciones Internacionales, la atribución de prefijos se hará por orden de antigüedad:",
+        "opciones": [
+            "Siguiendo una serie correlativa a la reservada a las Misiones Informáticas.",
+            "Siguiendo una serie correlativa a la reservada a las Oficinas Consulares.",
+            "Siguiendo una serie correlativa a la reservada a las del Personal Técnico Administrativo.",
+            "Siguiendo una serie correlativa a la reservada a las Misiones Diplomáticas."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos   2.º Organizaciones internacionales. Para los vehículos de las organizaciones internacionales, el fondo de las placas será retrorreflectante, de color azul. Los caracteres estampados en relieve irán pintados en color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras OI, seguidos por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada organización internacional; el segundo, un número de orden, que corresponderá a los vehículos propiedad de la organización internacional o de sus miembros, a propuesta de dichas organizaciones. La atribución de prefijos se hará por orden de antigüedad siguiendo una serie correlativa a la reservada a las Misiones Diplomáticas."
+    },
+    {
+        "pregunta": "Indique la respuesta correcta respecto a las placas de matrícula de los vehículos amparados por permisos temporales de empresa:",
+        "opciones": [
+            "La banda vertical en donde se consignen el mes y el año en que caducan, expresándose el primero en caracteres romanos y el segundo en caracteres de tipo árabe, será retrorreflectante de color blanco. Los caracteres que en ella se consignan serán adhesivos de color rojo mate.",
+            "La banda vertical en donde se consignen el año y el mes en que caducan, expresándose el primero en caracteres romanos y el segundo en caracteres de tipo árabe, será retrorreflectante de color blanco. Los caracteres que en ella se consignan serán adhesivos de color rojo mate.",
+            "La banda vertical en donde se consignen el mes y el año en que caducan, expresándose el primero en caracteres árabes y el segundo en caracteres de tipo romano, será retrorreflectante de color blanco. Los caracteres que en ella se consignan serán adhesivos de color rojo mate.",
+            "La banda vertical en donde se consignen el mes y el año en que caducan, expresándose el primero en caracteres romanos y el segundo en caracteres de tipo árabe, será retrorreflectante de color rojo. Los caracteres que en ella se consignan serán adhesivos de color blanco mate."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Con qué tipo de caracteres se indicará el año de caducidad de las placas de matrícula turísticas?",
+        "opciones": [
+            "Árabes.",
+            "Griegos.",
+            "Saudíes.",
+            "Latinos."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿De qué color serán los caracteres que se consignan en la banda vertical de la placa de matrícula turística?",
+        "opciones": [
+            "Rojo mate.",
+            "Negro mate.",
+            "Gris mate.",
+            "Blanco mate."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿De qué color serán los caracteres que se consignan en la banda vertical de la placa de matrícula turística?",
+        "opciones": [
+            "Rojo mate.",
+            "Negro mate.",
+            "Gris mate.",
+            "Blanco mate."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "Según el anexo XVIII del RD 2822/1998, para los vehículos de las organizaciones internacionales:",
+        "opciones": [
+            "El fondo de las placas será retrorreflectante, de color azul. Los caracteres estampados en relieve irán pintados en color negro mate.",
+            "El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+            "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+            "El fondo de las placas será retrorreflectante, de color azul. Los caracteres estampados en relieve irán pintados en color blanco mate."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Qué caracteres se inscribirán en las placas de matrícula de las Organizaciones Internacionales?",
+        "opciones": [
+            "CD.",
+            "OI.",
+            "CC.",
+            "VE."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de caracteres de las placas de matrícula de los vehículos amparados por permisos temporales para empresas estará constituido por las letras:",
+        "opciones": [
+            "V o S.",
+            "S.",
+            "T.",
+            "V."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de caracteres de las placas de matrícula de los vehículos matriculados, amparados por permisos temporales para empresas estará constituido por la letra:",
+        "opciones": [
+            "V o S.",
+            "S.",
+            "T.",
+            "V."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de caracteres de las placas de matrícula de los vehículos matriculados, amparados por permisos temporales para empresas estará constituido por la letra:",
+        "opciones": [
+            "V o S.",
+            "S.",
+            "T.",
+            "V."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Qué caracteres se consignarán en la segunda fila de la placa de matrícula temporal para particulares de los ciclos de motor y ciclomotores?",
+        "opciones": [
+            "Tres letras.",
+            "La letra P y una cifra.",
+            "Tres cifras.",
+            "Cuatro cifras."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "Para la fijación del segundo grupo de guarismos, en el caso de que la Oficina Consular no dependa de una Misión Diplomática acreditada en España:",
+        "opciones": [
+            "Se realizará a propuesta del Jefe de la Misión Diplomática.",
+            "Se realizará a propuesta del Jefe de la Oficina Consular.",
+            "Se realizará a propuesta del Ministro del Interior.",
+            "Se realizará a propuesta del Jefe de la Organización Internacional."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos   3.º Oficinas consulares y su personal. Para los vehículos de las Oficinas consulares y su personal, el fondo de las placas será retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras CC, seguidas de dos grupos de guarismos. El primero será el prefijo correspondiente a la Misión Diplomática de la que dependa la Oficina Consular, según lo establecido en el apartado 1º anterior, y de no existir tal dependencia se le atribuirá prefijo al Estado correspondiente. Para la fijación del segundo grupo de guarismos se estará igualmente a lo dispuesto en el citado apartado 1º. En el caso de que la Oficina Consular no dependa de una Misión Diplomática acreditada en España, se realizará a propuesta del Jefe de la Oficina Consular."
+    },
+    {
+        "pregunta": "La contraseña para vehículos pertenecientes a la Dirección General de la Policía y de la Guardia Civil, adscritos al ámbito del Cuerpo de la Guardia Civil será:",
+        "opciones": [
+            "CGC.",
+            "PGC.",
+            "CDGC.",
+            "GC."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "Para los vehículos de las Oficinas consulares y su personal, el fondo de las placas será:",
+        "opciones": [
+            "Retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+            "Retrorreflectante, de color azul. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+            "Retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+            "Retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color gris mate."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos   3.º Oficinas consulares y su personal. Para los vehículos de las Oficinas consulares y su personal, el fondo de las placas será retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras CC, seguidas de dos grupos de guarismos. El primero será el prefijo correspondiente a la Misión Diplomática de la que dependa la Oficina Consular, según lo establecido en el apartado 1º anterior, y de no existir tal dependencia se le atribuirá prefijo al Estado correspondiente. Para la fijación del segundo grupo de guarismos se estará igualmente a lo dispuesto en el citado apartado 1º. En el caso de que la Oficina Consular no dependa de una Misión Diplomática acreditada en España, se realizará a propuesta del Jefe de la Oficina Consular."
+    },
+    {
+        "pregunta": "¿De qué color será la banda vertical donde se indica la validez de la matrícula turística?",
+        "opciones": [
+            "De color rojo.",
+            "De color blanco.",
+            "Retrorreflectante de color rojo.",
+            "Retrorreflectante de color blanco."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "En las placas de matrícula especiales del Cuerpo Diplomático, la atribución de prefijos se hará siguiendo el orden alfabético establecido en la última lista oficial del Cuerpo Diplomático publicada por el Ministerio de Asuntos Exteriores, correspondiendo el prefijo -1- al Decanato del Cuerpo Diplomático, y para las Misiones de países que acrediten Embajadores con carácter permanente o establezcan relaciones diplomáticas con España en el futuro:",
+        "opciones": [
+            "Por orden de antigüedad.",
+            "Por decisión del Ministerio de Asuntos exteriores.",
+            "Por decisión del Ministerio de Asuntos Exteriores y Cooperación.",
+            "Por decisión del Ministerio del Interior."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "La contraseña para vehículos pertenecientes a la Dirección General de la Policía y de la Guardia Civil, adscritos al ámbito del Cuerpo Nacional de Policía será:",
+        "opciones": [
+            "CNP.",
+            "PN.",
+            "PE.",
+            "PGC."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de caracteres de las placas de matrícula de los vehículos no matriculados, amparados por permisos temporales para empresas estará constituido por la letra:",
+        "opciones": [
+            "V o S.",
+            "S.",
+            "T.",
+            "V."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El primer grupo de caracteres de las placas de matrícula de los vehículos históricos estará constituido por la letra:",
+        "opciones": [
+            "S.",
+            "T.",
+            "H.",
+            "V."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Qué fecha indican los caracteres consignados en la banda vertical de color retrorreflectante rojo de las placas de matrícula turística?",
+        "opciones": [
+            "La fecha de solicitud.",
+            "La fecha de concesión.",
+            "La fecha de caducidad.",
+            "La fecha de expedición."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "¿Qué caracteres se consignarán en la primera fila de la placa de matrícula temporal para particulares de los ciclomotores?",
+        "opciones": [
+            "La letra P.",
+            "La letra P y la cifra correspondiente a las unidades de millar.",
+            "La letra P y los cuatro números.",
+            "La letra P y dos cifras."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+        "pregunta": "El prefijo invariable y único para cada Organización Internacional que se inscribe en las placas de matrícula irá:",
+        "opciones": [
+            "En el segundo grupo de guarismos.",
+            "En el tercer grupo de guarismos.",
+            "En el primer grupo de guarismos.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. No están legitimados para interponer recurso de inconstitucionalidad:",
+        "opciones": [
+            "50 Senadores.",
+            "El Defensor del Pueblo.",
+            "El Ministerio Fiscal.",
+            "Los órganos colegiados ejecutivos de las Comunidades Autónomas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 162 1. Están legitimados: a) Para interponer el recurso de inconstitucionalidad, el Presidente del Gobierno, el Defensor del Pueblo, 50 Diputados, 50 Senadores, los órganos colegiados ejecutivos de las Comunidades Autónomas y, en su caso, las Asambleas de las mismas. b) Para interponer el recurso de amparo, toda persona natural o jurídica que invoque un interés legítimo, así como el Defensor del Pueblo y el Ministerio Fiscal. 2. En los demás casos, la ley orgánica determinará las personas y órganos legitimados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En relación con las funciones que el Título II de la Constitución atribuye al Rey, señale la respuesta correcta:",
+        "opciones": [
+            "Arbitra y modera el funcionamiento regular de las instituciones.",
+            "Arbitra y regenta el funcionamiento especial de las instituciones.",
+            "Arbitra y organiza el funcionamiento excepcional de las instituciones.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En la designación de los magistrados del TC, participan:",
+        "opciones": [
+            "El Congreso y el Senado.",
+            "El CGPJ.",
+            "El Gobierno.",
+            "Las respuestas a, b, y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey recibe una cantidad global de los Presupuestos del Estado:",
+        "opciones": [
+            "Para la satisfacción de los gastos inherentes a sus labores representativas del Estado en el extranjero.",
+            "La cual es distribuida por él libremente conforme a las partidas o conceptos de gastos determinados legalmente.",
+            "La cual es distribuida por él, con la supervisión anual del Tribunal de Cuentas.",
+            "Para el sostenimiento de su Familia y Casa."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale de los enumerados a continuación, quién no está legitimado para interponer el recurso de inconstitucionalidad:",
+        "opciones": [
+            "El Presidente del Gobierno.",
+            "Los Órganos Colegiados de las Comunidades Autónomas.",
+            "El CGPJ.",
+            "El Defensor del Pueblo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 162 1. Están legitimados: a) Para interponer el recurso de inconstitucionalidad, el Presidente del Gobierno, el Defensor del Pueblo, 50 Diputados, 50 Senadores, los órganos colegiados ejecutivos de las Comunidades Autónomas y, en su caso, las Asambleas de las mismas. b) Para interponer el recurso de amparo, toda persona natural o jurídica que invoque un interés legítimo, así como el Defensor del Pueblo y el Ministerio Fiscal. 2. En los demás casos, la ley orgánica determinará las personas y órganos legitimados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Jefe del Estado español es:",
+        "opciones": [
+            "El Presidente del Gobierno.",
+            "El Presidente del Congreso.",
+            "El Rey.",
+            "El presidente del Senado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Es función del Rey:",
+        "opciones": [
+            "Todas las otras respuestas son funciones del Rey.",
+            "Sancionar y promulgar leyes.",
+            "Convocar el Consejo de Ministros.",
+            "Elegir al Fiscal General del Estado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "La Constitución exige una Ley Orgánica para regular los aspectos relativos a la abdicación. Mediante qué Ley se hizo efectiva la abdicación de Su Majestad el Rey Don Juan Carlos I de Borbón:",
+        "opciones": [
+            "Ley Orgánica 1/2014.",
+            "Ley Orgánica 3/2014.",
+            "Ley Orgánica 3/2015.",
+            "Ley Orgánica 1/2015."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 3/2014, de 18 de junio, por la que se hace efectiva la abdicación de Su Majestad el Rey Don Juan Carlos I de Borbón"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué órgano constitucional dirige la Administración civil?",
+        "opciones": [
+            "El Rey.",
+            "El Gobierno.",
+            "El jefe del Estado español.",
+            "El Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En nombre de quien se administra la justicia?",
+        "opciones": [
+            "Del Rey.",
+            "De los ciudadanos.",
+            "De la nación.",
+            "Del pueblo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 117 1. La justicia emana del pueblo y se administra en nombre del Rey por Jueces y Magistrados integrantes del poder judicial, independientes, inamovibles, responsables y sometidos únicamente al imperio de la ley. 2. Los Jueces y Magistrados no podrán ser separados, suspendidos, trasladados ni jubilados, sino por alguna de las causas y con las garantías previstas en la ley. 3. El ejercicio de la potestad jurisdiccional en todo tipo de procesos, juzgando y haciendo ejecutar lo juzgado, corresponde exclusivamente a los Juzgados y Tribunales determinados por las leyes, según las normas de competencia y procedimiento que las mismas establezcan. 4. Los Juzgados y Tribunales no ejercerán más funciones que las señaladas en el apartado anterior y las que expresamente les sean atribuidas por ley en garantía de cualquier derecho. 5. El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales. La ley regulará el ejercicio de la jurisdicción militar en el ámbito estrictamente castrense y en los supuestos de estado de sitio, de acuerdo con los principios de la Constitución. 6. Se prohíben los Tribunales de excepción."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Nuestra Constitución dispone que el Rey es:",
+        "opciones": [
+            "Símbolo de la unidad y permanencia del Estado.",
+            "Símbolo de la Corona.",
+            "Símbolo de la Casa Real.",
+            "Símbolo de la monarquía."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué órgano constitucional dirige la política interior?",
+        "opciones": [
+            "El Gobierno.",
+            "El Presidente del Gobierno.",
+            "El Rey.",
+            "El jefe del Estado español."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey:",
+        "opciones": [
+            "Promulgará en el plazo de 15 días las leyes.",
+            "Ninguna respuesta es correcta.",
+            "Sancionará las leyes en el plazo de un mes desde su aprobación.",
+            "Ordenará la inmediata publicación de las leyes."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 91 El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale por qué periodo, son designados los magistrados del TC:",
+        "opciones": [
+            "Diez años.",
+            "Quince años.",
+            "Doce años.",
+            "Nueve años."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Podrán ser tutores del Rey:",
+        "opciones": [
+            "El padre, madre o abuelos maternos.",
+            "El padre o la madre, mientras permanezcan viudos.",
+            "Cualquiera que sea mayor de edad y español.",
+            "El padre, aunque más adelante contraiga matrimonio."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué órgano responde solidariamente de su gestión política ante el Congreso de los Diputados?",
+        "opciones": [
+            "El Tribunal Constitucional.",
+            "El Consejo de Estado.",
+            "El Gobierno.",
+            "El Senado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 108 El Gobierno responde solidariamente en su gestión política ante el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En cuál de los siguientes casos es imprescindible ser español de nacimiento?",
+        "opciones": [
+            "Para ejercer la Regencia.",
+            "Para ejercer la tutela testamentaria.",
+            "Para ser proclamado Rey.",
+            "Para ejercer la Regencia y la tutela testamentaria."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguiente materias no se desarrollará por Ley Ordinaria:",
+        "opciones": [
+            "El procedimiento administrativo.",
+            "El código civil.",
+            "La jurisdicción social.",
+            "El desarrollo del derecho a la vida."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 81 1. Son leyes orgánicas las relativas al desarrollo de los derechos fundamentales y de las libertades públicas, las que aprueben los Estatutos de Autonomía y el régimen electoral general y las demás previstas en la Constitución. 2. La aprobación, modificación o derogación de las leyes orgánicas exigirá mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué artículo de la Constitución establece los supuestos de exclusión a la Sucesión?",
+        "opciones": [
+            "El artículo 57.6.",
+            "El artículo 57.4.",
+            "El artículo 57.3.",
+            "El artículo 57.2."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Contra el auto en que decida el juez o tribunal plantear la cuestión de inconstitucionalidad, qué recurso cabe:",
+        "opciones": [
+            "No cabe recurso alguno.",
+            "Cabe el recurso de reforma.",
+            "Cabe el recurso de reforma y subsidiario de apelación.",
+            "Sólo cabe el recurso de apelación."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 164 1. Las sentencias del Tribunal Constitucional se publicarán en el boletín oficial del Estado con los votos particulares, si los hubiere. Tienen el valor de cosa juzgada a partir del día siguiente de su publicación y no cabe recurso alguno contra ellas. Las que declaren la inconstitucionalidad de una ley o de una norma con fuerza de ley y todas las que no se limiten a la estimación subjetiva de un derecho, tienen plenos efectos frente a todos. 2. Salvo que en el fallo se disponga otra cosa, subsistirá la vigencia de la ley en la parte no afectada por la inconstitucionalidad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Regente tiene que hacer el juramento previsto en el art. 61 de la Constitución.",
+        "opciones": [
+            "En ningún caso.",
+            "Al hacerse cargo de sus funciones.",
+            "Cuando se lo exija el Rey.",
+            "Al ser nombrado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes aseveraciones, referidas a sobre qué materias el TC es competente para conocer, son correctas:",
+        "opciones": [
+            "Del recurso de inconstitucionalidad contra Leyes y disposiciones normativas con fuerza de Ley.",
+            "Del recurso de amparo por violación de los derechos y libertades referidos en el art. 53.2 CE, en los casos y en la forma que la ley establezca.",
+            "De los conflictos de competencia entre el Estado y las Comunidades Autónomas o las de éstas entre sí.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 161 1. El Tribunal Constitucional tiene jurisdicción en todo el territorio español y es competente para conocer: a) Del recurso de inconstitucionalidad contra leyes y disposiciones normativas con fuerza de ley. La declaración de inconstitucionalidad de una norma jurídica con rango de ley, interpretada por la jurisprudencia, afectará a ésta, si bien la sentencia o sentencias recaídas no perderán el valor de cosa juzgada. b) Del recurso de amparo por violación de los derechos y libertades referidos en el artículo 53, 2, de esta Constitución, en los casos y formas que la ley establezca. c) De los conflictos de competencia entre el Estado y las Comunidades Autónomas o de los de éstas entre sí. d) De las demás materias que le atribuyan la Constitución o las leyes orgánicas. 2. El Gobierno podrá impugnar ante el Tribunal Constitucional las disposiciones y resoluciones adoptadas por los órganos de las Comunidades Autónomas. La impugnación producirá la suspensión de la disposición o resolución recurrida, pero el Tribunal, en su caso, deberá ratificarla o levantarla en un plazo no superior a cinco meses."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuántos senadores se elegirán por provincia, en las asambleas legislativas de las comunidades autónomas?",
+        "opciones": [
+            "2 Senadores.",
+            "3 Senadores.",
+            "4 Senadores.",
+            "Es variable en función de la población."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién será responsable de los actos del Rey?",
+        "opciones": [
+            "El Rey.",
+            "El Gobierno.",
+            "Las Cortes.",
+            "Quien los refrende."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 64 1. Los actos del Rey serán refrendados por el Presidente del Gobierno y, en su caso, por los Ministros competentes. La propuesta y el nombramiento del Presidente del Gobierno, y la disolución prevista en el artículo 99, serán refrendados por el Presidente del Congreso. 2. De los actos del Rey serán responsables las personas que los refrenden."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuántos diputados integran en la actualidad el Congreso de los Diputados?",
+        "opciones": [
+            "250 diputados.",
+            "300 diputados.",
+            "350 diputados.",
+            "400 diputados."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. En la actualidad el Congreso de los Diputados se compone de 350 (según la LOREG)"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los magistrados del TC, dependen de:",
+        "opciones": [
+            "Del Presidente del Consejo General del Poder Judicial.",
+            "Del Presidente del Tribunal Supremo.",
+            "Del CGPJ.",
+            "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La sanción por parte del Rey de la leyes aprobadas por las Cortes Generales se hará en un plazo de:",
+        "opciones": [
+            "Tres semanas.",
+            "Diecisiete días.",
+            "Quince días.",
+            "Cuatro semanas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 91 El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Puede presidir el Rey el Consejo de Ministros?",
+        "opciones": [
+            "Sí, cuando lo estime oportuno sin más requisitos.",
+            "Sí, previa petición del Presidente del Gobierno.",
+            "No, en ningún caso.",
+            "Sólo en casos excepcionales en el caso de declaración del estado de excepción."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los representantes diplomáticos extranjeros en España deberán acreditarse ante:",
+        "opciones": [
+            "La embajada correspondiente.",
+            "El Gobierno.",
+            "El Rey.",
+            "Las Cortes Generales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 63 1. El Rey acredita a los embajadores y otros representantes diplomáticos. Los representantes extranjeros en España están acreditados ante él. 2. Al Rey corresponde manifestar el consentimiento del Estado para obligarse internacionalmente por medio de tratados, de conformidad con la Constitución y las leyes. 3. Al Rey corresponde, previa autorización de las Cortes Generales, declarar la guerra y hacer la paz."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. A partir de qué momento, se computará el plazo para la interposición del recurso de inconstitucionalidad:",
+        "opciones": [
+            "A partir del día en que se publicó la Ley que se pretende impugnar.",
+            "A partir del día en que se publicó el Reglamento que se pretende impugnar.",
+            "A partir de que se comunica al TC la intención de interponer el recurso contra la Ley que se pretende impugnar.",
+            "A partir del día siguiente al de la publicación de la Ley que se pretende impugnar."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 164 1. Las sentencias del Tribunal Constitucional se publicarán en el boletín oficial del Estado con los votos particulares, si los hubiere. Tienen el valor de cosa juzgada a partir del día siguiente de su publicación y no cabe recurso alguno contra ellas. Las que declaren la inconstitucionalidad de una ley o de una norma con fuerza de ley y todas las que no se limiten a la estimación subjetiva de un derecho, tienen plenos efectos frente a todos. 2. Salvo que en el fallo se disponga otra cosa, subsistirá la vigencia de la ley en la parte no afectada por la inconstitucionalidad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En las elecciones generales al Congreso de los diputados, la circunscripción electoral es:",
+        "opciones": [
+            "El municipio.",
+            "La provincia.",
+            "La Comunidad Autónoma.",
+            "El propia Estado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál de los siguientes actos del Rey será refrendado por el Presidente del Congreso?",
+        "opciones": [
+            "El nombramiento y separación de los miembros del Gobierno.",
+            "La disolución de ambas Cámaras y la convocatoria de nuevas elecciones cuando hubieran transcurrido dos meses desde la primera votación de investidura sin que ningún candidato haya obtenido la confianza de las Cámaras.",
+            "La disolución de ambas Cámaras y la convocatoria de nuevas elecciones cuando hubieran transcurrido dos meses desde la primera votación de investidura sin que ningún candidato haya obtenido la confianza del Congreso.",
+            "La celebración de un referéndum a propuesta del Presidente del Gobierno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. De acuerdo con la jurisprudencia del tribunal constitucional, la cuestión de inconstitucionalidad prevista en el artículo 163 de la constitución:",
+        "opciones": [
+            "No se puede plantear frente a leyes procesales, pues la cuestión sólo se puede elevar una vez concluso el procedimiento y dentro del plazo para dictar sentencia.",
+            "Es de obligatorio planteamiento cuando el juez ordinario estima que una ley es contraria al Derecho de la Unión Europea.",
+            "No se puede plantear, en ningún caso, frente a leyes anteriores a la Constitución.",
+            "Es de obligatorio planteamiento cuando el juez ordinario estima que una ley autonómica infringe la normativa básica estatal."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 163 Cuando un órgano judicial considere, en algún proceso, que una norma con rango de ley, aplicable al caso, de cuya validez dependa el fallo, pueda ser contraria a la Constitución, planteará la cuestión ante el Tribunal Constitucional en los supuestos, en la forma y con los efectos que establezca la ley, que en ningún caso serán suspensivos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Título Segundo de la Constitución comienza en el artículo:",
+        "opciones": [
+            "65.",
+            "66.",
+            "55.",
+            "56."
+        ],
+        "correcta": 3,
+        "explicacion": "La regulación de la Corona se lleva a cabo en el Título II de la Constitución española de 1978, artículos 56 a 65, ambos incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey es el:",
+        "opciones": [
+            "Jefe de la Nación.",
+            "Jefe del Estado.",
+            "Jefe de la monarquía parlamentaria.",
+            "Jefe del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de los siguientes órganos, o personas, no están legitimados para el ejercicio del recurso de inconstitucionalidad:",
+        "opciones": [
+            "El Defensor del Pueblo.",
+            "El presidente del Gobierno.",
+            "Cincuenta Senadores.",
+            "El Ministerio Fiscal."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 162 1. Están legitimados: a) Para interponer el recurso de inconstitucionalidad, el Presidente del Gobierno, el Defensor del Pueblo, 50 Diputados, 50 Senadores, los órganos colegiados ejecutivos de las Comunidades Autónomas y, en su caso, las Asambleas de las mismas. b) Para interponer el recurso de amparo, toda persona natural o jurídica que invoque un interés legítimo, así como el Defensor del Pueblo y el Ministerio Fiscal. 2. En los demás casos, la ley orgánica determinará las personas y órganos legitimados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes tendrá la consideración de Cámara de representación territorial.",
+        "opciones": [
+            "El Congreso de los Diputados.",
+            "Las Asambleas Legislativas de las Comunidades Autónomas.",
+            "El Senado.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién nombra a los miembros del Tribunal Constitucional?",
+        "opciones": [
+            "El Consejo General del Poder Judicial.",
+            "El Rey.",
+            "Los magistrados del Tribunal Supremo.",
+            "Ninguna respuesta es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuántos son los miembros que integran el TC:",
+        "opciones": [
+            "Doce.",
+            "Diez.",
+            "Quince.",
+            "Veinte."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si se extinguen todas las líneas llamadas a la sucesión a la Corona:",
+        "opciones": [
+            "Todas las otras respuestas son correctas.",
+            "Actuarán los nombrados por el Rey difunto.",
+            "Ejercerán sus funciones los Regentes.",
+            "Las Cortes deberán proveer lo más conveniente a los intereses de España"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para poder ser nombrado magistrado del TC, cuántos años se deberá llevar en el ejercicio profesional:",
+        "opciones": [
+            "Diez.",
+            "Quince.",
+            "Doce.",
+            "Cinco."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes afirmaciones sobre el tribunal constitucional es incorrecta:",
+        "opciones": [
+            "Está integrado por doce miembros.",
+            "Se renueva por tercios cada tres años.",
+            "Cuatro de sus miembros son designados por el Senado por mayoría de tres quintos.",
+            "Su Presidente es designado por acuerdo del Congreso y del Senado."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 160 El Presidente del Tribunal Constitucional será nombrado entre sus miembros por el Rey, a propuesta del mismo Tribunal en pleno y por un período de tres años."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué órgano constitucional dirige la política exterior?",
+        "opciones": [
+            "El Presidente del Gobierno.",
+            "El Gobierno.",
+            "El Rey.",
+            "El jefe del Estado español."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿De quién emana la justicia?",
+        "opciones": [
+            "De los ciudadanos.",
+            "Del pueblo.",
+            "Del Rey.",
+            "De la Nación."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 117 1. La justicia emana del pueblo y se administra en nombre del Rey por Jueces y Magistrados integrantes del poder judicial, independientes, inamovibles, responsables y sometidos únicamente al imperio de la ley. 2. Los Jueces y Magistrados no podrán ser separados, suspendidos, trasladados ni jubilados, sino por alguna de las causas y con las garantías previstas en la ley. 3. El ejercicio de la potestad jurisdiccional en todo tipo de procesos, juzgando y haciendo ejecutar lo juzgado, corresponde exclusivamente a los Juzgados y Tribunales determinados por las leyes, según las normas de competencia y procedimiento que las mismas establezcan. 4. Los Juzgados y Tribunales no ejercerán más funciones que las señaladas en el apartado anterior y las que expresamente les sean atribuidas por ley en garantía de cualquier derecho. 5. El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales. La ley regulará el ejercicio de la jurisdicción militar en el ámbito estrictamente castrense y en los supuestos de estado de sitio, de acuerdo con los principios de la Constitución. 6. Se prohíben los Tribunales de excepción."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Tribunal Constitucional se compone:",
+        "opciones": [
+            "De 16 miembros.",
+            "De 12 miembros.",
+            "De 14 miembros.",
+            "De 10 miembro."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes aseveraciones no es correcta, en cuanto a la composición del TC:",
+        "opciones": [
+            "Cuatro de sus miembros son a propuesta del Congreso.",
+            "Cuatro de sus miembros son a propuesta del Senado.",
+            "Dos a propuesta del CGPJ.",
+            "Uno a propuesta del Gobierno."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Por qué mandato se ejerce la Regencia?",
+        "opciones": [
+            "Por mandato constitucional.",
+            "Por mandato real.",
+            "Por mandato soberano.",
+            "Por mandato popular."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En qué forma responde el Gobierno de su gestión política?",
+        "opciones": [
+            "El Gobierno no responde de su gestión política.",
+            "Mancomunadamente.",
+            "Solidariamente.",
+            "De forma individual."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 108 El Gobierno responde solidariamente en su gestión política ante el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué artículos comprende el Título II CE?",
+        "opciones": [
+            "56 a 65.",
+            "55 a 63.",
+            "57 a 64.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "La regulación de la Corona se lleva a cabo en el Título II de la Constitución española de 1978, artículos 56 a 65, ambos incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué duración tendrá el mandato del Congreso de los Diputados?",
+        "opciones": [
+            "Tres años.",
+            "Cuatro años.",
+            "Cinco años.",
+            "Seis años."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

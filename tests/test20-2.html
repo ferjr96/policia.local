@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, para descargar las armas en los armeros se deberá en caso de los revólveres:",
+        "opciones": [
+            "Con el tambor cerrado sin munición.",
+            "Sin tambor.",
+            "Con el tambor abierto sin munición.",
+            "Tal como se lleve de servicio."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el arma, la munición y otros elementos del equipamiento de autodefensa:",
+        "opciones": [
+            "Pueden ser prestados para prácticas de tiro.",
+            "No se pueden prestar.",
+            "Se pueden prestar con autorización.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 70 | Prohibición de préstamo, cesión o intercambio del arma Tampoco se puede prestar o ceder el arma a otra persona, intercambiar el arma o el armero con otro policía, ni depositarla en vehículos, aunque se aparquen en garajes, incluso vigilados"
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las piezas y los efectos de uniforme y de equipo de las policías locales de las Illes Balears se consideran agrupados en las siguientes clases:",
+        "opciones": [
+            "Vestuario y emblemas .",
+            "Distintivos y medallas.",
+            "Equipo y armamento.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 91 | Apariencia externa 1. La apariencia externa de los cuerpos de policía local de las Illes Balears se configura por la concurrencia de determinados signos que permiten una adecuada identificación. 2. Las piezas y los efectos de uniforme y de equipo de las policías locales de las Illes Balears se consideran agrupados en las siguientes clases: a) Vestuario b) Emblemas c) distintivos y medallas d) equipo y armamento 3. Los miembros de las policías locales, durante la prestación del servicio, deben vestir el uniforme reglamentario, excepto en los casos que determine la alcaldía según el puesto de trabajo o las necesidades del servicio y de acuerdo con lo previsto en la legislación vigente. No está permitido el uso de piezas, equipo, complementos y otros medios técnicos que no se ajusten a lo estrictamente reglamentado para cada ocasión, ni pueden ser objeto de reformas o alteraciones. Las asociaciones de municipios, con el informe previo y la autorización de la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales, pueden utilizar elementos de identificación externa propios que, en todo caso, deben mantener los criterios generales que se establecen para los de las policías locales. 4. En ningún caso se puede hacer uso de piezas de uniformidad fuera del horario de servicio, excepto para asistir a actividades formativas de la EBAP o con la autorización de la jefatura del cuerpo. La uniformidad debe ajustarse a los mínimos establecidos en este reglamento, que pueden variar mediante una orden de la consejera o consejero de Hacienda y Administraciones Públicas, competente en materia de coordinación de policías locales, que homologue los signos de identificación y de apariencia externa de las policías locales de las Illes Balears."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde: dentro de un recuadro dorado tiene que haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una al lado de la otra, en línea, ajustadas al extremo exterior y centrado verticalmente:",
+        "opciones": [
+            "Intendente/a.",
+            "Comisario/a.",
+            "Inspector/a.",
+            "Policía."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde: dentro de un recuadro plateado tiene que haber tres barras doradas y cruzadas, separadas entre sí por un centímetro, que tienen que estar situadas en los extremos exteriores del recuadro:",
+        "opciones": [
+            "Intendente/a.",
+            "Inspector/a.",
+            "Comisario/a.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, la placa de pecho se debe contener:",
+        "opciones": [
+            "Tiene que llevar en el centro el escudo del municipio.",
+            "En la parte superior la inscripción «POLICÍA LOCAL» .",
+            "Debajo del escudo la denominación del municipio.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 96 | Identificación personal 1. La identificación personal consta de una placa de pecho y una placa separada con el número que consta en la tarjeta de identificación profesional. El diseño y las características se muestran en la figura 2 del anexo 1 de este reglamento. 2. La placa de pecho debe llevarse en la parte superior derecha del pecho. Debe llevar en el centro el escudo del municipio, en la parte superior la inscripción POLICÍA LOCAL y debajo del escudo la denominación del municipio. 3. En una placa separada, con unas medidas de 4 x 1,5 cm, que debe situarse en la parte inferior de la placa que se describe en el punto anterior, y a 1 cm de esta, en letras blancas sobre un fondo azul marino, debe figurar el número de identificación personal. 4. Todos los policías locales deben tener una placa argentada, de material flexible, que deben llevar junto con la tarjeta de identificación profesional, la cual llevarán en una cartera como la indicada en la figura 3a del anexo 1 de este reglamento. La tarjeta de identificación profesional debe tener las características que se indican en el punto 3.3 del anexo 1."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, la placa de pecho se debe llevar en la parte:",
+        "opciones": [
+            "Superior derecha del pecho.",
+            "Superior izquierda del pecho.",
+            "Inferior derecha del pecho.",
+            "Inferior izquierda del pecho."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 96 | Identificación personal 1. La identificación personal consta de una placa de pecho y una placa separada con el número que consta en la tarjeta de identificación profesional. El diseño y las características se muestran en la figura 2 del anexo 1 de este reglamento. 2. La placa de pecho debe llevarse en la parte superior derecha del pecho. Debe llevar en el centro el escudo del municipio, en la parte superior la inscripción POLICÍA LOCAL y debajo del escudo la denominación del municipio. 3. En una placa separada, con unas medidas de 4 x 1,5 cm, que debe situarse en la parte inferior de la placa que se describe en el punto anterior, y a 1 cm de esta, en letras blancas sobre un fondo azul marino, debe figurar el número de identificación personal. 4. Todos los policías locales deben tener una placa argentada, de material flexible, que deben llevar junto con la tarjeta de identificación profesional, la cual llevarán en una cartera como la indicada en la figura 3a del anexo 1 de este reglamento. La tarjeta de identificación profesional debe tener las características que se indican en el punto 3.3 del anexo 1."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las corporaciones locales:",
+        "opciones": [
+            "Pueden modificar las piezas, los elementos de uniformidad, las insignias identificativas y los distintivos que se describen en el reglamento.",
+            "No pueden modificar las piezas, los elementos de uniformidad, las insignias identificativas y los distintivos que se describen en el reglamento.",
+            "Pueden modificar las piezas, los elementos de uniformidad, pero no las insignias identificativas y los distintivos que se describen en el reglamento.",
+            "No pueden modificar las piezas, los elementos de uniformidad, pero si las insignias identificativas y los distintivos que se describen en este reglamento."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 92 | Uso 1. Los miembros de los cuerpos de policía local deben utilizar únicamente las piezas, los elementos de uniformidad, las insignias identificativas y los distintivos que se describen en el anexo 1 de este reglamento. 2. No se permite que empresas privadas e instituciones del ámbito de la comunidad autónoma de las Illes Balears utilicen piezas, elementos de uniformidad y emblemas iguales o similares a los fijados en este reglamento. 3. Cualquier otro personal uniformado que dependa de los ayuntamientos o de empresas que presten servicios municipales no puede llevar un uniforme integral que se pueda confundir con el que este reglamento asigna a las policías locales. 4. Las corporaciones locales no pueden modificar las piezas, los elementos de uniformidad, las insignias identificativas ni los distintivos que se describen en este reglamento."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, todos los policías que prestan servicios uniformados:",
+        "opciones": [
+            "Fuera de las dependencias policiales tienen que llevar encima el bastón extensible dentro de la funda correspondiente, sujeto al cinturón.",
+            "Dentro y fuera de las dependencias policiales tienen que llevar encima el bastón extensible dentro de la funda correspondiente, sujeto al cinturón.",
+            "Siempre tienen que llevar encima el bastón extensible dentro de la funda correspondiente, sujeto al cinturón.",
+            "Siempre tienen que llevar encima el bastón extensible fuera de la funda correspondiente, sujeto al cinturón."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 78 | Obligación de llevar la defensa o el bastón extensible 1. Todos los policías que prestan servicios uniformados fuera de las dependencias policiales deben llevar encima de la defensa o el bastón extensible dentro de la funda correspondiente, sujeto al cinturón. 2. En el interior de los vehículos automóviles pueden deshacerse de la defensa o el bastón extensible y deben llevarlo nuevamente al salir. 3. Para tener asignado el bastón extensible debe hacerse el correspondiente curso de habilitación. En el supuesto de no tener este curso, el bastón extensible se puede sustituir por una defensa policial y su uso debe ajustarse a lo previsto en esta sección."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en el interior de los vehículos automóviles:",
+        "opciones": [
+            "No pueden deshacerse del bastón extensible.",
+            "Pueden deshacerse de la defensa o el bastón extensible y deben llevarlo nuevamente al salir.",
+            "Pueden deshacerse sólo de la defensa rígida y tendrán que portarla al salir.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 78 | Obligación de llevar la defensa o el bastón extensible 1. Todos los policías que prestan servicios uniformados fuera de las dependencias policiales deben llevar encima de la defensa o el bastón extensible dentro de la funda correspondiente, sujeto al cinturón. 2. En el interior de los vehículos automóviles pueden deshacerse de la defensa o el bastón extensible y deben llevarlo nuevamente al salir. 3. Para tener asignado el bastón extensible debe hacerse el correspondiente curso de habilitación. En el supuesto de no tener este curso, el bastón extensible se puede sustituir por una defensa policial y su uso debe ajustarse a lo previsto en esta sección."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en el caso de no tener este curso, el bastón extensible se podrá sustituir por:",
+        "opciones": [
+            "Una pistola eléctrica.",
+            "Una bicicleta.",
+            "Una defensa policial.",
+            "Unos grilletes."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 78 | Obligación de llevar la defensa o el bastón extensible 1. Todos los policías que prestan servicios uniformados fuera de las dependencias policiales deben llevar encima de la defensa o el bastón extensible dentro de la funda correspondiente, sujeto al cinturón. 2. En el interior de los vehículos automóviles pueden deshacerse de la defensa o el bastón extensible y deben llevarlo nuevamente al salir. 3. Para tener asignado el bastón extensible debe hacerse el correspondiente curso de habilitación. En el supuesto de no tener este curso, el bastón extensible se puede sustituir por una defensa policial y su uso debe ajustarse a lo previsto en esta sección."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el emblema tiene que contener el escudo de la comunidad autónoma de las Illes Balears:",
+        "opciones": [
+            "Y el escudo de la CCAA.",
+            "Y el escudo municipal.",
+            "Y el escudo del Consell insular.",
+            "Y el escudo de la unidad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 95 | Emblema de la Comunidad Autónoma y municipal El emblema debe contener el escudo de la Comunidad Autónoma de las Illes Balears y el escudo municipal, que debe tener las características de la figura 1 del anexo 1 de este reglamento. Debe llevarse en la manga izquierda, a 5 cm de la costura del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, ¿se puede hacer ostentación del arma?",
+        "opciones": [
+            "Siempre.",
+            "Nunca.",
+            "Cuando sea imprescindible.",
+            "Sólo en lugares con gran visibilidad y poca afluencia de gente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 76 | Ostentación del arma Debe evitarse hacer ostentación del arma, excepto que sea imprescindible por las características del servicio que debe prestarse."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, no se permite que empresas privadas e instituciones del ámbito de la comunidad autónoma de las Illes Balears utilicen:",
+        "opciones": [
+            "Piezas, elementos de uniformidad y emblemas iguales o similares a los fijados en el reglamento.",
+            "Sí, si tienen permiso.",
+            "La a y b son correctas.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 92 | Uso 1. Los miembros de los cuerpos de policía local deben utilizar únicamente las piezas, los elementos de uniformidad, las insignias identificativas y los distintivos que se describen en el anexo 1 de este reglamento. 2. No se permite que empresas privadas e instituciones del ámbito de la comunidad autónoma de las Illes Balears utilicen piezas, elementos de uniformidad y emblemas iguales o similares a los fijados en este reglamento. 3. Cualquier otro personal uniformado que dependa de los ayuntamientos o de empresas que presten servicios municipales no puede llevar un uniforme integral que se pueda confundir con el que este reglamento asigna a las policías locales. 4. Las corporaciones locales no pueden modificar las piezas, los elementos de uniformidad, las insignias identificativas ni los distintivos que se describen en este reglamento."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde si en el extremo interior figura el escudo del municipio:",
+        "opciones": [
+            "Intendente/a.",
+            "Comisario/a.",
+            "Policía.",
+            "Jefes de cuerpos de policía local."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: (...) 2. Los distintivos deben llevarse en las hombreras, mediante una anilla de fieltro de color azul marino; en la gorra, debajo del escudo municipal, y en la parte posterior inferior del casco protector. 3. Si se trata de jefes de cuerpos de policía local, los distintivos deben ajustarse al extremo exterior, mientras que en el extremo interior debe figurar el escudo del municipio. 4. En el caso de los policías y de las policías auxiliares a extinguir, la anilla no debe llevar ningún recuadro. 5. El distintivo de antigüedad debe ir en la parte izquierda del pecho y debe ser de forma rectangular, con recuadros de color azul entre recuadros de color blanco, de acuerdo con el diseño de la figura 4b del anexo 1. Este distintivo debe tener dos recuadros azules cuando cumplen veinte años de servicio, tres recuadros azules cuando se cumplen treinta años y cuatro recuadros azules cuando se cumplen cuarenta años o más de servicio."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los miembros de la policía local que tengan asignada un arma reglamentaria deberán:",
+        "opciones": [
+            "Llevarla siempre que se encuentren de servicio.",
+            "Llevarla en cualquier momento.",
+            "No deberán llevarla en servicios concretos determinados por alcaldía.",
+            "La a y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 75 | Obligación de llevar el arma Los miembros de la policía local que tengan asignada un arma reglamentaria deben llevarla siempre que se encuentren de servicio, y deben someterse a lo que establecido en la normativa vigente, sin perjuicio que la alcaldía pueda determinar algunos supuestos en los cuales no se debe llevar el arma en servicios concretos."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el armero:",
+        "opciones": [
+            "Puede ser intercambiado a otro agente.",
+            "No se puede intercambiar.",
+            "Se pueden intercambiar con autorización.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 70 | Prohibición de préstamo, cesión o intercambio del arma Tampoco se puede prestar o ceder el arma a otra persona, intercambiar el arma o el armero con otro policía, ni depositarla en vehículos, aunque se aparquen en garajes, incluso vigilados"
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las características originales del arma, la munición y otros elementos del equipamiento de autodefensa:",
+        "opciones": [
+            "Se pueden manipular ni modificar.",
+            "No se pueden manipular ni modificar, nunca.",
+            "No se pueden manipular ni modificar, excepto que haya una autorización expresa del responsable de armamento del cuerpo.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 69 | Conservación 1. Las armas deben conservarse limpias y en perfecto estado y deben adoptarse todas las medidas necesarias para evitar su deterioro, pérdida, robo, sustracción o que sean utilizadas por terceras personas. 2. Las características originales del arma, la munición y otros elementos del equipamiento de autodefensa no se pueden manipular ni modificar, excepto con una autorización expresa de la persona responsable de armamento del cuerpo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en caso de jubilación o de cese en el servicio por cualquier causa de un policía que tenga asignada un arma reglamentaria o sea propietario de alguna, el policía o los familiares deberán:",
+        "opciones": [
+            "Custodiarla adecuadamente.",
+            "Entregarla en depósito al cuerpo.",
+            "Podrán venderla y comunicarlo al ayuntamiento.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 74 | Cese en el servicio activo 1. En caso de muerte de un policía que tenga asignada un arma reglamentaria o que sea propietario de armas particulares guiadas con la misma guía que la reglamentaria, los familiares, herederos o albaceas deben entregar en depósito al cuerpo, de acuerdo con lo establecido en el artículo 93 del Reglamento de armas, aprobado por el Real Decreto 137/1993. Asimismo, deben entregar la correspondiente llave del armero que pueda tener asignado. El ayuntamiento debe comunicar este hecho a la Intervención de Armas y Explosivos de la Guardia Civil. 2. De igual forma debe procederse en caso de jubilación o de cese en el servicio por cualquier causa y la obligación corresponde en este caso al mismo policía o a sus familiares, en los casos de incapacidad o de imposibilidad."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, la identificación personal consta de una:",
+        "opciones": [
+            "Placa de pecho.",
+            "Una placa separada con el número que conste en la tarjeta de identificación profesional.",
+            "La a y b son correctas.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 96 | Identificación personal 1. La identificación personal consta de una placa de pecho y una placa separada con el número que consta en la tarjeta de identificación profesional. El diseño y las características se muestran en la figura 2 del anexo 1 de este reglamento. 2. La placa de pecho debe llevarse en la parte superior derecha del pecho. Debe llevar en el centro el escudo del municipio, en la parte superior la inscripción POLICÍA LOCAL y debajo del escudo la denominación del municipio. 3. En una placa separada, con unas medidas de 4 x 1,5 cm, que debe situarse en la parte inferior de la placa que se describe en el punto anterior, y a 1 cm de esta, en letras blancas sobre un fondo azul marino, debe figurar el número de identificación personal. 4. Todos los policías locales deben tener una placa argentada, de material flexible, que deben llevar junto con la tarjeta de identificación profesional, la cual llevarán en una cartera como la indicada en la figura 3a del anexo 1 de este reglamento. La tarjeta de identificación profesional debe tener las características que se indican en el punto 3.3 del anexo 1."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las pruebas psicotécnicas que permitan detectar disfunciones o anomalías de carácter no compatibles con el uso de armas se tendrán que llevar a cabo como mínimo con una periodicidad de:",
+        "opciones": [
+            "Anual.",
+            "Bienal.",
+            "Cada tres años.",
+            "Cada cinco años."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 73 | Procedimientos de habilitación y de uso del arma 3. Las pruebas psicotécnicas que permitan detectar disfunciones o anomalías de carácter no compatibles con el uso de armas deben llevarse a cabo como mínimo con una periodicidad de 3 años y debe certificarse que se han hecho ante la Dirección General de Emergencias e Interior, competente en materia de coordinación de policías locales."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, cuando un agente permanezca de baja laboral por un periodo superior a ________________, la custodia del arma es responsabilidad del ayuntamiento y, por lo tanto, se tendrá que custodiar en el armero correspondiente. Complete la frase:",
+        "opciones": [
+            "Dos meses.",
+            "Quince días.",
+            "30 días.",
+            "Tres semanas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 68 | Custodia del arma de fuego y de la cartuchería 4. Sin perjuicio de lo dispuesto en el apartado anterior, cuando un agente o una agente permanece de baja laboral, de acuerdo con el artículo 54.1.e) de este reglamento, la custodia del arma es responsabilidad del ayuntamiento y, por lo tanto, debe custodiarse en el armero correspondiente. Artículo 54 Circunstancias que determinan la retirada del armamento  e) La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o la médica que firme la baja en la que se acredite que la incapacidad no ha alterado sus condiciones psíquicas."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las armas se tendrán que depositar en los armeros:",
+        "opciones": [
+            "En su funda.",
+            "En su estado original.",
+            "Desmontadas.",
+            "Descargadas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 68 | Custodia del arma de fuego y de la cartuchería 1. Las armas de fuego reglamentarias y la cartuchería se custodian, fuera de las horas de servicio y salvo una autorización expresa del alcalde o alcaldesa, en las dependencias municipales habilitadas a tal efecto por el correspondiente ayuntamiento. Con esta finalidad, los ayuntamientos que disponen de policías locales en cuya dotación se incluya un arma de fuego reglamentaria deben disponer de zonas de seguridad específicas con armeros homologados para custodiarlas y un recipiente de arena o caucho para descargarlas. 2. En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia. 3. Las armas deben depositarse descargadas en los armeros, esto es, los revólveres con el tambor abierto sin munición, y las pistolas, en su caso, sin cargador y con la recámara vacía. 4. Sin perjuicio de lo dispuesto en el apartado anterior, cuando un agente o una agente permanece de baja laboral, de acuerdo con el artículo 54.1.e) de este reglamento, la custodia del arma es responsabilidad del ayuntamiento y, por lo tanto, debe custodiarse en el armero correspondiente."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde: dentro de un recuadro dorado tiene que haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior:",
+        "opciones": [
+            "Intendente/a.",
+            "Comisario/a.",
+            "Inspector/a.",
+            "Mayor."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las fechas en las que se tenga que cambiar el vestuario debido a las condiciones meteorológicas, así como los casos en que se tenga que usar la uniformidad de gala, debe determinarlas:",
+        "opciones": [
+            "La consejería competente.",
+            "Delegación de gobierno.",
+            "La correspondiente corporación local.",
+            "El ayuntamiento a propuesta de la EBAP."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 93 | Fechas de cambio de vestuario 1. Las fechas en las que debe cambiarse el vestuario por razón de las condiciones meteorológicas, debe determinarlas el jefe o jefa del correspondiente cuerpo de policía local. 2. El alcalde o alcaldesa determinará los casos en los que debe utilizarse la uniformidad de gala."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las prácticas obligatorias de tiro, cuyo contenido determinará la Escuela Balear de Administración Pública para cada plantilla, se llevarán a cabo al menos con una periodicidad:",
+        "opciones": [
+            "Semestral.",
+            "Anual.",
+            "Bienal.",
+            "Cada cinco años."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 73 | Procedimientos de habilitación y de uso del arma 4. Las prácticas obligatorias de tiro, cuyo contenido determinará la Escuela Balear de Administración Pública, deben llevarse a cabo al menos con una periodicidad semestral en sitios expresamente habilitados y que cumplen con las medidas de seguridad que se establecen para las fuerzas y cuerpos de seguridad. Estas prácticas deben dirigirlas, en todo caso, monitores de tiro, que deben estar en posesión de la habilitación acreditativa expedida por la Escuela Balear de Administración Pública (EBAP) o, en su caso, por la Escuela de Seguridad Pública de las Illes Balears."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, la no superación de las pruebas periódicas de tipo psicotécnico o las prácticas de tiro significará:",
+        "opciones": [
+            "Sólo las pruebas periódicas de tipo psicotécnico.",
+            "Sólo las prácticas de tiro que permitan evaluar la capacidad de todos los agentes en activo para poder llevar armas de fuego.",
+            "La no asignación de un arma reglamentaria .",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 73 | Procedimientos de habilitación y de uso del arma 1. Los procedimientos de habilitación y uso del arma que se prevén en el artículo 24 de la Ley 4/2013, consisten en pruebas periódicas de tipo psicotécnico y prácticas de tiro que permitan evaluar la capacidad de todos los agentes en activo para poder llevar armas de fuego. 2. La no superación de cualquiera de las pruebas que se señalan en el punto anterior significa la retirada inmediata del arma asignada, situación que debe prolongarse mientras persista esta incapacitación. Igualmente, la asignación de un arma reglamentaria está supeditada a la superación de estas pruebas."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde: dentro de un recuadro dorado tiene que haber dos pentágonos, de cuatro lados cada una, en relieve y doradas. Una al lado de la otra, en línea, ajustadas al extremo exterior y centrado verticalmente:",
+        "opciones": [
+            "Intendente/a.",
+            "Comisario/a.",
+            "Inspector/a.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: (...) NOTA El error está en el enunciado, nos habla de pentágonos."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el uso del arma de fuego tiene que ir precedido, si las circunstancias lo permiten, de:",
+        "opciones": [
+            "Comunicaciones dirigidas al agresor para que abandone su actitud.",
+            "De la advertencia que se encuentra ante un agente de la autoridad, cuando el atacante pueda desconocer dicha circunstancia.",
+            "De un toque de silbato.",
+            "La a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 77 | Medidas preventivas de uso del arma 1. Cuando se inicien intervenciones en las que sea presumible la necesidad de hacer uso y ostentación del arma, deben adoptarse las medidas preventivas que se estimen adecuadas a la situación. 2. El uso del arma de fuego debe ir precedido, si las circunstancias lo permiten, de comunicaciones dirigidas al agresor para que abandone su actitud, y de la advertencia que se encuentra ante un agente o una agente de la autoridad, cuando el atacante pueda desconocer esta circunstancia."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, para descargar las armas en los armeros se deberá en caso de las pistolas:",
+        "opciones": [
+            "Con el cargador y con la recámara vacía.",
+            "Sin cargador y con la recámara vacía.",
+            "Con el cargador y con la recámara llena.",
+            "Sin cargador y con la recámara llena."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 68 | Custodia del arma de fuego y de la cartuchería 1. Las armas de fuego reglamentarias y la cartuchería se custodian, fuera de las horas de servicio y salvo una autorización expresa del alcalde o alcaldesa, en las dependencias municipales habilitadas a tal efecto por el correspondiente ayuntamiento. Con esta finalidad, los ayuntamientos que disponen de policías locales en cuya dotación se incluya un arma de fuego reglamentaria deben disponer de zonas de seguridad específicas con armeros homologados para custodiarlas y un recipiente de arena o caucho para descargarlas. 2. En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia. 3. Las armas deben depositarse descargadas en los armeros, esto es, los revólveres con el tambor abierto sin munición, y las pistolas, en su caso, sin cargador y con la recámara vacía. 4. Sin perjuicio de lo dispuesto en el apartado anterior, cuando un agente o una agente permanece de baja laboral, de acuerdo con el artículo 54.1.e) de este reglamento, la custodia del arma es responsabilidad del ayuntamiento y, por lo tanto, debe custodiarse en"
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el arma, la munición y otros elementos del equipamiento de autodefensa:",
+        "opciones": [
+            "Pueden ser cedidos para prácticas de tiro.",
+            "Se pueden ceder con autorización.",
+            "No se pueden ceder.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 70 | Prohibición de préstamo, cesión o intercambio del arma Tampoco se puede prestar o ceder el arma a otra persona, intercambiar el arma o el armero con otro policía, ni depositarla en vehículos, aunque se aparquen en garajes, incluso vigilados"
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, ¿el arma puede ser depositada en el interior de los vehículos?",
+        "opciones": [
+            "Sí puede ser depositada.",
+            "No se pueden depositar.",
+            "Se pueden depositar en los garajes.",
+            "Se pueden depositar en los garajes vigilados."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 70 | Prohibición de préstamo, cesión o intercambio del arma Tampoco se puede prestar o ceder el arma a otra persona, intercambiar el arma o el armero con otro policía, ni depositarla en vehículos, aunque se aparquen en garajes, incluso vigilados"
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, no está permitido, en el uniforme reglamentario, el uso de piezas, equipo, complementos y otros medios técnicos que no se ajusten a lo estrictamente reglamentado para cada ocasión, ni pueden ser objeto de reformas o alteraciones, a excepción de:",
+        "opciones": [
+            "Sólo en el uniforme de gala.",
+            "Sólo en el uniforme de diario.",
+            "Depende de cada unidad.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 91 | Apariencia externa 3. Los miembros de las policías locales, durante la prestación del servicio, deben vestir el uniforme reglamentario, excepto en los casos que determine la alcaldía según el puesto de trabajo o las necesidades del servicio y de acuerdo con lo previsto en la legislación vigente. No está permitido el uso de piezas, equipo, complementos y otros medios técnicos que no se ajusten a lo estrictamente reglamentado para cada ocasión, ni pueden ser objeto de reformas o alteraciones. Las asociaciones de municipios, con el informe previo y la autorización de la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales, pueden utilizar elementos de identificación externa propios que, en todo caso, deben mantener los criterios generales que se establecen para los de las policías locales."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los ayuntamientos que disponen de policías locales en cuya dotación se incluya un arma de fuego reglamentaria y que dispongan de más de cincuenta armas reglamentarias tendrán que disponer de:",
+        "opciones": [
+            "Espacios con acceso restringido con clave o tarjeta.",
+            "Controlados mediante cámaras de vigilancia.",
+            "La a y b son correctas.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 68 | Custodia del arma de fuego y de la cartuchería 1. Las armas de fuego reglamentarias y la cartuchería se custodian, fuera de las horas de servicio y salvo una autorización expresa del alcalde o alcaldesa, en las dependencias municipales habilitadas a tal efecto por el correspondiente ayuntamiento. Con esta finalidad, los ayuntamientos que disponen de policías locales en cuya dotación se incluya un arma de fuego reglamentaria deben disponer de zonas de seguridad específicas con armeros homologados para custodiarlas y un recipiente de arena o caucho para descargarlas. 2. En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia. NOTA Se requiere el acceso restringido con CLAVE, no con llave."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde: dentro de un recuadro dorado tiene que haber tres pentágonos, de cuatro lados cada una, en relieve y doradas. Una al lado de la otra, en línea, ajustadas al extremo exterior y centrado verticalmente:",
+        "opciones": [
+            "Intendente/a.",
+            "Comisario/a.",
+            "Inspector/a.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: (...) NOTA El error está en el enunciado, nos habla de pentágonos."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde: dentro de un recuadro dorado tiene que haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una al lado de la otra, en línea, ajustadas al extremo exterior y centrado verticalmente:",
+        "opciones": [
+            "Intendente/a.",
+            "Comisario/a.",
+            "Inspector/a",
+            "Policía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los emblemas se tienen que referir exclusivamente a la identificación:",
+        "opciones": [
+            "De cada una de las personas miembros de la policía local.",
+            "A la diferenciación de los cuerpos de policía de los diferentes municipios.",
+            "A la identificación de los cuerpos de policía local de las Illes Balears y a las diferentes unidades de los servicios.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 94 | Emblemas 1. Los emblemas tienen como finalidad la identificación externa de las personas que forman parte del colectivo de la policía local. 2. Los emblemas deben referirse exclusivamente a la identificación de cada una de las personas miembros de la policía local, a la diferenciación de los cuerpos de policía de los diferentes municipios, a la identificación de los cuerpos de policía local de las Illes Balears y a las diferentes unidades de los servicios, cuando figuren constituidas en el organigrama del cuerpo de policía local aprobado por el órgano competente. 3. Cuando la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales, autorice un emblema que no prevea este reglamento, identificativo de una determinada unidad de un cuerpo de policía local, debe llevarse en la manga derecha, a 5 cm de la costura del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, la utilización del bastón extensible tiene que:",
+        "opciones": [
+            "Ser proporcional al daño que trate de evitarse.",
+            "Cuando sea imprescindible, contra partes no vitales.",
+            "Usarlo, si es posible, con la finalidad de apartar al oponente, sin pegarle.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 81 | Criterios generales de utilización 1. Los policías no deben ensañarse, por ningún concepto, en el uso del bastón extensible o defensa y deben detenerse cuando sea posible porque los agresores se han retirado o han sido reducidos. No deben amenazar ni pegar nunca a una persona que haya caído o que no ofrezca una resistencia grave, insuperable por otro medio. 2. La utilización del bastón extensible o defensa debe ser proporcional al daño que trate de evitarse. Teniendo en cuenta su naturaleza y con la finalidad de evitar daños irreparables, debe utilizarse, cuando sea imprescindible, contra partes no vitales y utilizarlo, si es posible, con la finalidad de apartar al oponente, sin pegarle."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde un recuadro plateado:",
+        "opciones": [
+            "Policía.",
+            "Comisario/a.",
+            "Subinspector/a.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, como norma general, en los casos de servicios colectivos, quien tenga que asumir su iniciativa y responsabilidad es el encargado de:",
+        "opciones": [
+            "Dar las órdenes de sacar el bastón extensible.",
+            "De utilizarlo.",
+            "De guardarlo.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 80 | Utilización en servicios colectivos 1. En los casos de servicios colectivos, quien debe asumir la iniciativa y responsabilidad es el encargado de dar las órdenes, en primer lugar, de sacar el bastón extensible, después, de utilizarlo, y, finalmente, de guardarlo. Ningún policía debe llevar a cabo estas acciones sin una orden previa, excepto si es estrictamente necesario. 2. Quien ejerza el mando debe someterse en todo momento a los criterios de estas normas."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el aerosol de defensa se debe utilizar solo como elemento de autodefensa:",
+        "opciones": [
+            "Ante personas en actitud agresiva que hayan amenazado o provocado con antelación a los policías.",
+            "Para evitar altercados graves.",
+            "Peleas tumultuarias o situaciones similares.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 82 | Criterios generales de utilización del aerosol de defensa 1. El aerosol de defensa debe servir solo como elemento de autodefensa ante personas con una actitud agresiva que hayan amenazado o provocado con antelación a los policías, para evitar altercados graves, peleas tumultuarias o situaciones similares. 2. La utilización del aerosol debe realizarse sin causar daños innecesarios y cesará inmediatamente cuando se haya reducido el agresor o los agresores. 3. En caso de que haya un mando presente, debe autorizar su uso."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el vestuario de los policías en los municipios donde no haya cuerpo de policía local y en la placa de pecho puede constar la inscripción de:",
+        "opciones": [
+            "«POLICÍA».",
+            "«POLICÍA AUXILIAR».",
+            "«POLICÍA SIN CUERPO».",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 96 | Identificación personal 1. La identificación personal consta de una placa de pecho y una placa separada con el número que consta en la tarjeta de identificación profesional. El diseño y las características se muestran en la figura 2 del anexo 1 de este reglamento. 2. La placa de pecho debe llevarse en la parte superior derecha del pecho. Debe llevar en el centro el escudo del municipio, en la parte superior la inscripción POLICÍA LOCAL y debajo del escudo la denominación del municipio. 3. En una placa separada, con unas medidas de 4 x 1,5 cm, que debe situarse en la parte inferior de la placa que se describe en el punto anterior, y a 1 cm de esta, en letras blancas sobre un fondo azul marino, debe figurar el número de identificación personal. 4. Todos los policías locales deben tener una placa argentada, de material flexible, que deben llevar junto con la tarjeta de identificación profesional, la cual llevarán en una cartera como la indicada en la figura 3a del anexo 1 de este reglamento. La tarjeta de identificación profesional debe tener las características que se indican en el punto 3.3 del anexo 1."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, a qué distintivos corresponde: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo:",
+        "opciones": [
+            "Policía auxiliar para extinguir.",
+            "Comisario/a.",
+            "Subinspector/a.",
+            "Mayor."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, cuando la Dirección General de Interior, Emergencias y Justicia, competente en materia de coordinación de las policías locales, autorice un emblema que no previsto en este reglamento, identificativo de una determinada unidad de un cuerpo de Policía Local:",
+        "opciones": [
+            "Se tendrá que llevar en la manga izquierda, a 5 cm de la costura del hombro.",
+            "No se tendrá que llevar.",
+            "Se tendrá que llevar en la manga derecha, a 5 cm de la costura del hombro.",
+            "Se podrá llevar en cualquier lugar, mientras sea visible."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 94 | Emblemas 1. Los emblemas tienen como finalidad la identificación externa de las personas que forman parte del colectivo de la policía local. 2. Los emblemas deben referirse exclusivamente a la identificación de cada una de las personas miembros de la policía local, a la diferenciación de los cuerpos de policía de los diferentes municipios, a la identificación de los cuerpos de policía local de las Illes Balears y a las diferentes unidades de los servicios, cuando figuren constituidas en el organigrama del cuerpo de policía local aprobado por el órgano competente. 3. Cuando la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales, autorice un emblema que no prevea este reglamento, identificativo de una determinada unidad de un cuerpo de policía local, debe llevarse en la manga derecha, a 5 cm de la costura del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, cuando se efectúe una patrulla individual, cada policía se somete a su propio juicio sobre la gravedad de la situación, pero no puede sacar el bastón extensible de la funda si...",
+        "opciones": [
+            "No prevé la inminente necesidad de utilizarla.",
+            "Y tan solo debe utilizarlo para contener o rechazar una agresión contra su persona.",
+            "Y tan solo debe utilizarlo para contener o rechazar una agresión contra la ciudadanía.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 79 | Criterios de utilización en patrullas individuales Cuando se efectúe una patrulla individual, cada policía se somete a su propio juicio sobre la gravedad de la situación, pero no puede sacar el bastón extensible de la funda si no prevé la necesidad inminente de utilizarlo, y tan solo debe utilizarlo para contener o rechazar una agresión contra su persona o la de la ciudadanía."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, aqué distintivos corresponde: dentro de un recuadro dorado tiene que haber un galón dorado de forma rectangular. Tiene que estar situado en el extremo exterior y centrado verticalmente:",
+        "opciones": [
+            "Oficial.",
+            "Comisario/a.",
+            "Subinspector/a.",
+            "Mayor."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Un agente en prácticas en un municipio de les Illes Balears recibe la uniformidad para empezar el próximo día hábil en turno de noche, también recibe todo el equipo básico de autodefensa y protección el cual ha sido asignado por:",
+        "opciones": [
+            "El jefe o jefa del Cuerpo de Policía Local",
+            "La escuela balear de administración pública (EBAP)",
+            "El ayuntamiento",
+            "El instituto de seguridad pública de les Illes Balears (ISPIB)"
+        ],
+        "correcta": 2,
+        "explicacion": "**Solución en el articulo 49.1 del Decreto 40/2019 que se estudia en el tema 20, el cual dice que el ayuntamiento debe ser quien lo asigne. Respuesta la c"
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, la no superación de las pruebas periódicas de tipo psicotécnico o las prácticas de tiro significará:",
+        "opciones": [
+            "Sólo las pruebas periódicas de tipo psicotécnico.",
+            "Sólo las prácticas de tiro que permitan evaluar la capacidad de todos los agentes en activo para poder llevar armas de fuego.",
+            "La retirada inmediata del arma asignada.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 73 | Procedimientos de habilitación y de uso del arma 1. Los procedimientos de habilitación y uso del arma que se prevén en el artículo 24 de la Ley 4/2013, consisten en pruebas periódicas de tipo psicotécnico y prácticas de tiro que permitan evaluar la capacidad de todos los agentes en activo para poder llevar armas de fuego. 2. La no superación de cualquiera de las pruebas que se señalan en el punto anterior significa la retirada inmediata del arma asignada, situación que debe prolongarse mientras persista esta incapacitación. Igualmente, la asignación de un arma reglamentaria está supeditada a la superación de estas pruebas"
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, para tener asignado el bastón extensible se tiene que hacer el correspondiente:",
+        "opciones": [
+            "Curso de habilitación.",
+            "No se requiere curso.",
+            "Sólo el curso de la EBAP.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 78 | Obligación de llevar la defensa o el bastón extensible 1. Todos los policías que prestan servicios uniformados fuera de las dependencias policiales deben llevar encima de la defensa o el bastón extensible dentro de la funda correspondiente, sujeto al cinturón. 2. En el interior de los vehículos automóviles pueden deshacerse de la defensa o el bastón extensible y deben llevarlo nuevamente al salir. 3. Para tener asignado el bastón extensible debe hacerse el correspondiente curso de habilitación. En el supuesto de no tener este curso, el bastón extensible se puede sustituir por una defensa policial y su uso debe ajustarse a lo previsto en esta sección."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los procedimientos de habilitación y de uso del arma previstos en el artículo 24 de la Ley 4/2013, de 17 de julio, de Coordinación de las Policías Locales de las Illes Balears, consisten en:",
+        "opciones": [
+            "Pruebas periódicas de tipo psicotécnico.",
+            "Prácticas de tiro que permitan evaluar la capacidad de todos los agentes en activo para poder llevar armas de fuego.",
+            "La a y b son correctas.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 73 | Procedimientos de habilitación y de uso del arma 1. Los procedimientos de habilitación y uso del arma que se prevén en el artículo 24 de la Ley 4/2013, consisten en pruebas periódicas de tipo psicotécnico y prácticas de tiro que permitan evaluar la capacidad de todos los agentes en activo para poder llevar armas de fuego."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

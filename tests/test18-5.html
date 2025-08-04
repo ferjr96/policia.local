@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de les Illes Balears. Artículo 4, denominación y naturaleza jurídica. El mando inmediato y operativo corresponde a…",
+        "opciones": [
+            "A la alcaldesa o alcalde o al regidor delegado o a la regidora delegada a propuesta del jefe/a de policia.",
+            "Sólo al alcalde o alcaldesa.",
+            "La persona que ejerza la jefatura del cuerpo.",
+            "Al jefe o jefa del cuerpo de policía."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. 2. El mando inmediato y operativo corresponde a la persona que ejerza la jefatura del cuerpo."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué artículos comprende el Capítulo II del Título IV, del Régimen de Funcionamiento?",
+        "opciones": [
+            "Artículos 23 a 27",
+            "Artículos 23 a 27 bis",
+            "Artículos 20 a 22",
+            "Artículos 20 a 22 bis"
+        ],
+        "correcta": 0,
+        "explicacion": "Capítulo II: Régimen de funcionamiento→artículos 23 a 27"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el Título de la Estructura y Régimen de Funcionamiento?",
+        "opciones": [
+            "Título I",
+            "Título II",
+            "Título IV",
+            "Todas son incorrectas"
+        ],
+        "correcta": 2,
+        "explicacion": "Título IV: Estructura y régimen de funcionamiento"
+    },
+    {
+        "pregunta": "¿Cuál de estos supuestos supone una retirada inmediata del arma?",
+        "opciones": [
+            "La negligencia o la impericia grave evidenciada por una actuación durante el servicio.",
+            "La no superación o negativa a realizar las pruebas con el arma de fuego particular.",
+            "La incapacidad laboral transitoria siempre.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 24 | Armamento 3. La retirada del armamento reglamentario y, en su caso, del arma de fuego particular obtenida mediante la autorización del ayuntamiento se puede llevar a cabo en los casos individuales en los que se considere necesaria cuando concurra alguna de las siguientes circunstancias: a) Un comportamiento de inestabilidad emocional o de alteración psíquica del agente que racionalmente pueda hacer prever la posibilidad de correr un riesgo propio o ajeno. b) El informe psicotécnico emitido por un psicólogo colegiado o una psicóloga colegiada que recomiende la retirada del arma de fuego. c) La negligencia o la impericia grave evidenciada por una actuación durante el servicio. d) La no superación o negativa a realizar las pruebas que reglamentariamente se determinen para la habilitación y el uso del armamento. e) La incapacidad laboral transitoria, cuando sea superior a 30 días, si no se presenta un certificado del médico o de la médica que firme la baja que acredite que la incapacidad no ha alterado sus condiciones psíquicas. f) Cuando mediante decisión judicial, ya sea cautelar o definitiva, se acuerde la retirada del arma."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el título del Título II de la mencionada Ley?",
+        "opciones": [
+            "Estructura y Régimen de Funcionamiento",
+            "Principios Generales",
+            "Estructura Básica",
+            "Cuerpos de Policía Local"
+        ],
+        "correcta": 3,
+        "explicacion": "Título II: Cuerpos de Policía Local→artículos 4 a 8"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Señale la correcta.",
+        "opciones": [
+            "Título IV: Infraestructura y Régimen de Funcionamiento",
+            "Título IV: Estructura de Funcionamiento",
+            "Título IV: Estructura y Régimen de Funcionamiento",
+            "Título IV: Estructura de la Policía Local"
+        ],
+        "correcta": 2,
+        "explicacion": "Título IV: Estructura y régimen de funcionamiento"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el título del Capítulo I del Título IV de la mencionada Ley?",
+        "opciones": [
+            "Estructura de Funcionamiento",
+            "Régimen de Estructura",
+            "Estructura Básica",
+            "Régimen de las Policías Locales"
+        ],
+        "correcta": 2,
+        "explicacion": "Capítulo I: Estructura básica→artículos 20 a 22 bis"
+    },
+    {
+        "pregunta": "La uniformidad de los miembros de los cuerpos de policía local y de los policías de los ayuntamientos que no hayan constituido cuerpo de policía local [...] incorporará…",
+        "opciones": [
+            "Los emblemas distintivos y de identiﬁcación que reglamentariamente se determinen.",
+            "Los signos distintivos y de identiﬁcación que reglamentariamente se determinen.",
+            "Los distintivos de identiﬁcación que reglamentariamente se determinen.",
+            "Las insignias distintivas y de identiﬁcación que reglamentariamente se determinen."
+        ],
+        "correcta": 1,
+        "explicacion": "Explicación: Art. 26.1 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuáles son los artículos que comprende el Título II?",
+        "opciones": [
+            "Artículos 3 al 7",
+            "Artículos 4 al 9",
+            "Artículos 4 al 8",
+            "Artículos 23 al 27"
+        ],
+        "correcta": 2,
+        "explicacion": "Título II: Cuerpos de Policía Local→artículos 4 a 8"
+    },
+    {
+        "pregunta": "Los cuerpos de policía local son…",
+        "opciones": [
+            "Institutos jerarquizados de naturaleza civil.",
+            "Institutos civiles de naturaleza armada.",
+            "Institutos armados de naturaleza civil.",
+            "Institutos armados de naturaleza jerárquica."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 4.1 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "En caso de que se ocupe un puesto de trabajo que comporte la obligación de llevar arma de fuego, la retirada definitiva del arma implicará…",
+        "opciones": [
+            "El cambio de destino.",
+            "El cambio de uniformidad.",
+            "La adecuación a las particularidades económicas del nuevo destino.",
+            "La a y la c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Art. 24.7 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "¿Cuál es la categoría mínima para ejercer la jefatura del cuerpo de la policía local?",
+        "opciones": [
+            "Policia.",
+            "Oficial.",
+            "Subinspector.",
+            "Cualquiera, ya que es un puesto de libre designación."
+        ],
+        "correcta": 1,
+        "explicacion": "- Artículo 22 | Jefatura del cuerpo de policía local. 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial. - Mínimo OFICIAL, tal y como establece la Ley. Por tanto, tener en cuenta que excepto policia, cualquier otra categoría puede ser nombrado/a jefe/a del cuerpo de policía Local."
+    },
+    {
+        "pregunta": "El objeto de la Ley 4/2013 es…",
+        "opciones": [
+            "Establecer los criterios básicos para coordinar la actuación de las policías locales.",
+            "El establecimiento de los criterios de coordinación de los cuerpos de policía local.",
+            "La formación y el perfeccionamiento de los miembros de los cuerpos de policía local.",
+            "Todas las respuestas son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 1 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013. Artículo 4, denominación y naturaleza jurídica. Señale la correcta.",
+        "opciones": [
+            "Las plazas de la plantilla vacantes y dotadas presupuestariamente de los cuerpos de policía local o de los municipios que no hayan constituido cuerpo de policía local han de ser ocupadas por personal funcionario de interino.",
+            "Las plazas de la plantilla vacantes y dotadas presupuestariamente de los cuerpos de policía local o de los municipios que no hayan constituido cuerpo de policía local han de ser ocupadas por personal funcionario de carrera.",
+            "Las plazas de la plantilla vacantes de los cuerpos de policía local o de los municipios que no hayan constituido cuerpo de policía local han de ser ocupadas por personal funcionario.",
+            "Todas pueden ser correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. 4. Las plazas de la plantilla vacantes y dotadas presupuestariamente de los cuerpos de policía local o de los municipios que no hayan constituido cuerpo de policía local han de ser ocupadas por personal funcionario de carrera."
+    },
+    {
+        "pregunta": "Para proveer los puestos de libre designación corresponde a…",
+        "opciones": [
+            "A la alcaldesa o alcalde o al regidor delegado o a la regidora delegada a propuesta del jefe/a de policia.",
+            "A la alcaldesa o alcalde o al regidor delegado o a la regidora delegada a propuesta del ministro del interior.",
+            "A la alcaldesa o alcalde a propuesta del jefe/a de policia.",
+            "Únicamente al regidor delegado o a la regidora delegada a propuesta del jefe/a de policia."
+        ],
+        "correcta": 0,
+        "explicacion": "- Artículo 20 | Estructura de los cuerpos de la policía local. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía. - A: Es correcta, tal y como especifica la Ley. B: No es correcto “a propuesta del ministro del interior. C: Falta regidor/a delegado/a. D: Falta el más importante: “el Alcalde/sa”."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de les Illes Balears. Artículo 22, Jefatura del cuerpo de policía local. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde ___________ …….. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de ________",
+        "opciones": [
+            "Al alcalde o alcadesa / Policía.",
+            "Al Regidor o regidora delegada a propuesta del alcalde / Oficial.",
+            "Al alcalde o alcadesa / La escala básica.",
+            "Al alcalde o alcadesa / Oficial."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 22 | Jefatura del cuerpo de policía local. 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial."
+    },
+    {
+        "pregunta": "¿A quién corresponde la creación del Cuerpo de Policía Local?",
+        "opciones": [
+            "Al Pleno de la Corporación.",
+            "Al ayuntamiento.",
+            "Al Consell insular de la isla que corresponda",
+            "A la consellería competente en materia de coordinación."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 7 Ley 4/2013 de coordinación de las Policías Locales [...] Concretamente el Segundo párrafo del artículo 7.1"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Para proveer los puestos de libre designación corresponde a…",
+        "opciones": [
+            "A la alcaldesa o alcalde o al regidor delegado o a la regidora delegada a propuesta del jefe/a de policía.",
+            "A la alcaldesa o alcalde o al regidor delegado o a la regidora delegada a propuesta del ministro del interior.",
+            "A la alcaldesa o alcalde a propuesta del jefe/a de policía.",
+            "Únicamente al regidor delegado o a la regidora delegada a propuesta del jefe/a de policía."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Artículo 20 | Estructura de los cuerpos de la policía local. 4. Corresponde al alcalde o la alcaldesa o al regidor delegado o a la regidora delegada proveer los puestos de libre designación a propuesta del jefe o de la jefa de policía."
+    },
+    {
+        "pregunta": "Señala la correcta:",
+        "opciones": [
+            "Los ayuntamientos pueden crear, en las categorias de policia, oficial y subinspector los grados de policia de primera, oficial de primera y subinspector de primera.",
+            "Los ayuntamientos deben crear, en las categorias de policia, oficial y subinspector los grados de policia de primera, oficial de primera y subinspector de primera.",
+            "Los ayuntamientos pueden crear, en las categorias de policia, oficial y inspector los grados de policia de primera, oficial de primera y inspector de primera.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 0,
+        "explicacion": "- Artículo 20 | Estructura de los cuerpos de la policía local. 2. Los ayuntamientos pueden crear, en las categorías de policía, oficial y subinspector, los grados de policía de primera, oficial de primera y subinspector de primera, en los que se pueden integrar, respetando los principios constitucionales de igualdad, mérito y capacidad, los funcionarios y las funcionarias de carrera de estas categorías cuando hayan cumplido diez años de servicio activo como policía, cinco años de servicio activo como oficial o tres años de servicio activo como subinspector del respectivo municipio. - A: Es correcto. B: No es “DEBEN CREAR” es “PUEDEN CREAR”. C: INSPECTOR no está contemplado, sólo policía, oficial y subinspector."
+    },
+    {
+        "pregunta": "¿A quién corresponde determinar los servicios en los que no se llevaran armas?",
+        "opciones": [
+            "Al alcalde o alcaldesa.",
+            "Al regidor/a en quién delegue el alcalde de forma expresa.",
+            "Al jefe/a de policía en quién delegue el alcalde de forma expresa.",
+            "Todas las respuestas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 24 | Armamento 1. Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones portarán el armamento reglamentario que se les asigne. Asimismo, dispondrán de los medios técnicos y operativos necesarios para cumplir sus funciones. Reglamentariamente se determinarán las prácticas de habilitación y uso del armamento que sean preceptivas para garantizar su correcta utilización. Corresponde al alcalde o a la alcaldesa de los municipios con cuerpo de policía local, al regidor o a la regidora en quien delegue de forma expresa o al jefe o a la jefa de policía por delegación expresa del alcalde o de la alcaldesa determinar los servicios en los que no se llevarán armas, procurando evitar la posesión de armas de fuego en aquellos casos en que no se considere estrictamente necesario."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué artículos comprende el Título I, de los Principios Generales?",
+        "opciones": [
+            "Artículos 1 y 2",
+            "Artículos 2 y 3",
+            "Artículos 1 al 3",
+            "Artículos 1 y 3"
+        ],
+        "correcta": 2,
+        "explicacion": "Título I: Principios generales→artículo 1 a 3"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Señale la correcta.",
+        "opciones": [
+            "Título IV, Capítulo I: Régimen de Funcionamiento",
+            "Título IV, Capítulo I: Estructura Básica",
+            "Título IV, Capítulo I: Cuerpos de Policía Local",
+            "Título IV, Capítulo I: Principios Generales"
+        ],
+        "correcta": 1,
+        "explicacion": "Título IV: Estructura y régimen de funcionamiento Capítulo I: Estructura básica→artículos 20 a 22 bis"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Señale la correcta.",
+        "opciones": [
+            "Título I: Cuerpos de Policía Local",
+            "Título I: Principios específicos",
+            "Título I: Estructura y Régimen de Funcionamiento",
+            "Título I: Principios Generales"
+        ],
+        "correcta": 3,
+        "explicacion": "Título I: Principios generales→artículo 1 a 3"
+    },
+    {
+        "pregunta": "La jefatura del cuerpo de policía local…",
+        "opciones": [
+            "Lleva a cabo las funciones que se determinen legalmente.",
+            "Ejerce la máxima responsabilidad operativa en policía local.",
+            "Tiene el mando inmediato.",
+            "Todas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Art. 22.4 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local, vestirán el uniforme reglamentario cuando estén de servicio, excepto…",
+        "opciones": [
+            "En los casos establecidos por la legislación vigente y previa autorización del alcalde o alcaldesa respectivo.",
+            "Cuando determine el alcalde o alcaldesa respectivo.",
+            "Cuando determine el alcalde o alcaldesa respectivo a petición del jefe/a de policía.",
+            "En los casos establecidos reglamentariamente y previa autorización del alcalde o alcaldesa respectivo."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Artículo 26 | Uniformidad. 2. Todos los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local vestirán el uniforme reglamentario cuando estén de servicio, excepto en los casos establecidos por la legislación vigente y previa autorización del alcalde o de la alcaldesa respectivo, caso en el que se identificarán con el documento de acreditación profesional."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el título rubricado “Principios Generales” de la mencionada Ley?",
+        "opciones": [
+            "Título I",
+            "Título II",
+            "Título III",
+            "Título IV"
+        ],
+        "correcta": 0,
+        "explicacion": "Título I: Principios generales→artículo 1 a 3"
+    },
+    {
+        "pregunta": "Artículo 22, Jefatura del cuerpo de Policía Local. ¿Puede un subinspector de Manacor optar a la plaza vacante de mayor jefe del cuerpo de policía del mismo municipio?",
+        "opciones": [
+            "Sí, ya que es un puesto de libre designación.",
+            "Sí, si cumple con la antigüedad mínima de 2 años y está en servicio activo.",
+            "Sí, si cumple con la antigüedad mínima de 2 años, está en servicio activo, tiene la titulación exigida.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial. - Tal y como dispone la Ley, un subinspector NO puede optar a la mencionada plaza aunque sea del mismo municipio, ya que la categoría de “mayor” pertenece a la escala técnica, y sólo podría optar un “inspector” (categoría superior de la escala inmediatamente inferior), si cumple con las demás condiciones legalmente establecidas. Como aclaración, la antigüedad mínima de 2 años es sólo para aquellos miembros que no sean del mismo municipio."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el título del Título IV de la mencionada Ley?",
+        "opciones": [
+            "Estructura y Régimen de Funcionamiento",
+            "Principios Generales",
+            "Cuerpos de Policía Local",
+            "Infraestructura y Régimen de Funcionamiento"
+        ],
+        "correcta": 0,
+        "explicacion": "Título IV: Estructura y régimen de funcionamiento"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el título del Título I de la mencionada Ley?",
+        "opciones": [
+            "Cuerpos de Policía Local",
+            "Estructura Básica",
+            "Principios Generales",
+            "Régimen de Funcionamineto"
+        ],
+        "correcta": 2,
+        "explicacion": "Título I: Principios generales→artículo 1 a 3"
+    },
+    {
+        "pregunta": "Artículo 22 bis ¿Cuándo se podrá crear la escala facultativa técnica?",
+        "opciones": [
+            "En los ayuntamientos de los municipios de más de 25.000 habitantes.",
+            "Los ayuntamientos de los municipios de igual o más de 25.000 habitantes.",
+            "En aquellos otros municipios donde se determine por parte de la consejeria competente.",
+            "A y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 22 bis | Escala facultativa técnica. 1. Los ayuntamientos de los municipios de más de 25.000 habitantes, y los de aquellos otros municipios donde se determine por parte de la consejería competente, teniendo en cuenta criterios de aumento de criminalidad o especial transcendencia para la seguridad pública, podrán crear la escala facultativa técnica, a la que corresponderá ejercer, bajo la dependencia directa del jefe del cuerpo, tareas de cobertura, asesoramiento, formación, estudio y apoyo a las funciones policiales en la especialidad de criminología y/o seguridad. La citada escala quedará adscrita al cuerpo de policía local. Asimismo, podrá colaborar con el Consejo de Coordinación Policial al que pertenezca su ayuntamiento de procedencia, para realizar las mismas tareas descritas anteriormente. - Aquí debemos quedarnos con los siguientes detalles: número de habitantes especificado en la Ley (MÁS DE 25.000 HABITANTES). Y en los demás (25.000 o menos) donde se determine por parte de la consejería competente."
+    },
+    {
+        "pregunta": "¿En qué Escalas se estructuran los Cuerpos de Policía Local?",
+        "opciones": [
+            "Ejecutiva, Legislativa y Judicial.",
+            "Avanzada, Media y Básica.",
+            "Técnica, Ejecutiva y Básica",
+            "Prefectura, Mandos y Policías."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 20.1 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Artículo 8 de las asociaciones de municipios en materia de policia local, ¿quién asume la dirección en el ejercicio de las funciones de coordinación operativa?",
+        "opciones": [
+            "El alcalde o alcaldesa correspondiente.",
+            "El jefe/a del cuerpo de policia local.",
+            "El consejero/a competente en materia de coordinación de policias locales.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 8 | Asociaciones de municipios en materia de policía local. 3. El ejercicio de las funciones de coordinación operativa de los servicios asociados de policía local corresponde al alcalde o a la alcaldesa del municipio que se determine en el acuerdo de colaboración para la prestación conjunta de los servicios de policía local. 4. En el ejercicio de las funciones de coordinación operativa, el consejero o la consejera competente en materia de coordinación de policías locales ha de asumir la dirección de la eventual cooperación entre los servicios de policía asociados, en los supuestos que señala el artículo 10.1.o) de esta ley, respetando el principio de autonomía municipal. - Tener en cuenta que el ejercicio de las funciones respecto a la coordinación operativa la tienen ambos (el alcalde “superior” y el consejero/a), pero en el punto 4 de este artículo 8 determina que éste último asumirá la dirección."
+    },
+    {
+        "pregunta": "¿A quién corresponde la creación del cuerpo de policia local?",
+        "opciones": [
+            "Al ayuntamiento.",
+            "Al alcalde junto con su regidor delegado.",
+            "Al pleno de corporación.",
+            "A la asociación de vecinos."
+        ],
+        "correcta": 2,
+        "explicacion": "- Artículo 7 | Creación de cuerpos de policía local. 1. Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía local propios, siempre que lo consideren oportuno en función de sus necesidades, de acuerdo con lo previsto en la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad, la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local, la presente ley y otras disposiciones que sean de aplicación, debiendo disponer de los medios humanos y materiales necesarios para garantizar la prestación de sus funciones de forma permanente. La creación del cuerpo de policía local corresponde al pleno de la corporación, que en el caso de los municipios con población igual o inferior a 5.000 habitantes requiere el previo informe no vinculante de la Comisión de Coordinación de Policías Locales. - La Ley especifica que corresponde al “PLENO DE LA CORPORACIÓN"
+    },
+    {
+        "pregunta": "Los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local, vestirán el uniforme reglamentario cuando estén de servicio, excepto…",
+        "opciones": [
+            "En los casos establecidos por la legislación vigente y previa autorización del alcalde o alcaldesa respectivo.",
+            "Cuando determine el alcalde o alcaldesa respectivo.",
+            "Cuando determine el alcalde o alcaldesa respectivo a petición del jefe/a de policía.",
+            "En los casos establecidos reglamentariamente y previa autorización del alcalde o alcaldesa respectivo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 26 | Uniformidad. 2. Todos los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local vestirán el uniforme reglamentario cuando estén de servicio, excepto en los casos establecidos por la legislación vigente y previa autorización del alcalde o de la alcaldesa respectivo, caso en el que se identificarán con el documento de acreditación profesional."
+    },
+    {
+        "pregunta": "Como norma general, ¿Cuál es el ámbito territorial de actuación?",
+        "opciones": [
+            "El que determine el alcalde/alcaldesa.",
+            "En cualquier municipio.",
+            "En el ámbito territorial de su propio municipio.",
+            "La barriada."
+        ],
+        "correcta": 2,
+        "explicacion": "- Artículo 6 | Ámbito territorial de actuación. 1. Los cuerpos de policía deben actuar en el ámbito territorial de sus municipios. Ello no obstante, sus miembros pueden actuar fuera de su término municipal cuando sean requeridos por la autoridad competente en situaciones de emergencia y con la autorización previa de los alcaldes o alcaldesas respectivos. En estos casos deben actuar bajo la dependencia del alcalde o alcaldesa del municipio que los haya requerido y bajo el mando del jefe del cuerpo de dicho municipio, sin perjuicio de las tareas de coordinación que correspondan a la consejería competente en materia de coordinación de policías locales y emergencias. - Fijaros que se pide “COMO NORMA GENERAL”, por ende, las excepciones quedan excluidas."
+    },
+    {
+        "pregunta": "Artículo 25 del documento de acreditación profesional, señala la correcta:",
+        "opciones": [
+            "Es propiedad del alcalde o alcaldesa y es expedido por la consejería competente en materia de coordinación de policías locales.",
+            "Es propiedad consejería competente en materia de coordinación de policías locales y es expedido por el alcalde o alcaldesa.",
+            "Es propiedad y es expedido por la consejería competente en materia de coordinación de policías locales.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "- Artículo 25 | Documento de acreditación profesional. 1. Todos los miembros de los cuerpos de policía local y los policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local llevarán un documento de acreditación profesional expedido por la consejería competente en materia de coordinación de policías locales, en que constarán al menos los datos relativos al municipio de pertenencia, la identificación de la categoría profesional y el número de registro individual. 2. El documento de acreditación profesional es propiedad de la consejería competente en materia de coordinación de policías locales y se devolverá en caso de baja o cambio de categoría en el cuerpo de policía al que pertenece."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de les Illes Balears. Artículo 22, Jefatura del cuerpo de policía local. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde ___________ . En cualquier caso, el nombramiento ha de recaer entre personal __________ que pertenezca, como mínimo, a la categoría de ________ .",
+        "opciones": [
+            "Al alcalde o alcadesa / Funcionario / Oficial.",
+            "Al alcalde o alcadesa o al regidor o regidora en quien delegue de forma expresa / Funcionario de carrera / Policía.",
+            "Al alcalde o alcadesa / Funcionario de carrera / Oficial.",
+            "Al alcalde o alcadesa o al regidor o regidora en quien delegue de forma expresa / Funcionario / Escala Básica."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial."
+    },
+    {
+        "pregunta": "¿A quién corresponde el nombramiento del jefe o jefa del cuerpo de policia local?",
+        "opciones": [
+            "Al alcalde o alcaldesa o al regidor/a delegado/a.",
+            "Al pleno de la corporación.",
+            "Al alcalde o alcaldesa.",
+            "Al alcalde o alcaldesa a propuesta del pleno de la corporación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 | Jefatura del cuerpo de policía local. 2. El nombramiento del jefe o de la jefa de cada cuerpo de policía local corresponde al alcalde o a la alcaldesa por el procedimiento de libre designación entre personal funcionario de carrera que pertenezca a la máxima escala o a la categoría superior de la escala inmediatamente inferior del cuerpo del municipio o entre personal funcionario de carrera de cuerpos de policía local de otros municipios o de otros cuerpos o fuerzas de seguridad, siempre que pertenezca a la escala o categoría citadas o a una escala superior. En cualquier caso, el nombramiento ha de recaer entre personal funcionario de carrera que pertenezca, como mínimo, a la categoría de oficial. - Ojo al detalle, sólo es al alcalde/sa, aquí no hay regidores/as delegados/as."
+    },
+    {
+        "pregunta": "La uniformidad de los miembros de los cuerpos de policía local y de los policías de los ayuntamientos que no hayan constituído cuerpo de policía local [...] incorporará…",
+        "opciones": [
+            "Los emblemas distintivos y de identificación que reglamentariamente se determinen.",
+            "Los signos distintivos y de identificación que reglamentariamente se determinen.",
+            "Los distintivos de identificación que reglamentariamente se determinen.",
+            "Las insignias distintivas y de identificación que reglamentariamente se determinen."
+        ],
+        "correcta": 1,
+        "explicacion": "Art. 26.1 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué artículos comprende el Capítulo I del Título IV, de la Estructura Básica?",
+        "opciones": [
+            "Artículos 23 a 27",
+            "Artículos 20 a 22",
+            "Artículos 20 a 22 bis",
+            "Ninguna de las anteriores"
+        ],
+        "correcta": 2,
+        "explicacion": "Capítulo I: Estructura básica→artículos 20 a 22 bis"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el Título de los Principios Generales?",
+        "opciones": [
+            "Título II",
+            "Título IV",
+            "Título III",
+            "Todas son incorrectas"
+        ],
+        "correcta": 3,
+        "explicacion": "Título I: Principios generales→artículo 1 a 3"
+    },
+    {
+        "pregunta": "¿En qué artículo se regulan las funciones de los cuerpos de la policía local?",
+        "opciones": [
+            "Artículo 5 de acuerdo a la ley 4/2013.",
+            "Artículo 70 de acuerdo a la ley 4/2013.",
+            "Artículo 53 de la ley orgánica 2/1986.",
+            "A y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 5 | Funciones de los cuerpos de la policía local. Son funciones de los cuerpos de policía local y de los policías de los ayuntamientos que no hayan constituido cuerpo de policía local las que indica el artículo 53 de la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Estas funciones no se pueden ejercer mediante sistemas de gestión indirecta. - Cuidado con esta pregunta trampa, si no nos especifican en base a qué Ley, pueden ser ambas opciones. Saber que si es en base a la Ley 4/2013 es el artículo 5, y si es en base a la Ley Orgánica 2/86 es el artículo 53."
+    },
+    {
+        "pregunta": "Ley 4/2013. Artículo 4, denominación y naturaleza jurídica. Señale la correcta.",
+        "opciones": [
+            "Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquiza bajo la jefatura superior y dependencia directa de la persona que ejerza la jefatura del cuerpo. En cada municipio integran en un cuerpo único con la denominación genérica de cuerpo de policía local, y sus dependencias con denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento",
+            "Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento.",
+            "Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa de la persona que ejerza la jefatura del cuerpo. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento.",
+            "Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. 1. Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el Título de los Cuerpos de Policía Local?",
+        "opciones": [
+            "Título I",
+            "Título II",
+            "Título III",
+            "Título IV"
+        ],
+        "correcta": 1,
+        "explicacion": "Título II: Cuerpos de Policía Local→artículos 4 a 8"
+    },
+    {
+        "pregunta": "Artículo 26, Uniformidad. Señale la correcta.",
+        "opciones": [
+            "Todos los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local vestirán el uniforme reglamentario cuando estén de servicio, excepto en los casos establecidos por la legislación vigente o previa autorización del alcalde o de la alcaldesa respectivo, caso en el que se identificarán con el documento de acreditación profesional.",
+            "Todos los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local vestirán el uniforme reglamentario cuando estén de servicio, excepto en los casos establecidos por la legislación vigente y previa autorización del jefe/a del cuerpo de policía, caso en el que se identificarán con el documento de acreditación profesional.",
+            "Fuera del horario de servicio se prohíbe el uso del uniforme y material reglamentario, excepto en los casos previstos en la legislación vigente o los que sean autorizados por la jefatura del cuerpo, para asistir a las acciones formativas relacionadas con la función policial convocadas por las administraciones públicas y a los actos institucionales.",
+            "Fuera del horario de servicio se autoriza el uso del uniforme y material reglamentario, excepto en los casos previstos en la legislación vigente o los que sean autorizados por la jefatura del cuerpo, para asistir a las acciones formativas relacionadas con la función policial convocadas por las administraciones públicas y a los actos institucionales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 26 | Uniformidad 2. Todos los miembros de la policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local vestirán el uniforme reglamentario cuando estén de servicio, excepto en los casos establecidos por la legislación vigente y previa autorización del alcalde o de la alcaldesa respectivo, caso en el que se identificarán con el documento de acreditación profesional. 3. Fuera del horario de servicio se prohíbe el uso del uniforme y material reglamentario, excepto en los casos previstos en la legislación vigente o los que sean autorizados por la jefatura del cuerpo, para asistir a las acciones formativas relacionadas con la función policial convocadas por las administraciones públicas y a los actos institucionales."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Señale la correcta.",
+        "opciones": [
+            "Título II: Cuerpos de Policía Local",
+            "Título II: Principios Generales",
+            "Título II: Estructura Básica",
+            "Título II: Régimen de Funcionamiento"
+        ],
+        "correcta": 0,
+        "explicacion": "Título II: Cuerpos de Policía Local→artículos 4 a 8"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de les Illes Balears. Artículo 4, denominación y naturaleza jurídica. El mando inmediato y operativo corresponde a…",
+        "opciones": [
+            "A la alcaldesa o alcalde o al regidor delegado o a la regidora delegada a propuesta del jefe/a de policia.",
+            "Sólo al alcalde o alcaldesa.",
+            "La persona que ejerza la jefatura del cuerpo.",
+            "Todas las anteriores son incorrectas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. 2. El mando inmediato y operativo corresponde a la persona que ejerza la jefatura del cuerpo."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuál es el título del Capítulo II del Título IV de la mencionada Ley?",
+        "opciones": [
+            "Régimen de la Policía Local",
+            "Cuerpos de Policía Local",
+            "Régimen de Funcionamiento",
+            "Estructura y Régimen de Funcionamiento"
+        ],
+        "correcta": 2,
+        "explicacion": "Capítulo II: Régimen de funcionamiento→artículos 23 a 27"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuáles son los artículos que comprende el Título I?",
+        "opciones": [
+            "Artículo 1",
+            "Artículos 2 y 3",
+            "Artículos 4 al 8",
+            "“a” y “b” son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Título I: Principios generales→artículo 1 a 3"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Señale la correcta.",
+        "opciones": [
+            "Título IV, Capítulo II: Estructura de Funcionamiento",
+            "Título IV, Capítulo II: Régimen de Funcionamiento",
+            "Título IV, Capítulo II: Estructura y Régimen de Funcionamiento",
+            "Título IV, Capítulo II: Régimen Básico"
+        ],
+        "correcta": 1,
+        "explicacion": "Título IV: Estructura y régimen de funcionamiento Capítulo II: Régimen de funcionamiento→artículos 23 a 27"
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

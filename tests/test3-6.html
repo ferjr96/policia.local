@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. En la sucesión al trono se prefiere la línea:",
+        "opciones": [
+            "Posterior a la anterior.",
+            "Anterior a la posterior.",
+            "Colateral a la directa.",
+            "Ascendente a la descendente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contr"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Puede el Rey negarse a sancionar una ley?",
+        "opciones": [
+            "En ningún caso.",
+            "Sí, alegando objeción de conciencia.",
+            "Puede abdicar temporalmente para no tener que sancionarla.",
+            "Ninguna respuesta es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "El Rey está obligado en todo caso a sancionar la ley aprobada por el Parlamento; y deberá hacerlo en el plazo de quince días, promulgándola y ordenando su inmediata publicación"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La cantidad que recibe el Rey de los presupuestos del Estado tiene que justificarla ante:",
+        "opciones": [
+            "No tiene que justificarla.",
+            "El Gobierno.",
+            "El Interventor general del Estado.",
+            "El Ministerio de Economía y Hacienda."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los actos del Rey no necesitan refrendo de sus actos cuando:",
+        "opciones": [
+            "Ejerza el Derecho de Gracia.",
+            "Nombre al Presidente del Gobierno.",
+            "Se publiquen en el BOE.",
+            "Nombre a los miembros civiles y militares de su Casa."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En la sucesión a la Corona, cuando dos personas del mismo sexo aspiren a la misma, corresponderá a:",
+        "opciones": [
+            "Quien sea mayor en edad.",
+            "Quien sea de menor edad.",
+            "La que hubiese designado el Rey.",
+            "La que acuerden las Cortes Generales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La inhabilitación del Rey debe reconocerla:",
+        "opciones": [
+            "El Tribunal Constitucional.",
+            "El Senado.",
+            "Las Cortes Generales.",
+            "El Congreso de los Diputados."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El último artículo del Título II es el:",
+        "opciones": [
+            "Artículo 67.",
+            "Artículo 66.",
+            "Artículo 65.",
+            "Artículo 64."
+        ],
+        "correcta": 2,
+        "explicacion": "La regulación de la Corona se lleva a cabo en el Título II de la Constitución española de 1978, artículos 56 a 65, ambos incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey:",
+        "opciones": [
+            "No podrá autorizar indultos generales.",
+            "Podrá acordar la amnistía de delitos contra la Corona.",
+            "No podrá autorizar indultos particulares.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey nombra y releva a los miembros militares de la Casa Real:",
+        "opciones": [
+            "Previo informe del Ministerio de Defensa.",
+            "Previo informe al Gobierno.",
+            "Libremente.",
+            "Previo informe del Jefe de la Casa Real."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Puede el Rey convocar libremente un referéndum?",
+        "opciones": [
+            "Sí, porque afecta su resultado a todos los ciudadanos.",
+            "No, porque está sometido a la Constitución.",
+            "No, porque solo puede convocar un plebiscito.",
+            "Sí, porque la Constitución le reconoce esa función."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 92 1. Las decisiones políticas de especial trascendencia podrán ser sometidas a referéndum consultivo de todos los ciudadanos. 2. El referéndum será convocado por el Rey, mediante propuesta del Presidente del Gobierno, previamente autorizada por el Congreso de los Diputados. 3. Una ley orgánica regulará las condiciones y el procedimiento de las distintas modalidades de referéndum previstas en esta Constitución."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Cortes Generales son:",
+        "opciones": [
+            "Inamovibles.",
+            "Inviolables.",
+            "Inescrutables.",
+            "Impenetrables."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 66 1. Las Cortes Generales representan al pueblo español y están formadas por el Congreso de los Diputados y el Senado. 2. Las Cortes Generales ejercen la potestad legislativa del Estado, aprueban sus Presupuestos, controlan la acción del Gobierno y tienen las demás competencias que les atribuya la Constitución. 3. Las Cortes Generales son inviolables."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál de los siguientes actos no necesitará la autorización previa del Congreso de los Diputados?",
+        "opciones": [
+            "La declaración del Estado de excepción.",
+            "La declaración del Estado de sitio.",
+            "Ninguna de ellas necesita la autorización del Congreso de los Diputados ya que se necesita la autorización de las Cortes Generales.",
+            "Las dos necesitarán la autorización del Congreso de los Diputados."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 116 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 2. El estado de alarma será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso de los Diputados, reunido inmediatamente al efecto y sin cuya autorización no podrá ser prorrogado dicho plazo. El decreto determinará el ámbito territorial a que se extienden los efectos de la declaración. 3. El estado de excepción será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros, previa autorización del Congreso de los Diputados. La autorización y proclamación del estado de excepción deberá determinar expresamente los efectos del mismo, el ámbito territorial a que se extiende y su duración, que no podrá exceder de treinta días, prorrogables por otro plazo igual, con los mismos requisitos. 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones. 5. No podrá procederse a la disolución del Congreso mientras estén declarados algunos de los estados comprendidos en el presente artículo, quedando automáticamente convocadas las Cámaras si no estuvieren en período de sesiones. Su funcionamiento, así como el de los demás poderes constitucionales del Estado, no podrán interrumpirse durante la vigencia de estos estados. Disuelto el Congreso o expirado su mandato, si se produjere alguna de las situaciones que dan lugar a cualquiera de dichos estados, las competencias del Congreso serán asumidas por su Diputación Permanente. 6. La declaración de los estados de alarma, de excepción y de sitio no modificarán el principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Podrán acumularse los cargos de Regente y Tutor en:",
+        "opciones": [
+            "El padre o ascendientes del Rey.",
+            "El padre, madre o ascendientes directos del Rey.",
+            "Los ascendientes directos del Rey.",
+            "El padre o en su caso la madre del Rey."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La convocatoria de un referéndum:",
+        "opciones": [
+            "Será hecha por Presidente del Gobierno por encargo del Rey.",
+            "Tendrá que ser autorizada por el Senado previamente.",
+            "Será convocado por el Rey en los casos previstos en la Constitución.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El nombramiento del Presidente del Gobierno que efectúa el Rey será refrendado por:",
+        "opciones": [
+            "El Presidente del Congreso.",
+            "El Presidente del Gobierno.",
+            "El Ministro de la Presidencia.",
+            "El Presidente del Tribunal Supremo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 64 1. Los actos del Rey serán refrendados por el Presidente del Gobierno y, en su caso, por los Ministros competentes. La propuesta y el nombramiento del Presidente del Gobierno, y la disolución prevista en el artículo 99, serán refrendados por el Presidente del Congreso. 2. De los actos del Rey serán responsables las personas que los refrenden."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Es posible ser miembro simultáneamente del Congreso y del Senado?",
+        "opciones": [
+            "Sólo si se cuenta con autorización del Presidente del Gobierno.",
+            "No, en ningún caso.",
+            "Sólo si se cuenta con autorización del Presidente de cada una de las Cámaras.",
+            "Sí, en todo caso."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 67 1. Nadie podrá ser miembro de las dos Cámaras simultáneamente, ni acumular el acta de una Asamblea de Comunidad Autónoma con la de Diputado al Congreso. 2. Los miembros de las Cortes Generales no estarán ligados por mandato imperativo. 3. Las reuniones de Parlamentarios que se celebren sin convocatoria reglamentaria no vincularán a las Cámaras, y no podrán ejercer sus funciones ni ostentar sus privilegios."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿De cuántos artículos consta el Título II de la Constitución?",
+        "opciones": [
+            "12 artículos.",
+            "10 artículos.",
+            "11 artículos.",
+            "9 artículos."
+        ],
+        "correcta": 1,
+        "explicacion": "La regulación de la Corona se lleva a cabo en el Título II de la Constitución española de 1978, artículos 56 a 65, ambos incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué plazo tiene el Rey para sancionar una ley desde su aprobación?",
+        "opciones": [
+            "3 días.",
+            "1 mes.",
+            "15 días.",
+            "10 días."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 91 El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes materias se tendrá que regular por una Ley Ordinaria:",
+        "opciones": [
+            "El texto refundido de contratos en el Sector Público.",
+            "El derecho de huelga.",
+            "La libertad sindical.",
+            "El Código Penal."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Cortes Generales representan:",
+        "opciones": [
+            "Al Gobierno de España.",
+            "Al pueblo español.",
+            "A la nación española.",
+            "A la Administración pública."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 66 1. Las Cortes Generales representan al pueblo español y están formadas por el Congreso de los Diputados y el Senado. 2. Las Cortes Generales ejercen la potestad legislativa del Estado, aprueban sus Presupuestos, controlan la acción del Gobierno y tienen las demás competencias que les atribuya la Constitución. 3. Las Cortes Generales son inviolables."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La cantidad que recibe el Rey para su familia y Casa se recoge en:",
+        "opciones": [
+            "El presupuesto de la Casa del Rey.",
+            "El presupuesto extraordinario del Estado.",
+            "El presupuesto del Ministerio de Economía.",
+            "El presupuesto del Estado."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey nombrará y separará a los miembros del Gobierno:",
+        "opciones": [
+            "A propuesta del Presidente del Gobierno.",
+            "En ningún caso.",
+            "Antes de los 30 días después de las elecciones generales.",
+            "Cuando hayan sido elegidos previamente por el Presidente del Congreso."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los actos del Rey que no están refrendados debiendo estarlo carecen de:",
+        "opciones": [
+            "Eficacia.",
+            "Validez.",
+            "Existencia.",
+            "Ninguna respuesta es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La Regencia se ejercerá:",
+        "opciones": [
+            "Por mandato del Rey.",
+            "En nombre del Rey.",
+            "Por mandato constitucional y en nombre del Rey.",
+            "Por mandato constitucional."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. No se podrá ser miembro simultáneamente:",
+        "opciones": [
+            "De una Asamblea de Comunidad Autónoma y del Congreso.",
+            "Todas las respuestas son incorrectas.",
+            "De una Asamblea de Comunidad Autónoma y del Senado.",
+            "De una Asamblea de Comunidad Autónoma y Concejal."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 67 1. Nadie podrá ser miembro de las dos Cámaras simultáneamente, ni acumular el acta de una Asamblea de Comunidad Autónoma con la de Diputado al Congreso. 2. Los miembros de las Cortes Generales no estarán ligados por mandato imperativo. 3. Las reuniones de Parlamentarios que se celebren sin convocatoria reglamentaria no vincularán a las Cámaras, y no podrán ejercer sus funciones ni ostentar sus privilegios."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál de las respuestas es cierta?",
+        "opciones": [
+            "El Rey acredita a los embajadores y otros representantes diplomáticos.",
+            "Los representantes extranjeros en España están acreditados ante el Rey.",
+            "Ninguna es cierta.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 63 1. El Rey acredita a los embajadores y otros representantes diplomáticos. Los representantes extranjeros en España están acreditados ante él. 2. Al Rey corresponde manifestar el consentimiento del Estado para obligarse internacionalmente por medio de tratados, de conformidad con la Constitución y las leyes. 3. Al Rey corresponde, previa autorización de las Cortes Generales, declarar la guerra y hacer la paz."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién expide los decretos acordados en el Consejo de Ministros?",
+        "opciones": [
+            "El Secretario del Consejo de Ministros.",
+            "El Ministro de la Presidencia.",
+            "El Rey.",
+            "El Presidente del Gobierno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Controlar la acción del Gobierno es una función que corresponde:",
+        "opciones": [
+            "Al Tribunal Constitucional.",
+            "A las Cortes Generales.",
+            "Al Consejo de Estado.",
+            "Al Tribunal Supremo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 66 1. Las Cortes Generales representan al pueblo español y están formadas por el Congreso de los Diputados y el Senado. 2. Las Cortes Generales ejercen la potestad legislativa del Estado, aprueban sus Presupuestos, controlan la acción del Gobierno y tienen las demás competencias que les atribuya la Constitución. 3. Las Cortes Generales son inviolables."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey está sujeto a:",
+        "opciones": [
+            "Responsabilidad política.",
+            "No está sujeto a ninguna responsabilidad.",
+            "Responsabilidad civil y penal.",
+            "Responsabilidad constitucional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Título III de la CE se divide:",
+        "opciones": [
+            "En tres Títulos.",
+            "En cuatro Capítulos.",
+            "En tres Capítulos.",
+            "En cuatro Títulos."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Príncipe heredero será Príncipe de Asturias desde:",
+        "opciones": [
+            "Su nacimiento.",
+            "Que así lo acuerde su padre como Rey de España.",
+            "Que se produzca el hecho que originó su reconocimiento.",
+            "Las respuestas a) y c) son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La acreditación de los embajadores de otros países en España, corresponde:",
+        "opciones": [
+            "Al Ministro de Asuntos Exteriores.",
+            "Al Presidente de la Comisión delegada para Asuntos Exteriores.",
+            "Al Rey.",
+            "Al Presidente del Gobierno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 63 1. El Rey acredita a los embajadores y otros representantes diplomáticos. Los representantes extranjeros en España están acreditados ante él. 2. Al Rey corresponde manifestar el consentimiento del Estado para obligarse internacionalmente por medio de tratados, de conformidad con la Constitución y las leyes. 3. Al Rey corresponde, previa autorización de las Cortes Generales, declarar la guerra y hacer la paz."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿A quién corresponde manifestar el consentimiento del Estado para obligarse internacionalmente por medio de Tratados?",
+        "opciones": [
+            "Al Ministro de Asuntos Exteriores.",
+            "Al Presidente del Gobierno.",
+            "Al Presidente de la Comisión Delegada para Asuntos Diplomáticos.",
+            "Al Rey de España."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 63 1. El Rey acredita a los embajadores y otros representantes diplomáticos. Los representantes extranjeros en España están acreditados ante él. 2. Al Rey corresponde manifestar el consentimiento del Estado para obligarse internacionalmente por medio de tratados, de conformidad con la Constitución y las leyes. 3. Al Rey corresponde, previa autorización de las Cortes Generales, declarar la guerra y hacer la paz."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si el Rey se inhabilitare para ejercer la Jefatura del Estado:",
+        "opciones": [
+            "Asumirán las Regencia el Príncipe/Princesa heredero/a, si fuere mayor de edad.",
+            "El Regente será nombrado por el Consejo de Ministros.",
+            "Ejercerá la regencia el padre, madre o pariente mayor de edad de los llamados a sucederle.",
+            "Las Cortes deberán reconocer la inhabilitación y después nombrar al Regente, eligiendo a la persona que consideren más convenientes."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Príncipe heredero al alcanzar la mayoría de edad:",
+        "opciones": [
+            "Prestará el mismo juramento que el Rey al ser proclamado.",
+            "Prestará juramento de fidelidad al Rey.",
+            "Prestará juramento de desempeñar fielmente sus funciones.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál de las siguientes no es una función del Rey?",
+        "opciones": [
+            "Declarar el Estado de Excepción.",
+            "Convocar un referéndum.",
+            "Convocar elecciones.",
+            "Todas las respuestas son actos que realiza el Rey."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los actos del Rey serán refrendados por:",
+        "opciones": [
+            "El Presidente del Gobierno.",
+            "El Ministro más antiguo.",
+            "El Secretario del Consejo de Ministros.",
+            "El Ministro de Jornada."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 64 1. Los actos del Rey serán refrendados por el Presidente del Gobierno y, en su caso, por los Ministros competentes. La propuesta y el nombramiento del Presidente del Gobierno, y la disolución prevista en el artículo 99, serán refrendados por el Presidente del Congreso. 2. De los actos del Rey serán responsables las personas que los refrenden."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿El Rey puede presidir los Consejos de Ministros?",
+        "opciones": [
+            "Cuando se produzca la apertura del año judicial.",
+            "Cuando lo estime oportuno a petición del Presidente del Gobierno.",
+            "Sí, y en caso de que asista será sustituido por el Presidente del Gobierno.",
+            "Nunca, pues es una función del Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La proclamación del Rey se lleva a cabo por y ante:",
+        "opciones": [
+            "El Congreso de los Diputados.",
+            "Las Cortes Generales.",
+            "El Gobierno de la Nación.",
+            "El Senado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Al Rey le corresponde declarar la guerra y hacer la paz:",
+        "opciones": [
+            "Previa autorización de las Cortes.",
+            "Previa autorización del Senado.",
+            "Previa autorización de la Delegada de Defensa.",
+            "Previa autorización del Jefe Supremo de las Fuerzas Armadas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 63 1. El Rey acredita a los embajadores y otros representantes diplomáticos. Los representantes extranjeros en España están acreditados ante él. 2. Al Rey corresponde manifestar el consentimiento del Estado para obligarse internacionalmente por medio de tratados, de conformidad con la Constitución y las leyes. 3. Al Rey corresponde, previa autorización de las Cortes Generales, declarar la guerra y hacer la paz."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El primer artículo del Título II es el:",
+        "opciones": [
+            "Artículo 56.",
+            "Artículo 53.",
+            "Artículo 57.",
+            "Artículo 55."
+        ],
+        "correcta": 0,
+        "explicacion": "La regulación de la Corona se lleva a cabo en el Título II de la Constitución española de 1978, artículos 56 a 65, ambos incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey:",
+        "opciones": [
+            "Promulgará en el plazo de 15 días las leyes.",
+            "Ninguna respuesta es correcta.",
+            "Sancionará las leyes en el plazo de un mes desde su aprobación.",
+            "Ordenará la inmediata publicación de las leyes."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 91 El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey entre sus funciones tiene que:",
+        "opciones": [
+            "Proponer al candidato de Presidente del Gobierno.",
+            "Proponer al Presidente del Congreso.",
+            "Proponer al Presidente del Senado.",
+            "Proponer al Presidente de las Cortes Generales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El ejercicio del derecho de gracia corresponde:",
+        "opciones": [
+            "Al Rey.",
+            "Al Pleno del Congreso y del Senado convocado al efecto.",
+            "Al Presidente del Gobierno.",
+            "Al Consejo de Ministros."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Diga cuál de estas funcione corresponde al Rey:",
+        "opciones": [
+            "La representación del pueblo español.",
+            "El Alto Patronazgo de las Reales Academias.",
+            "La potestad de dictar leyes.",
+            "La aprobación de los Estatutos de Autonomía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey entre sus funciones puede:",
+        "opciones": [
+            "Nombrar y separar a los Ministros en una legislatura.",
+            "Ser informado de las decisiones que adopte la Mesa del Congreso.",
+            "Convocar a referéndum en los casos previstos en la Constitución.",
+            "Convocar a referéndum para la distribución del presupuesto."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes leyes no podrá autorizar la modificación de sí misma:",
+        "opciones": [
+            "Ley de bases.",
+            "Ley Orgánica.",
+            "Real decreto legislativo.",
+            "Ley Ordinaria."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 83 Las leyes de bases no podrán en ningún caso: a) Autorizar la modificación de la propia ley de bases. b) Facultar para dictar normas con carácter retroactivo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién es responsable de los actos del Rey?",
+        "opciones": [
+            "El Presidente del Consejo de Ministros.",
+            "La persona que lo refrenda.",
+            "El Jefe de la Casa Real.",
+            "El Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 64 1. Los actos del Rey serán refrendados por el Presidente del Gobierno y, en su caso, por los Ministros competentes. La propuesta y el nombramiento del Presidente del Gobierno, y la disolución prevista en el artículo 99, serán refrendados por el Presidente del Congreso. 2. De los actos del Rey serán responsables las personas que los refrenden."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Diga cuál de estas funciones no corresponde al Rey:",
+        "opciones": [
+            "Proponer el candidato a presidente del Gobierno.",
+            "El mando supremo de las fuerzas armadas.",
+            "Promulgar las leyes.",
+            "Convocar plebiscitos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En el orden de sucesión a la Corona, se resolverán por una Ley Orgánica:",
+        "opciones": [
+            "Sólo las renuncias que se hagan ante las Cortes.",
+            "Las abdicaciones que previamente hayan sido aprobadas por las Cortes.",
+            "Las abdicaciones y renuncias.",
+            "Las renuncias voluntarias y explícitas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

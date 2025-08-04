@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            
+    {
+      "pregunta": "1. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro brillante, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi, de alquiler con conductor de hasta nueve plazas y de autobuses, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula delanteras y traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate."
+    },
+    {
+      "pregunta": "2. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. El primer grupo de caracteres de la placa de matrícula de los vehículos pertenecientes al Cuerpo Diplomático estará formado por:",
+      "opciones": [
+        "Las letras CD.",
+        "Un prefijo invariable y único para cada Misión diplomática.",
+        "Un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática.",
+        "Las letras OI."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA B) Matrícula especial. a) Matrícula en régimen diplomático: 1.º Cuerpo diplomático. Para los vehículos del Cuerpo diplomático, el fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras CD, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática. La atribución de prefijos se hará siguiendo el orden alfabético establecido en la ultima lista oficial del Cuerpo Diplomático publicada por el Ministerio de Asuntos Exteriores, correspondiendo el prefijo -1- al Decanato del Cuerpo Diplomático, y para las Misiones de países que acrediten Embajadores con carácter permanente o establezcan relaciones diplomáticas con España en el futuro, por orden de antigüedad."
+    },
+    {
+      "pregunta": "3. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras AAA y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color negro, de acuerdo con el cuadro 5 del presente anexo.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-1 del anexo XI de este Reglamento."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "4. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. La placa de matrícula ordinaria de los ciclomotores empezará por la letra:",
+      "opciones": [
+        "E.",
+        "R.",
+        "S.",
+        "C."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. d) Ciclomotores y ciclos de motor: El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color negro mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra C, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo. NOTA: LA PLACA DE MATRÍCULA DE LOS CICLOMOTORES EMPIEZA POR LA LETRA C."
+    },
+    {
+      "pregunta": "5. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿De qué color será el fondo de las placas de matrícula ordinarias para vehículos automóviles?",
+      "opciones": [
+        "El fondo será retrorreflectante de color blanco.",
+        "El fondo será no retrorreflectante de color blanco.",
+        "El fondo será retrorreflectante de color azul.",
+        "El fondo será retrorreflectante de color blanco mate."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate."
+    },
+    {
+      "pregunta": "6. Según el anexo XVIII del RD 2822/1998, ¿cuándo no será necesario que lleven en su parte posterior, los automóviles matriculados en España, el distintivo de nacionalidad, cuando circulen por los demás países de la Unión Europea?",
+      "opciones": [
+        "Aquellos en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España.",
+        "Aquellos en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de la Unión Europea.",
+        "Aquellos en cuyas placas de matrícula no figure la bandera europea y la sigla distintiva de España.",
+        "Aquellos en cuya placa de matrícula delantera figure la bandera europea y la sigla distintiva de España."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "7. Según el anexo XVIII del RD 2822/1998, indique la respuesta incorrecta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler sin conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "8. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a las placas de matrícula de los vehículos del Cuerpo diplomático:",
+      "opciones": [
+        "En las placas de matrícula se inscribirán tdos grupos de caracteres, constituidos por las letras CD, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras DC, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras CD, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras OI, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA B) Matrícula especial. a) Matrícula en régimen diplomático: 1.º Cuerpo diplomático. Para los vehículos del Cuerpo diplomático, el fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras CD, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática. La atribución de prefijos se hará siguiendo el orden alfabético establecido en la ultima lista oficial del Cuerpo Diplomático publicada por el Ministerio de Asuntos Exteriores, correspondiendo el prefijo -1- al Decanato del Cuerpo Diplomático, y para las Misiones de países que acrediten Embajadores con carácter permanente o establezcan relaciones diplomáticas con España en el futuro, por orden de antigüedad."
+    },
+    {
+      "pregunta": "9. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿De qué color será el fondo de las placas de matrícula ordinarias para vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas?",
+      "opciones": [
+        "El fondo será retrorreflectante de color blanco.",
+        "El fondo será retrorreflectante de color azul.",
+        "El fondo será retrorreflectante de color negro.",
+        "El fondo será retrorreflectante de color azul, pero únicamente la placa de matrícula trasera."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate."
+    },
+    {
+      "pregunta": "10. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cómo se hará la atribución de prefijos de las placas de matrícula de los vehículos del Cuerpo Diplomático?",
+      "opciones": [
+        "Siguiendo el orden alfabético establecido en la última lista oficial del Cuerpo Diplomático publicada por el Ministerio de Asuntos Exteriores.",
+        "Siguiendo el orden alfabético establecido en la última lista oficial del Cuerpo Diplomático publicada por el Ministerio del Interior.",
+        "Siguiendo el orden alfabético establecido en la última lista oficial del Cuerpo Diplomático publicada por el Ministerio de Hacienda.",
+        "Siguiendo el orden alfabético establecido en la última lista oficial del Cuerpo Diplomático publicada por el Ministerio de Asuntos Internos."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA B) Matrícula especial. a) Matrícula en régimen diplomático: 1.º Cuerpo diplomático. Para los vehículos del Cuerpo diplomático, el fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras CD, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática. La atribución de prefijos se hará siguiendo el orden alfabético establecido en la ultima lista oficial del Cuerpo Diplomático publicada por el Ministerio de Asuntos Exteriores, correspondiendo el prefijo -1- al Decanato del Cuerpo Diplomático, y para las Misiones de países que acrediten Embajadores con carácter permanente o establezcan relaciones diplomáticas con España en el futuro, por orden de antigüedad."
+    },
+    {
+      "pregunta": "11. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿De qué color irán pintados los caracteres en las placas de matrícula ordinarias para vehículos automóviles?",
+      "opciones": [
+        "De color blanco mate.",
+        "De color negro mate.",
+        "De color gris mate.",
+        "De color negro."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate."
+    },
+    {
+      "pregunta": "12. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de los ciclomotores:",
+      "opciones": [
+        "El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color negro mate.",
+        "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate.",
+        "El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+        "El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color negro mate."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. d) Ciclomotores y ciclos de motor: El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color negro mate"
+    },
+    {
+      "pregunta": "13. Según el anexo XVIII del RD 2822/1998, ¿cuántos grupos de caracteres se inscribirán en las placas de matrícula de los vehículos especiales?",
+      "opciones": [
+        "3.",
+        "2.",
+        "5.",
+        "4."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. b) Vehículos especiales: El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+    },
+    {
+      "pregunta": "14. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "Los automóviles matriculados en España en cuyas placas de matrícula no figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-1 del anexo XI de este Reglamento.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI del Reglamento General de Conductores."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "15. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. El grupo de cifras del que se compone la placa de matrícula de los vehículos ordinarios irá:",
+      "opciones": [
+        "Desde el 0001 al 9999.",
+        "Desde el 0000 al 9999.",
+        "Desde las letras AAA hasta las ZZZ.",
+        "Desde el 0000 al ZZZ."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q."
+    },
+    {
+      "pregunta": "16. Según el anexo XVIII del RD 2822/1998, el signo distintivo de la Unión Europea que se incluirá en las placas de matrícula, constará:",
+      "opciones": [
+        "De 12 estrellas de color amarillo y la sigla distintiva de España representada por la letra E de color blanco.",
+        "De 12 estrellas de color amarillo y la sigla distintiva de España representada por la letra E de color negro.",
+        "De 12 estrellas de color blanco y la sigla distintiva de España representada por la letra E de color negro.",
+        "De 12 estrellas de color blanco y la sigla distintiva de España representada por la letra E de color blanco."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "17. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color negro mate. ¿A qué tipo de vehículo pertenece esta placa de matrícula?",
+      "opciones": [
+        "A los remolques y semirremolques.",
+        "A los ciclomotores.",
+        "A los vehículos especiales.",
+        "A los vehículos ordinarios."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. d) Ciclomotores y ciclos de motor: El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color negro mate"
+    },
+    {
+      "pregunta": "18. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cuántos caracteres tendrán las placas de matrícula de los vehículos especiales?",
+      "opciones": [
+        "3.",
+        "4.",
+        "8.",
+        "6."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. b) Vehículos especiales: El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+    },
+    {
+      "pregunta": "19. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de los vehículos especiales:",
+      "opciones": [
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y la vocal O, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de tres caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras N y Q, por ser fácil su confusión con la letra Ñ y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. b) Vehículos especiales: El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+    },
+    {
+      "pregunta": "20. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Qué vocales se suprimirán en las placas de matrícula de los vehículos ordinarios?",
+      "opciones": [
+        "La I y la U.",
+        "La O, la I y la U.",
+        "La A, la I, la O y la U.",
+        "Las cinco vocales."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q."
+    },
+    {
+      "pregunta": "21. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cuál será el primer carácter de la placa de matrícula de los vehículos especiales?",
+      "opciones": [
+        "R.",
+        "E.",
+        "Z.",
+        "0000."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. b) Vehículos especiales: El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo. NOTA: EL PRIMER CARACTER A INSCRIBIR EN LA MATRÍCULA SERÁ SIEMPRE LA LETRA E."
+    },
+    {
+      "pregunta": "22. Según el anexo XVIII del RD 2822/1998, ¿en qué lado de la placa de matrícula irá situada la banda azul?",
+      "opciones": [
+        "En el lado derecho.",
+        "En el lado izquierdo de la placa de matrícula delantera únicamente.",
+        "En el lado izquierdo de la placa de matrícula trasera únicamente.",
+        "En el lado izquierdo de la placa de matrícula."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "23. Según el anexo XVIII del RD 2822/1998, las placas de matrícula de los vehículos del Cuerpo diplomático son:",
+      "opciones": [
+        "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+        "El fondo de las placas será retrorreflectante, de color azul. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+        "El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+        "El fondo de las placas será retrorreflectante, de color verde. Los caracteres estampados en relieve irán pintados en color blanco mate."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA B) Matrícula especial. a) Matrícula en régimen diplomático: 1.º Cuerpo diplomático. Para los vehículos del Cuerpo diplomático, el fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras CD, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática. La atribución de prefijos se hará siguiendo el orden alfabético establecido en la ultima lista oficial del Cuerpo Diplomático publicada por el Ministerio de Asuntos Exteriores, correspondiendo el prefijo -1- al Decanato del Cuerpo Diplomático, y para las Misiones de países que acrediten Embajadores con carácter permanente o establezcan relaciones diplomáticas con España en el futuro, por orden de antigüedad."
+    },
+    {
+      "pregunta": "24. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de los remolques y semirremolques:",
+      "opciones": [
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra C, un número que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente y las letras CH y LL por incompatibilidad con el diseño de la placa de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente y las letras CH y LL por incompatibilidad con el diseño de la placa de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra R, un número que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y O, por ser fácil su confusión con la letra N y el número 0, respectivamente y las letras CH y LL por incompatibilidad con el diseño de la placa de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra R, un número que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente y las letras CH y LL por incompatibilidad con el diseño de la placa de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. c) Remolques y semirremolques: El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra R, un número que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente y las letras CH y LL por incompatibilidad con el diseño de la placa de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+    },
+    {
+      "pregunta": "25. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿De qué color será la letra E que debe llevar la placa de matrícula ordinaria?",
+      "opciones": [
+        "Negra.",
+        "Amarilla.",
+        "Blanca.",
+        "Azul."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "26. Según el anexo XVIII del RD 2822/1998, indique la respuesta incorrecta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras N y Q.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "27. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de más de nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras N y Q.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo X de este Reglamento."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "28. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿De qué color irán pintados los caracteres en las placas de matrícula trasera ordinarias para vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas?",
+      "opciones": [
+        "De color negro mate.",
+        "De color blanco.",
+        "De color blanco mate.",
+        "De color negro."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate."
+    },
+    {
+      "pregunta": "29. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. El grupo de letras del que se compone la placa de matrícula de los vehículos ordinarios irá:",
+      "opciones": [
+        "Desde las letras BBB a ZZZ.",
+        "Desde las letras AAA a ZZZ.",
+        "Desde las letras BBB a YZZ.",
+        "Desde las letras AAA a YZZ."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q."
+    },
+    {
+      "pregunta": "30. Según el anexo XVIII del RD 2822/1998, ¿qué señal deberán, en su parte posterior, llevar los automóviles matriculados en España en cuyas placas de matrícula no figure la banda europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea?",
+      "opciones": [
+        "V-7, recogida en el anexo X.",
+        "V-7, recogida en el anexo IX.",
+        "V-7, recogida en el anexo XI.",
+        "V-7, recogida en el anexo XII."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "31. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate. ¿A qué tipo de vehículo pertenece esta placa de matrícula?",
+      "opciones": [
+        "A los remolques y semirremolques.",
+        "A los ciclomotores.",
+        "A los vehículos especiales.",
+        "A los vehículos ordinarios."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. c) Remolques y semirremolques: El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra R, un número que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente y las letras CH y LL por incompatibilidad con el diseño de la placa de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+    },
+    {
+      "pregunta": "32. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cuál de las siguientes letras se suprimirán en las placas de matrícula de los vehículos ordinarios?",
+      "opciones": [
+        "La p.",
+        "La t.",
+        "La g.",
+        "La q."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q."
+    },
+    {
+      "pregunta": "33. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cuál será el primer carácter de la placa de matrícula de los remolques y semirremolques?",
+      "opciones": [
+        "R.",
+        "V.",
+        "E.",
+        "S."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. c) Remolques y semirremolques: El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra R, un número que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente y las letras CH y LL por incompatibilidad con el diseño de la placa de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo. NOTA: LAS PLACAS DE MATRICULA ACTUALES DE UN REMOLQUE O SEMIRREMOLQUE SIEMPRE EMPIEZAN POR R."
+    },
+    {
+      "pregunta": "34. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Y y Q.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBC y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0001 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q."
+    },
+    {
+      "pregunta": "35. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula delanteras y traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta horizontalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "36. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "Además, en la parte derecha de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Además, en la parte izquierda de la placa de matrícula trasera se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color negro, de acuerdo con el cuadro 5 del presente anexo."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "37. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. ¿A qué tipo de vehículo pertenece esta placa de matrícula?",
+      "opciones": [
+        "A los remolques y semirremolques.",
+        "A los ciclomotores.",
+        "A los vehículos especiales.",
+        "A la placa de matrícula de los vehículos automóviles."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "38. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cuántas estrellas llevará el símbolo de la Unión Europea que se ha de incluir en las placas de matrícula ordinarias de los vehículos automóviles?",
+      "opciones": [
+        "11.",
+        "13.",
+        "12.",
+        "21."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "39. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate. ¿A qué tipo de vehículo pertenece esta placa de matrícula?",
+      "opciones": [
+        "A los remolques y semirremolques.",
+        "A los ciclomotores.",
+        "A los vehículos especiales.",
+        "A los vehículos ordinarios."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. b) Vehículos especiales: El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+    },
+    {
+      "pregunta": "40. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cuántos caracteres tendrán las placas de matrícula de los vehículos ordinarios (vehículos automóviles)?",
+      "opciones": [
+        "7.",
+        "6.",
+        "8.",
+        "3."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "41. Según el anexo XVIII del RD 2822/1998, indique la respuesta incorrecta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del presente anexo."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "42. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Qué tipo de vehículos llevarán la placa de matrícula trasera retrorreflectante de color azul?",
+      "opciones": [
+        "Todos los vehículos automóviles destinados al servicio de alquiler con conductor.",
+        "Todos los vehículos automóviles destinados al servicio de taxi y de alquiler con conductor.",
+        "Todos los vehículos automóviles destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas.",
+        "Todos los vehículos automóviles destinados al servicio de taxi y de alquiler con conductor de más de nueve plazas."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate."
+    },
+    {
+      "pregunta": "43. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color negro y los caracteres irán pintados en color blanco mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras YZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q.",
+        "Además, en la parte derecha de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "44. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de los ciclomotores:",
+      "opciones": [
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra C, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra V, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra E, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo.",
+        "En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra R, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. d) Ciclomotores y ciclos de motor: El fondo de las placas será retrorreflectante, de color amarillo. Los caracteres estampados en relieve irán pintados en color negro mate. En las placas de matrícula se inscribirán tres grupos de caracteres constituidos por la letra C, un número de cuatro cifras, que irá desde el 0000 al 9999, y tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, con lo que se evitan palabras malsonantes o acrósticos especialmente significados, así como las letras Ñ y Q, por ser fácil su confusión con la letra N y el número 0, respectivamente, y las letras CH y LL, por incompatibilidad con el diseño de las placas de matrícula que no admitiría la consignación de cuatro caracteres en el último grupo."
+    },
+    {
+      "pregunta": "45. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿A quién corresponde el prefijo -1- en las placas de matrícula de los vehículos del Cuerpo Diplomático?",
+      "opciones": [
+        "Al Secretario del Cuerpo Diplomático.",
+        "Al Decanato del Cuerpo Diplomático.",
+        "Al Principal del Cuerpo Diplomático.",
+        "Al Asesor del Cuerpo Diplomático."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA B) Matrícula especial. a) Matrícula en régimen diplomático: 1.º Cuerpo diplomático. Para los vehículos del Cuerpo diplomático, el fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate. En las placas de matrícula se inscribirán tres grupos de caracteres, constituidos por las letras CD, seguidas por dos grupos de guarismos. El primero de ellos es un prefijo invariable y único para cada Misión diplomática, y el segundo, un número de orden que corresponderá a los vehículos propiedad de la Misión o de sus miembros a propuesta de cada Misión Diplomática. La atribución de prefijos se hará siguiendo el orden alfabético establecido en la ultima lista oficial del Cuerpo Diplomático publicada por el Ministerio de Asuntos Exteriores, correspondiendo el prefijo -1- al Decanato del Cuerpo Diplomático, y para las Misiones de países que acrediten Embajadores con carácter permanente o establezcan relaciones diplomáticas con España en el futuro, por orden de antigüedad."
+    },
+    {
+      "pregunta": "46. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de los remolques y semirremolques:",
+      "opciones": [
+        "El fondo de las placas será retrorreflectante, de color negro. Los caracteres estampados en relieve irán pintados en color rojo mate.",
+        "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate.",
+        "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+        "El fondo de las placas será retrorreflectante, de color azul. Los caracteres estampados en relieve irán pintados en color negro mate."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. c) Remolques y semirremolques: El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color negro mate."
+    },
+    {
+      "pregunta": "47. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cuántos grupos de caracteres se inscribirán en las placas de matrícula ordinarias de los vehículos automóviles?",
+      "opciones": [
+        "Uno.",
+        "Tres.",
+        "Siete.",
+        "Dos."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q."
+    },
+    {
+      "pregunta": "48. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Cuál de las siguientes letras se suprimirán en las placas de matrícula de los vehículos ordinarios?",
+      "opciones": [
+        "La y.",
+        "La ñ.",
+        "La h.",
+        "La k."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q."
+    },
+    {
+      "pregunta": "49. Según el anexo XVIII del RD 2822/1998, indique la respuesta incorrecta respecto a la matrícula ordinaria de vehículos automóviles:",
+      "opciones": [
+        "El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate.",
+        "En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q.",
+        "Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color negro mate, de acuerdo con el cuadro 5 del presente anexo.",
+        "Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. a) Vehículos automóviles: El fondo de la placas será retrorreflectante de color blanco y los caracteres irán pintados en color negro mate, salvo las placas de matrícula traseras de los vehículos destinados al servicio de taxi y de alquiler con conductor de hasta nueve plazas, en que el fondo será retrorreflectante de color azul y los caracteres irán pintados en color blanco mate. En las placas de matrícula de todos los vehículos automóviles, con independencia del servicio al que estén destinados, se inscribirán dos grupos de caracteres constituidos por un número de cuatro cifras, que irá desde el 0000 al 9999, y de tres letras, empezando por las letras BBB y terminando por las letras ZZZ, suprimiéndose las cinco vocales, y las letras Ñ y Q. Además, en la parte izquierda de la placa de matrícula se incluirá, sobre una banda azul dispuesta verticalmente, el símbolo de la bandera europea, que constará de 12 estrellas de color amarillo, y la sigla distintiva de España representada por la letra E de color blanco, de acuerdo con el cuadro 5 del presente anexo. Los automóviles matriculados en España en cuyas placas de matrícula figure la bandera europea y la sigla distintiva de España, cuando circulen por los demás países de la Unión Europea, no será necesario que lleven en su parte posterior el signo distintivo de la nacionalidad española previsto en la señal V-7 del anexo XI de este Reglamento."
+    },
+    {
+      "pregunta": "50. Según el anexo XVIII del RD 2822/1998, indique la respuesta correcta respecto a la matrícula ordinaria de los vehículos especiales:",
+      "opciones": [
+        "El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color negro mate.",
+        "El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate.",
+        "El fondo de las placas será retrorreflectante, de color rojo. Los caracteres estampados en relieve irán pintados en color blanco mate.",
+        "El fondo de las placas será retrorreflectante, de color azul. Los caracteres estampados en relieve irán pintados en color blanco mate."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Anexo XVIII PLACAS DE MATRICULA A) Matrícula ordinaria. b) Vehículos especiales: El fondo de las placas será retrorreflectante, de color blanco. Los caracteres estampados en relieve irán pintados en color rojo mate."
+    }
+
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

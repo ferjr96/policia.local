@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Según el Artículo 23 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, Los dispositivos obligatorios de alumbrado y señalización óptica, que se regulan en la reglamentación que se recoge en los anexos I y X, para los vehículos de tracción animal cuando circulen de día, por tramos de vías no señalizados con la señal de «túnel» o con condiciones meteorológicas o ambientales que no disminuyan sensiblemente la visibilidad, son los especificados a continuación:",
+      "opciones": [
+        "Luz de posición delantera.",
+        "Luz de posición trasera.",
+        "Catadióptricos traseros no triangulares.",
+        "Ninguna es correcta."
+      ],
+      "correcta": 3,
+      "explicacion": "El enunciado hace referencia a que es de día y no se da NINGUNA de las situaciones que hagan obligatorio el uso de dispositivos de alumbrado y señalización óptica RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 23 Vehículos de tracción animal 5. Los dispositivos obligatorios de alumbrado y señalización óptica, que se regulan en la reglamentación que se recoge en los anexos I y X, para los vehículos de tracción animal cuando circulen de noche, por tramos de vías señalizados con la señal de «túnel» o con condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Catadióptricos traseros no triangulares. Si el vehículo de tracción animal llevase luces a ambos lados, serán iguales y simétricas, y si las tuviese en un solo lado, irán situadas en el izquierdo del sentido de la marcha. Los catadióptricos estarán situados lo más cerca que sea posible a los extremos del vehículo."
+    },
+    {
+      "pregunta": "2. Según el artículo 21 del RD 2822/1998, todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Luz de cruce. Luz de posición delantera. Luz de posición trasera. Luz de frenado. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Luces indicadoras de dirección para vehículos de carrocería cerrada. ¿Qué falta en el enunciado?",
+      "opciones": [
+        "Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos.",
+        "Un catadióptrico trasero triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos.",
+        "Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.500 milímetros, a partir de la cual deberán estar equipados de dos.",
+        "Un catadióptrico trasero triangular en los vehículos con anchura hasta 1.500 milímetros, a partir de la cual deberán estar equipados de dos."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 21 Homologación y características técnicas 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.2. Todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Luz de cruce. Luz de posición delantera. Luz de posición trasera. Luz de frenado. Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Luces indicadoras de dirección para vehículos de carrocería cerrada. Añadir nota a la pregunta #94681 Texto AÑADIR"
+    },
+    {
+      "pregunta": "4. Según el artículo 21 del RD 2822/1998, todo ciclomotor de tres ruedas y cuatriciclo ligero podrá estar provisto de: Señale la incorrecta.",
+      "opciones": [
+        "Catadióptricos laterales no triangulares.",
+        "Luz de carretera.",
+        "Luces indicadoras de dirección para vehículos sin carrocería cerrada.",
+        "Catadióptricos en los pedales cuando éstos existan y no sean retráctiles."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 21 Homologación y características técnicas 2.2. Todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Luz de cruce. Luz de posición delantera. Luz de posición trasera. Luz de frenado. Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Luces indicadoras de dirección para vehículos de carrocería cerrada. 2.4. Todo ciclomotor de tres ruedas y cuatriciclo ligero puede llevar: Luz de carretera. Luces indicadoras de dirección para vehículos sin carrocería cerrada. Catadióptricos laterales no triangulares. Luz de la placa trasera de matrícula."
+    },
+    {
+      "pregunta": "5. Según el Artículo 21 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, todo ciclomotor de dos ruedas deberá estar provisto de. Señala la incorrecta:",
+      "opciones": [
+        "Luz de cruce, luz de posición trasera y catadióptrico trasero no triangular.",
+        "Luz de frenado, catadióptrico lateral no triangular y catadióptricos en los pedales cuando estos no sean retráctiles.",
+        "Luz de cruce, luz de frenado, luz de posición delantera.",
+        "Luz de cruce, luz de posición trasera y luz de frenado."
+      ],
+      "correcta": 2,
+      "explicacion": "La luz de posición delantera es opcional. Artículo 21 Homologación y características técnicas 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.1. Todo ciclomotor de dos ruedas deberá estar provisto de: Luz de cruce. Luz de posición trasera. Luz de frenado. Catadióptrico trasero no triangular. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Catadióptricos laterales no triangulares."
+    },
+    {
+      "pregunta": "6. Según el artículo 23.2 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 20 centímetros de la parte más saliente del vehículo.",
+        "Los vehículos de tracción animal que lleven no galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 20 centímetros de la parte más saliente del vehículo.",
+        "Los vehículos de tracción animal que no lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo.",
+        "Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo."
+    },
+    {
+      "pregunta": "7. Según el artículo 21 del RD 2822/1998, todo ciclomotor de dos ruedas deberá estar provisto de: Señale la incorrecta.",
+      "opciones": [
+        "Luz de cruce.",
+        "Catadióptrico trasero no triangular.",
+        "Luz de frenado.",
+        "Catadióptrico trasero triangular."
+      ],
+      "correcta": 3,
+      "explicacion": "El catadióptrico trasero ha de ser NO triangular. Artículo 21 Homologación y características técnicas 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.1. Todo ciclomotor de dos ruedas deberá estar provisto de: Luz de cruce. Luz de posición trasera. Luz de frenado. Catadióptrico trasero no triangular. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Catadióptricos laterales no triangulares."
+    },
+    {
+      "pregunta": "8. Según el Artículo 22 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, los ciclos, para poder circular, deberán disponer de:",
+      "opciones": [
+        "Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Y un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél.",
+        "Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél.",
+        "Un sistema adecuado de frenado que actúe sobre las ruedas traseras y un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél.",
+        "Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras."
+      ],
+      "correcta": 0,
+      "explicacion": "RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 22 Ciclos y bicicletas 1. Los ciclos, para poder circular, deberán disponer de: Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél."
+    },
+    {
+      "pregunta": "9. Según el Artículo 24 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, ¿cuáles de estos dispositivos de alumbrado son obligatorios para los tranvías?",
+      "opciones": [
+        "Luz de posición delantera, luz de posición trasera y luces indicadoras de dirección.",
+        "Luz de posición delantera, luz de posición trasera, dispositivo luminoso delantero indicador de servicio y dispositivo luminoso trasero indicador del servicio.",
+        "Luz de posición delantera, luz de posición trasera y dispositivo luminoso trasera del indicador del servicio.",
+        "Luz de posición delantera, luz de posición trasera y luz de corto alcance."
+      ],
+      "correcta": 1,
+      "explicacion": "RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 24 Tranvías Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio. Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano longitudinal de simetría del vehículo. Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo."
+    },
+    {
+      "pregunta": "10. Según el Artículo 23 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan:",
+      "opciones": [
+        "Más de 15 centímetros de la parte más saliente del vehículo.",
+        "Más de 10 centímetros de la parte más saliente del vehículo.",
+        "Más de 10 centímetros de la parte trasera del vehículo.",
+        "Más de 20 centímetros de la parte más saliente del vehículo."
+      ],
+      "correcta": 1,
+      "explicacion": "RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo."
+    },
+    {
+      "pregunta": "11. Según el artículo 21 del RD 2822/1998, todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Señale la correcta.",
+      "opciones": [
+        "Luces indicadores de dirección.",
+        "Luz de placa de matrícula trasera.",
+        "Luz de posición delantera.",
+        "Luz de carretera."
+      ],
+      "correcta": 2,
+      "explicacion": "Las luces indicadoras de dirección sólo son obligatorias si estos son de carrocería cerrada, la luz de placa de matrícula trasera es opcional y la luz de carretera también. Artículo 21 Homologación y características técnicas 2.2. Todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Luz de cruce. Luz de posición delantera. Luz de posición trasera. Luz de frenado. Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Luces indicadoras de dirección para vehículos de carrocería cerrada."
+    },
+    {
+      "pregunta": "12. Según el artículo 24 del RD 2822/1998, los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Indique la respuesta correcta.",
+      "opciones": [
+        "Luz de cruce.",
+        "Luces indicadoras de dirección.",
+        "Dispositivo luminoso trasero indicador del servicio.",
+        "Luz de frenado."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 24 Tranvías Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio. Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano longitudinal de simetría del vehículo. Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo."
+    },
+    {
+      "pregunta": "13. Según el RD 2822/1998. ¿Cómo se llama el documento que necesita un VMP para poder circular?.",
+      "opciones": [
+        "Permiso de circulación.",
+        "Licencia de circulación.",
+        "Certificado de circulación.",
+        "Manual de características técnicas."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 22 bis Vehículos de movilidad personal 1. Los vehículos de movilidad personal quedan exceptuados de obtener la autorización administrativa a la que hace referencia el apartado 1 del artículo 1. 2. Los vehículos de movilidad personal requerirán para poder circular el certificado de circulación que garantice el cumplimiento de los requisitos técnicos exigibles por la normativa nacional e internacional recogidos en su manual de características, así como su identificación. 3. El manual de características de los vehículos de movilidad personal se aprobará por Resolución del Director General de Tráfico."
+    },
+    {
+      "pregunta": "14. Según el artículo 24 del RD 2822/1998, los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación. Indique la respuesta correcta:",
+      "opciones": [
+        "Luz de cruce.",
+        "Luces indicadoras de dirección.",
+        "Dispositivo luminoso trasero indicador del servicio.",
+        "Luz de frenado."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 24 Tranvías Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio. Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano longitudinal de simetría del vehículo. Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo."
+    },
+    {
+      "pregunta": "15. Qué título del RD 2822/1998, lleva por nombre “Ciclomotores, ciclos, vehículos de tracción animal y tranvías\":",
+      "opciones": [
+        "El título II.",
+        "El título I.",
+        "El título IV.",
+        "El título III."
+      ],
+      "correcta": 3,
+      "explicacion": "TÍTULO III. Ciclomotores, ciclos, vehículos de tracción animal y tranvías CAPÍTULO I. Ciclomotores Artículo 21 Homologación y características técnicas CAPÍTULO II. Ciclos, vehículos de tracción animal y tranvías Artículo 22 Ciclos y bicicletas Artículo 22 bis Vehículos de movilidad personal Artículo 23 Vehículos de tracción animal Artículo 24 Tranvías"
+    },
+    {
+      "pregunta": "16. Según el artículo 21.1 del RD 2822/1998, a los ciclomotores:",
+      "opciones": [
+        "Del artículo 12 les será de aplicación lo dispuesto para los cuatriciclos, salvo la exigencia de freno de estacionamiento del apartado 8.5.",
+        "Del artículo 12 les será de aplicación lo dispuesto para las motocicletas, salvo la exigencia de freno de estacionamiento del apartado 8.5.",
+        "Del artículo 12 les será de aplicación lo dispuesto para las motocicletas, salvo la exigencia de freno de servicio del apartado 8.5.",
+        "Del artículo 12 les será de aplicación lo dispuesto para los turismos, salvo la exigencia de freno de estacionamiento del apartado 8.5."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación. Los ciclomotores deberán cumplir lo dispuesto para las motocicletas y vehículos de tres ruedas en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 de este Reglamento. Del artículo 12 les será de aplicación lo dispuesto para las motocicletas, salvo la exigencia de freno de estacionamiento del apartado 8.5."
+    },
+    {
+      "pregunta": "17. Según el RD 2822/1998, todo ciclomotor de 3 ruedas deberá estar provisto de:",
+      "opciones": [
+        "Luz de carretera.",
+        "Luces indicadoras de dirección.",
+        "Luz de marcha atrás.",
+        "Ninguna es correcta."
+      ],
+      "correcta": 3,
+      "explicacion": "La luz de carretera es opcional, así como la de marcha atrás. Las luces indicadoras de dirección sólo son obligatorias cuando estos vehículos sean de carrocería cerrada. Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación. Los ciclomotores deberán cumplir lo dispuesto para las motocicletas y vehículos de tres ruedas en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 de este Reglamento. Thank you for watching Del artículo 12 les será de aplicación lo dispuesto para las motocicletas, salvo la exigencia de freno de estacionamiento del apartado 8.5. 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.2. Todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Luz de cruce. Luz de posición delantera. Luz de posición trasera. Luz de frenado. Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Luces indicadoras de dirección para vehículos de carrocería cerrada."
+    },
+    {
+      "pregunta": "18. Según el artículo 24 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio.",
+        "Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Luz de frenado. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio.",
+        "Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de cruce. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio.",
+        "Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de cruce. Luz de posición delantera. Luz de posición trasera. Luz de frenado. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 24 Tranvías Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio. Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano longitudinal de simetría del vehículo. Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo."
+    },
+    {
+      "pregunta": "19. Según el artículo 21 del RD 2822/1998, todo ciclomotor de dos ruedas deberá estar provisto de: Luz de cruce. Luz de posición trasera. Catadióptrico trasero no trian-gular. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Catadióptricos laterales no triangulares. ¿Es correcto este enunciado?",
+      "opciones": [
+        "Sí, es correcto.",
+        "No, no es correcto, faltan las luces indicadoras de dirección.",
+        "Sí, es correcto pero la luz de posición trasera no es obligatoria y faltaría añadir la luz de frenado.",
+        "No, no es correcto, falta añadir la luz de frenado."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 21 Homologación y características técnicas 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.1. Todo ciclomotor de dos ruedas deberá estar provisto de: Luz de cruce. Luz de posición trasera. Luz de frenado. Catadióptrico trasero no triangular. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Catadióptricos laterales no triangulares."
+    },
+    {
+      "pregunta": "20. Según el Artículo 21 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, los ciclomotores, como condición indispensable para su matriculación ordinaria o turística deberán corresponder a tipos previamente homologados de acuerdo con:",
+      "opciones": [
+        "En España, con el RD 2140/1985, de 9 de octubre.",
+        "En la Unión Europea con la directiva 2001/116.",
+        "En la Unión Europea, con la directiva 92/61/CEE.",
+        "Las respuestas a y c son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación."
+    },
+    {
+      "pregunta": "21. Según el artículo 21.1 del RD 2822/1998, los ciclomotores:",
+      "opciones": [
+        "Deberán cumplir lo dispuesto para las motocicletas y vehículos de tres ruedas en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 de este Reglamento.",
+        "Deberán cumplir lo dispuesto para las motocicletas y vehículos de tres ruedas en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 del Reglamento General de circulación.",
+        "Deberán cumplir lo dispuesto para las motocicletas y cuatriciclos en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 de este Reglamento.",
+        "Deberán cumplir lo dispuesto para las motocicletas y vehículos de cuatro ruedas en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 de este Reglamento."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación. Los ciclomotores deberán cumplir lo dispuesto para las motocicletas y vehículos de tres ruedas en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 de este Reglamento."
+    },
+    {
+      "pregunta": "22. Según el artículo 22 bis del RD 2822/1998. El manual de características de los vehículos de movilidad personal se aprobará por resolución de:",
+      "opciones": [
+        "De la Jefatura Central de Tráfico.",
+        "De la Dirección General de Tráfico.",
+        "Del Jefe Provincial de Tráfico.",
+        "Del Director General de Tráfico."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 22 bis Vehículos de movilidad personal 1. Los vehículos de movilidad personal quedan exceptuados de obtener la autorización administrativa a la que hace referencia el apartado 1 del artículo 1. 2. Los vehículos de movilidad personal requerirán para poder circular el certificado de circulación que garantice el cumplimiento de los requisitos técnicos exigibles por la normativa nacional e internacional recogidos en su manual de características, así como su identificación. 3. El manual de características de los vehículos de movilidad personal se aprobará por Resolución del Director General de Tráfico."
+    },
+    {
+      "pregunta": "23. Según el artículo 24 del RD 2822/1998, los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Indique la respuesta incorrecta.",
+      "opciones": [
+        "Luz de posición delantera.",
+        "Dispositivo luminoso delantero indicador del servicio.",
+        "Luz de posición trasera.",
+        "Únicamente puede llevar una luz de posición delantera y una trasera prohibiéndose un número mayor de luces."
+      ],
+      "correcta": 3,
+      "explicacion": "El reglamento permite llevar una o dos así cómo deben ir colocadas. Artículo 24 Tranvías Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio. Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano longitudinal de simetría del vehículo. Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo. Añadir nota a la pregunta #33514 Texto AÑADIR"
+    },
+    {
+      "pregunta": "25. Según el artículo 23.5 del RD 2822/1998, los dispositivos obligatorios de alumbrado y señalización óptica, que se regulan en la reglamentación que se recoge en los anexos I y X, para los vehículos de tracción animal cuando circulen de noche, por tramos de vías señalizados con la señal de «túnel» o con condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, son los especificados a continuación: Indique la respuesta correcta.",
+      "opciones": [
+        "Luz de cruce. Luz de posición delantera. Luz de posición trasera. Catadióptricos traseros no triangulares.",
+        "Luz de posición delantera. Luz de posición trasera. Catadióptricos traseros triangulares.",
+        "Luz de posición delantera. Luz de posición trasera. Catadióptricos traseros no triangulares.",
+        "Luz de cruce. Luz de posición trasera. Catadióptricos traseros no triangulares."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo. 3. Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo. 4. Los vehículos de tracción animal de dos ruedas deben llevar tentemozos adecuados. 5. Los dispositivos obligatorios de alumbrado y señalización óptica, que se regulan en la reglamentación que se recoge en los anexos I y X, para los vehículos de tracción animal cuando circulen de noche, por tramos de vías señalizados con la señal de «túnel» o con condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Catadióptricos traseros no triangulares. Si el vehículo de tracción animal llevase luces a ambos lados, serán iguales y simétricas, y si las tuviese en un solo lado, irán situadas en el izquierdo del sentido de la marcha. Los catadióptricos estarán situados lo más cerca que sea posible a los extremos del vehículo."
+    },
+    {
+      "pregunta": "26. Según el artículo 23 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo.",
+        "Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas de aluminio o de elasticidad similar.",
+        "Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 20 centímetros de la parte más saliente del vehículo.",
+        "Los vehículos de tracción animal de dos ejes deben llevar tentemozos adecuados."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo. 3. Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo. 4. Los vehículos de tracción animal de dos ruedas deben llevar tentemozos adecuados"
+    },
+    {
+      "pregunta": "27. Según el artículo 22.4 del RD 2822/1998, las bicicletas, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, deberán disponer de los siguientes dispositivos:",
+      "opciones": [
+        "Luz de posición delantera y trasera, catadióptrico trasero, y deberán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "Luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "Luz de posición delantera y trasera, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "Luz de posición delantera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 22 Ciclos y bicicletas 4. Las bicicletas, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, deberán disponer de los siguientes dispositivos: Luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+    },
+    {
+      "pregunta": "28. Según el artículo 23.1 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas conllantas.",
+        "Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo.",
+        "Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de llantas de aluminio.",
+        "Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar."
+      ],
+      "correcta": 3,
+      "explicacion": "El enunciado únicamente pide lo que dice el apartado 1 del artículo 23. Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo. 3. Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo."
+    },
+    {
+      "pregunta": "29. Según el artículo 24 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Si el tranvía llevase dos luces de posición delanteras y tres traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo.",
+        "Si el tranvía llevase tres luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo.",
+        "Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y asimétricas respecto al plano longitudinal de simetría del vehículo.",
+        "Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 24 Tranvías Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio. Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano longitudinal de simetría del vehículo. Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo."
+    },
+    {
+      "pregunta": "30. Según el RD 2822/1998, ¿Cuál de los siguientes vehículos estará exento de obtener una autorización administrativa para circular?.",
+      "opciones": [
+        "Los ciclomotores de dos ruedas.",
+        "Los vehículos de movilidad personal.",
+        "Las motocicletas.",
+        "Los vehículos para personas de movilidad reducida."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 22 bis Vehículos de movilidad personal 1. Los vehículos de movilidad personal quedan exceptuados de obtener la autorización administrativa a la que hace referencia el apartado 1 del artículo 1. 2. Los vehículos de movilidad personal requerirán para poder circular el certificado de circulación que garantice el cumplimiento de los requisitos técnicos exigibles por la normativa nacional e internacional recogidos en su manual de características, así como su identificación. 3. El manual de características de los vehículos de movilidad personal se aprobará por Resolución del Director General de Tráfico."
+    },
+    {
+      "pregunta": "31. Según el artículo 22.1 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Los ciclos, a excepción de las bicicletas, para poder circular, deberán disponer de: un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél.",
+        "Los ciclos, para poder circular, deberán disponer de: un sistema adecuado de frenado que actúe sobre las ruedas delanteras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél.",
+        "Los ciclos, para poder circular, deberán disponer de: un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél.",
+        "Los ciclos, excepto las bicicletas, para poder circular, deberán disponer de: un sistema adecuado de frenado que actúe sobre las ruedas delanteras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 22 Ciclos y bicicletas 1. Los ciclos, para poder circular, deberán disponer de: Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél. 2. Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, los ciclos, exceptuando las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares. Catadióptricos en los pedales."
+    },
+    {
+      "pregunta": "32. Según el artículo 21 del RD 2822/1998, todo ciclomotor de dos ruedas podrá estar provisto de: Señale la incorrecta.",
+      "opciones": [
+        "Catadióptricos delanteros no triangulares.",
+        "Luz de posición delantera.",
+        "Luz de corto alcance.",
+        "Luz de carretera."
+      ],
+      "correcta": 2,
+      "explicacion": "El enunciado hace referencia a qué podrá llevar, es decir, qué es opcional. La luz de corto alcance o cruce es obligatoria. Artículo 21 Homologación y características técnicas 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.1. Todo ciclomotor de dos ruedas deberá estar provisto de: Luz de cruce. Luz de posición trasera. Luz de frenado. Catadióptrico trasero no triangular. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Catadióptricos laterales no triangulares."
+    },
+    {
+      "pregunta": "33. Según el artículo 22.2 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, los ciclos, exceptuando las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares.",
+        "Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, los ciclos, exceptuando las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares. Catadióptricos en los pedales.",
+        "Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel», los ciclos, incluido las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares. Catadióptricos en los pedales.",
+        "Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, los ciclos, incluido las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares. Catadióptricos en los pedales."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 22 Ciclos y bicicletas 1. Los ciclos, para poder circular, deberán disponer de: Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél. 2. Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, los ciclos, exceptuando las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares. Catadióptricos en los pedales."
+    },
+    {
+      "pregunta": "34. Según el artículo 21 del RD 2822/1998, todo ciclomotor de dos ruedas podrá estar provisto de: Señale la correcta.",
+      "opciones": [
+        "Luz de carretera.",
+        "Luz de cruce.",
+        "Luz de frenado.",
+        "Catadióptricos laterales no triangulares."
+      ],
+      "correcta": 0,
+      "explicacion": "El enunciado hace referencia a qué es opcional y por lo tanto, no obligatorio. Artículo 21 Homologación y características técnicas 2.3. Todo ciclomotor de dos ruedas puede llevar: Luz de carretera. Luces indicadoras de dirección. Luz de posición delantera. Catadióptricos delanteros no triangulares. Luz de la placa trasera de matrícula."
+    },
+    {
+      "pregunta": "35. Según el artículo 21 del RD 2822/1998, los ciclomotores, para su matriculación, deberán estar homologados en la Unión Europea conforme a la directiva:",
+      "opciones": [
+        "2001/116/CEE.",
+        "2007/46/CEE.",
+        "98/18/CEE.",
+        "92/61/CEE."
+      ],
+      "correcta": 3,
+      "explicacion": "El enunciado pide la normativa europea de homologación, no la española. Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación."
+    },
+    {
+      "pregunta": "36. Según el artículo 22 del RD 2822/1998, cuando una bicicleta circule de noche, ¿a qué estará obligado?",
+      "opciones": [
+        "A llevar la luz de posición delantera y trasera, catadióptrico trasero, y deberán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "A llevar la luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "A tener un sistema adecuado de frenado que actúe sobre las ruedas delanteras y trasera, un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél y a llevar la luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "A tener un sistema adecuado de frenado que actúe sobre las ruedas delanteras y trasera, un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél y a llevar la luz de posición delantera y trasera, catadióptrico trasero, y además deberán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 22 Ciclos y bicicletas 1. Los ciclos, para poder circular, deberán disponer de: (se incluyen también las bicicletas). Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél. 2. Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, los ciclos, exceptuando las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares. Catadióptricos en los pedales. 3. Los ciclos y las bicicletas de pedales con pedaleo asistido quedan exceptuados de obtener la autorización administrativa a la que se hace referencia en el apartado 1 del artículo 1. Número 3 del artículo 22 redactado por el número dos del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 4. Las bicicletas, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, deberán disponer de los siguientes dispositivos: Luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+    },
+    {
+      "pregunta": "37. ¿Qué norma regula el Reglamento General de Vehículos?",
+      "opciones": [
+        "El RD 2822/1998, de 23 de noviembre.",
+        "El RD 2282/1998, de 23 de diciembre.",
+        "El RD 2822/1998, de 23 de diciembre.",
+        "El RD 2228/1989, de 23 de diciembre."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos"
+    },
+    {
+      "pregunta": "38. Según el artículo 21 del RD 2822/1998, los ciclomotores, para su matriculación, deberán estar homologados en España de acuerdo con la siguiente normativa:",
+      "opciones": [
+        "RDL 6/2015, de 30 de octubre.",
+        "RD 1428/2003, de 21 de noviembre.",
+        "RD 2140/1985, de 9 de octubre.",
+        "RD 2822/1998, de 23 de diciembre."
+      ],
+      "correcta": 2,
+      "explicacion": "El enunciado hace referencia únicamente a la normativa de homologación en España, no pide la de la Unión Europea. Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación."
+    },
+    {
+      "pregunta": "39. Según el Artículo 22 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, las bicicletas, para poder circular de noche, deberán disponer de: Señala la incorrecta.",
+      "opciones": [
+        "Catadióptricos en los radios de las ruedas.",
+        "Luz de posición delantera.",
+        "Luz de posición trasera.",
+        "Catadióptrico trasero."
+      ],
+      "correcta": 0,
+      "explicacion": "Los catadióptricos en los radios de las ruedas son opcionales. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 22 Ciclos y bicicletas 4. Las bicicletas, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, deberán disponer de los siguientes dispositivos: Luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+    },
+    {
+      "pregunta": "40. Según el Artículo 21 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Señale la opción incorrecta.",
+      "opciones": [
+        "Luz de posición delantera.",
+        "Luces indicadoras de dirección.",
+        "Luz de cruce.",
+        "Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos."
+      ],
+      "correcta": 1,
+      "explicacion": "El enunciado no hace referencia a la carrocería cerrada, por lo tanto, al no hacerlo tampoco ninguna de las respuestas, las luces indicadoras de dirección no son obligatorias para los que NO tengan carrocería cerrada. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 21 Homologación y características técnicas 2.2. Todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Luz de cruce. Luz de posición delantera. Luz de posición trasera. Luz de frenado. Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Luces indicadoras de dirección para vehículos de carrocería cerrada."
+    },
+    {
+      "pregunta": "41. Según el artículo 22 del RD 2822/1998, cuando una bicicleta circule de noche, ¿a qué estará obligado?",
+      "opciones": [
+        "A llevar la luz de posición delantera y trasera, catadióptrico trasero, y deberán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "A tener un sistema adecuado de frenado que actúe sobre las ruedas delanteras y trasera, un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél y a llevar la luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "A tener un sistema adecuado de frenado que actúe sobre las ruedas delanteras y trasera, un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél y a llevar la luz de posición delantera y trasera, catadióptrico trasero, y además deberán disponer de: catadióptricos en los radios de las ruedas y en los pedales.",
+        "A llevar la luz de posición delantera, catadióptrico trasero, y deberán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 22 Ciclos y bicicletas 1. Los ciclos, para poder circular, deberán disponer de: (Se incluyen también las bicicletas). Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél. 2. Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, los ciclos, exceptuando las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares. Catadióptricos en los pedales. 3. Los ciclos y las bicicletas de pedales con pedaleo asistido quedan exceptuados de obtener la autorización administrativa a la que se hace referencia en el apartado 1 del artículo 1. Número 3 del artículo 22 redactado por el número dos del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 4. Las bicicletas, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, deberán disponer de los siguientes dispositivos: Luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+    },
+    {
+      "pregunta": "42. Según el Artículo 23 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, en caso de que los vehículos de tracción animal deban llevar luces, ¿dónde irán colocadas?",
+      "opciones": [
+        "Si es una irán situadas en el lado derecho del sentido de la marcha. Si son dos, a ambos lados, iguales y simétricas.",
+        "Si es una irá situada en el lado izquierdo del sentido de la marcha. Si son dos, a ambos lados, iguales y simétricas.",
+        "Si es una irá situada en el centro del vehículo. Si son dos, a ambos lados, iguales y simétricas.",
+        "Si es una irán situadas en el lado derecho del sentido de la marcha. Si son dos, a ambos lados."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo. 3. Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo. 4. Los vehículos de tracción animal de dos ruedas deben llevar tentemozos adecuados. 5. Los dispositivos obligatorios de alumbrado y señalización óptica, que se regulan en la reglamentación que se recoge en los anexos I y X, para los vehículos de tracción animal cuando circulen de noche, por tramos de vías señalizados con la señal de «túnel» o con condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Catadióptricos traseros no triangulares. Si el vehículo de tracción animal llevase luces a ambos lados, serán iguales y simétricas, y si las tuviese en un solo lado, irán situadas en el izquierdo del sentido de la marcha. Los catadióptricos estarán situados lo más cerca que sea posible a los extremos del vehículo."
+    },
+    {
+      "pregunta": "43. Según el artículo 22.3 del RD 2822/1998, ¿qué vehículos quedan exceptuados de obtener la autorización administrativa a la que se hace referencia en el apartado 1 del artículo 1?",
+      "opciones": [
+        "Los ciclos y ciclos de motor.",
+        "Los ciclos de motor y ciclos de pedaleo asistido.",
+        "Los ciclos, las bicicletas, los ciclos de pedaleo asistido y los ciclos de motor.",
+        "Los ciclos y bicicletas de pedales con pealeo asistido"
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 22 Ciclos y bicicletas 1. Los ciclos, para poder circular, deberán disponer de: Un sistema adecuado de frenado que actúe sobre las ruedas delanteras y traseras. Un timbre, prohibiéndose el empleo de otro aparato acústico distinto de aquél. 2. Además, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, los ciclos, exceptuando las bicicletas, deberán disponer de: Luz de posición delantera y trasera. Catadióptricos traseros y laterales no triangulares. Catadióptricos en los pedales. 3. Los ciclos y las bicicletas de pedales con pedaleo asistido quedan exceptuados de obtener la autorización administrativa a la que se hace referencia en el apartado 1 del artículo 1."
+    },
+    {
+      "pregunta": "44. Según el RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 98/18/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación.",
+        "Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación.",
+        "Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 1428/2003, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación.",
+        "Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo XVIII. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación."
+      ],
+      "correcta": 1,
+      "explicacion": "TÍTULO III Ciclomotores, ciclos, vehículos de tracción animal y tranvías CAPÍTULO I Ciclomotores Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación"
+    },
+    {
+      "pregunta": "45. Según el artículo 21 del RD 2822/1998, todo ciclomotor de tres ruedas y cuatriciclo ligero puede llevar: Luz de carretera. Luces indicadoras de dirección para vehículos sin carrocería cerrada. Catadióptricos laterales no triangulares. ¿Es correcto el enunciado?",
+      "opciones": [
+        "Sí, es correcto.",
+        "No, no es correcto.",
+        "No, no es correcto, falta añadir la luz de la placa trasera de matrícula.",
+        "No, no es correcto, falta añadir la luz delantera de posición."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 21 Homologación y características técnicas 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.2. Todo ciclomotor de tres ruedas y cuatriciclo ligero deberá estar provisto de: Luz de cruce. Luz de posición delantera. Luz de posición trasera. Luz de frenado. Un catadióptrico trasero no triangular en los vehículos con anchura hasta 1.000 milímetros, a partir de la cual deberán estar equipados de dos. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Luces indicadoras de dirección para vehículos de carrocería cerrada. 2.4. Todo ciclomotor de tres ruedas y cuatriciclo ligero puede llevar: Luz de carretera. Luces indicadoras de dirección para vehículos sin carrocería cerrada. Catadióptricos laterales no triangulares. Luz de la placa trasera de matrícula."
+    },
+    {
+      "pregunta": "46. Según el artículo 21 del RD 2822/1998, todo ciclomotor de dos ruedas deberá estar provisto de: Señale la correcta.",
+      "opciones": [
+        "Luz de posición delantera.",
+        "Catadióptricos laterales no triangulares.",
+        "Luces indicadores de dirección.",
+        "Luz de placa de matrícula trasera."
+      ],
+      "correcta": 1,
+      "explicacion": "Para los ciclomotores de dos ruedas, las luces de posición delantera, la luz de placa de matrícula trasera y las luces indicadoras de dirección son opcionales. Artículo 21 Homologación y características técnicas 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.1. Todo ciclomotor de dos ruedas deberá estar provisto de: Luz de cruce. Luz de posición trasera. Luz de frenado. Catadióptrico trasero no triangular. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Catadióptricos laterales no triangulares."
+    },
+    {
+      "pregunta": "47. Según el artículo 21 del RD 2822/1998, todo ciclomotor de dos ruedas puede llevar: Luz de carretera. Luces indicadoras de dirección. Luz de posición trasera. Catadióptricos delanteros no triangulares. Luz de la placa trasera de matrícula. ¿Es correcto el enunciado?",
+      "opciones": [
+        "No, no es correcto. La luz de posición trasera es obligatoria y faltaría añadir al enunciado la luz de posición delantera.",
+        "Es correcto el enunciado.",
+        "No, no es correcto. Falta añadir la luz de posición delantera.",
+        "No, no es correcto. Las luces indicadores de dirección son obligatorias."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 21 Homologación y características técnicas 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X. 2.1. Todo ciclomotor de dos ruedas deberá estar provisto de: Luz de cruce. Luz de posición trasera. Luz de frenado. Catadióptrico trasero no triangular. Catadióptricos en los pedales cuando éstos existan y no sean retráctiles. Catadióptricos laterales no triangulares. 2.3. Todo ciclomotor de dos ruedas puede llevar: Luz de carretera. Luces indicadoras de dirección. Luz de posición delantera. Catadióptricos delanteros no triangulares. Luz de la placa trasera de matrícula."
+    },
+    {
+      "pregunta": "48. Según el Artículo 23 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, ¿qué vehículos de tracción animal deben llevar tentemozos adecuados?",
+      "opciones": [
+        "Los de 4 ruedas.",
+        "Los de dos ejes.",
+        "Los de 3 ruedas.",
+        "Los de 2 ruedas."
+      ],
+      "correcta": 3,
+      "explicacion": "RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo. 3. Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo. 4. Los vehículos de tracción animal de dos ruedas deben llevar tentemozos adecuados."
+    },
+    {
+      "pregunta": "49. Según el artículo 24 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el lado izquierdo del vehículo.",
+        "Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano longitudinal de simetría del vehículo.",
+        "Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el lado derecho del vehículo.",
+        "Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano perpendicular asimétrico del vehículo."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 24 Tranvías Los dispositivos obligatorios de alumbrado, que se regulan en la reglamentación que se recoge en los anexos I y X, para los tranvías son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Dispositivo luminoso delantero indicador del servicio. Dispositivo luminoso trasero indicador del servicio. Si el tranvía llevase solamente una luz de posición delantera y una luz de posición trasera, estarán situadas en el plano longitudinal de simetría del vehículo. Si el tranvía llevase dos luces de posición delanteras y dos traseras, serán iguales y simétricas respecto al plano longitudinal de simetría del vehículo."
+    },
+    {
+      "pregunta": "50. Según el artículo 23.4 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Los vehículos de tracción animal de dos ruedas deben llevar tentemozos adecuados.",
+        "Los vehículos de tracción animal de dos ejes deben llevar tentemozos adecuados.",
+        "Los vehículos de tracción animal de cuatro ruedas deben llevar tentemozos adecuados.",
+        "Los vehículos de tracción animal de cuatro ejes deben llevar tentemozos adecuados."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo. 3. Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo. 4. Los vehículos de tracción animal de dos ruedas deben llevar tentemozos adecuados"
+    },
+    {
+      "pregunta": "51. Según el artículo 21.2 del RD 2822/1998, los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los:",
+      "opciones": [
+        "Anexos I y II.",
+        "Anexos II y X.",
+        "Anexos I y X.",
+        "Anexos X y XVIII."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación. Los ciclomotores deberán cumplir lo dispuesto para las motocicletas y vehículos de tres ruedas en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 de este Reglamento. Del artículo 12 les será de aplicación lo dispuesto para las motocicletas, salvo la exigencia de freno de estacionamiento del apartado 8.5. 2. Los dispositivos de alumbrado y señalización óptica deberán cumplir lo dispuesto en los siguientes apartados y en la reglamentación que se recoge en los anexos I y X."
+    },
+    {
+      "pregunta": "52. Indica la respuesta incorrecta del artículo 22 bis del RD 2822/1998.",
+      "opciones": [
+        "Los vehículos de movilidad personal quedan exceptuados de obtener la autorización administrativa a la que hace referencia el apartado 1 del artículo 1.",
+        "El manual de características de los vehículos de movilidad personal se aprobará por Resolución del Director General de Tráfico.",
+        "Los vehículos de movilidad personal requerirán para poder circular el certificado de circulación que garantice el cumplimiento de los requisitos técnicos exigibles por la normativa nacional e internacional recogidos en su manual de características, así como su identificación.",
+        "Los vehículos de movilidad personal requerirán para poder circular el certificado de circulación que garantice el cumplimiento de los requisitos técnicos exigibles sólo por la normativa nacional recogidos en su manual de características, así como su identificación."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 22 bis Vehículos de movilidad personal 1. Los vehículos de movilidad personal quedan exceptuados de obtener la autorización administrativa a la que hace referencia el apartado 1 del artículo 1. 2. Los vehículos de movilidad personal requerirán para poder circular el certificado de circulación que garantice el cumplimiento de los requisitos técnicos exigibles por la normativa nacional e internacional recogidos en su manual de características, así como su identificación. 3. El manual de características de los vehículos de movilidad personal se aprobará por Resolución del Director General de Tráfico. Añadir nota a la pregunta #33513 Texto AÑADIR"
+    },
+    {
+      "pregunta": "54. Según el RD 2822/1998, indique la respuesta incorrecta:",
+      "opciones": [
+        "Las bicicletas, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, deberán disponer de los siguientes dispositivos: Luz de posición delantera únicamente, catadióptrico trasero, y podrán disponer de: catadióptricos en las ruedas y en los pedales.",
+        "Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar.",
+        "Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo.",
+        "Los ciclomotores deberán cumplir lo dispuesto para las motocicletas y vehículos de tres ruedas en los artículos 5, 6, 7, 8, 11 (apartados 1 al 11, 19 y 20), 15 y 20 de este Reglamento."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 22 Ciclos y bicicletas 4. Las bicicletas, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, deberán disponer de los siguientes dispositivos: Luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+    },
+    {
+      "pregunta": "55. Según el RD 2822/1998, ¿cuál de los siguientes dispositivos de alumbrado es opcional para las bicicletas cuando circulen de noche?",
+      "opciones": [
+        "La luz de posición delantera.",
+        "La luz de cruce.",
+        "La luz de posición trasera.",
+        "El catadióptrico trasero."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 22 Ciclos y bicicletas 4. Las bicicletas, para circular de noche, por tramos de vías señalizados con la señal de «túnel» o cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, deberán disponer de los siguientes dispositivos: Luz de posición delantera y trasera, catadióptrico trasero, y podrán disponer de: catadióptricos en los radios de las ruedas y en los pedales."
+    },
+    {
+      "pregunta": "56. Según el artículo 21 del RD 2822/1998, los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el:",
+      "opciones": [
+        "Anexo II.",
+        "Anexo I.",
+        "Anexo X",
+        "Anexo XVIII."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 21 Homologación y características técnicas 1. Los ciclomotores, como condición indispensable para su matriculación ordinaria o turística, deberán corresponder a tipos previamente homologados, según la reglamentación que se recoge en el anexo I. En particular, deberán estar homologados en España de acuerdo con el Real Decreto 2140/1985, de 9 de octubre, o en la Unión Europea conforme a la Directiva 92/61/CEE, o en el Espacio Económico Europeo cuando ésta le sea de aplicación. Añadir nota a la pregunta #33515 Texto AÑADIR"
+    },
+    {
+      "pregunta": "58. Según el Artículo 23 del RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos, ¿dónde irán situados los catadióptricos en un vehículo de tracción animal?",
+      "opciones": [
+        "Lo más cerca posible del lado izquierdo del vehículo.",
+        "Lo más cerca posible del lado derecho del vehículo.",
+        "Lo más cerca que sea posible a los extremos del vehículo.",
+        "Lo más centrado posible."
+      ],
+      "correcta": 2,
+      "explicacion": "RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de Vehículos Artículo 23 Vehículos de tracción animal 1. Los vehículos de tracción animal, cualquiera que sea el uso a que se destinen, sólo podrán circular por las vías públicas cuando vayan provistos de ruedas neumáticas o de elasticidad similar. 2. Los vehículos de tracción animal que lleven galgas tendrán éstas dispuestas de tal manera que en ningún caso sobresalgan más de 10 centímetros de la parte más saliente del vehículo. 3. Las cadenas y demás accesorios movibles o colgantes deben ir sujetos al vehículo en forma que en sus oscilaciones no puedan salir del contorno del mismo ni arrastrar por el suelo. 4. Los vehículos de tracción animal de dos ruedas deben llevar tentemozos adecuados. 5. Los dispositivos obligatorios de alumbrado y señalización óptica, que se regulan en la reglamentación que se recoge en los anexos I y X, para los vehículos de tracción animal cuando circulen de noche, por tramos de vías señalizados con la señal de «túnel» o con condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, son los especificados a continuación: Luz de posición delantera. Luz de posición trasera. Catadióptricos traseros no triangulares. Si el vehículo de tracción animal llevase luces a ambos lados, serán iguales y simétricas, y si las tuviese en un solo lado, irán situadas en el izquierdo del sentido de la marcha. Los catadióptricos estarán situados lo más cerca que sea posible a los extremos del vehículo."
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

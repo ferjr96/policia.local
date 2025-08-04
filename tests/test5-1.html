@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Según el EAIB, La bandera de las Islas Baleares está constituida:",
+        "opciones": [
+            "Por cuatro barras amarillas horizontales sobre fondo rojo, con un cuartel situado en la parte superior izquierda de fondo morado y con un castillo blanco que cuatro torres en medio.",
+            "Por cuatro barras rojas horizontales sobre fondo amarillo, con un cuartel situado en la parte superior izquierda de fondo morado y con un castillo blanco de cinco torres en medio.",
+            "Por cinco barras rojas horizontales sobre fondo amarillo, con un cuartel situado en la parte superior izquierda de fondo azul y con un castillo blanco de cinco torres en medio.",
+            "Por cuatro barras rojas horizontales sobre fondo amarillo, con un cuartel situado en la parte superior izquierda de fondo morado y un castillo blanco de tres torres en medio."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6. Los símbolos de las Illes Balears. 1. La bandera de las Illes Balears, integrada por símbolos distintivos legitimados históricamente, estará constituida por cuatro barras rojas horizontales sobre fondo amarillo, con un cuartel situado en la parte superior izquierda de fondo morado y con un castillo blanco de cinco torres en medio. 2. Cada isla podrá tener su bandera, su día de celebración y sus símbolos distintivos propios, por acuerdo del Consejo Insular respectivo. 3. El día de las Illes Balears es el 1 de marzo."
+    },
+    {
+        "pregunta": "Según el EAIB, La sede del Gobierno es:",
+        "opciones": [
+            "Cualquier lugar del territorio de la Comunidad donde tenga lugar la reunión del mismo.",
+            "La isla de Formentera.",
+            "La ciudad de Ibiza.",
+            "La ciudad de Palma."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 7. Capital de las Illes Balears. La capital de las Illes Balears es la ciudad de Palma, que es la sede permanente del Parlamento, de la Presidencia del Gobierno y del Gobierno, sin perjuicio de que el Parlamento y el Gobierno puedan reunirse en otros lugares de las Illes Balears, de acuerdo con lo que establecen, respectivamente, el Reglamento del Parlamento y la ley."
+    },
+    {
+        "pregunta": "Según el EAIB, los símbolos de las Islas se regulan en el:",
+        "opciones": [
+            "Artículo 6 de la Ley Orgánica 1/2007.",
+            "Artículo 3 de la Ley Orgánica 1/2007.",
+            "Artículo 1 de la Ley Orgánica 1/2007.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 6. Los símbolos de las Illes Balears. 1. La bandera de las Illes Balears, integrada por símbolos distintivos legitimados históricamente, estará constituida por cuatro barras rojas horizontales sobre fondo amarillo, con un cuartel situado en la parte superior izquierda de fondo morado y con un castillo blanco de cinco torres en medio. 2. Cada isla podrá tener su bandera, su día de celebración y sus símbolos distintivos propios, por acuerdo del Consejo Insular respectivo. 3. El día de las Illes Balears es el 1 de marzo."
+    },
+    {
+        "pregunta": "Según el EAIB, Señale la respuesta incorrecta:",
+        "opciones": [
+            "El Estatuto ampara la insularidad del territorio de la Comunidad Autónoma como hecho diferencial y merecedor de protección especial.",
+            "Los poderes públicos, de conformidad con lo que establece la Constitución, garantizan la realización efectiva de todas las medidas necesarias para evitar que del hecho diferencial puedan derivarse desequilibrios económicos o de cualquier otro tipo que vulneren el principio de solidaridad entre todas las comunidades autónomas.",
+            "Los extranjeros que, teniendo vecindad en cualquiera de los municipios de las Illes Balears, adquieran la nacionalidad española quedan sujetos al Derecho Civil de las Illes Balears excepto en el caso en que manifiesten su voluntad en sentido contrario.",
+            "El Gobierno ha de promover la comunicación, el intercambio cultural y la cooperación con las comunidades y los territorios pertenecientes al Estado español, que tienen vínculos lingüísticos y culturales con las Illes Balears. A estos efectos, el Gobierno de las Illes Balears y el Estado, de acuerdo con sus respectivas competencias, podrán suscribir convenios, tratados y otros instrumentos de coordinación."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5. Los territorios con vínculos lingüísticos y culturales con las Illes Balears. El Gobierno ha de promover la comunicación, el intercambio cultural y la cooperación con las comunidades y los territorios, pertenecientes o no al Estado español, que tienen vínculos lingüísticos y culturales con las Illes Balears. A estos efectos, el Gobierno de las Illes Balears y el Estado, de acuerdo con sus respectivas competencias, podrán suscribir convenios, tratados y otros instrumentos de colaboración."
+    },
+    {
+        "pregunta": "Según el EAIB, ¿Cómo se organiza territorialmente la Comunidad Autónoma de las Illes Balears y cuáles serían sus instituciones de gobierno?\"",
+        "opciones": [
+            "Se articula en islas y municipios.",
+            "Las instituciones de Gobierno de las islas son los Consejos Insulares.",
+            "Se articula en áreas territoriales y cada una con su Consejo Insular y ayuntamiento.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 8. La organización territorial. 1. La Comunidad Autónoma articula su organización territorial en islas y en municipios. Las instituciones de gobierno de las islas son los Consejos Insulares, y las de los municipios, los Ayuntamientos. 2. Esta organización será regulada, en el marco de la legislación básica del Estado, por ley del Parlamento de las Illes Balears, de acuerdo con este Estatuto y con los principios de eficacia, jerarquía, descentralización, desconcentración, delegación y coordinación entre los organismos administrativos y de autonomía en sus ámbitos respectivos."
+    },
+    {
+        "pregunta": "Según el EAIB, Además de las competencias derivadas de la legislación básica del Estado y de la legislación sectorial, corresponde a los municipios el ejercicio de las que puedan ser delegadas:",
+        "opciones": [
+            "Por el Estado, por la Comunidad Autónoma y por los Consejos Insulares.",
+            "Por el Estado, por la Comunidad Autónoma, por los Consejos Insulares y por otras Administraciones.",
+            "Por el Estado, por la Comunidad Autónoma, por los Consejos Insulares y por otras Administraciones locales.",
+            "Por la Comunidad Autónoma, por los Consejos Insulares y por otras Administraciones locales."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 75. Los municipios. 5. Además de las competencias derivadas de la legislación básica del Estado y de la legislación sectorial, corresponde a los municipios el ejercicio de las que puedan ser delegadas por el Estado, por la Comunidad Autónoma, por los Consejos Insulares y por otras Administraciones. La delegación de competencias a los municipios debe ir acompañada de los medios económicos, personales y materiales adecuados y suficientes."
+    },
+    {
+        "pregunta": "Según el EAIB, Quiénes serán electores:",
+        "opciones": [
+            "Todos los españoles mayores de edad.",
+            "Todos los ciudadanos mayores de edad, que figuren en el censo electoral de las Illes Balears.",
+            "Todos los españoles mayores de edad, que figuren en el censo electoral de las Illes Balears.",
+            "Todos los ciudadanos de las Islas Baleares."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 43. Electores. Serán electores todos los ciudadanos españoles mayores de edad que figuren en el censo electoral de las Illes Balears."
+    },
+    {
+        "pregunta": "Según el EAIB, si un Estatuto de Autonomía establece que corresponderá a la Comunidad Autónoma la función ejecutiva sobre una materia, corresponderá al Estado:",
+        "opciones": [
+            "Dictar las leyes y las normas de desarrollo de estas leyes.",
+            "Solamente dictar las leyes básicas, correspondiendo a la Comunidad Autónoma el desarrollo legislativo.",
+            "Establecer exclusivamente las directrices y los principios para esta ejecución.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 32. Competencias ejecutivas. Corresponde a la Comunidad Autónoma de las Illes Balears, en los términos que se establezcan en las leyes y normas reglamentarias que, en desarrollo de su legislación, dicte el Estado, la función ejecutiva en las siguientes materias (...)"
+    },
+    {
+        "pregunta": "Según el EAIB, ¿Qué tipo de competencia tiene la Comunidad Autónoma de las Islas Baleares en cuanto a la organización, régimen y funcionamiento de sus instituciones de autogobierno?",
+        "opciones": [
+            "Ejecutivo.",
+            "Legislativo y reglamentario.",
+            "Exclusivo.",
+            "Reglamentario y ejecutivo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 30. Competencias exclusivas. La Comunidad Autónoma tiene la competencia exclusiva en las siguientes materias, sin perjuicio de lo dispuesto en el artículo 149.1 de la Constitución: 1. Organización, régimen y funcionamiento de sus instituciones propias en el marco de este Estatuto."
+    },
+    {
+        "pregunta": "Según el EAIB, Una de las siguientes proposiciones respecto de las leyes del Parlamento es falsa:",
+        "opciones": [
+            "Las leyes serán promulgadas en nombre del Rey.",
+            "El Presidente de la Comunidad Autónoma ordenará la publicación en el BOIB.",
+            "En el plazo de los 15 días siguientes a su aprobación estas leyes se publicarán exclusivamente en el BOE.",
+            "Las leyes del Parlamento se publicarán tanto en el BOIB como en el BOE."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 48. Potestad legislativa. 1. El Parlamento, mediante la elaboración de leyes, ejerce la potestad legislativa. El Parlamento podrá delegar en el Gobierno de la Comunidad Autónoma la potestad de dictar normas con rango de ley, en los mismos términos y supuestos de delegación previstos en la Constitución. No podrán ser objeto de delegación la aprobación de las leyes que necesitan, para ser aprobadas, una mayoría especial. 2. Las leyes del Parlamento serán promulgadas en nombre del Rey por el Presidente de la Comunidad Autónoma, quien ordenará su publicación en el Butlletí Oficial de les Illes Balears, en el plazo de los quince días siguientes a su aprobación, así como también en el «Boletín Oficial del Estado». Al efecto de la entrada en vigor de las mismas, regirá la fecha de publicación en el Butlletí Oficial de les Illes Balears. La versión oficial castellana será la que la Presidencia de la Comunidad Autónoma enviará."
+    },
+    {
+        "pregunta": "Según el EAIB, En el ejercicio de las competencias propias, los municipios estarán sujetos al control de:",
+        "opciones": [
+            "Constitucionalidad y legalidad.",
+            "Constitucionalidad y subordinación jerárquica.",
+            "Constitucionalidad, legalidad y subordinación jerárquica.",
+            "Subordinación jerárquica y legalidad."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 75. Los municipios. 4. Este Estatuto garantiza a los municipios la autonomía para el ejercicio de sus competencias propias, bajo su responsabilidad y en defensa de los intereses de la colectividad que representa. En el ejercicio de las competencias propias, los municipios estarán sujetos al control de constitucionalidad y legalidad. Los municipios tienen en el ámbito de este Estatuto y de las leyes, libertad plena para el ejercicio de su iniciativa en cualquier materia que no esté excluida de su competencia o atribuida en exclusiva a otra administración o autoridad."
+    },
+    {
+        "pregunta": "Según el EAIB, Los Ayuntamientos de las Illes Balears, en su calidad de instituciones de gobierno de los municipios isleños:",
+        "opciones": [
+            "Podrán asumir en su ámbito territorial la función ejecutiva de las competencias propias de los Consejos Insulares o de aquellas que les hayan sido previamente transferidas.",
+            "Podrán asumir en su ámbito territorial la gestión de las competencias propias de los Consejos Insulares o de aquellas que les hayan sido previamente transferidas.",
+            "Podrán asumir en su ámbito territorial la función ejecutiva y la gestión de las competencias que les hayan sido previamente transferidas.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 75. Los municipios. 6. Asimismo, los Ayuntamientos de las Illes Balears, en su calidad de instituciones de gobierno de los municipios isleños, podrán asumir en su ámbito territorial la función ejecutiva y la gestión de las competencias propias de los Consejos Insulares o de aquellas que les hayan sido previamente transferidas. Para hacer efectiva esta transferencia, que deberá venir acompañada de los medios económicos, personales y materiales adecuados y suficientes, se requerirá el acuerdo del Pleno del Ayuntamiento solicitante y del Pleno del Consejo Insular respectivo. Una vez acordada la transferencia por el Consejo Insular, que contendrá el detalle de los medios económicos, personales y materiales que correspondan, se comunicará el acuerdo plenario al Ayuntamiento solicitante que, mediante acuerdo plenario, la aceptará o la rechazará."
+    },
+    {
+        "pregunta": "Según el EAIB, la organización territorial de las Islas Baleares se regula:",
+        "opciones": [
+            "Artículo 4 de la Ley Orgánica 1/2007.",
+            "Artículo 6 de la Ley Orgánica 1/2007.",
+            "Artículo 8 de la Ley Orgánica 1/2007.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 8. La organización territorial. 1. La Comunidad Autónoma articula su organización territorial en islas y en municipios. Las instituciones de gobierno de las islas son los Consejos Insulares, y las de los municipios, los Ayuntamientos. 2. Esta organización será regulada, en el marco de la legislación básica del Estado, por ley del Parlamento de las Illes Balears, de acuerdo con este Estatuto y con los principios de eficacia, jerarquía, descentralización, desconcentración, delegación y coordinación entre los organismos administrativos y de autonomía en sus ámbitos respectivos."
+    },
+    {
+        "pregunta": "Según el EAIB, las normas y las disposiciones de los poderes públicos de la comunidad autónoma de las Islas Baleares:",
+        "opciones": [
+            "En ningún caso podrán tener eficacia extraterritorial.",
+            "Tienen por lo general eficacia extraterritorial.",
+            "Tienen por lo general eficacia territorial, aunque en función de las materias o de las situaciones concretas podrán tener eficacia extraterritorial.",
+            "Ninguna de las respuestas es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 10. Las disposiciones de los poderes públicos de las Illes Balears. Las normas, las disposiciones y el Derecho Civil de la Comunidad Autónoma tienen eficacia en su territorio, sin perjuicio de las normas para resolver los conflictos de leyes y de las excepciones que puedan establecerse en cada materia."
+    },
+    {
+        "pregunta": "Según el EAIB, ¿Cuál de las siguientes funciones no tiene encomendada el Parlamento?",
+        "opciones": [
+            "Controlar la acción de Gobierno.",
+            "Ejercer la potestad legislativa.",
+            "Examinar y aprobar las cuentas de la comunidad autónoma.",
+            "Elaborar los presupuestos de la comunidad autónoma."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 40. Funciones y sede del Parlamento. 1. El Parlamento representa al pueblo de las Illes Balears, ejerce la potestad legislativa, aprueba los presupuestos de la Comunidad Autónoma, controla la acción de gobierno y ejerce todas las competencias que le atribuyen este Estatuto, las leyes del Estado y las del mismo Parlamento. 2. El Parlamento es inviolable y sólo podrá ser disuelto en los supuestos previstos en este Estatuto. 3. La sede del Parlamento de las Illes Balears radica en la ciudad de Palma."
+    },
+    {
+        "pregunta": "Según el EAIB, La legislatura es:",
+        "opciones": [
+            "Un periodo de sesiones.",
+            "El periodo de mandato por el que se elige el Parlamento.",
+            "La suma de 4 periodos de sesiones.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 52. Causas de finalización de la legislatura. La legislatura (periodo de mandato del Parlamento) finaliza por expiración del mandato al cumplirse cuatro años de la fecha de las elecciones. Puede finalizar también, anticipadamente, si no tiene lugar la investidura del Presidente o de la Presidenta de las Illes Balears. Finalizará de manera anticipada por disolución acordada por el Presidente o la Presidenta del Gobierno de las Illes Balears."
+    },
+    {
+        "pregunta": "Con respecto al municipio de Palma, el Estatuto de Autonomía señala que:",
+        "opciones": [
+            "Dispondrá de una ley de capitalidad general establecida por el Parlamento de las Illes Balears. El Ayuntamiento de Palma tiene iniciativa para proponer la modificación de este régimen general, debe participar en la elaboración de los proyectos de ley que inciden en este régimen y debe ser consultado en la tramitación parlamentaria de otras iniciativas legislativas sobre dicho régimen.",
+            "Dispondrá de una ley de capitalidad especial establecida por el Parlamento de las Illes Balears. El Ayuntamiento de Palma tiene iniciativa para proponer la modificación de este régimen especial y, de acuerdo con las leyes y el Reglamento del Parlamento, debe participar en la elaboración de los proyectos de ley que inciden en este régimen especial.",
+            "Dispondrá de una ley de capitalidad especial establecida por la FELIB. El Ayuntamiento de Palma tiene iniciativa para proponer la modificación de este régimen especial y, de acuerdo con las leyes y el Reglamento del Parlamento, debe participar en la elaboración de los proyectos de ley que inciden en este régimen especial y debe ser consultado en la tramitación parlamentaria de otras iniciativas legislativas sobre su régimen especial.",
+            "Dispondrá de una ley de capitalidad general establecida por la FELIB. El Ayuntamiento de Palma tiene iniciativa para proponer la modificación de este régimen general, debe participar en la elaboración de los proyectos de ley que inciden en este régimen general y debe ser consultado en la tramitación parlamentaria de otras iniciativas legislativas sobre su régimen general."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 75. Los municipios. 10. El municipio de Palma dispondrá de una ley de capitalidad especial establecida por el Parlamento de las Illes Balears. El Ayuntamiento de Palma tiene iniciativa para proponer la modificación de este régimen especial y, de acuerdo con las leyes y el Reglamento del Parlamento, debe participar en la elaboración de los proyectos de ley que inciden en este régimen especial y debe ser consultado en la tramitación parlamentaria de otras iniciativas legislativas sobre su régimen especial."
+    },
+    {
+        "pregunta": "La redacción actual del Estatuto de Autonomía de las Islas Baleares:",
+        "opciones": [
+            "Se debe a la Ley Orgánica 1/2009, de 28 de febrero, de reforma del Estatuto de Autonomía de las Illes Balears.",
+            "Ley Orgánica 1/2010, de 28 de febrero, de reforma del Estatuto de Autonomía de las Illes Balears.",
+            "Ley Orgánica 1/2007, de 28 de febrero, de reforma del Estatuto de Autonomía de las Illes Balears.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "El Estatuto de Autonomía de las Illes Balears (en adelante EAIB) fue inicialmente aprobado por Ley Orgánica 2/1983, de 25 de febrero, de Estatuto de Autonomía de las Illes Balears y fue objeto de importantes reformas en el año 1994 y 1999. Su redacción actual se debe a la Ley Orgánica 1/2007, de 28 de febrero, de reforma del Estatuto de Autonomía de las Illes Balears."
+    },
+    {
+        "pregunta": "Según el EAIB, los municipios tienen en el ámbito de este Estatuto y de las leyes:",
+        "opciones": [
+            "Libertad plena para el ejercicio de su iniciativa en cualquier materia que no esté incluida de su competencia o atribuida en exclusiva a otra administración o autoridad.",
+            "Libertad plena para el ejercicio de su iniciativa en cualquier materia que no esté excluida de su competencia o atribuida en exclusiva a otra administración o autoridad.",
+            "Libertad plena para el ejercicio de su iniciativa en cualquier materia que no esté incluida de su competencia o atribuida en exclusiva a otra administración o autoridad autonómica.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 75 EAIB. Los municipios. 4. Este Estatuto garantiza a los municipios la autonomía para el ejercicio de sus competencias propias, bajo su responsabilidad y en defensa de los intereses de la colectividad que representa. En el ejercicio de las competencias propias, los municipios estarán sujetos al control de constitucionalidad y legalidad. Los municipios tienen en el ámbito de este Estatuto y de las leyes, libertad plena para el ejercicio de su iniciativa en cualquier materia que no esté excluida de su competencia o atribuida en exclusiva a otra administración o autoridad."
+    },
+    {
+        "pregunta": "Según el EAIB, Cuántas circunscripciones electorales, establece la ley electoral de la CAIB:",
+        "opciones": [
+            "Tres, una para cada una de las Islas Mayores.",
+            "Cuatro, una para cada isla.",
+            "Cinco, una para cada una de las islas.",
+            "Dos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 41. Composición y régimen electoral. 1. El Parlamento estará formado por los Diputados del territorio autónomo, elegidos por sufragio universal, igual, libre, directo y secreto, mediante un sistema de representación proporcional que asegurará una adecuada representación de todas las zonas del territorio. 2. La duración del mandato de los Diputados será de cuatro años. 3. Las circunscripciones electorales son las de Mallorca, Menorca, Ibiza y Formentera. 4. Una ley del Parlamento, aprobada por mayoría cualificada de dos tercios, regulará el total de Diputados que deben integrarlo, el número de Diputados que debe corresponder elegir en cada una de las circunscripciones electorales y las causas de inelegibilidad y de incompatibilidad que les afecten. 5. El Parlamento se constituirá en el plazo máximo de treinta días después de la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Según el EAIB, La sesión constitutiva de la Asamblea tendrá lugar dentro del plazo máximo de:",
+        "opciones": [
+            "20 días después de la celebración de elecciones.",
+            "15 días después de la celebración de elecciones.",
+            "30 días después de la celebración de elecciones.",
+            "25 días después de la celebración de elecciones."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 41. Composición y régimen electoral. 1. El Parlamento estará formado por los Diputados del territorio autónomo, elegidos por sufragio universal, igual, libre, directo y secreto, mediante un sistema de representación proporcional que asegurará una adecuada representación de todas las zonas del territorio. 2. La duración del mandato de los Diputados será de cuatro años. 3. Las circunscripciones electorales son las de Mallorca, Menorca, Ibiza y Formentera. 4. Una ley del Parlamento, aprobada por mayoría cualificada de dos tercios, regulará el total de Diputados que deben integrarlo, el número de Diputados que debe corresponder elegir en cada una de las circunscripciones electorales y las causas de inelegibilidad y de incompatibilidad que les afecten. 5. El Parlamento se constituirá en el plazo máximo de treinta días después de la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Según el EAIB, De las materias que sean competencia exclusiva de las Illes Balears:",
+        "opciones": [
+            "Corresponde al Parlamento la potestad legislativa y al Gobierno la función ejecutiva, incluidas la potestad reglamentaria y la inspección.",
+            "Corresponde al parlamento la potestad legislativa y al Gobierno la función ejecutiva, excepto de la potestad reglamentaria y la inspección.",
+            "Corresponde a la comunidad autónoma el desarrollo legislativo y la ejecución dentro del marco de la legislación básica del Estado.",
+            "Corresponde a la comunidad autónoma la función ejecutiva en los términos que establezcan las leyes y las normas reglamentarias del Estado."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 84. Potestad legislativa y función ejecutiva de las competencias exclusivas. 1. Sobre las materias que sean de su competencia exclusiva, corresponde al Parlamento de las Illes Balears la potestad legislativa, según los términos previstos en este Estatuto, sin perjuicio de las competencias atribuidas al Estado en la Constitución 2. Corresponden al Gobierno de la Comunidad Autónoma y a los Consejos Insulares la función ejecutiva, incluidas la potestad reglamentaria y la inspección, y la actuación de fomento de las competencias que les son propias."
+    },
+    {
+        "pregunta": "El EAIB reafirma, en el marco de las competencias de la Comunidad Autónoma, los derechos fundamentales que emanan de: Señale la incorrecta.",
+        "opciones": [
+            "La Constitución.",
+            "La Carta de los Derechos Fundamentales de la Unión Europea.",
+            "Los tratados y los acuerdos sobre la materia ratificados por la comunidad Autónoma.",
+            "Todas son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 12. Principios rectores de la actividad pública. 1. La Comunidad Autónoma fundamenta el derecho al autogobierno en los valores del respeto a la dignidad humana, la libertad, la igualdad, la justicia, la paz y los derechos humanos. 2. Este Estatuto reafirma, en el marco de las competencias de la Comunidad Autónoma, los derechos fundamentales que emanan de la Constitución, de la Carta de los Derechos Fundamentales de la Unión Europea, del Convenio Europeo para la protección de los Derechos Humanos y de las Libertades Fundamentales y de los tratados y los acuerdos sobre la materia ratificados por el Estado. 3. Las instituciones propias de la Comunidad Autónoma de las Illes Balears, para cumplir las finalidades que les son propias y en el marco de las competencias que les atribuye este Estatuto, deben promover, como principios rectores de la política económica y social, el desarrollo sostenible encaminado a la plena ocupación, la cohesión social y el progreso científico y técnico de manera que asegure a toda la ciudadanía el acceso a los servicios públicos y el derecho a la salud, la educación, la vivienda, la protección social, el ocio y la cultura. 4. Las instituciones propias deben orientar la función del poder público en el sentido de consolidar y desarrollar las características de nacionalidad común de los pueblos de Mallorca, de Menorca, de Ibiza y de Formentera, así como las peculiaridades de cada isla como vínculo de solidaridad entre ellas."
+    },
+    {
+        "pregunta": "Según el EAIB, La organización territorial de las Islas Baleares se articula en:",
+        "opciones": [
+            "Cabildos y Municipios.",
+            "Islas y Cabildos.",
+            "Islas y comarcas.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 8. La organización territorial. 1. La Comunidad Autónoma articula su organización territorial en islas y en municipios. Las instituciones de gobierno de las islas son los Consejos Insulares, y las de los municipios, los Ayuntamientos. 2. Esta organización será regulada, en el marco de la legislación básica del Estado, por ley del Parlamento de las Illes Balears, de acuerdo con este Estatuto y con los principios de eficacia, jerarquía, descentralización, desconcentración, delegación y coordinación entre los organismos administrativos y de autonomía en sus ámbitos respectivos."
+    },
+    {
+        "pregunta": "Según el EAIB, ¿Cómo es la bandera de las Illes Balears?",
+        "opciones": [
+            "Tres barras rojas horizontales sobre fondo amarillo, con un cuartel en la parte superior izquierda de fondo marrón y con un castillo blanco.",
+            "Tres barras amarillas verticales sobre fondo rojo, con un cuartel en la parte superior con un castillo blanco de cuatro torres.",
+            "Cuatro barras rojas horizontales sobre fondo amarillo, con un cuartel en la parte superior izquierda de fondo morado y con un castillo blanco de cinco torres en medio.",
+            "Cuatro barras rojas verticales sobre fondo amarillo, con un castillo blanco dibujado en la parte superior izquierda."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6. Los símbolos de las Illes Balears. 1. La bandera de las Illes Balears, integrada por símbolos distintivos legitimados históricamente, estará constituida por cuatro barras rojas horizontales sobre fondo amarillo, con un cuartel situado en la parte superior izquierda de fondo morado y con un castillo blanco de cinco torres en medio. 2. Cada isla podrá tener su bandera, su día de celebración y sus símbolos distintivos propios, por acuerdo del Consejo Insular respectivo. 3. El día de las Illes Balears es el 1 de marzo."
+    },
+    {
+        "pregunta": "El Estatuto de Autonomía de las Islas Baleares considera como isla menor adyacente:",
+        "opciones": [
+            "Menorca.",
+            "Cabrera.",
+            "Formentera.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2. El territorio. El territorio de la Comunidad Autónoma de las Illes Balears es el formado por el de las islas de Mallorca, Menorca, Ibiza, Formentera y Cabrera y por el de las otras islas menores adyacentes."
+    },
+    {
+        "pregunta": "Según el EAIB, ¿Quién posee la condición política de balear?",
+        "opciones": [
+            "Los ciudadanos españoles que, de acuerdo con las leyes generales del Estado, tengan vecindad civil balear.",
+            "Los ciudadanos españoles que, de acuerdo con las leyes generales del Estado, tengan vecindad administrativa balear.",
+            "Los ciudadanos españoles residentes en el extranjero que hayan tenido, alguna vez, vecindad administrativa en las Islas Baleares.",
+            "Las respuestas b y c son ciertas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9. La condición política de los isleños. 1. A los efectos de este Estatuto, tienen la condición política de ciudadanos de la Comunidad Autónoma los españoles que, de acuerdo con las leyes generales del Estado, tengan vecindad administrativa en cualquiera de los municipios de las Illes Balears. 2. Gozan de los derechos políticos definidos en este Estatuto los ciudadanos españoles residentes en el extranjero que hayan tenido su última vecindad administrativa en las Illes Balears y acrediten esta condición en el correspondiente consulado de España. Gozan también de estos derechos sus descendientes inscritos como españoles, si lo solicitan, en la forma que determine la ley del Estado. 3. Los extranjeros que, teniendo vecindad en cualquiera de los municipios de las Illes Balears, adquieran la nacionalidad española quedan sujetos al Derecho Civil de las Illes Balears excepto en el caso en que manifiesten su voluntad en sentido contrario."
+    },
+    {
+        "pregunta": "El artículo 1 de la Ley Orgánica 1/2007:",
+        "opciones": [
+            "Prevé la creación de la Comunidad de las Islas Baleares, que incluiría las el territorio de las islas de Mallorca, Menorca, Ibiza y Formentera y Cabrera.",
+            "Recoge la manifestación de su carácter de nacionalidad histórica.",
+            "La a y b, son correctas.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 1. Illes Balears. 1. La nacionalidad histórica que forman las islas de Mallorca, de Menorca, de Ibiza y de Formentera, como expresión de su voluntad colectiva y en el ejercicio del derecho al autogobierno que la Constitución reconoce a las nacionalidades y a las regiones, se constituye en Comunidad Autónoma en el marco de la propia Constitución y del presente Estatuto. 2. La denominación de la Comunidad Autónoma es Illes Balears."
+    },
+    {
+        "pregunta": "Según el EAIB, el Estatuto de Autonomía reconoce a los municipios capacidad para constituir:",
+        "opciones": [
+            "Mancomunidades, consorcios y asociaciones.",
+            "Áreas metropolitanas, mancomunidades, consorcios y asociaciones.",
+            "Mancomunidades, consorcios, asociaciones y entes.",
+            "Áreas metropolitanas, mancomunidades, consorcios, asociaciones y entes."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 75. Los municipios. 7. Los municipios tienen derecho a asociarse con otros y a cooperar entre ellos y con otros entes públicos para ejercer sus competencias y para cumplir tareas de interés común. A estos efectos tienen capacidad para constituir mancomunidades, consorcios y asociaciones."
+    },
+    {
+        "pregunta": "Según el EAIB, El Artículo 11, sobre Principios rectores de la actividad pública, indica que:",
+        "opciones": [
+            "Las instituciones propias deben orientar la función del poder público en el sentido de consolidar y desarrollar las características de nacionalidad común de los pueblos Baleares.",
+            "La Comunidad Autónoma fundamenta el derecho al autogobierno en los valores del respeto a la dignidad humana, la libertad, la igualdad, la justicia, la paz y los derechos humanos.",
+            "Las normas, las disposiciones y el Derecho Civil de la Comunidad Autónoma tienen eficacia en su territorio, sin perjuicio de las normas para resolver los conflictos de leyes y de las excepciones que puedan establecerse.",
+            "El Artículo 11 no recoge ninguna de las anteriores."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 11. Comunidades isleñas fuera del territorio. 1. Las comunidades baleares establecidas fuera del territorio de la Comunidad Autónoma podrán solicitar como tales el reconocimiento de su personalidad de origen, entendida como el derecho a colaborar y compartir la vida social y cultural de las islas. Una ley del Parlamento de las Illes Balears regulará, sin perjuicio de las competencias del Estado, el alcance y contenido del reconocimiento mencionado que, en ningún caso, implicará la concesión de derechos políticos. 2. La Comunidad Autónoma podrá solicitar del Estado español que, para facilitar la disposición anterior, celebre, en su caso, los pertinentes tratados internacionales."
+    },
+    {
+        "pregunta": "¿Cómo define el EAIB a nuestra comunidad?",
+        "opciones": [
+            "Como una nación.",
+            "Como una nacionalidad histórica formada por las islas de Mallorca, Menorca, Ibiza y Formentera.",
+            "Como una entidad regional histórica formada por las islas de Mallorca, Menorca, Ibiza, Formentera y Cabrera.",
+            "Como un país integrado en el Estado español."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 1. Illes Balears. 1. La nacionalidad histórica que forman las islas de Mallorca, de Menorca, de Ibiza y de Formentera, como expresión de su voluntad colectiva y en el ejercicio del derecho al autogobierno que la Constitución reconoce a las nacionalidades y a las regiones, se constituye en Comunidad Autónoma en el marco de la propia Constitución y del presente Estatuto. 2. La denominación de la Comunidad Autónoma es Illes Balears."
+    },
+    {
+        "pregunta": "Según el EAIB, Las instituciones propias de la Comunidad Autónoma de las Illes Balears deben promover, como principios rectores de la política económica y social:",
+        "opciones": [
+            "El desarrollo sostenible encaminado a la plena ocupación.",
+            "La cohesión social y el progreso científico y técnico que asegure a toda la ciudadanía el acceso a los servicios públicos.",
+            "El derecho a la educación, la vivienda, la protección social, el ocio y la cultura.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 12. Principios rectores de la actividad pública. 1. La Comunidad Autónoma fundamenta el derecho al autogobierno en los valores del respeto a la dignidad humana, la libertad, la igualdad, la justicia, la paz y los derechos humanos. 2. Este Estatuto reafirma, en el marco de las competencias de la Comunidad Autónoma, los derechos fundamentales que emanan de la Constitución, de la Carta de los Derechos Fundamentales de la Unión Europea, del Convenio Europeo para la protección de los Derechos Humanos y de las Libertades Fundamentales y de los tratados y los acuerdos sobre la materia ratificados por el Estado. 3. Las instituciones propias de la Comunidad Autónoma de las Illes Balears, para cumplir las finalidades que les son propias y en el marco de las competencias que les atribuye este Estatuto, deben promover, como principios rectores de la política económica y social, el desarrollo sostenible encaminado a la plena ocupación, la cohesión social y el progreso científico y técnico de manera que asegure a toda la ciudadanía el acceso a los servicios públicos y el derecho a la salud, la educación, la vivienda, la protección social, el ocio y la cultura. 4. Las instituciones propias deben orientar la función del poder público en el sentido de consolidar y desarrollar las características de nacionalidad común de los pueblos de Mallorca, de Menorca, de Ibiza y de Formentera, así como las peculiaridades de cada isla como vínculo de solidaridad entre ellas."
+    },
+    {
+        "pregunta": "Según el EAIB, No es función del Parlamento:",
+        "opciones": [
+            "Elegir senadores.",
+            "Presentar cuestiones de constitucionalidad ante el Tribunal Constitucional.",
+            "Presentar proposiciones de ley a la Mesa del Congreso de los Diputados.",
+            "Solicitar del Gobierno del Estado la adopción de un proyecto de ley."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 50. Funciones. Corresponde también al Parlamento: 1. Designar, en aplicación del criterio de representación proporcional, al senador o a los Senadores que han de representar a la Comunidad Autónoma de las Illes Balears en el Senado, de acuerdo con lo que establece el artículo 69.5 de la Constitución. Los designados cesarán en el cargo en los casos previstos en el ordenamiento jurídico y, en todo caso, al acabar la legislatura del Parlamento de las Illes Balears en la que fueron designados, una vez que tomen posesión los nuevos Senadores. En el supuesto de disolución del Senado, el Parlamento de las Illes Balears entregará las credenciales de la designación de los mismos Senadores, que continuarán su mandato hasta que acabe la legislatura del Parlamento y sean designados los nuevos Senadores. El senador o los Senadores designados por el Parlamento de las Illes Balears comparecerán ante la comisión parlamentaria pertinente a iniciativa propia o a requerimiento de un grupo parlamentario o de una quinta parte de los Diputados para informar de su actividad en el Senado en los términos que establezca el Reglamento del Parlamento de las Illes Balears. 2. Remitir proposiciones de ley a la Mesa del Congreso de los Diputados y nombrar un máximo de tres Diputados encargados de defenderlas, de acuerdo con lo que permite el artículo 87.2 de la Constitución. 3. Solicitar del Gobierno del Estado la adopción de un proyecto de ley. 4. Interponer el recurso de inconstitucionalidad ante el Tribunal Constitucional en los casos previstos en la legislación vigente. 5. Fijar las previsiones de orden político, social y económico que, de acuerdo con lo que dispone el apartado 2 del artículo 131 de la Constitución, deban adoptarse para la elaboración de proyectos de planificación. 6. Aprobar y decidir transferencias o delegaciones de competencias a favor de los Consejos Insulares y demás entes locales de la Comunidad Autónoma. 7. Examinar y aprobar las cuentas de la Comunidad Autónoma, sin perjuicio del control que pueda corresponder a otros organismos del Estado o de la Comunidad Autónoma. 8. Ejercer cualesquiera otras competencias que le atribuyan este Estatuto, las leyes del Estado y las del mismo Parlamento."
+    },
+    {
+        "pregunta": "Según el EAIB, Si el Parlamento en su primera votación no otorgase la confianza al candidato propuesto por mayoría absoluta de sus miembros:",
+        "opciones": [
+            "La confianza podrá ser otorgada en una segunda votación en la misma sesión parlamentaria, pero por mayoría simple.",
+            "Se procederá a la convocatoria de nuevas elecciones.",
+            "Se procederá a proponer otro candidato",
+            "Ninguna respuesta es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 54. Elección del Presidente de las Illes Balears. 1. El Presidente de las Illes Balears será elegido por el Parlamento de entre sus miembros y nombrado por el Rey. 2. El candidato propuesto presentará al Parlamento el programa político del Gobierno que pretenda formar y, previo debate, solicitará su confianza. 3. Si el Parlamento, por el voto de la mayoría absoluta de sus miembros, otorga la confianza al candidato, será nombrado Presidente, de acuerdo con lo que se prevé en el apartado 1 de este mismo artículo. Si no se consigue esta mayoría, la misma propuesta se someterá a nueva votación cuarenta y ocho horas después de la anterior y la confianza será otorgada por mayoría simple. 4. Si en estas votaciones no se otorga la confianza del Parlamento, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. En el caso de que hayan transcurrido sesenta días a partir de la primera votación para la investidura y ningún candidato haya obtenido la confianza del Parlamento, éste quedará disuelto y se convocarán nuevas elecciones."
+    },
+    {
+        "pregunta": "La LO 1/2007 (EAIB) establece que una vez acordada la transferencia por el Consejo Insular, ésta se comunicará el acuerdo plenario al Ayuntamiento solicitante que:",
+        "opciones": [
+            "Mediante acuerdo plenario por mayoría absoluta, la aceptará o rechazará.",
+            "Mediante acuerdo plenario por mayoría simple, la aceptará o rechazará.",
+            "Mediante acuerdo plenario por mayoría de 2/3, la aceptará o rechazará.",
+            "Mediante acuerdo plenario, la aceptará o rechazará."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 75 | Los municipios 6. Asimismo, los Ayuntamientos de las Illes Balears, en su calidad de instituciones de gobierno de los municipios isleños, podrán asumir en su ámbito territorial la función ejecutiva y la gestión de las competencias propias de los Consejos Insulares o de aquellas que les hayan sido previamente transferidas. Para hacer efectiva esta transferencia, que deberá venir acompañada de los medios económicos, personales y materiales adecuados y suficientes, se requerirá el acuerdo del Pleno del Ayuntamiento solicitante y del Pleno del Consejo Insular respectivo. Una vez acordada la transferencia por el Consejo Insular, que contendrá el detalle de los medios económicos, personales y materiales que correspondan, se comunicará el acuerdo plenario al Ayuntamiento solicitante que, mediante acuerdo plenario, la aceptará o la rechazará."
+    },
+    {
+        "pregunta": "El artículo 3 de la Ley Orgánica 1/2007:",
+        "opciones": [
+            "Hace referencia a la Insularidad como elemento diferencia y merecedor de protección especial.",
+            "No hace referencia a la Insularidad como elemento diferencia y merecedor de protección especial.",
+            "Recoge la manifestación de su carácter de nacionalidad histórica.",
+            "La a y c, son ciertas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 3. Insularidad. 1. El Estatuto ampara la insularidad del territorio de la Comunidad Autónoma como hecho diferencial y merecedor de protección especial. 2. Los poderes públicos, de conformidad con lo que establece la Constitución, garantizan la realización efectiva de todas las medidas necesarias para evitar que del hecho diferencial puedan derivarse desequilibrios económicos o de cualquier otro tipo que vulneren el principio de solidaridad entre todas las comunidades autónomas."
+    },
+    {
+        "pregunta": "Según el EAIB, El gobierno y la administración municipal corresponden al Ayuntamiento formado por:",
+        "opciones": [
+            "El alcalde o la alcaldesa, el Pleno y la Junta de Gobierno.",
+            "El alcalde o la alcaldesa, los concejales y los demás miembros que, en su caso, reglamentariamente se establezcan.",
+            "El alcalde o la alcaldesa y los concejales y los demás miembros que, en su caso, establezcan las leyes.",
+            "El alcalde o la alcaldesa y los concejales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 75. Los municipios. 2. El gobierno y la administración municipal corresponden al Ayuntamiento formado por el alcalde o la alcaldesa, los concejales y los demás miembros que, en su caso establezcan las leyes."
+    },
+    {
+        "pregunta": "Según el EAIB, El Parlamento se reunirá durante ocho meses al año, en dos períodos de sesiones comprendidos entre:",
+        "opciones": [
+            "Septiembre y diciembre, el primero, y entre febrero y junio, el segundo.",
+            "Septiembre y noviembre, el primero, y entre febrero y junio, el segundo.",
+            "Septiembre y diciembre, el primero, y entre febrero y julio, el segundo.",
+            "Octubre y diciembre, el primero, y entre febrero y junio, el segundo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 45. Organización y funcionamiento. 1. El Parlamento tendrá un Presidente, una Mesa y una Diputación Permanente. El Reglamento regulará su composición y sus reglas de elección. 2. El Parlamento funcionará en Pleno y en Comisiones. Las Comisiones permanentes podrán elaborar y aprobar leyes por delegación expresa del Pleno, sin perjuicio de la facultad del mismo para reclamar su debate y aprobación en cualquier momento del proceso legislativo. Quedan exceptuadas de dicha delegación las leyes de bases y los Presupuestos de la Comunidad Autónoma. 3. El Parlamento podrá crear Comisiones especiales de investigación. 4. El Parlamento se reunirá durante ocho meses al año, en dos períodos de sesiones comprendidos entre septiembre y diciembre, el primero, y entre febrero y junio, el segundo. El Parlamento se reunirá en sesión extraordinaria, a petición del Gobierno o por acuerdo de la Diputación Permanente o del Pleno, a propuesta de una quinta parte de los Diputados. La sesión extraordinaria acabará una vez finalizado el orden del día determinado para el que fue convocada. 5. Los acuerdos, sean en el Pleno, sean en las Comisiones, para que sean válidos, deberán ser adoptados en sesiones convocadas reglamentariamente, con la asistencia de la mayoría de sus componentes y por aprobación de la mayoría de los presentes, excepto en aquellos casos en que la ley o el reglamento exijan un quórum más elevado. 6. El Parlamento debe establecer su propio Reglamento que regulará los períodos de sesiones, el régimen y el lugar de las sesiones, la formación de Grupos Parlamentarios y su intervención en el proceso legislativo, las funciones de la Junta de Portavoces, y demás cuestiones necesarias o pertinentes para el buen funcionamiento del Parlamento. La aprobación y la reforma del Reglamento requerirán la mayoría absoluta de los componentes del Parlamento."
+    },
+    {
+        "pregunta": "Según el EAIB, señale la proposición falsa en relación con la atribución de escaños en las distintas circunscripciones insulares:",
+        "opciones": [
+            "33 en Mallorca.",
+            "14 en Menorca.",
+            "12 en Eivissa.",
+            "1 en Formentera."
+        ],
+        "correcta": 1,
+        "explicacion": "De acuerdo con el artículo 12 del Título IV de la Ley 8/1986, de 26 de noviembre, Electoral de la Comunidad Autónoma de las Islas Baleares el Parlamento de las Islas Baleares está compuesto por 59 diputados, elegidos en las cuatro circunscripciones insulares. Las atribuciones de escaños en las distintas circunscripciones insulares es la siguiente: - Isla de Formentera: 1 diputado - Isla de Ibiza: 12 diputados - Isla de Mallorca: 33 diputados - Isla de Menorca: 13 diputados  NOTA: Esta información también se dispone en la Disposición transitoria séptima del EAIB."
+    },
+    {
+        "pregunta": "El artículo 4 de la Ley Orgánica 1/2007:",
+        "opciones": [
+            "Regula la lengua catalana como propia de las islas, teniendo el carácter de oficial junto con la lengua castellana.",
+            "No regula la lengua catalana como propia de las islas, teniendo el carácter de oficial junto con la lengua castellana.",
+            "Hace referencia a la Insularidad como elemento diferencia y merecedor de protección social.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 4. La lengua propia. 1. La lengua catalana, propia de las Illes Balears, tendrá, junto con la castellana, el carácter de idioma oficial. 2. Todos tienen el derecho de conocerla y utilizarla, y nadie podrá ser discriminado por razón del idioma. 3. Las instituciones de las Illes Balears garantizarán el uso normal y oficial de los dos idiomas, tomarán las medidas necesarias para asegurar su conocimiento y crearán las condiciones que permitan llegar a la igualdad plena de las dos lenguas en cuanto a los derechos de los ciudadanos de las Illes Balears."
+    },
+    {
+        "pregunta": "Señale cuál de las siguientes afirmaciones no viene recogida en la LO 1/2007 (EAIB):",
+        "opciones": [
+            "Cada isla podrá tener su bandera, su día de celebración y sus símbolos distintivos propios, por acuerdo de la Asamblea de la Comunidad autónoma.",
+            "La capital de las Illes Balears es la ciudad de Palma, que es la sede permanente del Parlamento, de la Presidencia del Gobierno y del Gobierno, sin perjuicio de que el Parlamento y el Gobierno puedan reunirse en otros lugares de las Illes Balears, de acuerdo con lo que establecen, respectivamente, el Reglamento del Parlamento y la ley.",
+            "Los extranjeros que, teniendo vecindad en cualquiera de los municipios de las Illes Balears, adquieran la nacionalidad española quedan sujetos al Derecho Civil de las Illes Balears excepto en el caso en que manifiesten su voluntad en sentido contrario.",
+            "Todas están recogidas en la L.O. 1/2007."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 6. Los símbolos de las Illes Balears. 1. La bandera de las Illes Balears, integrada por símbolos distintivos legitimados históricamente, estará constituida por cuatro barras rojas horizontales sobre fondo amarillo, con un cuartel situado en la parte superior izquierda de fondo morado y con un castillo blanco de cinco torres en medio. 2. Cada isla podrá tener su bandera, su día de celebración y sus símbolos distintivos propios, por acuerdo del Consejo Insular respectivo. 3. El día de las Illes Balears es el 1 de marzo."
+    },
+    {
+        "pregunta": "El Estatuto de Autonomía de las Islas Baleares:",
+        "opciones": [
+            "Fue aprobado en 1983.",
+            "Fue aprobado en 1981.",
+            "Fue aprobado en 1987.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "El Estatuto de Autonomía de las Illes Balears (en adelante EAIB) fue inicialmente aprobado por Ley Orgánica 2/1983, de 25 de febrero, de Estatuto de Autonomía de las Illes Balears y fue objeto de importantes reformas en el año 1994 y 1999. Su redacción actual se debe a la Ley Orgánica 1/2007, de 28 de febrero, de reforma del Estatuto de Autonomía de las Illes Balears."
+    },
+    {
+        "pregunta": "¿Qué valores proclama en su articulado el EAIB, según la última reforma del 2007?",
+        "opciones": [
+            "La libertad, la justicia, la igualdad y el pluralismo político.",
+            "La libertad, la igualdad, la paz y los derechos humanos.",
+            "El respeto a la dignidad humana, la libertad, la igualdad, justicia, la paz y los derechos humanos.",
+            "La igualdad, la paz y los derechos humanos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 12. Principios rectores de la actividad pública. 1. La Comunidad Autónoma fundamenta el derecho al autogobierno en los valores del respeto a la dignidad humana, la libertad, la igualdad, la justicia, la paz y los derechos humanos. 2. Este Estatuto reafirma, en el marco de las competencias de la Comunidad Autónoma, los derechos fundamentales que emanan de la Constitución, de la Carta de los Derechos Fundamentales de la Unión Europea, del Convenio Europeo para la protección de los Derechos Humanos y de las Libertades Fundamentales y de los tratados y los acuerdos sobre la materia ratificados por el Estado. 3. Las instituciones propias de la Comunidad Autónoma de las Illes Balears, para cumplir las finalidades que les son propias y en el marco de las competencias que les atribuye este Estatuto, deben promover, como principios rectores de la política económica y social, el desarrollo sostenible encaminado a la plena ocupación, la cohesión social y el progreso científico y técnico de manera que asegure a toda la ciudadanía el acceso a los servicios públicos y el derecho a la salud, la educación, la vivienda, la protección social, el ocio y la cultura. 4. Las instituciones propias deben orientar la función del poder público en el sentido de consolidar y desarrollar las características de nacionalidad común de los pueblos de Mallorca, de Menorca, de Ibiza y de Formentera, así como las peculiaridades de cada isla como vínculo de solidaridad entre ellas."
+    },
+    {
+        "pregunta": "Según el EAIB, la organización territorial de las Illes Balears será regulada de acuerdo con los principios de: Señale la incorrecta:",
+        "opciones": [
+            "Eficacia, jerarquía, descentralización, delegación y coordinación.",
+            "Jerarquía, descentralización, desconcentración y colaboración.",
+            "Eficacia, descentralización, desconcentración y delegación.",
+            "Todas son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 8. La organización territorial. 1. La Comunidad Autónoma articula su organización territorial en islas y en municipios. Las instituciones de gobierno de las islas son los Consejos Insulares, y las de los municipios, los Ayuntamientos. 2. Esta organización será regulada, en el marco de la legislación básica del Estado, por ley del Parlamento de las Illes Balears, de acuerdo con este Estatuto y con los principios de eficacia, jerarquía, descentralización, desconcentración, delegación y coordinación entre los organismos administrativos y de autonomía en sus ámbitos respectivos."
+    },
+    {
+        "pregunta": "Según el EAIB, La delegación de competencias a los municipios debe ir acompañada de medios:",
+        "opciones": [
+            "Económicos, personales y materiales adecuados y suficientes.",
+            "Económicos, personales y materiales adecuados.",
+            "Personales y materiales adecuados y suficientes.",
+            "Ninguna es totalmente correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 75. Los municipios. 5. Además de las competencias derivadas de la legislación básica del Estado y de la legislación sectorial, corresponde a los municipios el ejercicio de las que puedan ser delegadas por el Estado, por la Comunidad Autónoma, por los Consejos Insulares y por otras Administraciones. La delegación de competencias a los municipios debe ir acompañada de los medios económicos, personales y materiales adecuados y suficientes."
+    },
+    {
+        "pregunta": "El EAIB se ha elaborado de acuerdo con el artículo de la Constitución Española:",
+        "opciones": [
+            "El 143.",
+            "El 151.",
+            "El 147.",
+            "La disposición transitoria segunda."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 143 CE 1. En el ejercicio del derecho a la autonomía reconocido en el artículo 2 de la Constitución, las provincias limítrofes con características históricas, culturales y económicas comunes, los territorios insulares y las provincias con entidad regional histórica podrán acceder a su autogobierno y constituirse en Comunidades Autónomas con arreglo a lo previsto en este Título y en los respectivos Estatutos. 2. La iniciativa del proceso autonómico corresponde a todas las Diputaciones interesadas o al órgano interinsular correspondiente y a las dos terceras partes de los municipios cuya población represente, al menos, la mayoría del censo electoral de cada provincia o isla. Estos requisitos deberán ser cumplidos en el plazo de seis meses desde el primer acuerdo adoptado al respecto por alguna de las Corporaciones locales interesadas. 3. La iniciativa, en caso de no prosperar, solamente podrá reiterarse pasados cinco años."
+    },
+    {
+        "pregunta": "Según el EAIB, ¿Sobre cuál de las siguientes materias no puede dictar leyes nuestra comunidad autónoma?",
+        "opciones": [
+            "Ordenación farmacéutica.",
+            "Personal estatutario al servicio de la sanidad pública autonómica.",
+            "Productos farmacéuticos.",
+            "Planificación de recursos sanitarios."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 30. Competencias exclusivas. La Comunidad Autónoma tiene la competencia exclusiva en las siguientes materias, sin perjuicio de lo dispuesto en el artículo 149.1 de la Constitución: 48. Organización, funcionamiento y control de los centros sanitarios públicos y de los servicios de salud. Planificación de los recursos sanitarios. Coordinación de la sanidad privada con el sistema sanitario público. Promoción de la salud en todos los ámbitos, en el marco de las bases y la coordinación general de la sanidad. Ordenación farmacéutica, en el marco de lo que dispone el número 16, apartado 1, del artículo 149 de la Constitución."
+    },
+    {
+        "pregunta": "Según el EAIB, Los Consejos Insulares:",
+        "opciones": [
+            "Son las instituciones de gobierno de los Ayuntamientos de las islas.",
+            "Son las instituciones de gobierno de las islas y gozan de autonomía en la gestión de sus intereses.",
+            "Son órganos de la Administración local sin competencias propias que agrupan a varios Ayuntamientos.",
+            "Todas las respuestas son falsas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 61. Los Consejos Insulares. 1. Los Consejos Insulares son las instituciones de gobierno de cada una de las islas y ostentan el gobierno, la administración y la representación de las islas de Mallorca, Menorca, Ibiza y Formentera, así como de las islas adyacentes a éstas. 2. Los Consejos Insulares gozarán de autonomía en la gestión de sus intereses de acuerdo con la Constitución, este Estatuto y lo establecido en las leyes del Parlamento. 3. Los Consejos Insulares también son instituciones de la Comunidad Autónoma de las Illes Balears."
+    },
+    {
+        "pregunta": "Según el EAIB, El día de las Islas Baleares es:",
+        "opciones": [
+            "1 marzo.",
+            "2 marzo.",
+            "1 abril.",
+            "3 abril."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 6. Los símbolos de las Illes Balears. 1. La bandera de las Illes Balears, integrada por símbolos distintivos legitimados históricamente, estará constituida por cuatro barras rojas horizontales sobre fondo amarillo, con un cuartel situado en la parte superior izquierda de fondo morado y con un castillo blanco de cinco torres en medio. 2. Cada isla podrá tener su bandera, su día de celebración y sus símbolos distintivos propios, por acuerdo del Consejo Insular respectivo. 3. El día de las Illes Balears es el 1 de marzo."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

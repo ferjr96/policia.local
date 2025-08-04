@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. Las Diputaciones Permanentes estarán presididas:",
+        "opciones": [
+            "Por el Presidente del Senado.",
+            "Por el Presidente del Congreso.",
+            "Por el Presidente de la Cámara respectiva.",
+            "Por el Diputado o Senador integrante de la misma que sea elegido por sus componentes."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 78 1. En cada Cámara habrá una Diputación Permanente compuesta por un mínimo de veintiún miembros, que representarán a los grupos parlamentarios, en proporción a su importancia numérica. 2. Las Diputaciones Permanentes estarán presididas por el Presidente de la Cámara respectiva y tendrán como funciones la prevista en el artículo 73, la de asumir las facultades que correspondan a las Cámaras, de acuerdo con los artículos 86 y 116, en caso de que éstas hubieren sido disueltas o hubiere expirado su mandato y la de velar por los poderes de las Cámaras cuando éstas no estén reunidas. 3. Expirado el mandato o en caso de disolución, las Diputaciones Permanentes seguirán ejerciendo sus funciones hasta la constitución de las nuevas Cortes Generales. 4. Reunida la Cámara correspondiente, la Diputación Permanente dará cuenta de los asuntos tratados y de sus decisiones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. No es función del Rey:",
+        "opciones": [
+            "Nombrar al Presidente del Congreso y del Senado.",
+            "Alto Patronazgo de las Reales Academias.",
+            "Sancionar las leyes.",
+            "Convocar las Cortes Generales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, ¿Quién debe reconocer la imposibilidad del Rey para ejercer sus funciones?",
+        "opciones": [
+            "El Gobierno.",
+            "La Familia Real.",
+            "El Congreso de los Diputados.",
+            "Las Cortes Generales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale de los siguientes, quienes tienen capacidad de referendo con las actuaciones del Jefe del Estado.",
+        "opciones": [
+            "Presidente del Gobierno",
+            "Presidente Comunidades Autónomas",
+            "Presidente del Senado",
+            "Todas son correctas"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 64 CE 1. Los actos del Rey serán refrendados por el Presidente del Gobierno y, en su caso, por los Ministros competentes. La propuesta y el nombramiento del Presidente del Gobierno, y la disolución prevista en el artículo 99, serán refrendados por el Presidente del Congreso. 2. De los actos del Rey serán responsables las personas que los refrenden."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál de las siguientes funciones no está asignada al Consejo de Ministros?",
+        "opciones": [
+            "Aprobar los decretos leyes",
+            "Aprobar el proyecto de ley de presupuestos generales del Estado",
+            "Declarar el estado de sitio",
+            "Remitir al Congreso o, en su caso, al Senado proyectos de Ley"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 116 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En los supuestos de disolución de las Cortes Generales:",
+        "opciones": [
+            "El Gobierno presentará en pleno su dimisión ante el Rey.",
+            "No procederá nueva disolución antes de que transcurra un año desde la anterior.",
+            "Se restablece el equilibrio entre el legislativo y el ejecutivo.",
+            "El funcionario de esta se puede interrumpir durante la vigencia de algunos de los estados regulados en el art. 116 de la Constitución."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 115 1. El Presidente del Gobierno, previa deliberación del Consejo de Ministros, y bajo su exclusiva responsabilidad, podrá proponer la disolución del Congreso, del Senado o de las Cortes Generales, que será decretada por el Rey. El decreto de disolución fijará la fecha de las elecciones. 2. La propuesta de disolución no podrá presentarse cuando esté en trámite una moción de censura. 3. No procederá nueva disolución antes de que transcurra un año desde la anterior, salvo lo dispuesto en el artículo 99, apartado 5."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los Diputados y Senadores recibirán una asignación que será fijada:",
+        "opciones": [
+            "Por las Cortes Generales.",
+            "Por las respectivas Cámaras.",
+            "Por los Presupuestos Generales del Estado.",
+            "Por el Congreso de los Diputados."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 71 1. Los Diputados y Senadores gozarán de inviolabilidad por las opiniones manifestadas en el ejercicio de sus funciones. 2. Durante el período de su mandato los Diputados y Senadores gozarán asimismo de inmunidad y sólo podrán ser detenidos en caso de flagrante delito. No podrán ser inculpados ni procesados sin la previa autorización de la Cámara respectiva. 3. En las causas contra Diputados y Senadores será competente la Sala de lo Penal del Tribunal Supremo. 4. Los Diputados y Senadores percibirán una asignación que será fijada por las respectivas Cámaras."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si cuando sea declarado el estado de alarma, el de excepción o el de sitio, no se estuviere en periodo de sesiones:",
+        "opciones": [
+            "Quedará automáticamente convocada la Diputación Permanente.",
+            "Todas las otras respuestas son falsas.",
+            "Quedarán las Cámaras automáticamente convocadas.",
+            "Las Cámaras ya no se constituirán hasta que el estado declarado sea dejado sin efecto."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 116 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 2. El estado de alarma será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso de los Diputados, reunido inmediatamente al efecto y sin cuya autorización no podrá ser prorrogado dicho plazo. El decreto determinará el ámbito territorial a que se extienden los efectos de la declaración. 3. El estado de excepción será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros, previa autorización del Congreso de los Diputados. La autorización y proclamación del estado de excepción deberá determinar expresamente los efectos del mismo, el ámbito territorial a que se extiende y su duración, que no podrá exceder de treinta días, prorrogables por otro plazo igual, con los mismos requisitos. 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones. 5. No podrá procederse a la disolución del Congreso mientras estén declarados algunos de los estados comprendidos en el presente artículo, quedando automáticamente convocadas las Cámaras si no estuvieren en período de sesiones. Su funcionamiento, así como el de los demás poderes constitucionales del Estado, no podrán interrumpirse durante la vigencia de estos estados. Disuelto el Congreso o expirado su mandato, si se produjere alguna de las situaciones que dan lugar a cualquiera de dichos estados, las competencias del Congreso serán asumidas por su Diputación Permanente. 6. La declaración de los estados de alarma, de excepción y de sitio no modificarán el principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes."
+    },
+    {
+        "pregunta": "¿En qué artículo de la Constitución se recoge el juramento del Príncipe Heredero?",
+        "opciones": [
+            "En el artículo 63.1.",
+            "En el artículo 61.3.",
+            "En el artículo 61.2.",
+            "En el artículo 64.2."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Según la Constitución, las abdicaciones y renuncias a la Corona, ¿cómo se resolverán?",
+        "opciones": [
+            "Por las Cortes Generales en sesión conjunta de ambas Cámaras.",
+            "Mediante una ley orgánica, si plantean dudas de hecho o Derecho.",
+            "Mediante el mecanismo previsto en la Constitución.",
+            "Mediante una ley orgánica."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. No puede solicitar la celebración de una sesión extraordinaria de las Cortes el/la:",
+        "opciones": [
+            "Gobierno.",
+            "Mayoría absoluta de sus miembros.",
+            "Diputación Permanente de ellas.",
+            "Mesa de cada Cámara."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 73 1. Las Cámaras se reunirán anualmente en dos períodos ordinarios de sesiones: el primero, de septiembre a diciembre, y el segundo, de febrero a junio. 2. Las Cámaras podrán reunirse en sesiones extraordinarias a petición del Gobierno, de la Diputación Permanente o de la mayoría absoluta de los miembros de cualquiera de las Cámaras. Las sesiones extraordinarias deberán convocarse sobre un orden del día determinado y serán clausuradas una vez que éste haya sido agotado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El candidato que haya obtenido la confianza será nombrado Presidente:",
+        "opciones": [
+            "Por el Presidente del Congreso en reunión y sesión conjunta de ambas Cámaras.",
+            "Por el Presidente del Gobierno saliente, actuando en funciones.",
+            "Por el Rey.",
+            "Por el Presidente del Congreso."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, ¿Quién concede indultos generales?",
+        "opciones": [
+            "El Rey.",
+            "El Presidente del Gobierno.",
+            "No se pueden conceder.",
+            "El Presidente del Tribunal Supremo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "El Título Tercero de la Constitución consta de:",
+        "opciones": [
+            "Un capítulo.",
+            "Dos capítulos.",
+            "Cuatro capítulos.",
+            "Tres capítulos."
+        ],
+        "correcta": 3,
+        "explicacion": "La regulación constitucional de las Cortes Generales se recoge en el Título III de la misma, artículos 66 a 96, ambos incluidos. En este Título encontramos tres partes diferenciadas que responden a una estructura interna dedicada al tratamiento de los siguientes aspectos relacionados con la función legislativa: • Capítulo I- De las Cámaras. Artículos 66 a 80 CE. • Capítulo II- De la elaboración de las leyes. Artículos 81 a 92 CE. • Capítulo III-De los Tratados Internacionales. Artículos 93 a 96 CE."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los Ministros son nombrados por el:",
+        "opciones": [
+            "Congreso de los Diputados.",
+            "Rey.",
+            "Consejo de Ministros.",
+            "Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 100 Los demás miembros del Gobierno serán nombrados y separados por el Rey, a propuesta de su Presidente."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Diputaciones Permanentes estarán presididas:",
+        "opciones": [
+            "Por el Presidente del Senado.",
+            "Por el Presidente del Congreso.",
+            "Por el Presidente de la Cámara respectiva.",
+            "Por el Diputado o Senador integrante de la misma que sea elegido por sus componentes."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Constitución Española de 1978. No es función del Rey:",
+        "opciones": [
+            "Nombrar al Presidente del Congreso y del Senado.",
+            "Alto Patronazgo de las Reales Academias.",
+            "Sancionar las leyes.",
+            "Convocar las Cortes Generales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, ¿Quién debe reconocer la imposibilidad del Rey para ejercer sus funciones?",
+        "opciones": [
+            "El Gobierno.",
+            "La Familia Real.",
+            "El Congreso de los Diputados.",
+            "Las Cortes Generales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale de los siguientes, quienes tienen capacidad de referendo con las actuaciones del Jefe del Estado.",
+        "opciones": [
+            "Presidente del Gobierno",
+            "Presidente Comunidades Autónomas",
+            "Presidente del Senado",
+            "Todas son correctas"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 64 CE 1. Los actos del Rey serán refrendados por el Presidente del Gobierno y, en su caso, por los Ministros competentes. La propuesta y el nombramiento del Presidente del Gobierno, y la disolución prevista en el artículo 99, serán refrendados por el Presidente del Congreso. 2. De los actos del Rey serán responsables las personas que los refrenden."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál de las siguientes funciones no está asignada al Consejo de Ministros?",
+        "opciones": [
+            "Aprobar los decretos leyes",
+            "Aprobar el proyecto de ley de presupuestos generales del Estado",
+            "Declarar el estado de sitio",
+            "Remitir al Congreso o, en su caso, al Senado proyectos de Ley"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 116 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En los supuestos de disolución de las Cortes Generales:",
+        "opciones": [
+            "El Gobierno presentará en pleno su dimisión ante el Rey.",
+            "No procederá nueva disolución antes de que transcurra un año desde la anterior.",
+            "Se restablece el equilibrio entre el legislativo y el ejecutivo.",
+            "El funcionario de esta se puede interrumpir durante la vigencia de algunos de los estados regulados en el art. 116 de la Constitución."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 115 1. El Presidente del Gobierno, previa deliberación del Consejo de Ministros, y bajo su exclusiva responsabilidad, podrá proponer la disolución del Congreso, del Senado o de las Cortes Generales, que será decretada por el Rey. El decreto de disolución fijará la fecha de las elecciones. 2. La propuesta de disolución no podrá presentarse cuando esté en trámite una moción de censura. 3. No procederá nueva disolución antes de que transcurra un año desde la anterior, salvo lo dispuesto en el artículo 99, apartado 5."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los Diputados y Senadores recibirán una asignación que será fijada:",
+        "opciones": [
+            "Por las Cortes Generales.",
+            "Por las respectivas Cámaras.",
+            "Por los Presupuestos Generales del Estado.",
+            "Por el Congreso de los Diputados."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 71 1. Los Diputados y Senadores gozarán de inviolabilidad por las opiniones manifestadas en el ejercicio de sus funciones. 2. Durante el período de su mandato los Diputados y Senadores gozarán asimismo de inmunidad y sólo podrán ser detenidos en caso de flagrante delito. No podrán ser inculpados ni procesados sin la previa autorización de la Cámara respectiva. 3. En las causas contra Diputados y Senadores será competente la Sala de lo Penal del Tribunal Supremo. 4. Los Diputados y Senadores percibirán una asignación que será fijada por las respectivas Cámaras."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si cuando sea declarado el estado de alarma, el de excepción o el de sitio, no se estuviere en periodo de sesiones:",
+        "opciones": [
+            "Quedará automáticamente convocada la Diputación Permanente.",
+            "Todas las otras respuestas son falsas.",
+            "Quedarán las Cámaras automáticamente convocadas.",
+            "Las Cámaras ya no se constituirán hasta que el estado declarado sea dejado sin efecto."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 116 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 2. El estado de alarma será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso de los Diputados, reunido inmediatamente al efecto y sin cuya autorización no podrá ser prorrogado dicho plazo. El decreto determinará el ámbito territorial a que se extienden los efectos de la declaración. 3. El estado de excepción será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros, previa autorización del Congreso de los Diputados. La autorización y proclamación del estado de excepción deberá determinar expresamente los efectos del mismo, el ámbito territorial a que se extiende y su duración, que no podrá exceder de treinta días, prorrogables por otro plazo igual, con los mismos requisitos. 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones. 5. No podrá procederse a la disolución del Congreso mientras estén declarados algunos de los estados comprendidos en el presente artículo, quedando automáticamente convocadas las Cámaras si no estuvieren en período de sesiones. Su funcionamiento, así como el de los demás poderes constitucionales del Estado, no podrán interrumpirse durante la vigencia de estos estados. Disuelto el Congreso o expirado su mandato, si se produjere alguna de las situaciones que dan lugar a cualquiera de dichos estados, las competencias del Congreso serán asumidas por su Diputación Permanente. 6. La declaración de los estados de alarma, de excepción y de sitio no modificarán el principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes."
+    },
+    {
+        "pregunta": "¿En qué artículo de la Constitución se recoge el juramento del Príncipe Heredero?",
+        "opciones": [
+            "En el artículo 63.1.",
+            "En el artículo 61.3.",
+            "En el artículo 61.2.",
+            "En el artículo 64.2."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 61 1. El Rey, al ser proclamado ante las Cortes Generales, prestará juramento de desempeñar fielmente sus funciones, guardar y hacer guardar la Constitución y las leyes y respetar los derechos de los ciudadanos y de las Comunidades Autónomas. 2. El Príncipe heredero, al alcanzar la mayoría de edad, y el Regente o Regentes al hacerse cargo de sus funciones, prestarán el mismo juramento, así como el de fidelidad al Rey."
+    },
+    {
+        "pregunta": "Según la Constitución, las abdicaciones y renuncias a la Corona, ¿cómo se resolverán?",
+        "opciones": [
+            "Por las Cortes Generales en sesión conjunta de ambas Cámaras.",
+            "Mediante una ley orgánica, si plantean dudas de hecho o Derecho.",
+            "Mediante el mecanismo previsto en la Constitución.",
+            "Mediante una ley orgánica."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. No puede solicitar la celebración de una sesión extraordinaria de las Cortes el/la:",
+        "opciones": [
+            "Gobierno.",
+            "Mayoría absoluta de sus miembros.",
+            "Diputación Permanente de ellas.",
+            "Mesa de cada Cámara."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 73 1. Las Cámaras se reunirán anualmente en dos períodos ordinarios de sesiones: el primero, de septiembre a diciembre, y el segundo, de febrero a junio. 2. Las Cámaras podrán reunirse en sesiones extraordinarias a petición del Gobierno, de la Diputación Permanente o de la mayoría absoluta de los miembros de cualquiera de las Cámaras. Las sesiones extraordinarias deberán convocarse sobre un orden del día determinado y serán clausuradas una vez que éste haya sido agotado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El candidato que haya obtenido la confianza será nombrado Presidente:",
+        "opciones": [
+            "Por el Presidente del Congreso en reunión y sesión conjunta de ambas Cámaras.",
+            "Por el Presidente del Gobierno saliente, actuando en funciones.",
+            "Por el Rey.",
+            "Por el Presidente del Congreso."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, ¿Quién concede indultos generales?",
+        "opciones": [
+            "El Rey.",
+            "El Presidente del Gobierno.",
+            "No se pueden conceder.",
+            "El Presidente del Tribunal Supremo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "El Título Tercero de la Constitución consta de:",
+        "opciones": [
+            "Un capítulo.",
+            "Dos capítulos.",
+            "Cuatro capítulos.",
+            "Tres capítulos."
+        ],
+        "correcta": 3,
+        "explicacion": "La regulación constitucional de las Cortes Generales se recoge en el Título III de la misma, artículos 66 a 96, ambos incluidos. En este Título encontramos tres partes diferenciadas que responden a una estructura interna dedicada al tratamiento de los siguientes aspectos relacionados con la función legislativa: • Capítulo I- De las Cámaras. Artículos 66 a 80 CE. • Capítulo II- De la elaboración de las leyes. Artículos 81 a 92 CE. • Capítulo III-De los Tratados Internacionales. Artículos 93 a 96 CE."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los Ministros son nombrados por el:",
+        "opciones": [
+            "Congreso de los Diputados.",
+            "Rey.",
+            "Consejo de Ministros.",
+            "Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 100 Los demás miembros del Gobierno serán nombrados y separados por el Rey, a propuesta de su Presidente."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué órgano de los siguientes no puede solicitar la convocatoria extraordinaria del Congreso de los Diputados?",
+        "opciones": [
+            "La mayoría absoluta de sus miembros.",
+            "El Gobierno de la nación.",
+            "La Diputación Permanente.",
+            "El Rey."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 73 1. Las Cámaras se reunirán anualmente en dos períodos ordinarios de sesiones: el primero, de septiembre a diciembre, y el segundo, de febrero a junio. 2. Las Cámaras podrán reunirse en sesiones extraordinarias a petición del Gobierno, de la Diputación Permanente o de la mayoría absoluta de los miembros de cualquiera de las Cámaras. Las sesiones extraordinarias deberán convocarse sobre un orden del día determinado y serán clausuradas una vez que éste haya sido agotado."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, la regulación legal de los supuestos en que un juez puede autorizar la entrada y registro en un domicilio debe realizarse mediante:",
+        "opciones": [
+            "Ley Ordinaria, cuando no se afecte a un derecho fundamental.",
+            "Ley Orgánica, porque así lo exige el artículo 53.1 de la Constitución cuando se trata de regular el ejercicio de los derechos fundamentales.",
+            "Ley Orgánica, de conformidad con el artículo 81 de la Constitución.",
+            "Ley Ordinaria, como es el caso de la vigente ley de Enjuiciamiento Criminal."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 81 1. Son leyes orgánicas las relativas al desarrollo de los derechos fundamentales y de las libertades públicas, las que aprueben los Estatutos de Autonomía y el régimen electoral general y las demás previstas en la Constitución. 2. La aprobación, modificación o derogación de las leyes orgánicas exigirá mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué carácter tiene la Corona de España, a tenor del artículo 57.1 de la Constitución?",
+        "opciones": [
+            "Constitucional.",
+            "Prioritaria.",
+            "Hereditaria.",
+            "Formal."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. A las islas de Gran Canaria, Mallorca y Tenerife le corresponderán:",
+        "opciones": [
+            "Un Senador a cada una de ellas.",
+            "Tres Senadores a cada una de ellas.",
+            "Tres, dos y un Senador, respectivamente.",
+            "Uno, dos y tres Senadores, respectivamente"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. A las islas de Gran Canaria, Mallorca y Tenerife le corresponderán:",
+        "opciones": [
+            "Un Senador a cada una de ellas.",
+            "Tres Senadores a cada una de ellas.",
+            "Tres, dos y un Senador, respectivamente.",
+            "Uno, dos y tres Senadores, respectivamente"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Una de las siguientes afirmaciones es cierta:",
+        "opciones": [
+            "Las interpelaciones son realizadas por las Cámaras y las preguntas por las Comisiones, tanto al Gobierno como a cada uno de sus miembros.",
+            "Sólo el Presidente del Gobierno está sometido a las interpelaciones y preguntas que se le formulen en las Cámaras.",
+            "Las interpelaciones y preguntas al Gobierno ya sus miembros se efectuarán por las Cámaras y por sus Comisiones.",
+            "Están sometidos a esas interpelaciones y preguntas tanto el Gobierno como cada uno de sus miembros."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 111 1. El Gobierno y cada uno de sus miembros están sometidos a las interpelaciones y preguntas que se le formulen en las Cámaras. Para esta clase de debate los Reglamentos establecerán un tiempo mínimo semanal. 2. Toda interpelación podrá dar lugar a una moción en la que la Cámara manifieste su posición."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las condiciones y el procedimiento de las distintas modalidades de referéndum:",
+        "opciones": [
+            "Es materia tratable mediante Decreto Ley.",
+            "Es materia sobre la que cabe la iniciativa popular.",
+            "Es materia reservada a Ley Orgánica.",
+            "Es materia tratable mediante Ley Ordinaria."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 92 1. Las decisiones políticas de especial trascendencia podrán ser sometidas a referéndum consultivo de todos los ciudadanos. 2. El referéndum será convocado por el Rey, mediante propuesta del Presidente del Gobierno, previamente autorizada por el Congreso de los Diputados. 3. Una ley orgánica regulará las condiciones y el procedimiento de las distintas modalidades de referéndum previstas en esta Constitución."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Existe algún acto del Rey que pueda realizarse sin refrendo?",
+        "opciones": [
+            "Sí, la designación de su Sucesor.",
+            "Sí, los relacionados con la Casa Real y la distribución del Presupuesto de la misma.",
+            "Sí, los relacionados con nombramientos constitucionales.",
+            "No."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los miembros de las Cortes Generales:",
+        "opciones": [
+            "No están ligados a las mismas por mandato imperativo.",
+            "Están ligados a las mismas por mandato constitucional.",
+            "Están ligados a las mismas por mandado potestativo.",
+            "Están ligados a las mismas por mandato imperativo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 67 1. Nadie podrá ser miembro de las dos Cámaras simultáneamente, ni acumular el acta de una Asamblea de Comunidad Autónoma con la de Diputado al Congreso. 2. Los miembros de las Cortes Generales no estarán ligados por mandato imperativo. 3. Las reuniones de Parlamentarios que se celebren sin convocatoria reglamentaria no vincularán a las Cámaras, y no podrán ejercer sus funciones ni ostentar sus privilegios."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las poblaciones de Ceuta y Melilla estarán representadas:",
+        "opciones": [
+            "Por tres Diputados entre las dos.",
+            "Por el número de Diputados que les asigne la Ley.",
+            "Por un Diputado cada una.",
+            "Por dos Diputados cada una."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, en qué art. de los siguientes de la CE, vienen recogidos los estados de Alarma, Excepción y Sitio:",
+        "opciones": [
+            "116",
+            "117",
+            "126",
+            "136"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 116 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 2. El estado de alarma será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso de los Diputados, reunido inmediatamente al efecto y sin cuya autorización no podrá ser prorrogado dicho plazo. El decreto determinará el ámbito territorial a que se extienden los efectos de la declaración. 3. El estado de excepción será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros, previa autorización del Congreso de los Diputados. La autorización y proclamación del estado de excepción deberá determinar expresamente los efectos del mismo, el ámbito territorial a que se extiende y su duración, que no podrá exceder de treinta días, prorrogables por otro plazo igual, con los mismos requisitos. 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones. 5. No podrá procederse a la disolución del Congreso mientras estén declarados algunos de los estados comprendidos en el presente artículo, quedando automáticamente convocadas las Cámaras si no estuvieren en período de sesiones. Su funcionamiento, así como el de los demás poderes constitucionales del Estado, no podrán interrumpirse durante la vigencia de estos estados. Disuelto el Congreso o expirado su mandato, si se produjere alguna de las situaciones que dan lugar a cualquiera de dichos estados, las competencias del Congreso serán asumidas por su Diputación Permanente. 6. La declaración de los estados de alarma, de excepción y de sitio no modificarán el principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál de estas funciones no corresponde a la Diputación Permanente del Congreso de los Diputados?",
+        "opciones": [
+            "Velar por los poderes de la Cámara cuando ésta no esté reunida.",
+            "Convalidación de Decretos-Leyes cuando la Cámara sea disuelta.",
+            "Autorizar al Gobierno la declaración del estado de sitio.",
+            "Solicitar la celebración de una sesión extraordinaria de la Cámara."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 78 2. Las Diputaciones Permanentes estarán presididas por el Presidente de la Cámara respectiva y tendrán como funciones la prevista en el artículo 73, la de asumir las facultades que correspondan a las Cámaras, de acuerdo con los artículos 86 y 116, en caso de que éstas hubieren sido disueltas o hubiere expirado su mandato y la de velar por los poderes de las Cámaras cuando éstas no estén reunidas. Artículo 73 - Solicitar la celebración de una sesión extraordinaria de la Cámara. Artículo 86 - Convalidación de Decretos-Leyes cuando la Cámara sea disuelta. Artículo 116 - Declarar el Estado de Sitio, a propuesta del Gobierno (entre otras)"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En caso de que el Rey sea menor de edad:",
+        "opciones": [
+            "Ejercerá la Regencia el Príncipe Heredero.",
+            "Ejercerá la Regencia su cónyuge.",
+            "No tomará cargo de su cargo hasta su mayoría de edad.",
+            "Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Rey recibe una cantidad global de los Presupuestos del Estado:",
+        "opciones": [
+            "Para el sostenimiento de su Familia y Casa.",
+            "La cual es distribuida por él libremente conforme a las partidas o conceptos de gastos determinados legalmente.",
+            "Para la satisfacción de los gastos inherentes a sus labores representativas del Estado en el extranjero.",
+            "La cual es distribuida por él, con la supervisión anual del Tribunal de Cuentas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué mayoría es necesario alcanzar para entender otorgada la confianza en un proceso de cuestión de confianza?",
+        "opciones": [
+            "Mayoría de 2/3",
+            "Mayoría absoluta",
+            "Mayoría simple",
+            "Mayoría de 1/3"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 112 El Presidente del Gobierno, previa deliberación del Consejo de Ministros, puede plantear ante el Congreso de los Diputados la cuestión de confianza sobre su programa o sobre una declaración de política general. La confianza se entenderá otorgada cuando vote a favor de la misma la mayoría simple de los Diputados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Una de las siguientes no es función del Rey:",
+        "opciones": [
+            "Ejercer el derecho de gracia con arreglo a la Ley.",
+            "Expedir los Decretos acordados en el Consejo de Ministros.",
+            "Conferir los empleos civiles y militares, así como conceder honores y distinciones.",
+            "Coordinar las funciones de los miembros del Gobierno."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "La Constitución dedica a la Corona el Título:",
+        "opciones": [
+            "I.",
+            "II.",
+            "III.",
+            "IV."
+        ],
+        "correcta": 1,
+        "explicacion": "La regulación de la Corona se lleva a cabo en el Título II de la Constitución española de 1978, artículos 56 a 65, ambos incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, Respecto a los actos del Rey, ¿cuál de las siguientes alternativas es correcta?",
+        "opciones": [
+            "Los refrenda el Presidente del Gobierno, los Ministros, en su caso, y el Presidente del Congreso de los Diputados en la disolución del art. 99.",
+            "Los actos no necesitan ser refrendados.",
+            "Es responsable el Rey de sus propios actos.",
+            "Los refrenda el Presidente del Gobierno y, en su caso, los Ministros correspondientes."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 64 1. Los actos del Rey serán refrendados por el Presidente del Gobierno y, en su caso, por los Ministros competentes. La propuesta y el nombramiento del Presidente del Gobierno, y la disolución prevista en el artículo 99, serán refrendados por el Presidente del Congreso. 2. De los actos del Rey serán responsables las personas que los refrenden."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Cuando el Rey fuere menor de edad, la Regencia:",
+        "opciones": [
+            "Sólo podrá ser ejercida por el padre o por la madre del Rey.",
+            "Se ejercerá durante el tiempo que dure la minoría de edad del Rey.",
+            "Nunca podrá ser desempeñada por pariente alguno, mayor de edad, distinto de los progenitores.",
+            "Comenzará a ejercerse dentro de los seis primeros meses desde que se produjera el hecho que dio origen a la necesidad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 59 1. Cuando el Rey fuere menor de edad, el padre o la madre del Rey y, en su defecto, el pariente mayor de edad más próximo a suceder en la Corona, según el orden establecido en la Constitución, entrará a ejercer inmediatamente la Regencia y la ejercerá durante el tiempo de la minoría de edad del Rey. 2. Si el Rey se inhabilitare para el ejercicio de su autoridad y la imposibilidad fuere reconocida por las Cortes Generales, entrará a ejercer inmediatamente la Regencia el Príncipe heredero de la Corona, si fuere mayor de edad. Si no lo fuere, se procederá de la manera prevista en el apartado anterior, hasta que el Príncipe heredero alcance la mayoría de edad. 3. Si no hubiere ninguna persona a quien corresponda la Regencia, ésta será nombrada por las Cortes Generales, y se compondrá de una, tres o cinco personas. 4. Para ejercer la Regencia es preciso ser español y mayor de edad. 5. La Regencia se ejercerá por mandato constitucional y siempre en nombre del Rey."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La proposición del Presidente del Gobierno se realizará a través:",
+        "opciones": [
+            "Del Rey.",
+            "Del líder de la oposición.",
+            "Del Presidente del Gobierno saliente.",
+            "El rey junto a los representantes designados y a través del Presidente del Congreso."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién representa al Gobierno?",
+        "opciones": [
+            "El Ministro portavoz del Gobierno",
+            "El Ministro de la Presidencia",
+            "El Presidente",
+            "Los Ministros"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 98 1. El Gobierno se compone del Presidente, de los Vicepresidentes, en su caso, de los Ministros y de los demás miembros que establezca la ley. 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión. 3. Los miembros del Gobierno no podrán ejercer otras funciones representativas que las propias del mandato parlamentario, ni cualquier otra función pública que no derive de su cargo, ni actividad profesional o mercantil alguna. 4. La ley regulará el estatuto e incompatibilidades de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las disposiciones de los tratados internacionales que entren a formar parte del ordenamiento interno, podrán ser derogadas, modificadas o suspendidas:",
+        "opciones": [
+            "En la forma prevista en los propios tratados, en cualquier caso.",
+            "Mediante acuerdos adoptados por mayoría absoluta.",
+            "En la forma prevista para cualquier norma nacional con rango de Ley.",
+            "De acuerdo con las normas generales de Derecho Internacional, cuando los propios tratados no indiquen el procedimiento a seguir para ello."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 96 1. Los tratados internacionales válidamente celebrados, una vez publicados oficialmente en España, formarán parte del ordenamiento interno. Sus disposiciones sólo podrán ser derogadas, modificadas o suspendidas en la forma prevista en los propios tratados o de acuerdo con las normas generales del Derecho internacional. 2. Para la denuncia de los tratados y convenios internacionales se utilizará el mismo procedimiento previsto para su aprobación en el artículo 94."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El número mínimo de miembros de la Diputación Permanente del Congreso es de:",
+        "opciones": [
+            "Veintiuno.",
+            "Veintiocho.",
+            "Doce.",
+            "No se determina."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 78 1. En cada Cámara habrá una Diputación Permanente compuesta por un mínimo de veintiún miembros, que representarán a los grupos parlamentarios, en proporción a su importancia numérica. 2. Las Diputaciones Permanentes estarán presididas por el Presidente de la Cámara respectiva y tendrán como funciones la prevista en el artículo 73, la de asumir las facultades que correspondan a las Cámaras, de acuerdo con los artículos 86 y 116, en caso de que éstas hubieren sido disueltas o hubiere expirado su mandato y la de velar por los poderes de las Cámaras cuando éstas no estén reunidas. 3. Expirado el mandato o en caso de disolución, las Diputaciones Permanentes seguirán ejerciendo sus funciones hasta la constitución de las nuevas Cortes Generales. 4. Reunida la Cámara correspondiente, la Diputación Permanente dará cuenta de los asuntos tratados y de sus decisiones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién nombra a los miembros de la Casa Real?",
+        "opciones": [
+            "El Jefe de la Casa Real.",
+            "El Rey.",
+            "El Ministro del Interior.",
+            "El Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El consentimiento del Estado para obligarse por medio de tratados o convenios:",
+        "opciones": [
+            "Requiere la autorización del Rey.",
+            "Requiere la autorización del Congreso de los Diputados.",
+            "No requiere autorización de ninguna otra institución u órgano del Estado.",
+            "Requiere la autorización de las Cortes Generales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 94 1. La prestación del consentimiento del Estado para obligarse por medio de tratados o convenios requerirá la previa autorización de las Cortes Generales, en los siguientes casos: a) Tratados de carácter político. b) Tratados o convenios de carácter militar. c) Tratados o convenios que afecten a la integridad territorial del Estado o a los derechos y deberes fundamentales establecidos en el Título I. d) Tratados o convenios que impliquen obligaciones financieras para la Hacienda Pública. e) Tratados o convenios que supongan modificación o derogación de alguna ley o exijan medidas legislativas para su ejecución. 2. El Congreso y el Senado serán inmediatamente informados de la conclusión de los restantes tratados o convenios."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La mayoría exigida en la aprobación, modificación o derogación de las leyes orgánicas exigirá:",
+        "opciones": [
+            "En la votación parcial de todas y cada una de las enmiendas.",
+            "En una votación final sobre el conjunto del proyecto.",
+            "En la votación parcial de cada uno de los artículos del proyecto.",
+            "En la votación final sobre el conjunto de cada capítulo del proyecto."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 81 1. Son leyes orgánicas las relativas al desarrollo de los derechos fundamentales y de las libertades públicas, las que aprueben los Estatutos de Autonomía y el régimen electoral general y las demás previstas en la Constitución. 2. La aprobación, modificación o derogación de las leyes orgánicas exigirá mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En las provincias insulares, a efectos de elección de Senadores constituirá una agrupación:",
+        "opciones": [
+            "Cada isla o agrupación de ellas, con Cabildo o Consejo Insular.",
+            "Cada agrupación de islas.",
+            "Cada isla.",
+            "Cada isla o agrupación de ellas, cuente o no con Cabildo o Consejo Insular."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los restantes miembros del Gobierno, distintos a su Presidente:",
+        "opciones": [
+            "Serán nombrados y separados por el Rey a propuesta del Presidente del Gobierno.",
+            "Serán nombrados y separados por el Rey con el refrendo del Presidente del Congreso.",
+            "Serán nombrados y separados por el Presidente del Gobierno con el refrendo del Rey.",
+            "Todas las otras respuestas son falsas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 100 Los demás miembros del Gobierno serán nombrados y separados por el Rey, a propuesta de su Presidente."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Corresponde al Rey:",
+        "opciones": [
+            "Autorizar indultos generales.",
+            "Disolver las Cortes cuando lo crea conveniente.",
+            "Convocar a referéndum en los casos previstos en la Constitución.",
+            "Ejercer por delegación el Alto Patronazgo de las Reales Academias."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 62 Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Será tutor del Rey menor:",
+        "opciones": [
+            "Si no hubiere disposición testamentaria, el tutor será el padre o la madre, aunque contraigan segundas nupcias.",
+            "La acumulación de los cargos o títulos de Tutor del Rey menor de edad y de Regente sólo podrán coincidir en el padre, la madre o ascendientes directos del Rey.",
+            "En cualquier caso, la persona que en su testamento hubiere nombrado el Rey difunto.",
+            "En su defecto, será nombrado por las Cortes Generales, pudiendo acumularse sin excepción tal cargo con el de Regente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. A los Delegados del Gobierno en las Comunidades Autónomas se refiere el siguiente artículo de la Constitución:",
+        "opciones": [
+            "Art. 154.",
+            "Art. 156.",
+            "Art. 103.",
+            "Art. 137."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 154 Un Delegado nombrado por el Gobierno dirigirá la Administración del Estado en el territorio de la Comunidad Autónoma y la coordinará, cuando proceda, con la administración propia de la Comunidad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para la denuncia de los tratados y convenios internacionales por parte del Estado:",
+        "opciones": [
+            "Se requiere la autorización del Congreso de los Diputados.",
+            "Se requiere la autorización del Rey.",
+            "Se requiere la autorización de las Cortes Generales.",
+            "No se requiere autorización de ninguna otra institución u órgano del Estado."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Podrán ser tutores del Rey:",
+        "opciones": [
+            "El padre o la madre, mientras permanezcan viudos.",
+            "Cualquiera que sea mayor de edad y español.",
+            "El padre, madre o abuelos maternos.",
+            "El padre, aunque más adelante contraiga matrimonio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 60 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El consorte de la Reina puede asumir, como función constitucional, el/la:",
+        "opciones": [
+            "Alto patronazgo de las Reales Academias.",
+            "Regencia.",
+            "Tutoría.",
+            "Todas las otras respuestas son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 58 La Reina consorte o el consorte de la Reina no podrán asumir funciones constitucionales, salvo lo dispuesto para la Regencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La circunscripción electoral es:",
+        "opciones": [
+            "La Comunidad Autónoma.",
+            "La Provincia.",
+            "El Municipio.",
+            "La Comarca."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

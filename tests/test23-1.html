@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "El cónyuge del delincuente no separado legalmente o de hecho o la persona que conviva con él en análoga relación de afectividad, ¿está obligado a denunciar?",
+        "opciones": [
+            "No, de conformidad con el apartado 1º del artículo 261 CP.",
+            "No, de conformidad con el apartado 2º del artículo 261 CP.",
+            "Sí, pero únicamente en los delitos contra la vida.",
+            "Sí, cuando se trate de un delito contra la libertad o contra la libertad e indemnidad sexual."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882, aprobatorio de la Ley de Enjuiciamiento Criminal Artículo 261 Tampoco estarán obligados a denunciar: 1º El cónyuge del delincuente no separado legalmente o de hecho o la persona que conviva con él en análoga relación de afectividad. 2º Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el segundo grado inclusive. Esta disposición no será aplicable cuando se trate de un delito contra la vida, de un delito de homicidio, de un delito de lesiones de los artículos 149 y 150 del Código Penal, de un delito de maltrato habitual previsto en el artículo 173.2 del Código Penal, de un delito contra la libertad o contra la libertad e indemnidad sexual o de un delito de trata de seres humanos y la víctima del delito sea una persona menor de edad o una persona con discapacidad necesitada de especial protección."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Inés ejerce como Abogada en un conocido bufete de Palma y acude a su despacho Rubén, quien le confiesa haber asesinado a su novia mientras ésta dormía la siesta. ¿Tiene Inés la obligación de denunciar a Rubén tras haberle confesado el crimen?",
+        "opciones": [
+            "No, puesto que de conformidad con el artículo 263 de la LECrim, los Abogados no tienen la obligación de denunciar a sus clientes tras recibir las explicaciones oportunas.",
+            "Sí, puesto que la confesión debe ponerse inmediatamente en conocimiento de las autoridades.",
+            "Sí, excepto que Inés tenga ciertas sospechas de que Rubén no le dice la verdad.",
+            "No, puesto que de conformidad con el artículo 263 bis de la LECrim, los Abogados no tienen la obligación de denunciar a sus clientes tras recibir las explicaciones oportunas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 263. LECrim La obligación impuesta en el párrafo primero del art. anterior no comprenderá a los Abogados ni a los Procuradores respecto de las instrucciones o explicaciones que recibieren de sus clientes. Tampoco comprenderá a los eclesiásticos y ministros de cultos disidentes respecto de las noticias que se les hubieren revelado en el ejercicio de las funciones de su ministerio."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Rosa ha presenciado como Juan, su ex marido, ha golpeado en repetidas ocasiones a su hijo Luis en diferentes partes del cuerpo. Además, tras el divorcio, Juan ha amenazado de muerte a su hijo en varias ocasiones. ¿Tiene Rosa la obligación de denunciar a Juan?",
+        "opciones": [
+            "No, puesto que Rosa es cónyuge del delincuente no separado legalmente.",
+            "Sí, ya que Rosa se ha separado legalmente del delincuente.",
+            "No, en ningún caso.",
+            "No, ya que Rosa continúa viéndose con Juan al tener una relación sentimental."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 261. LECrim Tampoco estarán obligados a denunciar: 1.º El cónyuge del delincuente no separado legalmente o de hecho o la persona que conviva con él en análoga relación de afectividad. 2.º Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el segundo grado inclusive."
+    },
+    {
+        "pregunta": "De conformidad con lo establecido en la Ley de Enjuiciamiento Criminal, ¿quién está obligado a poner inmediatamente en conocimiento del Juez de instrucción más próximo al sitio en que se hallare, la perpetración de cualquier delito público?",
+        "opciones": [
+            "El que lo conociere.",
+            "El que lo cometiese.",
+            "El que lo presenciare.",
+            "El que lo presenciare, excepto los impúberes y los que no gocen del pleno uso de su razón."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 259. LECrim El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas. Artículo 260. LECrim La obligación establecida en el artículo anterior no comprende a los impúberes ni a los que no gozaren del pleno uso de su razón."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Para la apertura y registro de la correspondencia postal sospechosa de contener sustancias estupefacientes:",
+        "opciones": [
+            "Será preceptivo la presencia del interesado.",
+            "Se llevará a cabo respetando en todo momento las garantías judiciales establecidas en el ordenamiento jurídico.",
+            "Será preceptivo la presencia del representante del interesado.",
+            "Todas son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 263 bis. LECrim 4. La interceptación y apertura de envíos postales sospechosos de contener estupefacientes y, en su caso, la posterior sustitución de la droga que hubiese en su interior se llevarán a cabo respetando en todo momento las garantías judiciales establecidas en el ordenamiento jurídico, con excepción de lo previsto en el artículo 584 de la presente Ley."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). La obligación de denuncia alcanza a:",
+        "opciones": [
+            "Representantes legales.",
+            "Abogados y procuradores.",
+            "Los que por razón de su cargo tengan noticia de cualquier delito publico.",
+            "Todas son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 262. LECrim Los que por razón de sus cargos, profesiones u oficios tuvieren noticia de algún delito público, estarán obligados a denunciarlo inmediatamente al Ministerio fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio si se tratare de un delito flagrante. Los que no cumpliesen esta obligación incurrirán en la multa señalada en el artículo 259, que se impondrá disciplinariamente. Si la omisión en dar parte fuere de un Profesor en Medicina, Cirugía o Farmacia y tuviese relación con el ejercicio de sus actividades profesionales, la multa no podrá ser inferior a 125 pesetas ni superior a 250. Si el que hubiese incurrido en la omisión fuere empleado público, se pondrá además en conocimiento de su superior inmediato para los efectos a que hubiere lugar en el orden administrativo. Lo dispuesto en este artículo se entiende cuando la omisión no produjere responsabilidad con arreglo a las Leyes."
+    },
+    {
+        "pregunta": "¿Cuál de los siguientes tiene el deber de denunciar?",
+        "opciones": [
+            "Aquel que presenciare la perpetración de un delito público.",
+            "Aquel que con ocasión de su cargo tuviere noticia de algún delito público.",
+            "Aquel que presenciare la perpetración de un delito privado.",
+            "Aquel que no lo presenciare, ni con ocasión de su profesión tuviere noticia, pero se enterase de la perpetración de un delito perseguible de oficio."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 264 LECrim El que por cualquier medio diferente de los mencionados tuviere conocimiento de la perpetración de algún delito de los que deben perseguirse de oficio, deberá denunciarlo al Ministerio Fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, sin que se entienda obligado por esto a probar los hechos denunciados ni a formalizar querella."
+    },
+    {
+        "pregunta": "¿Qué norma otorga a cualquier persona la facultad de realizar detenciones en determinadas circunstancias?",
+        "opciones": [
+            "Los Jueces.",
+            "La LECrim.",
+            "El Gobierno.",
+            "La policía."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 490 LECrim Cualquier persona puede detener: 1.º Al que intentare cometer un delito en el momento de ir a cometerlo. 2.º Al delincuente in fraganti. 3.º Al que se fugare del establecimiento penal en que se halle extinguiendo condena. 4.º Al que se fugare de la cárcel en que estuviere esperando su traslación al establecimiento penal o lugar en que deba cumplir la condena que se le hubiese impuesto por sentencia firme. 5.º Al que se fugare al ser conducido al establecimiento o lugar mencionado en el número anterior. 6.º Al que se fugare estando detenido o preso por causa pendiente. 7.º Al procesado o condenado que estuviere en rebeldía."
+    },
+    {
+        "pregunta": "Antonio y Mariluz eran pareja sentimental hasta que ésta decidió romper con la relación hace unas semanas. Antonio no levanta cabeza y se siente celoso porque se ha percatado de que Mariluz ha empezado en un grupo de bailes latinos y sale frecuentemente a bailar con amigos. Antonio decide interponer una denuncia por maltrato en el ámbito familiar a Mariluz, sin tener motivo alguno. ¿Qué puede ocurrir según la LECrim?",
+        "opciones": [
+            "Una vez recibida la denuncia por el Juez y comprobados los hechos denunciados, si éste se percatase que la denuncia fuere manifiestamente falsa, se abstendrá de todo procedimiento, sin perjuicio de la responsabilidad en que pudiera incurrir si desestimase la denuncia indebidamente.",
+            "Una vez recibida la denuncia por el Juez y comprobados los hechos denunciados, si éste se percatase que la denuncia fuere manifiestamente falsa, se abstendrá de todo procedimiento.",
+            "Una vez recibida la denuncia por el Juez y comprobados los hechos denunciados, si éste se percatase que la denuncia fuere manifiestamente falsa, continuará con el procedimiento.",
+            "Una vez recibida la denuncia por el Juez sin comprobar los hechos denunciados, si éste se percatase que la denuncia fuere manifiestamente falsa, se abstendrá de todo procedimiento, sin perjuicio de la responsabilidad en que pudiera incurrir si desestimase la denuncia indebidamente."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 269. LECrim Formalizada que sea la denuncia, se procederá o mandará proceder inmediatamente por el Juez o funcionario a quien se hiciese a la comprobación del hecho denunciado, salvo que éste no revistiere carácter de delito, o que la denuncia fuere manifiestamente falsa. En cualquiera de estos dos casos, el Tribunal o funcionario se abstendrán de todo procedimiento, sin perjuicio de la responsabilidad en que incurran si desestimasen aquélla indebidamente."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). No están obligados a denunciar...",
+        "opciones": [
+            "Los que no gozaren de pleno uso de razón.",
+            "Los menores de edad.",
+            "Los menores de 21 años.",
+            "Los que tengan cualquier parentesco con el delincuente."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 260. LECrim La obligación establecida en el artículo anterior no comprende a los impúberes ni a los que no gozaren del pleno uso de su razón."
+    },
+    {
+        "pregunta": "Según lo estipulado en el artículo 263 bis LECrim, el Juez de Instrucción competente y el Ministerio Fiscal, así como los Jefes de las Unidades Orgánicas de Policía Judicial, centrales o de ámbito provincial, y sus mandos superiores podrán autorizar la circulación o entrega vigilada de drogas tóxicas, estupefacientes o sustancias psicotrópicas, así como de otras sustancias prohibidas. ¿Qué requisitos deberá reunir la resolución dictada por el Juez?",
+        "opciones": [
+            "Debe ser una resolución fundada, en la que se determine la entrega vigilada, así como el tipo y cantidad de la sustancia legales de que se trate.",
+            "Debe ser una resolución concisa, donde se refleje el objeto de autorización, así como el procedimiento a seguir por las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "Debe ser una resolución fundada, en la que se determine explícitamente, en cuanto sea posible, el objeto de autorización o entrega vigilada, así como el tipo y cantidad de la sustancia de que se trate.",
+            "No es necesario que sea una resolución fundada, pero sí que debe determinar explícitamente, el objeto de autorización o entrega vigilada, así como el tipo y cantidad de la sustancia de que se trate."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 263 bis. LECrim 1. El Juez de Instrucción competente y el Ministerio Fiscal, así como los Jefes de las Unidades Orgánicas de Policía Judicial, centrales o de ámbito provincial, y sus mandos superiores podrán autorizar la circulación o entrega vigilada de drogas tóxicas, estupefacientes o sustancias psicotrópicas, así como de otras sustancias prohibidas. Esta medida deberá acordarse por resolución fundada, en la que se determine explícitamente, en cuanto sea posible, el objeto de autorización o entrega vigilada, así como el tipo y cantidad de la sustancia de que se trate. Para adoptar estas medidas se tendrá en cuenta su necesidad a los fines de investigación en relación con la importancia del delito y con las posibilidades de vigilancia. El Juez que dicte la resolución dará traslado de copia de la misma al Juzgado Decano de su jurisdicción, el cual tendrá custodiado un registro de dichas resoluciones. También podrá ser autorizada la circulación o entrega vigilada de los equipos, materiales y sustancias a los que se refiere el artículo 371 del Código Penal, de los bienes y ganancias a que se hace referencia en el artículo 301 de dicho Código en todos los supuestos previstos en el mismo, así como de los bienes, materiales, objetos y especies animales y vegetales a los que se refieren los artículos 332, 334, 386, 399 bis, 566, 568 y 569, también del Código Penal."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). ¿Cómo podrán hacerse las denuncias?",
+        "opciones": [
+            "Por escrito, de palabra, personalmente o por medio de mandatario con poder especial.",
+            "De palabra o por escrito, pero en todo caso personalmente .",
+            "Solamente por escrito y ante la policía judicial.",
+            "Por escrito o de palabra y solamente ante la policía judicial."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 265. LECrim Las denuncias podrán hacerse por escrito o de palabra, personalmente o por medio de mandatario con poder especial."
+    },
+    {
+        "pregunta": "Cuando un empleado público no comunicare a la autoridad o al agente de la autoridad competente la noticia qué conocen por razón de sus cargos, oficios o profesiones La perpetración de un delito público:",
+        "opciones": [
+            "Se impondrá la pena de multa y se pondrá en conocimiento a su superior inmediato.",
+            "Se impondrá la pena de multa.",
+            "Se impondrá la pena de multa y la suspensión del ejercicio del empleo público por tiempo inferior a dos años.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "LECrim. Artículo 262. Los que por razón de sus cargos, profesiones u oficios tuvieren noticia de algún delito público, estarán obligados a denunciarlo inmediatamente al Ministerio fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio si se tratare de un delito flagrante. Los que no cumpliesen esta obligación incurrirán en la multa señalada en el artículo 259, que se impondrá disciplinariamente. Si la omisión en dar parte fuere de un Profesor en Medicina, Cirugía o Farmacia y tuviese relación con el ejercicio de sus actividades profesionales, la multa no podrá ser inferior a 125 pesetas ni superior a 250. Si el que hubiese incurrido en la omisión fuere empleado público, se pondrá además en conocimiento de su superior inmediato para los efectos a que hubiere lugar en el orden administrativo. Lo dispuesto en este artículo se entiende cuando la omisión no produjere responsabilidad con arreglo a las Leyes."
+    },
+    {
+        "pregunta": "Según la LECrim, por lo general, están obligados a poner inmediatamente en conocimiento del juez o funcionario del ministerio fiscal más próximo, la comisión de un delito:",
+        "opciones": [
+            "El que presenciare su perpetración.",
+            "El que hubiese tenido noticia de este por cualquier medio.",
+            "Los que lo hubiesen conocido por razón de su cargo, profesión u oficio.",
+            "Los citados en a y c solamente."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 259. LECrim El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas."
+    },
+    {
+        "pregunta": "De conformidad con el tenor literal del artículo 263 de la LECrim, la obligación impuesta en el párrafo primero del artículo anterior no comprenderá a _______________________respecto de las instrucciones o explicaciones que recibieren de sus clientes. Tampoco comprenderá a _______________________________respecto de las noticias que se les hubieren revelado en el ejercicio de las funciones de su ministerio. (Complete los espacios en blanco con la opción correcta):",
+        "opciones": [
+            "Los Abogados; los eclesiásticos.",
+            "Los Abogados ni a los Procuradores; los eclesiásticos y ministros de cultos disidentes.",
+            "Los Abogados ni a los Procuradores; los ministros de cultos disidentes.",
+            "Los Abogados; los eclesiásticos y ministros de cultos disidentes."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 263. LECrim La obligación impuesta en el párrafo primero del art. anterior no comprenderá a los Abogados ni a los Procuradores respecto de las instrucciones o explicaciones que recibieren de sus clientes. Tampoco comprenderá a los eclesiásticos y ministros de cultos disidentes respecto de las noticias que se les hubieren revelado en el ejercicio de las funciones de su ministerio."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Miguel y Pedro son dos policías locales que patrullan conjuntamente las calles de Palma al pertenecer a la misma unidad. Miguel, en ocasiones, accede al depósito de pruebas de la Jefatura para apropiarse de determinados objetos que retienen a los detenidos, como por ejemplo teléfonos móviles, dispositivos de audio externo, etc. ¿Tiene Pedro la obligación de denunciar ante las autoridades a Miguel?",
+        "opciones": [
+            "No, puesto que son compañeros y no tienen la obligación de denunciarse.",
+            "Ninguna de las anteriores respuestas es correcta.",
+            "Sí, ya que por razón de su profesión tiene conocimiento de la perpetración de un delito.",
+            "Sí, ya que por razón de su profesión tiene conocimiento de la perpetración de un delito. Además, deberá ponerlo en conocimiento de su superior inmediato para los efectos a que hubiere lugar en el orden administrativo."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 262. LECrim Los que por razón de sus cargos, profesiones u oficios tuvieren noticia de algún delito público, estarán obligados a denunciarlo inmediatamente al Ministerio fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio si se tratare de un delito flagrante. Los que no cumpliesen esta obligación incurrirán en la multa señalada en el artículo 259, que se impondrá disciplinariamente. Si la omisión en dar parte fuere de un Profesor en Medicina, Cirugía o Farmacia y tuviese relación con el ejercicio de sus actividades profesionales, la multa no podrá ser inferior a 125 pesetas ni superior a 250. Si el que hubiese incurrido en la omisión fuere empleado público, se pondrá además en conocimiento de su superior inmediato para los efectos a que hubiere lugar en el orden administrativo. Lo dispuesto en este artículo se entiende cuando la omisión no produjere responsabilidad con arreglo a las Leyes."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). ¿Quiénes podrán autorizar la circulación o entrega vigilada de drogas toxicas?",
+        "opciones": [
+            "Los jueces de instrucción competente.",
+            "Los jueces de instrucción competente y el ministerio fiscal.",
+            "Los jefes de las Unidades orgánicas de policía judicial.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 263 bis. LECrim 1. El Juez de Instrucción competente y el Ministerio Fiscal, así como los Jefes de las Unidades Orgánicas de Policía Judicial, centrales o de ámbito provincial, y sus mandos superiores podrán autorizar la circulación o entrega vigilada de drogas tóxicas, estupefacientes o sustancias psicotrópicas, así como de otras sustancias prohibidas. Esta medida deberá acordarse por resolución fundada, en la que se determine explícitamente, en cuanto sea posible, el objeto de autorización o entrega vigilada, así como el tipo y cantidad de la sustancia de que se trate. Para adoptar estas medidas se tendrá en cuenta su necesidad a los fines de investigación en relación con la importancia del delito y con las posibilidades de vigilancia. El Juez que dicte la resolución dará traslado de copia de la misma al Juzgado Decano de su jurisdicción, el cual tendrá custodiado un registro de dichas resoluciones. También podrá ser autorizada la circulación o entrega vigilada de los equipos, materiales y sustancias a los que se refiere el artículo 371 del Código Penal, de los bienes y ganancias a que se hace referencia en el artículo 301 de dicho Código en todos los supuestos previstos en el mismo, así como de los bienes, materiales, objetos y especies animales y vegetales a los que se refieren los artículos 332, 334, 386, 399 bis, 566, 568 y 569, también del Código Penal. 2. Se entenderá por circulación o entrega vigilada la técnica consistente en permitir que remesas ilícitas o sospechosas de drogas tóxicas, sustancias psicotrópicas u otras sustancias prohibidas, los equipos, materiales y sustancias a que se refiere el apartado anterior, las sustancias por las que se haya sustituido las anteriormente mencionadas, así como los bienes y ganancias procedentes de las actividades delictivas tipificadas en los artículos 301 a 304 y 368 a 373 del Código Penal, circulen por territorio español o salgan o entren en él sin interferencia obstativa de la autoridad o sus agentes y bajo su vigilancia, con el fin de descubrir o identificar a las personas involucradas en la comisión de algún delito relativo a dichas drogas, sustancias, equipos, materiales, bienes y ganancias, así como también prestar auxilio a autoridades extranjeras en esos mismos fines. 3. El recurso a la entrega vigilada se hará caso por caso y, en el plano internacional, se adecuará a lo dispuesto en los tratados internacionales. Los Jefes de las Unidades Orgánicas de la Policía Judicial centrales o de ámbito provincial o sus mandos superiores darán cuenta inmediata al Ministerio Fiscal sobre las autorizaciones que hubiesen otorgado de conformidad con el apartado 1 de este artículo y, si existiese procedimiento judicial abierto, al Juez de Instrucción competente. 4. La interceptación y apertura de envíos postales sospechosos de contener estupefacientes y, en su caso, la posterior sustitución de la droga que hubiese en su interior se llevarán a cabo respetando en todo momento las garantías judiciales establecidas en el ordenamiento jurídico, con excepción de lo previsto en el artículo 584 de la presente Ley."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Los que, por razón de su cargo, profesión u oficio, tuviere conocimiento de un delito público:",
+        "opciones": [
+            "Estarán obligados a denunciarlo inmediatamente al Ministerio Fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio, si se tratare de un delito flagrante.",
+            "No estará obligado a denunciarlo, al ministerio fiscal, al tribunal competente, al juez de instrucción y en su defecto, al funcionario de policía más próximo, si se trata de un delito flagrante.",
+            "Estará obligado a denunciarlo, al ministerio fiscal, o al tribunal competente.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 262. LECrim Los que por razón de sus cargos, profesiones u oficios tuvieren noticia de algún delito público, estarán obligados a denunciarlo inmediatamente al Ministerio fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio si se tratare de un delito flagrante. Los que no cumpliesen esta obligación incurrirán en la multa señalada en el artículo 259, que se impondrá disciplinariamente. Si la omisión en dar parte fuere de un Profesor en Medicina, Cirugía o Farmacia y tuviese relación con el ejercicio de sus actividades profesionales, la multa no podrá ser inferior a 125 pesetas ni superior a 250. Si el que hubiese incurrido en la omisión fuere empleado público, se pondrá además en conocimiento de su superior inmediato para los efectos a que hubiere lugar en el orden administrativo. Lo dispuesto en este artículo se entiende cuando la omisión no produjere responsabilidad con arreglo a las Leyes."
+    },
+    {
+        "pregunta": "De conformidad con lo establecido en el artículo 259 de la Ley de Enjuiciamiento Criminal, el que presenciare la perpetración de cualquier delito público está obligado a:",
+        "opciones": [
+            "Ponerlo inmediatamente en conocimiento del Juez de instrucción, de Paz, Comarcal o Municipal, o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas.",
+            "Ponerlo en conocimiento del Juez de instrucción, de Paz, Comarcal o Municipal, o funcionario fiscal más próximo al sitio en que se cometió el delito, bajo la multa de 25 a 250 pesetas.",
+            "Ponerlo inmediatamente en conocimiento del Juez de instrucción o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas.",
+            "Ponerlo inmediatamente en conocimiento del Juez de instrucción, Comarcal o Municipal, o funcionario fiscal más próximo al sitio en que se hallare."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 259. LECrim El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). María y Verónica fueron víctimas de un robo con violencia ayer noche mientras caminaban por la calle de camino de la discoteca hacia su domicilio. El delincuente les sustrajo los bolsos a ambas con todas sus pertenencias dentro utilizando un arma blanca y propinando varios golpes para conseguir llevarse los bolsos. María y Verónica han decidido ir a la Jefatura Superior de la Policía Nacional de Palma a denunciar los hechos, pero Verónica debe coger un vuelo inmediatamente para emprender un viaje. En caso de que Verónica otorgarse un poder especial a favor de María, ¿podría María denunciar en nombre de Verónica?",
+        "opciones": [
+            "No, la denuncia debe realizarse siempre personalmente de conformidad con el artículo 265 LECrim.",
+            "Sí, pero no es necesario mandatario verbal, puesto que con una simple grabación de voz podría denunciarse los hechos por María, ya que de conformidad con el artículo 265 LECrim la denuncia podrá hacerse de palabra.",
+            "Sí, pero no es necesario presentar un poder especial para hacerlo, simplemente una autorización firmada por la denunciante a favor de una tercera persona.",
+            "Sí, la denuncia puede realizarse por medio de mandatario con poder especial de conformidad con el artículo 265 LECrim."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 265. LECrim Las denuncias podrán hacerse por escrito o de palabra, personalmente o por medio de mandatario con poder especial."
+    },
+    {
+        "pregunta": "Cuál de los siguientes tiene el deber y no la obligación de denunciar:",
+        "opciones": [
+            "El particular que presenciare un delito público.",
+            "El agente de la autoridad que por razón de su oficio tuviere noticia de un delito público.",
+            "Los que tuvieren conocimiento de un delito publico exceptuando los supuestos de las opciones A y B.",
+            "Todos tienen la obligación de denunciar."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 264 LECrim El que por cualquier medio diferente de los mencionados tuviere conocimiento de la perpetración de algún delito de los que deben perseguirse de oficio, deberá denunciarlo al Ministerio Fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, sin que se entienda obligado por esto a probar los hechos denunciados ni a formalizar querella."
+    },
+    {
+        "pregunta": "Según lo estipulado en el artículo 268 de la LECrim, el Juez, Tribunal, Autoridad o funcionario que recibieren una denuncia verbal o escrita:",
+        "opciones": [
+            "Harán constar por la cédula personal, o por otros medios que reputen suficientes, la identidad de la persona del denunciador.",
+            "Harán constar por la cédula personal la identidad de la persona del denunciador.",
+            "Harán constar por medios que reputen suficientes, la identidad de la persona del denunciador.",
+            "Harán constar por la cédula personal, o por otros medios que reputen suficientes, la identidad de la persona del denunciador. Si éste lo exigiere, le darán un resguardo de haber formalizado la denuncia."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 268. LECrim El Juez, Tribunal, autoridad o funcionario que recibieren una denuncia verbal o escrita harán constar por la cédula personal o por otros medios que reputen suficientes, la identidad de la persona del denunciador. Si éste lo exigiere, le darán un resguardo de haber formalizado la denuncia."
+    },
+    {
+        "pregunta": "Según lo contemplado por el artículo 265 de la Ley de Enjuiciamiento Criminal, las denuncias podrán hacerse: Seleccione la opción incorrecta.",
+        "opciones": [
+            "Por escrito o de palabra.",
+            "Por medio de autorización firmada por el denunciante.",
+            "Personalmente.",
+            "Por medio de mandatario con poder especial."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 265. LECrim Las denuncias podrán hacerse por escrito o de palabra, personalmente o por medio de mandatario con poder especial."
+    },
+    {
+        "pregunta": "Cuando la denuncia sea verbal:",
+        "opciones": [
+            "El denunciante extenderá un acta de la misma.",
+            "El denunciante extenderá un acta de la misma y será firmada por denunciante y por el agente de la autoridad que la recibiere.",
+            "La autoridad con funcionario que recibiré la denuncia extenderá un acta de la misma.",
+            "La autoridad o funcionario que recibiere la denuncia la rubricará y sellará todas las hojas a presencia del que la presentare."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 267. Cuando la denuncia sea verbal, se extenderá un acta por la autoridad o funcionario que la recibiere, en la que, en forma de declaración, se expresarán cuantas noticias tenga el denunciante relativas al hecho denunciado y a sus circunstancias, firmándola ambos a continuación. Si el denunciante no pudiere firmar, lo hará otra persona a su ruego."
+    },
+    {
+        "pregunta": "De conformidad con el tenor literal del artículo 264 de la Ley de Enjuiciamiento Criminal, el que por cualquier medio diferente de los mencionados tuviere conocimiento de la perpetración de algún delito de los que deben perseguirse de oficio:",
+        "opciones": [
+            "Deberá denunciarlo al Ministerio fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, sin que se entienda obligado por esto a probar los hechos denunciados ni a formalizar querella.",
+            "Deberá denunciarlo al Ministerio fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, entendiéndose obligado por esto a probar los hechos denunciados ni a formalizar querella.",
+            "Deberá denunciarlo al Ministerio fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, sin que se entienda obligado por esto a probar los hechos denunciados debiendo formalizar querella.",
+            "Deberá denunciarlo al Ministerio fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, entendiéndose obligado por esto a probar los hechos denunciados y a formalizar querella."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 264. LECrim El que por cualquier medio diferente de los mencionados tuviere conocimiento de la perpetración de algún delito de los que deben perseguirse de oficio, deberá denunciarlo al Ministerio Fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, sin que se entienda obligado por esto a probar los hechos denunciados ni a formalizar querella. El denunciador no contraerá en ningún caso otra responsabilidad que la correspondiente a los delitos que hubiese cometido por medio de la denuncia, o con su ocasión."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). ¿Qué ocurre cuando la denuncia sea verbal?",
+        "opciones": [
+            "No es posible.",
+            "Se extenderá un acta por la autoridad funcionario que la recibiere.",
+            "En tal caso solo puede recibirla la autoridad judicial.",
+            "Solo puede recibirla autoridad competente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 267. LECrim Cuando la denuncia sea verbal, se extenderá un acta por la autoridad o funcionario que la recibiere, en la que, en forma de declaración, se expresarán cuantas noticias tenga el denunciante relativas al hecho denunciado y a sus circunstancias, firmándola ambos a continuación. Si el denunciante no pudiere firmar, lo hará otra persona a su ruego."
+    },
+    {
+        "pregunta": "En qué artículo de la Ley de Enjuiciamiento Criminal se establece la obligación que tiene toda persona que presenciare la perpetración de cualquier delito público de ponerlo inmediatamente en conocimiento del Juez de instrucción?",
+        "opciones": [
+            "Artículo 259.2 LECrim.",
+            "Artículo 259 LECrim.",
+            "Artículo 249 LECrim.",
+            "Artículo 269 LECrim."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 259. LECrim El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas."
+    },
+    {
+        "pregunta": "De conformidad con el tenor literal del artículo 267 de la Ley de Enjuiciamiento Criminal, cuando la denuncia ser verbal, ¿qué deberá extender la autoridad o funcionario que la recibiere?",
+        "opciones": [
+            "Un acta.",
+            "Un atestado.",
+            "Un documento sellado.",
+            "Un informe."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 267. LECrim Cuando la denuncia sea verbal, se extenderá un acta por la autoridad o funcionario que la recibiere, en la que, en forma de declaración, se expresarán cuantas noticias tenga el denunciante relativas al hecho denunciado y a sus circunstancias, firmándola ambos a continuación. Si el denunciante no pudiere firmar, lo hará otra persona a su ruego."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). En relación con la denuncia: Señale la incorrecta.",
+        "opciones": [
+            "En ningún caso es una obligación.",
+            "El denunciante, en ningún caso contraerá otra responsabilidad que la correspondiente a los delitos cometidos por medio de la denuncia.",
+            "Cuando se trate de un delito público, puede interponerla cualquiera",
+            "El denunciante puede constituirse como parte en el proceso."
+        ],
+        "correcta": 0,
+        "explicacion": "Están obligados a denunciar los que presenciaran cualquier delito público, los que por razón de su cargo tuvieran noticia de e"
+    },
+    {
+        "pregunta": "Según lo tipificado en la Ley de Enjuiciamiento Criminal, formalizada la denuncia se procederá o mandará proceder inmediatamente por el Juez:",
+        "opciones": [
+            "La identidad del delincuente.",
+            "La comprobación del hecho denunciado.",
+            "La identidad de los testigos.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 269. LECrim Formalizada que sea la denuncia, se procederá o mandará proceder inmediatamente por el Juez o funcionario a quien se hiciese a la comprobación del hecho denunciado, salvo que éste no revistiere carácter de delito, o que la denuncia fuere manifiestamente falsa. En cualquiera de estos dos casos, el Tribunal o funcionario se abstendrán de todo procedimiento, sin perjuicio de la responsabilidad en que incurran si desestimasen aquélla indebidamente."
+    },
+    {
+        "pregunta": "Atendiendo al tenor literal del artículo 266 LECrim. Señale la más correcta:",
+        "opciones": [
+            "Debe estar firmada por el denunciador y por otra persona a su ruego.",
+            "Debe estar firmada por la autoridad o funcionario.",
+            "Debe estar firmada por el denunciador y por una autoridad o funcionario.",
+            "Debe estar rubricada por la autoridad o funcionario que recibiere la denuncia."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 266 LECrim La denuncia que se hiciere por escrito deberá estar firmada por el denunciador; y si no pudiere hacerlo, por otra persona a su ruego. La autoridad o funcionario que la recibiere rubricará y sellará todas las hojas a presencia del que la presentare, quien podrá también rubricarla por sí o por medio de otra persona a su ruego."
+    },
+    {
+        "pregunta": "Según el tenor literal del apartado primero del artículo 261 de la LECrim, tampoco estarán obligados a denunciar:",
+        "opciones": [
+            "El cónyuge del delincuente separado legalmente o de hecho o la persona que no conviva con él en análoga relación de afectividad.",
+            "El cónyuge del delincuente separado legalmente o la persona que conviva con él en análoga relación de afectividad.",
+            "El cónyuge del delincuente no separado legalmente o la persona que conviva con él en análoga relación sentimental.",
+            "El cónyuge del delincuente no separado legalmente o de hecho o la persona que conviva con él en análoga relación de afectividad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 261. LECrim Tampoco estarán obligados a denunciar: 1.º El cónyuge del delincuente no separado legalmente o de hecho o la persona que conviva con él en análoga relación de afectividad. 2.º Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el segundo grado inclusive."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Estefanía ha decidido denunciar por escrito a Cristofer por inscribir en el Registro de Patentes y Marcas una conocida frase que se hizo viral en un programa de televisión. ¿Debe ir firmada la denuncia por Estefanía?",
+        "opciones": [
+            "Sí, la denuncia siempre debe ir firmada por el denunciador.",
+            "No, firmar la denuncia es una facultad que tiene el denunciador.",
+            "Sí, excepto que el denunciador no pueda hacerlo y designe a otra persona a su ruego.",
+            "No, aunque el denunciador pueda firmarla puede designar a otra persona a su ruego."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 266. LECrim La denuncia que se hiciere por escrito deberá estar firmada por el denunciador; y si no pudiere hacerlo, por otra persona a su ruego. La autoridad o funcionario que la recibiere rubricará y sellará todas las hojas a presencia del que la presentare, quien podrá también rubricarla por sí o por medio de otra persona a su ruego."
+    },
+    {
+        "pregunta": "Según el artículo 259 LECrim, ¿Quiénes tienen la obligación de poner en conocimiento de la autoridad la perpetración de cualquier delito público?",
+        "opciones": [
+            "El que por cualquier medio tuviere conocimiento de la perpetración de un delito publico.",
+            "Cualquier persona que lo presenciare.",
+            "Los que por razón de sus cargos, profesiones u oficio tuvieren noticia de cualquier tipo de delito.",
+            "Todas son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 259. LECrim El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas."
+    },
+    {
+        "pregunta": "Según la LECrim, en relación con la denuncia:",
+        "opciones": [
+            "Es la manera convencional de ejecutar la acción penal.",
+            "Es obligación de los ciudadanos que presenciare a perpetración de cualquier delito público.",
+            "La acción penal se ejecuta mediante denuncia.",
+            "Es una variedad de la querella."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 259. LECrim El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas."
+    },
+    {
+        "pregunta": "Según el tenor literal del artículo 259 LECrim, “el que presenciare la perpetración de cualquier delito público ____________ ponerlo inmediatamente en conocimiento del Juez de instrucción, de Paz, Comarcal o Municipal, o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas. Complete el espacio en blanco con la respuesta correcta:",
+        "opciones": [
+            "Está facultado a.",
+            "Tiene del deber de.",
+            "Está obligado a.",
+            "Tiene la decisión de."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 259. LECrim El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas."
+    },
+    {
+        "pregunta": "¿A quién deberán dar cuenta los Jefes de las Unidades Orgánicas de la Policía Judicial sobre las autorizaciones que hubiesen otorgado de conformidad con el apartado primero del artículo 263 bis LECrim cuando no exista procedimiento judicial abierto?",
+        "opciones": [
+            "Al Juez de Instrucción.",
+            "Al Letrado de la Administración de Justicia.",
+            "Al Ministerio Fiscal.",
+            "Al Abogado del Estado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 263 bis. LECrim 3. El recurso a la entrega vigilada se hará caso por caso y, en el plano internacional, se adecuará a lo dispuesto en los tratados internacionales. Los Jefes de las Unidades Orgánicas de la Policía Judicial centrales o de ámbito provincial o sus mandos superiores darán cuenta inmediata al Ministerio Fiscal sobre las autorizaciones que hubiesen otorgado de conformidad con el apartado 1 de este artículo y, si existiese procedimiento judicial abierto, al Juez de Instrucción competente."
+    },
+    {
+        "pregunta": "¿A quién deberán dar cuenta los Jefes de las Unidades Orgánicas de la Policía Judicial sobre las autorizaciones que hubiesen otorgado de conformidad con el apartado primero del artículo 263 bis LECrim?",
+        "opciones": [
+            "Al Ministerio Fiscal.",
+            "Al Juez de Instrucción.",
+            "Al Juez de Instrucción competente, si existiese procedimiento judicial abierto.",
+            "Las respuestas a y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 263 bis. LECrim 3. El recurso a la entrega vigilada se hará caso por caso y, en el plano internacional, se adecuará a lo dispuesto en los tratados internacionales. Los Jefes de las Unidades Orgánicas de la Policía Judicial centrales o de ámbito provincial o sus mandos superiores darán cuenta inmediata al Ministerio Fiscal sobre las autorizaciones que hubiesen otorgado de conformidad con el apartado 1 de este artículo y, si existiese procedimiento judicial abierto, al Juez de Instrucción competente."
+    },
+    {
+        "pregunta": "¿Dónde se encuentra regulada la denuncia en la Ley de Enjuiciamiento Criminal?",
+        "opciones": [
+            "En el Libro II, Título I, artículos 259 a 269.",
+            "En el Libro II, Título II, artículos 259 a 269.",
+            "En el Libro II, Título I, artículo 249 a 259.",
+            "En el Libro I, Título II, artículo 249 a 269."
+        ],
+        "correcta": 0,
+        "explicacion": "LA DENUNCIA El Título I del Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de enjuiciamiento criminal, LECrim, se rubrica “De la denuncia” (del LIBRO II) y está compuesto por los artículos 259 a 269, ambos inclusive,"
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Están exceptuados de la obligación de denunciar:",
+        "opciones": [
+            "El cónyuge del delincuente no separado legalmente o, de hecho.",
+            "La persona que conviva con el delincuente en análoga relación de afectividad.",
+            "Los ascendientes y descendientes del delincuente y sus colaterales hasta segundo grado.",
+            "Todos los citados anteriormente."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 260.LECrim La obligación establecida en el artículo anterior no comprende a los impúberes ni a los que no gozaren del pleno uso de su razón."
+    },
+    {
+        "pregunta": "Ley de Enjuiciamiento Criminal (RD de 14 de Sept. de 1882). Para la apertura y registro de la correspondencia postal sospechosa de contener sustancias estupefacientes:",
+        "opciones": [
+            "Será preceptivo la presencia del interesado.",
+            "No será preceptivo la presencia del interesado.",
+            "Será preceptivo la presencia del interesado o de su representante.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 263 bis. LECrim 4. La interceptación y apertura de envíos postales sospechosos de contener estupefacientes y, en su caso, la posterior sustitución de la droga que hubiese en su interior se llevarán a cabo respetando en todo momento las garantías judiciales establecidas en el ordenamiento jurídico, con excepción de lo previsto en el artículo 584 de la presente Ley."
+    },
+    {
+        "pregunta": "El apartado segundo del artículo 263 bis de la Ley de Enjuiciamiento Criminal establece que se entenderá por circulación o entrega vigilada:",
+        "opciones": [
+            "La técnica consistente en permitir que remesas lícitas de sustancias prohibidas circulen por territorio español con interferencia obstativa de la autoridad o sus agentes y bajo su vigilancia.",
+            "La técnica consistente en permitir que remesas ilícitas o sospechosas de drogas tóxicas, sustancias psicotrópicas u otras sustancias prohibidas circulen por territorio español o salgan o entren en él con interferencia obstativa de la autoridad o sus agentes y bajo su vigilancia.",
+            "La técnica consistente en permitir que remesas ilícitas o sospechosas de drogas tóxicas, sustancias psicotrópicas u otras sustancias prohibidas circulen por territorio español o salgan o entren en él sin interferencia obstativa de la autoridad o sus agentes y bajo su vigilancia, con el fin de descubrir o identificar a las personas involucradas en la comisión de algún delito relativo a dichas drogas, sustancias, equipos, materiales, bienes y ganancias, así como también prestar auxilio a autoridades extranjeras en esos mismos fines.",
+            "La técnica consistente en permitir que remesas ilícitas o sospechosas de drogas tóxicas, sustancias psicotrópicas u otras sustancias prohibidas circulen por territorio español, con el fin de descubrir o identificar a las personas involucradas en la comisión de algún delito relativo a dichas drogas, sustancias, equipos, materiales, bienes y ganancias."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 263 bis. LECrim 2. Se entenderá por circulación o entrega vigilada la técnica consistente en permitir que remesas ilícitas o sospechosas de drogas tóxicas, sustancias psicotrópicas u otras sustancias prohibidas, los equipos, materiales y sustancias a que se refiere el apartado anterior, las sustancias por las que se haya sustituido las anteriormente mencionadas, así como los bienes y ganancias procedentes de las actividades delictivas tipificadas en los artículos 301 a 304 y 368 a 373 del Código Penal, circulen por territorio español o salgan o entren en él sin interferencia obstativa de la autoridad o sus agentes y bajo su vigilancia, con el fin de descubrir o identificar a las personas involucradas en la comisión de algún delito relativo a dichas drogas, sustancias, equipos, materiales, bienes y ganancias, así como también prestar auxilio a autoridades extranjeras en esos mismos fines."
+    },
+    {
+        "pregunta": "Según el Art. 261 de la LECrim, no estará obligado a denunciar: Señale la opción incorrecta.",
+        "opciones": [
+            "El abuelo del delincuente.",
+            "La pareja sentimental del delincuente.",
+            "La cuñada del delincuente.",
+            "El cónyuge del delincuente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 261. LECrim Tampoco estarán obligados a denunciar: 1.º El cónyuge del delincuente no separado legalmente o de hecho o la persona que conviva con él en análoga relación de afectividad. 2.º Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el segundo grado inclusive."
+    },
+    {
+        "pregunta": "Según lo estipulado en el artículo 269 LECrim, formalizada que sea la denuncia, se procederá o mandará proceder inmediatamente por el Juez o funcionario a quien se hiciese a:",
+        "opciones": [
+            "La comprobación del hecho denunciado, salvo que éste no revistiere carácter de delito o que la denuncia fuere manifiestamente falsa.",
+            "La comprobación del hecho denunciado, salvo que éste no revistiere carácter de delito o que la denuncia fuere manifiestamente falsa. En cualquiera de estos dos casos el Tribunal o funcionario se abstendrán de todo procedimiento, sin perjuicio de la responsabilidad en que incurran si desestimasen aquélla indebidamente.",
+            "La identificación de la persona del delincuente y la comprobación del hecho denunciado.",
+            "La identificación de la persona del delincuente y la comprobación del hecho denunciado, salvo que éste no revistiere carácter de delito o que la denuncia fuere manifiestamente falsa. En cualquiera de estos dos casos el Tribunal o funcionario se abstendrán de todo procedimiento, sin perjuicio de la responsabilidad en que incurran si desestimasen aquélla indebidamente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 269. LECrim Formalizada que sea la denuncia, se procederá o mandará proceder inmediatamente por el Juez o funcionario a quien se hiciese a la comprobación del hecho denunciado, salvo que éste no revistiere carácter de delito, o que la denuncia fuere manifiestamente falsa. En cualquiera de estos dos casos, el Tribunal o funcionario se abstendrán de todo procedimiento, sin perjuicio de la responsabilidad en que incurran si desestimasen aquélla indebidamente."
+    },
+    {
+        "pregunta": "De conformidad con lo establecido en el artículo 266 de la LECrim, la autoridad o funcionario que recibiere una denuncia:",
+        "opciones": [
+            "Rubricará todas las hojas a presencia del que la presentare.",
+            "Rubricará y sellará todas las hojas sin necesidad de estar presente el que la presentare.",
+            "Sellará todas las hojas a presencia del que la presentare.",
+            "Las respuestas a y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 266. LECrim La denuncia que se hiciere por escrito deberá estar firmada por el denunciador; y si no pudiere hacerlo, por otra persona a su ruego. La autoridad o funcionario que la recibiere rubricará y sellará todas las hojas a presencia del que la presentare, quien podrá también rubricarla por sí o por medio de otra persona a su ruego."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Imaginemos que pertenecemos a un grupo de WhatsApp formado por amigos y conocidos de nuestro centro de trabajo y uno de éstos escribe que acaba de cometer un robo con fuerza en las cosas y envía una imagen con los objetos sustraídos:",
+        "opciones": [
+            "Nosotros tenemos la obligación de denunciarlo a las autoridades, debiendo probar los hechos denunciados.",
+            "Nosotros tenemos el deber de denunciarlo a las autoridades, debiendo probar los hechos denunciados.",
+            "Nosotros tenemos del deber de denunciarlo a las autoridades, sin tener que probar los hechos denunciados.",
+            "Nosotros tenemos la obligación de denunciarlo a las autoridades, sin tener que probar los hechos denunciados."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 264. LECrim El que por cualquier medio diferente de los mencionados tuviere conocimiento de la perpetración de algún delito de los que deben perseguirse de oficio, deberá denunciarlo al Ministerio Fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, sin que se entienda obligado por esto a probar los hechos denunciados ni a formalizar querella. El denunciador no contraerá en ningún caso otra responsabilidad que la correspondiente a los delitos que hubiese cometido por medio de la denuncia, o con su ocasión."
+    },
+    {
+        "pregunta": "Según la LECrim, están obligados a poner en conocimiento de la autoridad los que presenciaren:",
+        "opciones": [
+            "Todo tipo de delitos.",
+            "Todo tipo de delito privado.",
+            "Cualquier delito publico.",
+            "La b y c son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 259. LECrim El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal o funcionario fiscal más próximo al sitio en que se hallare, bajo la multa de 25 a 250 pesetas."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Pedro ha presenciado como su hijo ha cometido un delito de hurto en un establecimiento comercial, ¿tiene la obligación de denunciarlo ante las autoridades?",
+        "opciones": [
+            "Sí, ya que si no lo denuncia puede considerarse cómplice del delito.",
+            "Sí, ya que toda persona que presencia un delito tiene la obligación de denunciarlo.",
+            "No, puesto que en el momento de los hechos no presenció directamente el delito.",
+            "No, puesto que los ascendientes y descendientes del delincuente no tienen la obligación de denunciar."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 261. LECrim Tampoco estarán obligados a denunciar: 1.º El cónyuge del delincuente no separado legalmente o de hecho o la persona que conviva con él en análoga relación de afectividad. 2.º Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el segundo grado inclusive."
+    },
+    {
+        "pregunta": "El juez competente para la resolución del Hábeas Corpus:",
+        "opciones": [
+            "Tiene un plazo de 24 horas desde que el detenido es llevado a su presencia.",
+            "Tiene un plazo de 24 horas desde que se solicita el habeas corpus.",
+            "Tiene un plazo de 24 horas desde que se dicta el auto de incoación.",
+            "Tiene un plazo de 24 horas desde la detención."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo 7 En el auto de incoación, el Juez ordenará a la autoridad a cuya disposición se halle la persona privada de libertad o a aquél en cuyo poder se encuentre, que la ponga de manifiesto ante él, sin pretexto ni demora alguna o se constituirá en el lugar donde aquélla se encuentre. Antes de dictar resolución, oirá el Juez a la persona privada de libertad, o en su caso, a su representante legal y Abogado, si lo hubiera designado, así como al Ministerio Fiscal; acto seguido oirá en justificación de su proceder a la autoridad, agentes, funcionario público o representante de la institución o persona que hubiere ordenado o practicado la detención o internamiento y, en todo caso, a aquélla bajo cuya custodia se encontrase la persona privada de libertad; a todos ellos dará a conocer el Juez las declaraciones del privado de libertad. El Juez admitirá, si las estima pertinentes, las pruebas que aporten las personas a que se refiere el párrafo anterior y las que propongan que puedan practicarse en el acto. En el plazo de veinticuatro horas, contadas desde que sea dictado el auto de incoación, los Jueces practicarán todas las actuaciones a que se refiere este artículo y dictarán la resolución que proceda."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Están exentos de la obligación de denunciar: Señale la incorrecta.",
+        "opciones": [
+            "Los impúberes.",
+            "Los hijos y los hermanos del delincuente.",
+            "Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el 4º grado inclusive.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 260.LECrim La obligación establecida en el artículo anterior no comprende a los impúberes ni a los que no gozaren del pleno uso de su razón."
+    },
+    {
+        "pregunta": "Según la Ley de Enjuiciamiento Criminal, ¿quién podrá autorizar la circulación o entrega vigilada de drogas tóxicas, estupefacientes o sustancias psicotrópicas, así como de otras sustancias prohibidas? Señale la opción incorrecta:",
+        "opciones": [
+            "El Letrado de la Administración de Justicia.",
+            "El Juez de Instrucción competente.",
+            "El Ministerio Fiscal.",
+            "Los Jefes de las Unidades Orgánicas de Policía Judicial."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 263 bis. LECrim 1. El Juez de Instrucción competente y el Ministerio Fiscal, así como los Jefes de las Unidades Orgánicas de Policía Judicial, centrales o de ámbito provincial, y sus mandos superiores podrán autorizar la circulación o entrega vigilada de drogas tóxicas, estupefacientes o sustancias psicotrópicas, así como de otras sustancias prohibidas. Esta medida deberá acordarse por resolución fundada, en la que se determine explícitamente, en cuanto sea posible, el objeto de autorización o entrega vigilada, así como el tipo y cantidad de la sustancia de que se trate. Para adoptar estas medidas se tendrá en cuenta su necesidad a los fines de investigación en relación con la importancia del delito y con las posibilidades de vigilancia. El Juez que dicte la resolución dará traslado de copia de la misma al Juzgado Decano de su jurisdicción, el cual tendrá custodiado un registro de dichas resoluciones. También podrá ser autorizada la circulación o entrega vigilada de los equipos, materiales y sustancias a los que se refiere el artículo 371 del Código Penal, de los bienes y ganancias a que se hace referencia en el artículo 301 de dicho Código en todos los supuestos previstos en el mismo, así como de los bienes, materiales, objetos y especies animales y vegetales a los que se refieren los artículos 332, 334, 386, 399 bis, 566, 568 y 569, también del Código Penal."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). El que por cualquier medio diferente de los mencionados tuviere conocimiento de la perpetración de algún delito público:",
+        "opciones": [
+            "Deberá a denunciarlo al funcionario de policía judicial.",
+            "Deberá denunciarlo al tribunal competente, sin que se entienda obligado por esto a probar los hechos denunciados ni a formalizar querella.",
+            "Deberá denunciarlo al ministerio fiscal, juez de instrucción o municipal.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 264. LECrim El que por cualquier medio diferente de los mencionados tuviere conocimiento de la perpetración de algún delito de los que deben perseguirse de oficio, deberá denunciarlo al Ministerio Fiscal, al Tribunal competente o al Juez de instrucción o municipal, o funcionario de policía, sin que se entienda obligado por esto a probar los hechos denunciados ni a formalizar querella. El denunciador no contraerá en ningún caso otra responsabilidad que la correspondiente a los delitos que hubiese cometido por medio de la denuncia, o con su ocasión."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). El Jefe de la Unidad Orgánica de la Policía Judicial adscrita a la Jefatura Superior de Policía Nacional de Palma va a proceder a interceptar y abrir un envío postal sospechoso procedente de Colombia que presumiblemente contiene cocaína en su interior. Tras la intercepción, ¿puede proceder directamente a su apertura?",
+        "opciones": [
+            "Sí, no es obligatoria la presencia del destinatario.",
+            "Sí, respetando en todo momento las garantías judiciales establecidas en el ordenamiento jurídico, siendo obligatorio la presencia del destinatario.",
+            "Sí, respetando en todo momento las garantías judiciales establecidas en el ordenamiento jurídico, no siendo obligatorio la presencia del destinatario.",
+            "No, ya que para la apertura y registro de la correspondencia postal será citado el destinatario en todo caso."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 263 bis. LECrim 4. La interceptación y apertura de envíos postales sospechosos de contener estupefacientes y, en su caso, la posterior sustitución de la droga que hubiese en su interior se llevarán a cabo respetando en todo momento las garantías judiciales establecidas en el ordenamiento jurídico, con excepción de lo previsto en el artículo 584 de la presente Ley."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). Señale la incorrecta:",
+        "opciones": [
+            "El que presenciare la perpetración de cualquier delito público está obligado a ponerlo inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal, o funcionario fiscal más próximo al sitio en que se hallare.",
+            "La obligación de poner inmediatamente en conocimiento del Juez de instrucción, de paz, comarcal o municipal, o funcionario fiscal más próximo al sitio en que se hallare, incluye a los impúberes.",
+            "Los que por razón de sus cargos, profesiones u oficios tuvieren noticia de algún delito público, estarán obligados a denunciarlo inmediatamente al Ministerio Fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio, si se tratare de un delito flagrante.",
+            "Todas son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 260. LECrim La obligación establecida en el artículo anterior no comprende a los impúberes ni a los que no gozaren del pleno uso de su razón."
+    },
+    {
+        "pregunta": "LECrim (RD de 14 de Sept. de 1882). En cuanto a la obligación de la comprobación de los hechos denunciados:",
+        "opciones": [
+            "No corresponde si la denuncia fuese manifiestamente falsa.",
+            "Corresponde en todo caso.",
+            "No corresponde si no reviste carácter de delito.",
+            "La a y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 269. LECrim Formalizada que sea la denuncia, se procederá o mandará proceder inmediatamente por el Juez o funcionario a quien se hiciese a la comprobación del hecho denunciado, salvo que éste no revistiere carácter de delito, o que la denuncia fuere manifiestamente falsa. En cualquiera de estos dos casos, el Tribunal o funcionario se abstendrán de todo procedimiento, sin perjuicio de la responsabilidad en que incurran si desestimasen aquélla indebidamente."
+    },
+    {
+        "pregunta": "Según el tenor literal del apartado segundo del artículo 261 de la LECrim, tampoco estarán obligados a denunciar:",
+        "opciones": [
+            "Los ascendientes y descendientes del delincuente o sus parientes colaterales hasta el segundo grado inclusive.",
+            "Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el segundo grado inclusive.",
+            "Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el tercer grado inclusive.",
+            "Los ascendientes y descendientes del delincuente y sus parientes laterales hasta el segundo grado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 261. LECrim Tampoco estarán obligados a denunciar: 1.º El cónyuge del delincuente no separado legalmente o de hecho o la persona que conviva con él en análoga relación de afectividad. 2.º Los ascendientes y descendientes del delincuente y sus parientes colaterales hasta el segundo grado inclusive."
+    },
+    {
+        "pregunta": "Según lo estipulado en el artículo 262 de la Ley de Enjuiciamiento Criminal, los que por razón de sus cargos, profesiones u oficios tuvieren noticia de algún delito público, estarán obligados a denunciarlo:",
+        "opciones": [
+            "Al Ministerio fiscal, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio.",
+            "Inmediatamente al Ministerio fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio, si se tratare de un delito flagrante.",
+            "Al Ministerio fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio.",
+            "Inmediatamente al Ministerio fiscal, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio, si se tratare de un delito flagrante."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 262. LECrim Los que por razón de sus cargos, profesiones u oficios tuvieren noticia de algún delito público, estarán obligados a denunciarlo inmediatamente al Ministerio fiscal, al Tribunal competente, al Juez de instrucción y, en su defecto, al municipal o al funcionario de policía más próximo al sitio si se tratare de un delito flagrante. Los que no cumpliesen esta obligación incurrirán en la multa señalada en el artículo 259, que se impondrá disciplinariamente. Si la omisión en dar parte fuere de un Profesor en Medicina, Cirugía o Farmacia y tuviese relación con el ejercicio de sus actividades profesionales, la multa no podrá ser inferior a 125 pesetas ni superior a 250. Si el que hubiese incurrido en la omisión fuere empleado público, se pondrá además en conocimiento de su superior inmediato para los efectos a que hubiere lugar en el orden administrativo. Lo dispuesto en este artículo se entiende cuando la omisión no produjere responsabilidad con arreglo a las Leyes."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. Señale a cuál de los siguientes corresponde la siguiente definición: “Expresan el pluralismo político, concurren a la formación y manifestación de la voluntad popular y son instrumento fundamental para la participación política”:",
+        "opciones": [
+            "Los sindicatos.",
+            "Las Fuerzas Armadas.",
+            "Las asociaciones empresariales.",
+            "Los partidos políticos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 6 CE Los partidos políticos expresan el pluralismo político, concurren a la formación y manifestación de la voluntad popular y son instrumento fundamental para la participación política. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "La Constitución Española de 1978:",
+        "opciones": [
+            "No se ha reformado hasta ahora.",
+            "Tendrá que ser reformada para adecuarse al «Tratado de Lisboa», según sostuvo el Tribunal Constitucional en su Declaración 1/2004, de 13 de diciembre.",
+            "Se reformó en el año 1992, por el procedimiento ordinario del artículo 167, para adecuar el artículo 13.2 al Tratado de la Unión Europea.",
+            "Se reformó en el año 1984, para posibilitar la entrada de España en la Comunidad Europea."
+        ],
+        "correcta": 2,
+        "explicacion": "La Constitución española ha sido reformada en dos ocasiones: en 1992 y 2011, ambas siguiendo el procedimiento ordinario. Reforma de 1992 En 1992 se realizó la primera reforma a la constitución española de 1978. Consistió en añadir, en el artículo 13.2, la expresión «y pasivo» referida al ejercicio del derecho de sufragio de los extranjeros en elecciones municipales, en 1992, para adaptar la Constitución a una exigencia del Tratado de Maastricht de la Unión Europea. Al no solicitar referéndum el 10 % de diputados o senadores, éste no se celebró. Reforma de 2011 La reforma de 2011 gira en torno a la modificación del artículo 135 de la Constitución, estableciendo en el texto el concepto de “estabilidad presupuestaria”, en el marco de la crisis económica de 2008."
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título Preliminar de la Constitución?",
+        "opciones": [
+            "Seis.",
+            "Ocho.",
+            "Nueve.",
+            "Diez."
+        ],
+        "correcta": 2,
+        "explicacion": "Los 169 artículos de la Constitución se distribuyen en un Título Preliminar y en 10 Títulos diferentes por razón de la materia: • Título Preliminar: “Principios Generales” arts. 1-9. • Título Primero: “De los Derechos y deberes fundamentales” arts. 10-55. • Título Segundo: “De la Corona” arts. 56-65 CE. • Título Tercero: “De las Cortes Generales”. arts. 66-96. • Título Cuarto: “Del Gobierno y la Administración” arts. 97-107. • Título Quinto: “De las relaciones entre el Gobierno y las Cortes” arts. 108-116. • Título Sexto: “Del poder judicial” arts. 117-127. • Título Séptimo: “Economía y Hacienda” arts. 128-136. • Título Octavo: “De la organización territorial del Estado” arts. 137-158. • Título Noveno: “Del Tribunal Constitucional” arts. 159-165. • Título Décimo: “De la reforma constitucional” arts. 166-169."
+    },
+    {
+        "pregunta": "Señale la respuesta correcta. Si una disposición con fuerza de ley contiene preceptos contrarios a la Constitución de 1978:",
+        "opciones": [
+            "El Rey no debe sancionarla ni ordenar su publicación.",
+            "Los jueces no deben aplicarla.",
+            "Podrá ser declarada inconstitucional por tanto nula por el Tribunal Constitucional.",
+            "Las tres anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "LA CONSTITUCIÓN COMO NORMA SUPREMA La Constitución no sólo es una norma, sino que es la norma suprema, situada en la cúspide del Ordenamiento Jurídico. Esta superioridad se manifiesta en dos aspectos diferenciados: a) Supremacía Formal b) Supremacía Material : esta cualidad se aprecia claramente en la relación que existe entre Constitución y Ley. Ésta última es producto de la potestad legislativa de la que disponen los órganos parlamentarios y que deriva de la legitimidad democrática que les asiste. No obstante, y a pesar de esta superioridad de la Ley, los titulares del poder legislativo están sometidos a los preceptos constitucionales, verdaderos límites de la creación legislativa. De modo que las Leyes que no se ajusten a los contenidos constitucionales podrán ser sancionadas con la declaración de nulidad y consiguiente expulsión del ordenamiento jurídico, conforme a las facultades que la propia Constitución otorga al Tribunal Constitucional."
+    },
+    {
+        "pregunta": "La Constitución Española fue aprobada en sesiones plenarias del Congreso y del Senado celebradas el:",
+        "opciones": [
+            "27 de diciembre de 1978.",
+            "10 de enero de 1977.",
+            "6 de diciembre de 1977.",
+            "31 de octubre de 1978."
+        ],
+        "correcta": 3,
+        "explicacion": "CE Fechas importantes 31 de octubre 1978 | Aprobación por los plenos de las Cámaras. 6 de diciembre 1978 | Referéndum. 27 de diciembre 1978 | Sanción y promulgación. 29 de diciembre 1978 | Publicación en el BOE y Entrada en vigor."
+    },
+    {
+        "pregunta": "Señale de los siguientes, cuáles son principios recogidos en el art. 9 de la CE:",
+        "opciones": [
+            "Principio de retroactividad",
+            "Principio de Legalidad",
+            "Principio de publicidad de las leyes",
+            "Todas son correctas"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En un \"referéndum\" lo que se vota por los ciudadanos:",
+        "opciones": [
+            "Una organización que se quiere que sea permanente y general.",
+            "Es un texto legal.",
+            "Es un texto constitucional.",
+            "A una persona para presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Un referéndum o referendo es un procedimiento jurídico por el que se somete al voto popular, leyes o actos administrativos para su ratificación.​Se trata de un procedimiento para tomar decisiones por el cual los ciudadanos ejercen el derecho de sufragio para decidir acerca de una decisión de resolución mediante la expresión de su acuerdo o desacuerdo. Para llegar al acuerdo tiene que haber la mayoría absoluta entre los votos."
+    },
+    {
+        "pregunta": "Señale la respuesta correcta. Constitución Española de 1978. El procedimiento legislativo ordinario se encuentra regulado en:",
+        "opciones": [
+            "Título II.",
+            "Título III.",
+            "Título IV.",
+            "Título VI."
+        ],
+        "correcta": 1,
+        "explicacion": "Los diferentes procedimientos legislativos se encuentran en el capítulo \"de la elaboración del leyes\""
+    },
+    {
+        "pregunta": "La denominada parte orgánica de la Constitución está integrada por:",
+        "opciones": [
+            "El Título II.",
+            "El Título Preliminar.",
+            "El Título Primero.",
+            "Por todos los Títulos, salvo el Preliminar y el Primero."
+        ],
+        "correcta": 3,
+        "explicacion": "CE Parte Orgánica Incluye normas relativas a la organización y competencias de los distintos poderes públicos, así como la regulación de las distintas relaciones entre los mismos. Establece la organización de la división de poderes del Estado. Abarca los Títulos del II al X, dedicándolos a la organización política y jurídica de los poderes del Estado y la parte reformista del Título X."
+    },
+    {
+        "pregunta": "¿Cuántas disposiciones Derogatorias tiene la Constitución Española?",
+        "opciones": [
+            "Ninguna.",
+            "Una.",
+            "Cuatro",
+            "Nueve."
+        ],
+        "correcta": 1,
+        "explicacion": "Estructura de la constitución española. La CE tiene un total de 169 artículos. Su estructura esquemática es la siguiente: - Preámbulo (sin fuerza jurídica). - Título Preliminar. - 10 títulos. - 4 disposiciones Adicionales. - 9 disposiciones Transitorias. - 1 disposición Derogatoria. - 1 disposición Final."
+    },
+    {
+        "pregunta": "¿Cuántas disposiciones finales tiene la Constitución Española?",
+        "opciones": [
+            "Una.",
+            "Tres.",
+            "Nueve.",
+            "Cuatro."
+        ],
+        "correcta": 0,
+        "explicacion": "Estructura de la constitución española. La CE tiene un total de 169 artículos. Su estructura esquemática es la siguiente: - Preámbulo (sin fuerza jurídica). - Título Preliminar. - 10 títulos. - 4 disposiciones Adicionales. - 9 disposiciones Transitorias. - 1 disposición Derogatoria. - 1 disposición Final."
+    },
+    {
+        "pregunta": "Respecto de la Constitución:",
+        "opciones": [
+            "La ley orgánica tiene el mismo valor y rango que la norma constitucional.",
+            "La primacía de la Constitución no significa la nulidad de cualquier norma que se oponga o contra diga su contenido.",
+            "El resto de normas está subordinada a la Constitución.",
+            "La Constitución es un texto político y no jurídico."
+        ],
+        "correcta": 2,
+        "explicacion": "Principio de jerarquía normativa Las normas jurídicas se ordenan jerárquicamente, en función de su rango, situándose en el vértice superior la propia Constitución."
+    },
+    {
+        "pregunta": "¿Qué art. de la CE nos habla de la oficialidad de las lenguas de las comunidades autónomas?",
+        "opciones": [
+            "Art. 2",
+            "Art. 3",
+            "Art. 6",
+            "Art. 5"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 3 CE 1. El castellano es la lengua española oficial del Estado. Todos los españoles tienen el deber de conocerla y el derecho a usarla. 2. Las demás lenguas españolas serán también oficiales en las respectivas Comunidades Autónomas de acuerdo con sus Estatutos. 3. La riqueza de las distintas modalidades lingüísticas de España es un patrimonio cultural que será objeto de especial respeto y protección."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La prohibición de \"La retroactividad penal\" se reconoce en el artículo:",
+        "opciones": [
+            "10 de la Constitución.",
+            "9.3 de la Constitución.",
+            "9.2 de la Constitución.",
+            "2.2 de la Constitución."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "La Constitución como fuente del derecho:",
+        "opciones": [
+            "Impide que formen parte del ordenamiento jurídico las normas que la contradigan.",
+            "No regula el proceso de creación de normas legales.",
+            "No determina el valor de las normas legales creadas, sino que atribuye a todas el mismo valor y rango, sin perjuicio de cuanto se determine en la legislación ordinaria.",
+            "No puede ser considerada como fuente del derecho."
+        ],
+        "correcta": 0,
+        "explicacion": "LA CONSTITUCIÓN COMO NORMA SUPREMA La Constitución no sólo es una norma, sino que es la norma suprema, situada en la cúspide del Ordenamiento Jurídico. Esta superioridad se manifiesta en dos aspectos diferenciados: a) Supremacía Formal b) Supremacía Material : esta cualidad se aprecia claramente en la relación que existe entre Constitución y Ley. Ésta última es producto de la potestad legislativa de la que disponen los órganos parlamentarios y que deriva de la legitimidad democrática que les asiste. No obstante, y a pesar de esta superioridad de la Ley, los titulares del poder legislativo están sometidos a los preceptos constitucionales, verdaderos límites de la creación legislativa. De modo que las Leyes que no se ajusten a los contenidos constitucionales podrán ser sancionadas con la declaración de nulidad y consiguiente expulsión del ordenamiento jurídico, conforme a las facultades que la propia Constitución otorga al Tribunal Constitucional."
+    },
+    {
+        "pregunta": "¿Quién aprueba y ratifica la Constitución Española de 1978?",
+        "opciones": [
+            "El pueblo español.",
+            "Las Cortes la aprueban y el Rey la ratifica.",
+            "El Rey la aprueba y el pueblo la ratifica.",
+            "Las Cortes la aprueba y el pueblo español ratifica."
+        ],
+        "correcta": 3,
+        "explicacion": "PREÁMBULO CE La Nación española, deseando establecer la justicia, la libertad y la seguridad y promover el bien de cuantos la integran, en uso de su soberanía, proclama su voluntad de: Garantizar la convivencia democrática dentro de la Constitución y de las leyes conforme a un orden económico y social justo. Consolidar un Estado de Derecho que asegure el imperio de la ley como expresión de la voluntad popular. Proteger a todos los españoles y pueblos de España en el ejercicio de los derechos humanos, sus culturas y tradiciones, lenguas e instituciones. Promover el progreso de la cultura y de la economía para asegurar a todos una digna calidad de vida. Establecer una sociedad democrática avanzada, y Colaborar en el fortalecimiento de unas relaciones pacíficas y de eficaz cooperación entre todos los pueblos de la Tierra. En consecuencia, las Cortes aprueban y el pueblo español ratifica la siguiente CONSTITUCIÓN."
+    },
+    {
+        "pregunta": "Señale cuál de los siguientes principios no aparece recogido en el art. 2 de la Constitución:",
+        "opciones": [
+            "Solidaridad.",
+            "Unidad.",
+            "Autonomía.",
+            "Subsidiariedad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2 CE La Constitución se fundamenta en la indisoluble unidad de la Nación española, patria común e indivisible de todos los españoles, y reconoce y garantiza el derecho a la autonomía de las nacionalidades y regiones que la integran y la solidaridad entre todas ellas."
+    },
+    {
+        "pregunta": "La Constitución Española de 1978:",
+        "opciones": [
+            "Ha seguido la tradición española que configurar la constitución como un conjunto normativo meramente programático.",
+            "Es la norma suprema de nuestro ordenamiento jurídico y la primera de las fuentes del Derecho.",
+            "En ningún precepto declara derogado cuanto sea contrario a la Constitución.",
+            "No es parte de nuestro ordenamiento jurídico puesto que se halla en un ámbito metajurídico."
+        ],
+        "correcta": 1,
+        "explicacion": "LA CONSTITUCIÓN COMO NORMA SUPREMA. La Constitución no sólo es una norma, sino que es la norma suprema, situada en la cúspide del Ordenamiento Jurídico (en adelante O.J.). La supremacía se proclama en el art. 9.1 CE: “los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico”. Además del sometimiento de los poderes públicos a la Constitución y a la Ley, este precepto hace una distinción entre Constitución y “el resto del ordenamiento” indicando la supremacía de la primera."
+    },
+    {
+        "pregunta": "¿Cuántos procedimientos de reforma prevé nuestra Constitución en su Título X?",
+        "opciones": [
+            "2, uno general y uno agravado.",
+            "3, municipal, autonómico y estatal.",
+            "1, que afecta a todo su contenido.",
+            "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 166 - iniciativa de reforma. Art. 167 - reforma general (proyecto de reforma constitucional). Art. 168 - reforma agravada (revisión total o parcial que afecte al Título preliminar, al Capítulo segundo, Sección primera del Título I, o al Título II). Art. 169 - no reforma en tiempos de guerra o estados de alarma, excepción o sitio."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿De dónde emanan los poderes del Estado?",
+        "opciones": [
+            "Del Rey",
+            "Del Gobierno",
+            "De las Cortes Generales",
+            "Del pueblo Español"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 1 CE 1. España se constituye en un Estado social y democrático de Derecho, que propugna como valores superiores de su ordenamiento jurídico la libertad, la justicia, la igualdad y el pluralismo político. 2. La soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado. 3. La forma política del Estado español es la Monarquía parlamentaria."
+    },
+    {
+        "pregunta": "La denominada parte dogmática de la Constitución está integrada por:",
+        "opciones": [
+            "El Título Preliminar y el Título Primero.",
+            "El Título Preliminar.",
+            "El Título Primero.",
+            "La Ley, la costumbre y los principios generales del derecho."
+        ],
+        "correcta": 0,
+        "explicacion": "CE Parte Dogmática Se centra en reconocer los principios constitucionales que inspiran el nuevo orden político del Estado. Incluye el Título Preliminar, el Título Primero y la declaración de los valores primarios del Estado y de los derechos y libertades."
+    },
+    {
+        "pregunta": "Atendiendo al criterio de reformabilidad, las constituciones se clasifican en:",
+        "opciones": [
+            "Formales y materiales.",
+            "Flexibles y rígidas.",
+            "Pactadas e impuestas.",
+            "Otorgadas y pactadas."
+        ],
+        "correcta": 1,
+        "explicacion": "Es una Constitución rígida Se pueden calificar los textos constitucionales en rígidos y flexibles, según si su modificación sigue el procedimiento legislativo ordinario o exige algún tipo de requisito adicional, que dificultan su reforma. Nuestra Constitución es claramente rígida, pues su modificación sólo puede tener lugar por los procedimientos previstos en el Título X, que distingue dos vías en función de la materia objeto de reforma."
+    },
+    {
+        "pregunta": "¿En qué fecha se publicó el texto oficial de la Constitución en el BOE?",
+        "opciones": [
+            "28 de diciembre de 1978.",
+            "29 de diciembre de 1978.",
+            "27 de diciembre de 1978.",
+            "31 de diciembre de 1978."
+        ],
+        "correcta": 1,
+        "explicacion": "CE Fechas importantes 31 de octubre 1978 | Aprobación por los plenos de las Cámaras. 6 de diciembre 1978 | Referéndum. 27 de diciembre 1978 | Sanción y promulgación. 29 de diciembre 1978 | Publicación en el BOE y Entrada en vigor."
+    },
+    {
+        "pregunta": "Señale en cuál de las siguientes se puede apreciar influencia en la Constitución española.",
+        "opciones": [
+            "Constitución francesa.",
+            "Constitución italiana.",
+            "Ley fundamental de Bonn.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Es una Constitución derivada Las constituciones se pueden clasificar en originarias o derivadas según introduzcan un principio funcional nuevo o estén inspiradas en anteriores modelos, tanto nacionales como extranjeros. Nuestra Constitución se puede clasificar como derivada pues está inspirada en la Constitución de 1931, en lo que se refiere a la organización territorial en Comunidades autónomas, la iniciativa legislativa popular, etc.; en la Ley Fundamental de Bonn de 1949; además de la Constitución francesa, italiana, nórdicas; de las constituciones portuguesa y americana, una parte de los derechos fundamentales. Por último, también está inspirada en la Declaración de Derechos Humanos de la ONU."
+    },
+    {
+        "pregunta": "La Constitución:",
+        "opciones": [
+            "No reconoce la potestad reglamentaria del Gobierno.",
+            "Establece la estructura vertical de la ordenación de las fuentes, con el principio de jerarquía.",
+            "No establece reserva de ley alguna, sino sólo de ley orgánica.",
+            "Niega eficacia erga omnes a todas las sentencias del Tribunal Constitucional."
+        ],
+        "correcta": 1,
+        "explicacion": "Principio de jerarquía normativa Las normas jurídicas se ordenan jerárquicamente, en función de su rango, situándose en el vértice superior la propia Constitución."
+    },
+    {
+        "pregunta": "La Constitución:",
+        "opciones": [
+            "No es fuente del derecho, sino norma suprema del ordenamiento.",
+            "Es una norma de carácter meramente programático.",
+            "Es la fuente principal y jerárquicamente superior del ordenamiento jurídico.",
+            "Sólo obliga a los poderes públicos."
+        ],
+        "correcta": 2,
+        "explicacion": "Principio de jerarquía normativa Las normas jurídicas se ordenan jerárquicamente, en función de su rango, situándose en el vértice superior la propia Constitución."
+    },
+    {
+        "pregunta": "El art. 9 de la Constitución de 1978 consagra una serie de principios fundamentales. Señale cuál de los siguientes no aparece recogido en el mismo:",
+        "opciones": [
+            "Principio de legalidad.",
+            "Principio de jerarquía normativa.",
+            "Principio de tipicidad.",
+            "Principio de irretroactividad de las disposiciones sancionadoras."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "La Constitución Española fue firmada por el Jefe del Estado, los Presidentes del Congreso y del Senado:",
+        "opciones": [
+            "26 de diciembre de 1978.",
+            "5 de diciembre de 1978.",
+            "27 de diciembre de 1978.",
+            "30 de diciembre de 1978."
+        ],
+        "correcta": 2,
+        "explicacion": "CE Fechas importantes 31 de octubre 1978 | Aprobación por los plenos de las Cámaras. 6 de diciembre 1978 | Referéndum. 27 de diciembre 1978 | Sanción y promulgación. 29 de diciembre 1978 | Publicación en el BOE y Entrada en vigor."
+    },
+    {
+        "pregunta": "Señale de las siguientes cuáles son funciones de los partidos políticos según el artículo 6 de la Constitución Española:",
+        "opciones": [
+            "Expresan el pluralismo político",
+            "Son instrumento fundamental para la participación política",
+            "Concurren a la formación y manifestación de la voluntad popular",
+            "Todas las respuestas anteriores son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 6 CE Los partidos políticos expresan el pluralismo político, concurren a la formación y manifestación de la voluntad popular y son instrumento fundamental para la participación política. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "Señale la respuesta correcta. El Título VI de la Constitución se compone de los siguientes artículos:",
+        "opciones": [
+            "107-117.",
+            "117-127.",
+            "117-137.",
+            "107-127."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cómo debe ser la estructura y funcionamiento de las organizaciones sindicales?",
+        "opciones": [
+            "Legal",
+            "Representativa",
+            "Democrática",
+            "Unipersonal"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 7 CE Los sindicatos de trabajadores y las asociaciones empresariales contribuyen a la defensa y promoción de los intereses económicos y sociales que les son propios. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "La Constitución se publicó en:",
+        "opciones": [
+            "Castellano, Catalán y Euskera.",
+            "Castellano, Catalán, Vasco y Gallego.",
+            "Castellano y demás lenguas oficiales de la Unión Europea.",
+            "Castellano y en las demás lenguas de España."
+        ],
+        "correcta": 3,
+        "explicacion": "El BOE de 29 de diciembre de 1978, cumpliendo lo establecido en la Disposición Final de la Constitución, publicó el texto oficial de la misma en castellano y “en las demás lenguas de España”. Se da la circunstancia de que, al no existir en aquel momento Estatutos de Autonomía que establecieran las lenguas oficiales de cada comunidad autónoma, se optó por publicar versiones en castellano, balear, catalán, gallego, valenciano y euskera."
+    },
+    {
+        "pregunta": "En qué fecha fue aprobada por las Cortes Generales la Constitución de 1978:",
+        "opciones": [
+            "El 6 de diciembre de 1978.",
+            "El 27 de diciembre de 1978.",
+            "El 29 de diciembre de 1978.",
+            "El 31 de octubre de 1978."
+        ],
+        "correcta": 3,
+        "explicacion": "CE Fechas importantes 31 de octubre 1978 | Aprobación por los plenos de las Cámaras. 6 de diciembre 1978 | Referéndum. 27 de diciembre 1978 | Sanción y promulgación. 29 de diciembre 1978 | Publicación en el BOE y Entrada en vigor."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de los siguientes no constituye un capítulo del Título VIII de la organización territorial del Estado.",
+        "opciones": [
+            "Principios generales.",
+            "De la administración local.",
+            "De las Comunidades Autónomas.",
+            "De las provincias."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "¿Cuántos Capítulos tiene el Título I de la Constitución Española?",
+        "opciones": [
+            "Cinco.",
+            "Seis.",
+            "Tres.",
+            "Cuatro."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La reforma Constitucional viene recogida en el Título:",
+        "opciones": [
+            "IX",
+            "X",
+            "VIII",
+            "I"
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "En qué título de la Constitución de 1978 se recogen los principios generales de la misma:",
+        "opciones": [
+            "Título I.",
+            "Título Preliminar.",
+            "Título II.",
+            "Título VIII."
+        ],
+        "correcta": 1,
+        "explicacion": "Los 169 artículos de la Constitución se distribuyen en un Título Preliminar y en 10 Títulos diferentes por razón de la materia: • Título Preliminar: “Principios Generales” arts. 1-9. • Título Primero: “De los Derechos y deberes fundamentales” arts. 10-55. • Título Segundo: “De la Corona” arts. 56-65 CE. • Título Tercero: “De las Cortes Generales”. arts. 66-96. • Título Cuarto: “Del Gobierno y la Administración” arts. 97-107. • Título Quinto: “De las relaciones entre el Gobierno y las Cortes” arts. 108-116. • Título Sexto: “Del poder judicial” arts. 117-127. • Título Séptimo: “Economía y Hacienda” arts. 128-136. • Título Octavo: “De la organización territorial del Estado” arts. 137-158. • Título Noveno: “Del Tribunal Constitucional” arts. 159-165. • Título Décimo: “De la reforma constitucional” arts. 166-169."
+    },
+    {
+        "pregunta": "De la enumeración de los siguientes principios constitucionales derivados del artículo 9 CE, señale cuál es correcto:",
+        "opciones": [
+            "El principio de legalidad.",
+            "El principio de la interdicción de la arbitrariedad de los poderes públicos.",
+            "El principio de responsabilidad.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "La eficacia de la Constitución:",
+        "opciones": [
+            "Es indirecta, pues necesita normas de desarrollo.",
+            "Es directa y vincula a todos, aunque algún precepto precise desarrollo legislativo.",
+            "Depende de a quién se aplique.",
+            "Es indirecta, temporal y soslayable."
+        ],
+        "correcta": 1,
+        "explicacion": "CARACTERÍSTICAS DE LA CONSTITUCIÓN ESPAÑOLA c) Es una Constitución inacabada y ambigua: se remite en demasiadas ocasiones a normas de desarrollo, lo que se conoce como reserva de ley. l) La constitución española es una auténtica norma jurídica: así, es fuente del derecho y de aplicación directa, caracterizándose como Constitución-Ley. Se debe aquí destacar: - El art. 9 CE que señala que “los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico”."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La soberanía nacional reside en:",
+        "opciones": [
+            "El pueblo español.",
+            "El Estado de Derecho.",
+            "La monarquía parlamentaria.",
+            "Los poderes públicos."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 1 CE 1. España se constituye en un Estado social y democrático de Derecho, que propugna como valores superiores de su ordenamiento jurídico la libertad, la justicia, la igualdad y el pluralismo político. 2. La soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado. 3. La forma política del Estado español es la Monarquía parlamentaria."
+    },
+    {
+        "pregunta": "¿Cuántas veces se ha reformado la Constitución Española de 1978?",
+        "opciones": [
+            "Una, en el año 1992.",
+            "Dos, en el año 1991 y en el 2011.",
+            "Dos, en el año 1992 y en el 2011.",
+            "No se ha reformado nunca."
+        ],
+        "correcta": 2,
+        "explicacion": "La Constitución española ha sido reformada en dos ocasiones: en 1992 y 2011, ambas siguiendo el procedimiento ordinario. Reforma de 1992 En 1992 se realizó la primera reforma a la constitución española de 1978. Consistió en añadir, en el artículo 13.2, la expresión «y pasivo» referida al ejercicio del derecho de sufragio de los extranjeros en elecciones municipales, en 1992, para adaptar la Constitución a una exigencia del Tratado de Maastricht de la Unión Europea. Al no solicitar referéndum el 10 % de diputados o senadores, éste no se celebró. Reforma de 2011 La reforma de 2011 gira en torno a la modificación del artículo 135 de la Constitución, estableciendo en el texto el concepto de “estabilidad presupuestaria”, en el marco de la crisis económica de 2008."
+    },
+    {
+        "pregunta": "La declaración de inconstitucionalidad de las leyes promulgadas tras la Constitución corresponde:",
+        "opciones": [
+            "A cualquier juez o tribunal que deba aplicar la norma.",
+            "Al Tribunal Constitucional en exclusiva.",
+            "Al Defensor del Pueblo.",
+            "A las Audiencias Provinciales y, en última instancia, al Tribunal Supremo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 161 CE 1. El Tribunal Constitucional tiene jurisdicción en todo el territorio español y es competente para conocer: a) Del recurso de inconstitucionalidad contra leyes y disposiciones normativas con fuerza de ley. La declaración de inconstitucionalidad de una norma jurídica con rango de ley, interpretada por la jurisprudencia, afectará a ésta, si bien la sentencia o sentencias recaídas no perderán el valor de cosa juzgada. b) Del recurso de amparo por violación de los derechos y libertades referidos en el artículo 53, 2, de esta Constitución, en los casos y formas que la ley establezca. c) De los conflictos de competencia entre el Estado y las Comunidades Autónomas o de los de éstas entre sí. d) De las demás materias que le atribuyan la Constitución o las leyes orgánicas. 2. El Gobierno podrá impugnar ante el Tribunal Constitucional las disposiciones y resoluciones adoptadas por los órganos de las Comunidades Autónomas. La impugnación producirá la suspensión de la disposición o resolución recurrida, pero el Tribunal, en su caso, deberá ratificarla o levantarla en un plazo no superior a cinco meses."
+    },
+    {
+        "pregunta": "Señale de las siguientes, cuáles son funciones de las Fuerzas Armadas según la CE:",
+        "opciones": [
+            "Garantiza la soberanía e independencia de la patria",
+            "Defender su integridad interterritorial",
+            "Defender la legalidad vigente",
+            "Ninguna es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 8 CE 1. Las Fuerzas Armadas, constituidas por el Ejército de Tierra, la Armada y el Ejército del Aire, tienen como misión garantizar la soberanía e independencia de España, defender su integridad territorial y el ordenamiento constitucional. 2. Una ley orgánica regulará las bases de la organización militar conforme a los principios de la presente Constitución."
+    },
+    {
+        "pregunta": "El artículo 1.1 de la Constitución define la libertad, la justicia, la igualdad y el pluralismo político como:",
+        "opciones": [
+            "Principios generales del ordenamiento jurídico.",
+            "Valores superiores del ordenamiento jurídico.",
+            "Los principios de los que emana la soberanía nacional.",
+            "Principios superiores del ordenamiento jurídico."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 1 CE 1. España se constituye en un Estado social y democrático de Derecho, que propugna como valores superiores de su ordenamiento jurídico la libertad, la justicia, la igualdad y el pluralismo político. 2. La soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado. 3. La forma política del Estado español es la Monarquía parlamentaria."
+    },
+    {
+        "pregunta": "La Constitución Española se caracteriza:",
+        "opciones": [
+            "Por no ser rígida.",
+            "Por ser consensuada.",
+            "Por ser inflexible.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 1,
+        "explicacion": "CARACTERÍSTICAS DE LA CONSTITUCIÓN ESPAÑOLA a) Es una Constitución escrita b) Es una constitución codificada y cerrada c) Es una Constitución inacabada y ambigua d) Es una Constitución extensa e) Es una Constitución rígida f) Es una Constitución consensuada g) Es una Constitución monárquica h) Es una Constitución flexible i) Es una Constitución democrática j) Es una Constitución derivada"
+    },
+    {
+        "pregunta": "La Constitución establece que las nacionalidades y regiones que integran el territorio español tendrán:",
+        "opciones": [
+            "Derecho de autodeterminación.",
+            "Derecho a la federación.",
+            "Derecho a la autogestión.",
+            "Derecho a la autonomía."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2 CE La Constitución se fundamenta en la indisoluble unidad de la Nación española, patria común e indivisible de todos los españoles, y reconoce y garantiza el derecho a la autonomía de las nacionalidades y regiones que la integran y la solidaridad entre todas ellas."
+    },
+    {
+        "pregunta": "La Constitución Española entró en vigor:",
+        "opciones": [
+            "El mismo día de su publicación.",
+            "A los veinte días de su publicación.",
+            "A los quince días de su publicación.",
+            "Al día siguiente de su publicación."
+        ],
+        "correcta": 0,
+        "explicacion": "CE Fechas importantes 31 de octubre 1978 | Aprobación por los plenos de las Cámaras. 6 de diciembre 1978 | Referéndum. 27 de diciembre 1978 | Sanción y promulgación. 29 de diciembre 1978 | Publicación en el BOE y Entrada en vigor."
+    },
+    {
+        "pregunta": "Señale cuál de las siguientes características no se corresponde con la Constitución de 1978:",
+        "opciones": [
+            "Escrita.",
+            "Abierta.",
+            "Rígida.",
+            "Extensa."
+        ],
+        "correcta": 1,
+        "explicacion": "CARACTERÍSTICAS DE LA CONSTITUCIÓN ESPAÑOLA a) Es una Constitución escrita b) Es una constitución codificada y cerrada c) Es una Constitución inacabada y ambigua d) Es una Constitución extensa e) Es una Constitución rígida f) Es una Constitución consensuada g) Es una Constitución monárquica h) Es una Constitución flexible i) Es una Constitución democrática j) Es una Constitución derivada"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El principio de jerarquía normativa:",
+        "opciones": [
+            "Significa que la ley posterior deroga a la anterior.",
+            "No está reconocido en la Constitución.",
+            "Supone que carecen de validez las disposiciones que contradigan otras de rango superior.",
+            "No rige en la determinación de las fuentes de los Derechos forales o especiales."
+        ],
+        "correcta": 2,
+        "explicacion": "Principio de jerarquía normativa Las normas jurídicas se ordenan jerárquicamente, en función de su rango, situándose en el vértice superior la propia Constitución. - Además, según el Artículo 1 del Código Civil 1. Las fuentes del ordenamiento jurídico español son la ley, la costumbre y los principios generales del derecho. 2. Carecerán de validez las disposiciones que contradigan otra de rango superior."
+    },
+    {
+        "pregunta": "La Constitución vincula:",
+        "opciones": [
+            "Sólo a los poderes públicos.",
+            "A todos los poderes públicos e instituciones, salvo a la monarquía.",
+            "Sólo a los ciudadanos, pero no a los poderes públicos.",
+            "A los ciudadanos y a los poderes públicos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

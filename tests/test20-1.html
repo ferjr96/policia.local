@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las piezas y los efectos de uniforme y de equipo de las policías locales de las Islas Baleares, se agrupan en:",
+        "opciones": [
+            "Vestuario, emblemas y armamento.",
+            "Emblemas, distintivos y equipo.",
+            "Vestuario, medallas y armamento.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 91 | Apariencia externa 1. La apariencia externa de los cuerpos de policía local de las Illes Balears se configura por la concurrencia de determinados signos que permiten una adecuada identificación. 2. Las piezas y los efectos de uniforme y de equipo de las policías locales de las Illes Balears se consideran agrupados en las siguientes clases: a) Vestuario b) Emblemas c) distintivos y medallas d) equipo y armamento 3. Los miembros de las policías locales, durante la prestación del servicio, deben vestir el uniforme reglamentario, excepto en los casos que determine la alcaldía según el puesto de trabajo o las necesidades del servicio y de acuerdo con lo previsto en la legislación vigente. No está permitido el uso de piezas, equipo, complementos y otros medios técnicos que no se ajusten a lo estrictamente reglamentado para cada ocasión, ni pueden ser objeto de reformas o alteraciones. Las asociaciones de municipios, con el informe previo y la autorización de la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales, pueden utilizar elementos de identificación externa propios que, en todo caso, deben mantener los criterios generales que se establecen para los de las policías locales. 4. En ningún caso se puede hacer uso de piezas de uniformidad fuera del horario de servicio, excepto para asistir a actividades formativas de la EBAP o con la autorización de la jefatura del cuerpo. La uniformidad debe ajustarse a los mínimos establecidos en este reglamento, que pueden variar mediante una orden de la consejera o consejero de Hacienda y Administraciones Públicas, competente en materia de coordinación de policías locales, que homologue los signos de identificación y de apariencia externa de las policías locales de las Illes Balears."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, no es correcto que, mientras presten servicios, los miembros de los cuerpos de policía local, deban:",
+        "opciones": [
+            "Presentarse al servicio correctamente uniformados y aseados.",
+            "Consumir bebidas alcohólicas y drogas tóxicas, estupefacientes o sustancias psicotrópicas.",
+            "Adoptar una postura correcta y evitar actitudes que denoten dejadez.",
+            "Llevar el pelo bien peinado y recogido."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 124 | Normas de apariencia externa y presentación personal 1. Las normas de apariencia personal tienen por objeto mantener una imagen digna y de respeto a la ciudadanía, prevenir lesiones y, especialmente, la seguridad de los agentes de la policía local para que el funcionario pueda ser identificado fácilmente por el resto de la ciudadanía. 2. Mientras prestan servicio: a) Deben adoptar una postura correcta y deben evitar actitudes que denoten dejadez. b) Deben presentarse al servicio correctamente uniformados y aseados. c) En caso de que lleven barba o bigote deben llevarse arreglados y ajustarse a unas dimensiones discretas. d) El pelo debe llevarse bien peinado y recogido. El peinado no puede tapar la cara y no se puede hacer uso de colores no naturales o formas que puedan ser consideradas extravagantes. e) El uniforme debe llevarse abrochado y en un estado correcto de limpieza y presentación, y deben llevar siempre puesta la pieza de cabeza cuando se encuentren en la vía pública, excepto en casos justificados. f) Deben abstenerse de llevar las manos en los bolsillos, fumar o masticar cualquier cosa, excepto en el periodo de descanso reglamentario. g) No pueden consumir bebidas alcohólicas ni drogas tóxicas, estupefacientes o sustancias psicotrópicas. h) No pueden llevar elementos susceptibles de engancharse (anillos, pulseras, pendientes, cadenas, piercings, collares y otros elementos similares) y producir lesiones tanto al agente como a la ciudadanía. i) Deben evitar exhibir tatuajes u otros adornos de tipo personal que puedan menoscabar la imagen de un agente o una agente uniformados. j) Cuando se dirigen a la ciudadanía, los agentes deben tener la cara descubierta y deben levantarse, en su caso, las gafas de sol."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el armamento de los policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local es:",
+        "opciones": [
+            "Es el arma corta de fuego.",
+            "Todas las anteriores.",
+            "El bastón extensible o defensa.",
+            "El aerosol defensivo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 3. El armamento de los miembros de los cuerpos de policía local y de las policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, que debe ajustarse a lo dispuesto en la normativa vigente en materia de armas, es el arma corta de fuego, el bastón extensible o defensa y el aerosol defensivo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en determinados casos y como armamento complementario, los cuerpos policiales pueden disponer de:",
+        "opciones": [
+            "Armas cortas de fuego si el ayuntamiento lo solicita previamente y siempre que dispongan de las autorizaciones previstas en la normativa vigente en materia de armas, incluida la autorización de la Consejería de Administraciones Públicas, competente en materia de coordinación de policías locales.",
+            "Armas largas de fuego si el alcalde o alcaldesa lo solicita previamente y siempre que dispongan de las autorizaciones previstas en la normativa vigente en materia de armas, incluida la autorización del director o la directora general competente en materia de coordinación de las policías locales.",
+            "No procede.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 4. En determinados casos y como armamento complementario, los cuerpos policiales pueden disponer de armas largas de fuego si el alcalde o alcaldesa lo solicita previamente y siempre que dispongan de las autorizaciones previstas en la normativa vigente en materia de armas, incluida la autorización del director o la directora general competente en materia de coordinación de las policías locales."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los vehículos automóviles (coches, furgones, etc), al servicio de la policía local deben pintarse de color:",
+        "opciones": [
+            "Negro.",
+            "Azul.",
+            "Blanco.",
+            "Amarillo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 105 | Automóviles 1. Los vehículos automóviles (coches, furgonetas, etc.) al servicio de la policía local deben pintarse de color blanco. A partir de la parte inferior de las ventanas, debe haber una franja amarilla reflectora de entre 2 y 4 cm seguida de una azul con cuadrados blancos (tablero) que debe ser de material reflector. Esta franja debe tener continuidad en la parte posterior del vehículo, según la forma y las dimensiones indicadas en las figuras 27, 28, 29, 30, 31 y 32 del anexo 1 de este reglamento. 2. La tipografía para la rotulación de letras es la Black Italic de la familia DIN, en color azul marino, con las dimensiones orientativas para cada caso que se señalan en las figuras 26 y siguientes del anexo 1 de este reglamento. 3. En las puertas delanteras debe constar la inscripción POLICÍA LOCAL, y justo debajo de la letra P debe situarse el escudo de la Comunidad Autónoma de las Illes Balears, y debajo de la inscripción, el nombre del ayuntamiento. 4. Igualmente, en el techo del vehículo debe figurar la misma inscripción y acto seguido se puede rotular el número de unidad operativa. 5. En ambas aletas delanteras y en el lugar indicado en las figuras 27 y siguientes del anexo 1 de este reglamento, debe estar la bandera de la Comunidad Autónoma, que figura en el anexo 1 mencionado. 6. En una parte visible de ambos lados y en la parte posterior debe llevar el teléfono de emergencias 112 (teléfono único de emergencias europeo), de una altura máxima de 14 cm. 7. En el capó delantero, centrado, debe llevar el escudo municipal, de un máximo 35 cm de altura y la palabra POLICÍA en la parte inferior. 8. En la parte posterior debe constar la inscripción POLICÍA LOCAL y, en el medio, el escudo de las Illes Balears."
+    },
+    {
+        "pregunta": "La regulación de las normas de apariencia externa, presentación y uniformidad en el Decreto 40/2019, de 24 de mayo, se efectúa en:",
+        "opciones": [
+            "En el capítulo I.",
+            "En el capítulo III.",
+            "En el capítulo II.",
+            "En el capítulo IV."
+        ],
+        "correcta": 3,
+        "explicacion": "NORMAS DE APARIENCIA EXTERNA, PRESENTACIÓN Y UNIFORMIDAD Las normas de apariencia externa, presentación y uniformidad están reguladas en el Capítulo IV del Título VIII del Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares, en los artículos 124 a 126."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las armas de fuego reglamentarias y cartuchería, fuera de las horas de servicio y salvo una autorización expresa del alcalde o alcaldesa, deben custodiarse en:",
+        "opciones": [
+            "En las dependencias municipales.",
+            "En las dependencias policiales.",
+            "Cada miembro de los cuerpos de policía local la custodia en su propio domicilio.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 68 | Custodia del arma de fuego y de la cartuchería 1. Las armas de fuego reglamentarias y la cartuchería se custodian, fuera de las horas de servicio y salvo una autorización expresa del alcalde o alcaldesa, en las dependencias municipales habilitadas a tal efecto por el correspondiente ayuntamiento. Con esta finalidad, los ayuntamientos que disponen de policías locales en cuya dotación se incluya un arma de fuego reglamentaria deben disponer de zonas de seguridad específicas con armeros homologados para custodiarlas y un recipiente de arena o caucho para descargarlas. 2. En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia. 3. Las armas deben depositarse descargadas en los armeros, esto es, los revólveres con el tambor abierto sin munición, y las pistolas, en su caso, sin cargador y con la recámara vacía. 4. Sin perjuicio de lo dispuesto en el apartado anterior, cuando un agente o una agente permanece de baja laboral, de acuerdo con el artículo 54.1.e) de este reglamento, la custodia del arma es responsabilidad del ayuntamiento y, por lo tanto, debe custodiarse en el armero correspondiente."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en caso de pérdida, sustracción, robo, destrucción u otra circunstancia que afecte gravemente al arma reglamentaria o a su documentación, es obligatorio:",
+        "opciones": [
+            "Comunicar dentro de los siete días posteriores a la sustracción al mando correspondiente, sin perjuicio de presentar la denuncia pertinente.",
+            "Comunicar inmediatamente al mando correspondiente, sin perjuicio de presentar la denuncia pertinente.",
+            "Comunicar dentro de los dos días posteriores a la sustracción al mando correspondiente, sin perjuicio de presentar la denuncia pertinente.",
+            "No es necesario comunicarlo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 71 | Pérdida, sustracción o destrucción del arma En caso de pérdida, sustracción, robo, destrucción u otra circunstancia que afecte gravemente al arma o a su documentación, debe comunicarse inmediatamente al mando correspondiente, sin perjuicio de presentar la denuncia pertinente."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los distintivos que señalan la categoría de inspector o inspectora son:",
+        "opciones": [
+            "Un recuadro donde dentro debe haber dos pirámides, de cuatro lados cada una, en relieve y dorados. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente.",
+            "Un recuadro dorado donde dentro debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente.",
+            "Un recuadro dorado donde dentro debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuerdo.",
+            "Un recuadro dorado donde dentro debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, para poder llevar armas, se debe haber superado:",
+        "opciones": [
+            "La formación específica en utilización de armas impartida por la Escuela Balear de Administración Pública.",
+            "Haber obtenido el certificado psicológico adecuado.",
+            "La a y b son correctas.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 7. Para poder llevar armas, debe haber superado la formación específica en utilización de armas impartida por la Escuela Balear de Administración Pública o, en su caso, de la Escuela de Seguridad Pública de las Illes Balears y haber obtenido el certificado psicológico adecuado. Los mencionados certificados tienen un plazo de vigencia de tres años."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los distintivos que señalan la categoría de subinspector o subinspectora son:",
+        "opciones": [
+            "Dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por dos centímetros, que deben estar situadas en los extremos exteriores del recuadro.",
+            "Dentro de un recuadro dorado debe haber una barra dorada y paralela, situada en el extremo exterior del recuadro.",
+            "Dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro.",
+            "Dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por tres centímetros, que deben estar situadas en los extremos interiores del recuadro."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el equipo básico de autodefensa y protección está integrado por:",
+        "opciones": [
+            "Armamento.",
+            "Equipamiento básico.",
+            "La a y b son correctas.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 2. El equipo básico de autodefensa y protección es el previsto en el artículo 103 de este reglamento y está integrado por el armamento y el equipamiento básico."
+    },
+    {
+        "pregunta": "Según el artículo 90 del Decreto 40/2019, de 24 de mayo, los únicos elementos de identificación externa son:",
+        "opciones": [
+            "La placa, la tarjeta profesional y el arma.",
+            "La placa, la tarjeta profesional y los escudos.",
+            "La tarjeta profesional, el arma y los escudos.",
+            "La placa, el arma y los escudos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 90 | Elementos de identificación externa Los únicos elementos de identificación externa son la placa, la tarjeta profesional y los escudos previstos en el anexo 1 de este reglamento."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, para la categoría de oficial y para las diferentes categorías de la escala ejecutiva y técnica, la uniformidad de gala es:",
+        "opciones": [
+            "Opcional.",
+            "Obligatoria.",
+            "Excepcional.",
+            "Necesario."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 | Uniformidad de gala La uniformidad de gala es obligatoria para la categoría de oficial y para las diferentes categorías de la escala ejecutiva y técnica. Para la categoría de policía es potestativa según la decisión del alcalde o alcaldesa. Esta uniformidad debe utilizarse en los acontecimientos que se determinen."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los miembros de los cuerpos de policía local, como titulares de la licencia tipo \"A\" pueden poseer:",
+        "opciones": [
+            "Un arma larga propiedad suya.",
+            "Un arma corta propiedad suya.",
+            "Dos armas cortas de propiedad suya.",
+            "Un arma corta y un arma larga."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 6. Sin perjuicio de lo establecido en el punto anterior, los miembros de los cuerpos de policía local, como titulares de la licencia tipo «a» a la que se refiere el Real Decreto 137/1993, pueden poseer un arma corta de su propiedad, además de las que puedan recibir como dotación reglamentaria. Por ello, los agentes interesados en adquirirla deben solicitar al alcalde o alcaldesa autorización a tal efecto, que facilite la tramitación pertinente ante la Intervención de Armas de la Guardia Civil. En ningún caso, pueden llevar o utilizar esta arma corta de su propiedad durante el servicio."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los agentes, en caso de utilización del equipo básico de autodefensa, se regirán por los principios de:",
+        "opciones": [
+            "Congruencia.",
+            "Oportunidad.",
+            "Proporcionalidad.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 48 | Normativa específica La tenencia y la utilización del equipo básico de autodefensa y protección por parte del personal de las policías locales de las Illes Balears debe ajustarse a los criterios de la Ley 4/2013, a este reglamento, a las disposiciones del Real Decreto 137/1993, de 29 de enero, por el que se aprueba el Reglamento de armas, y del Real Decreto 740/1983, de 30 de marzo, por el que se regula la licencia de armas correspondientes a los miembros de la Policía de las Comunidades Autónomas y de las Entidades Locales, y a las normas que los ayuntamientos puedan aprobar sobre este aspecto en el ejercicio de su potestad normativa. Los agentes, en caso de utilización de estos medios, deben regirse por los principios de congruencia, oportunidad y proporcionalidad."
+    },
+    {
+        "pregunta": "El equipo básico de autodefensa y protección que las entidades locales deben facilitar a sus correspondientes policías de forma individual y en el momento de tomar posesión, debe cumplir lo establecido en el artículo 49 del reglamento de coordinación de las policías locales y estará integrado por el armamento y el equipamiento básico. ¿Qué incluye este equipamiento básico?",
+        "opciones": [
+            "El silbato y el cordón, los grilletes o las esposas y un equipo reflector.",
+            "El silbato y el cordón u un equipo reflector.",
+            "Los grilletes, las esposas, guantes, y un equipo reflector.",
+            "El silbato y el cordón, los grilletes o las esposas, un equipo reflector y los guantes anticortes."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 103 | Equipo básico de autodefensa y protección 1. El equipo básico de autodefensa y protección que las entidades locales deben facilitar a sus correspondientes policías de forma individual y en el momento de tomar posesión, debe cumplir lo establecido en el artículo 49 de este reglamento y estará integrado por el armamento y el equipamiento básico. 2. El armamento incluye un arma de fuego, una defensa o bastón extensible y un aerosol defensivo con las correspondientes fundas. 3. El equipamiento básico incluye: a) El silbato y el cordón, que deben ser de color de metal o negro. b) Los grilletes o las esposas, que deben llevarse dentro de las fundas correspondientes, que deben ser de color negro. c) Un equipo reflector homologado. El chaleco debe tener las características que se indican en la figura 14 del anexo 1 de este reglamento. d) Guantes anticortes."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el órgano competente para determinar las fechas en las que debe cambiarse el vestuario por razón de las condiciones meteorológicas es:",
+        "opciones": [
+            "El alcalde o alcaldesa.",
+            "El jefe o jefa del correspondiente cuerpo de policía.",
+            "El ayuntamiento.",
+            "Cada miembro del cuerpo de policía local."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 93 | Fechas de cambio de vestuario 1. Las fechas en las que debe cambiarse el vestuario por razón de las condiciones meteorológicas, debe determinarlas el jefe o jefa del correspondiente cuerpo de policía local. 2. El alcalde o alcaldesa determinará los casos en los que debe utilizarse la uniformidad de gala."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en ningún caso se puede hacer uso de piezas de uniformidad fuera del horario de servicio, excepto:",
+        "opciones": [
+            "Para asistir a actividades formativas de la EBAP.",
+            "Cuando sean autorizados por la jefatura del cuerpo.",
+            "El día de la Fiesta Nacional.",
+            "La a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 91 | Apariencia externa 1. La apariencia externa de los cuerpos de policía local de las Illes Balears se configura por la concurrencia de determinados signos que permiten una adecuada identificación. 2. Las piezas y los efectos de uniforme y de equipo de las policías locales de las Illes Balears se consideran agrupados en las siguientes clases: a) Vestuario b) Emblemas c) distintivos y medallas d) equipo y armamento 3. Los miembros de las policías locales, durante la prestación del servicio, deben vestir el uniforme reglamentario, excepto en los casos que determine la alcaldía según el puesto de trabajo o las necesidades del servicio y de acuerdo con lo previsto en la legislación vigente. No está permitido el uso de piezas, equipo, complementos y otros medios técnicos que no se ajusten a lo estrictamente reglamentado para cada ocasión, ni pueden ser objeto de reformas o alteraciones. Las asociaciones de municipios, con el informe previo y la autorización de la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales, pueden utilizar elementos de identificación externa propios que, en todo caso, deben mantener los criterios generales que se establecen para los de las policías locales. 4. En ningún caso se puede hacer uso de piezas de uniformidad fuera del horario de servicio, excepto para asistir a actividades formativas de la EBAP o con la autorización de la jefatura del cuerpo. La uniformidad debe ajustarse a los mínimos establecidos en este reglamento, que pueden variar mediante una orden de la consejera o consejero de Hacienda y Administraciones Públicas, competente en materia de coordinación de policías locales, que homologue los signos de identificación y de apariencia externa de las policías locales de las Illes Balears."
+    },
+    {
+        "pregunta": "El artículo 126 del Decreto 40/2019, de 24 de mayo, establece la obligación que tienen los miembros de las policías locales de saludar, ya que es una manifestación externa de educación cívica y respeto. Además, es específicamente obligatoria saludar a:",
+        "opciones": [
+            "A las autoridades locales, insulares, autonómicas y estatales; a los símbolos e himnos oficiales en los actos de carácter oficial y a las personas jerárquicamente superiores.",
+            "A los símbolos e himnos oficiales en los actos de carácter oficial y a los ciudadanos a quienes se dirijan o viceversa.",
+            "A los ciudadanos a quienes se dirijan o viceversa y a las autoridades locales, insulares, autonómicas y estatales.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 126 | Obligación de saludar 1. El saludo es una manifestación externa de educación cívica y respeto y, como tal, de obligado cumplimiento por todos los miembros de las policías locales. Deben efectuarlo con corrección, naturalidad y sin ningún tipo de exageración, siempre que se vista el uniforme, y consiste en llevar la mano derecha, doblando el brazo por el codo, hasta el lateral de la visera de la gorra o un lugar similar de la pieza de cabeza. Cuando esta forma no sea posible, el saludo debe realizarse mediante la fórmula verbal de cortesía correspondiente a la hora del día en la que se encuentre. 2. Específicamente es obligatorio el saludo: a) A las autoridades locales, insulares, autonómicas y estatales. b) A los símbolos e himnos oficiales en los actos de carácter oficial. c) A los ciudadanos a quienes se dirijan o viceversa, a los que debe dispensarse un trato educado y cortés, haciendo uso siempre del tratamiento de usted y evitando actitudes o gestos ajenos al carácter de agente de la autoridad. En este caso, el saludo debe hacerse tanto al principio de la conversación como al acabarla. d) A las personas jerárquicamente superiores, las cuales deben devolver obligatoriamente el saludo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en caso de utilizarse el aerosol:",
+        "opciones": [
+            "No se deberán causar daños innecesarios.",
+            "Se cesará inmediatamente cuando se haya reducido al agresor o a los agresor",
+            "Todas las anteriores son correctas.",
+            "Si hay un mando presente, debe autorizar su uso."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 82 | Criterios generales de utilización del aerosol de defensa 1. El aerosol de defensa debe servir solo como elemento de autodefensa ante personas con una actitud agresiva que hayan amenazado o provocado con antelación a los policías, para evitar altercados graves, peleas tumultuarias o situaciones similares. 2. La utilización del aerosol debe realizarse sin causar daños innecesarios y cesará inmediatamente cuando se haya reducido el agresor o los agresores. 3. En caso de que haya un mando presente, debe autorizar su uso."
+    },
+    {
+        "pregunta": "El artículo del Decreto 40/2019, de 24 de mayo, que regula el armamento y equipamiento básico de los miembros de los cuerpos de policía local es:",
+        "opciones": [
+            "El artículo 50.",
+            "El artículo 49.",
+            "El artículo 48.",
+            "El artículo 51."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico"
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los emblemas tienen como finalidad la:",
+        "opciones": [
+            "La identificación externa de las personas que forman parte del colectivo de la policía local.",
+            "La identificación interna de las personas que forman parte del colectivo de la policía local.",
+            "La identificación interna de los miembros del cuerpo de la policía local.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 94 | Emblemas 1. Los emblemas tienen como finalidad la identificación externa de las personas que forman parte del colectivo de la policía local. 2. Los emblemas deben referirse exclusivamente a la identificación de cada una de las personas miembros de la policía local, a la diferenciación de los cuerpos de policía de los diferentes municipios, a la identificación de los cuerpos de policía local de las Illes Balears y a las diferentes unidades de los servicios, cuando figuren constituidas en el organigrama del cuerpo de policía local aprobado por el órgano competente. 3. Cuando la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales, autorice un emblema que no prevea este reglamento, identificativo de una determinada unidad de un cuerpo de policía local, debe llevarse en la manga derecha, a 5 cm de la costura del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los cuerpos de policía local tendrán que disponer de un expediente tipo de armas, en el que deberá constar:",
+        "opciones": [
+            "Los datos referentes a su tenencia.",
+            "Conservación y uso.",
+            "La realización y el resultado de las pruebas, prácticas y cursos que lleven a cabo.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 50 | Expediente de armas Todos los cuerpos de policía local y policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, deben disponer de un expediente tipo de armas, informatizado e individualizado por agente, en el que consten los datos referentes a la tenencia, la conservación y el uso, como cualquier otro dato relacionado, incluida la realización y el resultado de las pruebas, prácticas y cursos que lleven a cabo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el plazo de vigencia de los certificados psicológicos que obtienen los miembros de los cuerpos de policía local tras haber superado la formación específica en utilización de armas impartida por la Escuela Balear de Administración Pública o, en su caso, de la Escuela de Seguridad Pública de las Illes Balears, es de:",
+        "opciones": [
+            "Dos años.",
+            "Cuatro años.",
+            "Tres años.",
+            "Un año."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 7. Para poder llevar armas, debe haber superado la formación específica en utilización de armas impartida por la Escuela Balear de Administración Pública o, en su caso, de la Escuela de Seguridad Pública de las Illes Balears y haber obtenido el certificado psicológico adecuado. Los mencionados certificados tienen un plazo de vigencia de tres años."
+    },
+    {
+        "pregunta": "Según el artículo 52 del Decreto 40/2019, de 24 de mayo, queda prohibido:",
+        "opciones": [
+            "Utilizar las armas o instrumentos de defensa no reglamentarios durante el servicio, así como llevar y/o utilizar el material reglamentario fuera de los servicios y hacer un uso abusivo o no justificado del mismo.",
+            "Utilizar las armas no reglamentarias durante el servicio, así como llevar y/o utilizar el material reglamentario fuera de servicio.",
+            "Utilizar los instrumentos de defensa no reglamentarios durante el servicio, así como llevar y/o utilizar el material reglamentario fuera de los servicios y hacer un uso abusivo o no justificado del mismo.",
+            "Utilizar las armas o instrumentos de defensa no reglamentarios fuera de servicio, así como llevar y/o utilizar el material reglamentario fuera de los servicios y hacer un uso abusivo o no justificado del mismo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 52 | Servicios armados 1. Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones llevarán el armamento reglamentario que se les asigne. No obstante, corresponde al alcalde o alcaldesa de los municipios con cuerpo de policía local, al concejal o concejala en quien delegue de forma expresa o al jefe o jefa de policía por delegación expresa del alcalde o alcaldesa, determinar de forma motivada los servicios en los cuales no deben llevarse armas de fuego. 2. Queda prohibido llevar y/o utilizar armas o instrumentos de defensa no reglamentarios durante el servicio, así como llevar y/o utilizar el material reglamentario fuera de los servicios y hacer un uso abusivo o no justificado del mismo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, todos los cuerpos de policía local tendrán que disponer de un expediente tipo de armas:",
+        "opciones": [
+            "Individualizado por agente.",
+            "Informatizado.",
+            "Ninguna de las anteriores.",
+            "La a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 50 | Expediente de armas Todos los cuerpos de policía local y policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, deben disponer de un expediente tipo de armas, informatizado e individualizado por agente, en el que consten los datos referentes a la tenencia, la conservación y el uso, como cualquier otro dato relacionado, incluida la realización y el resultado de las pruebas, prácticas y cursos que lleven a cabo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, teniendo presente su naturaleza y con la finalidad de evitar daños irreparables, se usará el bastón extensible o defensa cuando:",
+        "opciones": [
+            "Sea imprescindible.",
+            "Sea obligatorio.",
+            "Siempre.",
+            "Nunca."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 81 | Criterios generales de utilización 1. Los policías no deben ensañarse, por ningún concepto, en el uso del bastón extensible o defensa y deben detenerse cuando sea posible porque los agresores se han retirado o han sido reducidos. No deben amenazar ni pegar nunca a una persona que haya caído o que no ofrezca una resistencia grave, insuperable por otro medio. 2. La utilización del bastón extensible o defensa debe ser proporcional al daño que trate de evitarse. Teniendo en cuenta su naturaleza y con la finalidad de evitar daños irreparables, debe utilizarse, cuando sea imprescindible, contra partes no vitales y utilizarlo, si es posible, con la finalidad de apartar al oponente, sin pegarle."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, debe evitarse hacer ostentación del arma, excepto:",
+        "opciones": [
+            "En casos de necesidad extrema.",
+            "Cuando lo consideren oportuno.",
+            "En casos que sea imprescindible por las características del servicio que debe prestarse.",
+            "Nunca se debe hacer ostentación del arma."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 76 | Ostentación del arma Debe evitarse hacer ostentación del arma, excepto que sea imprescindible por las características del servicio que debe prestarse."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, es correcto que:",
+        "opciones": [
+            "Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones no llevarán el armamento reglamentario que se les asigne.",
+            "Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones llevarán el armamento que elijan.",
+            "Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones llevarán el armamento reglamentario que se les asigne.",
+            "Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado podrán llevar el armamento reglamentario que elijan."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 52 | Servicios armados 1. Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones llevarán el armamento reglamentario que se les asigne. No obstante, corresponde al alcalde o alcaldesa de los municipios con cuerpo de policía local, al concejal o concejala en quien delegue de forma expresa o al jefe o jefa de policía por delegación expresa del alcalde o alcaldesa, determinar de forma motivada los servicios en los cuales no deben llevarse armas de fuego. 2. Queda prohibido llevar y/o utilizar armas o instrumentos de defensa no reglamentarios durante el servicio, así como llevar y/o utilizar el material reglamentario fuera de los servicios y hacer un uso abusivo o no justificado del mismo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, las armas de fuego deben ir dentro de fundas antirrobo:",
+        "opciones": [
+            "De color negro.",
+            "Rígidas y amoldadas que permitan extraer y enfundar el arma con una sola mano y con un sistema de retención tres o superior.",
+            "De cualquier color.",
+            "La a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 5. Las armas de fuego deben ir dentro de fundas antirrobo de color negro, rígidas y amoldadas, que permitan extraer y enfundar el arma con una sola mano y con un sistema de retención tres o superior."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, queda prohibido llevar y/o utilizar armas o instrumentos de defensa no reglamentarios:",
+        "opciones": [
+            "Durante el servicio.",
+            "Durante el trayecto al servicio.",
+            "Fuera del servicio.",
+            "De vacaciones."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 52 | Servicios armados 1. Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones llevarán el armamento reglamentario que se les asigne. No obstante, corresponde al alcalde o alcaldesa de los municipios con cuerpo de policía local, al concejal o concejala en quien delegue de forma expresa o al jefe o jefa de policía por delegación expresa del alcalde o alcaldesa, determinar de forma motivada los servicios en los cuales no deben llevarse armas de fuego. 2. Queda prohibido llevar y/o utilizar armas o instrumentos de defensa no reglamentarios durante el servicio, así como llevar y/o utilizar el material reglamentario fuera de los servicios y hacer un uso abusivo o no justificado del mismo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los miembros de los cuerpos de policía local pueden llevar o utilizar esta arma corta propiedad suya durante el servicio:",
+        "opciones": [
+            "Correcto.",
+            "Incorrecto.",
+            "Sólo cuando las necesidades del servicio lo permitan.",
+            "Sólo cuando carezcan de arma reglamentaria."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 6. Sin perjuicio de lo establecido en el punto anterior, los miembros de los cuerpos de policía local, como titulares de la licencia tipo «a» a la que se refiere el Real Decreto 137/1993, pueden poseer un arma corta de su propiedad, además de las que puedan recibir como dotación reglamentaria. Por ello, los agentes interesados en adquirirla deben solicitar al alcalde o alcaldesa autorización a tal efecto, que facilite la tramitación pertinente ante la Intervención de Armas de la Guardia Civil. En ningún caso, pueden llevar o utilizar esta arma corta de su propiedad durante el servicio."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, ¿hasta qué momento el personal funcionario en prácticas debe vestir el uniforme con la hombrera de color morado vino?",
+        "opciones": [
+            "Hasta que sean nombrados miembros del cuerpo de policía local.",
+            "Hasta que sean nombrado personal funcionario.",
+            "Hasta que sean nombrados personal funcionario de carrera.",
+            "Hasta que lo decidan en junta general."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 101 | Distintivo de policías locales en prácticas Los opositores y opositoras que, una vez superado el proceso selectivo, sean nombrados como personal funcionario en prácticas de la categoría correspondiente en los respectivos ayuntamientos, deben vestir el mismo uniforme con la hombrera de color morado vino, tal y como se indica en la figura 8 del anexo 1 de este reglamento, hasta que sean nombrados personal funcionario de carrera."
+    },
+    {
+        "pregunta": "Según el artículo 107 del Decreto 40/2019, de 24 de mayo, las bicicletas que utilice la policía local deben ser de color:",
+        "opciones": [
+            "Azul.",
+            "Negro.",
+            "Amarillo.",
+            "Blanco."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 107 | Bicicletas y otros vehículos de movilidad personal 1. Las bicicletas que utilice la policía local deben ser de color negro. Deben llevar la inscripción POLICÍA LOCAL y una franja de color azul con cuadros blancos, tal y como se indica en la figura 35 del anexo 1 de este reglamento. 2. En el caso de otros vehículos de movilidad personal que puedan ser utilizados por la policía local, estos deben ser de color negro y respetar el estándar general de inscripción."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los ayuntamientos que disponen de policías locales en cuya dotación se incluya un arma de fuego reglamentaria tendrán que disponer de:",
+        "opciones": [
+            "Zonas de seguridad específicas.",
+            "Con armeros homologados para custodiarlas.",
+            "Un recipiente de arena o caucho para descargarlas.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 68 | Custodia del arma de fuego y de la cartuchería 1. Las armas de fuego reglamentarias y la cartuchería se custodian, fuera de las horas de servicio y salvo una autorización expresa del alcalde o alcaldesa, en las dependencias municipales habilitadas a tal efecto por el correspondiente ayuntamiento. Con esta finalidad, los ayuntamientos que disponen de policías locales en cuya dotación se incluya un arma de fuego reglamentaria deben disponer de zonas de seguridad específicas con armeros homologados para custodiarlas y un recipiente de arena o caucho para descargarlas. 2. En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia. 3. Las armas deben depositarse descargadas en los armeros, esto es, los revólveres con el tambor abierto sin munición, y las pistolas, en su caso, sin cargador y con la recámara vacía. 4. Sin perjuicio de lo dispuesto en el apartado anterior, cuando un agente o una agente permanece de baja laboral, de acuerdo con el artículo 54.1.e) de este reglamento, la custodia del arma es responsabilidad del ayuntamiento y, por lo tanto, debe custodiarse en el armero correspondiente."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los distintivos que señalan la categoría de policía es:",
+        "opciones": [
+            "Un recuadro negro.",
+            "Un rectángulo dorado.",
+            "Un recuadro dorado.",
+            "Un círculo dorado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 97 | Distintivos 1. Los distintivos que señalan las diferentes categorías de la policía local (figura 6 del anexo 1 de este reglamento) son los siguientes: a) Intendente: dentro de un recuadro dorado debe haber tres pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. b) Comisario o comisaria: dentro de un recuadro dorado debe haber dos pirámides, de cuatro lados cada una, en relieve y doradas. Una cerca de la otra, en línea, ajustadas al extremo exterior y centradas verticalmente. c) Mayor: dentro de un recuadro dorado debe haber una pirámide de cuatro lados, en relieve y dorada, centrada verticalmente y situada en el extremo exterior. d) Inspector o inspectora: dentro de un recuadro dorado debe haber tres barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. e) Subinspector o subinspectora: dentro de un recuadro dorado debe haber dos barras doradas y paralelas, separadas entre sí por un centímetro, que deben estar situadas en los extremos exteriores del recuadro. f) Oficial: dentro de un recuadro dorado debe haber un galón dorado de forma rectangular. Debe estar situado en el extremo exterior y centrado verticalmente. g) Policía: un recuadro dorado. h) Policía auxiliar a extinguir: una hombrera en azul marino, sin ningún recuadro ni ningún otro distintivo. i) Grado de primera: en los distintivos correspondientes a la categoría se le añade un ángulo recto de color dorado. Debe estar situado en el extremo interior. El grueso de la línea que delimita los recuadros debe ser de 2 mm en la escala básica y de 3 mm en el resto. Como extremo interior se entiende la parte del distintivo más próxima al cuello y como extremo exterior el situado en la parte más exterior del hombro."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, como norma general, los servicios policiales tienen que ser siempre con armas, pero, quienes pueden determinar los servicios en los cuales no se tienen que llevar armas de fuego:",
+        "opciones": [
+            "Al alcalde de los municipios con cuerpo de policía local.",
+            "Al concejal en quien delegue de forma expresa.",
+            "Al jefe o la jefa de policía por delegación expresa del alcalde.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 52 | Servicios armados 1. Los miembros de los cuerpos de policía local, por el hecho de pertenecer a un instituto armado, en el ejercicio de sus funciones llevarán el armamento reglamentario que se les asigne. No obstante, corresponde al alcalde o alcaldesa de los municipios con cuerpo de policía local, al concejal o concejala en quien delegue de forma expresa o al jefe o jefa de policía por delegación expresa del alcalde o alcaldesa, determinar de forma motivada los servicios en los cuales no deben llevarse armas de fuego. 2. Queda prohibido llevar y/o utilizar armas o instrumentos de defensa no reglamentarios durante el servicio, así como llevar y/o utilizar el material reglamentario fuera de los servicios y hacer un uso abusivo o no justificado del mismo."
+    },
+    {
+        "pregunta": "Según el artículo 51 del Decreto 40/2019, de 24 de mayo, los responsables de programar los cursos de capacitación para revisar y mantener el armamento son:",
+        "opciones": [
+            "La Escuela Nacional de Administración Pública o, en su caso La Escuela de Seguridad Nacional.",
+            "La Escuela Balear de Policías o, en su caso La Escuela de Seguridad Nacional.",
+            "La Escuela Balear de Administración pública, o en su caso la Escuela de Policías.",
+            "La Escuela Balear de Administración Pública, o en su caso, la Escuela de Seguridad Pública de les Illes Balears."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 51 | Responsable de armamento 1. En cada cuerpo policial, en los ayuntamientos sin cuerpo de policía y en la asociación de municipios, si procede, debe designarse un agente o una agente responsable de armamento con la capacitación correspondiente, que tiene como función específica llevar a cabo la gestión administrativa relativa a licencias, guías y revista de armas, de acuerdo con la normativa vigente y realizar el control del material 2. La Escuela Balear de Administración Pública o, en su caso, la Escuela de Seguridad Pública de las Illes Balears, programará los cursos de capacitación para revisar y mantener el armamento, destinados a los responsables de mantenimiento del armamento."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, y de conformidad a lo dispuesto en la normativa vigente en materia de armas, el armamento que disponen los miembros de los cuerpos de policía local es:",
+        "opciones": [
+            "Fusil y bastón extensible o defensa.",
+            "Arma corta de fuego y el aerosol defensivo.",
+            "El bastón extensible o defensa y el aerosol defensivo.",
+            "La b y c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 3. El armamento de los miembros de los cuerpos de policía local y de las policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, que debe ajustarse a lo dispuesto en la normativa vigente en materia de armas, es el arma corta de fuego, el bastón extensible o defensa y el aerosol defensivo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los procedimientos de habilitación y uso del arma que permiten evaluar la capacidad del agente en activo para poder llevar armas de fuego, consisten en:",
+        "opciones": [
+            "Pruebas periódicas de tipo psicotécnico y prácticas de tiro.",
+            "Pruebas periódicas de tipo psicotécnico y evaluación psicológica.",
+            "Prácticas de tiro y evaluación psicológica.",
+            "Únicamente es necesario una evaluación psicológica."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 73 | Procedimientos de habilitación y de uso del arma 1. Los procedimientos de habilitación y uso del arma que se prevén en el artículo 24 de la Ley 4/2013, consisten en pruebas periódicas de tipo psicotécnico y prácticas de tiro que permitan evaluar la capacidad de todos los agentes en activo para poder llevar armas de fuego."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en su actuación ante la comunidad, los miembros de los cuerpos de policía local deberán actuar bajo los principios de:",
+        "opciones": [
+            "Coordinación, oportunidad y congruencia.",
+            "Congruencia, coordinación y proporcionalidad.",
+            "Congruencia, oportunidad y proporcionalidad.",
+            "Proporcionalidad, congruencia y necesidad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 48 | Normativa específica La tenencia y la utilización del equipo básico de autodefensa y protección por parte del personal de las policías locales de las Illes Balears debe ajustarse a los criterios de la Ley 4/2013, a este reglamento, a las disposiciones del Real Decreto 137/1993, de 29 de enero, por el que se aprueba el Reglamento de armas, y del Real Decreto 740/1983, de 30 de marzo, por el que se regula la licencia de armas correspondientes a los miembros de la Policía de las Comunidades Autónomas y de las Entidades Locales, y a las normas que los ayuntamientos puedan aprobar sobre este aspecto en el ejercicio de su potestad normativa. Los agentes, en caso de utilización de estos medios, deben regirse por los principios de congruencia, oportunidad y proporcionalidad."
+    },
+    {
+        "pregunta": "De conformidad con el artículo 102 del Decreto 40/2019, de 24 de mayo, las personas miembros de las policías locales tienen prohibido llevar cualquier otro distintivo, emblema o guarnición que no sean los indicados expresamente en el reglamento, excepto:",
+        "opciones": [
+            "En los casos que, de manera excepcional lo autorice la jefatura del cuerpo.",
+            "En los casos que, de manera motivada y organizativa, lo autorice la Dirección General de Emergencias e interior.",
+            "En los casos que, de manera motivada y organizativa, lo autorice la jefatura del cuerpo.",
+            "En los casos que, de manera excepcional y motivada, lo autorice la Dirección General de Emergencias e interior."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 102 | Prohibición de uso de otros distintivos o emblemas Queda expresamente prohibido a todas las personas miembros de las policías locales llevar el uniforme con cualquier otro distintivo, emblema o guarnición que no sean los indicados expresamente en este reglamento, excepto en los supuestos en los que, de manera excepcional y motivada, lo autorice la Dirección General de Emergencias e Interior, competente en materia de coordinación de las policías locales."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, señale la respuesta correcta:",
+        "opciones": [
+            "Las armas de fuego deben conservarse en perfecto estado y no deben adoptarse todas las medidas necesarias para evitar su deterioro, pérdida, robo, sustracción o que sean utilizadas por terceras personas.",
+            "Las armas de fuego deben conservarse limpias y no deben adoptarse todas las medidas necesarias para evitar su deterioro, pérdida, robo, sustracción o que sean utilizadas por terceras personas.",
+            "Las armas de fuego deben conservarse limpias y perfecto estado y deben adoptarse todas las medidas necesarias para evitar su deterioro, pérdida, robo, sustracción o que sean utilizadas por terceras personas.",
+            "Las armas de fuego deben conservarse limpias y en perfecto estado y no deben adoptarse todas las medidas necesarias para evitar su deterioro, pérdida, robo, sustracción o que sean utilizadas por terceras personas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 69 | Conservación 1. Las armas deben conservarse limpias y en perfecto estado y deben adoptarse todas las medidas necesarias para evitar su deterioro, pérdida, robo, sustracción o que sean utilizadas por terceras personas. 2. Las características originales del arma, la munición y otros elementos del equipamiento de autodefensa no se pueden manipular ni modificar, excepto con una autorización expresa de la persona responsable de armamento del cuerpo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, para la categoría de policía, la uniformidad de gala es:",
+        "opciones": [
+            "Obligatorio.",
+            "Potestativo.",
+            "Excepcional.",
+            "Necesario."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 | Uniformidad de gala La uniformidad de gala es obligatoria para la categoría de oficial y para las diferentes categorías de la escala ejecutiva y técnica. Para la categoría de policía es potestativa según la decisión del alcalde o alcaldesa. Esta uniformidad debe utilizarse en los acontecimientos que se determinen."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, es correcto que:",
+        "opciones": [
+            "Las entidades locales deben dotar a los miembros de sus policías del material y el equipo básico y complementario necesario y adecuados a las funciones que deben llevar a cabo.",
+            "Las entidades locales no deben dotar a los miembros de sus policías del material y el equipo básico y complementario necesario y adecuados a las funciones que deben llevar a cabo.",
+            "Las entidades locales deben dotar a los miembros de sus policías del material necesario y adecuados a las funciones que deben llevar a cabo.",
+            "Las entidades locales no deben dotar a los miembros de sus policías del equipo básico necesario y adecuados a las funciones que deben llevar a cabo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 104 | Material que deben suministrar las entidades locales Las entidades locales deben dotar a los miembros de sus policías del material y el equipo básico y complementario necesarios y adecuados a las funciones que deben llevar a cabo."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, los certificados la formación específica en utilización de armas impartida por la Escuela Balear de Administración Pública y el de haber obtenido el certificado psicológico adecuado tienen un plazo de vigencia de:",
+        "opciones": [
+            "Dos años.",
+            "Tres años.",
+            "Cuatro años.",
+            "Son indefinidos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 7. Para poder llevar armas, debe haber superado la formación específica en utilización de armas impartida por la Escuela Balear de Administración Pública o, en su caso, de la Escuela de Seguridad Pública de las Illes Balears y haber obtenido el certificado psicológico adecuado. Los mencionados certificados tienen un plazo de vigencia de tres años."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, en cada cuerpo policial, en los ayuntamientos sin cuerpo de policía y en la asociación de municipios, si procede, se deberá designar:",
+        "opciones": [
+            "Dos agentes responsables de armamento con la capacitación correspondiente.",
+            "Un agente responsable de armamento con la capacitación correspondiente.",
+            "Un supervisor responsable de armamento con la capacitación correspondiente.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 51 | Responsable de armamento 1. En cada cuerpo policial, en los ayuntamientos sin cuerpo de policía y en la asociación de municipios, si procede, debe designarse un agente o una agente responsable de armamento con la capacitación correspondiente, que tiene como función específica llevar a cabo la gestión administrativa relativa a licencias, guías y revista de armas, de acuerdo con la normativa vigente y realizar el control del material 2. La Escuela Balear de Administración Pública o, en su caso, la Escuela de Seguridad Pública de las Illes Balears, programará los cursos de capacitación para revisar y mantener el armamento, destinados a los responsables de mantenimiento del armamento."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, el ayuntamiento tiene que asignar el equipo básico de autodefensa y protección a los miembros de los cuerpos de policía local o policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local para el ejercicio de sus funciones:",
+        "opciones": [
+            "Siempre.",
+            "En ningún caso.",
+            "Sólo a las unidades de intervención.",
+            "Sólo a las unidades operativas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 1. El ayuntamiento debe asignar el equipo básico de autodefensa y protección a los miembros de los cuerpos de policía local o policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local para el ejercicio de sus funciones, de acuerdo con lo dispuesto en este reglamento."
+    },
+    {
+        "pregunta": "Según el Decreto 40/2019, de 24 de mayo, está prohibido:",
+        "opciones": [
+            "Prestar o ceder el arma a otra persona, intercambiar el arma o el armero con otro policía, ni depositarla en vehículos.",
+            "Prestar el arma a otra persona, intercambiar el arma con otro policía, ni depositarla en vehículos.",
+            "Prestar o ceder el arma a otra persona, intercambiar el arma o el armero con otro policía.",
+            "Prestar o ceder el arma a otra persona."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 70 | Prohibición de préstamo, cesión o intercambio del arma Tampoco se puede prestar o ceder el arma a otra persona, intercambiar el arma o el armero con otro policía, ni depositarla en vehículos, aunque se aparquen en garajes, incluso vigilados"
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

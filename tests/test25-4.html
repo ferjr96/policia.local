@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentra tipificado el delito de Estafa en el Código Penal?",
+        "opciones": [
+            "En el Libro II, Título XIII, Capítulo VI, Sección 2ª, artículos 248 a 251 ter.",
+            "En el Libro II, Título XIII, Capítulo VI, Sección 1ª, artículos 248 a 251 bis.",
+            "En el Libro II, Título XIII, Capítulo VI, Sección 1ª, artículos 249 a 251.",
+            "En el Libro II, Título XIII, Capítulo VI, Sección 3ª, artículos 249 a 251 bis."
+        ],
+        "correcta": 1,
+        "explicacion": "Libro II: Delitos y sus penas - Título XIII: Delitos contra el patrimonio y contra el orden socioeconómico ➢ Capítulo Primero: De los hurtos → artículos 234 a 236 ➢ Capítulo Segundo: De los robos → artículos 237 a 242 ➢ Capítulo Cuarto: Del robo y hurto de uso de vehículos → artículo 244 ➢ Capítulo Quinto: De la usurpación → artículos 245 a 247 ➢ Capítulo Sexto: De las defraudaciones ▪ Sección 1ª: De las estafas → artículos 248 a 251 bis ▪ Sección 2ª: De la administración desleal → artículo 252 ▪ Sección 2ª BIS: De la apropiación indebida → artículos 253 y 254 ▪ Sección 3ª: De las defraudaciones de fluido eléctrico y análogas → artículos 255 y 256 ➢ Capítulo Noveno: De los daños → artículos 263 a 267 ➢ Capítulo Décimo: Disposiciones comunes → artículos 268 y 269"
+    },
+    {
+        "pregunta": "¿Existe tentativa de hurto?",
+        "opciones": [
+            "Nunca, ya que desde el momento de que se sustrae algo ya queda consumado el hecho.",
+            "Siempre, ya que es necesaria la tentativa como paso previo a la consumación.",
+            "Sí, y va a depender de la disponibilidad del objeto sustraído.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 234"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentra tipificado el delito de Usurpación en el Código Penal?",
+        "opciones": [
+            "En el Libro II, Título XIII, Capítulo V, artículos 246 a 247.",
+            "En el Libro II, Título XIII, Capítulo VI, artículos 245 a 247.",
+            "En el Libro II, Título XIII, Capítulo V, artículos 245 a 247.",
+            "En el Libro II, Título XIII, Capítulo VI, artículos 246 a 247."
+        ],
+        "correcta": 2,
+        "explicacion": "Libro II: Delitos y sus penas - Título XIII: Delitos contra el patrimonio y contra el orden socioeconómico ➢ Capítulo Primero: De los hurtos → artículos 234 a 236 ➢ Capítulo Segundo: De los robos → artículos 237 a 242 ➢ Capítulo Cuarto: Del robo y hurto de uso de vehículos → artículo 244 ➢ Capítulo Quinto: De la usurpación → artículos 245 a 247 ➢ Capítulo Sexto: De las defraudaciones ▪ Sección 1ª: De las estafas → artículos 248 a 251 bis ▪ Sección 2ª: De la administración desleal → artículo 252 ▪ Sección 2ª BIS: De la apropiación indebida → artículos 253 y 254 ▪ Sección 3ª: De las defraudaciones de fluido eléctrico y análogas → artículos 255 y 256 ➢ Capítulo Noveno: De los daños → artículos 263 a 267 ➢ Capítulo Décimo: Disposiciones comunes → artículos 268 y 269"
+    },
+    {
+        "pregunta": "Quien negare haber recibido dinero, habiéndosele confiado la recepción del mismo, y se lo quedara para si, estará cometiendo un delito de:",
+        "opciones": [
+            "Delito de estafa.",
+            "Delito de hurto.",
+            "Delito de apropiación indebida.",
+            ") Delito de administración desleal."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 253 1. Serán castigados con las penas del artículo 249 o, en su caso, del artículo 250, salvo que ya estuvieran castigados con una pena más grave en otro precepto de este Código, los que, en perjuicio de otro, se apropiaren para sí o para un tercero, de dinero, efectos, valores o cualquier otra cosa mueble, que hubieran recibido en depósito, comisión, o custodia, o que les hubieran sido confiados en virtud de cualquier otro título que produzca la obligación de entregarlos o devolverlos, o negaren haberlos recibido"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo estipulado en el apartado primero del artículo 245 del CP, se le impondrá la pena de prisión de uno a dos años, además de las penas en que incurriere por las violencias ejercidas:",
+        "opciones": [
+            "Al que con violencia o intimidación en las personas ocupare una cosa mueble o usurpare un derecho real mobiliario de pertenencia ajena.",
+            "Al que con violencia e intimidación en las personas ocupare una cosa inmueble y usurpare un derecho real inmobiliario de pertenencia ajena.",
+            "Al que con violencia o intimidación en las personas ocupare una cosa inmueble o usurpare un derecho real inmobiliario de pertenencia propia.",
+            "Al que con violencia o intimidación en las personas ocupare una cosa inmueble o usurpare un derecho real inmobiliario de pertenencia ajena."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 245. 1. Al que con violencia o intimidación en las personas ocupare una cosa inmueble o usurpare un derecho real inmobiliario de pertenencia ajena, se le impondrá, además de las penas en que incurriere por las violencias ejercidas, la pena de prisión de uno a dos años, que se fijará teniendo en cuenta la utilidad obtenida y el daño causado. 2. El que ocupare, sin autorización debida, un inmueble, vivienda o edificio ajenos que no constituyan morada, o se mantuviere en ellos contra la voluntad de su titular, será castigado con la pena de multa de tres a seis meses."
+    },
+    {
+        "pregunta": "Según el artículo 269 del Código Penal, serán castigados:",
+        "opciones": [
+            "La provocación, la conspiración y la proposición para cometer el delito de robo y el delito de extorsión.",
+            "La provocación, la conspiración y la proposición para cometer el delito de estafa y el delito de apropiación indebida.",
+            "Ninguna es correcta, los actos preparatorios de estos delitos no son punibles.",
+            "La respuesta a y la respuesta b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Código Penal. Artículo 269. La provocación, la conspiración y la proposición para cometer los delitos de robo, extorsión, estafa o apropiación indebida, serán castigadas con la pena inferior en uno o dos grados a la del delito correspondiente."
+    },
+    {
+        "pregunta": "Constituye un tipo agravado de estafa, cuando esta se realice:",
+        "opciones": [
+            "Sobre cosas de primera necesidad y bienes de reconocida utilidad cultural.",
+            "Sobre bienes del patrimonio deportivo.",
+            "Con abuso de las relaciones personales existentes entre víctima y defraudador.",
+            "El valor de la defraudación supere los 60.000 euros, o afecte a un elevado número de personas."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 250 1. El delito de estafa será castigado con las penas de prisión de uno a seis años y multa de seis a doce meses, cuando: 1.º Recaiga sobre cosas de primera necesidad, viviendas u otros bienes de reconocida utilidad social. 2.º Se perpetre abusando de firma de otro, o sustrayendo, ocultando o inutilizando, en todo o en parte, algún proceso, expediente, protocolo o documento público u oficial de cualquier clase. 3.º Recaiga sobre bienes que integren el patrimonio artístico, histórico, cultural o científico. 4.º Revista especial gravedad, atendiendo a la entidad del perjuicio y a la situación económica en que deje a la víctima o a su familia. 5.º El valor de la defraudación supere los 50.000 euros, o afecte a un elevado número de personas. 6.º Se cometa con abuso de las relaciones personales existentes entre víctima y defraudador, o aproveche éste su credibilidad empresarial o profesional. 7.º Se cometa estafa procesal. Incurren en la misma los que, en un procedimiento judicial de cualquier clase, manipularen las pruebas en que pretendieran fundar sus alegaciones o emplearen otro fraude procesal análogo, provocando error en el juez o tribunal y llevándole a dictar una resolución que perjudique los intereses económicos de la otra parte o de un tercero. 8.º Al delinquir el culpable hubiera sido condenado ejecutoriamente al menos por tres delitos comprendidos en este Capítulo. No se tendrán en cuenta antecedentes cancelados o que debieran serlo. 2. Si concurrieran las circunstancias incluidas en los numerales 4.º, 5.º, 6.º o 7.º con la del numeral 1.º del apartado anterior, se impondrán las penas de prisión de cuatro a ocho años y multa de doce a veinticuatro meses. La misma pena se impondrá cuando el valor de la defraudación supere los 250.000 euros."
+    },
+    {
+        "pregunta": "El que negare haber recibido cualquier cosa mueble quedándoselo para si mismo cometerá:",
+        "opciones": [
+            "Delito de hurto",
+            "Delito de estafa",
+            "Delito de apropiación indebida",
+            "Delito de administración desleal"
+        ],
+        "correcta": 2,
+        "explicacion": "Codigo Penal. Artículo 253. 1. Serán castigados con las penas del artículo 248 o, en su caso, del artículo 250, salvo que ya estuvieran castigados con una pena más grave en otro precepto de este Código, los que, en perjuicio de otro, se apropiaren para sí o para un tercero, de dinero, efectos, valores o cualquier otra cosa mueble, que hubieran recibido en depósito, comisión, o custodia, o que les hubieran sido confiados en virtud de cualquier otro título que produzca la obligación de entregarlos o devolverlos, o negaren haberlos recibido."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado cuarto del artículo 241 del CP, ¿Cuándo se impondrá la pena de dos a seis años de prisión?",
+        "opciones": [
+            "Cuando los hechos revistan especial gravedad, atendiendo a la forma de comisión del delito.",
+            "Cuando los hechos revistan especial gravedad, atendiendo a los perjuicios ocasionados.",
+            "Cuando concurra alguna de las circunstancias expresadas en el artículo 235 CP.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 241. 1. El robo cometido en casa habitada, edificio o local abiertos al público, o en cualquiera de sus dependencias, se castigará con una pena de prisión de dos a cinco años. Si los hechos se hubieran cometido en un establecimiento abierto al público, o en cualquiera de sus dependencias, fuera de las horas de apertura, se impondrá una pena de prisión de uno a cinco años. 2. Se considera casa habitada todo albergue que constituya morada de una o más personas, aunque accidentalmente se encuentren ausentes de ella cuando el robo tenga lugar. 3. Se consideran dependencias de casa habitada o de edificio o local abiertos al público, sus patios, garajes y demás departamentos o sitios cercados y contiguos al edificio y en comunicación interior con él, y con el cual formen una unidad física. 4. Se impondrá una pena de dos a seis años de prisión cuando los hechos a que se refieren los apartados anteriores revistan especial gravedad, atendiendo a la forma de comisión del delito o a los perjuicios ocasionados y, en todo caso, cuando concurra alguna de las circunstancias expresadas en el artículo 235."
+    },
+    {
+        "pregunta": "El que sustraiga sin ánimo de apropiárselo un vehículo a motor o ciclomotor ajeno y lo realiza con violencia o intimidación será castigado por:",
+        "opciones": [
+            "Delito de hurto de uso de vehículos.",
+            "Delito de robo de uso, de no efectuarse la restitución en el plazo establecido.",
+            "Delito de robo.",
+            "Delito de apropiación indebida."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 244 1. El que sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, será castigado con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas, sin que, en ningún caso, la pena impuesta pueda ser igual o superior a la que correspondería si se apropiare definitivamente del vehículo. 2. Si el hecho se ejecutare empleando fuerza en las cosas, la pena se aplicará en su mitad superior. 3. De no efectuarse la restitución en el plazo señalado, se castigará el hecho como hurto o robo en sus respectivos casos. 4. Si el hecho se cometiere con violencia o intimidación en las personas, se impondrán, en todo caso, las penas del artículo 242."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Identifique cuáles son los elementos y requisitos del delito de estafa tipificado en el artículo 248 del Código Penal:",
+        "opciones": [
+            "Ánimo de lucro; engaño; producción de error; realización de acto de disposición; perjuicio propio.",
+            "Ánimo de lucro; engaño suficiente; producción de error; realización de acto de disposición; perjuicio propio y ajeno.",
+            "Ánimo de lucro; engaño bastante; producción de error; realización de acto de disposición; perjuicio propio o ajeno.",
+            "Ánimo de lucro; engaño notable; producción de error; realización de acto de disposición; perjuicio ajeno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 248. 1. Cometen estafa los que, con ánimo de lucro, utilizaren engaño bastante para producir error en otro, induciéndolo a realizar un acto de disposición en perjuicio propio o ajeno. 2. También se consideran reos de estafa: a) Los que, con ánimo de lucro y valiéndose de alguna manipulación informática o artificio semejante, consigan una transferencia no consentida de cualquier activo patrimonial en perjuicio de otro. b) Los que fabricaren, introdujeren, poseyeren o facilitaren programas informáticos específicamente destinados a la comisión de las estafas previstas en este artículo. c) Los que utilizando tarjetas de crédito o débito, o cheques de viaje, o los datos obrantes en cualquiera de ellos, realicen operaciones de cualquier clase en perjuicio de su titular o de un tercero."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado tercero del artículo 244 del CP, ¿Qué ocurre cuando se sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, y no se efectuarse la restitución en el plazo de 48 horas?",
+        "opciones": [
+            "Se castigará el hecho como hurto.",
+            "Se castigará el hecho como robo.",
+            "Se castigará el hecho como hurto y robo en sus respectivos casos.",
+            "Se castigará el hecho como hurto o robo en sus respectivos casos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 244. 1. El que sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, será castigado con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas, sin que, en ningún caso, la pena impuesta pueda ser igual o superior a la que correspondería si se apropiare definitivamente del vehículo. 2. Si el hecho se ejecutare empleando fuerza en las cosas, la pena se aplicará en su mitad superior. 3. De no efectuarse la restitución en el plazo señalado, se castigará el hecho como hurto o robo en sus respectivos casos. 4. Si el hecho se cometiere con violencia o intimidación en las personas, se impondrán, en todo caso, las penas del artículo 242."
+    },
+    {
+        "pregunta": "La persona que tras consumir en un restaurante abandona el local sin abonar la factura comete delito de:",
+        "opciones": [
+            "No comete delito si el impago no supera los 400 €.",
+            "Delito de estafa.",
+            "Delito de hurto.",
+            "Delito de robo."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 248 1. Cometen estafa los que, con ánimo de lucro, utilizaren engaño bastante para producir error en otro, induciéndolo a realizar un acto de disposición en perjuicio propio o ajeno. 2. También se consideran reos de estafa: a) Los que, con ánimo de lucro y valiéndose de alguna manipulación informática o artificio semejante, consigan una transferencia no consentida de cualquier activo patrimonial en perjuicio de otro. b) Los que fabricaren, introdujeren, poseyeren o facilitaren programas informáticos específicamente destinados a la comisión de las estafas previstas en este artículo. c) Los que utilizando tarjetas de crédito o débito, o cheques de viaje, o los datos obrantes en cualquiera de ellos, realicen operaciones de cualquier clase en perjuicio de su titular o de un tercero."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo estipulado en el artículo 250 del CP, el delito de estafa será castigado con las penas de prisión de uno a seis años y multa de seis a doce meses, cuando: Señale la opción incorrecta.",
+        "opciones": [
+            "Recaiga sobre cosas de primera necesidad, viviendas u otros bienes de reconocida utilidad social.",
+            "Se perpetre abusando de firma de otro, o sustrayendo, ocultando o inutilizando, en todo o en parte, algún proceso, expediente, protocolo o documento público u oficial de cualquier clase.",
+            "Recaiga sobre bienes que integren el patrimonio artístico, histórico, cultural o científico.",
+            "El valor de la defraudación supere los 500.000 euros, o afecte a un elevado número de personas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 250. 1. El delito de estafa será castigado con las penas de prisión de uno a seis años y multa de seis a doce meses, cuando: 1.º Recaiga sobre cosas de primera necesidad, viviendas u otros bienes de reconocida utilidad social. 2.º Se perpetre abusando de firma de otro, o sustrayendo, ocultando o inutilizando, en todo o en parte, algún proceso, expediente, protocolo o documento público u oficial de cualquier clase. 3.º Recaiga sobre bienes que integren el patrimonio artístico, histórico, cultural o científico. 4.º Revista especial gravedad, atendiendo a la entidad del perjuicio y a la situación económica en que deje a la víctima o a su familia. 5.º El valor de la defraudación supere los 50.000 euros, o afecte a un elevado número de personas. 6.º Se cometa con abuso de las relaciones personales existentes entre víctima y defraudador, o aproveche éste su credibilidad empresarial o profesional. 7.º Se cometa estafa procesal. Incurren en la misma los que, en un procedimiento judicial de cualquier clase, manipularen las pruebas en que pretendieran fundar sus alegaciones o emplearen otro fraude procesal análogo, provocando error en el juez o tribunal y llevándole a dictar una resolución que perjudique los intereses económicos de la otra parte o de un tercero. 8.º Al delinquir el culpable hubiera sido condenado ejecutoriamente al menos por tres delitos comprendidos en este Capítulo. No se tendrán en cuenta antecedentes cancelados o que debieran serlo. 2. Si concurrieran las circunstancias incluidas en los numerales 4.º, 5.º, 6.º o 7.º con la del numeral 1.º del apartado anterior, se impondrán las penas de prisión de cuatro a ocho años y multa de doce a veinticuatro meses. La misma pena se impondrá cuando el valor de la defraudación supere los 250.000 euros."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según el apartado segundo del artículo 240 del CP, se impondrá la pena de prisión de dos a cinco años cuando:",
+        "opciones": [
+            "Concurran dos o más de las circunstancias previstas en el artículo 235 CP.",
+            "Concurran todas las circunstancias previstas en el artículo 235 CP.",
+            "Concurran alguna de las circunstancias previstas en el artículo 235 CP.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 240 1. El culpable de robo con fuerza en las cosas será castigado con la pena de prisión de uno a tres años. 2. Se impondrá la pena de prisión de dos a cinco años cuando concurra alguna de las circunstancias previstas en el artículo 235."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Qué delito tipifica el artículo 247 del CP?",
+        "opciones": [
+            "El que alterare términos o lindes de pueblos o heredades o cualquier clase de señales o mojones destinados a fijar los límites de propiedades o demarcaciones de predios contiguos, tanto de dominio público como privado, será castigado con la pena de multa de tres a dieciocho meses.",
+            "El que, sin hallarse autorizado, distrajere las aguas de uso público o privativo de su curso, o de su embalse natural o artificial, será castigado con la pena de multa de tres a seis meses.",
+            "Al que con violencia o intimidación en las personas ocupare una cosa inmueble o usurpare un derecho real inmobiliario de pertenencia ajena, se le impondrá, además de las penas en que incurriere por las violencias ejercidas, la pena de prisión de uno a dos años, que se fijará teniendo en cuenta la utilidad obtenida y el daño causado.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 247. 1. El que, sin hallarse autorizado, distrajere las aguas de uso público o privativo de su curso, o de su embalse natural o artificial, será castigado con la pena de multa de tres a seis meses. 2. Si la utilidad reportada no excediere de 400 euros, se impondrá la pena de multa de uno a tres meses."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Esteban es propietario de una furgoneta de siete plazas que utiliza para trabajar. Tras unos problemas con Hacienda, le embargan la furgoneta de su propiedad y ésta sale a subasta. José resulta ser el mejor postor, por lo que Estaban resulta ser desposeído de ella y la furgoneta queda depositada para serle entregada al adjudicatario. Esteban se apoderó de la misma quitando el precinto de sus puertas sin que consta el lugar donde la ocultó, evitando que se la entregaran al adjudicatario. ¿Comete algún delito Esteban?",
+        "opciones": [
+            "No, ya que es el propietario de la furgoneta.",
+            "Sí, comete delito de hurto del artículo 234.1 CP.",
+            "Sí, comete delito de hurto del artículo 236.1 CP.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 236 1. Será castigado con multa de tres a doce meses el que, siendo dueño de una cosa mueble o actuando con el consentimiento de éste, la sustrajere de quien la tenga legítimamente en su poder, con perjuicio del mismo o de un tercero. 2. Si el valor de la cosa sustraída no excediera de 400 euros, se impondrá la pena de multa de uno a tres meses."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Existe el delito leve de usurpación de inmueble?",
+        "opciones": [
+            "Sí, está recogido en el artículo 245.1 CP, y castigado con la pena de multa de uno a tres meses.",
+            "Sí, está recogido en el artículo 245.2 CP, y castigado con la pena de multa de tres a seis meses.",
+            "Sí, está recogido en el artículo 245.3 CP, y castigado con la pena de multa de tres a nueve meses.",
+            "No, no existe en su modalidad de delito leve."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 245. 1. Al que con violencia o intimidación en las personas ocupare una cosa inmueble o usurpare un derecho real inmobiliario de pertenencia ajena, se le impondrá, además de las penas en que incurriere por las violencias ejercidas, la pena de prisión de uno a dos años, que se fijará teniendo en cuenta la utilidad obtenida y el daño causado. 2. El que ocupare, sin autorización debida, un inmueble, vivienda o edificio ajenos que no constituyan morada, o se mantuviere en ellos contra la voluntad de su titular, será castigado con la pena de multa de tres a seis meses."
+    },
+    {
+        "pregunta": "Beatriz ha causado por imprudencia grave unos daños cuantificados en 100.000€ al Ayuntamiento de Palma. Beatriz no tiene suficiente dinero para abonar los daños causados y ha pedido perdón al Ayuntamiento de Palma por lo ocurrido. El Ayuntamiento de Palma decide iniciar la acción penal contra Beatriz en los juzgados de Palma. ¿Deberá Beatriz cumplir la pena de multa de tres a nueve meses?",
+        "opciones": [
+            "Sí, puesto que los daños causados por imprudencia grave en cuantía superior a 80.000 euros serán castigados con la pena de multa de tres a nueve meses.",
+            "Sí, será responsable tanto penal como civilmente.",
+            "No, será responsable civilmente pero no penalmente ya que el perdón de la persona ofendida extingue la acción penal.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 267 Los daños causados por imprudencia grave en cuantía superior a 80.000 euros, serán castigados con la pena de multa de tres a nueve meses, atendiendo a la importancia de los mismos. Las infracciones a que se refiere este artículo sólo serán perseguibles previa denuncia de la persona agraviada o de su representante legal. El Ministerio Fiscal también podrá denunciar cuando aquélla sea menor de edad, persona con discapacidad necesitada de especial protección o una persona desvalida. En estos casos, el perdón de la persona ofendida extingue la acción penal."
+    },
+    {
+        "pregunta": "Sonia que está con el mono y no tiene como ir a comprar heroína, aprovechando que un semáforo está en rojo le saca una navaja a una conductora para que se baje, Sonia se lleva el coche para ir a comprar su dosis y a las tres horas de haberlo sustraído lo abandona, ¿Qué delito comete Sonia?",
+        "opciones": [
+            "Un robo con intimidación.",
+            "Un robo de uso de vehículo.",
+            "Un robo de vehículo.",
+            "Un hurto de uso de vehículo."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 244 1. El que sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, será castigado con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas, sin que, en ningún caso, la pena impuesta pueda ser igual o superior a la que correspondería si se apropiare definitivamente del vehículo. 2. Si el hecho se ejecutare empleando fuerza en las cosas, la pena se aplicará en su mitad superior. 3. De no efectuarse la restitución en el plazo señalado, se castigará el hecho como hurto o robo en sus respectivos casos. 4. Si el hecho se cometiere con violencia o intimidación en las personas, se impondrán, en todo caso, las penas del artículo 242."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Vais caminando por la calle portando un altavoz inalámbrico y os encontráis a una persona con problemas de conducta que os para y os dice que se lo entreguéis “por las buenas o por las malas”, a lo que vosotros accedéis a entregarle el altavoz. ¿Comete delito?",
+        "opciones": [
+            "Sí, delito de hurto agravado.",
+            "Sí, delito de robo con violencia.",
+            "Sí, delito de robo con intimidación.",
+            "Sí, delito de extorsión."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 242. 1. El culpable de robo con violencia o intimidación en las personas será castigado con la pena de prisión de dos a cinco años, sin perjuicio de la que pudiera corresponder a los actos de violencia física que realizase. 2. Cuando el robo se cometa en casa habitada, edificio o local abiertos al público o en cualquiera de sus dependencias, se impondrá la pena de prisión de tres años y seis meses a cinco años. 3. Las penas señaladas en los apartados anteriores se impondrán en su mitad superior cuando el delincuente hiciere uso de armas u otros medios igualmente peligrosos, sea al cometer el delito o para proteger la huida, y cuando atacare a los que acudiesen en auxilio de la víctima o a los que le persiguieren. 4. En atención a la menor entidad de la violencia o intimidación ejercidas y valorando además las restantes circunstancias del hecho, podrá imponerse la pena inferior en grado a la prevista en los apartados anteriores."
+    },
+    {
+        "pregunta": "Cuál de los siguientes elementos forman parte del tipo delictivo establecido como delito de estafa, señale la incorrecta:",
+        "opciones": [
+            "Ánimo de lucro.",
+            "Engaño Bastante.",
+            "Sustraer un bien mueble ajeno.",
+            "Inducir a un acto en perjuicio propio o ajeno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 248. Código Penal 1. Cometen estafa los que, con ánimo de lucro, utilizaren engaño bastante para producir error en otro, induciéndolo a realizar un acto de disposición en perjuicio propio o ajeno"
+    },
+    {
+        "pregunta": "Lucía comete un atraco en un banco con arma de fuego, mientras, en el exterior la espera Manuel en una moto para que pueda huir más rápidamente:",
+        "opciones": [
+            "Lucía es autora de un robo con intimidación y Manuel es su cómplice.",
+            "Lucía y Manuel son coautores.",
+            "Lucía es autora de un robo con intimidación y Manuel es su cooperador necesario.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 237 Son reos del delito de robo los que, con ánimo de lucro, se apoderaren de las cosas muebles ajenas empleando fuerza en las cosas para acceder o abandonar el lugar donde éstas se encuentran o violencia o intimidación en las personas, sea al cometer el delito, para proteger la huida, o sobre los que acudiesen en auxilio de la víctima o que le persiguieren."
+    },
+    {
+        "pregunta": "Pedro, politoxicómano desde hace años, posa sobre el cuello de Julián una jeringuilla mientras le pide la cartera, Pedro comete:",
+        "opciones": [
+            "Un robo con violencia.",
+            "Un robo con intimidación.",
+            "Una extorsión.",
+            "Un hurto agravado."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 237 Son reos del delito de robo los que, con ánimo de lucro, se apoderaren de las cosas muebles ajenas empleando fuerza en las cosas para acceder o abandonar el lugar donde éstas se encuentran o violencia o intimidación en las personas, sea al cometer el delito, para proteger la huida, o sobre los que acudiesen en auxilio de la víctima o que le persiguieren."
+    },
+    {
+        "pregunta": "Juan ha sido condenado ejecutoriamente en tres ocasiones por hurtar carteras en el metro. En la primera ocasión hurtó 100€; en la segunda hurtó 280€ y en la tercera hurtó 20€. ¿Qué pena se le impondrá a Juan?",
+        "opciones": [
+            "Juan será castigado como reo de hurto con la pena de prisión de seis a dieciocho meses.",
+            "Juan será castigado con la pena de multa de uno a tres meses al ser un delito leve de hurto.",
+            "La opción a) sería correcta puesto que Juan ha sido condenado ejecutoriamente por tres delitos leves de hurto de la misma naturaleza y además el montante acumulado de las infracciones es superior a 400€.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 234 CP 1. El que, con ánimo de lucro, tomare las cosas muebles ajenas sin la voluntad de su dueño será castigado, como reo de hurto, con la pena de prisión de seis a dieciocho meses si la cuantía de lo sustraído excediese de 400 euros. 2. Se impondrá una pena de multa de uno a tres meses si la cuantía de lo sustraído no excediese de 400 euros, salvo si concurriese alguna de las circunstancias del artículo 235. No obstante, en el caso de que el culpable hubiera sido condenado ejecutoriamente a menos por tres delitos comprendidos en este Título, aunque sean de carácter leve, siempre que sean de la misma naturaleza y que el montante acumulado de las infracciones sea superior a 400 €, se impondrá la pena del apartado 1 de este artículo. No se tendrán en cuenta antecedentes cancelados o que debieran serlo. 3. Las penas establecidas en los apartados anteriores se impondrán en su mitad superior cuando en la comisión del hecho se hubieran neutralizado, eliminado o inutilizado, por cualquier medio, los dispositivos de alarma o seguridad instalados en las cosas sustraídas. En esta pregunta el montante acumulado de las infracciones NO es superior a 400€, por lo tanto, no se le impondrán las penas del apartado 1 del artículo 234. En caso de que la cantidad hubiera sido 401€ sí que se le podrían haber impuesto dichas penas."
+    },
+    {
+        "pregunta": "Alberto, aprovecha que Lucía lleva su bolso en la mano para de un tirón quitárselo y salir corriendo:",
+        "opciones": [
+            "Alberto comete un hurto.",
+            "Alberto comete un robo con fuerza.",
+            "Alberto comete un robo con violencia.",
+            "Alberto comete un hurto agravado."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 237 Son reos del delito de robo los que, con ánimo de lucro, se apoderaren de las cosas muebles ajenas empleando fuerza en las cosas para acceder o abandonar el lugar donde éstas se encuentran o violencia o intimidación en las personas, sea al cometer el delito, para proteger la huida, o sobre los que acudiesen en auxilio de la víctima o que le persiguieren."
+    },
+    {
+        "pregunta": "El delito de daños se castigará cuando se realizare dolosamente, salvo:",
+        "opciones": [
+            "Los daños fueran por imprudencia grave en cuantía superior a 80.000 €.",
+            "Los daños se hicieran con objeto de impedir la labor policial y superen los 1.000 €.",
+            "Los daños se realizarán con ánimo de impedir el acceso a un archivo informático.",
+            "Las respuestas anteriores son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 267 Los daños causados por imprudencia grave en cuantía superior a 80.000 euros, serán castigados con la pena de multa de tres a nueve meses, atendiendo a la importancia de los mismos."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con lo estipulado en el apartado tercero del artículo 241 del CP, ¿Qué se considera dependencias de casa habitada?",
+        "opciones": [
+            "Sus patios, garajes o demás departamentos y sitios cercados o contiguos al edificio y en comunicación interior con él, y con el cual formen una unidad física.",
+            "Sus patios, garajes y demás departamentos en comunicación interior con él, y con el cual formen una unidad física.",
+            "Sus patios, garajes o demás departamentos y sitios cercados o contiguos al edificio y en comunicación interior con él, y con el cual no formen una unidad física.",
+            "Sus patios, garajes y demás departamentos o sitios cercados y contiguos al edificio y en comunicación interior con él, y con el cual formen una unidad física."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 241. 1. El robo cometido en casa habitada, edificio o local abiertos al público, o en cualquiera de sus dependencias, se castigará con una pena de prisión de dos a cinco años. Si los hechos se hubieran cometido en un establecimiento abierto al público, o en cualquiera de sus dependencias, fuera de las horas de apertura, se impondrá una pena de prisión de uno a cinco años. 2. Se considera casa habitada todo albergue que constituya morada de una o más personas, aunque accidentalmente se encuentren ausentes de ella cuando el robo tenga lugar. 3. Se consideran dependencias de casa habitada o de edificio o local abiertos al público, sus patios, garajes y demás departamentos o sitios cercados y contiguos al edificio y en comunicación interior con él, y con el cual formen una unidad física. 4. Se impondrá una pena de dos a seis años de prisión cuando los hechos a que se refieren los apartados anteriores revistan especial gravedad, atendiendo a la forma de comisión del delito o a los perjuicios ocasionados y, en todo caso, cuando concurra alguna de las circunstancias expresadas en el artículo 235."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentra tipificado el delito de Administración Desleal en el Código Penal?",
+        "opciones": [
+            "En el Libro II, Título XIII, Capítulo V, Sección 1ª, artículo 253.",
+            "En el Libro II, Título XIII, Capítulo IV, Sección 2ª, artículo 252.",
+            "En el Libro II, Título XIII, Capítulo VI, Sección 1ª, artículo 253.",
+            "En el Libro II, Título XIII, Capítulo VI, Sección 2ª, artículo 252."
+        ],
+        "correcta": 3,
+        "explicacion": "Libro II: Delitos y sus penas - Título XIII: Delitos contra el patrimonio y contra el orden socioeconómico ➢ Capítulo Primero: De los hurtos → artículos 234 a 236 ➢ Capítulo Segundo: De los robos → artículos 237 a 242 ➢ Capítulo Cuarto: Del robo y hurto de uso de vehículos → artículo 244 ➢ Capítulo Quinto: De la usurpación → artículos 245 a 247 ➢ Capítulo Sexto: De las defraudaciones ▪ Sección 1ª: De las estafas → artículos 248 a 251 bis ▪ Sección 2ª: De la administración desleal → artículo 252 ▪ Sección 2ª BIS: De la apropiación indebida → artículos 253 y 254 ▪ Sección 3ª: De las defraudaciones de fluido eléctrico y análogas → artículos 255 y 256 ➢ Capítulo Noveno: De los daños → artículos 263 a 267 ➢ Capítulo Décimo: Disposiciones comunes → artículos 268 y 269"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se regula el robo en casa habitada en el Código Penal?",
+        "opciones": [
+            "En el artículo 240.1 CP.",
+            "En el artículo 241 CP.",
+            "En el artículo 242 CP.",
+            "En el artículo 242.1 CP."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 241. 1. El robo cometido en casa habitada, edificio o local abiertos al público, o en cualquiera de sus dependencias, se castigará con una pena de prisión de dos a cinco años. Si los hechos se hubieran cometido en un establecimiento abierto al público, o en cualquiera de sus dependencias, fuera de las horas de apertura, se impondrá una pena de prisión de uno a cinco años. 2. Se considera casa habitada todo albergue que constituya morada de una o más personas, aunque accidentalmente se encuentren ausentes de ella cuando el robo tenga lugar. 3. Se consideran dependencias de casa habitada o de edificio o local abiertos al público, sus patios, garajes y demás departamentos o sitios cercados y contiguos al edificio y en comunicación interior con él, y con el cual formen una unidad física. 4. Se impondrá una pena de dos a seis años de prisión cuando los hechos a que se refieren los apartados anteriores revistan especial gravedad, atendiendo a la forma de comisión del delito o a los perjuicios ocasionados y, en todo caso, cuando concurra alguna de las circunstancias expresadas en el artículo 235."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Existe del delito leve de estafa en nuestro Código Penal?",
+        "opciones": [
+            "Sí, está recogido en el artículo 249 CP y establece que, si la cuantía de lo defraudado no excediere de 400 euros, se impondrá la pena de multa de uno a tres meses.",
+            "Sí, está recogido en el artículo 250 CP y establece que, si la cuantía de lo defraudado no excediere de 400 euros, se impondrá la pena de multa de uno a tres meses.",
+            "Sí, está recogido en el artículo 249 y establece que, si la cuantía de lo defraudado excediere de 400 euros, se impondrá la pena de multa de uno a tres meses.",
+            "No existe delito leve de Estada en nuestro Código Penal."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 249. Los reos de estafa serán castigados con la pena de prisión de seis meses a tres años. Para la fijación de la pena se tendrá en cuenta el importe de lo defraudado, el quebranto económico causado al perjudicado, las relaciones entre éste y el defraudador, los medios empleados por éste y cuantas otras circunstancias sirvan para valorar la gravedad de la infracción. Si la cuantía de lo defraudado no excediere de 400 euros, se impondrá la pena de multa de uno a tres meses."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado cuarto del artículo 244 del CP, si el hecho se cometiere con violencia o intimidación en las personas, se impondrán, en todo caso, las penas del artículo:",
+        "opciones": [
+            "241 CP.",
+            "242 CP.",
+            "243 CP.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 244. 1. El que sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, será castigado con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas, sin que, en ningún caso, la pena impuesta pueda ser igual o superior a la que correspondería si se apropiare definitivamente del vehículo. 2. Si el hecho se ejecutare empleando fuerza en las cosas, la pena se aplicará en su mitad superior. 3. De no efectuarse la restitución en el plazo señalado, se castigará el hecho como hurto o robo en sus respectivos casos. 4. Si el hecho se cometiere con violencia o intimidación en las personas, se impondrán, en todo caso, las penas del artículo 242."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado segundo del artículo 250 del Código Penal, si concurrieran las circunstancias incluidas en los numerales 4.º, 5.º, 6.º o 7.º con la del numeral 1.º del apartado anterior, se impondrán las penas de prisión de __________________ y multa de doce a veinticuatro meses. La misma pena se impondrá cuando el valor de la defraudación supere los ________________ euros. Complete la frase.",
+        "opciones": [
+            "Cuatro a ocho años; 250.000.",
+            "Cuatro a seis años; 150.000.",
+            "Cuatro a diez años; 200.000.",
+            "Cuatro a nueve años; 200.000."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 250. 1. El delito de estafa será castigado con las penas de prisión de uno a seis años y multa de seis a doce meses, cuando: (...) 2. Si concurrieran las circunstancias incluidas en los numerales 4.º, 5.º, 6.º o 7.º con la del numeral 1.º del apartado anterior, se impondrán las penas de prisión de cuatro a ocho años y multa de doce a veinticuatro meses. La misma pena se impondrá cuando el valor de la defraudación supere los 250.000 euros."
+    },
+    {
+        "pregunta": "Alberto, va con su coche a una gasolinera y cuando llena el depósito abandona la estación de servicio sin abonar el importe:",
+        "opciones": [
+            "Alberto comete un hurto.",
+            "Alberto comete una apropiación indebida.",
+            "Alberto comete una estafa.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 248 1. Cometen estafa los que, con ánimo de lucro, utilizaren engaño bastante para producir error en otro, induciéndolo a realizar un acto de disposición en perjuicio propio o ajeno. 2. También se consideran reos de estafa: a) Los que, con ánimo de lucro y valiéndose de alguna manipulación informática o artificio semejante, consigan una transferencia no consentida de cualquier activo patrimonial en perjuicio de otro. b) Los que fabricaren, introdujeren, poseyeren o facilitaren programas informáticos específicamente destinados a la comisión de las estafas previstas en este artículo. c) Los que utilizando tarjetas de crédito o débito, o cheques de viaje, o los datos obrantes en cualquiera de ellos, realicen operaciones de cualquier clase en perjuicio de su titular o de un tercero."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según el artículo 239 CP, ¿Qué se consideran llaves?",
+        "opciones": [
+            "Las tarjetas, magnéticas o perforadas.",
+            "Los mandos o instrumentos de apertura a distancia.",
+            "Cualquier instrumento tecnológico de eficacia similar.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 239. Se considerarán llaves falsas: 1. Las ganzúas u otros instrumentos análogos. 2. Las llaves legítimas perdidas por el propietario u obtenidas por un medio que constituya infracción penal. 3. Cualesquiera otras que no sean las destinadas por el propietario para abrir la cerradura violentada por el reo. A los efectos del presente artículo, se consideran llaves las tarjetas, magnéticas o perforadas, los mandos o instrumentos de apertura a distancia y cualquier otro instrumento tecnológico de eficacia similar."
+    },
+    {
+        "pregunta": "Sonia, que por error del repartidor recibe un ordenador portátil de última generación. Una vez que el repartidor se da cuenta de su error y lo comunica a su empresa, ésta se pone en contacto con Sonia, la cual niega haber recibido ningún ordenador. Sonia comete un delito de:",
+        "opciones": [
+            "Estafa.",
+            "Usurpación.",
+            "Hurto.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 253 1. Serán castigados con las penas del artículo 249 o, en su caso, del artículo 250, salvo que ya estuvieran castigados con una pena más grave en otro precepto de este Código, los que, en perjuicio de otro, se apropiaren para sí o para un tercero, de dinero, efectos, valores o cualquier otra cosa mueble, que hubieran recibido en depósito, comisión, o custodia, o que les hubieran sido confiados en virtud de cualquier otro título que produzca la obligación de entregarlos o devolverlos, o negaren haberlos recibido. 2. Si la cuantía de lo apropiado no excediere de 400 euros, se impondrá una pena de multa de uno a tres meses."
+    },
+    {
+        "pregunta": "Juan ve un BMW estacionado en la calle, ya que siempre ha querido tener un BMW decide apoderarse de el para quedárselo, cuando se acerca observa que el propietario se ha dejado las puertas abiertas y las llaves puestas, igualmente consigue sustraerlo para apropiárselo, ¿Qué ilícito penal cometería Juan?",
+        "opciones": [
+            "Hurto de vehículo.",
+            "Hurto de uso de vehículo.",
+            "Robo con fuerza con llave falsa.",
+            "Robo con violencia."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 234 1. El que, con ánimo de lucro, tomare las cosas muebles ajenas sin la voluntad de su dueño será castigado, como reo de hurto, con la pena de prisión de seis a dieciocho meses si la cuantía de lo sustraído excediese de 400 euros. 2. Se impondrá una pena de multa de uno a tres meses si la cuantía de lo sustraído no excediese de 400 euros, salvo si concurriese alguna de las circunstancias del artículo 235. 3. Las penas establecidas en los apartados anteriores se impondrán en su mitad superior cuando en la comisión del hecho se hubieran neutralizado, eliminado o inutilizado, por cualquier medio, los dispositivos de alarma o seguridad instalados en las cosas sustraídas."
+    },
+    {
+        "pregunta": "Cuál de los siguientes delitos encaja mejor con la siguiente frase, “Serán punibles con las penas del artículo 249 o, en su caso, con las del artículo 250, los que teniendo facultades para administrar un patrimonio ajeno, emanadas de la ley, encomendadas por la autoridad o asumidas mediante un negocio jurídico, las infrinjan excediéndose en el ejercicio de las mismas y, de esa manera, causen un perjuicio al patrimonio administrado”:",
+        "opciones": [
+            "Apropiación indebida.",
+            "Estafa agravada.",
+            "Administración desleal.",
+            "Defraudaciones de fluido eléctrico y análogas."
+        ],
+        "correcta": 2,
+        "explicacion": "DE LA ADMINISTRACIÓN DESLEAL. Artículo 252. Código Penal 1. Serán punibles con las penas del artículo 249 o, en su caso, con las del artículo 250, los que teniendo facultades para administrar un patrimonio ajeno, emanadas de la ley, encomendadas por la autoridad o asumidas mediante un negocio jurídico, las infrinjan excediéndose en el ejercicio de las mismas y, de esa manera, causen un perjuicio al patrimonio administrado."
+    },
+    {
+        "pregunta": "Cual es una circunstancia agravante del delito de robo, señale la incorrecta:",
+        "opciones": [
+            "Cuando se sustraigan cosas de valor artístico, histórico, cultural o científico.",
+            "Cuando ponga a la víctima o a su familia en grave situación económica",
+            "Cuando se utilice a menores de dieciséis años para la comisión del delito.",
+            "Cuando el culpable o culpables participen en los hechos como miembros de una asociación ilicita."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 235 CP Cuando el culpable o culpables participen en los hechos como miembros de una organización o grupo criminal que se dedicare a la comisión de delitos comprendidos en este Título, siempre que sean de la misma naturaleza."
+    },
+    {
+        "pregunta": "El Código Penal considera una agravación del delito de hurto:",
+        "opciones": [
+            "Cuando se sustraigan cosas de valor artístico, histórico, cultural o científico.",
+            "En todo caso cuando se trate de un bien de primera necesidad destinado a un servicio público.",
+            "Cuando se utilice a menores de diecisiete años para la comisión del delito.",
+            "Las respuestas a) y b) son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 235 1. El hurto será castigado con la pena de prisión de uno a tres años: 1.º Cuando se sustraigan cosas de valor artístico, histórico, cultural o científico. 2.º Cuando se trate de cosas de primera necesidad y se cause una situación de desabastecimiento. [...] 8º. Cuando se utilice a menores de dieciséis años para la comisión del delito. [...]"
+    },
+    {
+        "pregunta": "Alberto entra en una pequeña perfumería, y aprovechando el descuido de la dependienta se lleva la pequeña caja que tiene con el dinero de la recaudación. Una vez en su casa, procede a abrirla con una radial, una vez que se ha hecho con el dinero de su interior:",
+        "opciones": [
+            "Alberto comete un robo con fuerza.",
+            "Alberto comete un hurto cualificado.",
+            "Alberto ha cometido una apropiación indebida.",
+            "Alberto ha cometido un robo con intimidación."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículos 237 y 238"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Puede cometer el delito de estafa una persona jurídica?",
+        "opciones": [
+            "Sí, de conformidad con el artículo 251 bis del Código Penal, en relación con el artículo 31 bis del mismo texto legal.",
+            "Sí, de conformidad con el artículo 251 bis del Código Penal, en relación con el artículo 31 bis de la Ley de Enjuiciamiento Criminal.",
+            "Sí, de conformidad con el artículo 251 ter del Código Penal, en relación con el artículo 31 bis de la Ley de Enjuiciamiento Criminal.",
+            "Ninguna de las anteriores respuestas es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 251 bis. Cuando de acuerdo con lo establecido en el artículo 31 bis una persona jurídica sea responsable de los delitos comprendidos en esta Sección, se le impondrán las siguientes penas: a) Multa del triple al quíntuple de la cantidad defraudada, si el delito cometido por la persona física tiene prevista una pena de prisión de más de cinco años. b) Multa del doble al cuádruple de la cantidad defraudada, en el resto de los casos."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con lo estipulado en el apartado primero del artículo 241 CP, ¿Cuándo se impondrá la pena de prisión de uno a cinco años?",
+        "opciones": [
+            "Si los hechos se hubieran cometido en un establecimiento público, o en cualquiera de sus dependencias, dentro de las horas de apertura.",
+            "Si los hechos se hubieran cometido en un establecimiento abierto al público, sin tener en cuenta sus dependencias, dentro de las horas de apertura.",
+            "Si los hechos se hubieran cometido en un establecimiento abierto al público, o en cualquiera de sus dependencias, fuera de las horas de apertura.",
+            "Si los hechos se hubieran cometido en un establecimiento abierto al público, sin tener en cuenta sus dependencias, fuera de las horas de apertura."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 241. 1. El robo cometido en casa habitada, edificio o local abiertos al público, o en cualquiera de sus dependencias, se castigará con una pena de prisión de dos a cinco años. Si los hechos se hubieran cometido en un establecimiento abierto al público, o en cualquiera de sus dependencias, fuera de las horas de apertura, se impondrá una pena de prisión de uno a cinco años. 2. Se considera casa habitada todo albergue que constituya morada de una o más personas, aunque accidentalmente se encuentren ausentes de ella cuando el robo tenga lugar. 3. Se consideran dependencias de casa habitada o de edificio o local abiertos al público, sus patios, garajes y demás departamentos o sitios cercados y contiguos al edificio y en comunicación interior con él, y con el cual formen una unidad física. 4. Se impondrá una pena de dos a seis años de prisión cuando los hechos a que se refieren los apartados anteriores revistan especial gravedad, atendiendo a la forma de comisión del delito o a los perjuicios ocasionados y, en todo caso, cuando concurra alguna de las circunstancias expresadas en el artículo 235."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Señale la afirmación incorrecta respecto a lo estipulado en el artículo 242 CP:",
+        "opciones": [
+            "El culpable de robo con violencia o intimidación en las personas será castigado con la pena de prisión de dos a cinco años, sin perjuicio de la que pudiera corresponder a los actos de violencia física que realizase.",
+            "En atención a la menor entidad de la violencia o intimidación ejercidas y valorando además las restantes circunstancias del hecho, podrá imponerse la pena en su mitad inferior.",
+            "Cuando el robo se cometa en casa habitada, edificio o local abiertos al público o en cualquiera de sus dependencias, se impondrá la pena de prisión de tres años y seis meses a cinco años.",
+            "Las penas señaladas en los apartados anteriores se impondrán en su mitad superior cuando el delincuente hiciere uso de armas u otros medios igualmente peligrosos, sea al cometer el delito o para proteger la huida, y cuando atacare a los que acudiesen en auxilio de la víctima o a los que le persiguieren."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 242. 1. El culpable de robo con violencia o intimidación en las personas será castigado con la pena de prisión de dos a cinco años, sin perjuicio de la que pudiera corresponder a los actos de violencia física que realizase. 2. Cuando el robo se cometa en casa habitada, edificio o local abiertos al público o en cualquiera de sus dependencias, se impondrá la pena de prisión de tres años y seis meses a cinco años. 3. Las penas señaladas en los apartados anteriores se impondrán en su mitad superior cuando el delincuente hiciere uso de armas u otros medios igualmente peligrosos, sea al cometer el delito o para proteger la huida, y cuando atacare a los que acudiesen en auxilio de la víctima o a los que le persiguieren. 4. En atención a la menor entidad de la violencia o intimidación ejercidas y valorando además las restantes circunstancias del hecho, podrá imponerse la pena inferior en grado a la prevista en los apartados anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿En qué se diferencian los delitos de robo y hurto?",
+        "opciones": [
+            "En el robo se ejercerá fuerza en las cosas o violencia o intimidación en las personas, mientras que en el hurto no.",
+            "En la cuantía del valor de lo sustraído.",
+            "En el hurto se ejercerá fuerza en las cosas o violencia o intimidación en las personas, mientras que en el robo no.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "El delito de robo es uno de los más comunes en los juzgados penales y de instrucción. Mucha gente lo confunde con el delito de hurto. La diferencia es muy simple: En un robo, el delincuente ejerce violencia o intimidación contra una persona, o bien, actúa con fuerza en las cosas. En un hurto, no se dan estas características, no hay violencia, ni intimidación ni fuerza. Por ejemplo, si te roban la cartera en el metro de Madrid, y no te das cuenta, es un hurto. Pero si te roban la cartera a punta de navaja es un robo. Por eso el robo, se castiga más duramente que el hurto."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentra tipificado el delito de Defraudación de Fluido Eléctrico y Análogas en el Código Penal?",
+        "opciones": [
+            "En el Libro II, Título XIII, Capítulo VI, Sección 3ª Bis, artículo 255 a 256.",
+            "En el Libro II, Título XIII, Capítulo VI, Sección 3ª, artículo 255 a 256.",
+            "En el Libro II, Título XII, Capítulo VI, Sección 3ª, artículo 255 a 256.",
+            "En el Libro III, Título XIII, Capítulo VI, Sección 3ª, artículo 255 a 256."
+        ],
+        "correcta": 1,
+        "explicacion": "Libro II: Delitos y sus penas - Título XIII: Delitos contra el patrimonio y contra el orden socioeconómico ➢ Capítulo Primero: De los hurtos → artículos 234 a 236 ➢ Capítulo Segundo: De los robos → artículos 237 a 242 ➢ Capítulo Cuarto: Del robo y hurto de uso de vehículos → artículo 244 ➢ Capítulo Quinto: De la usurpación → artículos 245 a 247 ➢ Capítulo Sexto: De las defraudaciones ▪ Sección 1ª: De las estafas → artículos 248 a 251 bis ▪ Sección 2ª: De la administración desleal → artículo 252 ▪ Sección 2ª BIS: De la apropiación indebida → artículos 253 y 254 ▪ Sección 3ª: De las defraudaciones de fluido eléctrico y análogas → artículos 255 y 256 ➢ Capítulo Noveno: De los daños → artículos 263 a 267 ➢ Capítulo Décimo: Disposiciones comunes → artículos 268 y 269"
+    },
+    {
+        "pregunta": "Carlos decide cortar la cadena pitón de un ciclomotor que se encuentra “atado” a una farola, con el objeto de llevárselo y darse un par de vueltas por el barrio y sin ánimo de apropiárselo. Carlos comete un:",
+        "opciones": [
+            "Hurto de uso.",
+            "Robo de uso.",
+            "Robo con fuerza.",
+            "No comete delito alguno."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 244 1. El que sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, será castigado con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas, sin que, en ningún caso, la pena impuesta pueda ser igual o superior a la que correspondería si se apropiare definitivamente del vehículo. 2. Si el hecho se ejecutare empleando fuerza en las cosas, la pena se aplicará en su mitad superior. 3. De no efectuarse la restitución en el plazo señalado, se castigará el hecho como hurto o robo en sus respectivos casos. 4. Si el hecho se cometiere con violencia o intimidación en las personas, se impondrán, en todo caso, las penas del artículo 242."
+    },
+    {
+        "pregunta": "Sobre las 6:00 horas del día 3 de julio de 2016, Gervasio, mayor de edad y sin antecedentes penales computables a efectos de reincidencia, se dirigió a la motocicleta Yamaha Jog matricula 7856GHD que su propietario Leoncio había dejado estacionada en la calle Mallorca de Madrid, y con ánimo de utilizarla temporalmente, forzando el bombín de arranque la puso en marcha circulando por la calle Gran Vía sin el correspondiente permiso de conducir por no haberlo obtenido nunca, hacia la calle San Bernardo sentido Plaza de Ruiz Giménez. Al ser observada su conducción por agentes de la policía municipal, iniciaron la persecución del acusado, accionando los sistemas acústicos y luminosos sin que el acusado depusiera su actitud, circulando a gran velocidad por las calles Pozas, la calle Cruz Verde, calle Luna para acceder a la calle Andrés Borrego donde colisionó con la motocicleta del Cuerpo de Policía NUM000 con matrícula 1256PXX causando daños por valor de 247,44 euros que han sido abonados por la compañía de seguros Bilbao. ¿Qué delito/s comete Gervasio?",
+        "opciones": [
+            "Delito de robo de uso de vehículo a motor, previsto y penado en el art. 244.1 CP, y de un delito contra la seguridad vial, en su modalidad de conducción sin permiso, previsto y penado en el art. 384.2 C.P.",
+            "Delito de robo de uso de vehículo a motor, previsto y penado en el art. 244.1 CP, y de un delito contra la seguridad vial, en su modalidad de conducción sin permiso, previsto y penado en el art. 383.2 C.P.",
+            "Delito de hurto de uso de vehículo a motor, previsto y penado en el art. 244.1 CP, y de un delito contra la seguridad vial, en su modalidad de conducción sin permiso, previsto y penado en el art. 384.2 C.P.",
+            "Delito de hurto de uso de vehículo a motor, previsto y penado en el art. 244.1 CP, y de un delito contra la seguridad vial, en su modalidad de conducción sin permiso, previsto y penado en el art. 383.2 C.P."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 244. 1. El que sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, será castigado con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas, sin que, en ningún caso, la pena impuesta pueda ser igual o superior a la que correspondería si se apropiare definitivamente del vehículo. Artículo 384. El que condujere un vehículo de motor o ciclomotor en los casos de pérdida de vigencia del permiso o licencia por pérdida total de los puntos asignados legalmente, será castigado con la pena de prisión de tres a seis meses o con la de multa de doce a veinticuatro meses o con la de trabajos en beneficio de la comunidad de treinta y uno a noventa días. La misma pena se impondrá al que realizare la conducción tras haber sido privado cautelar o definitivamente del permiso o licencia por decisión judicial y al que condujere un vehículo de motor o ciclomotor sin haber obtenido nunca permiso o licencia de conducción."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Según lo estipulado en el artículo 250 del CP, el delito de estafa será castigado con las penas de prisión de uno a seis años y multa de seis a doce meses, cuando: Señale la opción correcta.",
+        "opciones": [
+            "Revista especial gravedad, atendiendo a la entidad del hecho y a la situación laboral en que deje a la víctima o a su familia.",
+            "Se cometa con abuso de las relaciones personales existentes entre víctima y defraudador, o aproveche éste su credibilidad empresarial o profesional.",
+            "Se cometa estafa procesal. Incurren en la misma los que, en un procedimiento judicial penal, manipularen las pruebas en que pretendieran fundar sus alegaciones o emplearen otro fraude procesal análogo, provocando error en el juez o tribunal y llevándole a dictar una resolución que perjudique los intereses económicos de la otra parte o de un tercero.",
+            "Al delinquir el culpable hubiera sido condenado ejecutoriamente por más de tres delitos comprendidos en este Capítulo. Se tendrán en cuenta antecedentes cancelados o que debieran serlo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 250. 1. El delito de estafa será castigado con las penas de prisión de uno a seis años y multa de seis a doce meses, cuando: 1.º Recaiga sobre cosas de primera necesidad, viviendas u otros bienes de reconocida utilidad social. 2.º Se perpetre abusando de firma de otro, o sustrayendo, ocultando o inutilizando, en todo o en parte, algún proceso, expediente, protocolo o documento público u oficial de cualquier clase. 3.º Recaiga sobre bienes que integren el patrimonio artístico, histórico, cultural o científico. 4.º Revista especial gravedad, atendiendo a la entidad del perjuicio y a la situación económica en que deje a la víctima o a su familia. 5.º El valor de la defraudación supere los 50.000 euros, o afecte a un elevado número de personas. 6.º Se cometa con abuso de las relaciones personales existentes entre víctima y defraudador, o aproveche éste su credibilidad empresarial o profesional. 7.º Se cometa estafa procesal. Incurren en la misma los que, en un procedimiento judicial de cualquier clase, manipularen las pruebas en que pretendieran fundar sus alegaciones o emplearen otro fraude procesal análogo, provocando error en el juez o tribunal y llevándole a dictar una resolución que perjudique los intereses económicos de la otra parte o de un tercero. 8.º Al delinquir el culpable hubiera sido condenado ejecutoriamente al menos por tres delitos comprendidos en este Capítulo. No se tendrán en cuenta antecedentes cancelados o que debieran serlo. 2. Si concurrieran las circunstancias incluidas en los numerales 4.º, 5.º, 6.º o 7.º con la del numeral 1.º del apartado anterior, se impondrán las penas de prisión de cuatro a ocho años y multa de doce a veinticuatro meses. La misma pena se impondrá cuando el valor de la defraudación supere los 250.000 euros."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con lo estipulado en el artículo 249 del CP, los reos de estafa serán castigados con la pena de prisión de seis meses a tres años. Para la fijación de la pena se tendrá en cuenta:",
+        "opciones": [
+            "El importe de lo defraudado, el quebranto económico causado al perjudicado.",
+            "Las relaciones entre éste y el defraudador, los medios empleados por éste.",
+            "Cuantas otras circunstancias sirvan para valorar la autoría de la infracción.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 249. Los reos de estafa serán castigados con la pena de prisión de seis meses a tres años. Para la fijación de la pena se tendrá en cuenta el importe de lo defraudado, el quebranto económico causado al perjudicado, las relaciones entre éste y el defraudador, los medios empleados por éste y cuantas otras circunstancias sirvan para valorar la gravedad de la infracción. Si la cuantía de lo defraudado no excediere de 400 euros, se impondrá la pena de multa de uno a tres meses."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Un yonqui porta una jeringuilla ensangrentada y, anunciando que actúa bajo el síndrome de abstinencia, os dice que le entreguéis la cartera y el móvil que lleváis en los bolsillos. ¿Qué delito estaría cometiendo el yonqui?",
+        "opciones": [
+            "Delito de robo con violencia agravado.",
+            "Delito de robo con intimidación.",
+            "Delito de hurto agravado.",
+            "Delito de amenazas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 242. 1. El culpable de robo con violencia o intimidación en las personas será castigado con la pena de prisión de dos a cinco años, sin perjuicio de la que pudiera corresponder a los actos de violencia física que realizase. 2. Cuando el robo se cometa en casa habitada, edificio o local abiertos al público o en cualquiera de sus dependencias, se impondrá la pena de prisión de tres años y seis meses a cinco años. 3. Las penas señaladas en los apartados anteriores se impondrán en su mitad superior cuando el delincuente hiciere uso de armas u otros medios igualmente peligrosos, sea al cometer el delito o para proteger la huida, y cuando atacare a los que acudiesen en auxilio de la víctima o a los que le persiguieren. 4. En atención a la menor entidad de la violencia o intimidación ejercidas y valorando además las restantes circunstancias del hecho, podrá imponerse la pena inferior en grado a la prevista en los apartados anteriores."
+    },
+    {
+        "pregunta": "Juan, entra en un supermercado con la intención de llevarse un videojuego, el cual está en el interior de una carcasa transparente, tras forzar la carcasa y acceder al video juego, ¿Qué ilícito penal estaría cometiendo?",
+        "opciones": [
+            "Un robo con fuerza.",
+            "Un hurto.",
+            "Un hurto cualificado.",
+            "Un hurto agravado."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 234 1. El que, con ánimo de lucro, tomare las cosas muebles ajenas sin la voluntad de su dueño será castigado, como reo de hurto, con la pena de prisión de seis a dieciocho meses si la cuantía de lo sustraído excediese de 400 euros. 2. Se impondrá una pena de multa de uno a tres meses si la cuantía de lo sustraído no excediese de 400 euros, salvo si concurriese alguna de las circunstancias del artículo 235. 3. Las penas establecidas en los apartados anteriores se impondrán en su mitad superior cuando en la comisión del hecho se hubieran neutralizado, eliminado o inutilizado, por cualquier medio, los dispositivos de alarma o seguridad instalados en las cosas sustraídas. El enunciado se refiere al artículo 234.3 de nuestro Código Penal, que cualifica el tipo básico de hurto cuando, como es el caso, se rompe la carcasa (elemento de seguridad) para acceder al objeto que se quiere hurtar."
+    },
+    {
+        "pregunta": "El que ocupare, sin autorización debida un inmueble, vivienda o edificio ajenos que no constituyan morada, o se mantuviere en ellos contra la voluntad de su titular, comente un delito de:",
+        "opciones": [
+            "Allanamiento de morada.",
+            "Una usurpación de bien inmueble.",
+            "Una ocupación pacífica y legítima.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 245 1. Al que con violencia o intimidación en las personas ocupare una cosa inmueble o usurpare un derecho real inmobiliario de pertenencia ajena, se le impondrá, además de las penas en que incurriere por las violencias ejercidas, la pena de prisión de uno a dos años, que se fijará teniendo en cuenta la utilidad obtenida y el daño causado. 2. El que ocupare, sin autorización debida, un inmueble, vivienda o edificio ajenos que no constituyan morada, o se mantuviere en ellos contra la voluntad de su titular, será castigado con la pena de multa de tres a seis meses."
+    },
+    {
+        "pregunta": "Pau ha dejado su moto en el taller porque no funcionaban correctamente los frenos. una vez hecha la revisión el taller se ha puesto en contacto con Pau para decirle que la moto estaba lista y que el coste de la reparación son 900€. Pau no está conforme con el precio de la reparación y acude al taller para llevarse su moto sin abonar la factura al taller. ¿comete algún delito Pau?",
+        "opciones": [
+            "No, ya que Pau es propietario de la moto y tiene derecho a llevársela.",
+            "Sí, comete delito de robo con intimidación.",
+            "Sí, como delito de hurto de cosa propia regulado en el artículo 236.",
+            "Sí, como delito de hurto regulado en el artículo 234."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículo 236 1. Será castigado con multa de tres a doce meses el que, siendo dueño de una cosa mueble o actuando con el consentimiento de éste, la sustrajere de quien la tenga legítimamente en su poder, con perjuicio del mismo o de un tercero. 2. Si el valor de la cosa sustraída no excediera de 400 euros, se impondrá la pena de multa de uno a tres meses."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Juan es propietario de un terreno de 14.000 metros cuadrados y necesita 200 metros cuadrados más para poder construir una casa unifamiliar. Dado que lleva tiempo sin ver al vecino del terreno colindante, decide desplazar la pared que linda ambos terrenos de tal forma que cuando venga el arquitecto municipal a medir las dimensiones vea que existen los 14.200 metros exigidos urbanísticamente. ¿Comete algún delito Juan?",
+        "opciones": [
+            "Sí, un delito de usurpación del artículo 246.1 CP.",
+            "Sí, un delito de apropiación indebida del artículo 252.1 CP.",
+            "Sí, un delito de hurto del artículo 234.1 CP.",
+            "La conducta no es reprochable penalmente."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 246. 1. El que alterare términos o lindes de pueblos o heredades o cualquier clase de señales o mojones destinados a fijar los límites de propiedades o demarcaciones de predios contiguos, tanto de dominio público como privado, será castigado con la pena de multa de tres a dieciocho meses. 2. Si la utilidad reportada no excediere de 400 euros, se impondrá la pena de multa de uno a tres meses."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con lo estipulado en el artículo 251 del CP, será castigado con la pena de prisión de uno a cuatro años:",
+        "opciones": [
+            "Quien, atribuyéndose falsamente sobre una cosa inmueble facultad de disposición de la que carece, bien por no haberla tenido nunca, bien por haberla ya ejercitado, la enajenare, gravare o arrendare a otro, en perjuicio de éste o de tercero.",
+            "El que dispusiere de una cosa mueble o inmueble ocultando la existencia de cualquier carga sobre la misma, o el que, habiéndola enajenado como libre, la gravare o enajenare nuevamente antes de la definitiva transmisión al adquirente, en perjuicio de éste, o de un tercero.",
+            "El que otorgare en perjuicio de otro un contrato sinalagmático.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 251. Será castigado con la pena de prisión de uno a cuatro años: 1.º Quien, atribuyéndose falsamente sobre una cosa mueble o inmueble facultad de disposición de la que carece, bien por no haberla tenido nunca, bien por haberla ya ejercitado, la enajenare, gravare o arrendare a otro, en perjuicio de éste o de tercero. 2.º El que dispusiere de una cosa mueble o inmueble ocultando la existencia de cualquier carga sobre la misma, o el que, habiéndola enajenado como libre, la gravare o enajenare nuevamente antes de la definitiva transmisión al adquirente, en perjuicio de éste, o de un tercero. 3.º El que otorgare en perjuicio de otro un contrato simulado."
+    },
+    {
+        "pregunta": "Alberto se dedica a la venta de cobre y observa la existencia de este material en una caseta de comunicaciones de telefonía, la cual no posee puertas ni ventanas y se encuentra en estado de total abandono. Decide que cuando llegue la noche se va a llevar todas las líneas de cable ¿Qué ilícito penal cometería Alberto?",
+        "opciones": [
+            "Un hurto.",
+            "Un hurto agravado por ser cableado o equipo de telecomunicaciones.",
+            "Un robo agravado por ser cableado de telecomunicaciones.",
+            "Una apropiación indebida."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Artículos 234 y 235"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentra tipificado el delito de Apropiación Indebida en el Código Penal?",
+        "opciones": [
+            "En el Libro II, Título XIII, Capítulo VI, Sección 2ª Bis, artículo 253 a 254.",
+            "En el Libro II, Título XIII, Capítulo VI, Sección 2ª, artículo 254 a 256.",
+            "En el Libro II, Título XIII, Capítulo VI, Sección 1ª Bis, artículo 254 a 255.",
+            "En el Libro II, Título XIII, Capítulo IV, Sección 2ª Bis, artículo 253 a 254."
+        ],
+        "correcta": 0,
+        "explicacion": "Libro II: Delitos y sus penas - Título XIII: Delitos contra el patrimonio y contra el orden socioeconómico ➢ Capítulo Primero: De los hurtos → artículos 234 a 236 ➢ Capítulo Segundo: De los robos → artículos 237 a 242 ➢ Capítulo Cuarto: Del robo y hurto de uso de vehículos → artículo 244 ➢ Capítulo Quinto: De la usurpación → artículos 245 a 247 ➢ Capítulo Sexto: De las defraudaciones ▪ Sección 1ª: De las estafas → artículos 248 a 251 bis ▪ Sección 2ª: De la administración desleal → artículo 252 ▪ Sección 2ª BIS: De la apropiación indebida → artículos 253 y 254 ▪ Sección 3ª: De las defraudaciones de fluido eléctrico y análogas → artículos 255 y 256 ➢ Capítulo Noveno: De los daños → artículos 263 a 267 ➢ Capítulo Décimo: Disposiciones comunes → artículos 268 y 269"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Tras realizarse un atraco a un banco, huyendo los atracadores, en una calle próxima, se encuentran con un policía local al que apuntan con una pistola en el pecho para garantizar la huida. Señale la opción correcta:",
+        "opciones": [
+            "Los atracadores únicamente cometen un delito de robo con intimidación.",
+            "Los atracadores cometen un delito de robo con intimidación además de un delito de atentado contra la autoridad.",
+            "Los atracadores únicamente cometen un delito de hurto agravado.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 242. De los robos con violencia o intimidación en las personas 1. El culpable de robo con violencia o intimidación en las personas será castigado con la pena de prisión de dos a cinco años, sin perjuicio de la que pudiera corresponder a los actos de violencia física que realizase. 2. Cuando el robo se cometa en casa habitada, edificio o local abiertos al público o en cualquiera de sus dependencias, se impondrá la pena de prisión de tres años y seis meses a cinco años. 3. Las penas señaladas en los apartados anteriores se impondrán en su mitad superior cuando el delincuente hiciere uso de armas u otros medios igualmente peligrosos, sea al cometer el delito o para proteger la huida, y cuando atacare a los que acudiesen en auxilio de la víctima o a los que le persiguieren. 4. En atención a la menor entidad de la violencia o intimidación ejercidas y valorando además las restantes circunstancias del hecho, podrá imponerse la pena inferior en grado a la prevista en los apartados anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Qué se consideran llaves falsas según el CP? Señale la opción incorrecta:",
+        "opciones": [
+            "Las ganzúas u otros instrumentos análogos.",
+            "Cualesquiera otras que no sean las destinadas por el propietario para abrir la cerradura violentada por el reo.",
+            "Las llaves legítimas perdidas por el propietario u obtenidas por un medio que constituya infracción penal.",
+            "Cualesquiera otras que sean las destinadas por el propietario para abrir la cerradura violentada por el reo."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 239. Se considerarán llaves falsas: 1. Las ganzúas u otros instrumentos análogos. 2. Las llaves legítimas perdidas por el propietario u obtenidas por un medio que constituya infracción penal. 3. Cualesquiera otras que no sean las destinadas por el propietario para abrir la cerradura violentada por el reo. A los efectos del presente artículo, se consideran llaves las tarjetas, magnéticas o perforadas, los mandos o instrumentos de apertura a distancia y cualquier otro instrumento tecnológico de eficacia similar."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el artículo 237 del CP:",
+        "opciones": [
+            "Son reos del delito de hurto los que, con ánimo de lucro, se apoderaren de las cosas muebles ajenas empleando fuerza en las cosas para acceder o abandonar el lugar donde éstas se encuentran o violencia o intimidación en las personas, sea al cometer el delito, para proteger la huida, o sobre los que acudiesen en auxilio de la víctima o que le persiguieren.",
+            "Son reos del delito de robo los que, con ánimo de lucro, se apoderaren de las cosas muebles ajenas empleando fuerza en las cosas para acceder o abandonar el lugar donde éstas se encuentran o violencia o intimidación en las personas, sea al cometer el delito, para proteger la huida, o sobre los que acudiesen en auxilio de la víctima o que le persiguieren.",
+            "Son reos del delito de robo los que, con ánimo de lucro, se apoderaren de las cosas muebles ajenas empleando fuerza en las cosas para acceder al lugar donde éstas se encuentran o violencia o intimidación en las personas, sea al cometer el delito, para proteger la huida, o sobre los que acudiesen en auxilio de la víctima o que le persiguieren.",
+            "Son reos del delito de robo los que, con ánimo de lucro, se apoderaren de las cosas muebles ajenas empleando fuerza en las cosas para acceder y abandonar el lugar donde éstas se encuentran o violencia o intimidación en las personas, sea al cometer el delito, para proteger la huida, o sobre los que acudiesen en auxilio de la víctima o que le persiguieren."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 237. Son reos del delito de robo los que, con ánimo de lucro, se apoderaren de las cosas muebles ajenas empleando fuerza en las cosas para acceder o abandonar el lugar donde éstas se encuentran o violencia o intimidación en las personas, sea al cometer el delito, para proteger la huida, o sobre los que acudiesen en auxilio de la víctima o que le persiguieren."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado segundo del artículo 244 CP (robo y hurto de uso de vehículos), si el hecho se ejecutare empleando fuerza en las cosas:",
+        "opciones": [
+            "La pena se aplicará en su mitad superior.",
+            "La pena se aplicará en superior en un grado.",
+            "La pena se aplicará en superior en dos grados.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 244. 1. El que sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, será castigado con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas, sin que, en ningún caso, la pena impuesta pueda ser igual o superior a la que correspondería si se apropiare definitivamente del vehículo. 2. Si el hecho se ejecutare empleando fuerza en las cosas, la pena se aplicará en su mitad superior. 3. De no efectuarse la restitución en el plazo señalado, se castigará el hecho como hurto o robo en sus respectivos casos. 4. Si el hecho se cometiere con violencia o intimidación en las personas, se impondrán, en todo caso, las penas del artículo 242."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con lo estipulado en el artículo 238 del CP, son reos del delito de robo con fuerza en las cosas los que ejecuten el hecho cuando concurra alguna de las circunstancias siguientes: Señale la opción incorrecta.",
+        "opciones": [
+            "Rompimiento de pared, techo o suelo, o fractura de puerta o ventana.",
+            "Uso de llaves falsas.",
+            "Inutilización de sistemas generales de alarma o guarda.",
+            "Fractura de armarios, arcas u otra clase de muebles u objetos cerrados o sellados, o forzamiento de sus cerraduras o descubrimiento de sus claves para sustraer su contenido, sea en el lugar del robo o fuera del mismo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 238. Son reos del delito de robo con fuerza en las cosas los que ejecuten el hecho cuando concurra alguna de las circunstancias siguientes: 1.º Escalamiento. 2.º Rompimiento de pared, techo o suelo, o fractura de puerta o ventana. 3.º Fractura de armarios, arcas u otra clase de muebles u objetos cerrados o sellados, o forzamiento de sus cerraduras o descubrimiento de sus claves para sustraer su contenido, sea en el lugar del robo o fuera del mismo. 4.º Uso de llaves falsas. 5.º Inutilización de sistemas específicos de alarma o guarda."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con el apartado segundo del artículo 248 del CP, también se consideran reos de estafa: Señale la respuesta incorrecta.",
+        "opciones": [
+            "Los que, con ánimo de lucro y valiéndose de alguna manipulación informática o artificio semejante, consigan una transferencia no consentida de cualquier activo patrimonial en perjuicio de otro.",
+            "Los que fabricaren, introdujeren, poseyeren o facilitaren programas informáticos específicamente destinados a la comisión de las estafas previstas en este artículo.",
+            "Los que, en perjuicio de otro, se apropiaren para sí o para un tercero, de dinero, efectos, valores o cualquier otra cosa mueble, que hubieran recibido en depósito, comisión, o custodia, o que les hubieran sido confiados en virtud de cualquier otro título que produzca la obligación de entregarlos o devolverlos, o negaren haberlos recibido.",
+            "Los que utilizando tarjetas de crédito o débito, o cheques de viaje, o los datos obrantes en cualquiera de ellos, realicen operaciones de cualquier clase en perjuicio de su titular o de un tercero."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 248. 1. Cometen estafa los que, con ánimo de lucro, utilizaren engaño bastante para producir error en otro, induciéndolo a realizar un acto de disposición en perjuicio propio o ajeno. 2. También se consideran reos de estafa: a) Los que, con ánimo de lucro y valiéndose de alguna manipulación informática o artificio semejante, consigan una transferencia no consentida de cualquier activo patrimonial en perjuicio de otro. b) Los que fabricaren, introdujeren, poseyeren o facilitaren programas informáticos específicamente destinados a la comisión de las estafas previstas en este artículo. c) Los que utilizando tarjetas de crédito o débito, o cheques de viaje, o los datos obrantes en cualquiera de ellos, realicen operaciones de cualquier clase en perjuicio de su titular o de un tercero."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. De conformidad con lo estipulado en el apartado segundo del artículo 241 del CP, ¿Qué se considera casa habitada?",
+        "opciones": [
+            "Todo albergue que constituya morada de una persona, aunque casualmente se encuentre ausente de ella cuando el robo tenga lugar.",
+            "Todo albergue que constituya morada de una o más personas, aunque accidentalmente se encuentren ausentes de ella cuando el robo tenga lugar.",
+            "Todo albergue que constituya morada de una o más personas, aunque casualmente se encuentren ausentes de ella cuando el robo tenga lugar.",
+            "Todo albergue que constituya morada de dos o más personas, aunque accidentalmente se encuentren ausentes de ella cuando el robo tenga lugar."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 241. 1. El robo cometido en casa habitada, edificio o local abiertos al público, o en cualquiera de sus dependencias, se castigará con una pena de prisión de dos a cinco años. Si los hechos se hubieran cometido en un establecimiento abierto al público, o en cualquiera de sus dependencias, fuera de las horas de apertura, se impondrá una pena de prisión de uno a cinco años. 2. Se considera casa habitada todo albergue que constituya morada de una o más personas, aunque accidentalmente se encuentren ausentes de ella cuando el robo tenga lugar. 3. Se consideran dependencias de casa habitada o de edificio o local abiertos al público, sus patios, garajes y demás departamentos o sitios cercados y contiguos al edificio y en comunicación interior con él, y con el cual formen una unidad física. 4. Se impondrá una pena de dos a seis años de prisión cuando los hechos a que se refieren los apartados anteriores revistan especial gravedad, atendiendo a la forma de comisión del delito o a los perjuicios ocasionados y, en todo caso, cuando concurra alguna de las circunstancias expresadas en el artículo 235."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Qué se entiende por ánimo de lucro en el Código Penal?",
+        "opciones": [
+            "Es un elemento subjetivo del injusto que prevé el CP para que se vea colmado el tipo de diversos delitos, tanto de carácter personal como patrimonial.",
+            "Es la intención del sujeto de obtener una ventaja patrimonial mediante la incorporación a su patrimonio de una cosa ajena.",
+            "Es un elemento subjetivo del injusto que prevé el CP para que se vea colmado el tipo de diversos delitos, todos ellos de carácter patrimonial o que atentan contra el orden socioeconómico.",
+            "Las respuestas b) y c) son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "El ánimo de lucro es un elemento subjetivo del injusto que prevé el CP para que se vea colmado el tipo de diversos delitos, todos ellos de carácter patrimonial o que atentan contra el orden socioeconómico (hurto, robo, extorsión, estafa, receptación). En este sentido, la STS de 22 de febrero de 2000 ha definido el ánimo de lucro la intención del sujeto de obtener una ventaja patrimonial mediante la incorporación a su patrimonio de una cosa ajena. Constituye un elemento esencial en los delitos contra el patrimonio que nos permite deslindar las figuras típicas de apoderamiento y defraudaciones previstas en el Código Penal de otras sustracciones con finalidad distinta"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentra tipificado el delito de robo en el CP?",
+        "opciones": [
+            "En el Libro II, Título XIII, Capítulo III, artículos 234 a 242.",
+            "En el Libro II, Título XIII, Capítulo III, artículos 236 a 244.",
+            "En el Libro II, Título XIII, Capítulo II, artículos 237 a 242.",
+            "En el Libro II, Título XIII, Capítulo II, artículos 235 a 243."
+        ],
+        "correcta": 2,
+        "explicacion": "Libro II: Delitos y sus penas - Título XIII: Delitos contra el patrimonio y contra el orden socioeconómico ➢ Capítulo Primero: De los hurtos → artículos 234 a 236 ➢ Capítulo Segundo: De los robos → artículos 237 a 242 ➢ Capítulo Cuarto: Del robo y hurto de uso de vehículos → artículo 244 ➢ Capítulo Quinto: De la usurpación → artículos 245 a 247 ➢ Capítulo Sexto: De las defraudaciones ▪ Sección 1ª: De las estafas → artículos 248 a 251 bis ▪ Sección 2ª: De la administración desleal → artículo 252 ▪ Sección 2ª BIS: De la apropiación indebida → artículos 253 y 254 ▪ Sección 3ª: De las defraudaciones de fluido eléctrico y análogas → artículos 255 y 256 ➢ Capítulo Noveno: De los daños → artículos 263 a 267 ➢ Capítulo Décimo: Disposiciones comunes → artículos 268 y 269"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Dónde se encuentra tipificado el delito de Robo y Hurto de uso de vehículos en el Código Penal?",
+        "opciones": [
+            "En el Libro II, Título XIII, Capítulo VI, artículo 244.",
+            "En el Libro II, Título XIII, Capítulo IV, artículo 244.",
+            "En el Libro II, Título XII, Capítulo IV, artículo 244.",
+            "En el Libro III, Título XIII, Capítulo VI, artículo 244."
+        ],
+        "correcta": 1,
+        "explicacion": "Libro II: Delitos y sus penas - Título XIII: Delitos contra el patrimonio y contra el orden socioeconómico ➢ Capítulo Primero: De los hurtos → artículos 234 a 236 ➢ Capítulo Segundo: De los robos → artículos 237 a 242 ➢ Capítulo Cuarto: Del robo y hurto de uso de vehículos → artículo 244 ➢ Capítulo Quinto: De la usurpación → artículos 245 a 247 ➢ Capítulo Sexto: De las defraudaciones ▪ Sección 1ª: De las estafas → artículos 248 a 251 bis ▪ Sección 2ª: De la administración desleal → artículo 252 ▪ Sección 2ª BIS: De la apropiación indebida → artículos 253 y 254 ▪ Sección 3ª: De las defraudaciones de fluido eléctrico y análogas → artículos 255 y 256 ➢ Capítulo Noveno: De los daños → artículos 263 a 267 ➢ Capítulo Décimo: Disposiciones comunes → artículos 268 y 269"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El apartado primero del artículo 244 CP castiga con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses al que:",
+        "opciones": [
+            "Sustrajere o utilizare sin la debida autorización un vehículo ajeno, sin ánimo de apropiárselo, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas.",
+            "Sustrajere o utilizare sin la debida autorización un vehículo ajeno, sin ánimo de apropiárselo, si lo restituyera, directa o indirectamente, en un plazo no superior a veinticuatro horas.",
+            "Sustrajere o utilizare sin la debida autorización un vehículo a motor y ciclomotor ajenos, sin ánimo de apropiárselo, si lo restituyera, directa o indirectamente, en un plazo no superior a veinticuatro horas.",
+            "Sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 244. 1. El que sustrajere o utilizare sin la debida autorización un vehículo a motor o ciclomotor ajenos, sin ánimo de apropiárselo, será castigado con la pena de trabajos en beneficio de la comunidad de treinta y uno a noventa días o multa de dos a doce meses, si lo restituyera, directa o indirectamente, en un plazo no superior a cuarenta y ocho horas, sin que, en ningún caso, la pena impuesta pueda ser igual o superior a la que correspondería si se apropiare definitivamente del vehículo. 2. Si el hecho se ejecutare empleando fuerza en las cosas, la pena se aplicará en su mitad superior. 3. De no efectuarse la restitución en el plazo señalado, se castigará el hecho como hurto o robo en sus respectivos casos. 4. Si el hecho se cometiere con violencia o intimidación en las personas, se impondrán, en todo caso, las penas del artículo 242."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

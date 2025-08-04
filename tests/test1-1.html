@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "¿El Título VII de la CE trata de?",
+        "opciones": [
+            "Del Poder Judicial",
+            "Economía y hacienda",
+            "La Corona",
+            "Derechos y libertades"
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "En la Constitución Española:",
+        "opciones": [
+            "Algunos Títulos están divididos en Secciones.",
+            "En todos los Títulos existen Capítulos divididos a su vez en Secciones.",
+            "Algunos Títulos están divididos en Capítulos.",
+            "Todos los Títulos están divididos en Capítulos."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Constitución Española 1978. El Capítulo III denominado “ Principios rectores de la política social”, está comprendida la parte:",
+        "opciones": [
+            "Orgánica.",
+            "Dogmática.",
+            "Principal.",
+            "Estructural."
+        ],
+        "correcta": 1,
+        "explicacion": "Parte Dogmática: se centra en reconocer los principios constitucionales que inspiran el nuevo orden político del Estado. Incluye el Título Preliminar, el Título Primero y la declaración de los valores primarios del Estado y de los derechos y libertades."
+    },
+    {
+        "pregunta": "Uno de los siguientes principios no está garantizado por la Constitución:",
+        "opciones": [
+            "El de jerarquía reglamentaria.",
+            "El de irretroactividad de las disposiciones sancionadoras no favorables.",
+            "El de publicidad de las normas.",
+            "El de legalidad."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "¿El Título V de la CE, trata de?",
+        "opciones": [
+            "La Corona",
+            "De las relaciones entre el Gobierno y las Cortes Generales",
+            "Del Poder Judicial",
+            "Economía y Hacienda"
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La Disposición Final de la Constitución Española contiene:",
+        "opciones": [
+            "Cinco apartados.",
+            "Tres apartados.",
+            "Cuatro apartados.",
+            "Todas las otras respuestas son falsas."
+        ],
+        "correcta": 3,
+        "explicacion": "DISPOSICION FINAL Esta Constitución entrará en vigor el mismo día de la publicación de su texto oficial en el boletín oficial del Estado. Se publicará también en las demás lenguas de España. NOTA Esta disposición está formada por un único apartado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los partidos políticos:",
+        "opciones": [
+            "Concurren a la formación de la voluntad institucional.",
+            "Expresan el pluralismo ideológico en todos los campos.",
+            "Son instrumento fundamental para la participación política.",
+            "Participan en la manifestación de la voluntad de las agrupaciones políticas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6 CE Los partidos políticos expresan el pluralismo político, concurren a la formación y manifestación de la voluntad popular y son instrumento fundamental para la participación política. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La riqueza de las distintas modalidades lingüísticas de España:",
+        "opciones": [
+            "Es un patrimonio político que no podrá vulnerar el principio de solidaridad entre las distintas nacionalidades y regiones.",
+            "Es un patrimonio cultural que será objeto de especial respeto y protección.",
+            "Es un patrimonio natural que deberá ser desarrollado exclusivamente por las Comunidades Autónomas afectadas.",
+            "Es un patrimonio cultural cuya gestión corresponderá a Naciones Unidas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 3 CE 1. El castellano es la lengua española oficial del Estado. Todos los españoles tienen el deber de conocerla y el derecho a usarla. 2. Las demás lenguas españolas serán también oficiales en las respectivas Comunidades Autónomas de acuerdo con sus Estatutos. 3. La riqueza de las distintas modalidades lingüísticas de España es un patrimonio cultural que será objeto de especial respeto y protección."
+    },
+    {
+        "pregunta": "La firma por parte del Jefe del Estado, del Presidente de las Cortes Generales, y los Presidentes del Congreso de los Diputados y del Senado de la Constitución Española de 1978, se produjo en el Palacio de las Cortes:",
+        "opciones": [
+            "El uno de enero de 1979.",
+            "El veintiocho de noviembre de 1978.",
+            "El veintisiete de diciembre de 1978.",
+            "Todas las otras respuestas son falsas."
+        ],
+        "correcta": 2,
+        "explicacion": "CE - Fechas importantes 31 de octubre 1978 | Aprobación por los plenos de las Cámaras. 6 de diciembre 1978 | Referéndum. 27 de diciembre 1978 | Sanción y promulgación. 29 de diciembre 1978 | Publicación en el BOE y Entrada en vigor."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La estructura interna y el funcionamiento de los Partidos Políticos deberá ser:",
+        "opciones": [
+            "Jerárquica.",
+            "Estructurada.",
+            "Democrática.",
+            "Transparente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6 CE Los partidos políticos expresan el pluralismo político, concurren a la formación y manifestación de la voluntad popular y son instrumento fundamental para la participación política. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "La Disposición Derogatoria de la Constitución Española ostenta:",
+        "opciones": [
+            "Cuatro apartados.",
+            "Un solo apartado.",
+            "Tres apartados.",
+            "Dos apartados."
+        ],
+        "correcta": 2,
+        "explicacion": "DISPOSICION DEROGATORIA 1. Queda derogada la Ley 1/1977, de 4 de enero, para la Reforma Política, así como, en tanto en cuanto no estuvieran ya derogadas por la anteriormente mencionada Ley, la de Principios del Movimiento Nacional, de 17 de mayo de 1958; el Fuero de los Españoles, de 17 de julio de 1945; el del Trabajo, de 9 de marzo de 1938; la Ley Constitutiva de las Cortes, de 17 de julio de 1942; la Ley de Sucesión en la Jefatura del Estado, de 26 de julio de 1947, todas ellas modificadas por la Ley Orgánica del Estado, de 10 de enero de 1967, y en los mismos términos esta última y la de Referéndum Nacional de 22 de octubre de 1945. 2. En tanto en cuanto pudiera conservar alguna vigencia, se considera definitivamente derogada la Ley de 25 de octubre de 1839 en lo que pudiera afectar a las provincias de Álava, Guipúzcoa y Vizcaya. En los mismos términos se considera definitivamente derogada la Ley de 21 de julio de 1876. 3. Asimismo quedan derogadas cuantas disposiciones se opongan a lo establecido en esta Constitución."
+    },
+    {
+        "pregunta": "Sólo uno de los siguientes principios está garantizado constitucionalmente:",
+        "opciones": [
+            "La seguridad mercantil.",
+            "La seguridad jurídica.",
+            "La seguridad del tráfico.",
+            "La seguridad ciudadana."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "Constitución Española 1978. Que disposición hace referencia a la vigencia inmediata de la Constitución:",
+        "opciones": [
+            "Disposición adicional.",
+            "Disposición derogatoria.",
+            "Disposición transitoria.",
+            "Disposición final."
+        ],
+        "correcta": 3,
+        "explicacion": "La disposición final, establece que la Constitución entrará en vigor el mismo día de su publicación en el Boletín Oficial del Estado, el 29 de diciembre de 1978."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los sindicatos de trabajadores:",
+        "opciones": [
+            "Contribuyen junto con las asociaciones de empresarios a la defensa y promoción de los intereses económicos y sociales que le son propios.",
+            "Contribuyen en solitario a la promoción de los intereses sociales.",
+            "Contribuyen a la defensa de sus exclusivos intereses económicos.",
+            "Contribuyen junto a las asociaciones de empresarios a la defensa de los intereses sociales, pero no de naturaleza propia, sino general."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 7 CE Los sindicatos de trabajadores y las asociaciones empresariales contribuyen a la defensa y promoción de los intereses económicos y sociales que les son propios. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La forma política del Estado Español es:",
+        "opciones": [
+            "El Parlamentarismo Bicameral.",
+            "La Monarquía Parlamentaria.",
+            "El Parlamentarismo Democrático.",
+            "La Monarquía Institucional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 1 CE 1. España se constituye en un Estado social y democrático de Derecho, que propugna como valores superiores de su ordenamiento jurídico la libertad, la justicia, la igualdad y el pluralismo político. 2. La soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado. 3. La forma política del Estado español es la Monarquía parlamentaria."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Banderas y enseñas propias de las Comunidades Autónomas, reconocidas en sus Estatutos:",
+        "opciones": [
+            "Se utilizarán junto con la española sólo en los actos oficiales de carácter estatal.",
+            "Se utilizarán junto a la española en sus edificios públicos y en sus actos oficiales.",
+            "La utilización conjunta de la bandera de España y la de cada Comunidad Autónoma es potestad de las autoridades de la administración autonómica.",
+            "Se utilizarán en sustitución de la española en los edificios públicos oficiales propios de cada Comunidad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 4 CE 1. La bandera de España está formada por tres franjas horizontales, roja, amarilla y roja, siendo la amarilla de doble anchura que cada una de las rojas. 2. Los Estatutos podrán reconocer banderas y enseñas propias de las Comunidades Autónomas. Estas se utilizarán junto a la bandera de España en sus edificios públicos y en sus actos oficiales."
+    },
+    {
+        "pregunta": "¿Cuál es la norma de mayor rango legislativo en el ordenamiento jurídico español?",
+        "opciones": [
+            "Las Leyes Orgánicas",
+            "Los Reales Decretos",
+            "Los Decretos Legislativos",
+            "La Constitución"
+        ],
+        "correcta": 3,
+        "explicacion": "Principio de jerarquía normativa Las normas jurídicas se ordenan jerárquicamente, en función de su rango, situándose en el vértice superior la propia Constitución."
+    },
+    {
+        "pregunta": "El Título Décimo de la Constitución Española tiene:",
+        "opciones": [
+            "Cuatro artículos.",
+            "Siete artículos.",
+            "Cinco artículos.",
+            "Seis artículos."
+        ],
+        "correcta": 0,
+        "explicacion": "Del artículo 166 al 169, forman un total de 4 artículos."
+    },
+    {
+        "pregunta": "La Constitución Española aprobada por las Cortes en sesiones plenarias del Congreso de los Diputados y del Senado celebradas el 31 de octubre de 1978, fue ratificada por el pueblo español en referéndum el:",
+        "opciones": [
+            "8 de noviembre de 1978.",
+            "6 de diciembre de 1978.",
+            "7 de diciembre de 1978.",
+            "8 de diciembre de 1978."
+        ],
+        "correcta": 1,
+        "explicacion": "CE - Fechas importantes: 31 de octubre 1978 | Aprobación por los plenos de las Cámaras. 6 de diciembre 1978 | Referéndum. 27 de diciembre 1978 | Sanción y promulgación. 29 de diciembre 1978 | Publicación en el BOE y Entrada en vigor."
+    },
+    {
+        "pregunta": "La Constitución Española se fundamenta:",
+        "opciones": [
+            "En la unidad de la Nación Española.",
+            "En el compromiso de unidad de todos los pueblos y nacionalidades integrantes de la Nación Española.",
+            "En la indisoluble unidad de la Nación Española.",
+            "En la pluralidad de pueblos integrantes de la Nación Española."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 2 CE La Constitución se fundamenta en la indisoluble unidad de la Nación española, patria común e indivisible de todos los españoles, y reconoce y garantiza el derecho a la autonomía de las nacionalidades y regiones que la integran y la solidaridad entre todas ellas."
+    },
+    {
+        "pregunta": "Las Cámaras se encuentran reguladas en nuestra Constitución en:",
+        "opciones": [
+            "El Capítulo Primero del Título Cuarto.",
+            "El Capítulo Primero del Título Tercero.",
+            "El Capítulo Cuarto del Título Primero.",
+            "El Capítulo Segundo del Título Tercero."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Una de las siguientes materias no es regulada en el Título Preliminar de la Constitución Española:",
+        "opciones": [
+            "Las Cortes Generales.",
+            "Las Asociaciones de Empresarios.",
+            "Las Fuerzas Armadas.",
+            "Los Partidos Políticos."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 6 CE Los partidos políticos expresan el pluralismo político, concurren a la formación y manifestación de la voluntad popular y son instrumento fundamental para la participación política. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "El Título en el que la Constitución regula la elaboración de las leyes es el:",
+        "opciones": [
+            "Sexto.",
+            "Cuarto.",
+            "Quinto.",
+            "Tercero."
+        ],
+        "correcta": 3,
+        "explicacion": "Titulo III: Capitulo II: de la elaboración de las leyes (arts. 81 al 92)"
+    },
+    {
+        "pregunta": "Sólo uno de los siguientes principios está garantizado constitucionalmente:",
+        "opciones": [
+            "La responsabilidad e interdicción de la arbitrariedad de la Administración Pública, tanto nacional, como autonómica o local.",
+            "La responsabilidad de la Administración Pública.",
+            "La interdicción de la arbitrariedad del poder judicial.",
+            "La responsabilidad e interdicción de la arbitrariedad de los poderes públicos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "El Título Tercero de la Constitución Española está dedicado a:",
+        "opciones": [
+            "El Gobierno y la Administración.",
+            "El Poder Judicial.",
+            "La Corona.",
+            "Las Cortes Generales."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Respecto a las nacionalidades y regiones que integran a la Nación Española, la Constitución les reconoce y garantiza:",
+        "opciones": [
+            "El derecho a la solidaridad entre ellas, pero no el derecho a la autonomía políticamente entendida.",
+            "El derecho a su libre federación o confederación.",
+            "El derecho a la libre autodeterminación.",
+            "El derecho a la autonomía."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2 CE La Constitución se fundamenta en la indisoluble unidad de la Nación española, patria común e indivisible de todos los españoles, y reconoce y garantiza el derecho a la autonomía de las nacionalidades y regiones que la integran y la solidaridad entre todas ellas."
+    },
+    {
+        "pregunta": "A la Constitución y al resto del ordenamiento jurídico:",
+        "opciones": [
+            "Los ciudadanos y los poderes públicos están sometidos exclusivamente al imperio de la Ley.",
+            "Están sujetos tanto los ciudadanos como los poderes públicos.",
+            "Están sujetos sólo los poderes públicos.",
+            "Están sujetos exclusivamente los ciudadanos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "¿Cuántas Disposiciones Transitorias tiene la Constitución Española de 1978?",
+        "opciones": [
+            "Cinco.",
+            "Diez.",
+            "Nueve.",
+            "Cuatro."
+        ],
+        "correcta": 2,
+        "explicacion": "Estructura de la constitución española. La CE tiene un total de 169 artículos. Su estructura esquemática es la siguiente: - Preámbulo (sin fuerza jurídica). - Título Preliminar. - 10 títulos. - 4 disposiciones Adicionales. - 9 disposiciones Transitorias. - 1 disposición Derogatoria. - 1 disposición Final."
+    },
+    {
+        "pregunta": "Una de las siguientes afirmaciones referentes a las misiones de las Fuerzas Armadas en la Constitución Española no es cierta:",
+        "opciones": [
+            "Defienden el ordenamiento constitucional, impidiendo, por ejemplo, un golpe de estado antidemocrático.",
+            "Defienden la integridad territorial del Estado, lo cual no es obstáculo para que consientan la independencia de alguna o algunas nacionalidades o regiones de España, tras decisión libremente adoptada al efecto en referéndum de autodeterminación.",
+            "Garantizan la independencia de España, luchando, por ejemplo, contra la invasión militar de nuestro territorio por un ejército extranjero.",
+            "Defienden la integridad territorial del Estado, no consintiendo, por ejemplo, la ruptura de la unidad de España."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 8 CE 1. Las Fuerzas Armadas, constituidas por el Ejército de Tierra, la Armada y el Ejército del Aire, tienen como misión garantizar la soberanía e independencia de España, defender su integridad territorial y el ordenamiento constitucional. 2. Una ley orgánica regulará las bases de la organización militar conforme a los principios de la presente Constitución."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Corresponde a los podes públicos:",
+        "opciones": [
+            "Afianzar los obstáculos que impidan un equivocado o desmesurado empleo de la libertad individual.",
+            "Regular los cauces necesarios para alcanzar el disfrute por los ciudadanos de una seguridad plena.",
+            "Facilitar la participación de los ciudadanos en la vida cultural y social.",
+            "Facilitar la participación de los ciudadanos con capacidad en la vida política."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "El principio de irretroactividad garantizado en la Constitución abarca:",
+        "opciones": [
+            "A las disposiciones sancionadoras no favorables o restrictivas de derechos individuales.",
+            "A todas las disposiciones legales de cualquier orden.",
+            "A todas las normas de carácter penal.",
+            "A las disposiciones sancionadoras, más aquellas que impongan penas privativas de libertad no superior a los seis años, o de multa cualquiera que fuese su cuantía."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "El Título Cuarto de la Constitución Española está dedicado a:",
+        "opciones": [
+            "Las relaciones entre el Gobierno y las Cortes Generales.",
+            "El Poder Judicial.",
+            "El Gobierno y la Administración.",
+            "Las Cortes Generales."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "El Título en el que la Constitución regula los Tratados Internacionales es el:",
+        "opciones": [
+            "Segundo.",
+            "El Quinto.",
+            "El Cuarto.",
+            "El Tercero."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La capital del Estado es la villa de:",
+        "opciones": [
+            "Madrid, situada en la Comunidad Autónoma de Castilla León.",
+            "Madrid, ubicada en la Comunidad Autónoma de Castilla La Mancha.",
+            "Madrid, no perteneciente por tal motivo a Comunidad Autónoma alguna.",
+            "Madrid, situada en la Comunidad Autónoma del mismo nombre."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 CE La capital del Estado es la villa de Madrid."
+    },
+    {
+        "pregunta": "Constitución Española 1978. Que tipo de disposiciones hacen referencia a ordenación territorial de España:",
+        "opciones": [
+            "Disposiciones adicionales.",
+            "Disposiciones transitorias.",
+            "Disposiciones derogatorias.",
+            "Disposición final."
+        ],
+        "correcta": 0,
+        "explicacion": "De las disposiciones adicionales y transitorias solo la Disposiciones transitorias octava y novena se dedican a la transición que supuso el paso del régimen establecido en la Ley para la Reforma política al régimen constitucional. El resto se dedican a problemas de ordenación territorial del Estado español."
+    },
+    {
+        "pregunta": "La estructura básica y común a todos los Títulos de la Constitución Española es:",
+        "opciones": [
+            "La Sección.",
+            "El Capítulo.",
+            "El Libro.",
+            "El artículo."
+        ],
+        "correcta": 3,
+        "explicacion": "La estructura de la Constitución española de 1978 consta de 11 Títulos (Título Preliminar más 10 Títulos), estos Títulos pueden dividirse en Capítulos y Secciones. La CE tiene un total de 169 artículos."
+    },
+    {
+        "pregunta": "Cómo se le denomina aquella puerta abierta que nos dejan algunos artículos de la CE, indicando que los desarrollará una Ley Orgánica:",
+        "opciones": [
+            "Legalidad Constitucional",
+            "Reserva Legal",
+            "Legalitas subsidium",
+            "Reserva de Ley"
+        ],
+        "correcta": 3,
+        "explicacion": "CARACTERÍSTICAS Y ESTRUCTURA DE LA CONSTITUCIÓN ESPAÑOLA c) Es una Constitución inacabada y ambigua: se remite en demasiadas ocasiones a normas de desarrollo, lo que se conoce como reserva de ley."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Todos los españoles, con respecto al idioma oficial del Estado:",
+        "opciones": [
+            "Tienen el deber de usarlo.",
+            "Tienen el deber de conocerlo y el derecho de usarlo.",
+            "Tienen el deber y el derecho de conocerlo.",
+            "Tienen el deber y el derecho de usarlo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 3 CE 1. El castellano es la lengua española oficial del Estado. Todos los españoles tienen el deber de conocerla y el derecho a usarla. 2. Las demás lenguas españolas serán también oficiales en las respectivas Comunidades Autónomas de acuerdo con sus Estatutos. 3. La riqueza de las distintas modalidades lingüísticas de España es un patrimonio cultural que será objeto de especial respeto y protección."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las demás lenguas de las respectivas Comunidades Autónomas:",
+        "opciones": [
+            "Serán las únicas lenguas oficiales en las respectivas comunidades de acuerdo con sus Estatutos.",
+            "Deben ser conocidas y empleadas por todos los españoles que residan o visiten la comunidad autónoma afectada.",
+            "Serán también oficiales en las respectivas comunidades autónomas de acuerdo con sus Estatutos.",
+            "Son oficiales también el resto del Estado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 3 CE 1. El castellano es la lengua española oficial del Estado. Todos los españoles tienen el deber de conocerla y el derecho a usarla. 2. Las demás lenguas españolas serán también oficiales en las respectivas Comunidades Autónomas de acuerdo con sus Estatutos. 3. La riqueza de las distintas modalidades lingüísticas de España es un patrimonio cultural que será objeto de especial respeto y protección."
+    },
+    {
+        "pregunta": "¿En qué artículo de la Constitución Española nos hace referencia que la soberanía nacional reside en el pueblo español?",
+        "opciones": [
+            "art. 1.2",
+            "art. 2.1",
+            "art. 3",
+            "art. 5"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 1 CE 1. España se constituye en un Estado social y democrático de Derecho, que propugna como valores superiores de su ordenamiento jurídico la libertad, la justicia, la igualdad y el pluralismo político. 2. La soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado. 3. La forma política del Estado español es la Monarquía parlamentaria."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Una de las siguientes afirmaciones relativa a los sindicatos y asociaciones empresariales no es correcta:",
+        "opciones": [
+            "Su funcionamiento interno deberá ser democrático.",
+            "Su estructura interna deberá ser jerárquica.",
+            "Su creación será libre dentro del respecto a la Constitución ya la Ley.",
+            "El ejercicio de su actividad será igualmente libre dentro del respeto a la Constitución ya la Ley."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 7 CE Los sindicatos de trabajadores y las asociaciones empresariales contribuyen a la defensa y promoción de los intereses económicos y sociales que les son propios. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra:",
+        "opciones": [
+            "Se empleen por los ciudadanos dentro del respeto a la Constitución y las leyes.",
+            "Alcancen el nivel más alto posible.",
+            "Sean comunes a todos los miembros de la sociedad.",
+            "Sean reales y efectivas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 9 CE 1. Los ciudadanos y los poderes públicos están sujetos a la Constitución y al resto del ordenamiento jurídico. 2. Corresponde a los poderes públicos promover las condiciones para que la libertad y la igualdad del individuo y de los grupos en que se integra sean reales y efectivas; remover los obstáculos que impidan o dificulten su plenitud y facilitar la participación de todos los ciudadanos en la vida política, económica, cultural y social. 3. La Constitución garantiza el principio de legalidad, la jerarquía normativa, la publicidad de las normas, la irretroactividad de las disposiciones sancionadoras no favorables o restrictivas de derechos individuales, la seguridad jurídica, la responsabilidad y la interdicción de la arbitrariedad de los poderes públicos."
+    },
+    {
+        "pregunta": "El Título Noveno de la Constitución Española está dedicado a:",
+        "opciones": [
+            "El Tribunal Constitucional.",
+            "Economía y Hacienda.",
+            "La organización territorial del Estado.",
+            "La reforma constitucional."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La Constitución Española de 1978 regula el Tribunal Constitucional en su Título:",
+        "opciones": [
+            "Ninguno.",
+            "Décimo.",
+            "Octavo.",
+            "Noveno."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "El Título Cuarto de la Constitución Española tiene:",
+        "opciones": [
+            "Once artículos.",
+            "Ocho artículos.",
+            "Nueve artículos.",
+            "Diez artículos."
+        ],
+        "correcta": 0,
+        "explicacion": "Del artículo 97 al 107, forman un total de 11 artículos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La bandera de España está formada por tres franjas, roja, amarilla y roja:",
+        "opciones": [
+            "Verticalmente colocadas, siendo la amarilla de doble anchura que cada una de las rojas.",
+            "Horizontalmente colocadas, siendo la roja de doble anchura que cada una de las amarillas.",
+            "Horizontalmente colocadas, siendo las tres franjas de igual anchura.",
+            "Horizontalmente colocadas, siendo la amarilla de doble anchura que cada una de las rojas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4 CE 1. La bandera de España está formada por tres franjas horizontales, roja, amarilla y roja, siendo la amarilla de doble anchura que cada una de las rojas. 2. Los Estatutos podrán reconocer banderas y enseñas propias de las Comunidades Autónomas. Estas se utilizarán junto a la bandera de España en sus edificios públicos y en sus actos oficiales."
+    },
+    {
+        "pregunta": "¿Cuántas Disposiciones Adicionales tiene la Constitución Española de 1978?",
+        "opciones": [
+            "Tres",
+            "Nueve",
+            "Una",
+            "Cuatro"
+        ],
+        "correcta": 3,
+        "explicacion": "Estructura de la constitución española. La CE tiene un total de 169 artículos. Su estructura esquemática es la siguiente: - Preámbulo (sin fuerza jurídica). - Título Preliminar. - 10 títulos. - 4 disposiciones Adicionales. - 9 disposiciones Transitorias. - 1 disposición Derogatoria. - 1 disposición Final."
+    },
+    {
+        "pregunta": "El Título Quinto de la Constitución Española tiene:",
+        "opciones": [
+            "Once artículos.",
+            "Nueve artículos.",
+            "Diez artículos.",
+            "Ocho artículos."
+        ],
+        "correcta": 1,
+        "explicacion": "Del artículo 108 al 116, forman un total de 9 artículos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿La creación y el ejercicio de la actividad de los Partidos Políticos?",
+        "opciones": [
+            "Es libre, dentro del respeto a la dignidad de las personas y de las instituciones públicas.",
+            "Es libre, dentro del respeto a las reglas del juego democrático establecidas en la Ley reguladora de los Partidos Políticos.",
+            "Es libre, dentro del respeto a la Constitución y a la Ley.",
+            "Es libre, sin limitación de clase alguna."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6 CE Los partidos políticos expresan el pluralismo político, concurren a la formación y manifestación de la voluntad popular y son instrumento fundamental para la participación política. Su creación y el ejercicio de su actividad son libres dentro del respeto a la Constitución y a la ley. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "El Título Undécimo de la Constitución Española está dedicado a:",
+        "opciones": [
+            "La organización territorial del Estado.",
+            "El Tribunal Constitucional.",
+            "La reforma constitucional.",
+            "No existe el título undécimo en la Constitución Española."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, los valores superiores del ordenamiento jurídico son:",
+        "opciones": [
+            "La libertad, la justicia, la igualdad y el pluralismo político.",
+            "La libertad, la justicia y la libre competencia.",
+            "La libertad, la igualdad y el pluralismo político y sindical.",
+            "La libertad, la igualdad y la fraternidad."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 1 CE 1. España se constituye en un Estado social y democrático de Derecho, que propugna como valores superiores de su ordenamiento jurídico la libertad, la justicia, la igualdad y el pluralismo político. 2. La soberanía nacional reside en el pueblo español, del que emanan los poderes del Estado. 3. La forma política del Estado español es la Monarquía parlamentaria."
+    },
+    {
+        "pregunta": "Las bases de la organización militar conforme a los principios constitucionales:",
+        "opciones": [
+            "Se regulan en la propia Constitución, en el Título Octavo.",
+            "Se regulan por Ley Ordinaria, conforme al mandato constitucional.",
+            "Se regulan por Ley Orgánica, conforme al mandato constitucional.",
+            "Se regulan en la propia Constitución, en el Título I."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 8 CE 1. Las Fuerzas Armadas, constituidas por el Ejército de Tierra, la Armada y el Ejército del Aire, tienen como misión garantizar la soberanía e independencia de España, defender su integridad territorial y el ordenamiento constitucional. 2. Una ley orgánica regulará las bases de la organización militar conforme a los principios de la presente Constitución."
+    },
+    {
+        "pregunta": "Señale de los siguientes textos legales de otros países que influyeron en la confección de la CE:",
+        "opciones": [
+            "Constitución Italiana",
+            "Ley de Bonn",
+            "Constitución americana",
+            "Todas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Es una Constitución derivada Las constituciones se pueden clasificar en originarias o derivadas según introduzcan un principio funcional nuevo o estén inspiradas en anteriores modelos, tanto nacionales como extranjeros. Nuestra Constitución se puede clasificar como derivada pues está inspirada en la Constitución de 1931, en lo que se refiere a la organización territorial en Comunidades autónomas, la iniciativa legislativa popular, etc.; en la Ley Fundamental de Bonn de 1949; además de la Constitución francesa, italiana, nórdicas; de las constituciones portuguesa y americana, una parte de los derechos fundamentales. Por último, también está inspirada en la Declaración de Derechos Humanos de la ONU."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

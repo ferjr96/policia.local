@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            
+    {
+      "pregunta": "1. ¿Cuántos conceptos básicos hay en el RDL 6/2015 ?",
+      "opciones": [
+        "80",
+        "82",
+        "84",
+        "86"
+      ],
+      "correcta": 1,
+      "explicacion": "El Anexo I consta de 82 conceptos básicos."
+    },
+    {
+      "pregunta": "2. Indique la definición incorrecta:",
+      "opciones": [
+        "Senda ciclable: Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+        "Pista-bici: Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+        "Acera-bici: Vía ciclista señalizada sobre la calzada.",
+        "Carril-bici: Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+    },
+    {
+      "pregunta": "3. Definición de vía ciclista:",
+      "opciones": [
+        "Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+        "Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+        "Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos.",
+        "Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+    },
+    {
+      "pregunta": "4. Indique la definición correcta:",
+      "opciones": [
+        "Carretera. Vía pública no pavimentada situada fuera de poblado, salvo los tramos en travesía.",
+        "Paso a nivel. Cruce a la misma altura entre una vía y una línea de ferrocarril con plataforma conjunta.",
+        "Intersección. Nudo de la red viaria en el que todos los cruces de trayectorias posibles de los vehículos que lo utilizan se realizan a nivel.",
+        "Arcén. Franja longitudinal afirmada contigua a la calzada, destinada al uso de vehículos automóviles."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales. 62. Intersección. Nudo de la red viaria en el que todos los cruces de trayectorias posibles de los vehículos que lo utilizan se realizan a nivel. 63. Glorieta. Tipo especial de intersección caracterizado por que los tramos que en él confluyen se comunican a través de un anillo en el que se establece una circulación rotatoria alrededor de una isleta central. No son glorietas propiamente dichas las denominadas glorietas partidas en las que dos tramos, generalmente opuestos, se conectan directamente a través de la isleta central, por lo que el tráfico pasa de uno a otro y no la rodea. 64. Paso a nivel. Cruce a la misma altura entre una vía y una línea de ferrocarril con plataforma independiente. 65. Carretera. Vía pública pavimentada situada fuera de poblado, salvo los tramos en travesía."
+    },
+    {
+      "pregunta": "5. Definición de masa máxima autorizada:",
+      "opciones": [
+        "Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes.",
+        "La masa máxima para la utilización de un vehículo sin carga en circulación por las vías públicas.",
+        "La masa máxima para la utilización de un vehículo con carga en circulación por las vías públicas.",
+        "La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 35. Tara. Masa del vehículo, con su equipo fijo autorizado, sin personal de servicio, pasajeros ni carga, y con su dotación completa de agua, combustible, lubricante, repuestos, herramientas y accesorios reglamentarios. 36. Masa en carga. La masa efectiva del vehículo y de su carga, incluida la masa del personal de servicio y de los pasajeros. 37. Masa máxima autorizada (M.M.A.). La masa máxima para la utilización de un vehículo con carga en circulación por las vías públicas. 38. Masa por eje. La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje. 39. Grupo de ejes. Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes."
+    },
+    {
+      "pregunta": "6. Definición de masa por eje:",
+      "opciones": [
+        "Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes.",
+        "La masa máxima para la utilización de un vehículo con carga en uno de sus ejes y en circulación por las vías públicas.",
+        "La masa efectiva del vehículo y de su carga, incluida la masa del personal de servicio y de los pasajeros.",
+        "La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 35. Tara. Masa del vehículo, con su equipo fijo autorizado, sin personal de servicio, pasajeros ni carga, y con su dotación completa de agua, combustible, lubricante, repuestos, herramientas y accesorios reglamentarios. 36. Masa en carga. La masa efectiva del vehículo y de su carga, incluida la masa del personal de servicio y de los pasajeros. 37. Masa máxima autorizada (M.M.A.). La masa máxima para la utilización de un vehículo con carga en circulación por las vías públicas. 38. Masa por eje. La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje. 39. Grupo de ejes. Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes."
+    },
+    {
+      "pregunta": "7. Definición de masa en carga:",
+      "opciones": [
+        "Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes.",
+        "La masa efectiva del vehículo y de su carga, incluida la masa del personal de servicio y de los pasajeros.",
+        "La masa efectiva del vehículo y de su carga, sin incluir la masa del personal de servicio y de los pasajeros.",
+        "La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 35. Tara. Masa del vehículo, con su equipo fijo autorizado, sin personal de servicio, pasajeros ni carga, y con su dotación completa de agua, combustible, lubricante, repuestos, herramientas y accesorios reglamentarios. 36. Masa en carga. La masa efectiva del vehículo y de su carga, incluida la masa del personal de servicio y de los pasajeros. 37. Masa máxima autorizada (M.M.A.). La masa máxima para la utilización de un vehículo con carga en circulación por las vías públicas. 38. Masa por eje. La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje. 39. Grupo de ejes. Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes."
+    },
+    {
+      "pregunta": "8. Autovía. Carretera especialmente proyectada, construida y señalizada como tal que tiene las siguientes características: Señale la correcta.",
+      "opciones": [
+        "Tener acceso ilimitado a ella las propiedades colindantes.",
+        "Cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna.",
+        "Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación, o por otros medios.",
+        "Constar de distintas plataformas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación, o por otros medios."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 67. Autovía. Carretera especialmente proyectada, construida y señalizada como tal que tiene las siguientes características: a) Tener acceso limitado a ella las propiedades colindantes. b) No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna. c) Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación, o por otros medios."
+    },
+    {
+      "pregunta": "9. Definición de Tara:",
+      "opciones": [
+        "Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes.",
+        "Masa del vehículo, con su equipo fijo autorizado, sin personal de servicio, pasajeros ni carga, y con su dotación completa de agua, combustible, lubricante, repuestos, herramientas y accesorios reglamentarios.",
+        "Masa del vehículo, sin su equipo fijo autorizado, sin personal de servicio, pasajeros ni carga, y con su dotación completa de agua, combustible, lubricante, repuestos, herramientas y accesorios reglamentarios.",
+        "La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 35. Tara. Masa del vehículo, con su equipo fijo autorizado, sin personal de servicio, pasajeros ni carga, y con su dotación completa de agua, combustible, lubricante, repuestos, herramientas y accesorios reglamentarios. 36. Masa en carga. La masa efectiva del vehículo y de su carga, incluida la masa del personal de servicio y de los pasajeros. 37. Masa máxima autorizada (M.M.A.). La masa máxima para la utilización de un vehículo con carga en circulación por las vías públicas. 38. Masa por eje. La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje. 39. Grupo de ejes. Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes."
+    },
+    {
+      "pregunta": "10. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo:",
+      "opciones": [
+        "Refugio.",
+        "Paseo.",
+        "Arcén.",
+        "Zona peatonal."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 54. Plataforma. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes. 55. Calzada. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles. 56. Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas. 57. Carril para vehículos con alta ocupación. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación. 58. Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. 59. Zona peatonal. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo. 60. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+    },
+    {
+      "pregunta": "11. Definición de vía para automóviles:",
+      "opciones": [
+        "Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles.",
+        "Vía pública situada fuera de poblado.",
+        "Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente.",
+        "Vía reservada exclusivamente a la circulación de automóviles, con una o más calzadas y con limitación total o parcial de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "12. Zona peatonal situada en la calzada y protegida del tránsito rodado:",
+      "opciones": [
+        "Refugio.",
+        "Paseo.",
+        "Arcén.",
+        "Acera."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 54. Plataforma. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes. 55. Calzada. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles. 56. Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas. 57. Carril para vehículos con alta ocupación. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación. 58. Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. 59. Zona peatonal. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo. 60. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+    },
+    {
+      "pregunta": "13. Autopista. Carretera especialmente proyectada, construida y señalizada como tal para la exclusiva circulación de automóviles y que tiene las siguientes características: Señale la correcta.",
+      "opciones": [
+        "No tener acceso a la misma las propiedades colindantes.",
+        "No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, pero ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna.",
+        "Constar de distintas plataformas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación o, en casos excepcionales, por otros medios.",
+        "Cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 66. Autopista. Carretera especialmente proyectada, construida y señalizada como tal para la exclusiva circulación de automóviles y que tiene las siguientes características: a) No tener acceso a la misma las propiedades colindantes. b) No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna. c) Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación o, en casos excepcionales, por otros medios."
+    },
+    {
+      "pregunta": "14. Indique la definición incorrecta:",
+      "opciones": [
+        "Senda ciclable: Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+        "Pista-bici: Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+        "Vía pecuaria: Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos.",
+        "Carril-bici: Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+    },
+    {
+      "pregunta": "15. Vía pública situada fuera de poblado:",
+      "opciones": [
+        "Carretera convencional.",
+        "Vía interurbana.",
+        "Carretera.",
+        "Travesía."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "16. Indique la definición incorrecta:",
+      "opciones": [
+        "Senda ciclable: Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+        "Pista-bici: Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+        "Carril-bici protegico: Carril-bici provisto de elementos laterales y que no lo separan físicamente del resto de la calzada, así como de la acera.",
+        "Carril-bici: Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+    },
+    {
+      "pregunta": "17. Vía pública pavimentada situada fuera de poblado, salvo los tramos en travesía.",
+      "opciones": [
+        "Carretera convencional.",
+        "Vía interurbana.",
+        "Vía rápida.",
+        "Carretera."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 65. Carretera. Vía pública pavimentada situada fuera de poblado, salvo los tramos en travesía."
+    },
+    {
+      "pregunta": "18. Definición de carretera convencional:",
+      "opciones": [
+        "Carretera que reúne las características propias de las autopistas, autovías y vías para automóviles.",
+        "Vía pública situada fuera de poblado.",
+        "Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles.",
+        "Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "19. Indique la definición incorrecta:",
+      "opciones": [
+        "Senda ciclable: Vía para peatones y ciclos, no segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+        "Pista-bici: Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+        "Acera-bici: Vía ciclista señalizada sobre la acera.",
+        "Carril-bici: Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+    },
+    {
+      "pregunta": "20. Definición de travesía:",
+      "opciones": [
+        "Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles.",
+        "Vía pública situada fuera de poblado.",
+        "Tramo de carretera que discurre por poblado. Tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso.",
+        "Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "21. Definición de carretera:",
+      "opciones": [
+        "Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles.",
+        "Vía pública situada fuera de poblado.",
+        "Vía pública pavimentada situada fuera de poblado, salvo los tramos en travesía.",
+        "Vía pública pavimentada situada fuera de poblado, incluido los tramos en travesía."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 65. Carretera. Vía pública pavimentada situada fuera de poblado, salvo los tramos en travesía."
+    },
+    {
+      "pregunta": "22. Indique la definición incorrecta:",
+      "opciones": [
+        "Carretera. Vía pública pavimentada situada fuera de poblado, salvo los tramos en travesía.",
+        "Paso a nivel. Cruce a la misma altura entre una vía y una línea de ferrocarril con plataforma independiente.",
+        "Intersección. Nudo de la red viaria en el que todos los cruces de trayectorias posibles de los vehículos que lo utilizan se realizan a distinto nivel.",
+        "Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales. 62. Intersección. Nudo de la red viaria en el que todos los cruces de trayectorias posibles de los vehículos que lo utilizan se realizan a nivel. 63. Glorieta. Tipo especial de intersección caracterizado por que los tramos que en él confluyen se comunican a través de un anillo en el que se establece una circulación rotatoria alrededor de una isleta central. No son glorietas propiamente dichas las denominadas glorietas partidas en las que dos tramos, generalmente opuestos, se conectan directamente a través de la isleta central, por lo que el tráfico pasa de uno a otro y no la rodea. 64. Paso a nivel. Cruce a la misma altura entre una vía y una línea de ferrocarril con plataforma independiente. 65. Carretera. Vía pública pavimentada situada fuera de poblado, salvo los tramos en travesía."
+    },
+    {
+      "pregunta": "23. Definición de carril-bici protegido:",
+      "opciones": [
+        "Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques.",
+        "Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras.",
+        "Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera.",
+        "Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 74. Vía ciclista. Vía específicamente acondicionada para el tráfico de ciclos, con la señalización horizontal y vertical correspondiente, y cuyo ancho permite el paso seguro de estos vehículos. 75. Carril-bici. Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido. 76. Carril-bici protegido. Carril-bici provisto de elementos laterales que lo separan físicamente del resto de la calzada, así como de la acera. 77. Acera-bici. Vía ciclista señalizada sobre la acera. 78. Pista-bici. Vía ciclista segregada del tráfico motorizado, con trazado independiente de las carreteras. 79. Senda ciclable. Vía para peatones y ciclos, segregada del tráfico motorizado, y que discurre por espacios abiertos, parques, jardines o bosques."
+    },
+    {
+      "pregunta": "24. A qué definición corresponde: Vía ciclista que discurre adosada a la calzada, en un solo sentido o en doble sentido.",
+      "opciones": [
+        "Acera-bici.",
+        "Pista-bici.",
+        "Carril-bici.",
+        "Senda ciclable."
+      ],
+      "correcta": 2,
+      "explicacion": "Concepto básico 75 Carril-bici"
+    },
+    {
+      "pregunta": "25. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles:",
+      "opciones": [
+        "Vía interurbana.",
+        "Travesía.",
+        "Carretera.",
+        "Carretera convencional."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "26. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales:",
+      "opciones": [
+        "Refugio.",
+        "Paseo.",
+        "Arcén.",
+        "Acera."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 54. Plataforma. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes. 55. Calzada. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles. 56. Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas. 57. Carril para vehículos con alta ocupación. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación. 58. Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. 59. Zona peatonal. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo. 60. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+    },
+    {
+      "pregunta": "27. Autovía. Carretera especialmente proyectada, construida y señalizada como tal que tiene las siguientes características: Señale la incorrecta.",
+      "opciones": [
+        "Tener acceso limitado a ella las propiedades colindantes.",
+        "No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna.",
+        "Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación, o por otros medios.",
+        "Constar de distintas plataformas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación, o por otros medios."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 67. Autovía. Carretera especialmente proyectada, construida y señalizada como tal que tiene las siguientes características: a) Tener acceso limitado a ella las propiedades colindantes. b) No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna. c) Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación, o por otros medios."
+    },
+    {
+      "pregunta": "28. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso:",
+      "opciones": [
+        "Vía interurbana.",
+        "Travesía.",
+        "Carretera.",
+        "Carretera convencional."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "29. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes:",
+      "opciones": [
+        "Carretera.",
+        "Plataforma.",
+        "Calzada.",
+        "Arcén."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 54. Plataforma. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes. 55. Calzada. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles. 56. Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas. 57. Carril para vehículos con alta ocupación. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación. 58. Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. 59. Zona peatonal. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo. 60. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+    },
+    {
+      "pregunta": "30. Definición de vía interurbana:",
+      "opciones": [
+        "Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles.",
+        "Vía pública situada fuera de poblado.",
+        "Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso.",
+        "Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "31. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación:",
+      "opciones": [
+        "Calzada.",
+        "Carril.",
+        "Carril para vehículos con alta ocupación.",
+        "Calzada para vehículos con alta ocupación."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 54. Plataforma. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes. 55. Calzada. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles. 56. Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas. 57. Carril para vehículos con alta ocupación. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación. 58. Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. 59. Zona peatonal. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo. 60. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+    },
+    {
+      "pregunta": "32. A qué concepto básico corresponde: Vehículo de motor que sirve, normalmente, para el transporte de personas o de cosas, o de ambas a la vez, se excluyen de esta definición los vehículos especiales:",
+      "opciones": [
+        "Vehículo para personas de movilidad reducida.",
+        "Vehículo de motor.",
+        "Automóvil.",
+        "Vehículo."
+      ],
+      "correcta": 2,
+      "explicacion": "RDL 6/2015 Concepto básico 13 Automóvil"
+    },
+    {
+      "pregunta": "33. Cual de éstos es vehículo a motor.",
+      "opciones": [
+        "Motocicleta.",
+        "Ciclomotor.",
+        "Tranvía.",
+        "Vehículo para personas de movilidad reducida."
+      ],
+      "correcta": 0,
+      "explicacion": "Concepto básico 12. Vehículo de motor. Vehículo provisto de motor para su propulsión. Se excluyen de esta definición los ciclomotores, los tranvías y los vehículos para personas de movilidad reducida"
+    },
+    {
+      "pregunta": "34. A qué concepto básico corresponde: Exclusiva circulación de automóviles con las siguientes características: • No tener acceso a la misma las propiedades colindantes. • No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna. • Constar de distintas calzadas para cada sentido de circulación, separadas entre sí.",
+      "opciones": [
+        "Autovía.",
+        "Autopista.",
+        "Vía para automóviles.",
+        "Carretera convencional."
+      ],
+      "correcta": 1,
+      "explicacion": "RDL 6/2015 Concepto básico 66 Autopista"
+    },
+    {
+      "pregunta": "35. Definición de masa máxima autorizada:",
+      "opciones": [
+        "Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes.",
+        "La masa máxima para la utilización de un vehículo con carga en circulación por las vías públicas.",
+        "La masa efectiva del vehículo y de su carga, incluida la masa del personal de servicio y de los pasajeros.",
+        "La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 35. Tara. Masa del vehículo, con su equipo fijo autorizado, sin personal de servicio, pasajeros ni carga, y con su dotación completa de agua, combustible, lubricante, repuestos, herramientas y accesorios reglamentarios. 36. Masa en carga. La masa efectiva del vehículo y de su carga, incluida la masa del personal de servicio y de los pasajeros. 37. Masa máxima autorizada (M.M.A.). La masa máxima para la utilización de un vehículo con carga en circulación por las vías públicas. 38. Masa por eje. La que gravita sobre el suelo, transmitida por la totalidad de las ruedas acopladas a ese eje. 39. Grupo de ejes. Los ejes que forman parte de un bogie. En el caso de dos ejes, el grupo se denominará tándem, y tándem triaxial en caso de tres ejes."
+    },
+    {
+      "pregunta": "36. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente:",
+      "opciones": [
+        "Vía para automóviles.",
+        "Travesía.",
+        "Carretera.",
+        "Carretera convencional."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "37. A qué definición corresponde: Persona provista de la correspondiente autorización administrativa para conducir, cuya actividad laboral principal sea la conducción de vehículos a motor dedicados al transporte de mercancías o de personas.",
+      "opciones": [
+        "Conductor casual.",
+        "Conductor profesional.",
+        "Conductor habitual.",
+        "Conductor temporal."
+      ],
+      "correcta": 1,
+      "explicacion": "Concepto básico 3 Conductor profesional Documento adjunto Explicación detallada"
+    },
+    {
+      "pregunta": "38. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas:",
+      "opciones": [
+        "Carretera.",
+        "Carril.",
+        "Carril para vehículos con alta ocupación.",
+        "Arcén."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 54. Plataforma. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes. 55. Calzada. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles. 56. Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas. 57. Carril para vehículos con alta ocupación. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación. 58. Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. 59. Zona peatonal. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo. 60. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+    },
+    {
+      "pregunta": "39. Cuantas personas pueden ir como máximo en un turismo?",
+      "opciones": [
+        "5",
+        "7",
+        "8",
+        "9"
+      ],
+      "correcta": 3,
+      "explicacion": "Concepto básico 15 total 9 personas (conductor + 8)"
+    },
+    {
+      "pregunta": "40. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones:",
+      "opciones": [
+        "Refugio.",
+        "Paseo.",
+        "Arcén.",
+        "Acera."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 54. Plataforma. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes. 55. Calzada. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles. 56. Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas. 57. Carril para vehículos con alta ocupación. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación. 58. Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. 59. Zona peatonal. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo. 60. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+    },
+    {
+      "pregunta": "41. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles:",
+      "opciones": [
+        "Carretera.",
+        "Carril.",
+        "Calzada.",
+        "Arcén."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 54. Plataforma. Zona de la carretera dedicada al uso de vehículos, formada por la calzada y los arcenes. 55. Calzada. Parte de la carretera dedicada a la circulación de vehículos. Se compone de un cierto número de carriles. 56. Carril. Banda longitudinal en que puede estar subdividida la calzada, delimitada o no por marcas viales longitudinales, siempre que tenga una anchura suficiente para permitir la circulación de una fila de automóviles que no sean motocicletas. 57. Carril para vehículos con alta ocupación. Aquel especialmente reservado o habilitado para la circulación de los vehículos con alta ocupación. 58. Acera. Zona longitudinal de la carretera elevada o no, destinada al tránsito de peatones. 59. Zona peatonal. Parte de la vía, elevada o delimitada de otra forma, reservada a la circulación de peatones. Se incluye en esta definición la acera, el andén y el paseo. 60. Refugio. Zona peatonal situada en la calzada y protegida del tránsito rodado. 61. Arcén. Franja longitudinal afirmada contigua a la calzada, no destinada al uso de vehículos automóviles, más que en circunstancias excepcionales."
+    },
+    {
+      "pregunta": "42. Cuál de estas competencias no son de los municipios?",
+      "opciones": [
+        "La regulación, ordenación, gestión, vigilancia y disciplina, por medio de agentes propios, del tráfico en las vías urbanas de su titularidad.",
+        "La regulación mediante ordenanza municipal de circulación, la equitativa distribución de los aparcamientos, el uso peatonal de las calles, el estacionamiento limitado.",
+        "La realización en vías interurbanas, de las pruebas de detección alcohólica o drogas.",
+        "El cierre de vías urbanas cuando sea necesario."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 7: La realización en vías urbanas, de las pruebas de detección alcohólica o drogas"
+    },
+    {
+      "pregunta": "43. Definición de vía urbana:",
+      "opciones": [
+        "Vía pública situada dentro de poblado, excepto las travesías.",
+        "Vía privada situada dentro de poblado, excepto las travesías.",
+        "Vía pública situada dentro de poblado, incluido las travesías.",
+        "Vía privada situada dentro de poblado, incluido las travesías."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 68. Vía para automóviles. Vía reservada exclusivamente a la circulación de automóviles, con una sola calzada y con limitación total de accesos a las propiedades colindantes, y señalizada con las señales S-3 y S-4, respectivamente. 69. Carretera convencional. Carretera que no reúne las características propias de las autopistas, autovías y vías para automóviles. 70. Poblado. Espacio que comprende edificios y en cuyas vías de entrada y de salida están colocadas, respectivamente, las señales de entrada a poblado y de salida de poblado. 71. Travesía. Tramo de carretera que discurre por poblado. No tendrán la consideración de travesías aquellos tramos que dispongan de una alternativa viaria o variante a la cual tiene acceso. 72. Vía interurbana. Vía pública situada fuera de poblado. 73. Vía urbana. Vía pública situada dentro de poblado, excepto las travesías"
+    },
+    {
+      "pregunta": "44. Autopista. Carretera especialmente proyectada, construida y señalizada como tal para la exclusiva circulación de automóviles y que tiene las siguientes características: Señala la incorrecta.",
+      "opciones": [
+        "No tener acceso a la misma las propiedades colindantes.",
+        "No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna.",
+        "Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación o, en casos excepcionales, por otros medios.",
+        "Cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto Legislativo 6/2015, de 30 de octubre, por el que se aprueba el texto refundido de la Ley sobre Tráfico, Circulación de Vehículos a Motor y Seguridad Vial 66. Autopista. Carretera especialmente proyectada, construida y señalizada como tal para la exclusiva circulación de automóviles y que tiene las siguientes características: a) No tener acceso a la misma las propiedades colindantes. b) No cruzar a nivel ninguna otra senda, vía, línea de ferrocarril o tranvía, ni ser cruzada a nivel por senda, vía de comunicación o servidumbre de paso alguna. c) Constar de distintas calzadas para cada sentido de circulación, separadas entre sí, salvo en puntos singulares o con carácter temporal, por una franja de terreno no destinada a la circulación o, en casos excepcionales, por otros medios."
+    },
+    {
+      "pregunta": "45. Cual de los siguientes conceptos básicos es correcto.",
+      "opciones": [
+        "Ciclomotor: Vehículo de dos ruedas, con una velocidad máxima por construcción no superior a 50 km/h y con un motor de cilindrada inferior o igual a 45 cm³, si es de combustión interna, o bien con una potencia continua nominal máxima inferior o igual a 4 kW si es de motor.",
+        "Vehículo para personas de movilidad reducida. Vehículo cuya tara no sea superior a 350 kilogramos.",
+        "Ciclomotor: Vehículos de cuatro ruedas, cuya masa en vacío sea inferior o igual a 750 kilogramos no incluida la masa de baterías para los vehículos eléctricos.",
+        "Motocicletas de dos ruedas. Automóvil de dos ruedas, sin sidecar, provistos de un motor de cilindrada superior a 45 cm³, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 50 km/h."
+      ],
+      "correcta": 1,
+      "explicacion": "Ciclomotor: Vehículo de dos ruedas, con una velocidad máxima por construcción no superior a 45 km/h y con un motor de cilindrada inferior o igual a 50 cm³, si es de combustión interna, o bien con una potencia continua nominal máxima inferior o igual a 4 kW si es de motor Ciclomotor: Vehículos de cuatro ruedas, cuya masa en vacío sea inferior o igual a 350 kilogramos no incluida la masa de baterías para los vehículos eléctricos Motocicletas de dos ruedas. Automóvil de dos ruedas, sin sidecar, provistos de un motor de cilindrada superior a 50 cm³, si es de combustión interna, y/o con una velocidad máxima por construcción superior a 45 km/h"
+    },
+    {
+      "pregunta": "46. A qué tipo de vehículo corresponde: vehículo conectado a una línea eléctrica y que no circula por raíles.",
+      "opciones": [
+        "Tranvía",
+        "Tren",
+        "Trolebús.",
+        "Turismo"
+      ],
+      "correcta": 2,
+      "explicacion": "En el Concepto básico 16 Autobús o autocar, al final explica lo que es un trolebús. Tema 8 - Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y el desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990. Normas generales de comportamiento en la circulación: normas generales, normas generales de los conductores, normas sobre bebidas alcohólicas, normas sobre estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas"
+    },
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

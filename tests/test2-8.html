@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Quien puede ser titular de los derechos reconocidos en el art. 23 de la Constitución.",
+        "opciones": [
+            "Los extranjeros",
+            "Los ciudadanos",
+            "Las personas",
+            "Los españoles"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 13. 1. Los extranjeros gozarán en España de las libertades públicas que garantiza el presente Título en los términos que establezcan los tratados y la ley. 2. Solamente los españoles serán titulares de los derechos reconocidos en el artículo 23 , salvo lo que, atendiendo a criterios de reciprocidad, pueda establecerse por tratado o ley para el derecho de sufragio activo y pasivo en las elecciones municipales."
+    },
+    {
+        "pregunta": "El Habeas Corpus es?",
+        "opciones": [
+            "Un Derecho",
+            "Una Libertad",
+            "Un derecho fundamental",
+            "Un procedimiento"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 17 | Derecho a la libertad y seguridad La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "En cuantas secciones está subdividido el Capítulo II del Título I de la Constitución Española.",
+        "opciones": [
+            "Dos secciones",
+            "Tres secciones",
+            "No tiene ninguna sección",
+            "Una sección"
+        ],
+        "correcta": 0,
+        "explicacion": "Los derechos y deberes fundamentales están recogidos en el Título I de la Constitución española. Dicho Título I se rubrica “Derechos y deberes fundamentales” y está estructurado en cinco Capítulos. El Capítulo II a su vez, está subdividido en dos Secciones."
+    },
+    {
+        "pregunta": "Según el art. 24 de la Constitución quienes tienen derecho a Juez ordinario predeterminado por la ley.",
+        "opciones": [
+            "Todos",
+            "Los ciudadanos",
+            "Los españoles",
+            "Los extranjeros"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 24 | Derecho tutela judicial efectiva 1. Todas las personas tienen derecho a obtener la tutela efectiva de los jueces y tribunales en el ejercicio de sus derechos e intereses legítimos, sin que, en ningún caso, pueda producirse indefensión. 2. Asimismo, todos tienen derecho al Juez ordinario predeterminado por la ley, a la defensa y a la asistencia de letrado, a ser informados de la acusación formulada contra ellos, a un proceso público sin dilaciones indebidas y con todas las garantías, a utilizar los medios de prueba pertinentes para su defensa, a no declarar contra sí mismos, a no confesarse culpables y a la presunción de inocencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La protección de la familia llevada a cabo por los poderes públicos es de carácter:",
+        "opciones": [
+            "Social y económica.",
+            "Social, económica y jurídica.",
+            "Social, económica, jurídica y cultural.",
+            "Social, económica y cultural."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 39 1. Los poderes públicos aseguran la protección social, económica y jurídica de la familia. 2. Los poderes públicos aseguran, asimismo, la protección integral de los hijos, iguales éstos ante la ley con independencia de su filiación, y de las madres, cualquiera que sea su estado civil. La ley posibilitará la investigación de la paternidad. 3. Los padres deben prestar asistencia de todo orden a los hijos habidos dentro o fuera del matrimonio, durante su minoría de edad y en los demás casos en que legalmente proceda. 4. Los niños gozarán de la protección prevista en los acuerdos internacionales que velan por sus derechos."
+    },
+    {
+        "pregunta": "Según el art. 13 de la Constitución Española donde se encuentran reflejadas las libertades públicas que los extranjeros gozarán en España.",
+        "opciones": [
+            "En el Título Preliminar",
+            "En el Título I",
+            "En el Titulo I y Preliminar",
+            "En el Preámbulo y Título preliminar"
+        ],
+        "correcta": 1,
+        "explicacion": "Respuesta: B Artículo 13. 1. Los extranjeros gozarán en España de las libertades públicas que garantiza el presente Título en los términos que establezcan los tratados y la ley."
+    },
+    {
+        "pregunta": "Que artículo de la Constitución Española hace referencia a los apátridas:",
+        "opciones": [
+            "Art. 10.",
+            "Art. 13.",
+            "Art. 14.",
+            "Art. 15."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 13. 4. La ley establecerá los términos en que los ciudadanos de otros países y los apátridas podrán gozar del derecho de asilo en España."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, para garantizar el cumplimiento de las leyes, los poderes públicos:",
+        "opciones": [
+            "Controlarán y homologarán el sistema educativo.",
+            "Garantizarán y homologarán el sistema educativo.",
+            "Inspeccionarán y homologarán el sistema educativo.",
+            "Supervisarán y homologarán el sistema educativo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 27 1. Todos tienen el derecho a la educación. Se reconoce la libertad de enseñanza. 2. La educación tendrá por objeto el pleno desarrollo de la personalidad humana en el respeto a los principios democráticos de convivencia y a los derechos y libertades fundamentales. 3. Los poderes públicos garantizan el derecho que asiste a los padres para que sus hijos reciban la formación religiosa y moral que esté de acuerdo con sus propias convicciones. 4. La enseñanza básica es obligatoria y gratuita. 5. Los poderes públicos garantizan el derecho de todos a la educación, mediante una programación general de la enseñanza, con participación efectiva de todos los sectores afectados y la creación de centros docentes. 6. Se reconoce a las personas físicas y jurídicas la libertad de creación de centros docentes, dentro del respeto a los principios constitucionales. 7. Los profesores, los padres y, en su caso, los alumnos intervendrán en el control y gestión de todos los centros sostenidos por la Administración con fondos públicos, en los términos que la ley establezca. 8. Los poderes públicos inspeccionarán y homologarán el sistema educativo para garantizar el cumplimiento de las leyes. 9. Los poderes públicos ayudarán a los centros docentes que reúnan los requisitos que la ley establezca. 10. Se reconoce la autonomía de las Universidades, en los términos que la ley establezca."
+    },
+    {
+        "pregunta": "Según el artículo 10 de la Constitución Española de 1978, un tratado internacional sobre derechos humanos asumido por España, pero no ratificado. ¿Es Constitucional?",
+        "opciones": [
+            "Si.",
+            "No.",
+            "Si, ya que la ratificación es un acto protocolario.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 10. 1. La dignidad de la persona, los derechos inviolables que le son inherentes, el libre desarrollo de la personalidad, el respeto a la ley y a los derechos de los demás son fundamento del orden político y de la paz social. 2. Las normas relativas a los derechos fundamentales y a las libertades que la Constitución reconoce se interpretarán de conformidad con la Declaración Universal de Derechos Humanos y los tratados y acuerdos internacionales sobre las mismas materias ratificados por España. 2. Las normas relativas a los derechos fundamentales y a las libertades que la Constitución reconoce se interpretarán de conformidad con la Declaración Universal de Derechos Humanos y los tratados y acuerdos internacionales sobre las mismas materias ratificados por España."
+    },
+    {
+        "pregunta": "Que tipo de norma jurídica regulará la cláusula de conciencia a que hace referencia el art. 20 de la Constitución Española:",
+        "opciones": [
+            "Una Ley Orgánica.",
+            "Un Decreto Ley.",
+            "Una Ley.",
+            "Un decreto legislativo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 20 | Derecho de expresión. 1. Se reconocen y protegen los derechos:"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Qué artículo reconoce el derecho a los españoles a elegir libremente su residencia:",
+        "opciones": [
+            "16.",
+            "17.",
+            "18.",
+            "19."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 19 Los españoles tienen derecho a elegir libremente su residencia y a circular por el territorio nacional. Asimismo, tienen derecho a entrar y salir libremente de España en los términos que la ley establezca. Este derecho no podrá ser limitado por motivos políticos o ideológicos."
+    },
+    {
+        "pregunta": "Según el art. 25 de la Constitución Española, un condenado que esté cumpliendo pena de prisión podrá gozar de los derechos comprendidos en el art. 20 de la misma.",
+        "opciones": [
+            "No.",
+            "Si, pero puede tener limitaciones.",
+            "Depende del delito que haya cometido.",
+            "Nunca, con independencia del delito cometido."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 25 | Reinserción social. 2. Las penas privativas de libertad y las medidas de seguridad estarán orientadas hacia la reeducación y reinserción social y no podrán consistir en trabajos forzados. El condenado a pena de prisión que estuviere cumpliendo la misma gozará de los derechos fundamentales de este Capítulo, a excepción de los que se vean expresamente limitados por el contenido del fallo condenatorio, el sentido de la pena y la ley penitenciaria."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, nadie puede ser condenado o sancionado:",
+        "opciones": [
+            "Por acciones u omisiones que en el momento de producirse no constituyan delito, falta o infracción administrativa, según la legislación vigente en aquel momento.",
+            "Por acciones que en el momento de producirse no constituyan delito, falta o infracción administrativa, según la legislación vigente en aquel momento.",
+            "Por acciones u omisiones que en el momento de producirse no constituyan delito, falta e infracción administrativa, según la legislación vigente en aquel momento.",
+            "Por acciones y omisiones que en el momento de producirse no constituyan delito, falta o infracción administrativa, según la legislación vigente en aquel momento."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 25 1. Nadie puede ser condenado o sancionado por acciones u omisiones que en el momento de producirse no constituyan delito, falta o infracción administrativa, según la legislación vigente en aquel momento. 2. Las penas privativas de libertad y las medidas de seguridad estarán orientadas hacia la reeducación y reinserción social y no podrán consistir en trabajos forzados. El condenado a pena de prisión que estuviere cumpliendo la misma gozará de los derechos fundamentales de este Capítulo, a excepción de los que se vean expresamente limitados por el contenido del fallo condenatorio, el sentido de la pena y la ley penitenciaria. En todo caso, tendrá derecho a un trabajo remunerado y a los beneficios correspondientes de la Seguridad Social, así como al acceso a la cultura y al desarrollo integral de su personalidad. 3. La Administración civil no podrá imponer sanciones que, directa o subsidiariamente, impliquen privación de libertad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Quién es el alto comisionado de las Cortes Generales, designado por éstas para la defensa de los derechos comprendidos en el Título I de la Constitución:",
+        "opciones": [
+            "El Jefe de Estado.",
+            "El Defensor del Pueblo.",
+            "El Comisario de los Derechos Humanos.",
+            "El Delegado de gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 54 Una ley orgánica regulará la institución del Defensor del Pueblo, como alto comisionado de las Cortes Generales, designado por éstas para la defensa de los derechos comprendidos en este Título, a cuyo efecto podrá supervisar la actividad de la Administración, dando cuenta a las Cortes Generales."
+    },
+    {
+        "pregunta": "Un amigo suyo ha sido condenado en sentencia firme a tres años de prisión; donde se encuentran recogidos los derechos que podrá gozar el mismo?",
+        "opciones": [
+            "Título I, cap. 1",
+            "Título I, cap. 2",
+            "Título I, cap. 3",
+            "En el Reglamento Penitenciario"
+        ],
+        "correcta": 1,
+        "explicacion": "RESPUESTA: b Artículo 25 | Reinserción social 1. Nadie puede ser condenado o sancionado por acciones u omisiones que en el momento de producirse no constituyan delito, falta o infracción administrativa, según la legislación vigente en aquel momento. 2. Las penas privativas de libertad y las medidas de seguridad estarán orientadas hacia la reeducación y reinserción social y no podrán consistir en trabajos forzados. El condenado a pena de prisión que estuviere cumpliendo la misma gozará de los derechos fundamentales de este Capítulo, a excepción de los que se vean expresamente limitados por el contenido del fallo condenatorio, el sentido de la pena y la ley penitenciaria. En todo caso, tendrá derecho a un trabajo remunerado y a los beneficios correspondientes de la Seguridad Social, así como al acceso a la cultura y al desarrollo integral de su personalidad."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, mediante ley podrán regularse los deberes de los ciudadanos en los casos de:",
+        "opciones": [
+            "Estado de alarma, excepción y sitio.",
+            "Grave riesgo, catástrofe o calamidad pública.",
+            "Estado de alarma y sitio.",
+            "Catástrofes o calamidad pública."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 30 1. Los españoles tienen el derecho y el deber de defender a España. 2. La ley fijará las obligaciones militares de los españoles y regulará, con las debidas garantías, la objeción de conciencia, así como las demás causas de exención del servicio militar obligatorio, pudiendo imponer, en su caso, una prestación social sustitutoria. 3. Podrá establecerse un servicio civil para el cumplimiento de fines de interés general. 4. Mediante ley podrán regularse los deberes de los ciudadanos en los casos de grave riesgo, catástrofe o calamidad pública."
+    },
+    {
+        "pregunta": "¿Quién es el encargado de supervisar la actividad de la Administración según la Constitución Española?",
+        "opciones": [
+            "El Gobierno.",
+            "El defensor del pueblo.",
+            "Los juzgados.",
+            "El Rey."
+        ],
+        "correcta": 1,
+        "explicacion": "Constitución Española 1978. Artículo 54 Una ley orgánica regulará la institución del Defensor del Pueblo, como alto comisionado de las Cortes Generales, designado por éstas para la defensa de los derechos comprendidos en este Título, a cuyo efecto podrá supervisar la actividad de la Administración, dando cuenta a las Cortes Generales."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

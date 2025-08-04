@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4, denominación y naturaleza jurídica. Señale la correcta.",
+        "opciones": [
+            "El jefe/a del cuerpo de policía local tiene la jefatura superior",
+            "El alcalde/alcaldesa tiene el mando inmediato y operativo",
+            "La persona que ejerza la jefatura del cuepo tiene la dependencia directa",
+            "Ninguna de las anteriores es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento. El mando inmediato y operativo corresponde a la persona que ejerza la jefatura del cuerpo."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 3, objetivos básicos de los criterios de coordinación. Las singularidades del territorio de cada isla de la comunidad autónoma y las de cada localidad…",
+        "opciones": [
+            "Esta Ley no especifica que se tengan que atender",
+            "Se atenderán siempre que así se acuerde en las Juntas Locales de Seguridad",
+            "Se atenderán en la determinación de los criterios de estructuración del cuerpo",
+            "Se atenderán en la determinación de los criterios de coordinación"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación Constituye un objetivo básico en el establecimiento de los criterios de coordinación, la formación y el perfeccionamiento de los miembros de los cuerpos de policía local y su integración en un proyecto común de seguridad pública, desde una perspectiva integral de proximidad con la ciudadanía, basado en criterios éticos de rigor en cualquier ámbito de actuación, el carácter preventivo y asistencial del servicio y la resolución de conflictos como instrumentos de cohesión e integración social. En la determinación de los criterios de coordinación se atenderán en general las singularidades del territorio de cada isla de la comunidad autónoma y, en particular, las de cada localidad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 6, ámbito territorial de actuación. Los cuerpos de policía deben actuar en el ámbito territorial de sus municipios. Ello no obstante, sus miembros pueden actuar fuera de su término municipal cuando sean requeridos por la autoridad competente en situaciones de emergencia y con la autorización previa de los alcaldes o alcaldesas respectivos. En estos casos…",
+        "opciones": [
+            "Deben actuar bajo la dependencia del alcalde o alcaldesa del municipio que los haya requerido y bajo el mando del del jefe del cuerpo del municipio de origen",
+            "Deben actuar bajo la dependencia del alcalde o alcaldesa del municipio que los haya requerido y bajo el mando del del jefe del cuerpo de dicho municipio",
+            "Pueden actuar bajo la dependencia del alcalde o alcaldesa del municipio que los haya requerido y bajo el mando del del jefe del cuerpo de dicho municipio",
+            "Pueden actuar bajo la dependencia del regidor/a del municipio que los haya requerido y bajo el mando del del jefe del cuerpo de dicho municipio"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6 | Ámbito territorial de actuación. Los cuerpos de policía deben actuar en el ámbito territorial de sus municipios. Ello no obstante, sus miembros pueden actuar fuera de su término municipal cuando sean requeridos por la autoridad competente en situaciones de emergencia y con la autorización previa de los alcaldes o alcaldesas respectivos. En estos casos deben actuar bajo la dependencia del alcalde o alcaldesa del municipio que los haya requerido y bajo el mando del jefe del cuerpo de dicho municipio, sin perjuicio de las tareas de coordinación que correspondan a la consejería competente en materia de coordinación de policías locales y emergencias."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué artículo recoge los “Objetivos básicos de los criterios de coordinación”?",
+        "opciones": [
+            "Artículo 3",
+            "Artículo 6",
+            "Artículo 2",
+            "Ninguna es correcta"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4.1, denominación y naturaleza jurídica. La jefatura superior y la dependencia directa la ostenta…",
+        "opciones": [
+            "El jefe/a del cuepo de policía local",
+            "La persona que ejerza la jefatura del cuerpo",
+            "El alcalde o alcaldesa respectivo/a",
+            "Todas pueden ser correctas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 6, ámbito territorial de actuación. Los cuerpos de policía deben actuar en el ámbito territorial de sus municipios. Ello no obstante, sus miembros pueden actuar fuera de su término municipal cuando sean requeridos por la autoridad competente en situaciones de emergencia y con la autorización previa de los alcaldes o alcaldesas respectivos. En estos casos deben actuar bajo la dependencia del alcalde o alcaldesa del municipio que los haya requerido y bajo el mando del jefe del cuerpo de dicho municipio…",
+        "opciones": [
+            "Con perjuicio de las tareas de coordinación que correspondan a la consejería competente en materia de coordinación de policías locales",
+            "Sin perjuicio de las tarea",
+            "Sin perjuicio de las tareas de coordinación que correspondan a la consejería competente en materia de coordinación de policías locales y emergencias",
+            "Sin perjuicio de las tareas de coordinación que correspondan a la consejería competente en materia de coordinación de policías autonómicas y emergencias"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6 | Ámbito territorial de actuación. Los cuerpos de policía deben actuar en el ámbito territorial de sus municipios. Ello no obstante, sus miembros pueden actuar fuera de su término municipal cuando sean requeridos por la autoridad competente en situaciones de emergencia y con la autorización previa de los alcaldes o alcaldesas respectivos. En estos casos deben actuar bajo la dependencia del alcalde o alcaldesa del municipio que los haya requerido y bajo el mando del jefe del cuerpo de dicho municipio, sin perjuicio de las tareas de coordinación que correspondan a la consejería competente en materia de coordinación de policías locales y emergencias."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué titulo tiene el Artículo 4 de la mencionada Ley?",
+        "opciones": [
+            "Denominación y estructura jurídica",
+            "Ámbito de actuación",
+            "Denominación y naturaleza jurídica",
+            "Ámbito de aplicación"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. La creación del cuerpo de policía local corresponde al pleno de la corporación, que en el caso de los municipios con población igual o inferior a 5.000 habitantes requiere el previo informe no vinculante de la Junta Local de Seguridad.",
+        "opciones": [
+            "El enunciado es correcto.",
+            "El enunciado no es correcto, ya que es para los municipios con población inferior a 5.000 habitantes.",
+            "El enunciado no es correcto. El pervio informe es vinculante.",
+            "El enunciado no es correcto. El previo informe no vinculante lo crea la Comisión de Coordinación de Policías Locales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. La creación del cuerpo de policía local corresponde al pleno de la corporación, que en el caso de los municipios con población igual o inferior a 5.000 habitantes requiere el previo informe no vinculante de la Comisión de Coordinación de Policías Locales."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. De acuerdo al artículo 7.1 de la presente Ley, cuando un municipio crea un cuerpo de policía local…",
+        "opciones": [
+            "Pueden disponer de los medios humanos y matreriales necesarios para garantizar la prestación de sus funciones de forma permanente.",
+            "Deben disponer de los medios humanos y matreriales necesarios para garantizar la prestación de sus funciones de forma permanente.",
+            "El alcalde o alcadesa decide si la disposición de los medios humanos y matreriales necesarios para garantizar la prestación de sus funciones será de forma permanente o no.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía local propios, siempre que lo consideren oportuno en función de sus necesidades, de acuerdo con lo previsto en la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad, la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local, la presente ley y otras disposiciones que sean de aplicación, debiendo disponer de los medios humanos y materiales necesarios para garantizar la prestación de sus funciones de forma permanente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 6, ámbito territorial de actuación. Según el punto 2, eventualmente y por necesidades estacionales o circunstancias extraordinarias, los municipios se pueden asociar para reforzar la dotación. Estos convenios…",
+        "opciones": [
+            "Estos convenios se han de comunicar con anterioridad a su firma al Instituto de Seguridad Pública de las Illes Balears. Los servicios se prestarán bajo la dependencia del alcalde o la alcaldesa del ayuntamiento donde se realicen y bajo el mando del jefe o la jefa del cuerpo de este municipio.",
+            "Estos convenios se han de comunicar con anterioridad a su firma al Instituto de Seguridad Pública de las Illes Balears. Los servicios se prestarán bajo la dependencia del alcalde o la alcaldesa del ayuntamiento de origen y bajo el mando del jefe o la jefa del cuerpo de este municipio.",
+            "Estos convenios se pueden comunicar con anterioridad a su firma al Instituto de Seguridad Pública de las Illes Balears. Los servicios se prestarán bajo la dependencia del alcalde o la alcaldesa del ayuntamiento donde se realicen y bajo el mando del jefe o la jefa del cuerpo de este municipio.",
+            "Estos convenios se pueden comunicar con anterioridad a su firma al Instituto de Seguridad Pública de las Illes Balears. Los servicios se prestarán bajo la dependencia del alcalde o la alcaldesa del ayuntamiento de origen y bajo el mando del jefe o la jefa del cuerpo de este municipio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 6 | Ámbito territorial de actuación. Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley, o mediante acuerdos bilaterales subscritos entre los respectivos ayuntamientos, con la finalidad de que sus policías locales puedan actuar en el término municipal del solicitante, por tiempo determinado y en régimen de comisión de servicios, siempre que no afecte al normal funcionamiento del servicio de policía local de origen. Estos convenios se han de comunicar con anterioridad a su firma al Instituto de Seguridad Pública de las Illes Balears. Los servicios se prestarán bajo la dependencia del alcalde o la alcaldesa del ayuntamiento donde se realicen y bajo el mando del jefe o la jefa del cuerpo de este municipio."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. De acuerdo al artículo 7.1, en base a qué leyes los municipios pueden crear cuerpos de policía local?",
+        "opciones": [
+            "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad así como también la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local",
+            "“a” es correcta, y además también en base en la presente Ley",
+            "“b” es correcta y además, también se atienden otras disposiciones que sean de aplicación",
+            "Sólo “a” es correcta"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía local propios, siempre que lo consideren oportuno en función de sus necesidades, de acuerdo con lo previsto en la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad, la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local, la presente ley y otras disposiciones que sean de aplicación, debiendo disponer de los medios humanos y materiales necesarios para garantizar la prestación de sus funciones de forma permanente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué titulo tiene el Artículo 7 de la mencionada Ley?",
+        "opciones": [
+            "Asociaciones de municipios en materia de policía local",
+            "Ámbito territorial de actuación",
+            "Funciones de los cuerpos de la policía local",
+            "Creación de cuerpos de policía local"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué artículo recoge “las asociaciones de municipios en materia de policía local”?",
+        "opciones": [
+            "Artículo 8",
+            "Artículo 7",
+            "Artículo 6",
+            "Artículo 5"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 8 | Asociaciones de municipios en materia de policía local"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Al pleno de la corporacción le corresponde…",
+        "opciones": [
+            "Presidir la Junta Local de Seguridad",
+            "La creación del cuerpo de policía local",
+            "El nombramiento del Jefe o Jefa de policía local",
+            "Todas son correctas"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. La creación del cuerpo de policía local corresponde al pleno de la corporación, que en el caso de los municipios con población igual o inferior a 5.000 habitantes requiere el previo informe no vinculante de la Comisión de Coordinación de Policías Locales."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4.1. ¿Qué denominación tienen las dependencias del cuerpo de policía local?",
+        "opciones": [
+            "Jefatura superior",
+            "Comisaría del cuerpo de policía local",
+            "Jefatura de la policía local",
+            "Todas son incorrectas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 7.2, complete la frase: ____________________ las funciones propias de este cuerpo las deben ejercer los policías que formen parte de la plantilla del ayuntamiento.",
+        "opciones": [
+            "En todos los municipios.",
+            "En los municipios donde no haya cuerpo de policía local.",
+            "En los municipios donde haya cuerpo de policía local.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. En los municipios donde no haya cuerpo de policía local, las funciones propias de este cuerpo las deben ejercer los policías que formen parte de la plantilla del ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Cuáles son los artículos que comprende el Título IV?",
+        "opciones": [
+            "Artículos 20 al 22",
+            "Artículos 20 al 23",
+            "Artículos 20 al 27",
+            "Artículos 20 al 30"
+        ],
+        "correcta": 2,
+        "explicacion": "Título IV: Estructura y régimen de funcionamiento Capítulo I: Estructura básica→artículos 20 a 22 bis Capítulo II: Régimen de funcionamiento→artículos 23 a 27"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 6.2, ámbito territorial de actuación. Señale la correcta.",
+        "opciones": [
+            "Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 18 de esta ley.",
+            "Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se deberá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley.",
+            "Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley.",
+            "Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se deberá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 18 de esta ley."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6 | Ámbito territorial de actuación. Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 7.1, creación de cuerpos de policía local. Señale la correcta.",
+        "opciones": [
+            "Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía propios, siempre, en función de sus necesidades.",
+            "Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía propios, siempre que lo consideren oportuno en función de sus necesidades.",
+            "Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía únicos, siempre, en función de sus necesidades.",
+            "Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía únicos, siempre que lo consideren oportuno en función de sus necesidades."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía propios, siempre que lo consideren oportuno en función de sus necesidades."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 3. La formación y el perfeccionamiento de los miembros de los cuerpos de policía local…",
+        "opciones": [
+            "Constituye un objetivo específico de los criterios de coordinación",
+            "No constituye un objetivo básico de los criterios de coordinación",
+            "Constituye un objetivo básico de los criterios de coordinación",
+            "No constituye un objetivo específico de los criterios de coordinación"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación Constituye un objetivo básico en el establecimiento de los criterios de coordinación, la formación y el perfeccionamiento de los miembros de los cuerpos de policía local y su integración en un proyecto común de seguridad pública, desde una perspectiva integral de proximidad con la ciudadanía, basado en criterios éticos de rigor en cualquier ámbito de actuación, el carácter preventivo y asistencial del servicio y la resolución de conflictos como instrumentos de cohesión e integración social. En la determinación de los criterios de coordinación se atenderán en general las singularidades del territorio de cada isla de la comunidad autónoma y, en particular, las de cada localidad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4.2. La persona que ejerza la jefatura del cuerpo tiene…",
+        "opciones": [
+            "El mando mediato y operativo",
+            "La dependencia directa",
+            "La jefatura superior",
+            "El mando inmediato y operativo"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. El mando inmediato y operativo corresponde a la persona que ejerza la jefatura del cuerpo."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 1, del Objeto. Complete la frase: El objeto de esta ley es establecer los criterios básicos para coordinar la actuación de las policías locales en el ámbito territorial de la comunidad autónoma de las Illes Balears, sin perjuicio de su dependencia de las autoridades municipales, de conformidad con lo que prevén el artículo _______ del Estatuto de Autonomía y el artículo _______ de la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad.",
+        "opciones": [
+            "5 / 36",
+            "25.7 / 42",
+            "30.19 / 39",
+            "29.19 / 29"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 1 | Objeto El objeto de esta ley es establecer los criterios básicos para coordinar la actuación de las policías locales en el ámbito territorial de la comunidad autónoma de las Illes Balears, sin perjuicio de su dependencia de las autoridades municipales, de conformidad con lo que prevén el artículo 30.19 del Estatuto de Autonomía y el artículo 39 de la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué titulo tiene el Artículo 1 de la mencionada Ley?",
+        "opciones": [
+            "Ámbito de aplicación",
+            "Principios generales",
+            "Objetivos básicos",
+            "Objeto"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 1 | Objeto El objeto de esta ley es establecer los criterios básicos para coordinar la actuación de las policías locales en el ámbito territorial de la comunidad autónoma de las Illes Balears, sin perjuicio de su dependencia de las autoridades municipales, de conformidad con lo que prevén el artículo 30.19 del Estatuto de Autonomía y el artículo 39 de la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 7.3. ¿Qué es perceptivo en los casos de que la población municipal sea superior a 5.000 habitantes o cuando los policías que forman parte de la plantilla de ayuntamiento sea superior a 3?",
+        "opciones": [
+            "La creación de la Junta Local de Seguridad.",
+            "La creación de la Escala Facultativa Técnica.",
+            "La creación del Cuerpo de Policía Local.",
+            "La creación de un Comité de Seguridad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. La creación del cuerpo de policía local correspondiente es preceptiva en los casos en que la población municipal sea superior a 5.000 habitantes o cuando el número de efectivos que ejerza las funciones previstas en el apartado anterior sea superior a tres."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 7.2. ¿Quién debe ejercer las funciones propias del cuerpo de policía local, en los municipios donde no haya creado un cuerpo de policía local?",
+        "opciones": [
+            "Los policías que formen parte de la plantilla del ayuntamiento.",
+            "El personal que desempeñe funciones de custodia y vigilancia de bienes, servicios e instalaciones, con la denominación de guardas, vigilantes, agentes, alguaciles o análogos.",
+            "El alcalde o alcaldesa.",
+            "A y B son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. En los municipios donde no haya cuerpo de policía local, las funciones propias de este cuerpo las deben ejercer los policías que formen parte de la plantilla del ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué artículo recoge el “Objeto”?",
+        "opciones": [
+            "Artículo 1",
+            "Artículo 2",
+            "Artículo 3",
+            "Artículo 4"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 1 | Objeto El objeto de esta ley es establecer los criterios básicos para coordinar la actuación de las policías locales en el ámbito territorial de la comunidad autónoma de las Illes Balears, sin perjuicio de su dependencia de las autoridades municipales, de conformidad con lo que prevén el artículo 30.19 del Estatuto de Autonomía y el artículo 39 de la Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 3. Constituye un objetivo básico…",
+        "opciones": [
+            "La formación y el perfeccionamiento de los miembros de los cuerpos de policía local y su integración en un proyecto común de seguridad pública",
+            "Desde una perspectiva integral de proximidad con la ciudadanía",
+            "Basado en criterios éticos de rigor en cualquier ámbito de actuación",
+            "Todas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación Constituye un objetivo básico en el establecimiento de los criterios de coordinación, la formación y el perfeccionamiento de los miembros de los cuerpos de policía local y su integración en un proyecto común de seguridad pública, desde una perspectiva integral de proximidad con la ciudadanía, basado en criterios éticos de rigor en cualquier ámbito de actuación, el carácter preventivo y asistencial del servicio y la resolución de conflictos como instrumentos de cohesión e integración social. En la determinación de los criterios de coordinación se atenderán en general las singularidades del territorio de cada isla de la comunidad autónoma y, en particular, las de cada localidad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4.4. Señale la correcta.",
+        "opciones": [
+            "Las plazas de la plantilla vacantes y dotadas presupuestariamente de los cuerpos de policía local han de ser ocupadas por personal funcionario de carrera",
+            "Las plazas de la plantilla y dotadas presupuestariamente de los cuerpos de policía local o de los municipios que no hayan constituido cuerpo de policía local han de ser ocupadas por personal funcionario de carrera",
+            "Las plazas de la plantilla vacantes y dotadas presupuestariamente de los cuerpos de policía local o de los municipios que no hayan constituido cuerpo de policía local han de ser ocupadas por personal funcionario",
+            "Las plazas de la plantilla vacantes y dotadas presupuestariamente de los cuerpos de policía local o de los municipios que no hayan constituido cuerpo de policía local han de ser ocupadas por personal funcionario de carrera"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. Las plazas de la plantilla vacantes y dotadas presupuestariamente de los cuerpos de policía local o de los municipios que no hayan constituido cuerpo de policía local han de ser ocupadas por personal funcionario de carrera."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 3, objetivos básicos de los criterios de coordinación. En la determinación de los criterios de coordinación se atenderán…",
+        "opciones": [
+            "En particular las singularidades del territorio de cada isla de la comunidad autónoma",
+            "En general las de cada localidad",
+            "“a” y “b” son correctas",
+            "“a” y “b” son incorrectas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación Constituye un objetivo básico en el establecimiento de los criterios de coordinación, la formación y el perfeccionamiento de los miembros de los cuerpos de policía local y su integración en un proyecto común de seguridad pública, desde una perspectiva integral de proximidad con la ciudadanía, basado en criterios éticos de rigor en cualquier ámbito de actuación, el carácter preventivo y asistencial del servicio y la resolución de conflictos como instrumentos de cohesión e integración social. En la determinación de los criterios de coordinación se atenderán en general las singularidades del territorio de cada isla de la comunidad autónoma y, en particular, las de cada localidad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 3, objetivos básicos de los criterios de coordinación. En la determinación de los criterios de coordinación se atenderán…",
+        "opciones": [
+            "En particular, las singularidades del territorio de cada isla de la comunidad autónoma",
+            "En particular, las de cada ayuntamiento",
+            "En particular, las de cada localidad",
+            "En particular, las que considere el alcalde o alcaldesa"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación Constituye un objetivo básico en el establecimiento de los criterios de coordinación, la formación y el perfeccionamiento de los miembros de los cuerpos de policía local y su integración en un proyecto común de seguridad pública, desde una perspectiva integral de proximidad con la ciudadanía, basado en criterios éticos de rigor en cualquier ámbito de actuación, el carácter preventivo y asistencial del servicio y la resolución de conflictos como instrumentos de cohesión e integración social. En la determinación de los criterios de coordinación se atenderán en general las singularidades del territorio de cada isla de la comunidad autónoma y, en particular, las de cada localidad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4, denominación y naturaleza jurídica. Señale la correcta del artículo 4.1. Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo…",
+        "opciones": [
+            "Propio",
+            "Impropio",
+            "Único",
+            "“a” y “c” son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué titulo tiene el Artículo 3 de la mencionada Ley?",
+        "opciones": [
+            "Objeto",
+            "Ámbito de aplicación",
+            "Objetivos básicos de los criterios de estructuración",
+            "Ninguna es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4, denominación y naturaleza jurídica. Complete la frase del artículo 4.1: En cada municipio se integran ________________________ con la denominación genérica de cuerpo de policía local.",
+        "opciones": [
+            "En un cuerpo común y propio",
+            "En un cuerpo único y estructurado",
+            "En un cuerpo propio y único",
+            "Todas son incorrectas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 6.2, ámbito territorial de actuación. Señale la correcta.",
+        "opciones": [
+            "Eventualmente, cuando, por necesidades institucionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley.",
+            "Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley.",
+            "Imperativamente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley.",
+            "Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se deberá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6 | Ámbito territorial de actuación. Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4.3. ¿Quién tiene el carácter de agente de agente de la autoridad y debe poseer la condición de funcionario?",
+        "opciones": [
+            "Los miembros de los cuerpos de policía local",
+            "Los policías de los ayuntamientos que no hayan constituido cuerpo de policía local",
+            "“a” y “b”, siempre",
+            "“a” y “b”, en el ejercicio de sus funciones"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. En el ejercicio de sus funciones, los miembros de los cuerpos de policía local y los policías de los ayuntamientos que no hayan constituido cuerpo de policía local tienen el carácter de agentes de la autoridad y deben poseer la condición de funcionarios."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 2, del Ámbito de aplicación. ¿En qué municipios se extiende la coordinación a los policías locales que formen parte de la plantilla del ayuntamiento?",
+        "opciones": [
+            "En los municipios donde exista cuerpo de policía local.",
+            "En los municipios donde no exista Cuerpo Nacional de Policía",
+            "En los municipios donde no exista cuerpo de policía local",
+            "Todas las anteriores son incorrectas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 2 | Ámbito de aplicación 2. En los municipios donde no exista cuerpo de policía local, la coordinación se extiende a los policías locales que formen parte de la plantilla del ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué titulo tiene el Artículo 5 de la mencionada Ley?",
+        "opciones": [
+            "Ámbito territorial de actuación",
+            "Objetivos básicos de los criterios de coordinación",
+            "Funciones de los cuerpos de la policía local",
+            "Denominación y naturaleza jurídica"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5 | Funciones de los cuerpos de la policía local."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 4, denominación y naturaleza jurídica. Complete la frase del artículo 4.1: _______________ son institutos armados de naturaleza civil.",
+        "opciones": [
+            "Los policías con cuerpo de policía local",
+            "Los agentes de policía local",
+            "Los cuerpos de policía local",
+            "El jefe o jefa del cuerpo de policía local"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica. Los cuerpos de policía local son institutos armados de naturaleza civil, con estructura y organización jerarquizada bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva. En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 3, objetivos básicos de los criterios de coordinación. Señale la correcta.",
+        "opciones": [
+            "Está basado en criterios filosóficos de rigor en cualquier ámbito de actuación",
+            "Está basado en criterios éticos de rigor en algunos ámbitos de actuación",
+            "Está basado en criterios de actuación arbitraria en cualquier ámbito de actuación",
+            "Está basado en criterios éticos de rigor en cualquier ámbito de actuación"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación Constituye un objetivo básico en el establecimiento de los criterios de coordinación, la formación y el perfeccionamiento de los miembros de los cuerpos de policía local y su integración en un proyecto común de seguridad pública, desde una perspectiva integral de proximidad con la ciudadanía, basado en criterios éticos de rigor en cualquier ámbito de actuación, el carácter preventivo y asistencial del servicio y la resolución de conflictos como instrumentos de cohesión e integración social. En la determinación de los criterios de coordinación se atenderán en general las singularidades del territorio de cada isla de la comunidad autónoma y, en particular, las de cada localidad."
+    },
+    {
+        "pregunta": "Artículo 4 | Denominación y naturaleza jurídica.",
+        "opciones": [
+            "Artículo 1",
+            "Artículo 2",
+            "Artículo 3",
+            "Artículo 4"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4 | Denominación y naturaleza jurídica."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué titulo tiene el Artículo 2 de la mencionada Ley?",
+        "opciones": [
+            "Ámbito de estructuración",
+            "Objeto",
+            "Objetivos básicos de los citerios de coordinación",
+            "Ámbito de aplicación"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 2 | Ámbito de aplicación"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué artículo recoge el “Ámbito de aplicación”?",
+        "opciones": [
+            "Artículo 4",
+            "Artículo 2",
+            "Artículo 1",
+            "Artículo 3"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 2 | Ámbito de aplicación"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 7.1, creación de cuerpos de policía local. Señale la correcta.",
+        "opciones": [
+            "Los Consells de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía propios, siempre que lo consideren oportuno en función de sus necesidades.",
+            "Los Consells de la comunidad autónoma de las Illes Balears deben crear cuerpos de policía propios, siempre que lo consideren oportuno en función de sus necesidades.",
+            "Los municipios de la comunidad autónoma de las Illes Balears deben crear cuerpos de policía propios, siempre que lo consideren oportuno en función de sus necesidades.",
+            "Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía propios, siempre que lo consideren oportuno en función de sus necesidades."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. Los municipios de la comunidad autónoma de las Illes Balears pueden crear cuerpos de policía propios, siempre que lo consideren oportuno en función de sus necesidades."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 6.3, ámbito territorial de actuación. Señale la correcta.",
+        "opciones": [
+            "Cuando ejerzan funciones de protección de autoridades de las corporaciones locales, deben actuar dentro del término municipal respectivo con la autorización del Ministerio del Interior",
+            "Cuando ejerzan funciones de protección de autoridades de las corporaciones locales, pueden actuar fuera del término municipal respectivo con la autorización del Ministerio del Interior",
+            "Cuando ejerzan funciones de protección de autoridades de las corporaciones locales, deben actuar fuera del término municipal respectivo con la autorización del Ministerio del Interior",
+            "Cuando ejerzan funciones de protección de autoridades de las corporaciones locales, pueden actuar dentro del término municipal respectivo con la autorización del Ministerio del Interior"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6 | Ámbito territorial de actuación. Cuando ejerzan funciones de protección de autoridades de las corporaciones locales, pueden actuar fuera del término municipal respectivo con la autorización del Ministerio del Interior."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué titulo tiene el Artículo 6 de la mencionada Ley?",
+        "opciones": [
+            "Ámbito territorial de actuación",
+            "Objetivos básicos de los criterios de coordinación",
+            "Funciones de los cuerpos de la policía local",
+            "Denominación y naturaleza jurídica"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 6 | Ámbito territorial de actuación."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué título tiene el Artículo 8 de la mencionada Ley?",
+        "opciones": [
+            "Creación de cuerpos de policía local",
+            "Ámbito territorial de actuación",
+            "Objeto",
+            "Asociaciones de municipios en materia de policía local"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 8 | Asociaciones de municipios en materia de policía local"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. ¿Qué artículo recoge la “Creación de cuerpos de policía local”?",
+        "opciones": [
+            "Artículo 7",
+            "Artículo 6",
+            "Artículo 8",
+            "Todas son incorrectas"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Según el artículo 7.3, la creación del cuerpo de policía local correspondiente es perceptiva en los casos en que la población municipal sea…",
+        "opciones": [
+            "Superior a 5.000 habitantes o cuando el número de policías que formen parte del ayuntamiento sea superior a tres.",
+            "Inferior a 5.000 habitantes o cuando el número de policías que formen parte del ayuntamiento sea superior a tres.",
+            "Superior a 5.000 habitantes o cuando el número de policías del ayuntamiento colindante sea superior a tres.",
+            "Inferior a 5.000 habitantes o cuando el número de policías del ayuntamiento colindante sea superior a tres."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. En los municipios donde no haya cuerpo de policía local, las funciones propias de este cuerpo las deben ejercer los policías que formen parte de la plantilla del ayuntamiento. La creación del cuerpo de policía local correspondiente es preceptiva en los casos en que la población municipal sea superior a 5.000 habitantes o cuando el número de efectivos que ejerza las funciones previstas en el apartado anterior sea superior a tres."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 3, objetivos básicos de los criterios de coordinación. En la determinación de los criterios de coordinación se atenderán…",
+        "opciones": [
+            "En general las singularidades del territorio de cada isla de la comunidad autónoma",
+            "En particular las de cada localidad",
+            "“a” y “b” son correctas",
+            "“a” y “b” son incorrectas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 3 | Objetivos básicos de los criterios de coordinación Constituye un objetivo básico en el establecimiento de los criterios de coordinación, la formación y el perfeccionamiento de los miembros de los cuerpos de policía local y su integración en un proyecto común de seguridad pública, desde una perspectiva integral de proximidad con la ciudadanía, basado en criterios éticos de rigor en cualquier ámbito de actuación, el carácter preventivo y asistencial del servicio y la resolución de conflictos como instrumentos de cohesión e integración social. En la determinación de los criterios de coordinación se atenderán en general las singularidades del territorio de cada isla de la comunidad autónoma y, en particular, las de cada localidad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Artículo 7.4. Si un municipio crea un cuerpo de policía local, porque su población superaba los 5.000 habitantes, o porque sus policías que formaban parte de la plantilla del ayuntamiento era superior a tres, ¿pueden disolver dicho cuerpo si desciende de 5.000 habitantes?",
+        "opciones": [
+            "No, excepto autorización del Ministerio del Interior.",
+            "Sí, se puede disolver si así lo dice el alcalde.",
+            "No se puede disolver, en ningún caso.",
+            "Sólo se puede disolver si la Junta Local de Seguridad lo dice."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 7 | Creación de cuerpos de policía local. La creación del cuerpo de policía local correspondiente es preceptiva en los casos en que la población municipal sea superior a 5.000 habitantes o cuando el número de efectivos que ejerza las funciones previstas en el apartado anterior sea superior a tres. Los municipios que tengan cuerpo de policía local de acuerdo con los criterios anteriores no lo pueden disolver si la población desciende de 5.000 habitantes."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

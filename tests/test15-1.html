@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Según el artículo 28 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, en caso de cambio de matrícula por cambio de provincia, ¿a dónde se remitirá la tarjeta de inspección técnica correspondiente a la matrícula anterior?",
+      "opciones": [
+        "Al órgano competente en materia de Industria de la provincia donde el vehículo estuvo matriculado.",
+        "Al órgano competente en materia de Industria de la provincia donde tiene el domicilio el titular del vehículo.",
+        "A la Jefatura Provincial de Tráfico donde tiene el domicilio el titular del vehículo.",
+        "A la Dirección General de Tráfico."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 5. Cuando se conceda una nueva matrícula en los casos previstos en el artículo 27, apartado 2, a), b) y c), de este Reglamento, se anotará en el Registro de Vehículos la baja definitiva de la matrícula anterior y en el permiso de circulación que se expida se harán constar las mismas fechas que figurasen en el permiso de circulación anterior. La tarjeta de inspección técnica correspondiente a la matrícula anterior se remitirá al órgano competente en materia de Industria de la provincia donde el vehículo estuvo matriculado."
+    },
+    {
+      "pregunta": "2. Según el artículo 29 del RD 2822/1998, el permiso de circulación y la licencia de circulación se ajustarán, en cuanto a su modelo y contenido:",
+      "opciones": [
+        "A lo que se indica en el anexo XII.",
+        "A lo que se indica en el anexo XIII.",
+        "A lo que se indica en el anexo III.",
+        "A lo que se indica en el anexo XVIII."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 29 Modelos de permiso de circulación y de licencia de circulación El permiso de circulación y la licencia de circulación se ajustarán, en cuanto a su modelo y contenido, a lo que se indica en el anexo XIII."
+    },
+    {
+      "pregunta": "3. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. Los documentos que debe presentar el conductor ante los Agentes encargados de la Autoridad son:",
+      "opciones": [
+        "Los originales del permiso o licencia de circulación y la Tarjeta de Inspección Técnica o Certificado de Características Técnicas.",
+        "Bastará con presentar fotocopias del permiso de circulación y la tarjeta de inspección técnica del vehículo.",
+        "En caso de no presentar la documentación original, se podrá exhibir fotocopia de la misma debidamente cotejada.",
+        "Las respuestas a y c son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 26 Documentación de los vehículos 1. El conductor de un vehículo queda obligado a estar en posesión y llevar consigo, así como a exhibir ante los agentes de la autoridad que se lo soliciten, los siguientes documentos: a) El permiso de circulación o licencia de circulación en el caso de ciclomotores. El permiso de circulación podrá ser sustituido por una autorización provisional expedida por la Jefatura de Tráfico, que surtirá los mismos efectos. b) La tarjeta de inspección técnica o el certificado de características técnicas en el supuesto de ciclomotores. c) En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque y en el reverso de la tarjeta de inspección técnica del automóvil figurará que lleva instalado un sistema de acoplamiento compatible con el del remolque, de acuerdo con la legislación vigente. 2. Los documentos a que se refiere el apartado 1 de este artículo serán originales, pudiendo ser sustituidos por fotocopias si están debidamente cotejadas."
+    },
+    {
+      "pregunta": "4. Según el artículo 27 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, la matriculación es única para cada vehículo. En caso de cambio de matrícula, ¿cuál de estos casos no estará sujeto al abono de la tasa de matriculación?",
+      "opciones": [
+        "Por razones de seguridad debidamente acreditadas.",
+        "Por cambio de domicilio a provincia distinta de aquella.",
+        "Cuando se pretenda legalizar en nuestro país un vehículo con matrícula extranjera que haya estado matriculado anteriormente en España.",
+        "Todos los cambios de matriculación están sujetos a las tasas de matriculación."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII. 3. Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación."
+    },
+    {
+      "pregunta": "5. Según el artículo 28 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, la matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima exceda de 750 kilogramos, se solicitará por:",
+      "opciones": [
+        "El propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico en que tenga su domicilio legal.",
+        "Únicamente por el propietario, en la Jefatura de Tráfico en la que desee matricular el vehículo.",
+        "En el caso de vehículos agrícolas, en la Jefatura de Tráfico en la que se vaya a residenciar el vehículo especial agrícola.",
+        "Las respuestas a y c son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola. La matriculación y expedición de la licencia de circulación de los ciclomotores y ciclos de motor se efectuará en la Jefatura de Tráfico del domicilio legal del propietario, del arrendatario con opción de compra o del arrendatario a largo plazo."
+    },
+    {
+      "pregunta": "6. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. ¿Quién expide el duplicado del permiso de circulación?",
+      "opciones": [
+        "La DGT.",
+        "El organismo autónomo Jefatura Central de Tráfico.",
+        "El Ministerio del Interior.",
+        "La Jefatura Provincial de Tráfico."
+      ],
+      "correcta": 3,
+      "explicacion": "La expedición física del documento se realiza en la Jefatura Provincial de Tráfico, aunque los trámites pueden realizarse en cualquiera de los lugares previstos en el artículo 30.3 Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "7. Según el artículo 25 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo I. Esta obligación será exigida a los ciclomotores de acuerdo con lo que se determina en el artículo 28 del presente Reglamento.",
+        "Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores de acuerdo con lo que se determina en el artículo 28 del presente Reglamento.",
+        "Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada igual o superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores de acuerdo con lo que se determina en el artículo 28 del presente Reglamento.",
+        "Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación no será exigida a los ciclomotores de acuerdo con lo que se determina en el artículo 28 del presente Reglamento."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento."
+    },
+    {
+      "pregunta": "8. Según el artículo 27.4 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Los vehículos pertenecientes a la provincia, que deberán tener una matrícula oficial, podrán ser objeto además de matriculación ordinaria.",
+        "Los vehículos pertenecientes a las Comunidades Autónomas, que deberán tener una matrícula oficial, podrán ser objeto además de matriculación ordinaria.",
+        "Los vehículos pertenecientes al Estado, que podrán tener una matrícula oficial, deberán ser objeto además de matriculación ordinaria.",
+        "Los vehículos pertenecientes al Estado, que deberán tener una matrícula oficial, podrán ser objeto además de matriculación ordinaria."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII. 3. Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación. 4. Los vehículos pertenecientes al Estado, que deberán tener una matrícula oficial, podrán ser objeto además de matriculación ordinaria. 5. Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma podrán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación ordinaria en la Jefatura de Tráfico correspondiente."
+    },
+    {
+      "pregunta": "9. Según el artículo 25.2 del RD 2822/1998, cuando se pretenda matricular en nuestro país un vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE, ¿quién expedirá el correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas?",
+      "opciones": [
+        "Los órganos competentes de la Administración.",
+        "Las entidades delegadas de la Administración.",
+        "El fabricante de la Unión Europea o un importador o sus representantes respectivos.",
+        "Los órganos competentes de la Administración o entidades delegadas."
+      ],
+      "correcta": 2,
+      "explicacion": "El enunciado sólo pide el caso de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE. Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. Número 1 del artículo 25 redactado por el número cuatro del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá: a) Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE. b) Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE. 3. No obstante lo dispuesto en los apartados anteriores, podrá autorizarse la puesta en circulación de determinados vehículos sin que sea preciso matricularlos, en los supuestos y condiciones contemplados en el capítulo VI de este Título."
+    },
+    {
+      "pregunta": "10. Según el artículo 30 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, en caso de solicitar un duplicado del permiso o licencia de circulación, dicho trámite se solicitará:",
+      "opciones": [
+        "Ante la sede electrónica de la Dirección General de Tráfico.",
+        "En cualquier Jefatura Provincial de Tráfico.",
+        "En Cualquier Oficina Local de Tráfico.",
+        "Todas son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "11. Según el artículo 28.2 del RD 2822/1998, la solicitud se formulará en el modelo oficial que a tales efectos proporcionará la Jefatura de Tráfico correspondiente o que se podrá descargar en la siguiente página web: www.dgt.es. A dicha solicitud se acompañarán una serie de documentos. ¿En qué anexo se indican los documentos a presentar?",
+      "opciones": [
+        "En el anexo I.",
+        "En el anexo X.",
+        "En el anexo II.",
+        "En el anexo XIII."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola. La matriculación y expedición de la licencia de circulación de los ciclomotores y ciclos de motor se efectuará en la Jefatura de Tráfico del domicilio legal del propietario, del arrendatario con opción de compra o del arrendatario a largo plazo. 2. La solicitud se formulará en el modelo oficial que a tales efectos proporcionará la Jefatura de Tráfico correspondiente o que se podrá descargar en la siguiente página web: www.dgt.es. A la solicitud se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, en su caso, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor, así como aquellos otros documentos en que el interesado funde su derecho a la matriculación del vehículo y que acrediten su personalidad y domicilio"
+    },
+    {
+      "pregunta": "12. Según el artículo 26 del RD 2822/1998, respecto a la documentación que está obligado a llevar el conductor de un vehículo, indique la respuesta incorrecta:",
+      "opciones": [
+        "El permiso de circulación o licencia de circulación en el caso de ciclomotores. El permiso de circulación podrá ser sustituido por una autorización provisional expedida por la Jefatura Central de Tráfico, que surtirá los mismos efectos.",
+        "La tarjeta de inspección técnica o el certificado de características técnicas en el supuesto de ciclomotores.",
+        "En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque y en el reverso de la tarjeta de inspección técnica del automóvil figurará que lleva instalado un sistema de acoplamiento compatible con el del remolque, de acuerdo con la legislación vigente.",
+        "Los documentos a que se refiere el apartado 1 de este artículo serán originales, pudiendo ser sustituidos por fotocopias si están debidamente cotejadas."
+      ],
+      "correcta": 0,
+      "explicacion": "No es la Jefatura Central si no la Provincial. Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 26 Documentación de los vehículos 1. El conductor de un vehículo queda obligado a estar en posesión y llevar consigo, así como a exhibir ante los agentes de la autoridad que se lo soliciten, los siguientes documentos: a) El permiso de circulación o licencia de circulación en el caso de ciclomotores. El permiso de circulación podrá ser sustituido por una autorización provisional expedida por la Jefatura de Tráfico, que surtirá los mismos efectos. b) La tarjeta de inspección técnica o el certificado de características técnicas en el supuesto de ciclomotores. c) En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque y en el reverso de la tarjeta de inspección técnica del automóvil figurará que lleva instalado un sistema de acoplamiento compatible con el del remolque, de acuerdo con la legislación vigente. 2. Los documentos a que se refiere el apartado 1 de este artículo serán originales, pudiendo ser sustituidos por fotocopias si están debidamente cotejadas."
+    },
+    {
+      "pregunta": "13. Según el artículo 26 del RD 2822/1998, respecto a la documentación que está obligado a llevar el conductor de un vehículo, indique la respuesta correcta:",
+      "opciones": [
+        "El permiso de circulación o licencia de circulación en el caso de ciclomotores. El permiso de circulación podrá ser sustituido por una autorización provisional expedida por la Dirección General de Tráfico, que surtirá los mismos efectos.",
+        "La tarjeta de inspección técnica o el certificado de características técnicas en el supuesto de motocicletas.",
+        "En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque y en el reverso de la tarjeta de inspección técnica del automóvil figurará que lleva instalado un sistema de acoplamiento incompatible con el del remolque, de acuerdo con la legislación vigente.",
+        "Los documentos a que se refiere el apartado 1 de este artículo serán originales, pudiendo ser sustituidos por fotocopias si están debidamente cotejadas."
+      ],
+      "correcta": 3,
+      "explicacion": "En negrita se indican las palabras erróneas en las opciones a, b y c. Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 26 Documentación de los vehículos 1. El conductor de un vehículo queda obligado a estar en posesión y llevar consigo, así como a exhibir ante los agentes de la autoridad que se lo soliciten, los siguientes documentos: a) El permiso de circulación o licencia de circulación en el caso de ciclomotores. El permiso de circulación podrá ser sustituido por una autorización provisional expedida por la Jefatura de Tráfico, que surtirá los mismos efectos. b) La tarjeta de inspección técnica o el certificado de características técnicas en el supuesto de ciclomotores. c) En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque y en el reverso de la tarjeta de inspección técnica del automóvil figurará que lleva instalado un sistema de acoplamiento compatible con el del remolque, de acuerdo con la legislación vigente. 2. Los documentos a que se refiere el apartado 1 de este artículo serán originales, pudiendo ser sustituidos por fotocopias si están debidamente cotejadas. Añadir nota a la pregunta #94683 Texto AÑADIR"
+    },
+    {
+      "pregunta": "15. Según el artículo 30 del RD 2822/1998, ¿cuándo el titular de un vehículo podrá solicitar un duplicado del permiso o licencia de circulación?",
+      "opciones": [
+        "Únicamente por sustracción o extravío del original.",
+        "Únicamente por deterioro o sustracción del original.",
+        "Por sustracción, deterioro o extravío del original.",
+        "Por deterioro o extravío del original."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "16. Según el artículo 25 del RD 2822/1998, ¿cuál de los siguientes vehículos de los que a continuación se indican están obligados a matricularse y que lleven las placas de matrícula con los caracteres que se les asigne? Señale la incorrecta:",
+      "opciones": [
+        "Vehículos de motor, remolques y semirremolques de MMA superior a 750 kilogramos.",
+        "Ciclomotores, vehículos de motor y remolques de MMA superior a 750 kilogramos.",
+        "Vehículos de motor, ciclomotores, remolques y semirremolques de MMA igual o superior a 750 kilogramos.",
+        "Vehículos de motor y ciclomotores."
+      ],
+      "correcta": 2,
+      "explicacion": "Los remolques y semirremolques de MMA igual o inferior a 750kg están exentos de dicha obligación. Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento."
+    },
+    {
+      "pregunta": "17. Según el artículo 28.8 del RD 2822/1998, ¿un vehículo reconstruido puede ser admitido para su matriculación?",
+      "opciones": [
+        "Sí, siempre que tenga una homologación de tipo CE.",
+        "Sí, siempre que posea un certificado de conformidad CE.",
+        "Sí, siempre que pase una inspección técnica de sus características esenciales para su homologación a título colectivo.",
+        "Sí, siempre que pase una inspección técnica de sus características esenciales para su homologación a título individual."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 8. Se admitirán para su matriculación los vehículos reconstruidos siempre que pasen una inspección técnica de sus características esenciales para su homologación a título individual."
+    },
+    {
+      "pregunta": "18. Según el artículo 25.2 del RD 2822/1998, previamente a su matriculación, los vehículos citados en el apartado 25.1 deberán estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas. ¿Quién expedirá dicho certificado? Señale la correcta:",
+      "opciones": [
+        "Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE.",
+        "Por los órganos competentes de la Administración o entidades delegadas, si se trata de un vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE.",
+        "Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE.",
+        "Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. Número 1 del artículo 25 redactado por el número cuatro del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá: a) Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE. b) Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE. 3. No obstante lo dispuesto en los apartados anteriores, podrá autorizarse la puesta en circulación de determinados vehículos sin que sea preciso matricularlos, en los supuestos y condiciones contemplados en el capítulo VI de este Título."
+    },
+    {
+      "pregunta": "19. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. Cualquier variación de datos que figuren en el permiso de circulación, así como del domicilio, se notificarán a la JPT en el plazo de:",
+      "opciones": [
+        "10 días desde la fecha en que se produzcan.",
+        "20 días desde la fecha en que se produzcan.",
+        "30 días desde la fecha en que se produzcan.",
+        "15 días desde la fecha en que se produzcan."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "20. Según el artículo 27.2.a del RD 2822/1998, cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo:",
+      "opciones": [
+        "XIV.",
+        "X.",
+        "XVIII.",
+        "I."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII."
+    },
+    {
+      "pregunta": "21. Según el artículo 27.2.a del RD 2822/1998, ¿en cuáles de los siguientes casos, para proceder a una nueva matrícula ordinaria distinta a la inicialmente asignada, no se han de presentar los documentos que se indican en el anexo XIII?",
+      "opciones": [
+        "En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas.",
+        "Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla.",
+        "Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales.",
+        "Cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII. 3. Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación. 4. Los vehículos pertenecientes al Estado, que deberán tener una matrícula oficial, podrán ser objeto además de matriculación ordinaria. 5. Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma podrán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación ordinaria en la Jefatura de Tráfico correspondiente."
+    },
+    {
+      "pregunta": "22. Según el artículo 25 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, ¿quién podrá expedir el certificado oficial previo del que deben estar dotados los vehículos antes de su matriculación?",
+      "opciones": [
+        "Por los órganos competentes de la Administración o entidades delegadas si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE.",
+        "Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE.",
+        "Por los órganos competentes de la Administración o entidades delegadas, si se trata de un vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE.",
+        "Las respuestas a y b son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. Número 1 del artículo 25 redactado por el número cuatro del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá: a) Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE. b) Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE. 3. No obstante lo dispuesto en los apartados anteriores, podrá autorizarse la puesta en circulación de determinados vehículos sin que sea preciso matricularlos, en los supuestos y condiciones contemplados en el capítulo VI de este Título."
+    },
+    {
+      "pregunta": "23. Según el artículo 28.4 del RD 2822/1998, ¿quién organismo autorizará la matriculación de un vehículo?",
+      "opciones": [
+        "El Ministerio del Interior.",
+        "La Jefatura Central de Tráfico.",
+        "La Jefatura de Tráfico.",
+        "La Dirección General de Tráfico."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 4. A la vista del expediente, la Jefatura de Tráfico autorizará, si procede, la matriculación del vehículo, en cuyo caso expedirá el permiso circulación, que se entregará al interesado junto con la tarjeta de inspección técnica o certificado de características y comunicará la matrícula a los órganos competentes de la Administración Tributaria, de Industria, de Agricultura si se tratara de un vehículo especial agrícola, así como al ayuntamiento del domicilio legal del titular del vehículo. En el caso de que el Registro Oficial de Maquinaria Agrícola no hubiera transmitido los datos de inscripción a que se hace referencia en el apartado 2, la Jefatura de Tráfico solicitará al citado Registro el documento acreditativo de la inscripción antes de decidir sobre la autorización. Además del permiso de circulación, la Jefatura de Tráfico podrá expedir otro documento, si así se establece en el anexo XIII, de acuerdo con las condiciones y conforme al modelo que se indiquen en el mismo."
+    },
+    {
+      "pregunta": "24. Según el artículo 28.7 del RD 2822/1998, la matriculación y expedición del permiso o autorización para circular de los vehículos a que se refiere el apartado 1 de este artículo pertenecientes al Estado:",
+      "opciones": [
+        "Se llevará a cabo por los propios Organismos encargados de su conservación y empleo, con arreglo a las prescripciones y trámites que se determinen por el Ministerio de Economía y Hacienda.",
+        "Se llevará a cabo por los propios Organismos encargados de su conservación y empleo, con arreglo a las prescripciones y trámites que se determinen por el Ministerio Industria.",
+        "Se llevará a cabo por los propios Organismos encargados de su conservación y empleo, con arreglo a las prescripciones y trámites que se determinen por el Ministerio del Interior.",
+        "Se llevará a cabo por las Comunidades Autónomas, con arreglo a las prescripciones y trámites que se determinen por el Ministerio de Economía y Hacienda."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 7. La matriculación y expedición del permiso o autorización para circular de los vehículos a que se refiere el apartado 1 de este artículo pertenecientes al Estado se llevará a cabo por los propios Organismos encargados de su conservación y empleo, con arreglo a las prescripciones y trámites que se determinen por el Ministerio de Economía y Hacienda. Estos vehículos podrán, además, ser matriculados en las Jefaturas de Tráfico presentando los mismos documentos exigidos en el apartado 2 del presente artículo."
+    },
+    {
+      "pregunta": "25. Según el artículo 27 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, la matriculación es única para cada vehículo. ¿Cuándo podrá concederse una nueva matrícula ordinaria a la inicialmente asignada? Señale la incorrecta:",
+      "opciones": [
+        "En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquellas, debiendo presentar la documentación que se establece en el anexo XIII.",
+        "Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren las siglas provinciales.",
+        "Por razones de seguridad debidamente acreditadas.",
+        "En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a comunidad autónoma distinta de aquellas, debiendo presentar la documentación que se establece en el anexo XIII. En caso de cambio de domicilio a distinta provincia, pero dentro de la misma comunidad autónoma no se procederá al cambio de matrícula."
+      ],
+      "correcta": 3,
+      "explicacion": "Aunque dentro de la misma comunidad autónoma se cambie de provincia, se podrá solicitar una nueva matrícula ordinaria. No exige el cambio de comunidad autónoma. Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII. 3. Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación."
+    },
+    {
+      "pregunta": "26. Según el artículo 30 del RD 2822/1998, la expedición de un duplicado del permiso o licencia de circulación determinará por sí sola:",
+      "opciones": [
+        "La anulación del original, y además, en caso de recuperación posterior del original, se procederá a entregarlo a la Jefatura de Tráfico que lo expidió.",
+        "La anulación del duplicado. En consecuencia, y en caso de recuperación posterior del original, se procederá a la destrucción del duplicado.",
+        "La anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata entrega a la Jefatura donde se matriculó el vehículo.",
+        "La anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "27. Según el artículo 25 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, ¿Puede autorizarse la circulación de determinados vehículos sin que sea preciso matricularlos?",
+      "opciones": [
+        "La circulación de un vehículo no matriculado no se puede autorizar bajo ningún concepto.",
+        "Sí, en los supuestos contemplados en el capítulo VI del Título IV.",
+        "Sólo amparado por matrículas turísticas.",
+        "No, únicamente cuando realice pruebas o ensayos."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. Número 1 del artículo 25 redactado por el número cuatro del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá: a) Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE. b) Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE. 3. No obstante lo dispuesto en los apartados anteriores, podrá autorizarse la puesta en circulación de determinados vehículos sin que sea preciso matricularlos, en los supuestos y condiciones contemplados en el capítulo VI de este Título."
+    },
+    {
+      "pregunta": "28. Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos. Si expedido un duplicado por extravío se encuentra el permiso de circulación original, ¿Qué se ha de hacer con dicho documento?",
+      "opciones": [
+        "Entregarlo a la JPT de donde se haya encontrado dicho permiso.",
+        "Entregarlo a la JPT de donde tenga su domicilio el titular del permiso.",
+        "Entregarlo a la JPT que lo hubiese expedido.",
+        "Se procederá a su inmediata destrucción."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos. Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "29. Según el artículo 27 del RD 2822/1998, la matriculación es única para cada vehículo. No obstante, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria a la inicialmente asignada en los casos siguientes: Señale la correcta.",
+      "opciones": [
+        "Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en la misma provincia. A la solicitud se acompañarán los documentos que se indican en el anexo XIV.",
+        "En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio dentro de la misma provincia, debiendo presentar la documentación que se establece en el anexo XIII.",
+        "Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII.",
+        "En el caso de que el titular de un vehículo en cuya matrícula no figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII. 3. Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación. 4. Los vehículos pertenecientes al Estado, que deberán tener una matrícula oficial, podrán ser objeto además de matriculación ordinaria. 5. Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma podrán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación ordinaria en la Jefatura de Tráfico correspondiente."
+    },
+    {
+      "pregunta": "30. RD 2822/1998, de 23 de diciembre por el que se aprueba el Reglamento General de vehículos. Según el artículo 25:",
+      "opciones": [
+        "Para poner en circulación vehículos de motor, así como remolques y semirremolques de MMA hasta 750kg, será preciso matricularlos y que lleven las placas de matrícula.",
+        "Para poner en circulación vehículos de motor, así como remolques y semirremolques de MMA superior a 750kg, será preciso matricularlos y que lleven las placas de matrícula.",
+        "Para poner en circulación vehículos de motor, a excepción de remolques y semirremolques cualquiera que sea su MMA, será preciso matricularlos y que lleven las placas de matrícula.",
+        "Para poner en circulación cualquier tipo de vehículo independientemente de cuál sea su MMA, será preciso matricularlo y que lleve las placas de matrícula."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento."
+    },
+    {
+      "pregunta": "31. Según el artículo 25 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, previamente a su matriculación, los vehículos deben estar dotados de:",
+      "opciones": [
+        "La factura de compra.",
+        "Del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas.",
+        "Del correspondiente permiso de circulación.",
+        "Las respuestas b y c son correctas."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá:"
+    },
+    {
+      "pregunta": "32. Según el artículo 25.3 del RD 2822/1998, ¿cuándo podrá autorizarse al puesta en circulación de determinados vehículos sin que sea preciso matricularlos?",
+      "opciones": [
+        "En los supuestos y condiciones contemplados en el capítulo V de este Título.",
+        "En los supuestos y condiciones contemplados en el capítulo VI de este Título.",
+        "En los supuestos y condiciones contemplados en el capítulo IV de este Título.",
+        "En los supuestos y condiciones contemplados en el capítulo VII de este Título."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. Número 1 del artículo 25 redactado por el número cuatro del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá: a) Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE. b) Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE. 3. No obstante lo dispuesto en los apartados anteriores, podrá autorizarse la puesta en circulación de determinados vehículos sin que sea preciso matricularlos, en los supuestos y condiciones contemplados en el capítulo VI de este Título."
+    },
+    {
+      "pregunta": "33. Según el artículo 28.6 del RD 2822/1998, los trenes turísticos, sin perjuicio de la matriculación de cada elemento del mismo como vehículo especial, para circular por las vías públicas: Señale la incorrecta.",
+      "opciones": [
+        "Deberán obtener una autorización complementaria del órgano competente en materia de Tráfico que, en el supuesto de vías urbanas, será el Ayuntamiento.",
+        "Esta autorización se expedirá previo informe vinculante del titular de la vía y en la misma deberá figurar, en todo caso, el recorrido a realizar, horario y cuantas limitaciones se consideren necesarias para garantizar la seguridad.",
+        "Se matricularán como un único elemento.",
+        "La a y b son correctas."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 6. Los trenes turísticos, sin perjuicio de la matriculación de cada elemento del mismo como vehículo especial, para circular por las vías públicas deberán obtener una autorización complementaria del órgano competente en materia de Tráfico que, en el supuesto de vías urbanas, será el Ayuntamiento. Esta autorización se expedirá previo informe vinculante del titular de la vía y en la misma deberá figurar, en todo caso, el recorrido a realizar, horario y cuantas limitaciones se consideren necesarias para garantizar la seguridad."
+    },
+    {
+      "pregunta": "34. Según el artículo 28.4 del RD 2822/1998, ¿cuál será la actuación de la Jefatura de Tráfico una vez autorizada la matriculación del vehículo?",
+      "opciones": [
+        "Expedirá el permiso circulación, que se entregará al interesado junto con la tarjeta de inspección técnica o certificado de características y comunicará la matrícula a los órganos competentes de la Administración Tributaria, de Industria, de Agricultura si se tratara de un vehículo especial agrícola, así como al ayuntamiento del domicilio legal del titular del vehículo.",
+        "Expedirá el permiso circulación, que se entregará al interesado junto con la tarjeta de inspección técnica o certificado de características y comunicará la matrícula a los órganos competentes de la Administración Tributaria, de Industria, así como al ayuntamiento del domicilio legal del titular del vehículo.",
+        "Expedirá el permiso circulación, que se entregará al interesado junto con la tarjeta de inspección técnica o certificado de características y comunicará la matrícula al ayuntamiento del domicilio legal del titular del vehículo.",
+        "Expedirá el permiso circulación, la tarjeta de inspección técnica o certificado de características deberá obtenerla del órgano competente de la Administración de Industria y comunicará la matrícula a los órganos competentes de la Administración Tributaria, de Industria, de Agricultura si se tratara de un vehículo especial agrícola, así como al ayuntamiento del domicilio legal del titular del vehículo."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 4. A la vista del expediente, la Jefatura de Tráfico autorizará, si procede, la matriculación del vehículo, en cuyo caso expedirá el permiso circulación, que se entregará al interesado junto con la tarjeta de inspección técnica o certificado de características y comunicará la matrícula a los órganos competentes de la Administración Tributaria, de Industria, de Agricultura si se tratara de un vehículo especial agrícola, así como al ayuntamiento del domicilio legal del titular del vehículo."
+    },
+    {
+      "pregunta": "35. Según el artículo 25 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, ¿en cuál de estos casos no expedirá el órgano competente de la Administración o entidades delegadas el correspondiente certificado oficial de características técnicas de un vehículo?",
+      "opciones": [
+        "Si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE.",
+        "Si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados.",
+        "A matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España.",
+        "A vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. Número 1 del artículo 25 redactado por el número cuatro del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá: Thank you for watching a) Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE. b) Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE. 3. No obstante lo dispuesto en los apartados anteriores, podrá autorizarse la puesta en circulación de determinados vehículos sin que sea preciso matricularlos, en los supuestos y condiciones contemplados en el capítulo VI de este Título."
+    },
+    {
+      "pregunta": "36. Según el artículo 27 del RD 2822/1998, la matriculación es única para cada vehículo. No obstante, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria a la inicialmente asignada en los casos siguientes. ¿Cuál de ellos no estará sujeto al abono de la tasa de matriculación?",
+      "opciones": [
+        "Cuando lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII.",
+        "En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII.",
+        "Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV.",
+        "Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII. 3. Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación."
+    },
+    {
+      "pregunta": "37. Según el artículo 28.4 párrafo tercero del RD 2822/1998, además del permiso de circulación, ¿puede la Jefatura de Tráfico expedir otro documento?",
+      "opciones": [
+        "No, el documento sustitutivo solamente puede ser expedido de forma temporal por las gestorías.",
+        "Sí, si así se establece en el anexo XIII, de acuerdo con las condiciones y conforme al modelo que se indiquen en el mismo.",
+        "No, únicamente podrá expedir duplicados en los casos establecidos.",
+        "Sí, si así se establece en el anexo XVIII, de acuerdo con las condiciones y conforme al modelo que se indiquen en el mismo."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 4. A la vista del expediente, la Jefatura de Tráfico autorizará, si procede, la matriculación del vehículo, en cuyo caso expedirá el permiso circulación, que se entregará al interesado junto con la tarjeta de inspección técnica o certificado de características y comunicará la matrícula a los órganos competentes de la Administración Tributaria, de Industria, de Agricultura si se tratara de un vehículo especial agrícola, así como al ayuntamiento del domicilio legal del titular del vehículo. En el caso de que el Registro Oficial de Maquinaria Agrícola no hubiera transmitido los datos de inscripción a que se hace referencia en el apartado 2, la Jefatura de Tráfico solicitará al citado Registro el documento acreditativo de la inscripción antes de decidir sobre la autorización. Además del permiso de circulación, la Jefatura de Tráfico podrá expedir otro documento, si así se establece en el anexo XIII, de acuerdo con las condiciones y conforme al modelo que se indiquen en el mismo."
+    },
+    {
+      "pregunta": "38. Según el artículo 25.2 del RD 2822/1998, cuando se pretenda matricular en nuestro país un vehículo nuevo adquirido directamente en otro país y posea un certificado de conformidad CE, ¿quién expedirá el correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas?",
+      "opciones": [
+        "Los órganos competentes de la Administración Europea.",
+        "Las entidades delegadas de la Administración Europea.",
+        "El fabricante de la Unión Europea o un importador o sus representantes respectivos.",
+        "Los órganos competentes de la Administración o entidades delegadas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. Número 1 del artículo 25 redactado por el número cuatro del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá: a) Por los órganos competentes de la Administración o entidades delegadas, si se trata de vehículos que corresponden a tipos homologados incompletos, no homologados, matriculados anteriormente en otro país, vehículos usados procedentes de subastas oficiales realizadas en España o vehículos nuevos adquiridos directamente en otro país y que posean un certificado de conformidad CE. b) Por un fabricante de la Unión Europea o por un importador o por sus representantes respectivos, si se trata de vehículo nuevo que corresponde a tipo homologado según la legislación nacional u homologación CE. 3. No obstante lo dispuesto en los apartados anteriores, podrá autorizarse la puesta en circulación de determinados vehículos sin que sea preciso matricularlos, en los supuestos y condiciones contemplados en el capítulo VI de este Título."
+    },
+    {
+      "pregunta": "39. Según el artículo 29 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, el permiso de circulación y la licencia de circulación se ajustarán, en cuando a su modelo y contenido, a lo que se indica en el Anexo:",
+      "opciones": [
+        "I.",
+        "X.",
+        "II.",
+        "XIII."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 29 Modelos de permiso de circulación y de licencia de circulación El permiso de circulación y la licencia de circulación se ajustarán, en cuanto a su modelo y contenido, a lo que se indica en el anexo XIII."
+    },
+    {
+      "pregunta": "40. Según el artículo 28 del RD 2822/1998, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo:",
+      "opciones": [
+        "La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cuya masa máxima autorizada exceda de 750 kilogramos, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos.",
+        "La matriculación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda o no de 750 kilogramos.",
+        "La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos.",
+        "La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques cuya masa máxima autorizada exceda de 750 kilogramos y máquinas remolcadas especiales cuya masa máxima autorizada sea igual o superior a 750 kilogramos."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola."
+    },
+    {
+      "pregunta": "41. Según el artículo 30.3 del RD 2822/1998, los trámites de solicitud de duplicado del permiso o licencia de circulación y la comunicación de variación de datos que consten en el Registro de Vehículos se podrán realizar en: Señale la incorrecta.",
+      "opciones": [
+        "Ante la sede electrónica de la Dirección General de Tráfico.",
+        "En cualquier Jefatura Provincial de Tráfico.",
+        "En cualquier Oficina Local de Tráfico.",
+        "Únicamente en la Jefatura Provincial de Tráfico del domicilio legal del titular del vehículo y ante la sede electrónica de la Dirección General de Tráfico."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "42. Según el artículo 30.2 del RD 2822/1998, ¿en cuál de los casos que a continuación se indican se expedirá un nuevo permiso o licencia de circulación?",
+      "opciones": [
+        "Cuando la variación de datos afectase o no a los datos que deban ser consignados en dicho documento.",
+        "Cuando la variación de datos afectase a los que deban ser consignados en dicho documento.",
+        "Cuando la variación de datos afectase o no a los datos que deban ser consignados en el permiso de conducción.",
+        "Cuando la variación de datos afectase a los datos que deban ser consignados en la licencia de conducción."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "43. Según el artículo 25.2 del RD 2822/1998, previamente a su matriculación, los vehículos citados en el apartado 25.1 deberán estar dotados de:",
+      "opciones": [
+        "Del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas.",
+        "Del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas y privadas.",
+        "Del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías privadas.",
+        "Del correspondiente permiso de circulación que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 25 Normas generales 1. Para poner en circulación vehículos de motor, así como remolques y semirremolques de masa máxima autorizada superior a 750 kilogramos, será preciso matricularlos y que lleven las placas de matrícula con los caracteres que se les asigne, del modo que se establece en el anexo XVIII. Esta obligación será exigida a los ciclomotores y ciclos de motor de acuerdo con lo que se determina en el artículo 28 del presente Reglamento. Número 1 del artículo 25 redactado por el número cuatro del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. Previamente a su matriculación, los vehículos citados en el apartado anterior deben estar dotados del correspondiente certificado oficial que acredite sus características técnicas esenciales y su aptitud para circular por las vías públicas, que se expedirá:"
+    },
+    {
+      "pregunta": "44. Según el artículo 28 del RD 2822/1998, ¿cuál de las siguientes opciones que a continuación se indica puede solicitar la matriculación de un vehículo? Señale la incorrecta:",
+      "opciones": [
+        "El propietario y el arrendatario con opción de compra.",
+        "El arrendatario a largo plazo y el arrendatario con opción de compra.",
+        "El propietario, el arrendatario con opción de compra y el arrendatario a largo plazo.",
+        "El propietario, el arrendatario con opción de compra o tercera persona interesada en la compra del vehículo."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola."
+    },
+    {
+      "pregunta": "45. Según el artículo 30 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, ¿en qué casos se podrá solicitar un duplicado del permiso o licencia de Circulación?:",
+      "opciones": [
+        "En los casos de sustracción, deterioro o extravío.",
+        "Sólo en caso de sustracción y previa presentación de la correspondiente denuncia.",
+        "Sólo en caso de deterioro.",
+        "Sólo en caso de variación de datos."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "46. Según el artículo 28 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, se admitirán para su matriculación los vehículos reconstruidos:",
+      "opciones": [
+        "Si presentan un certificado del taller reparador y tengan una homologación individual.",
+        "Siempre que pasen una inspección técnica de sus características esenciales para su homologación a título individual.",
+        "Siempre que pasen una inspección técnica de sus características esenciales.",
+        "Un vehículo reconstruido no se puede matricular bajo ningún concepto."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 8. Se admitirán para su matriculación los vehículos reconstruidos siempre que pasen una inspección técnica de sus características esenciales para su homologación a título individual."
+    },
+    {
+      "pregunta": "47. Según el artículo 28.7 del RD 2822/1998, los vehículos pertenecientes al Estado, ¿pueden ser matriculados con matrícula ordinaria?",
+      "opciones": [
+        "No, tendrán siempre su matrícula estatal.",
+        "Sí, en la Jefatura Provincial de Tráfico de Madrid a través del Ministerio de Asuntos exteriores.",
+        "Sí, en las Jefaturas de Tráfico presentando los mismos documentos exigidos en el apartado 2 del artículo 28.",
+        "No, dado que la matriculación es única, sólo pueden tener una única matrícula."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 7. La matriculación y expedición del permiso o autorización para circular de los vehículos a que se refiere el apartado 1 de este artículo pertenecientes al Estado se llevará a cabo por los propios Organismos encargados de su conservación y empleo, con arreglo a las prescripciones y trámites que se determinen por el Ministerio de Economía y Hacienda. Estos vehículos podrán, además, ser matriculados en las Jefaturas de Tráfico presentando los mismos documentos exigidos en el apartado 2 del presente artículo."
+    },
+    {
+      "pregunta": "48. Según el artículo 28 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, la matriculación y expedición del permiso o autorización para circular de los vehículos pertenecientes al Estado se llevará a cabo por:",
+      "opciones": [
+        "El Ministerio del Interior.",
+        "Por los propios Organismos encargados de su conservación y empleo, con arreglo a las prescripciones y trámites que se determinen por el Ministerio de Economía y Hacienda.",
+        "Por la Jefatura Central de Tráfico, con arreglo a las prescripciones y trámites que se determinen por el Ministerio de Economía y Hacienda.",
+        "Por la Dirección General de Tráfico, con arreglo a las prescripciones y trámites que se determinen por el Ministerio de Economía y Hacienda."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 7. La matriculación y expedición del permiso o autorización para circular de los vehículos a que se refiere el apartado 1 de este artículo pertenecientes al Estado se llevará a cabo por los propios Organismos encargados de su conservación y empleo, con arreglo a las prescripciones y trámites que se determinen por el Ministerio de Economía y Hacienda. Estos vehículos podrán, además, ser matriculados en las Jefaturas de Tráfico presentando los mismos documentos exigidos en el apartado 2 del presente artículo."
+    },
+    {
+      "pregunta": "49. Según el artículo 27.5 del RD 2822/1998, indique la respuesta correcta:",
+      "opciones": [
+        "Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma deberán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación ordinaria en la Jefatura de Tráfico correspondiente.",
+        "Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma podrán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación ordinaria en la Jefatura de Tráfico correspondiente.",
+        "Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma podrán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación especial en la Jefatura de Tráfico correspondiente.",
+        "Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma podrán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación temporal en la Jefatura de Tráfico correspondiente."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII. 3. Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación. 4. Los vehículos pertenecientes al Estado, que deberán tener una matrícula oficial, podrán ser objeto además de matriculación ordinaria. 5. Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma podrán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación ordinaria en la Jefatura de Tráfico correspondiente."
+    },
+    {
+      "pregunta": "50. Según el artículo 28 del RD 2822/1998, ¿dónde se solicitará la matriculación y expedición del permiso de circulación de un automóvil por parte del propietario, arrendatario con opción de compra o arrendatario a largo plazo?",
+      "opciones": [
+        "En la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola.",
+        "En la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial.",
+        "En la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o aquella en que estuvo matriculado el vehículo.",
+        "En la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola."
+    },
+    {
+      "pregunta": "51. Según el artículo 28.4 del RD 2822/1998, en el caso de que el Registro Oficial de Maquinaria Agrícola no hubiera transmitido los datos de inscripción a que se hace referencia en el apartado 2 de dicho artículo.",
+      "opciones": [
+        "La Jefatura de Tráfico solicitará al citado Registro el documento acreditativo de la inscripción después de haberse matriculado el vehículo.",
+        "La Jefatura de Tráfico solicitará al citado Registro el documento acreditativo de la inscripción antes de decidir sobre la autorización.",
+        "La Jefatura Central de Tráfico solicitará al citado Registro el documento acreditativo de la inscripción antes de decidir sobre la autorización.",
+        "La Jefatura Central de Tráfico solicitará al citado Registro el documento acreditativo de la inscripción una vez matriculado el vehículo."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 4. A la vista del expediente, la Jefatura de Tráfico autorizará, si procede, la matriculación del vehículo, en cuyo caso expedirá el permiso circulación, que se entregará al interesado junto con la tarjeta de inspección técnica o certificado de características y comunicará la matrícula a los órganos competentes de la Administración Tributaria, de Industria, de Agricultura si se tratara de un vehículo especial agrícola, así como al ayuntamiento del domicilio legal del titular del vehículo. En el caso de que el Registro Oficial de Maquinaria Agrícola no hubiera transmitido los datos de inscripción a que se hace referencia en el apartado 2, la Jefatura de Tráfico solicitará al citado Registro el documento acreditativo de la inscripción antes de decidir sobre la autorización. Además del permiso de circulación, la Jefatura de Tráfico podrá expedir otro documento, si así se establece en el anexo XIII, de acuerdo con las condiciones y conforme al modelo que se indiquen en el mismo."
+    },
+    {
+      "pregunta": "52. Según el artículo 28.1 párrafo segundo del RD 2822/1998, ¿dónde se solicitará la matriculación y expedición de la licencia de circulación de los ciclomotores por parte del propietario, arrendatario con opción de compra o arrendatario a largo plazo?",
+      "opciones": [
+        "En la Jefatura de Tráfico de la provincia en que tenga su domicilio legal.",
+        "En la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el ciclomotor.",
+        "En la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o aquella en que estuvo matriculado el vehículo.",
+        "En la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola. La matriculación y expedición de la licencia de circulación de los ciclomotores y ciclos de motor se efectuará en la Jefatura de Tráfico del domicilio legal del propietario, del arrendatario con opción de compra o del arrendatario a largo plazo."
+    },
+    {
+      "pregunta": "53. Según el artículo 26 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, relativa a la documentación de los vehículos, señale la respuesta correcta:",
+      "opciones": [
+        "En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque, no siendo necesario que en el reverso de la tarjeta de inspección técnica del automóvil figure que lleva instalado un sistema de acoplamiento compatible con el del remolque, de acuerdo con la legislación vigente.",
+        "En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea superior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque y en el reverso de la tarjeta de inspección técnica del automóvil figurará que lleva instalado un sistema de acoplamiento compatible con el del remolque, de acuerdo con la legislación vigente.",
+        "En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque y en el reverso de la tarjeta de inspección técnica del automóvil figurará que lleva instalado un sistema de acoplamiento compatible con el del remolque, de acuerdo con la legislación vigente.",
+        "En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque únicamente."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 26 Documentación de los vehículos 1. El conductor de un vehículo queda obligado a estar en posesión y llevar consigo, así como a exhibir ante los agentes de la autoridad que se lo soliciten, los siguientes documentos: a) El permiso de circulación o licencia de circulación en el caso de ciclomotores. El permiso de circulación podrá ser sustituido por una autorización provisional expedida por la Jefatura de Tráfico, que surtirá los mismos efectos. b) La tarjeta de inspección técnica o el certificado de características técnicas en el supuesto de ciclomotores. c) En los conjuntos de vehículos formados por automóviles que arrastran remolques o semirremolques cuya masa máxima autorizada sea inferior o igual a 750 kilogramos, la tarjeta de inspección técnica del remolque o semirremolque y en el reverso de la tarjeta de inspección técnica del automóvil figurará que lleva instalado un sistema de acoplamiento compatible con el del remolque, de acuerdo con la legislación vigente. 2. Los documentos a que se refiere el apartado 1 de este artículo serán originales, pudiendo ser sustituidos por fotocopias si están debidamente cotejadas."
+    },
+    {
+      "pregunta": "54. Según el artículo 28 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, los trenes turísticos, sin perjuicio de su matriculación de cada elemento como vehículo especial, para circular por las vías públicas deberán obtener:",
+      "opciones": [
+        "Una autorización complementaria del órgano competente en materia de tráfico que será la JPT.",
+        "Una autorización complementaria del órgano competente en materia de tráfico que será la DGT.",
+        "Una autorización complementaria del órgano competente en materia de tráfico que, en el supuesto de vías urbanas, será el Ayuntamiento.",
+        "Una autorización complementaria del órgano competente en materia de tráfico que será el Organismo Autónomo Jefatura Central de Tráfico."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 6. Los trenes turísticos, sin perjuicio de la matriculación de cada elemento del mismo como vehículo especial, para circular por las vías públicas deberán obtener una autorización complementaria del órgano competente en materia de Tráfico que, en el supuesto de vías urbanas, será el Ayuntamiento. Esta autorización se expedirá previo informe vinculante del titular de la vía y en la misma deberá figurar, en todo caso, el recorrido a realizar, horario y cuantas limitaciones se consideren necesarias para garantizar la seguridad."
+    },
+    {
+      "pregunta": "55. Según el artículo 28.5 del RD 2822/1998, cuando se conceda una nueva matrícula en los casos previstos en el artículo 27, apartado 2, a), b) y c), de este Reglamento, ¿qué se hará con la tarjeta de inspección técnica correspondiente a la matrícula anterior?",
+      "opciones": [
+        "Se remitirá al órgano competente en materia de Industria de la provincia donde se solicitó la nueva matriculación del vehículo.",
+        "Se remitirá al órgano competente en materia de Industria de la provincia donde el vehículo estuvo matriculado.",
+        "Se procederá a su inmediata destrucción.",
+        "Se procederá a entregar a la Jefatura Provincial de Tráfico que expidió dicho documento."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 5. Cuando se conceda una nueva matrícula en los casos previstos en el artículo 27, apartado 2, a), b) y c), de este Reglamento, se anotará en el Registro de Vehículos la baja definitiva de la matrícula anterior y en el permiso de circulación que se expida se harán constar las mismas fechas que figurasen en el permiso de circulación anterior. La tarjeta de inspección técnica correspondiente a la matrícula anterior se remitirá al órgano competente en materia de Industria de la provincia donde el vehículo estuvo matriculado."
+    },
+    {
+      "pregunta": "56. Según el artículo 28 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, una vez inscrito el vehículo, ¿a qué organismo comunicará los datos el Registro Oficial de Maquinaria Agrícola?",
+      "opciones": [
+        "A la Jefatura Provincial de Tráfico.",
+        "Al Registro de Vehículos de la comunidad autónoma",
+        "Al Registro de vehículos de la Dirección General de Tráfico.",
+        "Al Ayuntamiento de donde resida el titular del vehículo."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola. La matriculación y expedición de la licencia de circulación de los ciclomotores y ciclos de motor se efectuará en la Jefatura de Tráfico del domicilio legal del propietario, del arrendatario con opción de compra o del arrendatario a largo plazo. Número 1 del artículo 28 redactado por el número cinco del artículo segundo del R.D. 970/2020, de 10 de noviembre, por el que se modifican el Reglamento General de Circulación, aprobado por R.D. 1428/2003, de 21 de noviembre y el Reglamento General de Vehículos, aprobado por R.D. 2822/1998, de 23 de diciembre, en materia de medidas urbanas de tráfico («B.O.E.» 11 noviembre).Vigencia: 2 enero 2021 2. La solicitud se formulará en el modelo oficial que a tales efectos proporcionará la Jefatura de Tráfico correspondiente o que se podrá descargar en la siguiente página web: www.dgt.es. A la solicitud se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, en su caso, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor, así como aquellos otros documentos en que el interesado funde su derecho a la matriculación del vehículo y que acrediten su personalidad y domicilio. En el caso de tratarse de un vehículo especial agrícola deberá haberse inscrito previamente en el Registro Oficial de Maquinaria Agrícola correspondiente. Dicho Registro comunicará los datos de inscripción al Registro de Vehículos de la Dirección General de Tráfico, conforme a lo dispuesto en el Real Decreto 1013/2009, de 19 de junio, sobre caracterización y registro de la maquinaria agrícola."
+    },
+    {
+      "pregunta": "57. Según el artículo 28.2 del RD 2822/1998, ¿qué documentos se acompañarán a la solicitud de matriculación de un vehículo?",
+      "opciones": [
+        "Se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, en su caso, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor.",
+        "Se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, en su caso, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor, así como aquellos otros documentos en que el interesado funde su derecho a la matriculación del vehículo y que acrediten su personalidad y domicilio.",
+        "Se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, siempre, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor, así como aquellos otros documentos en que el interesado funde su derecho a la matriculación del vehículo y que acrediten su personalidad y domicilio.",
+        "Se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, en su caso, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor, así como aquellos otros documentos en que el interesado funde su derecho a la matriculación del vehículo y que acrediten sus propiedades y domicilio."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola. La matriculación y expedición de la licencia de circulación de los ciclomotores y ciclos de motor se efectuará en la Jefatura de Tráfico del domicilio legal del propietario, del arrendatario con opción de compra o del arrendatario a largo plazo. 2. La solicitud se formulará en el modelo oficial que a tales efectos proporcionará la Jefatura de Tráfico correspondiente o que se podrá descargar en la siguiente página web: www.dgt.es. A la solicitud se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, en su caso, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor, así como aquellos otros documentos en que el interesado funde su derecho a la matriculación del vehículo y que acrediten su personalidad y domicilio."
+    },
+    {
+      "pregunta": "58. Según el artículo 28 del RD 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos, para matricular un vehículo especial agrícola, ¿qué se debe realizar previamente?",
+      "opciones": [
+        "No se ha de hacer ningún trámite previo, únicamente dirigirse a la Jefatura de Tráfico donde se vaya a residenciar el vehículo.",
+        "Inscribirse en el Registro Oficial de Maquinaria Agrícola.",
+        "Inscribirse en el Ministerio de Medio Ambiente.",
+        "Inscribirse en la Dirección General de Tráfico."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola. La matriculación y expedición de la licencia de circulación de los ciclomotores y ciclos de motor se efectuará en la Jefatura de Tráfico del domicilio legal del propietario, del arrendatario con opción de compra o del arrendatario a largo plazo. 2. La solicitud se formulará en el modelo oficial que a tales efectos proporcionará la Jefatura de Tráfico correspondiente o que se podrá descargar en la siguiente página web: www.dgt.es. A la solicitud se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, en su caso, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor, así como aquellos otros documentos en que el interesado funde su derecho a la matriculación del vehículo y que acrediten su personalidad y domicilio. En el caso de tratarse de un vehículo especial agrícola deberá haberse inscrito previamente en el Registro Oficial de Maquinaria Agrícola correspondiente. Dicho Registro comunicará los datos de inscripción al Registro de Vehículos de la Dirección General de Tráfico, conforme a lo dispuesto en el Real Decreto 1013/2009, de 19 de junio, sobre caracterización y registro de la maquinaria agrícola."
+    },
+    {
+      "pregunta": "59. Según el artículo 28.5 del RD 2822/1998, ¿en qué caso o casos de los previstos en el artículo 27, apartado 2, no se llevará a cabo lo siguiente? se anotará en el Registro de Vehículos la baja definitiva de la matrícula anterior y en el permiso de circulación que se expida se harán constar las mismas fechas que figurasen en el permiso de circulación anterior:",
+      "opciones": [
+        "En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas.",
+        "Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla.",
+        "Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales.",
+        "Cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas."
+      ],
+      "correcta": 3,
+      "explicacion": "El caso concreto de razones de seguridad personal, se encuentra en el apartado D y no se procede a dicha anotación. Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 5. Cuando se conceda una nueva matrícula en los casos previstos en el artículo 27, apartado 2, a), b) y c), de este Reglamento, se anotará en el Registro de Vehículos la baja definitiva de la matrícula anterior y en el permiso de circulación que se expida se harán constar las mismas fechas que figurasen en el permiso de circulación anterior. La tarjeta de inspección técnica correspondiente a la matrícula anterior se remitirá al órgano competente en materia de Industria de la provincia donde el vehículo estuvo matriculado."
+    },
+    {
+      "pregunta": "60. Según el artículo 30.2 del RD 2822/1998, ¿de qué plazo dispone el titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos, para comunicar dicha variación?",
+      "opciones": [
+        "De 15 días desde que se produjera.",
+        "De 25 días desde que se produjera.",
+        "De 10 días desde que se produjera.",
+        "De 20 días desde que se produjera."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 30 Duplicados y renovaciones del permiso o licencia de circulación 1. El titular de un vehículo cuyo permiso o licencia de circulación hubiese sido objeto de sustracción, deterioro o extravío, podrá solicitar un duplicado. Su expedición determinará por sí sola la anulación del original. En consecuencia, y en caso de recuperación posterior del original, se procederá a su inmediata destrucción. 2. El titular de un vehículo que hubiera sufrido variación en cualquiera de los datos que consten en el Registro de Vehículos dispondrá de un plazo de 15 días desde que se produjera para comunicarla. En todo caso, se expedirá un nuevo permiso o licencia de circulación si la variación de datos comunicada afectase a los que deban ser consignados en dicho documento. 3. Los trámites previstos en los apartados anteriores se practicarán ante la sede electrónica de la Dirección General de Tráfico, o en su defecto, en cualquier Jefatura Provincial u Oficina Local de Tráfico en los términos establecidos en el anexo XIII."
+    },
+    {
+      "pregunta": "61. Según el artículo 27 del RD 2822/1998, la matriculación es única para cada vehículo. No obstante, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria a la inicialmente asignada en los casos siguientes: Señale la incorrecta.",
+      "opciones": [
+        "Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV.",
+        "En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII.",
+        "Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el antiguo propietario y acompañe los documentos que se indican en el anexo XIII.",
+        "Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 27 Matriculación única. Excepciones 1. La matriculación ordinaria es única para cada vehículo. 2. No obstante lo dispuesto en el apartado anterior, y en las condiciones fijadas en este Reglamento, podrá concederse una nueva matrícula ordinaria distinta a la inicialmente asignada en los casos siguientes: a) Cuando se solicite simultáneamente una nueva matrícula y el cambio de titularidad por el adquirente de un vehículo en cuya matrícula figuren las siglas de la provincia donde se matriculó, siempre que tenga su domicilio en provincia distinta de aquélla. A la solicitud se acompañarán los documentos que se indican en el anexo XIV. b) En el caso de que el titular de un vehículo en cuya matrícula figuren siglas provinciales cambie su domicilio a provincia distinta de aquéllas, debiendo presentar la documentación que se establece en el anexo XIII. c) Cuando se pretenda legalizar en nuestro país la situación de un vehículo matriculado en el extranjero, pero que anteriormente ha estado matriculado en España y en cuya matrícula figuren siglas provinciales. La solicitud únicamente podrá hacerla el nuevo propietario siempre que sea distinto del último titular que figure inscrito en el Registro de Vehículos y acompañe los documentos que se indican en el anexo XIII. 3. Asimismo, podrá concederse una nueva matrícula distinta de la que figure inicial o posteriormente asignada cuando así lo solicite el titular del vehículo por razones de seguridad personal debidamente acreditadas, con sujeción a las prescripciones que se indican en el anexo XIII. Este cambio de matrícula no estará sujeto al abono de la tasa de matriculación. Véase O.M. de 9 de diciembre de 1999 sobre cambio de matrícula por motivos de seguridad y sobre autorizaciones de circulación para vehículos con dispositivos retrorreflectantes («B.O.E.» 11 diciembre). 4. Los vehículos pertenecientes al Estado, que deberán tener una matrícula oficial, podrán ser objeto además de matriculación ordinaria. 5. Los vehículos adscritos al Cuerpo de Policía de una Comunidad Autónoma podrán utilizar, en el ámbito de la misma, placas de matrícula con una contraseña y numeración propias, sin perjuicio de su matriculación ordinaria en la Jefatura de Tráfico correspondiente."
+    },
+    {
+      "pregunta": "62. Según el artículo 28.2 del RD 2822/1998, en el caso de que se pretenda matricular un vehículo especial agrícola, ¿cuál sería el proceso del mismo?",
+      "opciones": [
+        "Deberá haberse inscrito previamente en la Jefatura de Tráfico correspondiente. Dicho Registro comunicará los datos de inscripción al Registro de Vehículos de la Dirección General de Tráfico, conforme a lo dispuesto en el Real Decreto 1013/2008, de 19 de junio, sobre caracterización y registro de la maquinaria agrícola.",
+        "Deberá haberse inscrito previamente en el Registro Oficial de Maquinaria Agrícola correspondiente. Dicho Registro comunicará los datos de inscripción al Registro de Vehículos de la Jefatura Central de Tráfico, conforme a lo dispuesto en el Real Decreto 1013/2019, de 19 de junio, sobre caracterización y registro de la maquinaria agrícola.",
+        "Deberá haberse inscrito previamente en el Registro Oficial de Maquinaria Agrícola correspondiente. Dicho Registro comunicará los datos de inscripción al Registro de Vehículos de la Jefatura Provincial de Tráfico, conforme a lo dispuesto en el Real Decreto 1014/2009, de 19 de junio, sobre caracterización y registro de la maquinaria agrícola.",
+        "Deberá haberse inscrito previamente en el Registro Oficial de Maquinaria Agrícola correspondiente. Dicho Registro comunicará los datos de inscripción al Registro de Vehículos de la Dirección General de Tráfico, conforme a lo dispuesto en el Real Decreto 1013/2009, de 19 de junio, sobre caracterización y registro de la maquinaria agrícola."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 2822/1998, de 23 de diciembre, por el que se aprueba el Reglamento General de Vehículos Artículo 28 Matriculación de los vehículos 1. La matriculación y expedición del permiso de circulación de los automóviles y de los vehículos especiales autopropulsados, cualquiera que sea su masa, así como de los remolques, semirremolques y máquinas remolcadas especiales cuya masa máxima autorizada exceda de 750 kilogramos, se solicitará por el propietario, el arrendatario con opción de compra o el arrendatario a largo plazo de la Jefatura de Tráfico de la provincia en que tenga su domicilio legal o en la que se vaya a residenciar el vehículo especial agrícola. La matriculación y expedición de la licencia de circulación de los ciclomotores y ciclos de motor se efectuará en la Jefatura de Tráfico del domicilio legal del propietario, del arrendatario con opción de compra o del arrendatario a largo plazo. 2. La solicitud se formulará en el modelo oficial que a tales efectos proporcionará la Jefatura de Tráfico correspondiente o que se podrá descargar en la siguiente página web: www.dgt.es. A la solicitud se acompañarán los documentos que se indican en el anexo XIII, los cuales acreditan los requisitos técnicos del vehículo, el cumplimiento de las obligaciones tributarias, de la importación legal, en su caso, o de que cumple con los requisitos para obtener o que cuenta con el título habilitante para obtener o realizar alguna actividad de transporte o de arrendamiento sin conductor, así como aquellos otros documentos en que el interesado funde su derecho a la matriculación del vehículo y que acrediten su personalidad y domicilio. En el caso de tratarse de un vehículo especial agrícola deberá haberse inscrito previamente en el Registro Oficial de Maquinaria Agrícola correspondiente. Dicho Registro comunicará los datos de inscripción al Registro de Vehículos de la Dirección General de Tráfico, conforme a lo dispuesto en el Real Decreto 1013/2009, de 19 de junio, sobre caracterización y registro de la maquinaria agrícola."
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

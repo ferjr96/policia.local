@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Para que se considere accidente de tráfico con víctimas, ¿cuál de estas circunstancias se han de dar?",
+      "opciones": [
+        "Producirse, o tener su origen, en una de las vías o terrenos objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial.",
+        "Estar implicado, al menos, un vehículo en movimiento.",
+        "Descarrilar un tren por la vía en la que circula",
+        "Las respuestas a y b son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "2. En los accidentes de tráfico, la persona que va a los mandos del vehículo y al bajar del mismo es arrollada, se considera:",
+      "opciones": [
+        "Conductor.",
+        "Peatón.",
+        "Pasajero.",
+        "Ninguna de las respuestas es correcta."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "3. En el accidente de circulación, toda persona que haga uso de la vía pública con o sin vehículo cualquiera que sea este, se considera:",
+      "opciones": [
+        "Vehículo.",
+        "Vehículo implicado.",
+        "Unidad de tráfico.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "4. Un accidente en el que intervienen dos o más vehículos es un accidente:",
+      "opciones": [
+        "Sencillo.",
+        "Complejo.",
+        "Simple.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "5. Es el dibujo del neumático impreso en terreno blando, húmedo o no:",
+      "opciones": [
+        "Impronta.",
+        "Tiznadura.",
+        "Marca de arrastre.",
+        "Huella de frenado."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "6. El accidente por raspado en una colisión se hace de forma:",
+      "opciones": [
+        "Por alcance.",
+        "Frontal.",
+        "Lateral.",
+        "Choque."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "7. Cuando el vehículo topa contra un elemento fijo de la vía, su infraestructura o elementos ajenos a esta, o un vehículo estacionado:",
+      "opciones": [
+        "Colisión.",
+        "Choque.",
+        "Colisión por alcance.",
+        "Vuelco."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "8. ¿Qué factores son los más influyentes en un accidente de tráfico?",
+      "opciones": [
+        "El factor humano, la vía y el vehículo.",
+        "El factor humano, la tecnología y la meteorología.",
+        "La vía, el vehículo y la meteorología.",
+        "El vehículo, la vía y la climatología."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "9. Salida de vía:",
+      "opciones": [
+        "Cuando un vehículo se sale de la vía por causas ajenas a la voluntad de su conductor. Sin haber vuelco (vueltas de tonel o campana) o existir colisión o no. La salida será en el sentido en el que circule el vehículo, por su derecha o izquierda.",
+        "Cuando un vehículo se sale de la vía por causas ajenas a la voluntad de su conductor. Puede o no haber vuelco (vueltas de tonel o campana) existiendo colisión. La salida será en el sentido en el que circule el vehículo, por su derecha o izquierda.",
+        "Cuando un vehículo se sale de la vía por causas ajenas a la voluntad de su conductor. Puede o no haber vuelco (vueltas de tonel o campana) o existir colisión o no. La salida será en el sentido en el que circule el vehículo, por su derecha o izquierda.",
+        "Cuando un vehículo se sale de la vía por causas ajenas a la voluntad de su conductor. Puede o no haber vuelco (vueltas de tonel o campana) o existir colisión o no. La salida será en el sentido en el que circule el vehículo, por su derecha."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "10. El accidente de tráfico con víctimas no definido como accidente de tráfico mortal en el que al menos, una de las personas implicadas resulta herida con hospitalización superior a 24 horas tiene la consideración de:",
+      "opciones": [
+        "Accidente de tráfico.",
+        "Accidente de tráfico grave.",
+        "Accidente de tráfico muy grave.",
+        "Ninguna es correcta."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "11. Cuando un vehículo gira de forma transversal sobre su eje longitudinal se llama:",
+      "opciones": [
+        "Vueltas de campana.",
+        "Vueltas de tonel.",
+        "Daños materiales.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "12. Es una función propia de la fase final del siniestro para esclarecer los hechos:",
+      "opciones": [
+        "Identificación de las víctimas.",
+        "Retirada de vehículos.",
+        "Señalización del accidente.",
+        "Investigación del accidente."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "13. Una colisión por embestida perpendicular es:",
+      "opciones": [
+        "Cuando se ven afectados la parte lateral de un vehículo y la frontal de otro y los ejes longitudinales forman un ángulo de 90 grados.",
+        "Cuando se ven afectados la parte lateral de un vehículo y la frontal de otro y los ejes longitudinales forman un ángulo que no es de 90 grados.",
+        "Cuando se ven afectados los frentes de los vehículos.",
+        "Cuando se ven afectados los laterales de los vehículos."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "14. ¿Qué se excluye del accidente de circulación?",
+      "opciones": [
+        "Los accidentes no provocados por muertes naturales confirmadas.",
+        "Los homicidios, lesiones intencionadas a terceros y/o daños intencionados a propiedades.",
+        "Los accidentes provocados por muertes naturales confirmadas o en los que existan indicios de suicidio o intento de suicidio, excepto cuando produzcan daños a otras personas.",
+        "Las respuestas b y c son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "15. Un encuentro violento entre dos o más vehículos en movimiento es:",
+      "opciones": [
+        "Un choque.",
+        "Una salida de vía.",
+        "Una colisión.",
+        "Las respuestas b y c son correctas."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "16. Indique la definición correcta de colisión por embestida oblicua:",
+      "opciones": [
+        "Cuando colisionan las partes frontales de ambos vehículos y forman un ángulo que no es de 90 grados.",
+        "Cuando colisiona el frontal de un vehículo contra el lateral de otro y forman un ángulo de 90 grados.",
+        "Cuando colisiona el frontal de un vehículo contra el lateral de otro y forman un ángulo que no es de 90 grados.",
+        "Cuando colisionan los laterales de ambos vehículos que circulan en sentido contrario."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "17. Cuando un accidente se produce en vía urbana se clasifica como accidente:",
+      "opciones": [
+        "Por el resultado.",
+        "Por el modo en que se produce.",
+        "Por su ubicación.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "18. En los accidentes de tráfico, la persona que va a los mandos del vehículo, se baja del vehículo y es atropellado mientras se está alejando de dicho vehículo, se considera.",
+      "opciones": [
+        "Conductor.",
+        "Pasajero.",
+        "Peatón.",
+        "Ninguna es correcta."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "19. Un vehículo que circula por una vía, realiza una maniobra brusca y queda girado en sentido contrario sin haber daños materiales ni lesiones a sus ocupantes:",
+      "opciones": [
+        "Es un accidente de circulación.",
+        "No tiene la consideración de accidente.",
+        "Es un accidente de circulación debido a que se ha modificado la trayectoria original del vehículo.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "20. Es aquel punto en el que el accidente pudo ser percibido y considerado para producirse, pero no representa un peligro real:",
+      "opciones": [
+        "Punto de percepción posible.",
+        "Punto de percepción real.",
+        "Fase de conflicto.",
+        "Punto de decisión."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "21. Según la Orden INT/2223/2014, ¿cuál de las siguientes unidades de tráfico tiene la consideración de peatón en caso de atropello?",
+      "opciones": [
+        "Quienes empujan un coche de niño.",
+        "Quienes conducen a pie un ciclo.",
+        "Quienes conducen a pie una motocicleta.",
+        "Todas son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "22. Es el momento y lugar en el que se consuma el accidente. Es dónde se produce la colisión:",
+      "opciones": [
+        "Posición final.",
+        "Punto de decisión.",
+        "Punto de conflicto.",
+        "Punto de percepción real."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "23. ¿Qué norma regula la comunicación de la información al Registro Nacional de Víctimas de Accidentes de Tráfico?",
+      "opciones": [
+        "El RDL 6/2015.",
+        "El RD 2822/1998.",
+        "El RD 818/2009.",
+        "La Orden INT/2223/2014"
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "24. No se considera accidente de tráfico:",
+      "opciones": [
+        "El atropello a un peatón que cambia la rueda de un vehículo averiado.",
+        "La caída de un peatón que se golpea contra un vehículo estacionado.",
+        "El choque de un vehículo, cuyo freno de mano no estaba correctamente.",
+        "Las respuestas a y c son correctas."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "25. ¿En cuál de estos casos no se considera que el vehículo está implicado en un accidente de tráfico?",
+      "opciones": [
+        "Cuando el pasajero del vehículo es arrollado mientras se baja del mismo.",
+        "Cuando el conductor del vehículo es arrollado mientras se sube al mismo.",
+        "Cuando el conductor del vehículo observa un accidente mientras está detenido en un semáforo.",
+        "Cuando se produce un accidente debido a que un vehículo está mal estacionado e influye en el accidente."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "26. Son aquellas que intervienen de forma directa en la producción del accidente, en la mayoría de los casos relacionadas con el factor humano:",
+      "opciones": [
+        "Causas mediatas.",
+        "Causa principal.",
+        "Causa inmediata.",
+        "Ninguna de las respuestas anteriores es correcta."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "27. Un accidente de tráfico con víctimas es un tipo de accidente por su:",
+      "opciones": [
+        "Ubicación.",
+        "Resultado.",
+        "Número de vehículos implicados.",
+        "Modo en que se producen."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "28. El raspado negativo es:",
+      "opciones": [
+        "Cuando circulan en el mismo sentido.",
+        "Cuando circulan en sentido contrario.",
+        "Cuando colisiona el frontal de un vehículo con el lateral de otro.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "29. Toda persona que como consecuencia de un accidente de tráfico resulta muerta o herida es:",
+      "opciones": [
+        "Fallecido a 24 horas.",
+        "Herido.",
+        "Víctima.",
+        "Las respuestas a y b son correctas."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "30. Cuando un vehículo vuelca longitudinalmente:",
+      "opciones": [
+        "Da vueltas de tonel.",
+        "Da vueltas de campana.",
+        "Es una salida de vía sin vuelco.",
+        "Es un choque."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "31. Cuando un vehículo colisiona con un animal, se trata de:",
+      "opciones": [
+        "Un choque.",
+        "Una colisión.",
+        "Un atropello.",
+        "Las respuestas a y b son correctas."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "32. La colisión por alcance es:",
+      "opciones": [
+        "Cuando la parte trasera de un vehículo colisiona con la delantera del que le sigue.",
+        "Cuando la parte delantera de un vehículo colisiona con la trasera de un vehículo estacionado.",
+        "Cuando la parte trasera de un vehículo colisiona con la delantera de un vehículo en movimiento.",
+        "Cuando la parte delantera de un vehículo colisiona con la parte trasera de otro vehículo en movimiento o detenido por cumplir algún precepto de las normas de tráfico."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "33. Cuando en un accidente de circulación colisionan frontalmente dos vehículos y los ejes longitudinales forman un ángulo inferior a 90 grados, se trata de:",
+      "opciones": [
+        "Una embestida lateral.",
+        "Una embestida frontal angular.",
+        "Una colisión frontal angular.",
+        "Un choque."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "34. ¿Cuál de los siguientes accidentes está catalogado por el modo en que se producen?",
+      "opciones": [
+        "Accidente con daños materiales.",
+        "Choque.",
+        "Colisión.",
+        "Las respuestas b y c son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "35. Un accidente simple es aquel en el que:",
+      "opciones": [
+        "Intervienen dos unidades de tráfico.",
+        "Un accidente con daños materiales.",
+        "Un accidente en el que intervienen un vehículo y un peatón.",
+        "Interviene una sola unidad de tráfico."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "36. ¿Se considera víctima de un accidente de tráfico el pasajero de un vehículo que resulta herido leve debido a que el conductor del vehículo ha intentado suicidarse?",
+      "opciones": [
+        "No.",
+        "Sí.",
+        "No, porque no ha resultado herido grave.",
+        "Las respuestas a y c son correctas."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "37. Cuando en un accidente colisionan frontalmente dos vehículos no coincidiendo sus ejes longitudinales, pero son paralelos, se trata de:",
+      "opciones": [
+        "Una colisión frontal angular.",
+        "Una colisión frontal excéntrica.",
+        "Una colisión frontal central.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "38. El raspado positivo es:",
+      "opciones": [
+        "Cuando circulan en el mismo sentido.",
+        "Cuando circulan en sentido contrario.",
+        "Cuando colisiona el frontal de un vehículo con el lateral de otro.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "39. Tiene la consideración de fallecido en accidente de tráfico toda persona que como consecuencia de un accidente de tráfico:",
+      "opciones": [
+        "Fallece en el acto.",
+        "Fallece dentro de las 24 horas desde que se produjo el accidente.",
+        "Fallece dentro de los 30 días siguiente al accidente.",
+        "Todas las anteriores."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "40. Toda persona implicada en un accidente de tráfico a la que no le sean aplicables las definiciones de fallecido a veinticuatro horas o herido:",
+      "opciones": [
+        "Ileso.",
+        "Fallecido.",
+        "Herido leve.",
+        "Muerto."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "41. ¿En qué fase se encuentra un conductor cuando se da cuenta de que se va a producir un accidente?",
+      "opciones": [
+        "En la fase de decisión.",
+        "En la fase de percepción.",
+        "En la fase de conflicto.",
+        "En la fase final."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "42. Los tipos de accidentes catalogados por el lugar donde se producen son:",
+      "opciones": [
+        "Urbanos únicamente.",
+        "Urbanos e interurbanos.",
+        "Sólo interurbanos.",
+        "Urbanos y extraurbanos."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "43. Definición de accidente de tráfico:",
+      "opciones": [
+        "Se puede definir el accidente de tráfico como aquel suceso brusco y fortuito o eventual que altera el estado del vehículo y/o sus ocupantes de forma intencionada.",
+        "Se puede definir el accidente de tráfico como aquel suceso brusco y fortuito o eventual que no altera el estado del vehículo ni sus ocupantes de forma no intencionada.",
+        "Se puede definir el accidente de tráfico como aquel suceso brusco y fortuito o eventual que altera el estado del vehículo y/o sus ocupantes de forma no intencionada.",
+        "Se puede definir el accidente de tráfico como aquel suceso brusco y fortuito o eventual que altera el estado del vehículo pero no el de sus ocupantes de forma intencionada."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "44. En los accidentes de tráfico, la persona que va a los mandos del vehículo en el momento de producirse el accidente se considera:",
+      "opciones": [
+        "Peatón.",
+        "Conductor.",
+        "Pasajero.",
+        "Ocupante."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "45. En un accidente de circulación, ¿cuál debe ser el último paso en la actuación policial?",
+      "opciones": [
+        "La retirada de vehículos de la vía.",
+        "La limpieza de la vía.",
+        "La identificación de las víctimas.",
+        "Restablecer la circulación."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "46. ¿Cuál de estas premisas prevalece en la actuación policial ante un accidente de tráfico?",
+      "opciones": [
+        "La atención a las víctimas.",
+        "La investigación del accidente",
+        "La autoprotección y seguridad del resto de usuarios de la vía",
+        "La retirada de los vehículos implicados."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "47. ¿Cuál de estas normas, respecto al accidente, está derogada?",
+      "opciones": [
+        "La Orden Ministerial del 18 de febrero de 1993.",
+        "El RDL 6/2015.",
+        "El RD 1428/2003.",
+        "La Orden INT/2223/2014"
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "48. Son aquellas que por sí mismas no generan el accidente, pero conducen a él. Afectan de forma indirecta o pueden unirse a otra para la producción del accidente.",
+      "opciones": [
+        "Causas inmediatas.",
+        "Causas determinantes.",
+        "Causas mediatas.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "49. ¿Cuál de los siguientes accidentes está catalogado por su resultado?",
+      "opciones": [
+        "Simples.",
+        "Complejos.",
+        "Accidente de tráfico grave.",
+        "Choque."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "50. Es aquel lugar en el que quedan las personas, vehículo y objetos tras el impacto:",
+      "opciones": [
+        "Posición inicial.",
+        "Punto de conflicto.",
+        "Punto de percepción.",
+        "Posición final."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

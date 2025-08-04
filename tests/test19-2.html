@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Señale la respuesta incorrecta, según lo dispuesto en la Ley 4/2013, de 17 de julio, en relación a la prescripción de las faltas:",
+        "opciones": [
+            "Las faltas muy graves prescriben a los tres años.",
+            "Las faltas graves prescriben a los dos años.",
+            "Las faltas menos graves prescriben al año.",
+            "Las faltas leves prescriben al mes."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 75 | Prescripción de las faltas 1. Las faltas muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes. 2. El plazo de prescripción se empieza a contar desde que la falta se haya cometido, a no ser que esta derive de hechos que hayan sido objeto de condena por delito doloso; en este caso, el plazo se empezará a contar desde la fecha de la firmeza de la sentencia condenatoria. 3. La prescripción se interrumpe por el inicio del procedimiento; a estos efectos, la resolución que disponga la iniciación será debidamente registrada y notificada al funcionario expedientado o publicada, siempre que este no sea localizado. El plazo de prescripción se reprenderá si el procedimiento se paraliza durante más de seis meses por causa no imputable al funcionario sometido a expediente. 4. Cuando se inicie un procedimiento penal contra un funcionario de los cuerpos de policía local o policías auxiliares, la prescripción de las infracciones disciplinarias se suspenderá por la incoación del procedimiento, aunque no se haya tomado ninguna medida disciplinaria. En estos supuestos, el plazo volverá a computar desde la fecha de la firmeza de la resolución judicial."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Respecto a la responsabilidad civil y penal. Señale la opción correcta.",
+        "opciones": [
+            "El régimen disciplinario que establece esta ley se entiende sin perjuicio de la responsabilidad civil o penal en que puedan incurrir los funcionarios de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local, que se hará efectiva en la forma legalmente establecida.",
+            "El régimen disciplinario que establece esta ley se entiende sin perjuicio sólo de la responsabilidad penal en que puedan incurrir los funcionarios de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local, que se hará efectiva en la forma legalmente establecida.",
+            "El régimen disciplinario que establece esta ley anula la responsabilidad civil o penal en que puedan incurrir los funcionarios de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local, que se hará efectiva en la forma legalmente establecida.",
+            "El régimen disciplinario que establece esta ley se entiende sin perjuicio de la responsabilidad civil o penal en que puedan incurrir sólo los funcionarios de los cuerpos de policía local, que se hará efectiva en la forma legalmente establecida."
+        ],
+        "correcta": 0,
+        "explicacion": "- Artículo 64 | Responsabilidad civil y penal - El régimen disciplinario que establece esta ley se entiende sin perjuicio de la responsabilidad civil o penal en que puedan incurrir los funcionarios de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local, que se hará efectiva en la forma legalmente establecida. - B es incorrecta porque pone sólo responsabilidad penal. C es incorrecta porque dice que el régimen disciplinario anula la responsabilidad civil o penal. D es incorrecta porque no recoge a los policías en los ayuntamientos que no hayan constituido cuerpo de policía local."
+    },
+    {
+        "pregunta": "Es falta grave:",
+        "opciones": [
+            "La insubordinación individual o colectiva respecto de las autoridades o mandos de que dependen.",
+            "El incumplimiento de las normas sobre incompatibilidad cuando dé lugar a una situación de incompatibilidad.",
+            "La desobediencia a los superiores jerárquicos o a los responsables del servicio con motivo de las órdenes o instrucciones legítimas de estos, excepto si constituyen infracción grave del ordenamiento jurídico.",
+            "La pérdida o sustracción, por simple negligencia, de los distintivos de identificación, del arma reglamentaria o de otros medios o recursos destinados a la función policial."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 69.b) Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Indique la gravedad de la siguiente falta disciplinaria: “El cuidado en la presentación y la limpieza personal y el cumplimiento de las normas de uniformidad”.",
+        "opciones": [
+            "Falta leve.",
+            "Falta grave.",
+            "Falta muy grave.",
+            "El caso planteado no corresponde a una falta."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 70 | Faltas leves h) El descuido en la presentación y la limpieza personal y el incumplimiento de las normas de uniformidad."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de les Illes Balears. Artículo 74, Extinción de la responsabilidad. La responsabilidad disciplinaria se extingue por:",
+        "opciones": [
+            "El cumplimiento de la falta.",
+            "La muerte de un familiar de la persona responsable.",
+            "La prescripción de la falta o de la sanción.",
+            "Todas son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad La responsabilidad disciplinaria se extingue por el cumplimiento de la sanción, por la muerte de la persona responsable y por la prescripción de la falta o de la sanción."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 73, de la competencia sancionadora. ¿A quién corresponde incoar e imponer las sanciones que se puedan originar durante la realización de los cursos de capacitación de las diferentes categorías en la EBAP?",
+        "opciones": [
+            "A la consejería competente.",
+            "Al órgano competente en materia de formación de policías locales.",
+            "A la consejería competente en materia de formación de policías locales.",
+            "Al órgano competente del ayuntamiento."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 73 | Competencia sancionadora 2. Corresponde a la consejería competente en materia de formación de policías locales incoar y resolver los expedientes disciplinarios que se puedan originar durante la realización de los cursos de capacitación de las diferentes categorías en la Escuela Balear de Administración Pública."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 71, de las sanciones. ¿Qué sanciones se pueden imponer en el caso de las faltas muy graves?",
+        "opciones": [
+            "La separación del servicio o la suspensión de funciones y la pérdida de remuneraciones desde tres meses a 6 años.",
+            "La separación del servicio o la suspensión de funciones y la pérdida de remuneraciones desde dos meses y un día a 6 años.",
+            "La separación del servicio o la suspensión de funciones y la pérdida de remuneraciones desde tres meses y un día a 6 años.",
+            "La separación del servicio o la suspensión de funciones y la pérdida de remuneraciones desde tres meses a 6 años y un día."
+        ],
+        "correcta": 2,
+        "explicacion": "- Artículo 71 | Sanciones 1. Las sanciones que se pueden imponer por la comisión de faltas muy graves son:"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Del Régimen Disciplinario, señale la correcta:",
+        "opciones": [
+            "El artículo 68 corresponde a las faltas graves.",
+            "El artículo 69 corresponde a las faltas menos graves.",
+            "El artículo 70 corresponde a las faltas menos graves.",
+            "El artículo 68 corresponde a las faltas muy graves."
+        ],
+        "correcta": 3,
+        "explicacion": "Como base, las faltas muy graves están contempladas en el artículo 68, las graves en el artículo 69 y las leves en el artículo 70. No obstante, podríamos descartar B y C, ya que la categoría “menos grave” sólo existe en tema penal"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Indique la gravedad de la siguiente falta disciplinaria: “Impedir, limitar u obstaculizar a los subordinados el ejercicio de los derechos que tengan reconocidos, siempre que no constituya falta muy grave”.",
+        "opciones": [
+            "Falta leve.",
+            "Falta grave.",
+            "Falta muy grave.",
+            "El caso planteado no corresponde a una falta."
+        ],
+        "correcta": 1,
+        "explicacion": "- Artículo 69 | Faltas graves p) Impedir, limitar u obstaculizar a los subordinados el ejercicio de los derechos que tengan reconocidos, siempre que no constituya falta muy grave."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Son faltas graves:",
+        "opciones": [
+            "La infracción de las normas de prevención de riesgos laborales que pongan en grave riesgo la vida, la salud o la integridad física, propia o de sus compañeros o subordinados.",
+            "La práctica de cualquier clase de juego que se lleve a cabo en las dependencias policiales, siempre que perjudique la prestación del servicio o menoscabe la imagen policial.",
+            "El incumplimiento de las normas sobre incompatibilidades cuando dé lugar a una situación de incompatibilidad.",
+            "La negativa injustificada a someterse a reconocimientos médicos o a la prueba de alcoholemia o de detección de drogas tóxicas, estupefacientes o sustancias psicotrópicas, legítimamente ordenadas, con la finalidad de constatar la capacidad psicofísica para prestar servicio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 69 | Faltas graves Son faltas graves: a) La desconsideración grave con los superiores, compañeros, subordinados o ciudadanos, en el ejercicio de sus funciones o cuando causen descrédito notorio a la institución policial. b) La desobediencia a los superiores jerárquicos o a los responsables del servicio con motivo de las órdenes o instrucciones legítimas de estos, excepto si constituyen infracción grave del ordenamiento jurídico. c) La omisión de la obligación de dar cuenta por escrito a la superioridad con la diligencia debida de todo asunto que por su entidad requiera su conocimiento o urgente decisión. d) La falta de presentación o puesta a disposición inmediata en la dependencia de destino en los supuestos de alteración grave de la seguridad ciudadana, cuando así se disponga. e) La tercera falta injustificada de asistencia al servicio en un periodo de tres meses cuando los dos anteriores hayan sido sancionados con sanción firme por falta leve. f) No prestar servicio, alegando supuesta enfermedad. g) La falta de rendimiento reiterada que ocasione un perjuicio a los ciudadanos, a las entidades con personalidad jurídica o a la eficiencia de los servicios. h) El abuso de atribuciones cuando no constituya falta muy grave. i) La emisión de informes sobre asuntos de servicio que, sin faltar abiertamente a la verdad, la desnaturalicen utilizando términos ambiguos, que causen confusión o tendenciosos, o lo alteren mediante inexactitudes, cuando causen perjuicio a la administración o a los ciudadanos, siempre que el hecho no constituya infracción muy grave. j) La intervención en un procedimiento administrativo cuando concurra alguna causa legal de abstención. k) No llevar en los actos de servicio el uniforme reglamentario, cuando sea preceptivo su uso, los distintivos de la categoría o el cargo, el arma reglamentaria o los medios de protección o acción que se determinen, excepto autorización en contra. l) Exhibir armas sin causa justificada, así como su utilización en acto de servicio o fuera de servicio, con infracción de las normas que regulan su uso. m) Dar lugar al extravío, la pérdida o la sustracción por negligencia inexcusable de los distintivos de identificación o del arma reglamentaria. n) Asistir de uniforme a cualquier manifestación o reunión pública, a no ser que se trate de actos de servicio o actos oficiales para los cuales se ha recibido autorización. o) Causar, por negligencia inexcusable, perjuicios graves en la conservación de los locales, del material o del resto de elementos relacionados con el servicio o dar lugar a la pérdida o sustracción de aquellos. p) Impedir, limitar u obstaculizar a los subordinados el ejercicio de los derechos que tengan reconocidos, siempre que no constituya falta muy grave. q) Embriagarse o consumir drogas tóxicas, estupefacientes o sustancias psicotrópicas fuera del servicio cuando sea con carácter habitual o afecten a la imagen del cuerpo. Se entiende que hay habitualidad cuando se acrediten tres o más episodios de embriaguez o consumo de dichas sustancias en un periodo de un año. r) La tenencia de drogas tóxicas, estupefacientes o sustancias psicotrópicas, excepto cuando se derive de actuaciones propias del servicio. s) Solicitar y obtener cambios de destinación mediante cualquier recompensa, ánimo de lucro o falseando las condiciones que los regulan. t) Utilizar para usos no relacionados con el servicio o para este, o sin que haya una causa justificada, medios o recursos inherentes a la función policial, o autorizar su utilización. u) Las infracciones de lo que dispone la legislación vigente sobre utilización de videocámaras por los cuerpos y fuerzas de seguridad en lugares públicos, cuando no constituya falta muy grave. v) El incumplimiento de los plazos u otras disposiciones de procedimiento en materia de incompatibilidades, cuando no supongan mantenimiento de una situación de incompatibilidad. w) La violación del secreto profesional cuando no perjudique el desarrollo de la labor policial, a las entidades con personalidad jurídica o a cualquier ciudadano. x) La falta de colaboración manifiesta con otros miembros de los cuerpos y fuerzas de seguridad, siempre que no se pueda calificar como falta muy grave. y) La infracción de deberes u obligaciones legales inherentes al cargo o a la función policial, cuando se produzcan de forma grave y manifiesta. z) Ser condenado o condenada en virtud de sentencia firme por delito doloso, siempre que no constituya infracción muy grave, o por una falta dolosa o delito leve doloso cuando la infracción penal esté relacionada con el servicio. aa) La no prestación de auxilio con urgencia en hechos o circunstancias en que sea obligada su actuación, a no ser que sea constitutivo de delito. bb) La infracción de las normas de prevención de riesgos laborales que pongan en grave riesgo la vida, la salud o la integridad física, propia o de sus compañeros o subordinados. cc) La negativa reiterada a tramitar cualquier solicitud, reclamación o queja relacionada con el servicio, siempre que no constituya falta leve."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. El plazo de prescripción de las sanciones comenzará a contarse desde:",
+        "opciones": [
+            "El día siguiente al que se convierta en resolución administrativa firme.",
+            "Que la falta se hubiera cometido.",
+            "La firmeza de la resolución sancionadora.",
+            "Que la falta se hubiera cometido o desde que se tenga conocimiento de la misma."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 76 | Prescripción de las sanciones 1. Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes. El plazo de prescripción de las sanciones se empieza a contar desde el día siguiente al que se convierta en firme. 2. En caso de concurrencia de diferentes sanciones, el plazo de prescripción de las sanciones firmes que estén pendientes de cumplimiento se empieza a contar desde el día siguiente al que quede extinguida la sanción que la precede en el orden de cumplimiento señalado en lo que se ha citado, o, en su caso, desde la fecha en que se haya producido la inejecución de la sanción. 3. El cumplimiento de los plazos de prescripción de la sanción determina la cancelación de las anotaciones correspondientes en el expediente personal. Transcurrido el plazo para la prescripción de la sanción, el órgano competente lo acordará de oficio y lo notificará a los interesados."
+    },
+    {
+        "pregunta": "Ley 4/2013. Régimen disciplinario. Señale la opción correcta.",
+        "opciones": [
+            "Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubren las faltas graves y menos graves consumadas incurren en falta de un grado inferior. Se entiende por encubrimiento no dar cuenta por escrito al superior jerárquico, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las cuales se tenga conocimiento.",
+            "Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubren las faltas muy graves y graves incurren en falta de un grado inferior. Se entiende por encubrimiento no dar cuenta por escrito al superior jerárquico, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las cuales se tenga conocimiento.",
+            "Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubren las faltas muy graves y graves consumadas incurren en falta de un grado superior. Se entiende por encubrimiento no dar cuenta por escrito al superior jerárquico, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las cuales se tenga conocimiento.",
+            "Todas las anteriores son incorrectas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 66 | Extensión de la responsabilidad 1. Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubren las faltas muy graves y graves consumadas incurren en falta de un grado inferior. Se entiende por encubrimiento no dar cuenta por escrito al superior jerárquico, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las cuales se tenga conocimiento."
+    },
+    {
+        "pregunta": "La responsabilidad disciplinaria se extingue:",
+        "opciones": [
+            "Por el cumplimiento de la sanción.",
+            "Por la prescripción de la falta.",
+            "Por la pérdida de la condición de funcionario.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Art. 74.1 y 74.2 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "¿Cual es la sanción mínima que se puede imponer por la comisión de una falta disciplinaria?",
+        "opciones": [
+            "El apercibimiento.",
+            "La suspensión de funciones y pérdida de remuneración durante un día..",
+            "La advertencia.",
+            "La separación del servicio durante un día."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 71.3.b) Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Hay reincidencia cuando:",
+        "opciones": [
+            "El funcionario, en el momento de la comisión de la falta, haya sido sancionado con anterioridad en resolución firme por otra falta que no ha sido cancelada.",
+            "El funcionario, en el momento de la comisión de la falta, no haya sido sancionado con anterioridad en resolución firme por otra falta de más gravedad.",
+            "El funcionario, en el momento de la comisión de la falta, ya ha sido sancionado con anterioridad por otra de más gravedad o por dos de igual o inferior gravedad y no han sido canceladas.",
+            "El funcionario, en el momento de la comisión de la falta, ya ha sido sancionado con anterioridad en resolución firme por otra falta de más gravedad o por dos de igual o inferior gravedad y no han sido canceladas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 72 | Criterios de gradación de sanciones Para graduar la sanción y actuando bajo el principio de proporcionalidad, se tendrán en cuenta los siguientes criterios: a) La intencionalidad. b) La reincidencia. Hay reincidencia cuando el funcionario, en el momento de la comisión de la falta, ya ha sido sancionado con anterioridad en resolución firme por otra falta de más gravedad o por dos de igual o inferior gravedad y no han sido canceladas. A los efectos de la reincidencia, no se computarán los antecedentes disciplinarios cancelados o que tengan que serlo. c) El historial profesional, que, a estos efectos, solo se puede valorar como circunstancia atenuante. d) La incidencia sobre la seguridad ciudadana. e) La perturbación en el funcionamiento normal de la administración o de los servicios que le sean encomendados. f) El grado de afectación a los principios de disciplina, jerarquía y subordinación. g) En el caso de los artículos 68.b) y 69.z) se ha de valorar específicamente la cuantía o entidad de la pena impuesta en virtud de sentencia firme, así como la relación de la conducta delictiva con las funciones policiales."
+    },
+    {
+        "pregunta": "Para agravar la graduación de una sanción se tendrá en cuenta (señala la respuesta INCORRECTA)",
+        "opciones": [
+            "La incidencia sobre la seguridad ciudadana.",
+            "La intencionalidad.",
+            "El historial profesional.",
+            "La reincidencia."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 72.c) Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013. Régimen disciplinario. ¿Es correcto si afirmamos que los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local incurren en la misma responsabilidad si inducen a otros a cometer actos o a tener conductas constitutivas de falta disciplinaria?",
+        "opciones": [
+            "Sí, pero sólo en las faltas graves y muy graves.",
+            "Sí, y además los mandos que las toleren, sólo en las graves y muy graves.",
+            "Sí, ya sean leves, graves o muy graves.",
+            "No, ya que sólo incurre en la falta disciplinaria aquellos/as que las cometan."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 66 | Extensión de la responsabilidad 1. Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local que induzcan a otros a cometer actos o a tener conductas constitutivas de falta disciplinaria incurren en la misma responsabilidad; también incurren en ella los mandos que las toleren. - Sí existe la extensión de responsabilidad tanto para los que induzcan como para los mandos que las toleren, y al no especificar gravedad, caben las leves, las graves y las muy graves."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 72, de los criterios de graduación de las sanciones. ¿Cuál de las siguientes opciones no es un criterio de graduación de una sanción?",
+        "opciones": [
+            "La intencionalidad.",
+            "La incidencia sobre la seguridad ciudadana.",
+            "El grado de afectación a los principios de disciplina, jerarquía y subordinación.",
+            "El historial profesional, que a estos efectos, solo se puede valorar como circunstancia agravante."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 72 | Criterios de graduación de sanciones c) El historial profesional, que, a estos efectos, solo se puede valorar como circunstancia atenuante."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 73, de la competencia sancionadora. ¿A quién corresponde incoar e imponer las sanciones para los miembros de los cuerpos de policía local o a los policías de los ayuntamientos que no hayan constituido cuerpo de policía local?",
+        "opciones": [
+            "A la consejería competente.",
+            "A la consejería competente en materia de formación de policías locales.",
+            "Al órgano competente del ayuntamiento para las faltas graves y muy graves.",
+            "Al órgano competente del ayuntamiento para las faltas leves, graves y muy graves."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 73 | Competencia sancionadora 1. Corresponde al órgano competente del ayuntamiento incoar los expedientes disciplinarios e imponer las sanciones por la comisión de las faltas muy graves, graves y leves a los miembros de los cuerpos de policía local o a los policías en los ayuntamientos que no hayan constituido cuerpo de policía local."
+    },
+    {
+        "pregunta": "El artículo de la Ley 4/2013, de 17 de julio, que regula la responsabilidad civil y penal es:",
+        "opciones": [
+            "El artículo 65.",
+            "El artículo 70.",
+            "El artículo 64.",
+            "El artículo 72."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 64 | Responsabilidad civil y penal El régimen disciplinario que establece esta ley se entiende sin perjuicio de la responsabilidad civil o penal en que puedan incurrir los funcionarios de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local, que se hará efectiva en la forma legalmente establecida."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Indique la gravedad de la siguiente falta disciplinaria: “La ausencia injustificada de cualquier servicio, cuando no merezca una consideración más grave”.",
+        "opciones": [
+            "Falta leve.",
+            "Falta grave.",
+            "Falta muy grave.",
+            "El caso planteado no corresponde a una falta."
+        ],
+        "correcta": 0,
+        "explicacion": "- Artículo 70 | Faltas leves i) La ausencia injustificada de cualquier servicio, cuando no merezca una consideración más grave. - Especial atención a la “coletilla” que nos indica que es leve."
+    },
+    {
+        "pregunta": "¿En que falta incurren aquellos que encubren las faltas consumadas por compañeros?",
+        "opciones": [
+            "Falta de grado superior",
+            "Misma falta que el infractor",
+            "Falta de grado inferior",
+            "Lo determina el instructor del expediente"
+        ],
+        "correcta": 2,
+        "explicacion": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales. Artículo 66 1. Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que induzcan a otros a cometer actos o tener conductas constitutivas de falta disciplinaria incurren en la misma responsabilidad que el autor de la falta."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 65, de la comunicación de las infracciones. ¿Tiene la obligación de comunicar a su superior jerárquico un miembro del cuerpo de policía local de los hechos de los cuales tenga conocimiento?",
+        "opciones": [
+            "Sí, siempre y de toda infracción que tenga conocimiento.",
+            "No, ya que no está contemplada la obligación de comunicarlo.",
+            "Sí, siempre, pero sólo de las faltas graves y muy graves.",
+            "Sí, de las faltas graves y muy graves, excepto cuando éste sea el presunto infractor; en este caso, la comunicación se realizará al inmediatamente superior al presunto infractor."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 65 | Comunicación de infracciones"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 75, de la prescripción de las faltas. Señale la opción correcta.",
+        "opciones": [
+            "Las faltas muy graves prescriben a los 3 años, las graves a los 2 años y las leves, al mes, y el plazo de prescripción se empieza a contar desde el día siguiente en que la falta se haya cometido.",
+            "Las faltas muy graves prescriben a los 3 años, las graves a los 2 años y las leves, al año, y el plazo de prescripción se empieza a contar desde que la falta se haya cometido.",
+            "Las faltas muy graves prescriben a los 3 años, las graves a los 2 años y las leves, al mes, y el plazo de prescripción se empieza a contar desde que la falta se haya cometido.",
+            "Las faltas muy graves prescriben a los 3 años, las graves a los 2 meses y las leves, al año, y el plazo de prescripción se empieza a contar desde el día siguiente en que la falta se haya cometido."
+        ],
+        "correcta": 2,
+        "explicacion": "- Artículo 75 | Prescripción de las faltas 1. Las faltas muy graves prescriben a los tres años; las graves a los dos años y las leves, al mes. 2. El plazo de prescripción se empieza a contar desde que la falta se haya cometido, …"
+    },
+    {
+        "pregunta": "Los miembros de los cuerpos de policía local [...] que induzcan a otros a cometer actos o tener conductas constitutivas de falta disciplinaria incurren:",
+        "opciones": [
+            "En la misma responsabilidad que el autor.",
+            "En una falta de un grado inferior.",
+            "En una falta de grado superior.",
+            "Ninguna respuesta es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 66.1 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. El órgano competente para iniciar los expedientes disciplinarios e imponer las sanciones es:",
+        "opciones": [
+            "El órgano competente del ayuntamiento.",
+            "El cuerpo de policía local.",
+            "El delegado de gobierno.",
+            "El pleno."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 73 | Competencia sancionadora 1. Corresponde al órgano competente del ayuntamiento incoar los expedientes disciplinarios e imponer las sanciones por la comisión de las faltas muy graves, graves y leves a los miembros de los cuerpos de policía local o a los policías en los ayuntamientos que no hayan constituido cuerpo de policía local. 2. Corresponde a la consejería competente en materia de formación de policías locales incoar y resolver los expedientes disciplinarios que se puedan originar durante la realización de los cursos de capacitación de las diferentes categorías en la Escuela Balear de Administración Pública."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Las sanciones impuestas por faltas graves prescribirán:",
+        "opciones": [
+            "A los tres años.",
+            "A los dos años.",
+            "Al año.",
+            "A los seis meses."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 76 | Prescripción de las sanciones 1. Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes. El plazo de prescripción de las sanciones se empieza a contar desde el día siguiente al que se convierta en firme. 2. En caso de concurrencia de diferentes sanciones, el plazo de prescripción de las sanciones firmes que estén pendientes de cumplimiento se empieza a contar desde el día siguiente al que quede extinguida la sanción que la precede en el orden de cumplimiento señalado en lo que se ha citado, o, en su caso, desde la fecha en que se haya producido la inejecución de la sanción. 3. El cumplimiento de los plazos de prescripción de la sanción determina la cancelación de las anotaciones correspondientes en el expediente personal. Transcurrido el plazo para la prescripción de la sanción, el órgano competente lo acordará de oficio y lo notificará a los interesados."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. ¿Con cual de las siguientes sanciones se podría imponer la sanción accesoria de cambio de destino?",
+        "opciones": [
+            "La suspensión de funciones y la pérdida de remuneraciones de 6 años y 2 meses.",
+            "La suspensión de funciones y la pérdida de remuneraciones de 7 días.",
+            "La suspensión de funciones y la pérdida de remuneraciones de 3 días.",
+            "Todas podrían ser correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Artículo 71 | Sanciones 1. Las sanciones que se pueden imponer por la comisión de faltas muy graves son: a) La separación del servicio o la revocación del nombramiento del personal funcionario interino. b) La suspensión de funciones y la pérdida de remuneraciones desde tres meses y un día hasta un máximo de seis años. 2. Por faltas graves se puede imponer la sanción de suspensión de funciones y pérdida de remuneraciones desde cinco días hasta tres meses. 3. Las sanciones que se pueden imponer por la comisión de faltas leves son: a) La suspensión de funciones y la pérdida de la remuneración de uno a cuatro días. b) La advertencia. 4. En los casos de infracciones muy graves o graves se puede imponer la sanción accesoria de cambio de destino dentro de la estructura de cada cuerpo cuando se motive adecuadamente y por un hecho que haya afectado o pueda afectar el funcionamiento normal de los destinos."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 76, de la prescripción de las sanciones. Señale la opción correcta.",
+        "opciones": [
+            "Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes. El plazo de prescripción de las sanciones se empieza a contar desde el día siguiente al que se convierta en firme.",
+            "Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al año. El plazo de prescripción de las sanciones se empieza a contar desde el día al que se convierta en firme.",
+            "Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes. El plazo de prescripción de las sanciones se empieza a contar desde el día al que se convierta en firme.",
+            "Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al año. El plazo de prescripción de las sanciones se empieza a contar desde el día siguiente al que se convierta en firme."
+        ],
+        "correcta": 0,
+        "explicacion": "- Artículo 76 | Prescripción de las sanciones 1. Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes. El plazo de prescripción de las sanciones se empieza a contar desde el día siguiente al que se convierta en firme."
+    },
+    {
+        "pregunta": "El plazo de prescripción de una falta se empieza a contar:",
+        "opciones": [
+            "Desde el inicio del procedimiento.",
+            "Desde la notificación al funcionario expedientado.",
+            "Desde el día siguiente al que se convierte en firme.",
+            "Desde que se haya cometido."
+        ],
+        "correcta": 3,
+        "explicacion": "Art. 75.2 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. El funcionario suspendido provisionalmente tendrá derecho a percibir durante la suspensión:",
+        "opciones": [
+            "Únicamente las retribuciones básicas.",
+            "Únicamente las prestaciones familiares por hijo a cargo.",
+            "Las retribuciones básicas y, en su caso, las prestaciones familiares por hijo a cargo.",
+            "Las retribuciones íntegras y, en su caso, las prestaciones familiares por hijo a cargo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 89. Medidas cautelares. 1. Iniciado el procedimiento penal o disciplinario, si hay elementos de juicio suficientes, el alcalde o la alcaldesa puede acordar, preventivamente, de forma motivada, las medidas cautelares adecuadas para facilitar la tramitación del expediente y asegurar la eficacia de la resolución que pueda recaer. 2. Cuando se acuerde preventivamente la suspensión provisional de funciones, se llevará a cabo con los efectos que se señalan a continuación: a) El funcionario o funcionaria en la situación de suspensión provisional queda privado temporalmente del ejercicio de sus funciones y de los derechos inherentes a su condición de funcionario, sin perjuicio de lo que disponen los apartados siguientes, y se procederá a recoger los distintivos de su cargo y el arma o armas, en su caso. No obstante, el alcalde o la alcaldesa podrá autorizar el uso del arma cuando circunstancias excepcionales así lo aconsejen. b) El tiempo de suspensión provisional, como consecuencia de un expediente disciplinario, por hechos que no son objeto de un procedimiento penal no puede exceder de tres meses en el supuesto de faltas graves y de seis meses en el supuesto de faltas muy graves, excepto en los supuestos de paralización del procedimiento imputable al interesado. c) Si los hechos que motivan el expediente disciplinario dan lugar también a un procedimiento penal, la suspensión provisional se mantendrá durante todo el tiempo que dure la prisión provisional u otras medidas dictadas por el juez que determinen la imposibilidad de llevar a cabo las funciones de su puesto de trabajo. En este caso, si la suspensión provisional excede de seis meses no supondrá pérdida del puesto de trabajo. No obstante, el alcalde o la alcaldesa podrá acordar, excepcionalmente, como medida preventiva, la suspensión provisional de los funcionarios sometidos a procedimiento penal, si esta medida no ha sido adoptada por la autoridad judicial y se podrá prolongar hasta la conclusión del procedimiento penal. d) El funcionario o la funcionaria suspendido provisionalmente tiene derecho a percibir durante la suspensión las retribuciones básicas y, si procede, las prestaciones familiares por hijos, excepto en casos de paralización del procedimiento imputable al interesado, que comportará la pérdida de toda retribución mientras se mantenga la paralización y tampoco tendrá derecho a ninguna retribución en el caso de incomparecencia en el expediente disciplinario. 3. En la resolución definitiva del expediente se realizará una declaración expresa respecto de las medidas cautelares adoptadas durante su tramitación, declarando que se abonarán por el cumplimiento de la sanción impuesta si ésta es de suspensión de funciones, o bien, si el expediente concluye sin declaración de responsabilidad disciplinaria, computando el tiempo de suspensión provisional como de servicio activo y con reconocimiento de todos los derechos económicos, excepto si tiene que pasar a suspendido firme de funciones como consecuencia de condena criminal que afecte a su condición de funcionario y derive de los hechos que motivaron la adopción de la medida cautelar; en este caso, la suspensión provisional le será de abono para el cumplimiento de la pena, con la autorización previa del tribunal sentenciador. No será procedente el reconocimiento de tiempo ni de ningún derecho al afectado por la suspensión provisional si se impone la sanción de separación del servicio o se tiene que declarar la pérdida de la condición de funcionario como consecuencia de pena de inhabilitación absoluta o inhabilitaciones especiales que afecten a su condición de funcionario, derivada de condena criminal impuesta por los hechos que dieron lugar a la adopción de la suspensión provisional de funciones."
+    },
+    {
+        "pregunta": "Ley 4/4013. Régimen disciplinario. Artículo 72, Criterios de graduación de Sanciones. Señale la opción correcta.",
+        "opciones": [
+            "Hay reincidencia cuando el funcionario, en el momento de la comisión de la falta, ya ha sido sancionado con anterioridad en resolución firme por otra falta de más gravedad o por tres de igual o inferior gravedad y no han sido canceladas. A los efectos de la reincidencia, no se computarán los antecedentes disciplinarios cancelados o que tengan que serlo.",
+            "Hay reincidencia cuando el funcionario, en el momento de la comisión de la falta, ya ha sido sancionado con anterioridad en resolución firme por otra falta de más gravedad o por dos de igual o inferior gravedad y han sido canceladas. A los efectos de la reincidencia, no se computarán los antecedentes disciplinarios cancelados o que tengan que serlo.",
+            "Hay reincidencia cuando el funcionario, en el momento de la comisión de la falta, ya ha sido sancionado con anterioridad en resolución firme por otra falta de más gravedad o por dos de igual o inferior gravedad y no han sido canceladas. A los efectos de la reincidencia, se computarán los antecedentes disciplinarios cancelados o que tengan que serlo.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 72 | Criterios de gradación de sanciones Para graduar la sanción y actuando bajo el principio de proporcionalidad, se tendrán en cuenta los siguientes criterios: b) La reincidencia. Hay reincidencia cuando el funcionario, en el momento de la comisión de la falta, ya ha sido sancionado con anterioridad en resolución firme por otra falta de más gravedad o por dos de igual o inferior gravedad y no han sido canceladas. A los efectos de la reincidencia, no se computarán los antecedentes disciplinarios cancelados o que tengan que serlo."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 66, de la extensión de la responsabilidad. ¿Tiene responsabilidad el policía que induce a otro a cometer una falta disciplinaria?",
+        "opciones": [
+            "No, sólo el que la comete.",
+            "Sí, pero sólo para las faltas menos graves y muy graves.",
+            "Sí, pero sólo para las faltas graves.",
+            "Sí, para todas las faltas."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 66 | Extensión de la responsabilidad"
+    },
+    {
+        "pregunta": "¿A quién corresponde incoar los expedientes disciplinarios a los miembros de los cuerpos de policía local?",
+        "opciones": [
+            "Al ayuntamiento",
+            "A la consejería competente",
+            "Al órgano competente del ayuntamiento",
+            "Al órgano que designe la consejería competente"
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 73.1 Ley 4/2013 de coordinación de las Policías Locales [...]"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Son faltas graves:",
+        "opciones": [
+            "Ostentar insignias, condecoraciones u otros distintivos, sin autorización, cuando no merezca una consideración más grave.",
+            "El abuso de atribuciones que cause grave perjuicio a los ciudadanos, a los subordinados, a la administración o a las entidades con personalidad jurídica.",
+            "El retraso o la negligencia en el cumplimiento de las funciones y órdenes recibidas.",
+            "La negativa reiterada a tramitar cualquier solicitud, reclamación o queja relacionada con el servicio, siempre que no constituya falta leve."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 69 | Faltas graves Son faltas graves: a) La desconsideración grave con los superiores, compañeros, subordinados o ciudadanos, en el ejercicio de sus funciones o cuando causen descrédito notorio a la institución policial. b) La desobediencia a los superiores jerárquicos o a los responsables del servicio con motivo de las órdenes o instrucciones legítimas de estos, excepto si constituyen infracción grave del ordenamiento jurídico. c) La omisión de la obligación de dar cuenta por escrito a la superioridad con la diligencia debida de todo asunto que por su entidad requiera su conocimiento o urgente decisión. d) La falta de presentación o puesta a disposición inmediata en la dependencia de destino en los supuestos de alteración grave de la seguridad ciudadana, cuando así se disponga. e) La tercera falta injustificada de asistencia al servicio en un periodo de tres meses cuando los dos anteriores hayan sido sancionados con sanción firme por falta leve. f) No prestar servicio, alegando supuesta enfermedad. g) La falta de rendimiento reiterada que ocasione un perjuicio a los ciudadanos, a las entidades con personalidad jurídica o a la eficiencia de los servicios. h) El abuso de atribuciones cuando no constituya falta muy grave. i) La emisión de informes sobre asuntos de servicio que, sin faltar abiertamente a la verdad, la desnaturalicen utilizando términos ambiguos, que causen confusión o tendenciosos, o lo alteren mediante inexactitudes, cuando causen perjuicio a la administración o a los ciudadanos, siempre que el hecho no constituya infracción muy grave. j) La intervención en un procedimiento administrativo cuando concurra alguna causa legal de abstención. k) No llevar en los actos de servicio el uniforme reglamentario, cuando sea preceptivo su uso, los distintivos de la categoría o el cargo, el arma reglamentaria o los medios de protección o acción que se determinen, excepto autorización en contra. l) Exhibir armas sin causa justificada, así como su utilización en acto de servicio o fuera de servicio, con infracción de las normas que regulan su uso. m) Dar lugar al extravío, la pérdida o la sustracción por negligencia inexcusable de los distintivos de identificación o del arma reglamentaria. n) Asistir de uniforme a cualquier manifestación o reunión pública, a no ser que se trate de actos de servicio o actos oficiales para los cuales se ha recibido autorización. o) Causar, por negligencia inexcusable, perjuicios graves en la conservación de los locales, del material o del resto de elementos relacionados con el servicio o dar lugar a la pérdida o sustracción de aquellos. p) Impedir, limitar u obstaculizar a los subordinados el ejercicio de los derechos que tengan reconocidos, siempre que no constituya falta muy grave. q) Embriagarse o consumir drogas tóxicas, estupefacientes o sustancias psicotrópicas fuera del servicio cuando sea con carácter habitual o afecten a la imagen del cuerpo. Se entiende que hay habitualidad cuando se acrediten tres o más episodios de embriaguez o consumo de dichas sustancias en un periodo de un año. r) La tenencia de drogas tóxicas, estupefacientes o sustancias psicotrópicas, excepto cuando se derive de actuaciones propias del servicio. s) Solicitar y obtener cambios de destinación mediante cualquier recompensa, ánimo de lucro o falseando las condiciones que los regulan. t) Utilizar para usos no relacionados con el servicio o para este, o sin que haya una causa justificada, medios o recursos inherentes a la función policial, o autorizar su utilización. u) Las infracciones de lo que dispone la legislación vigente sobre utilización de videocámaras por los cuerpos y fuerzas de seguridad en lugares públicos, cuando no constituya falta muy grave. v) El incumplimiento de los plazos u otras disposiciones de procedimiento en materia de incompatibilidades, cuando no supongan mantenimiento de una situación de incompatibilidad. w) La violación del secreto profesional cuando no perjudique el desarrollo de la labor policial, a las entidades con personalidad jurídica o a cualquier ciudadano. x) La falta de colaboración manifiesta con otros miembros de los cuerpos y fuerzas de seguridad, siempre que no se pueda calificar como falta muy grave. y) La infracción de deberes u obligaciones legales inherentes al cargo o a la función policial, cuando se produzcan de forma grave y manifiesta. z) Ser condenado o condenada en virtud de sentencia firme por delito doloso, siempre que no constituya infracción muy grave, o por una falta dolosa o delito leve doloso cuando la infracción penal esté relacionada con el servicio. aa) La no prestación de auxilio con urgencia en hechos o circunstancias en que sea obligada su actuación, a no ser que sea constitutivo de delito. bb) La infracción de las normas de prevención de riesgos laborales que pongan en grave riesgo la vida, la salud o la integridad física, propia o de sus compañeros o subordinados. cc) La negativa reiterada a tramitar cualquier solicitud, reclamación o queja relacionada con el servicio, siempre que no constituya falta leve."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 71, de las sanciones. ¿En cuál de las siguientes opciones se podría imponer la pena accesoria de cambio de destino?",
+        "opciones": [
+            "En los casos de infracciones leves, graves o muy graves.",
+            "En los casos de infracciones menos graves o graves.",
+            "En los casos de infracciones menos graves o muy graves.",
+            "En los casos de infracciones graves o muy graves."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 71 | Sanciones 4. En los casos de infracciones muy graves o graves se puede imponer la sanción accesoria de cambio de destino dentro de la estructura de cada cuerpo cuando se motive adecuadamente y por un hecho que haya afectado o pueda afectar el funcionamiento normal de los destinos."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de les Illes Balears. Artículos 75 y 76, de la prescripción de las faltas y de las sanciones. Señale la más completa y correcta.",
+        "opciones": [
+            "La prescripción de las faltas muy graves es a los tres años, 2 años para las graves y 1 año para las leves.",
+            "La prescripción de las faltas muy graves es a los tres años, 2 años para las graves y 1 mes para las leves.",
+            "La opción A es correcta, y además es igual para la prescripción de las sanciones.",
+            "La opción B es correcta, y además es igual para la prescripción de las sanciones."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 75 | Prescripción de las faltas 1. Las faltas muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes. Artículo 76 | Prescripción de las sanciones 1. Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Son faltas leves:",
+        "opciones": [
+            "El descuido o el mal uso de los bienes de equipo y en la conservación de las instalaciones, los materiales, los vehículos y otros elementos del servicio, cuando no merezca una consideración más grave.",
+            "La negativa reiterada a tramitar cualquier solicitud, reclamación o queja relacionada con el servicio, siempre que no constituya falta leve.",
+            "La no prestación de auxilio con urgencia en hechos o circunstancias en que sea obligada su actuación, a no ser que sea constitutivo de delito.",
+            "La negativa injustificada a someterse a reconocimientos médicos o a la prueba de alcoholemia o de detección de drogas tóxicas, estupefacientes o sustancias psicotrópicas, legítimamente ordenadas, con la finalidad de constatar la capacidad psicofísica para prestar servicio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 70 | Faltas leves Son faltas leves: a) El retraso o la negligencia en el cumplimiento de las funciones y órdenes recibidas. b) La incorrección con los ciudadanos o con otros miembros de los cuerpos y fuerzas de seguridad, siempre que no merezca una calificación más grave. c) La falta de asistencia al servicio que no constituya falta más grave y el incumplimiento de la jornada de trabajo, así como las faltas repetidas de puntualidad, en los treinta días precedentes. d) El descuido o el mal uso de los bienes de equipo y en la conservación de las instalaciones, los materiales, los vehículos y otros elementos del servicio, cuando no merezca una consideración más grave. e) La pérdida o sustracción, por simple negligencia, de los distintivos de identificación, del arma reglamentaria o de otros medios o recursos destinados a la función policial. f) La exhibición de los distintivos de identificación sin causa justificada. g) El hecho de prescindir del conducto reglamentario al formular cualquier solicitud o reclamación, excepto en el caso de urgencia o imposibilidad física, así como la interrupción de la tramitación a la persona destinataria. Quedan exceptuadas del conducto reglamentario las que formulan los representantes de las organizaciones sindicales en el ejercicio de la actividad sindical. h) El descuido en la presentación y la limpieza personal y el incumplimiento de las normas de uniformidad. i) La ausencia injustificada de cualquier servicio, cuando no merezca una consideración más grave. j) La omisión intencionada de saludo a un o a una superior, que no la devuelva o la infracción de las normas que la regulen. k) La práctica de cualquier clase de juego que se lleve a cabo en las dependencias policiales, siempre que perjudique la prestación del servicio o menoscabe la imagen policial. l) Ostentar insignias, condecoraciones u otros distintivos, sin autorización, cuando no merezca una consideración más grave. m) Ser condenado o condenada en virtud de sentencia firme por falta dolosa o delito leve doloso cuando la infracción penal cause perjuicio a la administración o a los administrados."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Son faltas leves:",
+        "opciones": [
+            "El retraso o la negligencia en el cumplimiento de las funciones y órdenes recibidas.",
+            "La violación del secreto profesional cuando no perjudique el desarrollo de la labor policial, a las entidades con personalidad jurídica o a cualquier ciudadano.",
+            "La negativa reiterada a tramitar cualquier solicitud, reclamación o queja relacionada con el servicio, siempre que no constituya falta leve.",
+            "La negativa injustificada a someterse a reconocimientos médicos o a la prueba de alcoholemia o de detección de drogas tóxicas, estupefacientes o sustancias psicotrópicas, legítimamente ordenadas, con la finalidad de constatar la capacidad psicofísica para prestar servicio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 70 | Faltas leves Son faltas leves: a) El retraso o la negligencia en el cumplimiento de las funciones y órdenes recibidas. b) La incorrección con los ciudadanos o con otros miembros de los cuerpos y fuerzas de seguridad, siempre que no merezca una calificación más grave. c) La falta de asistencia al servicio que no constituya falta más grave y el incumplimiento de la jornada de trabajo, así como las faltas repetidas de puntualidad, en los treinta días precedentes. d) El descuido o el mal uso de los bienes de equipo y en la conservación de las instalaciones, los materiales, los vehículos y otros elementos del servicio, cuando no merezca una consideración más grave. e) La pérdida o sustracción, por simple negligencia, de los distintivos de identificación, del arma reglamentaria o de otros medios o recursos destinados a la función policial. f) La exhibición de los distintivos de identificación sin causa justificada. g) El hecho de prescindir del conducto reglamentario al formular cualquier solicitud o reclamación, excepto en el caso de urgencia o imposibilidad física, así como la interrupción de la tramitación a la persona destinataria. Quedan exceptuadas del conducto reglamentario las que formulan los representantes de las organizaciones sindicales en el ejercicio de la actividad sindical. h) El descuido en la presentación y la limpieza personal y el incumplimiento de las normas de uniformidad. i) La ausencia injustificada de cualquier servicio, cuando no merezca una consideración más grave. j) La omisión intencionada de saludo a un o a una superior, que no la devuelva o la infracción de las normas que la regulen. k) La práctica de cualquier clase de juego que se lleve a cabo en las dependencias policiales, siempre que perjudique la prestación del servicio o menoscabe la imagen policial. l) Ostentar insignias, condecoraciones u otros distintivos, sin autorización, cuando no merezca una consideración más grave. m) Ser condenado o condenada en virtud de sentencia firme por falta dolosa o delito leve doloso cuando la infracción penal cause perjuicio a la administración o a los administrados."
+    },
+    {
+        "pregunta": "Los miembros de los cuerpos de policía local se rigen en cuanto a su régimen disciplinario por los principios generales de la Ley 4/2013, de 17 de julio, recogidos en su capítulo:",
+        "opciones": [
+            "I",
+            "VI",
+            "III",
+            "IV"
+        ],
+        "correcta": 0,
+        "explicacion": "RÉGIMEN DISCIPLINARIO: PRINCIPIOS GENERALES El Título VII de la Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares se rubrica “Régimen disciplinario”. El Capítulo I trata de la los “Principios generales” y está compuesto por los artículos 63 a 66, ambos inclusive."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de les Illes Balears. Artículo 74, Extinción de la responsabilidad. La responsabilidad disciplinaria se extingue por:",
+        "opciones": [
+            "El cumplimiento de la sanción.",
+            "La muerte de un familiar de la persona responsable.",
+            "La prescripción de la falta o de la sanción.",
+            "A y C son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad 1. La responsabilidad disciplinaria se extingue por el cumplimiento de la sanción, por la muerte de la persona responsable y por la prescripción de la falta o de la sanción."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Es falta leve:",
+        "opciones": [
+            "La violación del secreto profesional cuando no perjudique el desarrollo de la labor policial, a las entidades con personalidad jurídica o a cualquier ciudadano.",
+            "La exhibición de los distintivos de identificación sin causa justificada.",
+            "La intervención en un procedimiento administrativo cuando concurra alguna causa legal de abstención.",
+            "No prestar servicio, alegando supuesta enfermedad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 70 | Faltas leves Son faltas leves: a) El retraso o la negligencia en el cumplimiento de las funciones y órdenes recibidas. b) La incorrección con los ciudadanos o con otros miembros de los cuerpos y fuerzas de seguridad, siempre que no merezca una calificación más grave. c) La falta de asistencia al servicio que no constituya falta más grave y el incumplimiento de la jornada de trabajo, así como las faltas repetidas de puntualidad, en los treinta días precedentes. d) El descuido o el mal uso de los bienes de equipo y en la conservación de las instalaciones, los materiales, los vehículos y otros elementos del servicio, cuando no merezca una consideración más grave. e) La pérdida o sustracción, por simple negligencia, de los distintivos de identificación, del arma reglamentaria o de otros medios o recursos destinados a la función policial. f) La exhibición de los distintivos de identificación sin causa justificada. g) El hecho de prescindir del conducto reglamentario al formular cualquier solicitud o reclamación, excepto en el caso de urgencia o imposibilidad física, así como la interrupción de la tramitación a la persona destinataria. Quedan exceptuadas del conducto reglamentario las que formulan los representantes de las organizaciones sindicales en el ejercicio de la actividad sindical. h) El descuido en la presentación y la limpieza personal y el incumplimiento de las normas de uniformidad. i) La ausencia injustificada de cualquier servicio, cuando no merezca una consideración más grave. j) La omisión intencionada de saludo a un o a una superior, que no la devuelva o la infracción de las normas que la regulen. k) La práctica de cualquier clase de juego que se lleve a cabo en las dependencias policiales, siempre que perjudique la prestación del servicio o menoscabe la imagen policial. l) Ostentar insignias, condecoraciones u otros distintivos, sin autorización, cuando no merezca una consideración más grave. m) Ser condenado o condenada en virtud de sentencia firme por falta dolosa o delito leve doloso cuando la infracción penal cause perjuicio a la administración o a los administrados."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 74, de la extinción de la responsabilidad. La responsabilidad disciplinaria se extingue por…",
+        "opciones": [
+            "El cumplimiento de la sanción.",
+            "Muerte de la persona responsable.",
+            "Prescripción de la falta o de la sanción.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad 1. La responsabilidad disciplinaria se extingue por el cumplimiento de la sanción, por la muerte de la persona responsable y por la prescripción de la falta o de la sanción."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 71, de las sanciones. ¿Qué sanciones se pueden imponer en el caso de las faltas leves?",
+        "opciones": [
+            "La advertencia o la suspensión de funciones y la pérdida de la remuneración de uno a cuatro días.",
+            "La advertencia o la suspensión de funciones y la pérdida de la remuneración de dos a cuatro días.",
+            "La advertencia o la suspensión de funciones y la pérdida de la remuneración de uno a cinco días.",
+            "La advertencia o la suspensión de funciones y la pérdida de la remuneración de dos a cinco días."
+        ],
+        "correcta": 0,
+        "explicacion": "- Artículo 71 | Sanciones 3. Las sanciones que se pueden imponer por la comisión de faltas leves son: a) La suspensión de funciones y la pérdida de la remuneración de uno a cuatro días. b) La advertencia."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 66, de la extensión de la responsabilidad. ¿Tiene alguna responsabilidad el policía que encubre una falta?",
+        "opciones": [
+            "Sí, de todas las faltas que encubra.",
+            "No, sólo tiene responsabilidad el que comete la falta.",
+            "Sí, de las faltas graves o muy graves consumadas e incurre en la misma gravedad de la falta.",
+            "Sí, de las faltas graves o muy graves consumadas e incurre en falta de un grado inferior."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 66 | Extensión de la responsabilidad"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Son faltas leves:",
+        "opciones": [
+            "El abuso de atribuciones que cause grave perjuicio a los ciudadanos, a los subordinados, a la administración o a las entidades con personalidad jurídica.",
+            "Solicitar y obtener cambios de destinación mediante cualquier recompensa, ánimo de lucro o falseando las condiciones que los regulan.",
+            "La incorrección con los ciudadanos o con otros miembros de los cuerpos y fuerzas de seguridad, siempre que no merezca una calificación más grave.",
+            "La negativa reiterada a tramitar cualquier solicitud, reclamación o queja relacionada con el servicio, siempre que no constituya falta leve."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 70 | Faltas leves Son faltas leves: a) El retraso o la negligencia en el cumplimiento de las funciones y órdenes recibidas. b) La incorrección con los ciudadanos o con otros miembros de los cuerpos y fuerzas de seguridad, siempre que no merezca una calificación más grave. c) La falta de asistencia al servicio que no constituya falta más grave y el incumplimiento de la jornada de trabajo, así como las faltas repetidas de puntualidad, en los treinta días precedentes. d) El descuido o el mal uso de los bienes de equipo y en la conservación de las instalaciones, los materiales, los vehículos y otros elementos del servicio, cuando no merezca una consideración más grave. e) La pérdida o sustracción, por simple negligencia, de los distintivos de identificación, del arma reglamentaria o de otros medios o recursos destinados a la función policial. f) La exhibición de los distintivos de identificación sin causa justificada. g) El hecho de prescindir del conducto reglamentario al formular cualquier solicitud o reclamación, excepto en el caso de urgencia o imposibilidad física, así como la interrupción de la tramitación a la persona destinataria. Quedan exceptuadas del conducto reglamentario las que formulan los representantes de las organizaciones sindicales en el ejercicio de la actividad sindical. h) El descuido en la presentación y la limpieza personal y el incumplimiento de las normas de uniformidad. i) La ausencia injustificada de cualquier servicio, cuando no merezca una consideración más grave. j) La omisión intencionada de saludo a un o a una superior, que no la devuelva o la infracción de las normas que la regulen. k) La práctica de cualquier clase de juego que se lleve a cabo en las dependencias policiales, siempre que perjudique la prestación del servicio o menoscabe la imagen policial. l) Ostentar insignias, condecoraciones u otros distintivos, sin autorización, cuando no merezca una consideración más grave. m) Ser condenado o condenada en virtud de sentencia firme por falta dolosa o delito leve doloso cuando la infracción penal cause perjuicio a la administración o a los administrados."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Para graduar las sanciones, se tendrán en cuenta los siguientes criterios:",
+        "opciones": [
+            "La intencionalidad; la reincidencia; el historial profesional; la incidencia sobre la seguridad ciudadana y la perturbación en el funcionamiento normal de la administración o de los servicios que le sean encomendados.",
+            "La intencionalidad; la reincidencia; el historial profesional; la incidencia sobre la seguridad ciudadana; la perturbación en el funcionamiento normal de la administración o de los servicios que le sean encomendados; el grado de afectación a los principios de disciplina, jerarquía y subordinación; y en el caso de los artículos 68.b) y 69.z) de la Ley 4/2013, de 17 de julio, se ha de valorar la cuantía o entidad de la pena impuesta en virtud de sentencia firme, así como la relación de la conducta delictiva con las funciones policiales.",
+            "La reincidencia; el historial profesional; la incidencia sobre la seguridad ciudadana y la perturbación en el funcionamiento normal de la administración o de los servicios que le sean encomendados y en el caso de los artículos 68.b) y 69.z) de la Ley 4/2013, de 17 de julio, se ha de valorar la cuantía o entidad de la pena impuesta en virtud de sentencia firme, así como la relación de la conducta delictiva con las funciones policiales.",
+            "La intencionalidad; la reincidencia; el historial profesional; la incidencia sobre la seguridad ciudadana; la perturbación en el funcionamiento normal de la administración o de los servicios que le sean encomendados y en el caso de los artículos 68.b) y 69.z) de la Ley 4/2013, de 17 de julio, se ha de valorar la cuantía o entidad de la pena impuesta en virtud de sentencia firme, así como la relación de la conducta delictiva con las funciones policiales."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 72 | Criterios de gradación de sanciones Para graduar la sanción y actuando bajo el principio de proporcionalidad, se tendrán en cuenta los siguientes criterios: a) La intencionalidad. b) La reincidencia. Hay reincidencia cuando el funcionario, en el momento de la comisión de la falta, ya ha sido sancionado con anterioridad en resolución firme por otra falta de más gravedad o por dos de igual o inferior gravedad y no han sido canceladas. A los efectos de la reincidencia, no se computarán los antecedentes disciplinarios cancelados o que tengan que serlo. c) El historial profesional, que, a estos efectos, solo se puede valorar como circunstancia atenuante. d) La incidencia sobre la seguridad ciudadana. e) La perturbación en el funcionamiento normal de la administración o de los servicios que le sean encomendados. f) El grado de afectación a los principios de disciplina, jerarquía y subordinación. g) En el caso de los artículos 68.b) y 69.z) se ha de valorar específicamente la cuantía o entidad de la pena impuesta en virtud de sentencia firme, así como la relación de la conducta delictiva con las funciones policiales."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Los miembros de los cuerpos de policía local en su condición de agentes de autoridad, tendrán la condición de:",
+        "opciones": [
+            "Funcionario público.",
+            "Autoridad.",
+            "Empleado público.",
+            "Agente público."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 46. Régimen jurídico. Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local, en su condición de agentes de la autoridad, tendrán la condición de funcionarios. Para nombrarlos es necesario disponer de la formación de capacitación adecuada y haber superado los procesos selectivos que correspondan."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Respecto a los funcionarios en prácticas, ¿les es aplicable esta Ley?",
+        "opciones": [
+            "No, ya que existe una normativa específica de régimen disciplinario para funcionarios en prácticas.",
+            "Sí, pero sólo algunos apartados.",
+            "Sí, les es aplicable lo que dispone esta Ley.",
+            "Sí, les es aplicable lo que disponen esta Ley y el resto de normativa de aplicación en materia de régimen disciplinario para los funcionarios de carrera."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 63 | Régimen aplicable 3. A los funcionarios en prácticas les es aplicable lo que disponen esta ley y el resto de normativa de aplicación en materia de régimen disciplinario para los funcionarios de carrera."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Indique la gravedad de la siguiente falta disciplinaria: “La tenencia de drogas tóxicas, estupefacientes o sustancias psicotrópicas, cuando se derive de actuaciones propias del servicio”.",
+        "opciones": [
+            "Falta leve.",
+            "Falta grave.",
+            "Falta muy grave.",
+            "El caso planteado no corresponde a una falta."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 69 | Faltas graves r) La tenencia de drogas tóxicas, estupefacientes o sustancias psicotrópicas, excepto cuando se derive de actuaciones propias del servicio."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de les Illes Balears. Artículos 75 y 76, de la prescripción de las faltas y de las sanciones. Señale la más completa y correcta.",
+        "opciones": [
+            "La prescripción de las faltas muy graves es a los tres años, 2 años para las graves y 1 mes para las leves.",
+            "La prescripción de las faltas graves es a los tres años, 2 años para las menos graves y 1 mes para las leves.",
+            "La opción A, pero las faltas leves prescriben al año.",
+            "La opción B es correcta, y además es igual para la prescripción de las sanciones."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 75 | Prescripción de las faltas Las faltas muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes. Artículo 76 | Prescripción de las sanciones Las sanciones muy graves prescriben a los tres años; las graves, a los dos años; y las leves, al mes."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Indique la gravedad de la siguiente falta disciplinaria: “El cumplimiento del deber de fidelidad a la Constitución o al Estatuto de Autonomía de las Illes Balears en el ejercicio de sus funciones”.",
+        "opciones": [
+            "Falta leve.",
+            "Falta grave.",
+            "Falta muy grave.",
+            "El caso planteado no corresponde a una falta."
+        ],
+        "correcta": 3,
+        "explicacion": "- Artículo 68 | Faltas muy graves a) El incumplimiento del deber de fidelidad a la Constitución o al Estatuto de Autonomía de las Illes Balears en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Indique la gravedad de la siguiente falta disciplinaria: “La falta de colaboración manifiesta con otros miembros de las fuerzas y cuerpos de seguridad, cuando resulte gravemente perjudicado el servicio o se deriven consecuencias graves para la seguridad ciudadana.”.",
+        "opciones": [
+            "Falta leve.",
+            "Falta grave.",
+            "Falta muy grave.",
+            "El caso planteado no corresponde a una falta."
+        ],
+        "correcta": 2,
+        "explicacion": "- Artículo 68 | Faltas muy graves k) La falta de colaboración manifiesta con otros miembros de las fuerzas y cuerpos de seguridad, cuando resulte gravemente perjudicado el servicio o se deriven consecuencias graves para la seguridad ciudadana. - Especial atención a los detalles que nos indican que es muy grave."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Según el artículo 74 de la presente ley, la responsabilidad disciplinaria se extingue por:",
+        "opciones": [
+            "La muerte de la persona responsable.",
+            "La prescripción de la falta o la sanción.",
+            "La a y b son correctas.",
+            "Nunca."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad 1. La responsabilidad disciplinaria se extingue por el cumplimiento de la sanción, por la muerte de la persona responsable y por la prescripción de la falta o de la sanción. 2. Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente, se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir, y se ordenará el archivo de las actuaciones, salvo que por la parte interesada se inste la continuación del procedimiento o se instruya por falta muy grave; en este caso, se continuará hasta su resolución. También se dejarán sin efecto las medidas cautelares adoptadas en relación con el funcionario."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Son faltas leves:",
+        "opciones": [
+            "La falta de asistencia al servicio que no constituya falta más grave y el incumplimiento de la jornada de trabajo, así como las faltas repetidas de puntualidad, en los treinta días precedentes.",
+            "El abuso de atribuciones que cause grave perjuicio a los ciudadanos, a los subordinados, a la administración o a las entidades con personalidad jurídica.",
+            "La falta de rendimiento reiterada que ocasione un perjuicio a los ciudadanos, a las entidades con personalidad jurídica o a la eficiencia de los servicios.",
+            "La negativa reiterada a tramitar cualquier solicitud, reclamación o queja relacionada con el servicio, siempre que no constituya falta leve."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 70 | Faltas leves Son faltas leves: a) El retraso o la negligencia en el cumplimiento de las funciones y órdenes recibidas. b) La incorrección con los ciudadanos o con otros miembros de los cuerpos y fuerzas de seguridad, siempre que no merezca una calificación más grave. c) La falta de asistencia al servicio que no constituya falta más grave y el incumplimiento de la jornada de trabajo, así como las faltas repetidas de puntualidad, en los treinta días precedentes. d) El descuido o el mal uso de los bienes de equipo y en la conservación de las instalaciones, los materiales, los vehículos y otros elementos del servicio, cuando no merezca una consideración más grave. e) La pérdida o sustracción, por simple negligencia, de los distintivos de identificación, del arma reglamentaria o de otros medios o recursos destinados a la función policial. f) La exhibición de los distintivos de identificación sin causa justificada. g) El hecho de prescindir del conducto reglamentario al formular cualquier solicitud o reclamación, excepto en el caso de urgencia o imposibilidad física, así como la interrupción de la tramitación a la persona destinataria. Quedan exceptuadas del conducto reglamentario las que formulan los representantes de las organizaciones sindicales en el ejercicio de la actividad sindical. h) El descuido en la presentación y la limpieza personal y el incumplimiento de las normas de uniformidad. i) La ausencia injustificada de cualquier servicio, cuando no merezca una consideración más grave. j) La omisión intencionada de saludo a un o a una superior, que no la devuelva o la infracción de las normas que la regulen. k) La práctica de cualquier clase de juego que se lleve a cabo en las dependencias policiales, siempre que perjudique la prestación del servicio o menoscabe la imagen policial. l) Ostentar insignias, condecoraciones u otros distintivos, sin autorización, cuando no merezca una consideración más grave. m) Ser condenado o condenada en virtud de sentencia firme por falta dolosa o delito leve doloso cuando la infracción penal cause perjuicio a la administración o a los administrados."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Illes Balears. Artículo 71, de las sanciones. ¿Qué sanciones se pueden imponer en el caso de las faltas leves?",
+        "opciones": [
+            "La advertencia o la suspensión de funciones y la pérdida de la remuneración de uno a cuatro días.",
+            "La advertencia o la suspensión de funciones y la pérdida de la remuneración de dos a cuatro días.",
+            "La advertencia o la suspensión de funciones y la pérdida de la remuneración de uno a cinco días.",
+            "La advertencia o la suspensión de funciones y la pérdida de la remuneración de dos a cinco días."
+        ],
+        "correcta": 0,
+        "explicacion": "- Artículo 71 | Sanciones 3. Las sanciones que se pueden imponer por la comisión de faltas leves son: a) La suspensión de funciones y la pérdida de la remuneración de uno a cuatro días. b) La advertencia."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de Julio, de coordinación de las policías locales de las Islas Baleares. Las sanciones impuestas por faltas leves son:",
+        "opciones": [
+            "La separación del servicio y la pérdida de la remuneración de uno a cuatro días.",
+            "La separación del servicio, la suspensión de funciones y la pérdida de la remuneración de tres meses y un día hasta un máximo de seis años.",
+            "La suspensión de funciones y la pérdida de la remuneración de uno a tres días.",
+            "La suspensión de funciones y la pérdida de la remuneración de uno a cuatro días."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 71 | Sanciones 1. Las sanciones que se pueden imponer por la comisión de faltas muy graves son: a) La separación del servicio. b) La suspensión de funciones y la pérdida de remuneraciones desde tres meses y un día hasta un máximo de seis años. 2. Por faltas graves se puede imponer la sanción de suspensión de funciones y pérdida de remuneraciones desde cinco días hasta tres meses. 3. Las sanciones que se pueden imponer por la comisión de faltas leves son: a) La suspensión de funciones y la pérdida de la remuneración de uno a cuatro días. b) La advertencia. 4. En los casos de infracciones muy graves o graves se puede imponer la sanción accesoria de cambio de destino dentro de la estructura de cada cuerpo cuando se motive adecuadamente y por un hecho que haya afectado o pueda afectar el funcionamiento normal de los destinos."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

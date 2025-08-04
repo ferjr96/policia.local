@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "El artículo 36 del EAIB, corresponde al Título:",
+        "opciones": [
+            "Primero.",
+            "Sexto.",
+            "Cuarto.",
+            "Tercero."
+        ],
+        "correcta": 3,
+        "explicacion": "Título Tercero: De las competencias de la Comunidad Autónoma de las Illes Balears. Artículos 30 a 38."
+    },
+    {
+        "pregunta": "La organización territorial de las Islas Baleares será regulada en el marco de la legislación básica del estado por:",
+        "opciones": [
+            "El EAIB.",
+            "Una Ley Orgánica.",
+            "Una Ley del Parlamento.",
+            "El reglamento del Parlamento."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 8 | La organización territorial. 2. Esta organización será regulada, en el marco de la legislación básica del Estado, por ley del Parlamento de las Illes Balears, de acuerdo con este Estatuto y con los principios de eficacia, jerarquía, descentralización, desconcentración, delegación y coordinación entre los organismos administrativos y de autonomía en sus ámbitos respectivos."
+    },
+    {
+        "pregunta": "Según el art. 36 del EAIB, corresponde a la Comunidad Autónoma de las Illes Balears la competencia ___________________ de la enseñanza en toda su extensión, niveles y grados, modalidades y especialidades. (Complete la frase)",
+        "opciones": [
+            "Exclusiva.",
+            "Desarrollo legislativo y de ejecución.",
+            "Ejecutiva.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 36 | Enseñanza. De acuerdo con lo que dispone el artículo 27 y el número 30 del apartado 1 del artículo 149 de la Constitución en materia de enseñanza, corresponde a la Comunidad Autónoma de las Illes Balears: 2. Corresponde a la Comunidad Autónoma de las Illes Balears la competencia de desarrollo legislativo y de ejecución de la enseñanza en toda su extensión, niveles y grados, modalidades y especialidades."
+    },
+    {
+        "pregunta": "Quien tiene que promover la comunicación, el intercambio cultural y la cooperación entre las comunidades y territorios….., según el art. 5 del EAIB.",
+        "opciones": [
+            "El parlament",
+            "El Gobierno",
+            "La Constitución",
+            "La a y la c son correctas"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 5 | Los territorios con vínculos lingüísticos y culturales con las Illes Balears El Gobierno ha de promover la comunicación, el intercambio cultural y la cooperación con las comunidades y los territorios, pertenecientes o no al Estado español, que tienen vínculos lingüísticos y culturales con las Illes Balears. A estos efectos, el Gobierno de las Illes Balears y el Estado, de acuerdo con sus respectivas competencias, podrán suscribir convenios, tratados y otros instrumentos de colaboración."
+    },
+    {
+        "pregunta": "Las políticas de género son una competencia de tipo?",
+        "opciones": [
+            "Desarrollo legislativo y ejecución",
+            "Exclusiva",
+            "Ejecución",
+            "Desarrollo legislativo"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 30 | Competencias exclusivas 17. Políticas de género"
+    },
+    {
+        "pregunta": "Señale en que reforma del Estatuto de Autonomía de la Islas Baleares, se modifica la supresión del aforamiento de los Diputados y las Diputadas del Parlamento de las Illes Balears y de los miembros del Gobierno de las Illes Balears.",
+        "opciones": [
+            "Ley Orgánica 2/1983 de 25 de febrero",
+            "Ley Orgánica 1/2007 de 28 de febrero",
+            "Ley Orgánica 1/2022, de 8 de febrero",
+            "Ninguna es correcta"
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 1/2022, de 8 de febrero de reforma de la Ley Orgánica 1/2007, de 28 de febrero, de reforma del Estatuto de Autonomía de las Illes Balears, para la supresión del aforamiento de los Diputados y las Diputadas del Parlamento de las Illes Balears y de los miembros del Gobierno de las Illes Balears."
+    },
+    {
+        "pregunta": "Según el artículo 45 del EAIB, podrá crear comisiones de investigación?",
+        "opciones": [
+            "El Consejo de Gobierno",
+            "El Presidente",
+            "El Parlamento",
+            "Todas son correctas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 45 | Organización y funcionamiento 1. El Parlamento tendrá un Presidente, una Mesa y una Diputación Permanente. El Reglamento regulará su composición y sus reglas de elección. 2. El Parlamento funcionará en Pleno y en Comisiones. Las Comisiones permanentes podrán elaborar y aprobar leyes por delegación expresa del Pleno, sin perjuicio de la facultad del mismo para reclamar su debate y aprobación en cualquier momento del proceso legislativo. Quedan exceptuadas de dicha delegación las leyes de bases y los Presupuestos de la Comunidad Autónoma. 3. El Parlamento podrá crear Comisiones especiales de investigación."
+    },
+    {
+        "pregunta": "Señale de las siguientes cuales son competencias exclusivas de la CA.",
+        "opciones": [
+            "Ferrocarriles, carreteras y caminos. El transporte realizado por estos medios, por cable y por tubería. Puertos, aeropuertos y helipuertos calificados de interés general por el Estado, y puertos de refugio, puertos, aeropuertos y helipuertos deportivos",
+            "Centros de contratación y terminales de carga en materia de transportes. Delimitación de las zonas de servicios de los puertos y aeropuertos señalados en el apartado 5 de este mismo artículo",
+            "Montes, aprovechamientos forestales, vías pecuarias y pastos. Tratamiento especial de las zonas de mar",
+            "Todas son correctas"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 30 | Competencias exclusivas 5. Ferrocarriles, carreteras y caminos. El transporte realizado por estos medios, por cable y por tubería. Puertos, aeropuertos y helipuertos no calificados de interés general por el Estado, y puertos de refugio, puertos, aeropuertos y helipuertos deportivos 7. Centros de contratación y terminales de carga en materia de transportes. Delimitación de las zonas de servicios de los puertos y aeropuertos señalados en el apartado 5 de este mismo artículo. 9. Montes, aprovechamientos forestales, vías pecuarias y pastos. Tratamiento especial de las zonas de montaña."
+    },
+    {
+        "pregunta": "Señale de las siguientes competencias de los Consells, cuales son de función ejecutiva:",
+        "opciones": [
+            "Servicios sociales y asistencia social. Desarrollo comunitario e integración. Política de protección y atención a personas dependientes. Complementos de la seguridad social no contributiva. Voluntariado social. Políticas de atención a las personas y a los colectivos en situación de pobreza o necesidad social",
+            "Actividades clasificadas. Parques acuáticos. Infracciones y sanciones.",
+            "Espectáculos públicos y actividades recreativas.",
+            "Ninguna es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "CORRECTA: D Artículo 71 | Función ejecutiva de competencias Los Consejos Insulares, además de las competencias que les son propias, podrán asumir en su ámbito territorial la función ejecutiva y la gestión en las siguientes materias: 1. Montes y aprovechamientos forestales, vías pecuarias y pastos. 2. Recursos y aprovechamientos hidráulicos, canales y regadíos, régimen general de aguas. Aguas minerales, termales y subterráneas. 3. Obras públicas. 4. Estadísticas de interés insular. 5. Vigilancia y protección de sus edificios e instalaciones. 6. Ferias insulares. 7. Sanidad. 8. Enseñanza. 9. Cooperativas y cámaras. 10. Planificación y desarrollo económicos en el territorio de cada una de las Islas, de acuerdo con las bases y con la ordenación general de la economía del Estado y de la Comunidad Autónoma. 11. Contratos y concesiones administrativas respecto de las materias cuya gestión les corresponda en su territorio. Y, en general, cualesquiera otras que, en el propio ámbito territorial, correspondan a los intereses respectivos, de acuerdo con las transferencias o delegaciones que se establezcan para tal fin. Una ley del Parlamento establecerá el procedimiento de transferencia o delegación de competencias a los Consejos Insulares."
+    },
+    {
+        "pregunta": "Que Quorum es necesario para aprobar la Ley de los Consejos Insulares?",
+        "opciones": [
+            "1/5 de los diputados del parlamento",
+            "2/3 de los Consellers",
+            "3/5 de los diputados del parlamento",
+            "2/3 de los diputados del parlament"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 68 | Funcionamiento y régimen jurídico La Ley de los Consejos Insulares, aprobada con el voto favorable de dos tercios de los Diputados del Parlamento de las Illes Balears, y para el Consejo Insular de Formentera una ley específica, en su caso, determinarán las reglas de funcionamiento y el régimen jurídico de la actuación de los Consejos Insulares y de sus órganos, así como el régimen de sus funciones y competencias respetando la legislación básica del Estado"
+    },
+    {
+        "pregunta": "Que artículo del EAIB, hace referencia al Sindic de Greuges",
+        "opciones": [
+            "Art. 41",
+            "Art. 56",
+            "Art. 55",
+            "Art. 51"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 51 | Sindicatura de Greuges"
+    },
+    {
+        "pregunta": "Según el art. 36 del EAIB quien tiene la competencia exclusiva en la creación, la organización y régimen de los centros públicos en materia de enseñanza no universitaria.",
+        "opciones": [
+            "El Estado",
+            "La Comunidad Autónoma",
+            "Los Consells",
+            "Ninguna es correcta"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 36 | Enseñanza De acuerdo con lo que dispone el artículo 27 y el número 30 del apartado 1 del artículo 149 de la Constitución en materia de enseñanza, corresponde a la Comunidad Autónoma de las Illes Balears: 1. En materia de enseñanza no universitaria, la competencia exclusiva en la creación, la organización y el régimen de los centros públicos; régimen de becas y ayudas con fondos propios, la formación y el perfeccionamiento del personal docente; servicios educativos y actividades extraescolares complementarias en relación con los centros públicos y privados sostenidos con fondos públicos, en colaboración con los órganos de participación de los padres y las madres de sus alumnos."
+    },
+    {
+        "pregunta": "Según el artículo 43, son electores; Complete la frase. “Serán electores todos los ciudadanos ____________ mayores de edad que figuren en el censo electoral de las Illes Balears.",
+        "opciones": [
+            "De las Islas Baleares",
+            "Extranjeros",
+            "Españoles",
+            "B y la c son correctas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 43 | Electores Serán electores todos los ciudadanos españoles mayores de edad que figuren en el censo electoral de las Illes Balears."
+    },
+    {
+        "pregunta": "Señale de las siguientes cuales son competencias ejecutivas",
+        "opciones": [
+            "Productos farmacéuticos",
+            "Sector público estatal en el ámbito territorial de la Comunidad Autónoma, que participará en las actividades que correspondan.",
+            "Seguridad privada, cuando así lo establezca la legislación del Estado.",
+            "Todas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 32 | Competencias ejecutivas 8. Productos farmacéuticos. 14. Sector público estatal en el ámbito territorial de la Comunidad Autónoma, que participará en las actividades que correspondan. 19. Seguridad privada, cuando así lo establezca la legislación del Estado."
+    },
+    {
+        "pregunta": "Que capítulo del Titulo IV hace referencia a los Consejos Insulares.",
+        "opciones": [
+            "Capítulo II",
+            "Capítulo IV",
+            "Capítulo V",
+            "Capítulo I"
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ud. Y su esposa son Ibicencos de nacimiento y residentes en Santa Eulalia, están en régimen de separación de bienes según el Derecho Civil de la Comunidad Autónoma de I.B., por motivos de trabajo se trasladan a vivir a la Comunidad Autónoma de Galicia. En caso de algún conflicto legal por su régimen económico; tienen validez las disposiciones de la Comunidad autónoma de Islas Baleares en la Comunidad de Galicia, según el Estatuto de autonomía de su comunidad de origen.",
+        "opciones": [
+            "Si, ya que el derecho civil tiene carácter estatal",
+            "No, ya que las normas o disposiciones solo tienen eficacia en su territorio",
+            "Tiene que decidirlo una comisión de ambas comunidades",
+            "En caso de duda, se recurrirá al derecho sustantivo."
+        ],
+        "correcta": 1,
+        "explicacion": "CORRECTA: B Artículo 10 | Las disposiciones de los poderes públicos de las Illes Balears Las normas, las disposiciones y el Derecho Civil de la Comunidad Autónoma tienen eficacia en su territorio, sin perjuicio de las normas para resolver los conflictos de leyes y de las excepciones que puedan establecerse en cada materia."
+    },
+    {
+        "pregunta": "¿Un Decreto Ley, será elaborado por?",
+        "opciones": [
+            "El Gobierno",
+            "El Parlamento",
+            "Los Consells",
+            "Los partidos políticos"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 49 | Decretos leyes 1. En caso de extraordinaria y urgente necesidad, el Consejo de Gobierno podrá dictar medidas legislativas provisionales en forma de Decretos leyes que no podrán afectar a los derechos establecidos en este Estatuto, a las materias objeto de leyes de desarrollo básico del Estatuto de Autonomía, a los presupuestos generales de la Comunidad Autónoma, a la reforma del Estatuto, al régimen electoral ni al ordenamiento de las instituciones básicas de la Comunidad Autónoma de las Illes Balears. 2. Los Decretos leyes quedarán derogados si en el plazo improrrogable de treinta días subsiguientes a su promulgación no son convalidados expresamente por el Parlamento después de un debate y una votación de totalidad."
+    },
+    {
+        "pregunta": "Según el art. 64 del EAIB, que tipo de norma regulará el número de miembros que deben integrar cada Consejo Insular.",
+        "opciones": [
+            "La Ley Electoral.",
+            "El EAIB.",
+            "Una Ley de la Comunidad.",
+            "Una Ley del Parlamento."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 64 | Composición y régimen electoral. 1. Una ley del Parlamento regulará el número de miembros que deben integrar cada Consejo Insular, así como las causas de inelegibilidad y de incompatibilidad que les afecten."
+    },
+    {
+        "pregunta": "Régimen de aguas y aprovechamientos hidráulicos, canales y regadíos. Aguas minerales y termales. Ordenación y concesión de recursos y aprovechamientos, es una competencia de la Comunidad Autónoma de tipo?",
+        "opciones": [
+            "De desarrollo legislativo y ejecución",
+            "Exclusiva",
+            "Ejecutivas",
+            "De ampliación legislativa"
+        ],
+        "correcta": 1,
+        "explicacion": "ARTÍCULO 30.- COMPETENCIAS EXCLUSIVAS  8. Régimen de aguas y aprovechamientos hidráulicos, canales y regadíos. Aguas minerales y termales. Ordenación y concesión de recursos y aprovechamientos."
+    },
+    {
+        "pregunta": "Que artículo del EAIB hace referencia a como se realizará el ejercicio de las competencias de la CA.",
+        "opciones": [
+            "37",
+            "39",
+            "41",
+            "51"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 37 | Ejercicio de las competencias de la Comunidad Autónoma El ejercicio de todas las competencias de la Comunidad Autónoma se realizará de acuerdo con los términos que dispone la Constitución"
+    },
+    {
+        "pregunta": "Señale de las siguientes cuales son competencias de desarrollo legislativo y ejecución.",
+        "opciones": [
+            "Contratos y concesiones administrativas en el ámbito sustantivo de competencias de la Comunidad Autónoma.",
+            "Ordenación y planificación de la actividad turística de las Illes Balears.",
+            "La protección de datos de carácter colectivo respecto de los ficheros de titularidad de las Administraciones públicas de la Comunidad Autónoma y los entes u organismos de cualquier clase vinculados o dependientes de éstas.",
+            "Todas son correctas"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 31 | Competencias de desarrollo legislativo y ejecución 5. Contratos y concesiones administrativas en el ámbito sustantivo de competencias de la Comunidad Autónoma. 6. Ordenación y planificación de la actividad económica de las Illes Balears. 14. La protección de datos de carácter personal respecto de los ficheros de titularidad de las Administraciones públicas de la Comunidad Autónoma y los entes u organismos de cualquier clase vinculados o dependientes de éstas."
+    },
+    {
+        "pregunta": "Que art. Del EAIB., hace referencia a las competencias exclusivas de la CA.",
+        "opciones": [
+            "art. 15",
+            "art. 32",
+            "art. 29",
+            "art. 30"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 30 | Competencias exclusivas"
+    },
+    {
+        "pregunta": "En que título del EAIB, vienen recogidas las competencias de la misma.",
+        "opciones": [
+            "Título II",
+            "Título III",
+            "Título V",
+            "Título VI"
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La duración del mandato de los Diputados será de?",
+        "opciones": [
+            "5 años",
+            "4 años",
+            "No tiene límites",
+            "Ninguna es correcta"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 41 | Composición y régimen electoral 1. El Parlamento estará formado por los Diputados del territorio autónomo, elegidos por sufragio universal, igual, libre, directo y secreto, mediante un sistema de representación proporcional que asegurará una adecuada representación de todas las zonas del territorio. 2. La duración del mandato de los Diputados será de cuatro años."
+    },
+    {
+        "pregunta": "La Enseñanza de la lengua propia viene recogida en el artículo?",
+        "opciones": [
+            "45",
+            "35",
+            "30",
+            "40"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 35 | Enseñanza de la lengua propia"
+    },
+    {
+        "pregunta": "Señale de los siguientes cuales son competencias ejecutivas de la Comunidad Autónoma.",
+        "opciones": [
+            "Organización, régimen y funcionamiento de sus instituciones propias en el marco de este Estatuto.",
+            "Alteraciones de los términos municipales y denominación oficial de los municipios y topónimos.",
+            "Ordenación del territorio, incluyendo el litoral, el urbanismo y la vivienda.",
+            "Ninguna es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 30 | Competencias exclusivas La Comunidad Autónoma tiene la competencia exclusiva en las siguientes materias, sin perjuicio de lo dispuesto en el artículo 149.1 de la Constitución: 1. Organización, régimen y funcionamiento de sus instituciones propias en el marco de este Estatuto. 2. Alteraciones de los términos municipales y denominación oficial de los municipios y topónimos. 3. Ordenación del territorio, incluyendo el litoral, el urbanismo y la vivienda."
+    },
+    {
+        "pregunta": "Que artículo del EAIB hace referencia a la policía en las Islas Baleares",
+        "opciones": [
+            "33",
+            "35",
+            "37",
+            "43"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 33 | Policía de las Illes Balears"
+    },
+    {
+        "pregunta": "Según el artículo 48 del EAIB, quien ejerce la potestad legislativa.",
+        "opciones": [
+            "El Gobierno",
+            "El Consejo de Gobierno",
+            "El Parlamento",
+            "Los Consells"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 48 | Potestad legislativa 1. El Parlamento, mediante la elaboración de leyes, ejerce la potestad legislativa. El Parlamento podrá delegar en el Gobierno de la Comunidad Autónoma la potestad de dictar normas con rango de ley, en los mismos términos y supuestos de delegación previstos en la Constitución. No podrán ser objeto de delegación la aprobación de las leyes que necesitan, para ser aprobadas, una mayoría especial"
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

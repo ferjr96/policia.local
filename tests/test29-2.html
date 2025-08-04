@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Atendiendo a la Ley 11/2016. ¿Qué artículo regula las definiciones de violencia machista?",
+        "opciones": [
+            "El artículo 56.",
+            "El artículo 65.",
+            "El artículo 35.",
+            "El artículo 55."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El Título V “Violencia machista”, Capítulo I “Principios generales” se inicia con el artículo 65 “definición”."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 ¿qué figura deberá fomentar el Observatorio de Igualdad?",
+        "opciones": [
+            "La figura del agente de igualdad de oportunidades de mujeres y hombres en el ámbito privado",
+            "La figura del agente de igualdad de oportunidades de mujeres y hombres en el ámbito público y privado",
+            "La figura del técnico o técnica de igualdad de oportunidades de mujeres y hombres en el ámbito público",
+            "La figura del técnico o técnica de igualdad de oportunidades de mujeres y hombres en el ámbito público o privado"
+        ],
+        "correcta": 1,
+        "explicacion": "Justificación: La respuesta correcta es la B. El artículo 18 señala. “se fomentará la figura del agente de igualdad de oportunidades de mujeres y hombres en los ámbitos público y privado”"
+    },
+    {
+        "pregunta": "Cuántos centros de atención y asistencia psicológica, social y jurídica específica debe haber como mínimo según la Ley 11/2016?",
+        "opciones": [
+            "Uno por cada isla",
+            "Uno en las islas de más de 20.000 habitantes",
+            "Uno en el territorio de las Islas Baleares",
+            "Dos en las islas de gran población."
+        ],
+        "correcta": 0,
+        "explicacion": "Justificación: La respuesta correcta es la A. El artículo 70 señala: Los centros de información y asesoramiento, además, prestarán asistencia psicológica y jurídica específica. Como mínimo, deberá haber un centro por cada isla. Las islas con más población tendrán que disponer de un centro por cada 100.000 mujeres. En este caso debemos tener en cuenta que se están marcando unos mínimos imprescindibles."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 ¿Qué pasa si la mujer víctima de violencia no tiene ningún tipo de prueba cualificada?",
+        "opciones": [
+            "Podrá aportar medios de prueba específicos",
+            "Podrá aportar medios de prueba técnicos",
+            "Tendrá que presentar testigos y grabaciones de la violencia",
+            "Tendrá que contratar un detective para poder aportar los medios de prueba cualificados."
+        ],
+        "correcta": 0,
+        "explicacion": "Justificación: La respuesta correcta es la A. El artículo 78.2 señala: Si no existen algunos de los medios establecidos en el apartado 1 de este artículo, son medios específicos de identificación de las situaciones de violencia machista, siempre que expresen la existencia de indicios de que una mujer la ha sufrido o está en riesgo verosímil de sufrirla (…)"
+    },
+    {
+        "pregunta": "Laura está buscando trabajo, leyendo el periódico ve el siguiente anuncio: “se busca mujer de 25 a 40 años para labores de administración en oficina de lunes a viernes en turno partido”. ¿Es una anuncio discriminatorio?",
+        "opciones": [
+            "Si, es discriminatorio por razón de edad.",
+            "Sí, es discriminatorio por razón de sexo.",
+            "Sí, es discriminatorio por razón de horario.",
+            "Las respuestas a) y b) son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d) puesto que el artículo 3.1 apartado a) señala:” La igualdad de trato de mujeres y hombres, que implica la ausencia de cualquier discriminación, directa o indirecta, por razón de sexo, en los ámbitos político, social, laboral, cultural, deportivo, de la salud, educativo y económico, en particular en cuanto al empleo, la formación profesional y las condiciones laborales”."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 ¿cuántas unidades para la Igualdad se constituirán o se designarán?",
+        "opciones": [
+            "Una en cada Conselleria",
+            "Habrá un órgano responsable o unidad administrativa en los Consejos insulares y en los municipios de más de 20.000 habitantes.",
+            "Habrá un órgano responsable o unidad administrativa en cada Consell insular y en cada ayuntamiento",
+            "La a y la b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Justificación: La respuesta correcta es la D. El artículo 19 señala: Para impulsar medidas para la igualdad, se constituirá o designará en cada consejería una unidad administrativa con el objeto de ejecutar lo dispuesto en esta ley y en el plan estratégico de igualdad de mujeres y hombres que apruebe el Gobierno de las Illes Balears. Esta unidad contará con profesionales formados en igualdad de género. 2. Los consejos insulares y los municipios de más de 20.000 habitantes, en el ámbito de sus competencias de autoorganización, adecuarán sus estructuras de modo que dispongan de un órgano responsable o unidad administrativa que se encargue de impulsar, programar y evaluar las políticas de igualdad de mujeres y hombres en sus respectivos ámbitos de actuación territorial, y de asesorar sobre estas políticas."
+    },
+    {
+        "pregunta": "Matías trabaja en el call center del 061. Acaba de tener un hijo y solicita una reducción de jornada para poder cuidar del bebé. La empresa le deniega la reducción por imposibilidades organizativas. Escoge la opción correcta.",
+        "opciones": [
+            "Es una discriminación indirecta por razón de sexo.",
+            "Es una discriminación indirecta ya que lo sufre el hombre.",
+            "No es ningún tipo de discriminación ya que solo lo sería si lo sufre la mujer.",
+            "Es un delito de discriminación."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a). Según el artículo 3.1 opción a) La igualdad de trato de mujeres y hombres, que implica la ausencia de cualquier discriminación, directa o indirecta, por razón de sexo, en los ámbitos político, social, labora (l…). Matías debe poder acogerse a su derecho de solicitar su reducción de jornada de igual forma que lo puede hacer una mujer. Esta pregunta está basada en un caso real, lo podéis consultar en: https://elpais.com/economia/2021/08/03/mis_derechos/1627987720_837890.html"
+    },
+    {
+        "pregunta": "En el año 1983, el grupo ingles de rock “Te Police” con su cantante Sting a la cabeza compusieron “Ebert breath you take”. Esta canción ha sido y es una de las más escuchadas. Su estribillo dice lo siguiente: \"Oh, ¿no puedes ver que tú me perteneces? Cómo duele mi pobre corazón con cada paso que das. Cada movimiento que hagas, y cada promesa que rompas cada sonrisa que finjas, cada parte que reclames, te estaré vigilando\". (La puedes escuchar aquí https://www.youtube.com/watch?v=OMOGaugKpzs) Según la ley 11/2016 ¿Qué tipo de violencia es?",
+        "opciones": [
+            "Violencia psicológica.",
+            "Violencia simbólica.",
+            "Violencia física.",
+            "No es un tipo de violencia porque es una canción."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El artículo 65.4 apartado e) señala “Violencia simbólica, que incluye iconos, representaciones, narrativas, imágenes, etc., que reproducen o transmiten relaciones de dominación de los hombres respecto de las mujeres, así como desigualdades de poder entre sexos y de segregación”."
+    },
+    {
+        "pregunta": "¿Quiénes promoverán la realización de investigaciones sobre las causa, características, dificultades para identificar los problemas y las consecuencias de las diferentes formas de violencia sexista, la eficacia y la idoneidad de las medidas aplicadas para erradicarla y para reparar los efectos que esta causa?",
+        "opciones": [
+            "El gobierno",
+            "El Consell insular en su ámbito territorial.",
+            "Las administraciones públicas de las Illes Balears",
+            "El parlamento de las Illes Balears"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La respuesta correcta es la C. El artículo 66 señala: Las administraciones públicas de las Illes Balears promoverán la investigación sobre las causas, las características, las dificultades para identificar los problemas y las consecuencias de las diferentes formas de violencia sexista, así como sobre la eficacia y la idoneidad de las medidas aplicadas para erradicarla y para reparar sus efectos."
+    },
+    {
+        "pregunta": "¿Cuáles son los medios de prueba cualificados para acceder a los derechos establecidos en la sección 2ª del capítulo I del título V de la Ley 11/2016?",
+        "opciones": [
+            "La sentencia del Juzgado de Violencia sobre la Mujer, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de violencia. La orden de protección vigente. El informe de la Inspección de Trabajo y Seguridad Social.",
+            "La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de violencia. La orden de protección vigente. El informe de la Inspección de Trabajo y Seguridad Social.",
+            "La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de violencia. La orden de protección vigente. El informe de la Inspección de Trabajo y Seguridad Social, el atestado elaborado por las FFCCSS.",
+            "La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de violencia. El informe del Ministerio Fiscal. La orden de protección vigente. El informe de la Inspección de Trabajo y Seguridad Social."
+        ],
+        "correcta": 1,
+        "explicacion": "Justificación: La respuesta correcta es la B. El artículo 78 señala: 1. A efectos de acceder a los derechos establecidos en esta sección, son medios de prueba cualificados para identificar las situaciones de violencia machista los siguientes: a) La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta violencia. b) La orden de protección vigente. c) El informe de la Inspección de Trabajo y Seguridad Social."
+    },
+    {
+        "pregunta": "¿Cuál es la definición de violencia machista según la ley 11/2016?",
+        "opciones": [
+            "Es aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres.",
+            "Es aquella que violencia que se ejerce sobre las mujeres por el hecho mismo de ser mujeres.",
+            "Es aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres.",
+            "Es aquella que, como manifestación de superioridad de la mujer sobre el hombre, este ejerce contra ella para igualar la balanza del equilibrio entre sexos."
+        ],
+        "correcta": 0,
+        "explicacion": "Justificación: La respuesta correcta es la A. El artículo 65 señala: A los efectos de esta ley, se entiende por violencia machista aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres"
+    },
+    {
+        "pregunta": "Según la ley 11/2016 ¿a que tipo de actos comprende la violencia machista?",
+        "opciones": [
+            "Cualquier acto de violencia contra la mujer.",
+            "Cualquier acto de violencia por razón de sexo que tenga como consecuencia, o que pueda tener como consecuencia, un perjuicio o sufrimiento en la salud física, sexual o psicológica.",
+            "Las amenazas, la coerción y las privaciones arbitrarias de su libertad tanto si se producen en la vida pública como en la privada.",
+            "La respuesta b y c son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Justificación: La respuesta correcta es la DEl artículo 65 señala: La violencia a la que se refiere esta ley comprende cualquier acto de violencia por razón de sexo que tenga como consecuencia, o que pueda tener como consecuencia, un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos, la coerción y las privaciones arbitrarias de su libertad, tanto si se producen en la vida pública como en la privada."
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre hombres y mujeres, son medios de prueba cualificados para identificar las situaciones de violencia machista:",
+        "opciones": [
+            "La orden de protección vigente. El informe de la inspección de trabajo y Seguridad Social. La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta violencia.",
+            "La orden de protección vigente. El atestado elaborado por las fuerzas y cuerpos de seguridad que han presenciado directamente alguna manifestación de violencia machista. La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta violencia.",
+            "La orden de protección. El informe de la inspección de trabajo. La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta violencia.",
+            "La orden de protección vigente. El informe del Ministerio Fiscal. La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta violencia."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a). El artículo 78 enumera cuales son los medios de prueba cualificados para identificar las situaciones de violencia machista siendo los que se encuentran en dicho apartado. Es importante que la orden de protección sea VIGENTE."
+    },
+    {
+        "pregunta": "Atendiendo a la ley 11/2016, es un medio de prueba cualificado:",
+        "opciones": [
+            "La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta discriminación.",
+            "La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta violencia.",
+            "La sentencia de cualquier orden jurisdiccional, que no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta violencia.",
+            "La orden de protección."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El artículo 78. 1 señala. A efectos de acceder a los derechos establecidos en esta sección, son medios de prueba cualificados para identificar las situaciones de violencia machista los siguientes: a) La sentencia de cualquier orden jurisdiccional, aunque no sea firme, que declare que las mujeres han sufrido alguna de las formas de esta violencia. b) La orden de protección vigente. c) El informe de la Inspección de Trabajo y Seguridad Social."
+    },
+    {
+        "pregunta": "La Defensora o defensor de la igualdad de mujeres y hombres se encuentra en:",
+        "opciones": [
+            "Título I Capítulo II Sección 3ª de la Ley 11/2016",
+            "Título II Capítulo I Sección 2ª de la Ley 11/2016",
+            "Título II Capítulo II Sección 3ª de la Ley 11/2016",
+            "Título I Capítulo II Sección 1ª de la Ley 11/2016"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La respuesta correcta es la C."
+    },
+    {
+        "pregunta": "¿En que casos por actos de violencia machista, puede personarse la Administración de la Comunidad Autónoma de las Islas Baleares?",
+        "opciones": [
+            "Solo en casos de muerte a las mujeres.",
+            "Solo en casos de lesiones graves a las mujeres.",
+            "Solo en casos de muerte y lesiones graves a las mujeres.",
+            "La Administración de la Comunidad Autónoma no se puede personar, solo lo puede hacer el Ministerio Fiscal en casos de lesiones graves y/o muerte de gran relevancia social."
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la c). El artículo 72 señala: “La Administración de la comunidad autónoma de las Illes Balears se personará, de acuerdo con la legislación procesal vigente, en los procedimientos por actos de violencia machista cometidos en las Illes Balears en los que se causen la muerte o lesiones graves a las mujeres”"
+    },
+    {
+        "pregunta": "Una mujer es acogida en una centro de acogida y servicio de urgencia ya que ha tenido que huir de su domicilio porque su marido, aficionado a la caza, ha disparado contra ella con el objetivo de matarla. Horas después, el marido localiza a la mujer y accede al centro llevándosela a la fuerza. Según la ley 11/2016 Que medidas mínimas debe tener el centro para que esto no ocurra?",
+        "opciones": [
+            "Debe disponer de un agente de paisano encargado de la vigilancia del centro.",
+            "Debe disponer de instalaciones aseguradas mediante aperturas digitales.",
+            "Tener las condiciones de seguridad suficientes y necesarias para salvaguardar la integridad física de las víctimas y de su personal.",
+            "Tener una patrulla de policía de la zona que éste disponible para este tipo de incidencias ."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). El artículo 71.4 señala: Como mínimo, los servicios cumplirán las siguientes características: a) Ser accesibles a cualquier mujer, con sus hijas e hijos a cargo, que sea víctima de violencia machista y que necesite protección y alojamiento urgente y temporal, independientemente de su situación personal, jurídica o social y especialmente sin la exigencia de tener que interponer una denuncia por los hechos sufridos. b) Disponer de personal suficiente para una primera acogida y para llevar a cabo tareas de acompañamiento a las víctimas. c) Tener las condiciones de seguridad suficientes y necesarias para salvaguardar la integridad física de las víctimas y de su personal. d) Aplicar los protocolos de derivación a los servicios ordinarios para intervenir en estas situaciones. e) Disponer de servicios específicas de atención para las y los menores."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 ¿Quién elaborará y desarrollará los protocolos de intervención para la atención a las víctimas de violencia machista en cualquiera de las fases del proceso en que se encuentre?",
+        "opciones": [
+            "El Gobierno de las Islas Baleares.",
+            "El Consell Insular respectivo.",
+            "El Gobierno de las Islas Baleares a través del Instituto Balear de la Mujer.",
+            "Ninguna de las respuestas es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). El artículo 77 de la ley 11/2016 señala que será el Gobierno de las Islas Baleares, a través del Instituto Balear de la Mujer elaborará y desarrollará, junto con el resto de administraciones e instituciones competentes, los protocolos de intervención para la atención a las víctimas de violencia machista."
+    },
+    {
+        "pregunta": "Claudia conoce a Juan a través de Tinder. En seguida se establece súper buena conexión y, tras darse el teléfono y hablar por whatssap, deciden quedar para hacer unas cañas. Durante la cita se toman varias cañas y como se sienten cómodos, deciden cenar y la cosa se alarga. Una vez acabada la velada, Juan le dice a Claudia que la puede llevar a casa sin embargo, en vez de llevarla a casa, él se desvía del camino para llevarla a la suya a “hacer la última copa”. Claudia le dice en varias ocasiones que no desea ir a su casa y que pare el coche sin que Juan haga caso a sus peticiones. En vista de que Juan estaba obcecado en llevarla a su casa, Claudia aprovechó un semáforo en rojo para salir del vehículo a la carrera. ¿Qué tipo de violencia ha sufrido Claudia?",
+        "opciones": [
+            "Violencia machista.",
+            "Violencia de género.",
+            "Violencia machista de tipo sexual.",
+            "Violencia machista de tipo psicológico."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). Según el artículo 65 de la ley 11/2016 se entiende por VIOLENCIA MACHISTA aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres. En este caso, se considera que el hecho de que Juan haga caso omiso a lo que Claudia desea, es un acto, per se, de superioridad y control sobre la mujer (es el “unga, unga” cavernícola de “te llevo a mi cueva”). Así mismo si atendemos al apartado 4 sección b (artículo 65.4b) en la definición de violencia psicológica se incluyen actitudes tanto verbales como NO VERBALES de coerción y limitaciones de su ámbito de libertad."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 las competencias en materia de políticas de género, conciliación de la vida familiar y laboral y mujer, así como todas las potestades vinculadas específicamente a la prevención y la atención integral de la violencia machista ¿Por quién serán ejercidas?",
+        "opciones": [
+            "El Consell de Mallorca en su ámbito territorial.",
+            "Los ayuntamientos de más de 20.000 habitantes.",
+            "El Consell Insular en el conjunto de las Islas Baleares.",
+            "La Administración de la Comunidad Autónoma en base a la Ley Reguladora de Bases de Régimen Local."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). El artículo 12 señala: “Las competencias en materia de políticas de género, conciliación de la vida familiar y laboral y mujer, así como todas las potestades vinculadas específicamente a la prevención y la atención integral de la violencia machista, serán ejercidas por la Administración de la comunidad autónoma en el conjunto de las Illes Balears o por las administraciones de los consejos insulares, en sus respectivos ámbitos territoriales, de conformidad con lo establecido en el Estatuto de Autonomía de las Illes Balears, esta ley y el resto de normativa, estatal o autonómica, que sea de aplicación” Así miso debéis tener en cuenta, que ese mismo artículo en el apartado 2 hace mención a los ayuntamientos, los cuales pueden ejercer estas competencias, dice así: Las administraciones locales de las Illes Balears también pueden ejercer competencias en las materias de promoción de la igualdad de oportunidades y de prevención de la violencia machista, pero solo en los términos y las condiciones establecidos en la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local (LRBRL), y en esta ley”"
+    },
+    {
+        "pregunta": "Laura, al ver el anuncio en el periódico” “se busca mujer de 25 a 40 años para labores de administración en oficina de lunes a viernes en turno partido” ¿Qué puede hacer?",
+        "opciones": [
+            "Puede poner en conocimiento de los hechos a Inspección de Trabajo y Seguridad Social.",
+            "Puede ir directamente a poner una denuncia a las fuerzas y Cuerpos de seguridad.",
+            "Puede ir al Juzgado de Guardia para interponer una denuncia por la vía Penal.",
+            "Ninguna de las opciones es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "La repuesta correcta es la a). Para este caso concreto, Laura puede poner en conocimiento los hechos a Inspección de Trabajo y Seguridad Social. Para ello deberá dar los siguientes datos: identificación personal del denunciante y su firma, siendo necesario incluir teléfono de contacto. Los hechos presuntamente constitutivos de infracción(en este caso el anuncio) Concretando qué se denuncia y a qué materia concreta afecta (laboral, Seguridad Social, etc.). Fecha y lugar en el que se produjeron los hechos. Identificación de los presuntamente responsables, señalando el empleador o empresario al que se denuncia. Demás circunstancias relevantes, acompañando, en su caso, la documentación justificativa. Debemos tener en cuenta que la Ley 11/2016 de igualdad entre hombres y mujeres no es una herramienta “puramente policial” dependiendo del caso, las víctimas deberán dirigirse a un departamento u otro dependiendo del tipo de discriminación y la gravedad de los hechos."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 la Comisión para la Igualdad de Género se encarga de:",
+        "opciones": [
+            "Coordinar las políticas y los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres.",
+            "Proponer la política del Gobierno en relación con la violencia sobre la mujer y coordinar e impulsar todas las actuaciones que se realicen en dicha materia.",
+            "Servir como centro de análisis de la situación y evolución de la violencia sobre la mujer, así como asesorar y colaborar con el Delegado en la elaboración de propuestas y medidas para erradicar este tipo de violencia.",
+            "Ninguna de las respuestas es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Justificación: La respuesta correcta es la A. EL artículo 20 señala: “Se crea la Comisión para la Igualdad de Género como el órgano encargado de coordinar las políticas y los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres.”"
+    },
+    {
+        "pregunta": "¿Cuál de las opciones podría decirse que vulnera un principio general de la ley 11/2016?",
+        "opciones": [
+            "Una empresa de eventos organiza una carrera popular. Los premios para la categoría masculina son de 1500 euros para el primer clasificado y para la categoría femenina son 1000 euros para la primera clasificada.",
+            "Una empresa quiere contratar a María y le pregunta si desea tener hijos",
+            "Un anuncio de demanda de empleo para un hotel se oferta de la siguiente manera “se busca camarera de pisos y mozo de almacén”",
+            "Todas ellas."
+        ],
+        "correcta": 3,
+        "explicacion": "La opción correcta es la d). La a) se vulnera el principio del apartado a La igualdad de trato de mujeres y hombres, que implica la ausencia de cualquier discriminación, directa o indirecta, por razón de sexo, en los ámbitos político, social, laboral, cultural, deportivo, de la salud, educativo y económico, en particular en cuanto al empleo, la formación profesional y las condiciones laborales. La opción b) se vulnera el apartado e) El reconocimiento de la maternidad libre y decidida y de los derechos sexuales reproductivos, a fin de evitar efectos negativos y obstáculos en el desarrollo de las libertades de las mujeres puesto que no pueden pedir ese tipo de información en una entrevista de trabajo. La opción c) vulnera el principio del apartado m) La adopción de las medidas necesarias para hacer un uso no sexista del lenguaje y en todo caso, para evitar la invisibilidad de las mujeres a través del lenguaje."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 ¿quiénes están representados en la Comisión para la Igualdad de Género?",
+        "opciones": [
+            "El Gobierno, los Consejos insulares, el Ayuntamiento de Palma y el EBAP",
+            "El Gobierno, los Consejos insulares, el Ayuntamiento de Palma y el SOIB",
+            "El Gobierno, los Consejos insulares, el Ayuntamiento de Palma y la FELIB",
+            "El Gobierno, los Consejos insulares y el Ayuntamiento de Palma"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La respuesta correcta es la C. El artículo 20 señala: En la comisión estarán representados el Gobierno, los consejos insulares, la Federació d’Entitats Locals de les Illes Balears (FELIB) y el Ayuntamiento de Palma."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 ¿Quiénes son víctimas de violencia machista?",
+        "opciones": [
+            "Las mujeres que sufren esa violencia",
+            "Las mujeres que sufren esa violencia y los hombres que la ejercen por tener una mentalidad misógina",
+            "Las mujeres que la sufren y sus hijos e hijas",
+            "Las mujeres que la sufren cuando esta se produce en el entorno familiar"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La repuesta correcta es la C. El artículo 65 señala: A los efectos de esta ley, también se consideran víctimas las hijas y los hijos de la madre víctima de violencia."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 para la formación de la Comisión para la Igualdad de Género en cuanto a personal que lo forma:",
+        "opciones": [
+            "Se realizará una partida presupuestaria para incrementar el personal laboral o funcionario para que ejerza las tareas para el puesto de la Comisión.",
+            "Se realizará una partida presupuestaria para designar una persona para que realice las funciones encomendadas en la Comisión",
+            "Se designará una persona que sea responsable para que ocupar el puesto en la comisión para la igualdad de género",
+            "No implicará en ningún caso incremento de personal laboral o funcionario ni de cargos de designación en la coordinación, y las correspondientes tareas y responsabilidades se distribuirán entre las diferentes administraciones participantes y partiendo de los puestos de trabajo existentes."
+        ],
+        "correcta": 3,
+        "explicacion": "Justificación: La respuesta correcta es la D. El artículo 20 señala: El reglamento que se elabore no implicará en ningún caso incremento de personal laboral o funcionario ni de cargos de designación en la coordinación, y las correspondientes tareas y responsabilidades se distribuirán entre las diferentes administraciones participantes y partiendo de los puestos de trabajo existentes."
+    },
+    {
+        "pregunta": "¿Como se titula la Sección 2ª del Capítulo II del Título II de la Ley 11/2016?",
+        "opciones": [
+            "Organismos de coordinación y consulta",
+            "Organismos de coordinación y consultivos",
+            "Órganos de coordinación y consulta",
+            "Órganos de coordinación y consultivos"
+        ],
+        "correcta": 3,
+        "explicacion": "Justificación: La respuesta correcta es la D"
+    },
+    {
+        "pregunta": "¿Cada cuánto tiempo se hará una evaluación de la eficacia de los recursos en materia de violencia contra las mujeres y sus hijos e hijas?",
+        "opciones": [
+            "El instituto Balear de la Mujer, junto con el Observatorio para la igualdad, realizarán cada año un informe que presentarán al Parlamento de las Islas Baleares.",
+            "El instituto Balear de la Mujer, realizará cada cuatro años un informe que presentará al Parlamento de las Islas Baleares.",
+            "El Observatorio para la igualdad realizará cada año un informe que presentará al Parlamento de las Islas Baleares. Las otras administraciones públicas implicadas deberán colaborar en el preceptivo informe.",
+            "El Instituto Balear de la Mujer realizará cada año un informe que presentará al Parlamento de las Islas Baleares. Las otras administraciones públicas implicadas deberán colaborar en el preceptivo informe."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). El artículo 66.2 señala: “Anualmente, el Instituto Balear de la Mujer elaborará una evaluación de la eficacia de los recursos existentes en las Illes Balears en materia de violencia contra las mujeres y sus hijas e hijos, que se presentará al Parlamento de las Illes Balears. Con esta finalidad, las otras administraciones publicas implicadas deberán facilitarle toda la información disponible de los recursos y los programas dependientes de ellas”"
+    },
+    {
+        "pregunta": "Como maestra adjunta a la UIB he observado que de los diez puestos de dirección para la investigación ocho han sido asignados a mis compañeros varones, pese a que se han presentado candidaturas femeninas para encabezar esos puestos. La junta de la UIB se escuda en que la experiencia de las personas admitidas es superior al resto. ¿Quién es el encargado, según la ley 11/2016 de investigar situaciones de discriminación?",
+        "opciones": [
+            "La Conselleria de Educación.",
+            "La propia UIB.",
+            "La Administración de la Comunidad autónoma.",
+            "El Consell insular de Mallorca."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c. El artículo 13 nos habla de las competencias del Gobierno y de la Administración de la Comunidad Autónoma de las I.B. Su apartado p) señala que tiene la potestad de investigar y detectar situaciones de discriminación por razón de sexo y adoptar las medidas para su erradicación. Así mismo el artículo 66 de este tema, también hace mención a este apartado."
+    },
+    {
+        "pregunta": "Una mujer desea montar un empresa para dar asesoramiento y prestar servicios en materia de igualdad de mujeres y hombres. ¿A quién debe acudir para saber las condiciones que debe cumplir?",
+        "opciones": [
+            "Al ayuntamiento correspondiente.",
+            "A la PIMEN (federación de pequeña y mediana empresa).",
+            "Al Gobierno de las Islas Baleares.",
+            "Al Consell Insular respectivo."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). Si atendemos al artículo 16 de la Ley 11/2016, será el Gobierno de las Islas Baleares el encargado de fijar un reglamento sobre los principios generales y las condiciones mínimas básicas y comunes que se aplicarán a las acreditaciones de entidades privadas que deseen prestar servicios en materia de igualdad de mujeres y hombres."
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre hombres y mujeres, son medios específicos de identificación de situaciones de violencia machista (señala la más correcta):",
+        "opciones": [
+            "El informe del Instituto Balear de la Mujer y de los departamentos competentes en esta materia de los consejos insulares.",
+            "El atestado elaborado por cualquier agente de las fuerzas y cuerpos de seguridad.",
+            "Cualquier medida judicial cautelar de protección, seguridad o de aseguramiento.",
+            "Ninguna de ellas es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a). El artículo 78.2 nos habla sobre los medios específicos de identificación de situaciones de VM siendo el Instituto Balear de la Mujer y sus departamentos competentes en esta materia de los consejos insulares, personal técnico especializado en VM, por ello su informe puede ser utilizado como medio específico de identificación. El apartado b) no es correcto porque para que sea medio específico debe ser un atestado elaborado por los agentes que han presenciado directamente alguna manifestación de VM. La opción c tampoco es correcta porque las medidas judiciales deben ser VIGENTES."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 la Defensora o defensor de la igualdad de mujeres y hombres estará adscrito a:",
+        "opciones": [
+            "La sindicatura de Greuges",
+            "El Consell insular respectivo",
+            "La Conselleria competente en materia de igualdad",
+            "Al ayuntamiento de Palma."
+        ],
+        "correcta": 0,
+        "explicacion": "Justificación: La respuesta correcta es la A. El artículo 22 señala: Con esta finalidad, puede nombrarse una defensora o un defensor de la igualdad de mujeres y hombres adjunta o adjunto a la Sindicatura de Greuges."
+    },
+    {
+        "pregunta": "Claudia conoce a Juan a través de Tinder. En seguida se establece súper buena conexión y, tras darse el teléfono y hablar por whatssap, deciden quedar para hacer unas cañas. Durante la cita se toman varias cañas y como se sienten cómodos, deciden cenar y la cosa se alarga. Una vez acabada la velada, Juan le dice a Claudia que la puede llevar a casa sin embargo, en vez de llevarla a casa, él se desvía del camino para llevarla a la suya a “hacer la última copa”. Claudia le dice en varias ocasiones que no desea ir a su casa y que pare el coche sin que Juan haga caso a sus peticiones. En vista de que Juan estaba obcecado en llevarla a su casa, Claudia aprovechó un semáforo en rojo para salir del vehículo a la carrera. Tras lo ocurrido, Claudia habla con una amiga la cual le aconseja que vaya a denunciar lo sucedido. ¿A que lugares puede acudir a poner la denuncia?",
+        "opciones": [
+            "Policía local o Nacional.",
+            "Guardia Civil.",
+            "Al Juzgado de violencia sobre la mujer.",
+            "A y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). Debemos tener en cuenta la diferencia entre violencia machista y violencia de género. El caso entre Claudia y Juan no es un caso de violencia de género, puesto que no ha habido ni hay una análoga relación de afectividad por lo que Claudia no podrá acudir al Juzgado de Violencia sobre la mujer, puesto que ellos tienen competencia exclusiva en casos de violencia de género. Si como policías nos encontramos esta intervención, Claudia podría poner denuncia por una detención ilegal del artículo 163.1 del Código Penal “el particular que encerrare a otro o detuviere a otro, privándole de su libertad"
+    },
+    {
+        "pregunta": "A los efectos de la Ley 11/2016 ¿Qué se considera violencia machista?",
+        "opciones": [
+            "La violencia física, violencia psicológica, violencia económica, violencia simbólica, violencia sexual, abusos y agresiones sexuales, feminicidio y la mutilación genital femenina.",
+            "La violencia física, violencia psicológica, violencia económica, violencia simbólica, violencia sexual, violencia de género, feminicidio y la mutilación genital femenina.",
+            "La violencia física, violencia psicológica, violencia económica, violencia simbólica, violencia sexual, abusos y agresiones sexuales, feminicidio y la mutilación genital femenina y el asesinato",
+            "La violencia física, violencia psicológica, violencia económica, violencia informática, violencia sexual, abusos y agresiones sexuales, feminicidio y la mutilación genital femenina."
+        ],
+        "correcta": 0,
+        "explicacion": "Justificación: La respuesta correcta es la A. El artículo 65 enumera en su apartado 4 lo que según la ley se considera violencia machista. Siendo los conceptos que se recogen en el apartado a."
+    },
+    {
+        "pregunta": "Xisca empieza a trabajar como Policía Local. Una de las funciones que le apetece más desarrollar en su carrera profesional es el de atender a mujeres víctimas en violencia de género. Xisca, envuelta en su nube de ilusión, hace un escrito y se ofrece a trabajar en este ámbito. La contestación por parte de la jefatura es que debe presentar una formación básica en la materia.",
+        "opciones": [
+            "Cierto, la ley 11/2016 de igualdad de mujeres y hombres señala que las personas que dediquen sus servicios a la atención de mujeres víctimas de violencia de género, deberán acreditar unos conocimientos mínimos en la materia.",
+            "La c) y la d) son correctas.",
+            "Falso, la Ley 11/2016 señala que las administraciones públicas garantizarán que los cuerpos de policías locales dependientes de ellas y todo el personal que pueda intervenir en la atención a las mujeres víctimas de violencia de género dispongan de la formación básica adecuada.",
+            "Falso, la Ley 11/2016 señala que las administraciones públicas garantizarán que los cuerpos de policías locales dependientes de ellas y todo el personal que pueda intervenir en la atención a las mujeres víctimas de violencia de género dispongan de la formación y la capacitación específicas y permanentes en materia de prevención, asistencia y protección de las mujeres que sufren violencia machista."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El artículo 67 señala: “Las administraciones publicas garantizarán que los cuerpos policiales dependientes de ellas y todo el personal que pueda intervenir en la atención a las víctimas de violencia de género dispongan de la formación básica adecuada en materia de violencia machista y de la formación y la capacitación específicas y permanentes en materia de prevención, asistencia y protección de las mujeres que sufren violencia machista.” Esta claro que para atender de una forma correcta y profesional lo adecuado es tener formación especializada en la materia, sin embargo es la administración la que debe darnos las facilidades para dar ese servicio de calidad, no es el propio agente el que debe contar ya con esa formación. Si bien es cierto, que si la plaza viene dada por un concurso de méritos esos conocimientos se tendrán en cuenta, no deben son requisitorios para el acceso al puesto."
+    },
+    {
+        "pregunta": "¿Cómo se titula el Título V de la Ley 11/2016?",
+        "opciones": [
+            "Violencia contra la mujer",
+            "Violencia de género",
+            "Violencia machista",
+            "Violencia del hombre contra la mujer"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La respuesta correcta es la C. El título V se llama Violencia machista."
+    },
+    {
+        "pregunta": "Una mujer desea montar un empresa para dar asesoramiento y prestar servicios en materia de igualdad de mujeres y hombres. ¿A quién debe acudir para saber las condiciones que debe cumplir?",
+        "opciones": [
+            "Al ayuntamiento correspondiente.",
+            "A la PIMEN (federación de pequeña y mediana empresa).",
+            "Al Gobierno de las Islas Baleares.",
+            "Al Consell Insular respectivo."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). Si atendemos al artículo 16 de la Ley 11/2016, será el Gobierno de las Islas Baleares el encargado de fijar un reglamento sobre los principios generales y las condiciones mínimas básicas y comunes que se aplicarán a las acreditaciones de entidades privadas que deseen prestar servicios en materia de igualdad de mujeres y hombres."
+    },
+    {
+        "pregunta": "Ana vive en la zona de Cala Saona, con su hija de 9 meses, Cintia. Ella lleva sola en la isla desde que nació el bebé y no tiene familiares. Su expareja, José, la dejó cuando supo del embarazo y ella se ha hecho cargo de Cintia desde el primer día. José un bebedor empedernido y aficionado a las tragaperras, se ha quedado sin blanca y acude de forma insistente a Ana para que le deje dinero porque no puede llegar a fin de mes. Ana le ha dicho que no quiere darle dinero pero él la persigue de forma constante. Ana no sabe que hacer ni donde acudir ¿Qué puede hacer?",
+        "opciones": [
+            "Puede acudir a la policía y poner denuncia.",
+            "Puede acudir a un centro de atención y asistencia para que le den información y asesoramiento.",
+            "Puede acudir al Juzgado de Violencia sobre la mujer y poner denuncia.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). Juan está cometiendo un tipo de acosos conocido como “stalking”. Se trata de un patrón de conducta insidioso y reiterado que, perpetrado en contra de la voluntad de la victima, es susceptible de provocar en esta ciertos efectos negativos, como intranquilidad o miedo (Pujols, 2019). Esta conducta puede ser denunciada por la víctima y, en este caso, al haber tenido una análoga relación de afectividad es víctima de violencia de género. Si os interesa el tema del stalking podéis leer: https://violenciagenero.igualdad.gob.es/violenciaEnCifras/estudios/Tesis/pdfs/Tesis_9_Stalking.pdf"
+    },
+    {
+        "pregunta": "¿Cuántos capítulos tiene el título V de la Ley 11/2016?",
+        "opciones": [
+            "1",
+            "2",
+            "3",
+            "No tiene"
+        ],
+        "correcta": 0,
+        "explicacion": "Justificación: La respuesta correcta es la A. Consta del Capítulo I llamado principios generales"
+    },
+    {
+        "pregunta": "¿Cuál es la finalidad del Consejo de Participación de las Mujeres?",
+        "opciones": [
+            "Favorecer el asociacionismo y la participación de las mujeres en los temas que puedan afectarlas.",
+            "Favorecer talleres para la participación de las mujeres",
+            "Favorecer la participación de las mujeres en temas históricamente destinados a los hombres",
+            "Ese consejo no existe"
+        ],
+        "correcta": 0,
+        "explicacion": "Justificación: La respuesta correcta es la A. El artículo 21 señala: En el marco de esta ley, el Consejo de Participación de las Mujeres se configura como el máximo órgano de participación de carácter autonómico con la finalidad de favorecer el asociacionismo y la participación de las mujeres en los temas que puedan afectarlas."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 ¿Quién dará apoyo técnico y administrativo en materia de igualdad a los municipios de menos de 20.000 habitantes?",
+        "opciones": [
+            "El Gobierno de las Islas Baleares",
+            "La Comunidad autónoma de las Islas Baleares",
+            "Los Consejos Insulares",
+            "Los poderes públicos de las Islas Baleares"
+        ],
+        "correcta": 2,
+        "explicacion": "Justificación: La respuesta correcta es la C. El artículo 19.3 señala: Los consejos insulares, en el ámbito de sus competencias, son las instituciones encargadas de dar apoyo técnico y administrativo en materia de igualdad a los municipios de menos de 20.000 habitantes”"
+    },
+    {
+        "pregunta": "Atendiendo a la Ley 11/2016 y, concretamente a su Título V, las mujeres víctimas de violencia de género pueden acceder a una serie de derechos que se establecen en dicho título ¿Cuáles son?",
+        "opciones": [
+            "Derecho a la protección efectiva; centros de atención y asistencia psicológica, social y jurídica específica; Centros de acogida y servicios de urgencia; personación de la Administración de la comunidad autónoma de las I.B; Prestaciones económicas; Vivienda; Inserción laboral; Educación; Coordinación Interinstitucional.",
+            "Prestaciones económicas; Vivienda; Inserción laboral; Educación; Coordinación Interinstitucional.",
+            "Derecho a la protección efectiva; centros de atención y asistencia psicológica, social y jurídica específica; Centros de acogida y servicios de urgencia; personación de la Administración de la comunidad autónoma de las I.B.",
+            "Derecho a la protección efectiva; centros de atención y asistencia psicológica, social y jurídica específica; Centros de acogida y servicios de urgencia; personación de la Administración de la comunidad autónoma de las I.B; Prestaciones económicas; Vivienda; Inserción laboral; Educación; Religión; Coordinación Interinstitucional."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). La sección 2ª “atención y protección a las víctimas” habla desde su artículo 69 hasta su artículo 77 sobre los derechos que las mujeres víctimas pueden tener acceso, en el artículo 78 se habla sobre como deben acreditar su condición de víctima para poder acceder a dichos derechos."
+    },
+    {
+        "pregunta": "Dentro de la Ley 11/2016 de igualdad entre mujeres y hombres, en su Título V, la sección 2ª “atención y protección a las víctimas” ¿Qué temas tratan los artículos de esta sección?",
+        "opciones": [
+            "Identificación de las situaciones de violencia machista; coordinación interinstitucional; educación; Inserción laboral; vivienda; Prestaciones económicas; Personación de la Administración de la comunidad autónoma de las Illes Balears; centros de acogida y servicios de urgencia; centros de atención y asistencia psicológica, social y jurídica específica; derecho a la protección efectiva.",
+            "Derecho a la protección efectiva; reincidencia; sujetos responsables; formación; investigación; centros de acogida y servicios de urgencia; centros de atención y asistencia psicológica, social y jurídica específica; derecho a la protección efectiva.",
+            "Derecho a la protección efectiva; centros de atención y asistencia psicológica, social y jurídica específica; ; Personación de la Administración de la comunidad autónoma de las Illes Balears; centros de acogida y servicios de urgencia.",
+            "La ley 11/2016 de igualdad entre mujeres y hombres no tiene una sección 2ª en su título V."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). En el Título V “Violencia Machista” se trata en su sección 2ª sobre la atención y protección de las víctimas siendo los artículos 69 al artículo 78 los destinados a este tema."
+    },
+    {
+        "pregunta": "Sandra se presenta a un master de dirección de empresas que dura un año. Al inscribirse se encuentra embarazada de 4 semanas y hace todos los trámites sin ningún problema. Sandra inicia muy ilusionada su master, sin embargo a los 6 meses de embarazo y casi a mitad del curso el director del centro la llama a su despacho y le comunica que debe dejar el master ya que “ en su estado” no está en disposición de acabarlo ya que dará a luz antes de acabar el curso. El director le hace firmar una hoja de renuncia y Sandra se marcha no sin antes acudir al consejo escolar y poner comunicar lo ocurrido recibiendo una negativa a seguir en el master ¿Qué puede hacer?",
+        "opciones": [
+            "Puede denunciar los hechos al Instituto Balear de la Mujer.",
+            "Puede comunicar los hechos a los Servicios de Inspección Educativa.",
+            "Puede denunciar ante el Juzgado o la Fiscalía para que tenga conocimiento de la discriminación sufrida, estudie el caso y tome medidas al respecto.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). En este caso, Sandra ha sufrido una discriminación directa por razón de sexo y una merma en su libertad reproductiva. El Instituto Balear de la mujer, tiene como funciones recibir y canalizar las denuncias formuladas en casos de discriminación de hecho o de derecho por razón de sexo. Así mismo puede acudir a los Servicios de inspección Educativa e incluso puede poner en conocimiento este hecho ante la justicia."
+    },
+    {
+        "pregunta": "¿Cuáles son los títulos que se deben estudiar de la ley 11/2016 de 28 de julio de igualdad de mujeres y hombres?",
+        "opciones": [
+            "Título I, Título II y Título V.",
+            "Título Preliminar, Título II y Título VI.",
+            "Título Preliminar, Título I y Título V.",
+            "Título Preliminar, Título II y Título V."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). Dentro del tema 29 se pide el estudio de las siguientes materias: Disposiciones generales (Título Preliminar) Competencias, funciones, organización institucional y financiamiento (Título II). Violencia machista. Título V)."
+    },
+    {
+        "pregunta": "Atendiendo a la Ley 11/2016 ¿Qué artículo regula las competencias del Gobierno y la Administración de la Comunidad Autónoma de las Islas Baleares?",
+        "opciones": [
+            "El artículo 11.",
+            "El artículo 12.",
+            "El artículo 13.",
+            "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "La repuesta correcta es la c). El Título II abarca los artículo 12 al 22 siendo el artículo 12 el que habla sobre las administraciones competentes y el artículo 13 el que habla de las competencias del Gobierno y la Administración de la Comunidad Autónoma de las Islas Baleares."
+    },
+    {
+        "pregunta": "Lise Meitnerio y su sobrino Otto Hahn fueron nominados en 1939 para el Premio Nobel de Física tras descubrir la base de la bomba atómica. Finalmente, en 1944 solo se le dio ese Premio a Otto fue la artífice. Atendiendo a la ley 11/2016, y especialmente a unos de sus principios fundamentales ¿Qué principio fundamental estarían vulnerando?",
+        "opciones": [
+            "La garantía y la promoción de una imagen de las mujeres y los hombres fundamentada en la igualdad de sexos en todos los ámbitos de la vida pública y privada.",
+            "La igualdad de trato de mujeres y hombres, que implica la ausencia de cualquier discriminación, directa o indirecta, por razón de sexo, en los ámbitos político, social, laboral, cultural, deportivo, de la salud, educativo y económico, en particular en cuanto al empleo, la formación profesional y las condiciones laborales.",
+            "La adopción de las medidas específicas destinadas a eliminar las desigualdades de hecho por razón de sexo que puedan existir en los diferentes ámbitos.",
+            "Todas las opciones son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la d). Todas las opciones hacen mención a la discriminación por razón de sexo, la garantía de la promoción igualitaria entre ambos sexos asi como la eliminación de las desigualdades. Aquí tenéis la historia de Lisa Meitner, un hito en el mundo de la ciencia https://mujeresconciencia.com/2015/03/04/lise-meitner-la-cientifica-que-descubrio-la-fision-nuclear/"
+    },
+    {
+        "pregunta": "¿Cuál es la función del defensor/a de la igualdad de mujeres y hombres según la Ley 11/2016?",
+        "opciones": [
+            "Fomentar la lucha por la igualdad mediante la promoción de manifestaciones",
+            "Velar para que las administraciones públicas cumplan las previsiones que establece esta ley",
+            "Hacer programas de sensibilización para fomentar la igualdad de oportunidades",
+            "Coordinar a las diferentes administraciones públicas en materia de igualdad"
+        ],
+        "correcta": 1,
+        "explicacion": "Justificación: La respuesta correcta es la B. El artículo 22 señala: 1. La Sindicatura de Greuges, en la forma y en las condiciones que establece su normativa reguladora, velará especialmente para que las administraciones públicas cumplan las previsiones que establece esta ley. 2. Con esta finalidad, puede nombrarse una defensora o un defensor de la igualdad de mujeres y hombres adjunta o adjunto a la Sindicatura de Greuges."
+    },
+    {
+        "pregunta": "Según la Ley 11/2016 el consejo de Participación de las Muejres es:",
+        "opciones": [
+            "Organismo de asesoramiento de los Consell insulares",
+            "Máximo órgano de participación de carácter local",
+            "Máximo órgano de participación de carácter insular",
+            "Máximo órgano de participación de carácter autonómico"
+        ],
+        "correcta": 3,
+        "explicacion": "Justificación: La respuesta correcta es la D. . El artículo 21 señala: En el marco de esta ley, el Consejo de Participación de las Mujeres se configura como el máximo órgano de participación de carácter autonómico con la finalidad de favorecer el asociacionismo y la participación de las mujeres en los temas que puedan afectarlas."
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título II de la ley 11/2016 de Igualdad de mujeres y hombres?",
+        "opciones": [
+            "Tiene 10 artículos del 4 al 14.",
+            "Tiene 20 artículos del 12 al 32.",
+            "Tiene 13artículos del 65 al 78.",
+            "Tiene 11 artículos del 12 al 22."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la a). El título II posee once artículos que van desde el 12 al 22 incluidos."
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título II de la ley 11/2016 de Igualdad de mujeres y hombres?",
+        "opciones": [
+            "Tiene 10 artículos del 4 al 14.",
+            "Tiene 20 artículos del 12 al 32.",
+            "Tiene 13artículos del 65 al 78.",
+            "Tiene 11 artículos del 12 al 22."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título II de la ley 11/2016 de Igualdad de mujeres y hombres?",
+        "opciones": [
+            "Tiene 10 artículos del 4 al 14.",
+            "Tiene 20 artículos del 12 al 32.",
+            "Tiene 13artículos del 65 al 78.",
+            "Tiene 11 artículos del 12 al 22."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la a). El título II posee once artículos que van desde el 12 al 22 incluidos."
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título II de la ley 11/2016 de Igualdad de mujeres y hombres?",
+        "opciones": [
+            "Tiene 10 artículos del 4 al 14.",
+            "Tiene 20 artículos del 12 al 32.",
+            "Tiene 13artículos del 65 al 78.",
+            "Tiene 11 artículos del 12 al 22."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título II de la ley 11/2016 de Igualdad de mujeres y hombres?",
+        "opciones": [
+            "Tiene 10 artículos del 4 al 14.",
+            "Tiene 20 artículos del 12 al 32.",
+            "Tiene 13artículos del 65 al 78.",
+            "Tiene 11 artículos del 12 al 22."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la a). El título II posee once artículos que van desde el 12 al 22 incluidos."
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título II de la ley 11/2016 de Igualdad de mujeres y hombres?",
+        "opciones": [
+            "Tiene 10 artículos del 4 al 14.",
+            "Tiene 20 artículos del 12 al 32.",
+            "Tiene 13artículos del 65 al 78.",
+            "Tiene 11 artículos del 12 al 22."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título II de la ley 11/2016 de Igualdad de mujeres y hombres?",
+        "opciones": [
+            "Tiene 10 artículos del 4 al 14.",
+            "Tiene 20 artículos del 12 al 32.",
+            "Tiene 13artículos del 65 al 78.",
+            "Tiene 11 artículos del 12 al 22."
+        ],
+        "correcta": 3,
+        "explicacion": "La respuesta correcta es la a). El título II posee once artículos que van desde el 12 al 22 incluidos."
+    },
+    {
+        "pregunta": "¿Cuántos artículos tiene el Título II de la ley 11/2016 de Igualdad de mujeres y hombres?",
+        "opciones": [
+            "Tiene 10 artículos del 4 al 14.",
+            "Tiene 20 artículos del 12 al 32.",
+            "Tiene 13artículos del 65 al 78.",
+            "Tiene 11 artículos del 12 al 22."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

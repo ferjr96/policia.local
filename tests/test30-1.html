@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "El ámbito de aplicación espacial de la Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia, se circunscribe a:",
+        "opciones": [
+            "Las islas de Mallorca, Menorca, Ibiza y Formentera.",
+            "Mallorca.",
+            "Comunidad Autónoma de les Illes Balears.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 3. Ámbito de aplicación y garantía de cumplimiento. 1. Esta ley se aplica, en el ámbito territorial de la comunidad autónoma de las Illes Balears, a cualquier persona, física o jurídica, de derecho público o privado, independientemente de su situación administrativa o personal y de su domicilio o residencia, sin perjuicio de lo que establecen la legislación en materia de extranjería, los tratados internacionales aplicables y la otra legislación vigente. 2. El Gobierno de las Illes Balears y los entes locales garantizarán el cumplimiento de esta ley y promoverán las condiciones para hacerla plenamente efectiva en los ámbitos competenciales respectivos."
+    },
+    {
+        "pregunta": "De cuántos artículos consta el Capítulo Primero del Título II de la Ley 8/2016, de 30 de mayo:",
+        "opciones": [
+            "2.",
+            "3.",
+            "4.",
+            "5."
+        ],
+        "correcta": 0,
+        "explicacion": "TÍTULO II. Políticas públicas para promover la igualdad efectiva de las personas LGTBI CAPÍTULO I. Profesionales que actúan en ámbitos sensibles (arts. 10 y 11)"
+    },
+    {
+        "pregunta": "En relación con la Ley 8/2016, de 30 de mayo, los profesionales que actúan en ámbitos sensibles, se regula en:",
+        "opciones": [
+            "Título V Capítulo Primero.",
+            "Título V Capítulo Segundo.",
+            "Título II Capítulo Primero.",
+            "Título II Capítulo Segundo."
+        ],
+        "correcta": 2,
+        "explicacion": "TÍTULO II. Políticas públicas para promover la igualdad efectiva de las personas LGTBI CAPÍTULO I. Profesionales que actúan en ámbitos sensibles (arts. 10 y 11)"
+    },
+    {
+        "pregunta": "Según lo establecido en la Ley 8/2016, de 30 de mayo, la situación en que se encuentra una persona que es, ha sido o p",
+        "opciones": [
+            "Discriminación por asociación.",
+            "Acoso por razón de la orientación sexual, la identidad de género o la expresión de género.",
+            "Discriminación indirecta.",
+            "Discriminación directa."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: b) Discriminación directa: situación en que se encuentra una persona que es, ha sido o puede ser tratada, por razón de la orientación sexual, la identidad de género o la expresión de género, de una manera menos favorable que otra en una situación análoga."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, ¿En qué ámbito NO están legitimados las entidades, las asociaciones, las organizaciones y los sindicatos para defender los derechos y los intereses de las personas afiliadas o asociadas?:",
+        "opciones": [
+            "Procesos judiciales penales.",
+            "Procesos judiciales civiles.",
+            "Procesos judiciales sociales.",
+            "Procesos judiciales contenciosos administrativos."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 25. Legitimación para la defensa del derecho a la igualdad de las personas LGTBI. 1. Tienen la consideración de interesado e interesada en los procedimientos administrativos en qué haya que pronunciarse respecto a una situación de discriminación, y siempre con la autorización de la persona o las personas afectadas, las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos. Tienen la misma consideración los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios. 2. De acuerdo con los términos establecidos por las leyes procesales, las entidades, las asociaciones, las organizaciones y los sindicatos a que hace referencia el apartado 1 anterior están legitimados para defender los derechos y los intereses de las personas afiliadas o asociadas que así lo deseen en procesos judiciales civiles, contenciosos administrativos y sociales."
+    },
+    {
+        "pregunta": "¿Qué ley regula la garantía de los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia?",
+        "opciones": [
+            "L.O 8/2016, de 30 de mayo",
+            "Ley 8/2016, de 30 de mayo",
+            "Decreto Ley 8/2016, de 30 de mayo",
+            "Ley 4/2015, de 30 de mayo"
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b) puesto que se trata de una ley autonómica, por tanto no podrá ser nunca una Ley Orgánica o un Decreto. Así mismo debemos fijarnos bien en las fechas, puesto que en el caso de la letra d) podemos confundirnos con la Ley de Seguridad Ciudadana."
+    },
+    {
+        "pregunta": "¿Quiénes deben garantizar el cumplimiento de la Ley 8/2016, de 30 de mayo?:",
+        "opciones": [
+            "El Gobierno de las Illes Balears, los entes locales y todas las administraciones de carácter público o privado de las Islas Baleares.",
+            "El Gobierno de las Illes Balears, los entes locales y los poderes públicos.",
+            "El Gobierno de las Illes Balears, los entes locales y la Administración Pública.",
+            "El Gobierno de las Illes Balears y los entes locales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 3. Ámbito de aplicación y garantía de cumplimiento. 1. Esta ley se aplica, en el ámbito territorial de la comunidad autónoma de las Illes Balears, a cualquier persona, física o jurídica, de derecho público o privado, independientemente de su situación administrativa o personal y de su domicilio o residencia, sin perjuicio de lo que establecen la legislación en materia de extranjería, los tratados internacionales aplicables y la otra legislación vigente. 2. El Gobierno de las Illes Balears y los entes locales garantizarán el cumplimiento de esta ley y promoverán las condiciones para hacerla plenamente efectiva en los ámbitos competenciales respectivos."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, el derecho a la no discriminación vincula a:",
+        "opciones": [
+            "A los poderes públicos.",
+            "A los poderes públicos y a los particulares.",
+            "A los poderes públicos y a los ciudadanos.",
+            "A los poderes públicos y a las personas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 5. Cláusula general antidiscriminatoria. 1. Las instituciones públicas de las Illes Balears velarán por el derecho a la no discriminación con independencia de la orientación sexual, la identidad de género o la expresión de género de la persona o del grupo familiar a que pertenezca. 2. El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. Este derecho vincula tanto a los poderes públicos como a los particulares."
+    },
+    {
+        "pregunta": "En relación a la Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia, las medidas establecidas afectarán:",
+        "opciones": [
+            "A partir de los 14 años y todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación, la privación de libertad o la muerte.",
+            "A partir de la mayoría de edad y todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación, la privación de libertad o la muerte.",
+            "A todas las etapas de la vida y todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación y la privación de libertad.",
+            "A todas las etapas de la vida y todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación, la privación de libertad o la muerte."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 1. Objeto. 1. Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias. 2. Las medidas que establece esta ley para hacer efectivo el derecho de las personas lesbianas, gays, bisexuales, transexuales, transgéneros e intersexuales a la igualdad y a la no discriminación a que hace referencia el apartado 1 afectan: a) A cualquier ámbito de la vida social y en particular las áreas civil, laboral, social, sanitaria, educativa, económica y cultural. b) A todas las etapas de la vida y a todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación, la privación de libertad o la muerte."
+    },
+    {
+        "pregunta": "La normativa reguladora para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales, tiene el rango de:",
+        "opciones": [
+            "Ley Orgánica.",
+            "Decreto Ley.",
+            "Ley.",
+            "Decreto del Parlamento de las Illes Balears."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia"
+    },
+    {
+        "pregunta": "Las medidas establecidas en el artículo 1.2. A) de la Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia, afectan a cualquier ámbito de la vida social y en particular:",
+        "opciones": [
+            "A las áreas civil, laboral, social, judicial, sanitaria, educativa, económica y cultural.",
+            "A las áreas civil, laboral, social, sanitaria, educativa, económica y cultural.",
+            "A las áreas civil, laboral, social, administrativa, sanitaria, educativa, económica y cultural.",
+            "A las áreas civil, laboral, social, administrativa, educativa, económica y cultural."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 1. Objeto. 1. Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias. 2. Las medidas que establece esta ley para hacer efectivo el derecho de las personas lesbianas, gays, bisexuales, transexuales, transgéneros e intersexuales a la igualdad y a la no discriminación a que hace referencia el apartado 1 afectan: a) A cualquier ámbito de la vida social y en particular las áreas civil, laboral, social, sanitaria, educativa, económica y cultural. b) A todas las etapas de la vida y a todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación, la privación de libertad o la muerte."
+    },
+    {
+        "pregunta": "El ámbito de aplicación de la Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia, se extiende a:",
+        "opciones": [
+            "Personas físicas.",
+            "Personas físicas y jurídicas de derecho público o privado.",
+            "Personas físicas o jurídicas, de derecho público o privado.",
+            "Personas físicas con independencia de su origen o nacionalidad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 3. Ámbito de aplicación y garantía de cumplimiento. 1. Esta ley se aplica, en el ámbito territorial de la comunidad autónoma de las Illes Balears, a cualquier persona, física o jurídica, de derecho público o privado, independientemente de su situación administrativa o personal y de su domicilio o residencia, sin perjuicio de lo que establecen la legislación en materia de extranjería, los tratados internacionales aplicables y la otra legislación vigente. 2. El Gobierno de las Illes Balears y los entes locales garantizarán el cumplimiento de esta ley y promoverán las condiciones para hacerla plenamente efectiva en los ámbitos competenciales respectivos."
+    },
+    {
+        "pregunta": "Según viene recogido en la Ley 8/2016, de 30 de mayo, las entidades, las asociaciones, las organizaciones y los sindicatos para poder tener la consideración de interesados o interesadas en los procedimientos administrativos, deberán contar con:",
+        "opciones": [
+            "Poder especial de la persona o personas afectadas.",
+            "Poder general de la persona o personas afectadas.",
+            "Apoderamiento apud acta de la persona o personas afectadas.",
+            "Autorización de la persona o personas afectadas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 25. Legitimación para la defensa del derecho a la igualdad de las personas LGTBI. 1. Tienen la consideración de interesado e interesada en los procedimientos administrativos en qué haya que pronunciarse respecto a una situación de discriminación, y siempre con la autorización de la persona o las personas afectadas, las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos. Tienen la misma consideración los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios. 2. De acuerdo con los términos establecidos por las leyes procesales, las entidades, las asociaciones, las organizaciones y los sindicatos a que hace referencia el apartado 1 anterior están legitimados para defender los derechos y los intereses de las personas afiliadas o asociadas que así lo deseen en procesos judiciales civiles, contenciosos administrativos y sociales."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, las administraciones de las Illes Balears prestarán especial atención:",
+        "opciones": [
+            "A las personas especialmente vulnerables por razón de edad.",
+            "A las personas que por tradición o cultura pudiesen contar con un mayor nivel de discriminación.",
+            "A las personas con diversidad funcional.",
+            "A las personas con diversidad cognitiva."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 11. Deber de intervención. 1. Los y las profesionales a que hace referencia el artículo 10, si tienen conocimiento de una situación de riesgo o tienen una sospecha fundamentada de discriminación o violencia por razón de orientación sexual, identidad de género o expresión de género, tienen el deber de comunicarlo a los cuerpos y fuerzas de seguridad y al órgano competente. 2. A los efectos de lo que establece el apartado 1, se elaborará un protocolo específico de actuación. 3. Las administraciones de las Illes Balears adoptarán los mecanismos necesarios para la protección efectiva de los menores en atención a su identidad y/o expresión de género, que se encuentren bajo la tutela de la administración, ya sea en centros de menores, pisos tutelados u otros en los cuales residan, garantizando el respeto absoluto a su identidad o expresión de género, y unas plenas condiciones de vida. 4. Las administraciones de las Illes Balears garantizarán y adoptarán las medidas necesarias para la protección y el absoluto respeto de los derechos de las personas con diversidad funcional o cognitiva en atención a su identidad y/o expresión de género. Los centros y servicios de atención a personas con diversidad funcional o cognitiva, públicos o privados, velarán porque el respeto al derecho a la no discriminación de las personas sea real y efectivo. 5. Las administraciones de las Illes Balears garantizarán que no se produzcan situaciones de discriminación de las personas especialmente vulnerables por razón de edad, en atención a su identidad y/o expresión de género. Las residencias de la tercera edad, tanto públicas como privadas, garantizarán el derecho a la no discriminación de personas en atención a su identidad y/o expresión de género, ya sea en su individualidad o en su relación sentimental. 6. Se adoptarán las medidas necesarias para que los espacios o equipamientos identificados en función del sexo en los centros de menores, pisos tutelados, centros de atención a personas con diversidad funcional y/o cognitiva, residencias de la tercera edad o cualquier otro recurso que acoja a personas especialmente vulnerables, puedan utilizarse por las personas libremente en atención al género sentido. 7. Las administraciones de las Illes Balears prestarán especial protección a las personas que por tradición o cultura pudiesen contar con un mayor nivel de discriminación por razón de identidad o expresión de género. 8. Las administraciones de las Illes Balears garantizarán en cualquier caso que, en todos los ámbitos de aplicación de la presente ley, se aportarán a los profesionales los instrumentos necesarios para la no discriminación y se contará con el personal especializado necesario en las diferentes materias, según se precise en los diferentes protocolos y medidas a tomar."
+    },
+    {
+        "pregunta": "Qué rúbrica lleva el Capítulo Primero del Título V de la Ley 8/2016, de 30 de mayo:",
+        "opciones": [
+            "Disposiciones Generales.",
+            "Derecho de Admisión.",
+            "Derecho a la atención y a la reparación.",
+            "Sectores de intervención."
+        ],
+        "correcta": 0,
+        "explicacion": "TÍTULO V. Mecanismos para garantizar el derecho a la igualdad (arts. 24 - 41) CAPÍTULO I. Disposiciones generales (arts. 24 y 25)"
+    },
+    {
+        "pregunta": "Según establece la Ley 8/2016, de 30 de mayo, la situación en que una persona lesbiana, gay, transexual, bisexual y/o intersexual, por el hecho de pertenecer a otros grupos que también son objeto de discriminación, sufre formas agravadas y específicas de discriminación, se denomina:",
+        "opciones": [
+            "Discriminación por asociación.",
+            "Discriminación múltiple.",
+            "Discriminación directa.",
+            "Discriminación indirecta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: f) Discriminación múltiple: situación en que una persona lesbiana, gay, transexual, bisexual y/o intersexual, por el hecho de pertenecer a otros grupos que también son objeto de discriminación, sufre formas agravadas y específicas de discriminación"
+    },
+    {
+        "pregunta": "De conformidad con la Ley 8/2016, de 30 de mayo, los y las profesionales, si tienen conocimiento de una situación de riesgo o tienen una sospecha fundamentada de discriminación o violencia por razón de la orientación sexual, deberán comunicarla a:",
+        "opciones": [
+            "Las Fuerzas y Cuerpos de Seguridad competentes.",
+            "Las Fuerzas y Cuerpos de Seguridad y a la EBAP.",
+            "Las Fuerzas y Cuerpos de Seguridad y al órgano competente.",
+            "Al órgano competente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 11. Deber de intervención. 1. Los y las profesionales a que hace referencia el artículo 10, si tienen conocimiento de una situación de riesgo o tienen una sospecha fundamentada de discriminación o violencia por razón de orientación sexual, identidad de género o expresión de género, tienen el deber de comunicarlo a los cuerpos y fuerzas de seguridad y al órgano competente. 2. A los efectos de lo que establece el apartado 1, se elaborará un protocolo específico de actuación. 3. Las administraciones de las Illes Balears adoptarán los mecanismos necesarios para la protección efectiva de los menores en atención a su identidad y/o expresión de género, que se encuentren bajo la tutela de la administración, ya sea en centros de menores, pisos tutelados u otros en los cuales residan, garantizando el respeto absoluto a su identidad o expresión de género, y unas plenas condiciones de vida. 4. Las administraciones de las Illes Balears garantizarán y adoptarán las medidas necesarias para la protección y el absoluto respeto de los derechos de las personas con diversidad funcional o cognitiva en atención a su identidad y/o expresión de género. Los centros y servicios de atención a personas con diversidad funcional o cognitiva, públicos o privados, velarán porque el respeto al derecho a la no discriminación de las personas sea real y efectivo. 5. Las administraciones de las Illes Balears garantizarán que no se produzcan situaciones de discriminación de las personas especialmente vulnerables por razón de edad, en atención a su identidad y/o expresión de género. Las residencias de la tercera edad, tanto públicas como privadas, garantizarán el derecho a la no discriminación de personas en atención a su identidad y/o expresión de género, ya sea en su individualidad o en su relación sentimental. 6. Se adoptarán las medidas necesarias para que los espacios o equipamientos identificados en función del sexo en los centros de menores, pisos tutelados, centros de atención a personas con diversidad funcional y/o cognitiva, residencias de la tercera edad o cualquier otro recurso que acoja a personas especialmente vulnerables, puedan utilizarse por las personas libremente en atención al género sentido. 7. Las administraciones de las Illes Balears prestarán especial protección a las personas que por tradición o cultura pudiesen contar con un mayor nivel de discriminación por razón de identidad o expresión de género. 8. Las administraciones de las Illes Balears garantizarán en cualquier caso que, en todos los ámbitos de aplicación de la presente ley, se aportarán a los profesionales los instrumentos necesarios para la no discriminación y se contará con el personal especializado necesario en las diferentes materias, según se precise en los diferentes protocolos y medidas a tomar."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, el reconocimiento efectivo de la diversidad del hecho familiar se aplicará a:",
+        "opciones": [
+            "El Derecho Civil público de las Illes Balears.",
+            "El Derecho Foral Balear y en la práctica judicial y administrativa y en todas las actuaciones del Gobierno de las Illes Balears.",
+            "El Derecho Civil de las Illes Balears, tanto público como privado y en la práctica judicial y administrativa y en todas las actuaciones del Gobierno de las Illes Balears.",
+            "Las Compilaciones de Derecho Balear y en la práctica judicial y administrativa y en todas las actuaciones del Gobierno de las Illes Balears."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 6. Principios orientadores de la actuación de los poderes públicos. De acuerdo con los principios orientadores que inspiran esta ley, la actuación de los poderes públicos con relación a las personas LGTBI: k) Hará efectivo el reconocimiento de la diversidad del hecho familiar en el Derecho Civil de las Illes Balears, tanto público como privado, en la práctica judicial y administrativa y en todas las actuaciones del Gobierno de las Illes Balears."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, la colaboración del Gobierno de las Illes Balears con otras administraciones para la formación de su personal, se efectuará:",
+        "opciones": [
+            "Promoviendo Acuerdos de colaboración.",
+            "Promoviendo Pactos de colaboración.",
+            "Promoviendo Convenios de colaboración.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 10. Formación y sensibilización. 1. Las administraciones públicas de las Illes Balears garantizarán la formación y la sensibilización adecuada de los profesionales que realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación. 2. El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal. 3. Se llevarán a cabo medidas de prevención de la discriminación y de apoyo a la visibilidad de las personas LGTBI. En particular se adoptarán medidas específicas de apoyo, mediación y protección en los supuestos de menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito familiar debido a su expresión y/o identidad de género."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 8/2016, de 30 de mayo, cualquier instrucción que implique la discriminación, directa o indirecta, por razón de la orientación sexual, la identidad de género o la expresión de género, se denomina:",
+        "opciones": [
+            "Orden de discriminar.",
+            "Acoso por razón de la orientación sexual.",
+            "Represalia discriminatoria.",
+            "Instrucción discriminatoria."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: g) Orden de discriminar: cualquier instrucción que implique la discriminación, directa o indirecta, por razón de la orientación sexual, la identidad de género o la expresión de género"
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, cuál de los siguientes principio orientadores NO es cierto:",
+        "opciones": [
+            "Velar por la sensibilización en este ámbito, por la prevención y la detección de la discriminación, por la atención a las personas que la sufran, por la recuperación de estas personas y por la garantía de su derecho a la reparación.",
+            "Dotar de un carácter integral y transversal a las medidas que se adopten en este ámbito.",
+            "Asegurar la cooperación interadministrativa.",
+            "Velar por la formación genérica y la debida capacitación de los y las profesionales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 6. Principios orientadores de la actuación de los poderes públicos. De acuerdo con los principios orientadores que inspiran esta ley, la actuación de los poderes públicos con relación a las personas LGTBI: b) Dotará de un carácter integral y transversal las medidas que adopten en este ámbito. h) Velará por la sensibilización en este ámbito, por la prevención y la detección de la discriminación, por la atención a las personas que la sufran, por la recuperación de estas personas y por la garantía de su derecho a la reparación. l) Asegurará la cooperación interadministrativa. m) Velará por la formación especializada y la debida capacitación de los y de las profesionales."
+    },
+    {
+        "pregunta": "La normativa reguladora para garantizar los derechos de las lesbianas, gays, trans, bisexuales e intersexuales es:",
+        "opciones": [
+            "LO 8/2016, de 30 de mayo.",
+            "Ley 8/2016, de 30 de mayo.",
+            "Ley 8/2016, de 30 de junio.",
+            "LO 8/2016, de 30 de junio."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia"
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, la tutela judicial y administrativa ante la conculcación del derecho a la igualdad de las personas LGTBI comprenderá:",
+        "opciones": [
+            "Medidas necesarias al cese inmediato de la discriminación.",
+            "Adopción de medidas cautelares.",
+            "Prevención de violaciones inminentes o ulteriores.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 24. Tutela judicial y administrativa del derecho a la igualdad de las personas LGTBI. La tutela judicial y administrativa ante las conculcaciones del derecho a la igualdad de las personas LGTBI comprenderá, según el caso, la adopción de todas las medidas necesarias dirigidas al cese inmediato de la discriminación, la adopción de medidas cautelares, la prevención de violaciones inminentes o ulteriores, la indemnización de los daños y perjuicios causados y el restablecimiento de la persona perjudicada en el pleno ejercicio de su derecho. Cuando la discriminación quede acreditada, el daño moral se valorará atendiendo las circunstancias del caso y la gravedad de la lesión efectivamente producida."
+    },
+    {
+        "pregunta": "De cuántos artículos consta el Capítulo Primero del Título V de la Ley 8/2016, de 30 de mayo:",
+        "opciones": [
+            "1.",
+            "2.",
+            "3.",
+            "4."
+        ],
+        "correcta": 1,
+        "explicacion": "TÍTULO V. Mecanismos para garantizar el derecho a la igualdad (arts. 24 - 41) CAPÍTULO I. Disposiciones generales (arts. 24 y 25)"
+    },
+    {
+        "pregunta": "Según lo estipulado en la Ley 8/2016, de 30 de mayo, la situación en que una disposición, un criterio, una interpretación o una práctica pretendidamente neutros puede ocasionar a lesbianas, gays, transexuales, trangéneros, bisexuales y/o intersexuales una desventaja particular respecto de personas que no lo son, se denomina:",
+        "opciones": [
+            "Discriminación directa.",
+            "Discriminación indirecta.",
+            "Orden de discriminar.",
+            "Represalia discriminatoria."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: c) Discriminación indirecta: situación en que una disposición, un criterio, una interpretación o una práctica pretendidamente neutros puede ocasionar a lesbianas, gays, transexuales, transgéneros, bisexuales y/o intersexuales una desventaja particular respecto de personas que no lo son"
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, en caso de quedar acreditada la discriminación:",
+        "opciones": [
+            "Tendrá derecho al restablecimiento en el pleno ejercicio de su derecho.",
+            "La víctima tendrá derecho a ser resarcida por los daños morales ocasionados.",
+            "A y b son correctas.",
+            "Los daños morales serán valorados individualmente en atención al baremo que e acompaña a la presente ley como Anexo II."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 24. Tutela judicial y administrativa del derecho a la igualdad de las personas LGTBI. La tutela judicial y administrativa ante las conculcaciones del derecho a la igualdad de las personas LGTBI comprenderá, según el caso, la adopción de todas las medidas necesarias dirigidas al cese inmediato de la discriminación, la adopción de medidas cautelares, la prevención de violaciones inminentes o ulteriores, la indemnización de los daños y perjuicios causados y el restablecimiento de la persona perjudicada en el pleno ejercicio de su derecho. Cuando la discriminación quede acreditada, el daño moral se valorará atendiendo las circunstancias del caso y la gravedad de la lesión efectivamente producida."
+    },
+    {
+        "pregunta": "Los mecanismos para garantizar el derecho a la igualdad, dentro de la Ley 8/2016, de 30 de mayo, vienen regulados en:",
+        "opciones": [
+            "Título II.",
+            "Título III.",
+            "Título IV.",
+            "Título V."
+        ],
+        "correcta": 3,
+        "explicacion": "TÍTULO V. Mecanismos para garantizar el derecho a la igualdad (arts. 24 - 41)"
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, para llevar a cabo el deber de los y las profesionales de comunicar a las Fuerzas y Cuerpos de Seguridad aquellas situaciones de riesgo de discriminación, se elaborará:",
+        "opciones": [
+            "Un Plan específico de comunicación.",
+            "Un Protocolo específico de actuación.",
+            "Un Plan General de actuación.",
+            "Un Protocolo General de comunicación"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 11. Deber de intervención. 1. Los y las profesionales a que hace referencia el artículo 10, si tienen conocimiento de una situación de riesgo o tienen una sospecha fundamentada de discriminación o violencia por razón de orientación sexual, identidad de género o expresión de género, tienen el deber de comunicarlo a los cuerpos y fuerzas de seguridad y al órgano competente. 2. A los efectos de lo que establece el apartado 1, se elaborará un protocolo específico de actuación. 3. Las administraciones de las Illes Balears adoptarán los mecanismos necesarios para la protección efectiva de los menores en atención a su identidad y/o expresión de género, que se encuentren bajo la tutela de la administración, ya sea en centros de menores, pisos tutelados u otros en los cuales residan, garantizando el respeto absoluto a su identidad o expresión de género, y unas plenas condiciones de vida. 4. Las administraciones de las Illes Balears garantizarán y adoptarán las medidas necesarias para la protección y el absoluto respeto de los derechos de las personas con diversidad funcional o cognitiva en atención a su identidad y/o expresión de género. Los centros y servicios de atención a personas con diversidad funcional o cognitiva, públicos o privados, velarán porque el respeto al derecho a la no discriminación de las personas sea real y efectivo. 5. Las administraciones de las Illes Balears garantizarán que no se produzcan situaciones de discriminación de las personas especialmente vulnerables por razón de edad, en atención a su identidad y/o expresión de género. Las residencias de la tercera edad, tanto públicas como privadas, garantizarán el derecho a la no discriminación de personas en atención a su identidad y/o expresión de género, ya sea en su individualidad o en su relación sentimental. 6. Se adoptarán las medidas necesarias para que los espacios o equipamientos identificados en función del sexo en los centros de menores, pisos tutelados, centros de atención a personas con diversidad funcional y/o cognitiva, residencias de la tercera edad o cualquier otro recurso que acoja a personas especialmente vulnerables, puedan utilizarse por las personas libremente en atención al género sentido. 7. Las administraciones de las Illes Balears prestarán especial protección a las personas que por tradición o cultura pudiesen contar con un mayor nivel de discriminación por razón de identidad o expresión de género. 8. Las administraciones de las Illes Balears garantizarán en cualquier caso que, en todos los ámbitos de aplicación de la presente ley, se aportarán a los profesionales los instrumentos necesarios para la no discriminación y se contará con el personal especializado necesario en las diferentes materias, según se precise en los diferentes protocolos y medidas a tomar."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, la situación en que una persona o un grupo de personas son objeto de discriminación por orientación sexual, identidad de género o expresión de género como consecuencia de una apreciación errónea, se denomina:",
+        "opciones": [
+            "Discriminación directa.",
+            "Discriminación indirecta.",
+            "Discriminación por analogía.",
+            "Discriminación por error."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: e) Discriminación por error: situación en que una persona o un grupo de personas son objeto de discriminación por orientación sexual, identidad de género o expresión de género como consecuencia de una apreciación errónea"
+    },
+    {
+        "pregunta": "A tenor de lo establecido en la Ley 8/2016, de 30 de mayo, ¿Cuál de los siguientes NO tiene la consideración de interesado/a en los procedimientos administrativos en que haya que pronunciarse respecto a una situación de discriminación?:",
+        "opciones": [
+            "Las asociaciones cuya finalidad sea la defensa y promoción de los derechos humanos.",
+            "Los sindicatos.",
+            "Los ascendientes y descendientes y los familiares hasta segundo grado de consanguinidad de la persona afectada.",
+            "Organizaciones de consumidores y usuarios."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 25. Legitimación para la defensa del derecho a la igualdad de las personas LGTBI. 1. Tienen la consideración de interesado e interesada en los procedimientos administrativos en qué haya que pronunciarse respecto a una situación de discriminación, y siempre con la autorización de la persona o las personas afectadas, las entidades, asociaciones y organizaciones legalmente constituidas que tengan entre sus finalidades la defensa y la promoción de los derechos humanos. Tienen la misma consideración los sindicatos, las asociaciones profesionales y las organizaciones de consumidores y usuarios. 2. De acuerdo con los términos establecidos por las leyes procesales, las entidades, las asociaciones, las organizaciones y los sindicatos a que hace referencia el apartado 1 anterior están legitimados para defender los derechos y los intereses de las personas afiliadas o asociadas que así lo deseen en procesos judiciales civiles, contenciosos administrativos y sociales."
+    },
+    {
+        "pregunta": "Según lo tipificado en la Ley 8/2016, de 30 de mayo, cualquier comportamiento basado en la orientación sexual, la identidad de género o la expresión de género de una persona que tenga la finalidad o provoque el efecto de atentar contra su dignidad o su integridad física o psíquica o de crearle un entorno intimidatorio, hostil, degradante, humillante, ofensivo y/o molesto, hace referencia a:",
+        "opciones": [
+            "Trato vejatorio y degradante por razón de la orientación sexual, la identidad de género o la expresión de género.",
+            "Violencia intragénero.",
+            "Acoso por razón de la orientación sexual, la identidad de género o la expresión de género.",
+            "Delito de odio por razón de la orientación sexual, la identidad de género o la expresión de género."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: h) Acoso por razón de la orientación sexual, la identidad de género o la expresión de género: cualquier comportamiento basado en la orientación sexual, la identidad de género o la expresión de género de una persona que tenga la finalidad o provoque el efecto de atentar contra su dignidad o su integridad física o psíquica o de crearle un entorno intimidatorio, hostil, degradante, humillante, ofensivo y/o molesto"
+    },
+    {
+        "pregunta": "El objeto de la Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia, es:",
+        "opciones": [
+            "Establecer y regular los principios, los medios y las medidas para asegurar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias.",
+            "Establecer y regular las bases y los principios, los medios y las medidas para asegurar plenamente la igualad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias.",
+            "Establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias.",
+            "Establecer y regular las bases y los principios, los medios y las medidas para garantizar plenamente la igualad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 1. Objeto. 1. Esta ley tiene por objeto establecer y regular los principios, los medios y las medidas para garantizar plenamente la igualdad real y efectiva en el ejercicio de los derechos de las personas lesbianas, gays, bisexuales, trans (transexuales y transgéneros) e intersexuales (LGTBI), mediante la prevención, la corrección y la eliminación de toda discriminación por razón de orientación sexual e identidad de género, en los ámbitos público y privado, sobre los cuales el Gobierno de las Illes Balears, los consejos insulares y los entes locales tienen competencias. 2. Las medidas que establece esta ley para hacer efectivo el derecho de las personas lesbianas, gays, bisexuales, transexuales, transgéneros e intersexuales a la igualdad y a la no discriminación a que hace referencia el apartado 1 afectan: a) A cualquier ámbito de la vida social y en particular las áreas civil, laboral, social, sanitaria, educativa, económica y cultural. b) A todas las etapas de la vida y a todas las contingencias de su decurso, como pueden ser cualquier cambio en el estado civil, la formación de una familia, la enfermedad, la incapacitación, la privación de libertad o la muerte."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 8/2016, de 30 de mayo, las actuaciones que se lleven a cabo y las medidas que se adopten:",
+        "opciones": [
+            "Serán iguales en todas las islas y municipios.",
+            "Se adecuarán a las necesidades específicas de las diferentes islas y municipios, con especial atención al mundo rural.",
+            "Se adecuarán a las necesidades específicas de las diferentes islas y municipios, con especial atención al entorno mas desfavorecido.",
+            "Se adecuarán a las necesidades específicas de las diferentes islas y municipios."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6. Principios orientadores de la actuación de los poderes públicos. De acuerdo con los principios orientadores que inspiran esta ley, la actuación de los poderes públicos con relación a las personas LGTBI: p) Adecuará las actuaciones que se lleven a cabo y las medidas que se adopten a las necesidades específicas de las diferentes islas y municipios, con especial atención al mundo rural."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, la protección de la integridad, la dignidad y la libertad de todas las personas se efectuará de acuerdo con:",
+        "opciones": [
+            "Declaración universal de los derechos humanos.",
+            "Los derechos fundamentales y los derechos humanos universales.",
+            "La Constitución Española y el resto del ordenamiento jurídico español vigente.",
+            "Todas las anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6. Principios orientadores de la actuación de los poderes públicos. De acuerdo con los principios orientadores que inspiran esta ley, la actuación de los poderes públicos con relación a las personas LGTBI: a) Protegerá la integridad, la dignidad y la libertad de todas las personas, de acuerdo con los derechos fundamentales y los derechos humanos universales."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, cuál de las siguientes afirmaciones NO es correcta:",
+        "opciones": [
+            "La discriminación puede ser directa o indirecta.",
+            "LGTBI se refiere a personas lesbianas, gays, transexuales, transgéneros, bisexuales e intersexuales, no estando representadas otras que estén fuera del heteronormativismo y definidas como queers, travestis, asexuales y pansexuales.",
+            "La violencia ejercida entre parejas del mismo sexo se denomina violencia intragénero.",
+            "El trato adverso que se produce contra una persona como consecuencia de la presentación de una denuncia por el acoso a la que ha sido sometida se denomina represalia discriminatoria."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: a) LGTBI: en esta ley se utiliza el término LGTBI de forma inclusiva y extensiva, para referirse a las personas lesbianas, gays, transexuales, transgéneros, bisexuales e intersexuales, así como al resto de personas que no se identifican exactamente con estos términos pero que sufren discriminación y violencia por su orientación sexual, identidad de género o expresión de género. En este sentido, se tienen que sentir representadas también otras realidades de la diversidad sexual y de género que están fuera del heteronormativismo, definidas y expresadas con términos cómo: queer, travesti, asexualidad, pansexualidad, etc."
+    },
+    {
+        "pregunta": "El Título Preliminar de la Ley 8/2016, de 30 de mayo, que recoge las Disposiciones Generales, engloba los artículos:",
+        "opciones": [
+            "1 a 5.",
+            "1 a 6.",
+            "1 a 7.",
+            "1 a 8."
+        ],
+        "correcta": 1,
+        "explicacion": "DISPOSICIONES GENERALES Las disposiciones generales se encuentran reguladas en el Título Preliminar de la Ley 8/2016, de 30 de mayo, artículos 1 a 6 ambos inclusive."
+    },
+    {
+        "pregunta": "La finalidad de la Ley 8/2016, de 30 de mayo, para garantizar los derechos de lesbianas, gays, trans, bisexuales e intersexuales y para erradicar la LGTBI fobia, radica en:",
+        "opciones": [
+            "Establecer las condiciones para que las personas LGTBI puedan ejercer sus derechos con libertad e igualdad sin ningún tipo de discriminación, garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social; contribuir a la superación de los estereotipos que afectan negativamente la percepción social de estas personas, y establecer medidas concretas para lograr una sociedad más justa, libre, basada en la igualdad de trato y de oportunidades de las personas LGTBI y donde la diversidad sea valorada positivamente.",
+            "Establecer las condiciones para que las personas LGTBI puedan ejercer sus derechos con libertad e igualdad sin ningún tipo de discriminación, garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social; contribuir a la superación de los estereotipos que afectan negativamente la percepción social de estas personas, y establecer medidas concretas para lograr una sociedad más justa, libre, basada en la igualdad de trato y de oportunidades de las personas LGTBI y donde la diversidad no sea motivo de discriminación.",
+            "Establecer las condiciones para que las personas LGTBI puedan ejercer sus derechos con libertad e igualdad sin ningún tipo de discriminación, garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social y cultural; contribuir a la superación de los estereotipos que afectan negativamente la percepción social de estas personas, y establecer medidas concretas para lograr una sociedad más justa, libre, basada en la igualdad de trato y de oportunidades de las personas LGTBI y donde la diversidad sea valorada positivamente.",
+            "Establecer las condiciones para que las personas LGTBI puedan ejercer sus derechos con libertad e igualdad sin ningún tipo de discriminación, garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social y cultural; contribuir a la superación de los estereotipos que afectan negativamente la percepción social de estas personas, y establecer medidas concretas para lograr una sociedad más justa, libre, basada en la igualdad de trato y de oportunidades de las personas LGTBI y donde la diversidad no sea motivo de discriminación."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 2. Finalidad. La finalidad de esta ley es establecer las condiciones para que las personas LGTBI puedan ejercer sus derechos con libertad e igualdad sin ningún tipo de discriminación; garantizar la igualdad de oportunidades en la participación y la representación en todos los ámbitos de la vida social; contribuir a la superación de los estereotipos que afectan negativamente la percepción social de estas personas; y establecer medidas concretas para lograr una sociedad más justa, libre, basada en la igualdad de trato y de oportunidades de las personas LGTBI y donde la diversidad sea valorada positivamente."
+    },
+    {
+        "pregunta": "En relación con la Ley 8/2016, de 30 de mayo, ¿Quién es el encargado de de velar por el derecho a la no discriminación con independencia de la orientación sexual, la identidad de género o la expresión de género de la persona o del grupo familiar a que pertenezca?:",
+        "opciones": [
+            "El Gobierno de las Illes Balears.",
+            "Los poderes públicos de las Illes Balears.",
+            "Las instituciones públicas de las Illes Balears.",
+            "Las Administraciones Públicas de las Illes Balears."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5. Cláusula general antidiscriminatoria. 1. Las instituciones públicas de las Illes Balears velarán por el derecho a la no discriminación con independencia de la orientación sexual, la identidad de género o la expresión de género de la persona o del grupo familiar a que pertenezca. 2. El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. Este derecho vincula tanto a los poderes públicos como a los particulares."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, el maltrato adicional ejercido contra lesbianas, gays, transexuales, transgéneros, bisexuales y/o intersexuales que se encuentran en alguno de los supuestos de discriminación, acoso y/o represalia como consecuencia directa o indirecta de los déficits de las intervenciones llevadas a cabo por los organismos responsables, y también por las actuaciones de otros agentes implicados, se conoce como:",
+        "opciones": [
+            "Victimización primaria.",
+            "Victimización secundaria.",
+            "Victimización originaria.",
+            "Victimización derivada."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: j) Victimización secundaria: maltrato adicional ejercido contra lesbianas, gays, transexuales, transgéneros, bisexuales y/o intersexuales que se encuentran en alguno de los supuestos de discriminación, acoso y/o represalia como consecuencia directa o indirecta de los déficits de las intervenciones llevadas a cabo por los organismos responsables, y también por las actuaciones de otros agentes implicados."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 8/2016, de 30 de mayo, las medidas específicas de apoyo, mediación y protección se llevarán a cabo en los supuestos de:",
+        "opciones": [
+            "Menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito escolar debido a su expresión y/o identidad de género.",
+            "Menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito familiar o escolar debido a su expresión y/o identidad de género.",
+            "Menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito familiar, escolar o social debido a su expresión y/o identidad de género.",
+            "Menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito familiar debido a su expresión y/o identidad de género."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 10. Formación y sensibilización. 1. Las administraciones públicas de las Illes Balears garantizarán la formación y la sensibilización adecuada de los profesionales que realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación. 2. El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal. 3. Se llevarán a cabo medidas de prevención de la discriminación y de apoyo a la visibilidad de las personas LGTBI. En particular se adoptarán medidas específicas de apoyo, mediación y protección en los supuestos de menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito familiar debido a su expresión y/o identidad de género."
+    },
+    {
+        "pregunta": "¿En qué artículos de la Ley 8/2016, de 30 de mayo, viene regulado el deber de intervención de los profesionales que actúan en ámbitos sensibles?",
+        "opciones": [
+            "Artículo 5.",
+            "Artículo 6.",
+            "Artículo 10.",
+            "Artículo 11."
+        ],
+        "correcta": 3,
+        "explicacion": "TÍTULO II. Políticas públicas para promover la igualdad efectiva de las personas LGTBI CAPÍTULO I. Profesionales que actúan en ámbitos sensibles (arts. 10 y 11) Artículo 10. Formación y sensibilización. Artículo 11. Deber de intervención."
+    },
+    {
+        "pregunta": "Qué artículo de la Ley 8/2016, de 30 de mayo, regula la llamada cláusula general antidiscriminatoria:",
+        "opciones": [
+            "Artículo 3.",
+            "Artículo 4.",
+            "Artículo 5.",
+            "Artículo 6."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5. Cláusula general antidiscriminatoria. 1. Las instituciones públicas de las Illes Balears velarán por el derecho a la no discriminación con independencia de la orientación sexual, la identidad de género o la expresión de género de la persona o del grupo familiar a que pertenezca. 2. El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. Este derecho vincula tanto a los poderes públicos como a los particulares."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 8/2016, de 30 de mayo, la situación en que una persona es objeto de discriminación por orientación sexual, identidad de género o expresión de género como consecuencia de su relación con una persona o grupo LGTBI, se denomina:",
+        "opciones": [
+            "Discriminación por asociación.",
+            "Discriminación indirecta.",
+            "Discriminación directa.",
+            "Discriminación múltiple."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: d) Discriminación por asociación: situación en que una persona es objeto de discriminación por orientación sexual, identidad de género o expresión de género como consecuencia de su relación con una persona o un grupo LGTBI"
+    },
+    {
+        "pregunta": "De conformidad con la Ley 8/2016, de 30 de mayo, el derecho a la no discriminación tiene que ser:",
+        "opciones": [
+            "Un principio fundamental del ordenamiento jurídico balear.",
+            "Un principio informador del ordenamiento jurídico balear.",
+            "Un principio ordenador del ordenamiento jurídico balear.",
+            "Un principio rector del ordenamiento jurídico balear."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 5. Cláusula general antidiscriminatoria. 1. Las instituciones públicas de las Illes Balears velarán por el derecho a la no discriminación con independencia de la orientación sexual, la identidad de género o la expresión de género de la persona o del grupo familiar a que pertenezca. 2. El derecho a la no discriminación tiene que ser un principio informador del ordenamiento jurídico balear, de la actuación administrativa y de la práctica judicial. Este derecho vincula tanto a los poderes públicos como a los particulares."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, el impulso para la formación del personal, tanto funcionario como laboral propio de la comunidad se realizará a través de:",
+        "opciones": [
+            "Escuela de Administración Pública de las Illes Balears.",
+            "Instituto de Administración Pública de las Illes Balears.",
+            "Consejo de Administración Pública de las Illes Balears.",
+            "Observatorio de Administración Pública de las Illes Balears."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 10. Formación y sensibilización. 1. Las administraciones públicas de las Illes Balears garantizarán la formación y la sensibilización adecuada de los profesionales que realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación. 2. El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal. 3. Se llevarán a cabo medidas de prevención de la discriminación y de apoyo a la visibilidad de las personas LGTBI. En particular se adoptarán medidas específicas de apoyo, mediación y protección en los supuestos de menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito familiar debido a su expresión y/o identidad de género."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, la violencia en sus diferentes manifestaciones que se produce en el seno de relaciones afectivas y sexuales entre personas del mismo sexo, que constituye un ejercicio de poder, siendo el objetivo de la persona que abusa la dominación y el control del otro miembro de la pareja, es:",
+        "opciones": [
+            "Violencia de género.",
+            "Violencia intragénero.",
+            "Violencia inclusiva transgénero.",
+            "Violencia intergénero."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: k) Violencia intragénero (entre parejas del mismo sexo): se considera como tal la violencia en sus diferentes manifestaciones que se produce en el seno de relaciones afectivas y sexuales entre personas del mismo sexo, que constituye un ejercicio de poder, siendo el objetivo de la persona que abusa la dominación y el control del otro miembro de la pareja"
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, el impulso para la formación del personal, tanto funcionario como laboral propio de la comunidad, será competencia de:",
+        "opciones": [
+            "Todas las instituciones de la Comunidad Autónoma, tanto públicas como privadas.",
+            "Los poderes públicos.",
+            "El Gobierno de las Illes Balears.",
+            "Las administraciones públicas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 10. Formación y sensibilización. 1. Las administraciones públicas de las Illes Balears garantizarán la formación y la sensibilización adecuada de los profesionales que realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación. 2. El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal. 3. Se llevarán a cabo medidas de prevención de la discriminación y de apoyo a la visibilidad de las personas LGTBI. En particular se adoptarán medidas específicas de apoyo, mediación y protección en los supuestos de menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito familiar debido a su expresión y/o identidad de género."
+    },
+    {
+        "pregunta": "Según la Ley 8/2016, de 30 de mayo, el trato adverso o efecto negativo que se produzca contra una persona como consecuencia de la presentación de una queja, una reclamación, una denuncia, una demanda o un recurso, de cualquier tipo, destinado a evitar, disminuir o denunciar la discriminación o el acoso a que es sometida o ha sido sometida, se denomina:",
+        "opciones": [
+            "Represalia discriminatoria.",
+            "Victimización por razón de la orientación sexual.",
+            "Acoso por razón de la orientación sexual, la identidad de género o la expresión de género.",
+            "Orden de discriminar."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 4. Definiciones. A los efectos de lo que establece esta ley, se entiende por: i) Represalia discriminatoria: trato adverso o efecto negativo que se produce contra una persona como consecuencia de la presentación de una queja, una reclamación, una denuncia, una demanda o un recurso, de cualquier tipo, destinado a evitar, disminuir o denunciar la discriminación o el acoso a que es sometida o ha sido sometida."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 8/2016, de 30 de mayo, ¿Quién debe garantizar la formación y la sensibilización adecuada de los profesionales que realizan, entre otras, tareas de prevención, detección, atención y asistencia?:",
+        "opciones": [
+            "El Gobierno de las Illes Balears.",
+            "Los poderes públicos.",
+            "Las administraciones públicas.",
+            "El Gobierno de las Illes Balears en cooperación con las administraciones públicas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 10. Formación y sensibilización. 1. Las administraciones públicas de las Illes Balears garantizarán la formación y la sensibilización adecuada de los profesionales que realizan tareas de prevención, detección, atención, asistencia y recuperación en los ámbitos laboral, de la educación, de la salud, de los servicios sociales, de la justicia y los cuerpos de seguridad, del deporte y el ocio y de la comunicación. 2. El Gobierno de las Illes Balears, a través de la Escuela de Administración Pública de las Illes Balears (EBAP) impulsará la formación del personal, tanto funcionario como laboral propio de la comunidad, y promoverá convenios de colaboración y otros instrumentos con otras administraciones para poder formar a su personal. 3. Se llevarán a cabo medidas de prevención de la discriminación y de apoyo a la visibilidad de las personas LGTBI. En particular se adoptarán medidas específicas de apoyo, mediación y protección en los supuestos de menores, adolescentes y jóvenes que estén sometidos a presión o maltrato psicológico en el ámbito familiar debido a su expresión y/o identidad de género."
+    },
+    {
+        "pregunta": "El Título II de la Ley 8/2016, de 30 de mayo, lleva por rúbrica:",
+        "opciones": [
+            "Mecanismos para garantizar el derecho a la igualdad.",
+            "Medidas para garantizar la igualdad real y efectiva de las personas atendiendo a la identidad y expresión de género.",
+            "Políticas públicas para promover la igualdad efectiva de las personas.",
+            "Personas intersexuales."
+        ],
+        "correcta": 2,
+        "explicacion": "TÍTULO II. Políticas públicas para promover la igualdad efectiva de las personas LGTBI (arts. 10 - 21)"
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

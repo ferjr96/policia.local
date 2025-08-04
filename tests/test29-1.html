@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "¿Por medio de qué instituciones la Administración de la comunidad autónoma de las Illes Balears ejerce las competencias objeto de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres?",
+        "opciones": [
+            "El Instituto Balear de la Mujer.",
+            "Las unidades administrativas.",
+            "Las unidades para la igualdad",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 13 | Competencias del gobierno y de la administración de la comunidad autónoma de las Illes Balears 3. La Administración de la comunidad autónoma de las Illes Balears ejerce las competencias objeto de esta ley por medio de: a) El Instituto Balear de la Mujer, que queda adscrito a la consejería competente en materia de igualdad. b) Las unidades administrativas, de acuerdo con lo establecido en el artículo 19 de esta ley. Artículo 19 | Unidades para la igualdad"
+    },
+    {
+        "pregunta": "De conformidad con el apartad segundo del artículo 13 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, en el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones: Señale la opción incorrecta.",
+        "opciones": [
+            "Establecer medidas de fomento para dotar a las empresas y a las organizaciones de recursos materiales, económicos y personales para desarrollar planes, programas y actividades dirigidos a la consecución de la igualdad de mujeres y hombres.",
+            "Prestar servicios o establecer programas de carácter estatal con el objetivo de garantizar el acceso a los derechos de las mujeres y los hombres que sufren discriminación.",
+            "Establecer relaciones y canales de participación y colaboración con las federaciones de asociaciones, con la iniciativa privada, con asociaciones del ámbito de la comunidad autónoma y con organismos e instituciones de las Illes Balears, así como de otras comunidades autónomas, del Estado y del ámbito internacional.",
+            "Establecer los principios generales y las condiciones mínimas básicas y comunes de aplicación para acreditar entidades para prestar servicios en materia de igualdad de mujeres y hombres."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 13 | Competencias del gobierno y de la administración de la comunidad autónoma de las Illes Balears 2. En el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones: l) Establecer medidas de fomento para dotar a las empresas y a las organizaciones de recursos materiales, económicos y personales para desarrollar planes, programas y actividades dirigidos a la consecución de la igualdad de mujeres y hombres. m) Prestar servicios o establecer programas de carácter pluriinsular con el objetivo de garantizar el acceso a los derechos de las mujeres que sufren discriminación múltiple. n) Establecer relaciones y canales de participación y colaboración con las federaciones de asociaciones, con la iniciativa privada, con asociaciones del ámbito de la comunidad autónoma y con organismos e instituciones de las Illes Balears, así como de otras comunidades autónomas, del Estado y del ámbito internacional. o) Establecer los principios generales y las condiciones mínimas básicas y comunes de aplicación para acreditar entidades para prestar servicios en materia de igualdad de mujeres y hombres."
+    },
+    {
+        "pregunta": "A los efectos de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, se considera violencia machista:",
+        "opciones": [
+            "Violencia física, psíquica, económica, sexual, simbólica, feminicidio y mutilación genital femenina.",
+            "Violencia física, psíquica, económica, laboral, sexual, simbólica, feminicidio y mutilación genital femenina.",
+            "Violencia física, psicológica, económica, sexual, simbólica, feminicidio y mutilación genital femenina.",
+            "Violencia física, psíquica, económica, laboral, profesional, sexual, simbólica, feminicidio y mutilación genital femenina."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 65 | Definición 4. A los efectos de esta ley, se considera violencia machista: a) Violencia física b) Violencia psicológica c) Violencia económica d) Violencia sexual e) Violencia simbólica f) Feminicidio g) Mutilación genital femenina"
+    },
+    {
+        "pregunta": "¿Qué es la Comisión para la igualdad de género?",
+        "opciones": [
+            "Órgano encargado de coordinar las políticas y los programas que llevan a cabo las administraciones autonómica e insular en materia de igualdad de mujeres y hombres.",
+            "Es el órgano encargado de coordinar las políticas y los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres.",
+            "Es el máximo órgano de participación de carácter autonómico.",
+            "Es el órgano encargado de buscar, analizar y difundir información periódica y sistemática sobre la evolución de los indicadores, desglosados por islas, de igualdad de mujeres y hombres en las Illes Balears, que sirvan para realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El artículo 20.1 dice: “Se crea la Comisión para la Igualdad de Género como el órgano encargado de coordinar las políticas y los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres."
+    },
+    {
+        "pregunta": "¿Cómo se rubrica el Título V de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres?",
+        "opciones": [
+            "Disposiciones generales.",
+            "Políticas públicas para la promoción de la igualdad de género.",
+            "Competencias, funciones, organización institucional y financiación.",
+            "Violencia machista."
+        ],
+        "correcta": 3,
+        "explicacion": "VIOLENCIA MACHISTA El Título V de la Ley 11/2016, de 28 de julio, se rubrica “Violencia machista”."
+    },
+    {
+        "pregunta": "En el marco de lo dispuesto en el Estatuto de Autonomía de las Illes Balears, y de conformidad con lo establecido en Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, y en el resto de legislación aplicable en materia de igualdad efectiva de mujeres y hombres y para la protección integral contra la violencia machista, el Gobierno y la Administración de la comunidad autónoma de las Illes Balears tienen atribuidas las competencias:",
+        "opciones": [
+            "En materia de políticas de género.",
+            "En materia de políticas de género y de conciliación de la vida familiar y laboral.",
+            "En materia de políticas de género y de conciliación de la vida familiar y laboral, excepto las que son propias de los consejos insulares de acuerdo con el artículo 70.20 de la norma estatutaria.",
+            "En materia de políticas de género y de conciliación de la vida familiar y laboral, además de las que son propias de los consejos insulares de acuerdo con el artículo 70.20 de la norma estatutaria."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 13 | Competencias del gobierno y de la administración de la comunidad autónoma de las Illes Balears 1. En el marco de lo dispuesto en el Estatuto de Autonomía de las Illes Balears, y de conformidad con lo establecido en esta ley y en el resto de legislación aplicable en materia de igualdad efectiva de mujeres y hombres y para la protección integral contra la violencia machista, el Gobierno y la Administración de la comunidad autónoma de las Illes Balears tienen atribuidas las competencias en materia de políticas de género y de conciliación de la vida familiar y laboral, excepto las que son propias de los consejos insulares de acuerdo con el artículo 70.20 de la norma estatutaria."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, el Consejo de Participación de las Mujeres:",
+        "opciones": [
+            "Se configura como el máximo órgano de participación de carácter autonómico con la finalidad de favorecer el asociacionismo y la participación de las mujeres en los temas que puedan afectarlas.",
+            "Se configura como el órgano de participación de carácter autonómico con la finalidad de favorecer el asociacionismo o la participación de las mujeres en los temas que puedan afectarlas.",
+            "Se configura como el órgano de participación de carácter autonómico con la finalidad de favorecer el asociacionismo de las mujeres en los temas que puedan afectarlas.",
+            "Se configura como el órgano de participación de carácter autonómico con la finalidad de favorecer la participación de las mujeres en los temas que puedan afectarlas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 21 | Consejo de participación de las mujeres 1. En el marco de esta ley, el Consejo de Participación de las Mujeres se configura como el máximo órgano de participación de carácter autonómico con la finalidad de favorecer el asociacionismo y la participación de las mujeres en los temas que puedan afectarlas. 2. Sus funciones son las establecidas en el Decreto 49/2008, de 18 de abril, como órgano colegiado de carácter consultivo y de asesoramiento de la Administración de la comunidad autónoma."
+    },
+    {
+        "pregunta": "A los efectos de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, también se considerarán víctimas:",
+        "opciones": [
+            "Los ascendientes y descendientes en primer grado de la víctima de violencia.",
+            "Los ascendientes, descendientes y colaterales hasta segundo grado de la víctima de violencia.",
+            "Cualquier familiar de la víctima de violencia.",
+            "Las hijas y los hijos de la madre víctima de violencia."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 65 | Definición 1. A los efectos de esta ley, se entiende por violencia machista aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres. 2. La violencia a la que se refiere esta ley comprende cualquier acto de violencia por razón de sexo que tenga como consecuencia, o que pueda tener como consecuencia, un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos, la coerción y las privaciones arbitrarias de su libertad, tanto si se producen en la vida pública como en la privada. 3. A los efectos de esta ley, también se consideran víctimas las hijas y los hijos de la madre víctima de violencia."
+    },
+    {
+        "pregunta": "De conformidad con el apartad segundo del artículo 13 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, en el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones:",
+        "opciones": [
+            "Llevar a cabo estudios e investigaciones sobre la situación de las mujeres cuyo ámbito territorial sean las Illes Balears.",
+            "Llevar a cabo actividades de sensibilización sobre la situación de igualdad de mujeres y hombres, y sobre las medidas necesarias para promoverla, cuyo ámbito territorial sean las Illes Balears.",
+            "Hacer un seguimiento de la normativa estatal y de su aplicación de acuerdo con el principio de igualdad entre mujeres y hombres.",
+            "Facilitar asistencia técnica especializada en materia de igualdad a los consejos insulares, a las entidades locales y a las entidades públicas y privadas que actúen en las Illes Balears en materia de igualdad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 13 | Competencias del gobierno y de la administración de la comunidad autónoma de las Illes Balears 2. En el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones: k) Facilitar asistencia técnica especializada en materia de igualdad a los consejos insulares, a las entidades locales y a las entidades públicas y privadas que actúen en las Illes Balears en materia de igualdad."
+    },
+    {
+        "pregunta": "La violencia machista a la que se refiere la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, comprende:",
+        "opciones": [
+            "Cualquier acto de violencia por razón de sexo que tenga como consecuencia, o que pueda tener como consecuencia, un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos, la coerción y las privaciones arbitrarias de su libertad, tanto si se producen en la vida pública como en la privada.",
+            "Cualquier acto de violencia por razón de sexo que tenga como consecuencia un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos.",
+            "Cualquier acto de violencia por razón de sexo que tenga como consecuencia un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos, la coerción y las privaciones arbitrarias de su libertad, tanto si se producen en la vida pública como en la privada.",
+            "Cualquier acto de violencia por razón de sexo que tenga como consecuencia un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos, la coerción y las privaciones arbitrarias de su libertad."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 65 | Definición 1. A los efectos de esta ley, se entiende por violencia machista aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres. 2. La violencia a la que se refiere esta ley comprende cualquier acto de violencia por razón de sexo que tenga como consecuencia, o que pueda tener como consecuencia, un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos, la coerción y las privaciones arbitrarias de su libertad, tanto si se producen en la vida pública como en la privada."
+    },
+    {
+        "pregunta": "De conformidad con el apartad segundo del artículo 13 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, en el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones: Señale la opción incorrecta.",
+        "opciones": [
+            "Evaluar las políticas de igualdad en el ámbito de las Illes Balears y el grado de cumplimiento de esta ley.",
+            "Colaborar con los diferentes organismos privados en materia de igualdad de mujeres y hombres.",
+            "Establecer medidas de fomento con la finalidad de dotar a los consejos insulares, a los ayuntamientos y al resto de entidades locales de recursos materiales, económicos y personales para desarrollar programas y actividades dirigidos a la consecución de la igualdad de mujeres y hombres.",
+            "Planificar y diseñar la metodología para adecuar las estadísticas al principio de igualdad, así como adecuar y mantener estadísticas actualizadas que permitan tener un conocimiento de las diferencias entre mujeres y hombres en los diversos ámbitos de intervención autonómica."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 13 | Competencias del gobierno y de la administración de la comunidad autónoma de las Illes Balears 2. En el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones: d) Evaluar las políticas de igualdad en el ámbito de las Illes Balears y el grado de cumplimiento de esta ley. f) Establecer medidas de fomento con la finalidad de dotar a los consejos insulares, a los ayuntamientos y al resto de entidades locales de recursos materiales, económicos y personales para desarrollar programas y actividades dirigidos a la consecución de la igualdad de mujeres y hombres. g) Planificar y diseñar la metodología para adecuar las estadísticas al principio de igualdad, así como adecuar y mantener estadísticas actualizadas que permitan tener un conocimiento de las diferencias entre mujeres y hombres en los diversos ámbitos de intervención autonómica."
+    },
+    {
+        "pregunta": "Que competencias tienen las administraciones locales según el artículo 13 de la ley de igualdad entre mujeres y hombres:",
+        "opciones": [
+            "Evaluar las políticas de igualdad en el ámbito de las Illes Balears y el grado de cumplimiento de esta ley.",
+            "Planificar y elaborar los principios generales de actuación en materia de igualdad de mujeres y hombres.",
+            "Crear y adecuar estructuras, programas y procedimientos para integrar la perspectiva de género en su actividad administrativa.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "La opción correcta es la d) ya que las competencias a las que se refiere el artículo 13 son atribuidas al Gobierno y a las Administración de las Comunidad Autónoma de las Islas Baleares y no a las administraciones locales."
+    },
+    {
+        "pregunta": "Los principios generales por los que se rige la ley de igualdad entre mujeres y hombres son de aplicación:",
+        "opciones": [
+            "A todos los poderes públicos a las personas físicas y jurídicas que suscriban contratos o convenios de colaboración o sean beneficiarias de las ayudas o las subvenciones que conceden los poderes públicos y, en general, a todas las actuaciones que promuevan o lleven a cabo personas físicas o jurídicas privadas, en los términos establecidos en esta ley.",
+            "A los poderes públicos de las Islas Baleares a las personas físicas y jurídicas que suscriban contratos o convenios de colaboración o sean beneficiarias de las ayudas o las subvenciones que conceden los poderes públicos y, en general, a todas las actuaciones que promuevan o lleven a cabo personas físicas o jurídicas privadas, en los términos establecidos en esta ley.",
+            "A lo poderes públicos de las Islas Baleares según sus atribuciones así como a las personas físicas y jurídicas que suscriban contratos o convenios de colaboración o sean beneficiarias de las ayudas o las subvenciones que conceden los poderes públicos y, en general, a todas las actuaciones que promuevan o lleven a cabo personas físicas o jurídicas privadas, en los términos establecidos en esta ley.",
+            "A lo poderes públicos de las Islas Baleares según sus atribuciones así como a las personas jurídicas que suscriban contratos o convenios de colaboración o sean beneficiarias de las ayudas o las subvenciones que conceden los poderes públicos y, en general, a todas las actuaciones que promuevan o lleven a cabo personas físicas o jurídicas privadas, en los términos establecidos en esta ley."
+        ],
+        "correcta": 2,
+        "explicacion": "La opción correcta es la c) ya que el artículo 3.1 señala que las actuaciones de los poderes públicos de las Islas Baleares, en el marco de sus atribuciones se regirán por los principios que enumera y tras dicha enumeración en el artículo 3.2 dice “Los principios generales a los que hace referencia el apartado anterior también son de aplicación a las personas físicas y jurídicas que suscriban contratos o convenios de colaboración o sean beneficiarias de las ayudas o las subvenciones que conceden los poderes públicos y, en general, a todas las actuaciones que promuevan o lleven a cabo personas físicas o jurídicas privadas, en los términos establecidos en esta ley”."
+    },
+    {
+        "pregunta": "En las materias de promoción de la igualdad de oportunidades y de prevención de la violencia machista a las que se refiere la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, los municipios pueden ejercer competencias:",
+        "opciones": [
+            "Delegadas, siempre que les sean delegadas por la administración titular de la competencia en el marco de lo dispuesto en el artículo 24 de la Ley reguladora de las bases del régimen local.",
+            "Competencias diferentes a las delegadas siempre que se cumplan los requisitos establecidos en el artículo 4.7 de la misma Ley reguladora de las bases del régimen local.",
+            "Delegadas o competencias diferentes a las delegadas siempre que, en el primer caso, les sean delegadas por la administración titular de la competencia en el marco de lo dispuesto en el artículo 27 de la Ley reguladora de las bases del régimen local, o, en el segundo, se cumplan los requisitos establecidos en el artículo 7.4 de la misma Ley reguladora de las bases del régimen local.",
+            "Las respuestas a) y b) son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 15 | Competencias que pueden ejercer los ayuntamientos Sin perjuicio de las competencias propias de los municipios con respecto a la atención inmediata a personas en situación o riesgo de exclusión social a la que hace referencia el artículo 25.2.e) de la Ley 7/1985, de 2 de abril , reguladora de las bases del régimen local, en las materias de promoción de la igualdad de oportunidades y de prevención de la violencia machista a las que se refiere esta ley, los municipios pueden ejercer competencias delegadas o competencias diferentes a las delegadas siempre que, en el primer caso, les sean delegadas por la administración titular de la competencia en el marco de lo dispuesto en el artículo 27 de la Ley reguladora de las bases del régimen local , o, en el segundo, se cumplan los requisitos establecidos en el artículo 7.4 de la misma Ley reguladora de las bases del régimen local."
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Cuáles son sus órganos de coordinación y consulta?",
+        "opciones": [
+            "La comisión para la igualdad de género y el consejo de participación de las mujeres.",
+            "La comisión para la igualdad de género, el consejo de participación de las mujeres y la defensora o defensor de la igualdad entre mujeres y hombres.",
+            "El instituto Balear de la mujer, la comisión para la igualdad de género y el consejo de participación de las mujeres.",
+            "El instituto Balear de la mujer, las unidades administrativas, el observatorio de la mujer, la comisión para la igualdad de género y el consejo de participación de las mujeres."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a). La ley 11/2016 en su Título II, Capítulo II, Sección 2ª habla de los órganos de coordinación y consulta siendo estos la comisión para la igualdad de género y el consejo de participación de las mujeres."
+    },
+    {
+        "pregunta": "¿Cuáles son los artículos que forman el Título V de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres?",
+        "opciones": [
+            "Del 64 al 78.",
+            "Del 65 al 78.",
+            "Del 65 al 77.",
+            "Del 64 al 79."
+        ],
+        "correcta": 1,
+        "explicacion": "VIOLENCIA MACHISTA El Título V de la Ley 11/2016, de 28 de julio, se rubrica “Violencia machista”. En el presente apartado será objeto de estudio únicamente su Capítulo I que regula los “Principios generales” y comprende los artículos 65 a 78, ambos inclusive."
+    },
+    {
+        "pregunta": "De conformidad con el apartad segundo del artículo 13 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, en el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones:",
+        "opciones": [
+            "Investigar y detectar situaciones de discriminación por razón de sexo y adoptar medidas para su erradicación.",
+            "Ejercer la potestad sancionadora en su ámbito competencial.",
+            "Llevar a cabo cualquier otra función incluida en esta ley, independientemente de que le haya sido encomendada en su ámbito de competencia o no.",
+            "Las respuestas a y b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 13 | Competencias del gobierno y de la administración de la comunidad autónoma de las Illes Balears 2. En el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones: p) Investigar y detectar situaciones de discriminación por razón de sexo y adoptar medidas para su erradicación. q) Ejercer la potestad sancionadora en su ámbito competencial."
+    },
+    {
+        "pregunta": "¿Cuántos artículos contiene el Título V de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres?",
+        "opciones": [
+            "12 artículos.",
+            "13 artículos.",
+            "14 artículos.",
+            "15 artículos."
+        ],
+        "correcta": 2,
+        "explicacion": "VIOLENCIA MACHISTA El Título V de la Ley 11/2016, de 28 de julio, se rubrica “Violencia machista”. En el presente apartado será objeto de estudio únicamente su Capítulo I que regula los “Principios generales” y comprende los artículos 65 a 78, ambos inclusive."
+    },
+    {
+        "pregunta": "El Observatorio para la Igualdad y las Unidades Administrativas son:",
+        "opciones": [
+            "Organismos de Igualdad.",
+            "Órganos de Igualdad.",
+            "Organismos de consulta y asesoramiento de los ayuntamientos.",
+            "Órganos dependientes de la consejería de competente en materia de seguridad."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a). El artículo 18 habla sobre el Observatorio para la Igualdad y el artículo 19 habla sobre las unidades administrativas. Ambos pertenecen a las Sección 1ª “Organismos de Igualdad”"
+    },
+    {
+        "pregunta": "De conformidad con el apartad segundo del artículo 13 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, en el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones:",
+        "opciones": [
+            "Crear y adecuar estructuras, programas y procedimientos para integrar la perspectiva de género en su actividad administrativa.",
+            "Planificar y elaborar los principios generales de actuación en materia de igualdad de mujeres y hombres.",
+            "Diseñar y ejecutar medidas de acción positiva y de programas y servicios cuyo ámbito territorial sean las Illes Balears.",
+            "Todas las anteriores respuestas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 13 | Competencias del gobierno y de la administración de la comunidad autónoma de las Illes Balears 2. En el ejercicio de las competencias que les atribuye el ordenamiento jurídico, corresponden al Gobierno y a la Administración de la comunidad autónoma de las Illes Balears, en materia de políticas de género y de conciliación de la vida familiar y laboral, las siguientes funciones: a) Crear y adecuar estructuras, programas y procedimientos para integrar la perspectiva de género en su actividad administrativa. b) Planificar y elaborar los principios generales de actuación en materia de igualdad de mujeres y hombres. c) Diseñar y ejecutar medidas de acción positiva y de programas y servicios cuyo ámbito territorial sean las Illes Balears."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, podrá nombrarse una defensora o un defensor de la igualdad de mujeres y hombres:",
+        "opciones": [
+            "Adjunta o adjunto al Gobierno.",
+            "Adjunta o adjunto al Consejo Insular.",
+            "Adjunta o adjunto al Instituto Balear de la Mujer.",
+            "Adjunta o adjunto a la Sindicatura de Greuges."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 | La defensora o el defensor de la igualdad de mujeres y hombres 1. La Sindicatura de Greuges, en la forma y en las condiciones que establece su normativa reguladora, velará especialmente para que las administraciones públicas cumplan las previsiones que establece esta ley. 2. Con esta finalidad, puede nombrarse una defensora o un defensor de la igualdad de mujeres y hombres adjunta o adjunto a la Sindicatura de Greuges."
+    },
+    {
+        "pregunta": "Indica cual de ellos es un principio general regulado en la ley de igualdad entre hombres y mujeres:",
+        "opciones": [
+            "Crear y adecuar estructuras, programas y procedimientos para integrar la perspectiva de género en su actividad administrativa.",
+            "Llevar a cabo actividades de sensibilización sobre la situación de desigualdad de mujeres y hombres, y sobre las medidas necesarias para promover la igualdad, cuyo ámbito territorial sean las Illes Balears.",
+            "Establecer medidas de fomento para dotar a las empresas y a las organizaciones de recursos materiales, económicos y personales para desarrollar planes, programas y actividades dirigidos a la consecución de la igualdad de mujeres y hombres.",
+            "Ninguno de ellos es un principio general."
+        ],
+        "correcta": 3,
+        "explicacion": "La opción correcta es la d). Si recordamos los “tips” para diferenciar los principios generales (art.3), de las funciones de la comunidad autónoma de las Islas Baleares (art 13), debemos observar que uno de los trucos es que los principios van enumerados con artículo + verbo (La incorporación…la adopción…) mientras que las funciones van enumeradas con un verbo (crear, planificar…)."
+    },
+    {
+        "pregunta": "De conformidad con el artículo 16 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, señale la respuesta correcta:",
+        "opciones": [
+            "El Gobierno de las Illes Balears fijará reglamentariamente los principios generales aplicables a las acreditaciones de entidades privadas para prestar servicios en materia de igualdad de mujeres y hombres, que se atendrán, en todo caso, a criterios de calidad y eficacia del servicio.",
+            "El Gobierno de las Illes Balears fijará los principios generales aplicables a las acreditaciones de entidades privadas para prestar servicios en materia de igualdad de mujeres y hombres.",
+            "El Gobierno de las Illes Balears fijará reglamentariamente los principios generales y las condiciones mínimas básicas y comunes aplicables a las acreditaciones de entidades privadas para prestar servicios en materia de igualdad de mujeres y hombres, que se atendrán, en todo caso, a criterios de calidad y eficacia del servicio.",
+            "El Gobierno de las Illes Balears fijará reglamentariamente los principios generales o las condiciones mínimas básicas y comunes aplicables a las acreditaciones de entidades privadas para prestar servicios en materia de igualdad de mujeres y hombres, que se atendrán, en todo caso, a criterios de calidad y eficacia del servicio."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 16 | Acreditación de servicios El Gobierno de las Illes Balears fijará reglamentariamente los principios generales y las condiciones mínimas básicas y comunes aplicables a las acreditaciones de entidades privadas para prestar servicios en materia de igualdad de mujeres y hombres, que se atendrán, en todo caso, a criterios de calidad y eficacia del servicio."
+    },
+    {
+        "pregunta": "¿Qué es lo que hacen los centros de atención y asistencia psicológica, social y jurídica específica?",
+        "opciones": [
+            "Proporcionarán a las mujeres información y asesoramiento para paliar las consecuencias físicas, psíquicas y sociales que les causa la violencia",
+            "Proporcionarán a las mujeres información y asesoramiento para paliar las consecuencias físicas, psíquicas que les causa la violencia.",
+            "Proporcionarán a las mujeres información y asesoramiento para paliar las consecuencias psíquicas y sociales que les causa la violencia.",
+            "Proporcionarán a las mujeres información y asesoramiento para paliar las consecuencias físicas, psíquicas y sociales y laborales que les causa la violencia."
+        ],
+        "correcta": 0,
+        "explicacion": "La respuesta correcta es la a). El artículo 70.1 señala: “Las administraciones públicas de las Illes Balears proporcionarán a las mujeres información y asesoramiento para paliar las consecuencias físicas, psíquicas y sociales que les causa la violencia”. Tened en cuenta que una de las características de estos centros es que trabajan en 3 dimensiones la social, la psicológica y la jurídica (por las lesiones físicas producidas entre otras cosas). Así mismo debemos recordar que estos centros también prestarán asistencia psicológica y jurídica específica."
+    },
+    {
+        "pregunta": "De conformidad con el artículo 18 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, ¿a qué institución está adscrito el Observatorio para la Igualdad?",
+        "opciones": [
+            "Al Instituto Balear de la Mujer.",
+            "Al Consejo Insular.",
+            "A la administración local.",
+            "Al Instituto Balear de la Igualdad."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 18 | Observatorio para la igualdad 1. Se crea el Observatorio para la Igualdad, adscrito al Instituto Balear de la Mujer, encargado de buscar, analizar y difundir información periódica y sistemática sobre la evolución de los indicadores, desglosados por islas, de igualdad de mujeres y hombres en las Illes Balears, que sirvan para realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos. En cualquier caso, se priorizarán las áreas de la violencia machista, la situación laboral, la imagen pública de las mujeres y el ámbito educativo y de salud, y se fomentará la figura del agente de igualdad de oportunidades de mujeres y hombres en los ámbitos público y privado. 2. El Observatorio dispondrá de dotación económica, medios tecnológicos y personal especializado suficientes para elaborar el sistema de indicadores, tratar los datos y difundirlos. 3. Sus funciones, composición y funcionamiento, así como las diferentes áreas de intervención, se determinarán en un reglamento que se desarrollará durante el primer año de aplicación de la ley."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, las administraciones locales de las Illes Balears, ¿pueden ejercer competencias en las materias de promoción de la igualdad de oportunidades y de prevención de la violencia machista?",
+        "opciones": [
+            "Sí, siempre.",
+            "Sí, pero solo en los términos y las condiciones establecidos en la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local (LRBRL) y en dicha ley.",
+            "Sí, pero solo en los términos y las condiciones establecidos en la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local (LRBRL).",
+            "No, excepto en los términos y las condiciones establecidos en la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local (LRBRL)."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 12 | Administraciones competentes 2. Las administraciones locales de las Illes Balears también pueden ejercer competencias en las materias de promoción de la igualdad de oportunidades y de prevención de la violencia machista, pero solo en los términos y las condiciones establecidos en la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local (LRBRL), y en esta ley."
+    },
+    {
+        "pregunta": "Si nos basamos en la ley de igualdad entre mujeres y hombres ¿Qué es el derecho a la protección efectiva?",
+        "opciones": [
+            "Significa que se implementarán protocolos y se dotarán de recursos a los cuerpos y fuerzas de seguridad propios.",
+            "Significa que las administraciones públicas de las Islas Baleares, en el ámbito de sus competencias, dotarán a los cuerpos y fuerzas de seguridad de los recursos y protocolos necesarios para conseguir la máxima eficacia en la intervención en casos de violencia machista y derivarlas hacia los recurso psicosociales y orientativos existentes y, especialmente, en relación con la ejecución y el control de las medidas judiciales adoptadas para proteger a las mujeres afectadas.",
+            "Significa que las administraciones públicas de las Islas Baleares, en el ámbito de sus competencias, dotarán a los cuerpos y fuerzas de seguridad propios de la formación, recursos y protocolos necesarios para conseguir la máxima eficacia en la intervención en casos de violencia machista y derivarlas hacia los recurso psicosociales y orientativos existentes y, especialmente, en relación con la ejecución y el control de las medidas judiciales adoptadas para proteger a las mujeres afectadas.",
+            "Significa que las administraciones públicas de las Islas Baleares, en el ámbito de sus competencias, dotarán a los cuerpos y fuerzas de seguridad propios de los recursos y protocolos necesarios para conseguir la máxima eficacia en la intervención en casos de violencia machista y derivarlas hacia los recursos psicosociales y orientativos existentes y, especialmente, en relación con la ejecución y el control de las medidas judiciales adoptadas para proteger a las mujeres afectadas."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). El artículo 69 menciona que las administraciones públicas de las Islas Baleares, además de la formación que se especifica en el artículo 67 (…)dotarán a los cuerpos y fuerzas de seguridad propios de los recursos y protocolos necesarios para conseguir la máxima eficacia en la intervención en casos de violencia machista y derivarlas hacia los recursos psicosociales y orientativos existentes y, especialmente, en relación con la ejecución y el control de las medidas judiciales adoptadas para proteger a las mujeres afectadas. Aquí debemos tener en cuenta dos cosas: - Una, que la protección efectiva viene dada por una adecuada formación (por eso es más correcta la opción c) ya que es la que hace mención a eso) y por esa razón es lo primero que matiza el artículo 69. - Dos, que habla de fuerzas y cuerpos de seguridad PROPIOS es decir, de las policías locales."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, ¿qué competencias serán ejercidas por la Administración de la comunidad autónoma en el conjunto de las Illes Balears o por las administraciones de los consejos insulares, en sus respectivos ámbitos territoriales, de conformidad con lo establecido en el Estatuto de Autonomía de las Illes Balears, en dicha ley y en el resto de normativa, estatal o autonómica, que sea de aplicación?",
+        "opciones": [
+            "Las competencias en materia de políticas de género, conciliación de la vida familiar y laboral y mujer, así como todas las potestades vinculadas específicamente a la prevención y la atención integral de la violencia machista.",
+            "Las competencias en materia de políticas de género, conciliación de la vida laboral, así como todas las potestades vinculadas específicamente a la violencia machista.",
+            "Las competencias en materia de conciliación de la vida familiar, así como todas las potestades vinculadas específicamente a la atención integral de la violencia machista.",
+            "Las competencias en materia de políticas de género, así como todas las potestades vinculadas específicamente a la violencia machista."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 12 | Administraciones competentes 1. Las competencias en materia de políticas de género, conciliación de la vida familiar y laboral y mujer, así como todas las potestades vinculadas específicamente a la prevención y la atención integral de la violencia machista, serán ejercidas por la Administración de la comunidad autónoma en el conjunto de las Illes Balears o por las administraciones de los consejos insulares, en sus respectivos ámbitos territoriales, de conformidad con lo establecido en el Estatuto de Autonomía de las Illes Balears, esta ley y el resto de normativa, estatal o autonómica, que sea de aplicación."
+    },
+    {
+        "pregunta": "El Instituto Balear de la mujer presentará una evaluación de la eficacia de los recursos existentes en las Islas Baleares en materia de violencia contra las mujeres y sus hijas e hijos. ¿A quién lo presentará y con que periodicidad?",
+        "opciones": [
+            "Lo presentará al Parlamento de las Islas Baleares cada dos años.",
+            "Lo presentará al Gobierno de las Islas Baleares cada fin de legislatura.",
+            "Lo presentará al Gobierno de las Islas Baleares cada seis meses.",
+            "Lo presentará al Parlamento de las Islas Baleares cada año."
+        ],
+        "correcta": 3,
+        "explicacion": "La opción correcta es la d). El artículo 66.2 señala: “Anualmente, el Instituto Balear de la Mujer elaborará una evaluación de la eficacia de los recursos existentes en las Illes Balears en materia de violencia contra las mujeres y sus hijas e hijos, que se presentará al Parlamento de las Illes Balears”"
+    },
+    {
+        "pregunta": "¿Qué es lo que hace el Observatorio para la Igualdad según la ley de igualdad entre mujeres y hombres?",
+        "opciones": [
+            "Es el encargado de buscar, analizar la información periódica y sistemática sobre la evolución de los indicadores, desglosados por islas, de igualdad de mujeres y hombres en las Illes Balears, que sirvan para realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos.",
+            "Es el encargado de buscar, analizar y difundir información periódica y sistemática sobre la evolución de los indicadores, desglosados por islas, de igualdad de mujeres y hombres en las Illes Balears, que sirvan para realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos.",
+            "Es el encargado de analizar y difundir información periódica y sistemática sobre la evolución de los indicadores, desglosados por islas, de igualdad de mujeres y hombres en las Illes Balears, que sirvan para realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos.",
+            "Es el encargado de buscar, analizar y difundir información periódica y sistemática y pormenorizada sobre la evolución de los indicadores, desglosados por islas y por municipios de igualdad de mujeres y hombres en las Illes Balears, que sirvan para realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos."
+        ],
+        "correcta": 1,
+        "explicacion": "La opción correcta es la b). El artículo 18.1 señala: “Se crea el Observatorio para la Igualdad, adscrito al Instituto Balear de la Mujer, encargado de buscar, analizar y difundir información periódica y sistemática sobre la evolución de los indicadores, desglosados por islas, de igualdad de mujeres y hombres en las Illes Balears, que sirvan para realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos”"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién ejerce las competencias en materia de políticas de género, conciliación de la vida familiar y laboral y mujer, así como todas las potestades vinculadas específicamente a la prevención y la atención integral de la violencia machista?",
+        "opciones": [
+            "a. Serán ejercidas por la Administración de la Comunidad Autónoma en el conjunto de las Islas Baleares o también por las administraciones de los consejos insulares en su respectivo territorio.",
+            "b. Serán ejercidas por la Administración de la Comunidad Autónoma en el conjunto de las Islas Baleares, por las administraciones de los consejos insulares en su respectivo territorio y por las administraciones locales.",
+            "c. Serán ejercidas por la Administración de la Comunidad Autónoma en el conjunto de las Islas Baleares, por las administraciones de los consejos insulares en su respectivo territorio y podrán serlo por las administraciones locales.",
+            "d. Serán ejercidas por la Administración de la Comunidad Autónoma en el conjunto de las Islas Baleares, por las administraciones de los consejos insulares en su respectivo territorio y podrán serlo por las administraciones locales según los establecido en el Estatuto de Autonomía de las Islas Baleares."
+        ],
+        "correcta": 0,
+        "explicacion": "El artículo 12 habla de las administraciones competentes por lo que su título ya nos declara que tema va a tratar: Artículo 12. Administraciones competentes. 1. Las competencias en materia de políticas de género, conciliación de la vida familiar y laboral y mujer, así como todas las potestades vinculadas específicamente a la prevención y la atención integral de la violencia machista, serán ejercidas por la Administración de la comunidad autónoma en el conjunto de las Illes Balears o por las administraciones de los consejos insulares, en sus respectivos ámbitos territoriales, de conformidad con lo establecido en el Estatuto de Autonomía de las Illes Balears, esta ley y el resto de normativa, estatal o autonómica, que sea de aplicación. Mas adelante en su apartado 2 señala: 2. Las administraciones locales de las Illes Balears también pueden ejercer competencias (...) Así mismo el apartado 2 sigue diciendo: (...) en las materias de promoción de la igualdad de oportunidades y de prevención de la violencia machista, pero solo en los términos y las condiciones establecidos en la Ley 7/1985, de 2 de abril, reguladora de las bases del régimen local (LRBRL), y en esta ley. Cuando dicho apartado 2 habla de \"materias de promoción de la igualdad de oportunidades y de prevención de la violencia machista\" en un sentido amplio se entiende que engloba las competencias referidas al inicio del articulo 12.1 \"materia de políticas de género, conciliación de la vida familiar y laboral y mujer, así como todas las potestades vinculadas específicamente a la prevención y la atención integral de la violencia machista\" especialmente el último apartado, el de violencia machista. Debemos escoger la opción que sea mas correcta en la literalidad de la ley cuando hay opciones muy semejantes. En este caso, la opción C) podría ser plausible, sin embargo si leemos el enunciado \"competencias en materia de políticas de género, conciliación de la vida familiar y laboral y mujer, así como todas las potestades vinculadas específicamente a la prevención y la atención integral de la violencia machista\" no son todas ellas ejercidas por las entidades locales. Las entidades locales PODRÁN (no están obligadas) ejercer competencias, pero el artículo 12.2 especifica que serán \"en las materias de promoción de la igualdad de oportunidades y de prevención de la violencia machista\" por lo que no tendrán, por ejemplo competencias segun esta ley, en conciliación de la vida familiar y laboral y mujer"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres se deberá formar al personal de las administraciones públicas sobre materia de igualdad. En referencia a esto, indica cual es la respuesta correcta:",
+        "opciones": [
+            "El Instituto Balear de la Mujer, elaborará un diagnóstico periódico para conocer el grado de formación de su personal y, de acuerdo con dicho diagnóstico, deberán modificar su programación formativa.",
+            "Los órganos competentes en materia de formación de personal, de las Administraciones públicas de las Islas Baleares, en colaboración con el Instituto Balear de la Mujer, elaborarán un diagnóstico periódico para conocer el grado de formación de su personal y, de acuerdo con dicho diagnóstico, deberán modificar su programación formativa.",
+            "Las Unidades administrativas y el Observatorio para la Igualdad, elaborará un diagnóstico periódico para conocer el grado de formación de su personal y, de acuerdo con dicho diagnóstico, deberán modificar su programación formativa.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El artículo 67.1 señala: “Los órganos competentes en materia de formación del personal de las administraciones públicas de las Illes Balears, en colaboración con el Instituto Balear de la Mujer, elaborarán un diagnóstico periódico para conocer el grado de formación de su personal y, de acuerdo con dicho diagnóstico, deberán modificar su programación formativa”"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres, los centros de acogida deberán garantizar un servicio integral, asi como los recursos humanos necesarios. ¿Cuántas plazas por mujer deberán cubrirse, en general, por personal en función al número de mujeres?",
+        "opciones": [
+            "10 plazas por cada 3500 mujeres.",
+            "5 plazas por cada 3500 mujeres.",
+            "2 plazas por cada 3500 mujeres.",
+            "1 plaza por cada 3500 mujeres."
+        ],
+        "correcta": 3,
+        "explicacion": "La opción correcta es la d). El artículo 71.2 señala: Deberá haber una plaza por cada 3.500 mujeres. Además debemos recordar que los servicios de acogida deberán tener 1 plaza por cada 3500 mujeres a partir de los 18 años, no obstante en Formentera será una plaza por cada 2500 mujeres y sus hijos."
+    },
+    {
+        "pregunta": "De conformidad con el apartado primero del artículo 19 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, para impulsar medidas para la igualdad:",
+        "opciones": [
+            "Se constituirá en cada consejería una unidad administrativa con el objeto de ejecutar lo dispuesto en dicha Ley.",
+            "Se designará en cada consejería una unidad administrativa con el objeto de ejecutar lo dispuesto en esta Ley.",
+            "Se constituirá y designará en cada consejería una unidad administrativa con el objeto de ejecutar lo dispuesto en esta ley y en el plan estratégico de igualdad de mujeres y hombres que apruebe el Gobierno de las Illes Balears.",
+            "Se constituirá o designará en cada consejería una unidad administrativa con el objeto de ejecutar lo dispuesto en esta ley y en el plan estratégico de igualdad de mujeres y hombres que apruebe el Gobierno de las Illes Balears."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 19 | Unidades para la igualdad 1. Para impulsar medidas para la igualdad, se constituirá o designará en cada consejería una unidad administrativa con el objeto de ejecutar lo dispuesto en esta ley y en el plan estratégico de igualdad de mujeres y hombres que apruebe el Gobierno de las Illes Balears. Esta unidad contará con profesionales formados en igualdad de género. 2. Los consejos insulares y los municipios de más de 20.000 habitantes, en el ámbito de sus competencias de autoorganización, adecuarán sus estructuras de modo que dispongan de un órgano responsable o unidad administrativa que se encargue de impulsar, programar y evaluar las políticas de igualdad de mujeres y hombres en sus respectivos ámbitos de actuación territorial, y de asesorar sobre estas políticas. 3. Los consejos insulares, en el ámbito de sus competencias, son las instituciones encargadas de dar apoyo técnico y administrativo en materia de igualdad a los municipios de menos de 20.000 habitantes."
+    },
+    {
+        "pregunta": "¿Qué competencias pueden ejercer los Consejos Insulares de conformidad con la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres?",
+        "opciones": [
+            "En las materias de políticas de género, conciliación de la vida familiar y laboral y mujer que ejercerán las competencias que les son atribuidas como propias de conformidad con el artículo 70.20 del Estatuto de Autonomía de las Illes Balears.",
+            "En las materias de políticas de género, conciliación de la vida familiar y laboral y mujer que ejercerán las competencias que les son atribuidas como propias de conformidad con el artículo 70 del Estatuto de Autonomía de las Illes Balears.",
+            "En las materias de políticas de género, conciliación de la vida familiar y laboral y mujer que ejercerán las competencias que les son atribuidas como propias de conformidad con el artículo 70.20 del Estatuto de Autonomía de las Illes Balears, sin perjuicio de que las funciones y los servicios inherentes a dichas competencias tengan que ser objeto de translación a las instituciones insulares mediante decreto de traspasos acordado en comisión mixta.",
+            "Los Consejos Insulares no tienen asignadas competencias en este ámbito."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 14 | Competencias propias de los consejos insulares En las materias de políticas de género, conciliación de la vida familiar y laboral y mujer que, entre otras, menciona esta ley, los consejos insulares ejercerán, en sus respectivos ámbitos territoriales, las competencias que les son atribuidas como propias de conformidad con el artículo 70.20 del Estatuto de Autonomía de las Illes Balears, sin perjuicio de que las funciones y los servicios inherentes a dichas competencias tengan que ser objeto de translación a las instituciones insulares mediante decreto de traspasos acordado en comisión mixta. En caso de traspaso, cada consejo insular elaborará su propia cartera de políticas públicas de igualdad de género."
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres, existe la posibilidad de prestar servicios de forma privada en materia de igualdad. ¿Quién acreditará estos servicios?",
+        "opciones": [
+            "El ayuntamiento respectivo.",
+            "El Gobierno de las Islas Baleares.",
+            "La Conselleria en materia de igualdad.",
+            "El ayuntamiento respectivo mediante la Conselleria en materia de igualdad."
+        ],
+        "correcta": 1,
+        "explicacion": "La opción correcta es la b). El artículo 16 señala: “El Gobierno de las Illes Baleares fijará reglamentariamente los principios generales y las condiciones mínimas básicas y comunes aplicables a las acreditaciones de entidades privadas para prestar servicios en materia de igualdad de mujeres y hombres, que se atendrán, en todo caso, a criterios de calidad y eficacia del servicio”"
+    },
+    {
+        "pregunta": "De conformidad con la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, en la Comisión para la Igualdad de Género estarán representados:",
+        "opciones": [
+            "El Gobierno y los consejos insulares.",
+            "El Gobierno, los consejos insulares y la Federació d’Entitats Locals de les Illes Balears.",
+            "El Gobierno, los consejos insulares, la Federació d’Entitats Locals de les Illes Balears y el Ayuntamiento de Palma.",
+            "El Gobierno, los consejos insulares, la Federació d’Entitats Locals de les Illes Balears y los Ayuntamientos de todas las entidades locales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 20 | Comisión para la igualdad de género 1. Se crea la Comisión para la Igualdad de Género como el órgano encargado de coordinar las políticas y los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres. 2. Sus funciones, composición, organización y régimen de funcionamiento se determinarán reglamentariamente. En la comisión estarán representados el Gobierno, los consejos insulares, la Federació d'Entitats Locals de les Illes Balears (FELIB) y el Ayuntamiento de Palma. 3. El reglamento que se elabore no implicará en ningún caso incremento de personal laboral o funcionario ni de cargos de designación en la coordinación, y las correspondientes tareas y responsabilidades se distribuirán entre las diferentes administraciones participantes y partiendo de los puestos de trabajo existentes."
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres se entiende por violencia machista:",
+        "opciones": [
+            "Aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres.",
+            "Cualquier acto de violencia por razón de sexo que tenga como consecuencia, o que pueda tener como consecuencia, un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos, la coerción y las privaciones arbitrarias de su libertad, tanto si se producen en la vida pública como en la privada.",
+            "Aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres.",
+            "Cualquier acto de violencia por razón de sexo que tenga como consecuencia un perjuicio o sufrimiento en la salud física, sexual o psicológica, e incluye las amenazas de estos actos, la coerción y las privaciones arbitrarias de su libertad, tanto si se producen en la vida pública como en la privada."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a). El artículo 65 posee 4 apartados. En el 65.1 nos habla de lo que se entiende, a efectos de esta ley, por violencia machista: aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres” Esta es la definición principal y básica, la cual se centra en las relaciones de poder de los hombres sobre las mujeres que son las que crean desigualdad y discriminación. Así mismo en el apartado 2 señala que es lo que comprende esta violencia pero es el apartado 1 el que da la definición básica de violencia machista."
+    },
+    {
+        "pregunta": "De conformidad con el apartado tercero del artículo 19 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, los consejos insulares, en el ámbito de sus competencias, son las instituciones encargadas de dar apoyo técnico y administrativo en materia de igualdad a:",
+        "opciones": [
+            "Los territorios de menos de 20.000 habitantes.",
+            "Las ciudades de menos de 20.000 habitantes.",
+            "Los municipios de menos de 22.000 habitantes.",
+            "Los municipios de menos de 20.000 habitantes."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 19 | Unidades para la igualdad 1. Para impulsar medidas para la igualdad, se constituirá o designará en cada consejería una unidad administrativa con el objeto de ejecutar lo dispuesto en esta ley y en el plan estratégico de igualdad de mujeres y hombres que apruebe el Gobierno de las Illes Balears. Esta unidad contará con profesionales formados en igualdad de género. 2. Los consejos insulares y los municipios de más de 20.000 habitantes, en el ámbito de sus competencias de autoorganización, adecuarán sus estructuras de modo que dispongan de un órgano responsable o unidad administrativa que se encargue de impulsar, programar y evaluar las políticas de igualdad de mujeres y hombres en sus respectivos ámbitos de actuación territorial, y de asesorar sobre estas políticas. 3. Los consejos insulares, en el ámbito de sus competencias, son las instituciones encargadas de dar apoyo técnico y administrativo en materia de igualdad a los municipios de menos de 20.000 habitantes."
+    },
+    {
+        "pregunta": "A los efectos de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, se entiende por violencia machista:",
+        "opciones": [
+            "Aquella que, como manifestación de la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres.",
+            "Aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres.",
+            "Aquella que, como manifestación de la discriminación y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres.",
+            "Aquella que, como manifestación de las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 65 | Definición 1. A los efectos de esta ley, se entiende por violencia machista aquella que, como manifestación de la discriminación, la situación de desigualdad y las relaciones de poder de los hombres sobre las mujeres, se ejerce sobre estas por el hecho mismo de ser mujeres."
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres, para cumplir la finalidad de esta ley, los principios generales se regirán para dar cumplimiento a unos artículos del Estatuto de Autonomía de las Islas Baleares. ¿Qué artículos del Estatuto de Autonomía están relacionados con la ley de igualdad entre mujeres y hombres y que menciona explícitamente esta ley?",
+        "opciones": [
+            "Los artículo 17, 18 y 19.",
+            "Los artículos 16, 17 y 22.",
+            "Los artículos 16, 17 y 23.",
+            "Los artículos 15, 17 y 22."
+        ],
+        "correcta": 1,
+        "explicacion": "La respuesta correcta es la b). El artículo 3 habla que los principios generales dan cumplimiento a los artículos 16 “derechos sociales” artículo 17 “no discriminación por razón de sexo” y el artículo 22 “ derecho de acceso a una vivienda digna”."
+    },
+    {
+        "pregunta": "¿Cuál de las siguientes afirmaciones es correcta de conformidad con el artículo 17 de la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, en materia de financiación?",
+        "opciones": [
+            "El Gobierno de las Illes Balears consignará en el correspondiente proyecto de ley de presupuestos los créditos suficientes para asegurar los recursos económicos necesarios con el objeto de ejecutar las medidas establecidas en esta ley.",
+            "Los consejos insulares preverán las dotaciones económicas y los recursos suficientes para ejercer las competencias que les son propias de acuerdo con el artículo 70.20 del Estatuto de Autonomía de las Illes Balears, así como las que les son atribuidas por esta ley.",
+            "Los municipios consignarán en sus presupuestos los recursos suficientes para atender las competencias propias que les asigne la Ley reguladora de las bases del régimen local, sin perjuicio de lo establecido en los artículos 7 y 27 de la citada ley.",
+            "Todas las anteriores respuestas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 17 | Financiación 1. El Gobierno de las Illes Balears consignará en el correspondiente proyecto de ley de presupuestos los créditos suficientes para asegurar los recursos económicos necesarios con el objeto de ejecutar las medidas establecidas en esta ley. 2. Los consejos insulares preverán las dotaciones económicas y los recursos suficientes para ejercer las competencias que les son propias de acuerdo con el artículo 70.20 del Estatuto de Autonomía de las Illes Balears, así como las que les son atribuidas por esta ley. 3. Los municipios consignarán en sus presupuestos los recursos suficientes para atender las competencias propias que les asigne la Ley reguladora de las bases del régimen local, sin perjuicio de lo establecido en los artículos 7 y 27 de la citada ley."
+    },
+    {
+        "pregunta": "¿Qué ley regula la igualdad entre mujeres y hombres?",
+        "opciones": [
+            "Ley 11/2016, de 18 de julio, de igualdad entre mujeres y hombres.",
+            "L.O 11/2016, de 28 de julio, de igualdad entre mujeres y hombres.",
+            "L.O 11/2016, de 18 de julio, de igualdad entre mujeres y hombres.",
+            "Ley 11/2016, de 28 de julio, de igualdad entre mujeres y hombres."
+        ],
+        "correcta": 3,
+        "explicacion": "La opción correcta es la d) ya que al ser una ley autonómica nunca será una Ley Orgánica y si nos fijamos en la fecha la opción a) no es correcta."
+    },
+    {
+        "pregunta": "Las Unidades para la igualdad:",
+        "opciones": [
+            "Se constituirán o designarán en cada consejería una unidad administrativa.",
+            "Se constituirán o designarán en cada consejería y ayuntamiento de más de 20.000 habitantes una unidad administrativa.",
+            "Se constituirán o designarán en cada consejería y ayuntamiento de más de 20.000 habitantes una unidad administrativa u órgano responsable.",
+            "Se constituirán o designarán en cada consejería y ayuntamiento a partir de 20.000 habitantes una unidad administrativa."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la c). El artículo 19.2 señala que en los consejos insulares y en los municipio de más de 20.000 habitantes deberán adecuar sus estructuras (es decir introducir en el organigrama de personal) de modo que dispongan de un órgano responsable o unidad administrativa. Los consejos insulares son los que darán apoyo técnico a los municipios de menos de 20.000 habitantes."
+    },
+    {
+        "pregunta": "De conformidad con la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres, la Comisión para la Igualdad de Género:",
+        "opciones": [
+            "Es el órgano encargado de coordinar las políticas o los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres.",
+            "Es el órgano encargado de coordinar los programas que llevan a cabo las administraciones locales en materia de igualdad de mujeres y hombres.",
+            "Es el órgano encargado de coordinar los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres.",
+            "Es el órgano encargado de coordinar las políticas y los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20 | Comisión para la igualdad de género 1. Se crea la Comisión para la Igualdad de Género como el órgano encargado de coordinar las políticas y los programas que llevan a cabo las administraciones autonómica, insular y local en materia de igualdad de mujeres y hombres. 2. Sus funciones, composición, organización y régimen de funcionamiento se determinarán reglamentariamente. En la comisión estarán representados el Gobierno, los consejos insulares, la Federació d'Entitats Locals de les Illes Balears (FELIB) y el Ayuntamiento de Palma. 3. El reglamento que se elabore no implicará en ningún caso incremento de personal laboral o funcionario ni de cargos de designación en la coordinación, y las correspondientes tareas y responsabilidades se distribuirán entre las diferentes administraciones participantes y partiendo de los puestos de trabajo existentes."
+    },
+    {
+        "pregunta": "¿Qué funciones tiene encargadas el Observatorio para la Igualdad de conformidad con la Ley 11/2016, de 28 de julio, de igualdad de mujeres y hombres?",
+        "opciones": [
+            "Buscar, analizar y difundir información periódica y sistemática sobre la evolución de los indicadores de igualdad de mujeres y hombres en las Illes Balears.",
+            "Realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos.",
+            "Priorizar las áreas de la violencia machista, la situación laboral, la imagen pública de las mujeres y el ámbito educativo y de salud.",
+            "Todas las anteriores respuestas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 18 | Observatorio para la igualdad 1. Se crea el Observatorio para la Igualdad, adscrito al Instituto Balear de la Mujer, encargado de buscar, analizar y difundir información periódica y sistemática sobre la evolución de los indicadores, desglosados por islas, de igualdad de mujeres y hombres en las Illes Balears, que sirvan para realizar propuestas de nuevas políticas dirigidas a cambiar y mejorar la situación de las mujeres en los diversos ámbitos. En cualquier caso, se priorizarán las áreas de la violencia machista, la situación laboral, la imagen pública de las mujeres y el ámbito educativo y de salud, y se fomentará la figura del agente de igualdad de oportunidades de mujeres y hombres en los ámbitos público y privado. 2. El Observatorio dispondrá de dotación económica, medios tecnológicos y personal especializado suficientes para elaborar el sistema de indicadores, tratar los datos y difundirlos. 3. Sus funciones, composición y funcionamiento, así como las diferentes áreas de intervención, se determinarán en un reglamento que se desarrollará durante el primer año de aplicación de la ley."
+    },
+    {
+        "pregunta": "En los términos que determina la ley de igualdad entre mujeres y hombres, se entiende por Administración pública de las Islas Baleares:",
+        "opciones": [
+            "La Administración de la comunidad autónoma de las Illes Balears y los entes que integran su sector público instrumental. La Administración de los consejos insulares y los entes públicos dependientes o vinculados a estos. La Administración local insular y los entes públicos dependientes o vinculados a esta. La Universidad de las Islas Baleares.",
+            "La Administración de la comunidad autónoma de las Illes Balears y los entes que integran su sector público instrumental. La Administración de los consejos insulares y los entes públicos dependientes. La Administración local insular y los entes públicos dependientes o vinculados a esta. La Universidad de las Islas Baleares.",
+            "La Administración de la comunidad autónoma de las Illes Balears y los entes que integran su sector público instrumental. La Administración de los consejos insulares y los entes públicos dependientes o vinculados a estos. La Universidad de las Islas Baleares.",
+            "La Administración de la comunidad autónoma de las Illes Balears. La Administración de los consejos insulares. La Administración local insular. La Universidad de las Islas Baleares."
+        ],
+        "correcta": 0,
+        "explicacion": "La opción correcta es la a) ya que el artículo 2 señala : En los términos que determina esta ley, se entiende por administraciones públicas de las Illes Balears: a) La Administración de la comunidad autónoma de las Illes Balears y los entes que integran su sector público instrumental. b) La Administración de los consejos insulares y los entes públicos dependientes o vinculados a estos. c) La Administración local insular y los entes públicos dependientes o vinculados a esta. d) La Universidad de las Illes Balears."
+    },
+    {
+        "pregunta": "Se considera violencia machista según la ley de igualdad entre mujeres y hombres:",
+        "opciones": [
+            "La violencia sexual, violencia psicológica, violencia física, violencia económica, violencia simbólica, la coacción, coerción y el feminicidio.",
+            "La violencia física, violencia psicológica, violencia económica, violencia sexual, violencia simbólica, asesinato (feminicidio) y la mutilación genital femenina ejercida por un hombre contra una mujer.",
+            "La violencia física, económica, simbólica, sexual, psicológica y el feminicidio.",
+            "Todas son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "La opción correcta es la b). El artículo 65.4 hace una enumeración de lo que se considera violencia machista a efectos de esta ley siendo: Violencia física, violencia psicológica, violencia económica, violencia sexual, violencia simbólica, feminicidio y la mutilación sexual femenina."
+    },
+    {
+        "pregunta": "La ley de igualdad entre mujeres y hombres se ha implementado con el objeto y la finalidad de:",
+        "opciones": [
+            "La ley tiene como finalidad hacer efectivo el derecho a la igualdad de las mujeres y los hombres. Su objeto es el de establecer y regular los mecanismos y dispositivos, así como las medidas y los recursos, dirigidos a promover y garantizar la igualdad de oportunidades y la no discriminación por razón de sexo, en cualquiera de los ámbitos, etapas y circunstancias de la vida.",
+            "La finalidad es hacer efectivo el derecho a la igualdad real y efectiva de las mujeres y los hombres, esta ley tiene por objeto establecer y regular los mecanismos y dispositivos, así como las medidas y los recursos, dirigidos a promover y garantizar la igualdad de oportunidades y la no discriminación por razón de sexo, en cualquiera de los ámbitos, etapas y circunstancias de la vida.",
+            "El objeto de la ley es de hacer efectivo el derecho a la igualdad real y efectiva de las mujeres y los hombres, así mismo su finalidad es establecer y regular los mecanismos y dispositivos, así como las medidas y los recursos, dirigidos a promover y garantizar la igualdad de oportunidades y la no discriminación por razón de sexo, en cualquiera de los ámbitos, etapas y circunstancias de la vida.",
+            "El objetivo es garantizar la representación equilibrada de mujeres y hombres en el nombramiento de las personas titulares de los órganos directivos de la Administración de la comunidad autónoma de las Illes Balears y de los entes que integran su sector público instrumental, en conjunto, cuya designación le corresponda. El objeto es una sociedad mas justa y equilibrada."
+        ],
+        "correcta": 1,
+        "explicacion": "La opción correcta es la b). El artículo 1 de la ley 11/2016 señala: “Con la finalidad de hacer efectivo el derecho a la igualdad real y efectiva de las mujeres y los hombres, esta ley tiene por objeto establecer y regular los mecanismos y dispositivos, así como las medidas y los recursos, dirigidos a promover y garantizar la igualdad de oportunidades y la no discriminación por razón de sexo, en cualquiera de los ámbitos, etapas y circunstancias de la vida”"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). El artículo 71.1 señala: “Los consejos insulares y los municipios, en el ámbito de sus competencias, garantizarán la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijas e hijos mientras dure el proceso de atención”"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). El artículo 71.1 señala: “Los consejos insulares y los municipios, en el ámbito de sus competencias, garantizarán la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijas e hijos mientras dure el proceso de atención”"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). El artículo 71.1 señala: “Los consejos insulares y los municipios, en el ámbito de sus competencias, garantizarán la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijas e hijos mientras dure el proceso de atención”"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). El artículo 71.1 señala: “Los consejos insulares y los municipios, en el ámbito de sus competencias, garantizarán la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijas e hijos mientras dure el proceso de atención”"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": "La respuesta correcta es la c). El artículo 71.1 señala: “Los consejos insulares y los municipios, en el ámbito de sus competencias, garantizarán la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijas e hijos mientras dure el proceso de atención”"
+    },
+    {
+        "pregunta": "Según la ley de igualdad entre mujeres y hombres ¿Quién o quienes deberán garantizar la existencia de servicios de acogida suficientes para atender a las necesidades de protección y alojamiento de las mujeres víctimas de violencia machista y de sus hijos/as?",
+        "opciones": [
+            "El gobierno de las Islas Baleares en el ámbito de sus competencias.",
+            "El gobierno y los consejos insulares en el ámbito de sus competencias.",
+            "Los consejos insulares y los municipios en el ámbito de sus competencias.",
+            "El gobierno y los municipios en el ámbito de sus competencias."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

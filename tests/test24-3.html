@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Las circunstancias agravantes se recogen en:",
+        "opciones": [
+            "Artículo 21 del Código Penal.",
+            "Artículo 22 del Código Penal.",
+            "Artículo 23 del Código Penal.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: 1ª Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas empleando en la ejecución medios, modos o formas que tiendan directa o especialmente a asegurarla, sin el riesgo que para su persona pudiera proceder de la defensa por parte del ofendido. 2ª Ejecutar el hecho mediante disfraz, con abuso de superioridad o aprovechando las circunstancias de lugar, tiempo o auxilio de otras personas que debiliten la defensa del ofendido o faciliten la impunidad del delincuente. 3ª Ejecutar el hecho mediante precio, recompensa o promesa. 4ª Cometer el delito por motivos racistas, antisemitas u otra clase de discriminación referente a la ideología, religión o creencias de la víctima, la etnia, raza o nación a la que pertenezca, su sexo, orientación o identidad sexual, razones de género, la enfermedad que padezca o su discapacidad. 5ª Aumentar deliberada e inhumanamente el sufrimiento de la víctima, causando a ésta padecimientos innecesarios para la ejecución del delito. 6ª Obrar con abuso de confianza. 7ª Prevalerse del carácter público que tenga el culpable. 8ª Ser reincidente. Hay reincidencia cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título de este Código, siempre que sea de la misma naturaleza. A los efectos de este número no se computarán los antecedentes penales cancelados o que debieran serlo, ni los que correspondan a delitos leves. Las condenas firmes de jueces o tribunales impuestas en otros Estados de la Unión Europea producirán los efectos de reincidencia salvo que el antecedente penal haya sido cancelado o pudiera serlo con arreglo al Derecho español."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La cooperación puede distinguirse:",
+        "opciones": [
+            "Cooperación necesaria, unicamente.",
+            "Cooperación necesaria y complicidad.",
+            "Complicidad unicamente.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente (autor inmediato) o por medio de otro del que se sirven como instrumento (autor mediato). También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. (inductor) b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado. (cooperador necesario) Artículo 29 CP Son cómplices los que, no hallándose comprendidos en el artículo anterior, cooperan a la ejecución del hecho con actos anteriores o simultáneos."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Las circunstancia mixta de parentesco se recoge en:",
+        "opciones": [
+            "Artículo 21 del Código Penal.",
+            "Artículo 22 del Código Penal.",
+            "Artículo 23 del Código Penal.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Circunstancia eximente: impide la aplicación de la pena que en principio debería corresponder. (arts. 19 y 20 CP) Circunstancia atenuante: rebaja la aplicación de la pena que en principio debería corresponder. (art 21 CP) Circunstancia agravante: aumenta la aplicación de la pena que en principio debería corresponder. (art 22 CP) Circunstancia mixta de parentesco: atenúa o agrava la aplicación de la pena que en principio debería corresponder. (art 23 CP)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Si tras la inducción no se comete el delito, el inductor será castigado como:",
+        "opciones": [
+            "Cooperador necesario.",
+            "Provocador.",
+            "Cómplice.",
+            "Autor."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción. NOTA Por tanto se deduce que si el inductor no logra que se perpetre el delito, será castigado como provocador."
+    },
+    {
+        "pregunta": "Por la comisión de un delito se puede incurrir:",
+        "opciones": [
+            "Responsabilidad penal.",
+            "Responsabilidad civil derivada del delito.",
+            "La a y b, son correctas.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Mediante la responsabilidad penal la sociedad se defiende contra los hechos que le causan daño, o que amenazan el orden en que está establecida; para impedir que esos actos se cometan o se repitan, la sociedad castiga a sus autores. Y poco importa que el acto prohibido por la ley penal cause o no perjuicio a un particular; es la sociedad quien castiga con abstracción del daño individual. En el derecho español, la responsabilidad civil derivada de delito, está sometida a un régimen que se recoge en el Código Penal, son normas de responsabilidad civil, pero con matices diferenciados respecto a la normativa del Código Civil; sin perjuicio de la aplicación analógica de las normas del Código Civil cuando corresponda. Por lo tanto, además de la condena, o absolución penal, en el proceso penal se resuelve, con arreglo a normas especiales, sobre la indemnización por daños."
+    },
+    {
+        "pregunta": "En Derecho Penal, la enajenación mental:",
+        "opciones": [
+            "Implica la no comprensión de la ilicitud del hecho o actuar conforme a esa compresión.",
+            "Implica la comprensión de la ilicitud del hecho o actuar conforme a esa compresión.",
+            "No está prevista en el Código Penal.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "La enajenación mental es la locura, demencia o pérdida de razón. En Derecho Civil es causa de restricción de la personalidad jurídica, debiendo el enajenado ser sometido a tutela. En Derecho Penal es eximente porque se entiende como enajenado al sujeto que posee un estado mental en el cual no puede hacerse responsable de sus actos por la falta de juicio."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Señale la respuesta correcta:",
+        "opciones": [
+            "La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley.",
+            "La conspiración y la proposición para delinquir se castigarán en todo caso.",
+            "La conspiración y la proposición para delinquir nunca se castigarán.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17 CP 1. La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo. 2. La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a participar en él. 3. La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La proposición aparece definida en:",
+        "opciones": [
+            "Artículo 17.2 del Código Penal.",
+            "Artículo 172.2 del Código Penal.",
+            "Artículo 15.2 del Código Penal.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17 CP 1. La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo. 2. La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a participar en él. 3. La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. En los delitos cometidos utilizando medios o soportes de difusión mecánicos, la responsabilidad criminal de los autores será:",
+        "opciones": [
+            "Escalonada, excluyente y subsidiaria de acuerdo con el orden establecido por el CP.",
+            "Solidaria.",
+            "Solidaria entre los autores y subsidiaria respecto de éstos para los cómplices.",
+            "Sólo responderán los que realmente hayan redactado el texto o producido el signo de que se trate, y quienes les hayan inducido a realizarlo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 30 CP 1. En los delitos que se cometan utilizando medios o soportes de difusión mecánicos no responderán criminalmente ni los cómplices ni quienes los hubieren favorecido personal o realmente. 2. Los autores a los que se refiere el artículo 28 responderán de forma escalonada, excluyente y subsidiaria de acuerdo con el siguiente orden: 1º Los que realmente hayan redactado el texto o producido el signo de que se trate, y quienes les hayan inducido a realizarlo. 2º Los directores de la publicación o programa en que se difunda. 3º Los directores de la empresa editora, emisora o difusora. 4º Los directores de la empresa grabadora, reproductora o impresora. 3. Cuando por cualquier motivo distinto de la extinción de la responsabilidad penal, incluso la declaración de rebeldía o la residencia fuera de España, no pueda perseguirse a ninguna de las personas comprendidas en alguno de los números del apartado anterior, se dirigirá el procedimiento contra las mencionadas en el número inmediatamente posterior."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Quien evite voluntariamente la consumación del delito, bien desistiendo de la ejecución ya iniciada, bien impidiendo la producción del resultado:",
+        "opciones": [
+            "Será castigado con la pena inferior en un grado a la señalada por la Ley para la tentativa del delito de que se trate.",
+            "Quedará exento de responsabilidad penal por el delito intentado.",
+            "Quedará exento de responsabilidad penal por el delito intentado, sin perjuicio de la responsabilidad en que pudiera haber incurrido por los actos ya ejecutados, si éstos fueren ya constitutivos de otro delito.",
+            "Quedará exento de responsabilidad penal por el delito intentado, sin perjuicio de la responsabilidad en que pudiera haber incurrido por los actos ya ejecutados, si éstos fueren ya constitutivos de una infracción de orden administrativo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 16 CP 1. Hay tentativa cuando el sujeto da principio a la ejecución del delito directamente por hechos exteriores, practicando todos o parte de los actos que objetivamente deberían producir el resultado, y sin embargo éste no se produce por causas independientes de la voluntad del autor. 2. Quedará exento de responsabilidad penal por el delito intentado quien evite voluntariamente la consumación del delito, bien desistiendo de la ejecución ya iniciada, bien impidiendo la producción del resultado, sin perjuicio de la responsabilidad en que pudiera haber incurrido por los actos ejecutados, si éstos fueren ya constitutivos de otro delito. 3. Cuando en un hecho intervengan varios sujetos, quedarán exentos de responsabilidad penal aquél o aquéllos que desistan de la ejecución ya iniciada, e impidan o intenten impedir, seria, firme y decididamente, la consumación, sin perjuicio de la responsabilidad en que pudieran haber incurrido por los actos ejecutados, si éstos fueren ya constitutivos de otro delito."
+    },
+    {
+        "pregunta": "Indique cuál es el grado de ejecución o forma de participación contenida en el artículo 18.1 del Código Penal:",
+        "opciones": [
+            "La tentativa.",
+            "La complicidad.",
+            "La autoría.",
+            "La provocación."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción."
+    },
+    {
+        "pregunta": "El cooperador necesario es considerado por el Código Penal Como:",
+        "opciones": [
+            "Autor.",
+            "Cómplice.",
+            "Encubridor.",
+            "Ninguna de las tres anteriores aseveraciones es cierta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente (autor inmediato) o por medio de otro del que se sirven como instrumento (autor mediato). También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. (inductor) b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado. (cooperador necesario)"
+    },
+    {
+        "pregunta": "Los que no hallándose comprendidos entre los que el Código Penal, considera autores, cooperan a la ejecución del hecho con actos anteriores o simultáneos, son:",
+        "opciones": [
+            "Cooperadores necesarios.",
+            "Autores mediatos.",
+            "Cómplices.",
+            "Encubridores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente o por medio de otro del que se sirven como instrumento. También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado. Artículo 29 CP Son cómplices los que, no hallándose comprendidos en el artículo anterior, cooperan a la ejecución del hecho con actos anteriores o simultáneos."
+    },
+    {
+        "pregunta": "Indique cuál es el grado de ejecución o forma de participación contenida en el artículo 17.1 del Código Penal:",
+        "opciones": [
+            "La tentativa.",
+            "La complicidad.",
+            "La conspiración.",
+            "La provocación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17 CP 1. La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo. 2. La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a participar en él. 3. La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El copartícipe de un delito que desista de la ejecución ya iniciada, e impida o intente impedir, seria, firme y decididamente la consumación:",
+        "opciones": [
+            "Se le impondrá la pena inferior en uno o dos grados a la señalada por la ley para el delito cometido por los demás copartícipes que no hayan desistido, atendiendo a las circunstancias personales del culpable y a la eficacia de su desistimiento en el grado de ejecución alcanzado.",
+            "Quedará exento de responsabilidad penal.",
+            "Quedará exento de responsabilidad penal, sin perjuicio de la responsabilidad en que pudiera haber incurrido por los actos ejecutados, si éstos fueren ya constitutivos de una infracción de orden administrativo.",
+            "Quedará exento de responsabilidad penal, sin perjuicio de la responsabilidad en que pudiera haber incurrido por los actos ejecutados, si éstos fueren ya constitutivos de otro delito."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 16 CP 1. Hay tentativa cuando el sujeto da principio a la ejecución del delito directamente por hechos exteriores, practicando todos o parte de los actos que objetivamente deberían producir el resultado, y sin embargo éste no se produce por causas independientes de la voluntad del autor. 2. Quedará exento de responsabilidad penal por el delito intentado quien evite voluntariamente la consumación del delito, bien desistiendo de la ejecución ya iniciada, bien impidiendo la producción del resultado, sin perjuicio de la responsabilidad en que pudiera haber incurrido por los actos ejecutados, si éstos fueren ya constitutivos de otro delito. 3. Cuando en un hecho intervengan varios sujetos (copartícipes), quedarán exentos de responsabilidad penal aquél o aquéllos que desistan de la ejecución ya iniciada, e impidan o intenten impedir, seria, firme y decididamente, la consumación, sin perjuicio de la responsabilidad en que pudieran haber incurrido por los actos ejecutados, si éstos fueren ya constitutivos de otro delito."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La inducción:",
+        "opciones": [
+            "Debe ser anterior, puesto que ha de ser causal para la resolución del hecho.",
+            "Debe ser directa.",
+            "Debe ser dolosa.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Esta inducción para poder ser punible debe ser eficaz (con anterioridad al delito, el cual debe llevarse a cabo), directa y dolosa"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La reincidencia aparece recogida:",
+        "opciones": [
+            "Artículo 22.8 del Código Penal.",
+            "Artículo 20 del Código Penal.",
+            "Artículo 15 del Código Penal.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: 1ª Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas empleando en la ejecución medios, modos o formas que tiendan directa o especialmente a asegurarla, sin el riesgo que para su persona pudiera proceder de la defensa por parte del ofendido. 2ª Ejecutar el hecho mediante disfraz, con abuso de superioridad o aprovechando las circunstancias de lugar, tiempo o auxilio de otras personas que debiliten la defensa del ofendido o faciliten la impunidad del delincuente. 3ª Ejecutar el hecho mediante precio, recompensa o promesa. 4ª Cometer el delito por motivos racistas, antisemitas u otra clase de discriminación referente a la ideología, religión o creencias de la víctima, la etnia, raza o nación a la que pertenezca, su sexo, orientación o identidad sexual, razones de género, la enfermedad que padezca o su discapacidad. 5ª Aumentar deliberada e inhumanamente el sufrimiento de la víctima, causando a ésta padecimientos innecesarios para la ejecución del delito. 6ª Obrar con abuso de confianza. 7ª Prevalerse del carácter público que tenga el culpable. 8ª Ser reincidente. Hay reincidencia cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título de este Código, siempre que sea de la misma naturaleza. A los efectos de este número no se computarán los antecedentes penales cancelados o que debieran serlo, ni los que correspondan a delitos leves. Las condenas firmes de jueces o tribunales impuestas en otros Estados de la Unión Europea producirán los efectos de reincidencia salvo que el antecedente penal haya sido cancelado o pudiera serlo con arreglo al Derecho español."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Señale la respuesta correcta:",
+        "opciones": [
+            "Toda persona criminalmente responsable de un delito lo es también civilmente si del hecho se derivaren daños o perjuicios. Si son dos o más los responsables de un delito los jueces o tribunales señalarán la cuota de que deba responder cada uno.",
+            "Toda persona criminalmente responsable de un delito no lo es también civilmente si del hecho se derivaren daños o perjuicios. Si son dos o más los responsables de un delito los jueces o tribunales señalarán la cuota de que deba responder cada uno.",
+            "Toda persona criminalmente responsable de un delito no lo es también civilmente si del hecho se derivaren daños o perjuicios. Si son dos o más los responsables de un delito los jueces o tribunales señalarán la cuota de que deba responder cada uno.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 116 CP 1. Toda persona criminalmente responsable de un delito lo es también civilmente si del hecho se derivaren daños o perjuicios. Si son dos o más los responsables de un delito los jueces o tribunales señalarán la cuota de que deba responder cada uno. 2. Los autores y los cómplices, cada uno dentro de su respectiva clase, serán responsables solidariamente entre sí por sus cuotas, y subsidiariamente por las correspondientes a los demás responsables. La responsabilidad subsidiaria se hará efectiva: primero, en los bienes de los autores, y después, en los de los cómplices. Tanto en los casos en que se haga efectiva la responsabilidad solidaria como la subsidiaria, quedará a salvo la repetición del que hubiere pagado contra los demás por las cuotas correspondientes a cada uno. 3. La responsabilidad penal de una persona jurídica llevará consigo su responsabilidad civil en los términos establecidos en el artículo 110 de este Código de forma solidaria con las personas físicas que fueren condenadas por los mismos hechos."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La tentativa aparece regulada en:",
+        "opciones": [
+            "Artículo 16 del Código Penal.",
+            "Artículo 12 del Código Penal.",
+            "Artículo 40 del Código Penal.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 16 CP 1. Hay tentativa cuando el sujeto da principio a la ejecución del delito directamente por hechos exteriores, practicando todos o parte de los actos que objetivamente deberían producir el resultado, y sin embargo éste no se produce por causas independientes de la voluntad del autor. (...)"
+    },
+    {
+        "pregunta": "Según el Derecho Penal, los delitos de peligro:",
+        "opciones": [
+            "Ponen en riesgo el bien jurídico.",
+            "Dañan el bien jurídico.",
+            "No ponen en riesgo el bien jurídico.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Delitos de peligro, también conocidos como delitos de riesgo en materia penal es una categoría de tipos penales, o delitos, en los cuales sólo se requiere que el sujeto ejerza una conducta, sin llegar a consumarla. El hecho por sí mismo se considera entonces como delito, ya que pone en peligro al bien jurídico. Se opone al delito de lesión, en que se requiere que el bien jurídico protegido haya sido afectado por el hecho punible."
+    },
+    {
+        "pregunta": "Con respecto al Derecho Penal, señale la respuesta correcta:",
+        "opciones": [
+            "El delito de acción, consiste en la realización de una acto positivo.",
+            "El delito de omisión, supone un no hacer.",
+            "El delito de comisión por omisión, inactividad cuando era exigible al autor una acción que evitase el resultado.",
+            "Todas las anteriores."
+        ],
+        "correcta": 3,
+        "explicacion": "La acción se define como aquella actividad que realiza el sujeto, produciendo consecuencias en el bien jurídico. La omisión, en derecho, es una conducta que consiste en la abstención de una actuación que constituye un deber legal. La comisión por omisión acción por omisión (doctrina francesa), también conocida como omisión impropia (doctrina alemana), se produce cuando es vulnerada una norma prohibitiva a través de la infracción de una norma de mandato o de un especial deber jurídico; puede decirse que el autor no hace lo que debe hacer y produce un resultado que no debe producir."
+    },
+    {
+        "pregunta": "Conforme al artículo 31 bis del Código Penal:",
+        "opciones": [
+            "Las personas jurídicas no son responsables penalmente en ningún caso.",
+            "Las personas jurídicas sólo responden en defecto de sus administradores de hecho o de derecho.",
+            "Las personas jurídicas responden penalmente de los delitos cometidos en nombre o por cuenta de las mismas, y en su provecho, por sus representantes legales y administradores de hecho o de derecho.",
+            "Las personas jurídicas responden penalmente, sólo en los supuestos previstos en el Código, de los delitos cometidos en nombre o por cuenta de las mismas, y en su provecho, por sus representantes legales y administradores de hecho o de derecho."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 31 bis. CP 1. En los supuestos previstos en este Código, las personas jurídicas serán penalmente responsables: a) De los delitos cometidos en nombre o por cuenta de las mismas, y en su beneficio directo o indirecto, por sus representantes legales o por aquellos que actuando individualmente o como integrantes de un órgano de la persona jurídica, están autorizados para tomar decisiones en nombre de la persona jurídica u ostentan facultades de organización y control dentro de la misma. b) De los delitos cometidos, en el ejercicio de actividades sociales y por cuenta y en beneficio directo o indirecto de las mismas, por quienes, estando sometidos a la autoridad de las personas físicas mencionadas en el párrafo anterior, han podido realizar los hechos por haberse incumplido gravemente por aquéllos los deberes de supervisión, vigilancia y control de su actividad atendidas las concretas circunstancias del caso."
+    },
+    {
+        "pregunta": "Según el Derecho Penal, los delitos de peligro se distinguen en:",
+        "opciones": [
+            "Delito de peligro concreto.",
+            "Delito de peligro abstracto.",
+            "Delito de lesión.",
+            "La a y b, son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Delitos de peligro, es una categoría de tipos penales, o delitos, en los cuales sólo se requiere que el sujeto ejerza una conducta, sin llegar a consumarla. El hecho por sí mismo se considera entonces como delito, ya que pone en peligro al bien jurídico. Se distinguen dos tipos: a) Los delitos de peligro concreto son aquellos en los que la ley expresamente requiere que el resultado de la acción sea de peligro. b) Los delitos de peligro abstracto son aquellos en los cuales no se requiere expresamente la efectiva situación de peligro, sino que el fundamento de su castigo es que normalmente suponen un peligro. Basta, por lo tanto, la peligrosidad de la conducta."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La conspiración aparece recogida en:",
+        "opciones": [
+            "Artículo 17.1 del Código Penal.",
+            "Artículo 19.1 del Código Penal.",
+            "Artículo 22 del Código Penal.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17 CP 1. La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo. 2. La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a participar en él. 3. La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Las circunstancias modificativas de la responsabilidad penal:",
+        "opciones": [
+            "Suponen un aumento del injusto, lo que incrementa el reproche penal al autor.",
+            "Suponen una disminución del injusto, lo que minora el reproche penal al autor.",
+            "Nunca pueden suponer un aumento del injusto, lo que incrementa el reproche penal al autor.",
+            "La a y b, son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Circunstancia eximente: impide la aplicación de la pena que en principio debería corresponder. Circunstancia atenuante: rebaja la aplicación de la pena que en principio debería corresponder. Circunstancia agravante: aumenta la aplicación de la pena que en principio debería corresponder Circunstancia mixta: atenúa o agrava la aplicación de la pena que en principio debería corresponder"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La Autoría mediata se define:",
+        "opciones": [
+            "El que realiza por sí toda la conducta típica.",
+            "Pluralidad de sujetos que se reparten funcionalmente la comisión de un delito.",
+            "Ninguna de las anteriores.",
+            "Como el que utiliza a otro (autor inmediato) como instrumento, respondiendo del hecho como si lo hubiera realizado el sólo."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente (autor inmediato) o por medio de otro del que se sirven como instrumento (autor mediato). También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. (inductor) b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado. (cooperador necesario)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La provocación aparece definida en el:",
+        "opciones": [
+            "Artículo 18 del Código Penal.",
+            "Artículo 12 del Código Penal.",
+            "Artículo 13 del Código Penal.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El estado de necesidad, está recogido en:",
+        "opciones": [
+            "Artículo 20.5 Código Penal.",
+            "Artículo 20.7 Código Penal.",
+            "Artículo 20.9 Código Penal.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Art 20 CP Eximentes (...) 5º El que, en estado de necesidad, para evitar un mal propio o ajeno lesione un bien jurídico de otra persona o infrinja un deber, siempre que concurran los siguientes requisitos: 1. Que el mal causado no sea mayor que el que se trate de evitar. 2. Que la situación de necesidad no haya sido provocada intencionadamente por el sujeto. 3. Que el necesitado no tenga, por su oficio o cargo, obligación de sacrificarse."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Por la clase y duración de las penas, los delitos menos graves son:",
+        "opciones": [
+            "Los de duración de hasta cinco años de prisión.",
+            "Los de inhabilitación absoluta y privación del permiso de conducir o licencia para porte de armas superior a ocho años.",
+            "La a y b, son correctas.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 33 CP 1. En función de su naturaleza y duración, las penas se clasifican en graves, menos graves y leves. 3. Son penas menos graves: a) La prisión de tres meses hasta cinco años. b) Las inhabilitaciones especiales hasta cinco años. c) La suspensión de empleo o cargo público hasta cinco años. d) La privación del derecho a conducir vehículos a motor y ciclomotores de un año y un día a ocho años. e) La privación del derecho a la tenencia y porte de armas de un año y un día a ocho años. f) Inhabilitación especial para el ejercicio de profesión, oficio o comercio que tenga relación con los animales y para la tenencia de animales de un año y un día a cinco años. g) La privación del derecho a residir en determinados lugares o acudir a ellos, por tiempo de seis meses a cinco años. h) La prohibición de aproximarse a la víctima o a aquellos de sus familiares u otras personas que determine el juez o tribunal, por tiempo de seis meses a cinco años. i) La prohibición de comunicarse con la víctima o con aquellos de sus familiares u otras personas que determine el juez o tribunal, por tiempo de seis meses a cinco años. j) La multa de más de tres meses. k) La multa proporcional, cualquiera que fuese su cuantía, salvo lo dispuesto en el apartado 7 de este artículo. l) Los trabajos en beneficio de la comunidad de treinta y un días a un año."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El concepto definido de delito se encuentra:",
+        "opciones": [
+            "Artículo 15 de la Ley Orgánica 10/1995.",
+            "Artículo 50 de la Ley Orgánica 10/1995.",
+            "Artículo 10 de la Ley Orgánica 10/1995.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 10 CP Son delitos las acciones y omisiones dolosas o imprudentes penadas por la ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La forma de participación que se produce cuando el sujeto activo se vale de un inimputable, de una persona a la que se induce a error sobre la ilegalidad del hecho o a la que se fuerza mediante violencia o intimidación se denomina:",
+        "opciones": [
+            "Autoría inmediata.",
+            "Autoría mediata.",
+            "Cooperación necesaria.",
+            "Inducción."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente (autor inmediato) o por medio de otro del que se sirven como instrumento (autor mediato). También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. (inductor) b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado. (cooperador necesario)"
+    },
+    {
+        "pregunta": "Indique cuál es el grado de ejecución o forma de participación contenida en el artículo 16 del Código Penal:",
+        "opciones": [
+            "La tentativa.",
+            "La complicidad.",
+            "La autoría.",
+            "La provocación."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 16 CP 1. Hay tentativa cuando el sujeto da principio a la ejecución del delito directamente por hechos exteriores, practicando todos o parte de los actos que objetivamente deberían producir el resultado, y sin embargo éste no se produce por causas independientes de la voluntad del autor. (...)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La incitación intensa y adecuada sobre otra persona, que no está decidida a cometer la infracción penal, que le motive suficientemente para la perpetración de la misma y efectivamente la realice, se denomina:",
+        "opciones": [
+            "Inducción.",
+            "Cooperación necesaria.",
+            "Proposición.",
+            "Provocación."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente (autor inmediato) o por medio de otro del que se sirven como instrumento (autor mediato). También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. (inductor) b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado. (cooperador necesario)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Las circunstancias eximentes aparecen reguladas:",
+        "opciones": [
+            "Artículo 12 y 20 del Código Penal.",
+            "Artículo 15 y 20 del Código Penal.",
+            "Artículo 19 y 22 del Código Penal.",
+            "Artículo 19 y 20 del Código Penal."
+        ],
+        "correcta": 3,
+        "explicacion": "Circunstancia eximente: impide la aplicación de la pena que en principio debería corresponder. (arts. 19 y 20 CP) Circunstancia atenuante: rebaja la aplicación de la pena que en principio debería corresponder. (art 21 CP) Circunstancia agravante: aumenta la aplicación de la pena que en principio debería corresponder. (art 22 CP) Circunstancia mixta: atenúa o agrava la aplicación de la pena que en principio debería corresponder. (art 23 CP)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Las circunstancias atenuantes se recogen en:",
+        "opciones": [
+            "Artículo 21 del Código Penal.",
+            "Artículo 22 del Código Penal.",
+            "Artículo 23 del Código Penal.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior, cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior. 3ª La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante. 4ª La de haber procedido el culpable, antes de conocer que el procedimiento judicial se dirige contra él, a confesar la infracción a las autoridades. 5ª La de haber procedido el culpable a reparar el daño ocasionado a la víctima, o disminuir sus efectos, en cualquier momento del procedimiento y con anterioridad a la celebración del acto del juicio oral. 6ª La dilación extraordinaria e indebida en la tramitación del procedimiento, siempre que no sea atribuible al propio inculpado y que no guarde proporción con la complejidad de la causa. 7ª Cualquier otra circunstancia de análoga significación que las anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. El abuso de confianza, está recogido en:",
+        "opciones": [
+            "Artículo 21.6 Código Penal.",
+            "Artículo 22.6 Código Penal.",
+            "Artículo 24.6 Código Penal.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: 1ª Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas empleando en la ejecución medios, modos o formas que tiendan directa o especialmente a asegurarla, sin el riesgo que para su persona pudiera proceder de la defensa por parte del ofendido. 2ª Ejecutar el hecho mediante disfraz, con abuso de superioridad o aprovechando las circunstancias de lugar, tiempo o auxilio de otras personas que debiliten la defensa del ofendido o faciliten la impunidad del delincuente. 3ª Ejecutar el hecho mediante precio, recompensa o promesa. 4ª Cometer el delito por motivos racistas, antisemitas u otra clase de discriminación referente a la ideología, religión o creencias de la víctima, la etnia, raza o nación a la que pertenezca, su sexo, orientación o identidad sexual, razones de género, la enfermedad que padezca o su discapacidad. 5ª Aumentar deliberada e inhumanamente el sufrimiento de la víctima, causando a ésta padecimientos innecesarios para la ejecución del delito. 6ª Obrar con abuso de confianza. 7ª Prevalerse del carácter público que tenga el culpable. 8ª Ser reincidente. Hay reincidencia cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título de este Código, siempre que sea de la misma naturaleza. A los efectos de este número no se computarán los antecedentes penales cancelados o que debieran serlo, ni los que correspondan a delitos leves. Las condenas firmes de jueces o tribunales impuestas en otros Estados de la Unión Europea producirán los efectos de reincidencia salvo que el antecedente penal haya sido cancelado o pudiera serlo con arreglo al Derecho español."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Señale la respuesta correcta:",
+        "opciones": [
+            "Son autores quienes realizan el hecho por sí solos.",
+            "Son considerados autores los que inducen directamente a otro u otros a ejecutarlo.",
+            "Son considerados autores los que cooperan a en la ejecución de un acto sin el cual no se habría ejecutado.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente (autor inmediato) o por medio de otro del que se sirven como instrumento (autor mediato). También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. (inductor) b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado. (cooperador necesario)"
+    },
+    {
+        "pregunta": "La Alevosía, se encuentra regulada en el artículo 22.1 del Código Penal. Sus requisitos son:",
+        "opciones": [
+            "Aseguramiento del resultado sin riesgo para el autor, eliminando la defensa que pueda existir por la víctima.",
+            "El ánimo dirigido hacia la indefensión del sujeto pasivo.",
+            "La a y b, son correctas.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "STS 1890/2001, 19 de Octubre de 2001 (Sentencia del Tribunal Supremo): La alevosía requiere: a) un aseguramiento del resultado sin riesgo para el agente, eliminando la defensa que pudiera existir por parte del ofendido; b) la presencia de un ánimo tendencial dirigido hacia la indefensión del sujeto pasivo del delito, y mediante el cual, se pone de relieve cierta vileza o cobardía en el obrar."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Ejecutar el hecho mediante disfraz, con abuso de superioridad o aprovechando las circunstancias de lugar, tiempo o auxilio de otras personas que debiliten la defensa del ofendido o faciliten la impunidad del delincuente, es:",
+        "opciones": [
+            "Abuso de superioridad.",
+            "Precio, recompensa o promesa.",
+            "Alevosía.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: (...) 2ª Ejecutar el hecho mediante disfraz, con abuso de superioridad o aprovechando las circunstancias de lugar, tiempo o auxilio de otras personas que debiliten la defensa del ofendido o faciliten la impunidad del delincuente. (...)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Cuando se han cumplido todos los requisitos objetivos y subjetivos exigidos por el tipo penal, nos encontramos ante:",
+        "opciones": [
+            "El delito perfecto.",
+            "El delito consumado.",
+            "El delito agotado.",
+            "El delito ejecutado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 15 CP Son punibles el delito consumado y la tentativa de delito."
+    },
+    {
+        "pregunta": "Según el Código Penal, se consideran autores:",
+        "opciones": [
+            "Los autores inmediatos, los autores mediatos, los cooperadores necesarios y los inductores.",
+            "Sólo quienes realizan el hecho por sí solos, conjuntamente o por medio de otro del que se sirven como instrumento.",
+            "Sólo los autores inmediatos y los cooperadores necesarios.",
+            "Los autores inmediatos, los autores mediatos y los inductores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente (autor inmediato) o por medio de otro del que se sirven como instrumento (autor mediato). También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. (inductor) b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado. (cooperador necesario)"
+    },
+    {
+        "pregunta": "En los delitos cometidos utilizando medios o soportes de difusión mecánicos los cómplices responderán criminalmente, conforme al Código Penal:",
+        "opciones": [
+            "En defecto de los autores.",
+            "De conformidad con las previsiones del artículo 63.",
+            "De igual forma que los autores.",
+            "No responderán criminalmente."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 30 CP 1. En los delitos que se cometan utilizando medios o soportes de difusión mecánicos no responderán criminalmente ni los cómplices ni quienes los hubieren favorecido personal o realmente. (...)"
+    },
+    {
+        "pregunta": "Indique cuál es el contenido del artículo 28 del Código Penal:",
+        "opciones": [
+            "Las personas que el CP considera autores de los delitos.",
+            "Las personas que el CP considera cómplices de los delitos.",
+            "Las personas que el CP considera encubridores de los delitos.",
+            "La responsabilidad criminal en los delitos y faltas que se cometan utilizando medios o soportes de difusión mecánica."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 28 CP Son autores quienes realizan el hecho por sí solos, conjuntamente o por medio de otro del que se sirven como instrumento. También serán considerados autores: a) Los que inducen directamente a otro u otros a ejecutarlo. b) Los que cooperan a su ejecución con un acto sin el cual no se habría efectuado."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Aumentar de forma deliberada e inhumanamente el sufrimiento de la víctima, causando a ésta padecimientos innecesarios para la ejecución del delito:",
+        "opciones": [
+            "Es Ensañamiento.",
+            "Es Alevosía.",
+            "Es Miedo insuperable.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: 1ª Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas empleando en la ejecución medios, modos o formas que tiendan directa o especialmente a asegurarla, sin el riesgo que para su persona pudiera proceder de la defensa por parte del ofendido. 2ª Ejecutar el hecho mediante disfraz, con abuso de superioridad o aprovechando las circunstancias de lugar, tiempo o auxilio de otras personas que debiliten la defensa del ofendido o faciliten la impunidad del delincuente. 3ª Ejecutar el hecho mediante precio, recompensa o promesa. 4ª Cometer el delito por motivos racistas, antisemitas u otra clase de discriminación referente a la ideología, religión o creencias de la víctima, la etnia, raza o nación a la que pertenezca, su sexo, orientación o identidad sexual, razones de género, la enfermedad que padezca o su discapacidad. 5ª Aumentar deliberada e inhumanamente el sufrimiento de la víctima, causando a ésta padecimientos innecesarios para la ejecución del delito. (ensañamiento) 6ª Obrar con abuso de confianza. 7ª Prevalerse del carácter público que tenga el culpable. 8ª Ser reincidente. Hay reincidencia cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título de este Código, siempre que sea de la misma naturaleza. A los efectos de este número no se computarán los antecedentes penales cancelados o que debieran serlo, ni los que correspondan a delitos leves. Las condenas firmes de jueces o tribunales impuestas en otros Estados de la Unión Europea producirán los efectos de reincidencia salvo que el antecedente penal haya sido cancelado o pudiera serlo con arreglo al Derecho español."
+    },
+    {
+        "pregunta": "Indique qué se establece en el artículo 31 del Código Penal:",
+        "opciones": [
+            "La responsabilidad criminal en los delitos que se cometan utilizando medios o soportes de difusión mecánica.",
+            "Las personas que el CP considera cómplices de los delitos.",
+            "La responsabilidad personal de los administradores de las personas jurídicas y de los que actúen en nombre o representación legal o voluntaria de otro.",
+            "Ninguna de las tres anteriores aseveraciones es cierta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 31 CP El que actúe como administrador de hecho o de derecho de una persona jurídica, o en nombre o representación legal o voluntaria de otro, responderá personalmente, aunque no concurran en él las condiciones, cualidades o relaciones que la correspondiente figura de delito o falta requiera para poder ser sujeto activo del mismo, si tales circunstancias se dan en la entidad o persona en cuyo nombre o representación obre."
+    },
+    {
+        "pregunta": "Según el Código Penal, si a la provocación hubiese seguido la perpetración del delito, se castigará como:",
+        "opciones": [
+            "Cooperación necesaria.",
+            "Inducción.",
+            "Tentativa.",
+            "Autoría mediata."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Los requisitos para la concurrencia de la figura de la legítima defensa son:",
+        "opciones": [
+            "Agresión ilegitima.",
+            "Necesidad racional del medio empleado para impedir agresión ilegitima.",
+            "Falta de provocación suficiente por el defensor.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20 CP Están exentos de responsabilidad criminal: (...) 4º El que obre en defensa de la persona o derechos propios o ajenos, siempre que concurran los requisitos siguientes: 1. Agresión ilegítima. En caso de defensa de los bienes se reputará agresión ilegítima el ataque a los mismos que constituya delito y los ponga en grave peligro de deterioro o pérdida inminentes. En caso de defensa de la morada o sus dependencias, se reputará agresión ilegítima la entrada indebida en aquélla o éstas. 2. Necesidad racional del medio empleado para impedirla o repelerla. 3. Falta de provocación suficiente por parte del defensor."
+    },
+    {
+        "pregunta": "Según el Derecho Penal, los delitos de lesión:",
+        "opciones": [
+            "No dañan el bien jurídico.",
+            "Ponen en riesgo el bien jurídico.",
+            "La a y b, son correctas.",
+            "Dañan el bien jurídico."
+        ],
+        "correcta": 3,
+        "explicacion": "Delitos de peligro, es una categoría de tipos penales, o delitos, en los cuales sólo se requiere que el sujeto ejerza una conducta, sin llegar a consumarla. El hecho por sí mismo se considera entonces como delito, ya que pone en peligro al bien jurídico. Se opone al delito de lesión, en que se requiere que el bien jurídico protegido haya sido afectado por el hecho punible."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La apología del delito:",
+        "opciones": [
+            "Consiste ensalzar el crimen.",
+            "Consiste ensalzar al autor del crimen.",
+            "La a y b, son correctas.",
+            "Ninguna de las anteriores es correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

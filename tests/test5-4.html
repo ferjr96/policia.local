@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Los municipios al asociarse con otros y cooperar entre ellos podrán constituir:",
+        "opciones": [
+            "Consorcios, mancomunidades y asociaciones.",
+            "Consorcios, mancomunidades y agrupaciones.",
+            "Mancomunidades, asociaciones y Confederaciones.",
+            "Confederaciones, mancomunidades y consorcios."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 75. Los municipios. 7. Los municipios tienen derecho a asociarse con otros y a cooperar entre ellos y con otros entes públicos para ejercer sus competencias y para cumplir tareas de interés común. A estos efectos tienen capacidad para constituir mancomunidades, consorcios y asociaciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En relación a la cuestión de confianza sobre el programa del Presidente, la confianza se entenderá otorgada:",
+        "opciones": [
+            "Cuando vote a favor la mayoría absoluta.",
+            "Cuando vote a favor la mayoría de dos terceras partes.",
+            "Cuando vote a favor la mayoría simple.",
+            "Cuando vote a favor la mayoría de tres quintas partes."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 56. Funciones del Presidente o de la Presidenta. 3. El Presidente, previa deliberación del Consejo de Gobierno, podrá plantear ante el Parlamento la cuestión de confianza sobre su programa o sobre una declaración de política general. La confianza se considerará otorgada cuando vote a favor de la misma la mayoría simple. Si el Parlamento le niega la confianza, el Presidente presentará su dimisión ante el Parlamento, cuyo Presidente convocará, en el plazo máximo de quince días, la sesión plenaria para la elección de un nuevo Presidente de la Comunidad Autónoma, de acuerdo con el procedimiento que se prevé en el artículo 54 de este Estatuto."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En cuál de las siguientes materias tendrán los Consejos Insulares potestad reglamentaria:",
+        "opciones": [
+            "Enseñanza.",
+            "Agricultura, ganadería y pesca.",
+            "Vigilancia y protección de sus edificios e instalaciones.",
+            "Montes y aprovechamientos forestales, vías pecuarias y pastos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 72. Potestad reglamentaria. 1. En las competencias que son atribuidas como propias a los Consejos Insulares, éstos ejercen la potestad reglamentaria."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las competencias atribuidas como propias a los Consejos Insulares, se transferirán mediante:",
+        "opciones": [
+            "Ley de traspaso.",
+            "Decreto de traspaso.",
+            "Decreto ley de traspaso.",
+            "Acuerdo de traspaso."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 70. Competencias propias. Son competencias propias de los Consejos Insulares, además de las que les vengan atribuidas por la legislación estatal, las siguientes materias: (...) A la entrada en vigor del presente Estatuto de Autonomía se transferirán las competencias atribuidas como propias a los Consejos Insulares, mediante Decreto de traspaso acordado en Comisión Mixta de Transferencias."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La Conferencia de Presidentes se constituirá de acuerdo con los principios de:",
+        "opciones": [
+            "Cooperación, coordinación y lealtad institucional.",
+            "Colaboración, autonomía y coordinación.",
+            "Colaboración, cooperación y lealtad institucional.",
+            "Colaboración, coordinación y lealtad institucional."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 74. Conferencia de Presidentes. 1. La Conferencia de Presidentes, integrada por el Presidente de las Illes Balears y por los Presidentes de los Consejos Insulares de Mallorca, Menorca, Ibiza y Formentera, se constituirá, de acuerdo con los principios de cooperación, colaboración y lealtad institucional, como marco general y permanente de relación, deliberación, participación, formulación de propuestas, toma de acuerdos e intercambio de información entre el Gobierno de las Illes Balears y los Consejos Insulares de cada una de las islas en las materias de interés común. 2. La propia Conferencia de Presidentes adoptará su reglamento interno y de funcionamiento."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En caso de ausencia o enfermedad del Presidente de la Comunidad Autónoma, ejercerá la representación de las Illes Balears:",
+        "opciones": [
+            "El miembro designado por el Presidente.",
+            "El Presidente del Parlamento.",
+            "El miembro de más edad del Gobierno.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 56. Funciones del Presidente o de la Presidenta. 9. En caso de ausencia o enfermedad del Presidente, ejercerá la representación de las Illes Balears el Presidente del Parlamento, sin perjuicio de que interinamente presida el Gobierno uno de sus miembros designado por el Presidente."
+    },
+    {
+        "pregunta": "Según el art. 10 del EAIB, el Derecho Civil de la Comunidad Autónoma, ¿tiene eficacia en?",
+        "opciones": [
+            "Las Islas",
+            "La Comunidad",
+            "Su territorio",
+            "Todas son correctas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 10 | Las disposiciones de los poderes públicos de las Illes Balears Las normas, las disposiciones y el Derecho Civil de la Comunidad Autónoma tienen eficacia en su territorio, sin perjuicio de las normas para resolver los conflictos de leyes y de las excepciones que puedan establecerse en cada materia."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Qué afirmación respecto a los Consejos Insulares es falsa:",
+        "opciones": [
+            "Son instituciones de consulta y asesoramiento.",
+            "Son instituciones de representación de las Islas.",
+            "Son instituciones de gobierno de las Islas.",
+            "Son instituciones de administración de las Islas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 61. Los Consejos Insulares. 1. Los Consejos Insulares son las instituciones de gobierno de cada una de las islas y ostentan el gobierno, la administración y la representación de las islas de Mallorca, Menorca, Ibiza y Formentera, así como de las islas adyacentes a éstas. 2. Los Consejos Insulares gozarán de autonomía en la gestión de sus intereses de acuerdo con la Constitución, este Estatuto y lo establecido en las leyes del Parlamento. 3. Los Consejos Insulares también son instituciones de la Comunidad Autónoma de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las competencias no atribuidas expresamente como propias a los Consejos Insulares en el Estatuto:",
+        "opciones": [
+            "Corresponden al Parlamento de las Illes Balears.",
+            "Corresponden al Gobierno de las Illes Balears.",
+            "Corresponderán al Pleno.",
+            "Corresponderán a los Consejos Ejecutivos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 69. Cláusula de cierre. Las competencias no atribuidas expresamente como propias a los Consejos Insulares en este Estatuto de Autonomía corresponden al Gobierno de las Illes Balears, sin que en ningún caso sean susceptibles de transferencia aquellas que por su propia naturaleza tengan un carácter suprainsular, que incidan sobre la ordenación y la planificación de la actividad económica general en el ámbito autonómico o aquellas competencias cuyo ejercicio exija la obligación de velar por el equilibrio o la cohesión territorial entre las diferentes islas."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Qué funciones puede delegar temporalmente el Presidente de las Illes Balears en alguno de los miembros de su gobierno:",
+        "opciones": [
+            "Exclusivamente de coordinación.",
+            "Exclusivamente las ejecutivas.",
+            "Las ejecutivas y las de coordinación.",
+            "No puede efectuar delegaciones de carácter temporal."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 56. Funciones del Presidente o de la Presidenta. 2. El Presidente podrá delegar temporalmente funciones ejecutivas y de coordinación en alguno de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Que ampara la insularidad del territorio de la Comunidad Autónoma como hecho diferencial y merecedor de protección especial",
+        "opciones": [
+            "La Constitución",
+            "El Estatuto",
+            "Las Leyes autonómicas",
+            "Ninguna es correcta"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 3 | Insularidad 1. El Estatuto ampara la insularidad del territorio de la Comunidad Autónoma como hecho diferencial y merecedor de protección especial."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. No procederá ninguna nueva disolución del Parlamento antes de que haya transcurrido:",
+        "opciones": [
+            "2 años desde la anterior, exceptuando lo dispuesto en el artículo 54.5 de este Estatuto.",
+            "1 año desde la anterior, exceptuando lo dispuesto en el artículo 54.5 de este Estatuto.",
+            "3 años desde la anterior, exceptuando lo dispuesto en el artículo 54.5 de este Estatuto.",
+            "6 meses desde la anterior, exceptuando lo dispuesto en el artículo 54.5 de este Estatuto."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 55. Disolución del Parlamento. 1. El Presidente del Gobierno, previa deliberación del Consejo de Gobierno de las Illes Balears y bajo su exclusiva responsabilidad, podrá acordar la disolución del Parlamento de las Illes Balears con anticipación al plazo natural de la legislatura. 2. La disolución se acordará por Decreto, en el que se convocarán a su vez elecciones, indicando los requisitos exigidos en la legislación electoral aplicable. 3. El Parlamento de las Illes Balears no podrá disolverse cuando esté en trámite una moción de censura. 4. No procederá ninguna nueva disolución antes de que haya transcurrido un año desde la anterior, exceptuando lo que se dispone en el artículo 54.5 de este Estatuto."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las relaciones de orden tributario y financiero entre el Estado y la Comunidad Autónoma de las Illes Balears se regularán por:",
+        "opciones": [
+            "La Constitución, el presente Estatuto y la Ley Orgánica prevista en el apartado 1 del artículo 157 de la Constitución.",
+            "La Constitución, el presente Estatuto y la Ley Orgánica prevista en el apartado 2 del artículo 157 de la Constitución.",
+            "La Constitución, el presente Estatuto y la Ley Orgánica prevista en el apartado 3 del artículo 157 de la Constitución.",
+            "La Constitución, el presente Estatuto y la Ley prevista en el apartado 2 del artículo 157 de la Constitución."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 120. Principios. 1. Las relaciones de orden tributario y financiero entre el Estado y la Comunidad Autónoma de las Illes Balears se regulan por la Constitución, el presente Estatuto y la Ley Orgánica prevista en el apartado 3 del artículo 157 de la Constitución. 2. La financiación de la Comunidad Autónoma de las Illes Balears se fundamenta en los siguientes principios: a) Autonomía financiera. b) Lealtad institucional. c) Solidaridad, equidad y suficiencia financiera, atendiendo al reconocimiento específico del hecho diferencial de la insularidad, para garantizar el equilibrio territorial, y a la población real efectiva, determinada de acuerdo con la normativa estatal, así como a su evolución. d) Responsabilidad fiscal. e) Coordinación y transparencia en las relaciones fiscales y financieras entre las Administraciones públicas. f) Garantía de financiación de los servicios educativos, sanitarios y sociales en los términos previstos en el artículo 123.2 de este Estatuto. g) Prudencia financiera y austeridad. 3. La Comunidad Autónoma de las Illes Balears goza del mismo tratamiento fiscal que la legislación establezca para el Estado."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La organización del Gobierno, las atribuciones y el Estatuto personal de cada uno de sus componentes será aprobado por:",
+        "opciones": [
+            "Ley del Parlamento, aprobada por mayoría simple.",
+            "Decreto del Parlamento, aprobado por mayoría absoluta.",
+            "Ley del Parlamento, aprobada por mayoría absoluta.",
+            "Decreto del Parlamento, aprobado por mayoría simple."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57. El Gobierno y su sede. 1. El Gobierno de las Illes Balears es el órgano colegiado que ejerce funciones ejecutivas y administrativas y dirige la política general. 2. El Gobierno está formado por el Presidente, los Vicepresidentes, en su caso, y los consejeros. 3. Por ley del Parlamento, aprobada por mayoría absoluta, se establecerá la organización del Gobierno, las atribuciones y el Estatuto personal de cada uno de sus componentes. 4. El Gobierno responde políticamente de manera solidaria ante el Parlamento, sin perjuicio de la responsabilidad directa de cada uno de sus miembros por su gestión. 5. La responsabilidad penal de los miembros del Gobierno será exigible en los mismos términos que se establezcan para los Diputados del Parlamento. 6. La sede del Gobierno será la ciudad de Palma, pero, previa convocatoria, podrá reunirse en cualquier otro lugar del territorio de la Comunidad Autónoma. 7. Solamente en el ejercicio de sus competencias, el Gobierno podrá establecer organismos, servicios y dependencias en cualquiera de las Islas, de acuerdo con lo que establece el presente Estatuto. 8. El Gobierno cesa: a) Después de la celebración de elecciones al Parlamento. b) Por dimisión, incapacidad o defunción de su Presidente. c) Por pérdida de la confianza del Parlamento o por la adopción de una moción de censura. El gobierno cesante continuará en funciones hasta la toma de posesión del nuevo gobierno."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Los órganos necesarios de los Consejos Insulares son:",
+        "opciones": [
+            "El Pleno, el Presidente y el Consejo Ejecutivo.",
+            "El Pleno, el Presidente y el Consejo Ejecutivo excepto en Formentera.",
+            "El Pleno, el Presidente, la Comisión y el Consejo Ejecutivo .",
+            "El Pleno, el Presidente, la Comisión y el Consejo Ejecutivo excepto en Formentera."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 63. Órganos. 1. Los órganos necesarios de los Consejos Insulares de Mallorca, Menorca e Ibiza son: el Pleno, el Presidente y el Consejo Ejecutivo. En los términos fijados por la Ley de Consejos Insulares, cada Consejo Insular podrá crear órganos complementarios de los anteriores. 2. En el caso del Consejo Insular de Formentera, que será integrado por los regidores del Ayuntamiento de Formentera, no será preceptiva la existencia de consejo ejecutivo. La Ley de Consejos Insulares o una ley específica podrá establecer, en su caso, singularidades de régimen jurídico y de organización propias para el Consejo Insular de Formentera."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La disolución del Parlamento se acordará mediante:",
+        "opciones": [
+            "Ley.",
+            "Decreto.",
+            "Acuerdo.",
+            "Reglamento."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 55. Disolución del Parlamento. 1. El Presidente del Gobierno, previa deliberación del Consejo de Gobierno de las Illes Balears y bajo su exclusiva responsabilidad, podrá acordar la disolución del Parlamento de las Illes Balears con anticipación al plazo natural de la legislatura. 2. La disolución se acordará por Decreto, en el que se convocarán a su vez elecciones, indicando los requisitos exigidos en la legislación electoral aplicable. 3. El Parlamento de las Illes Balears no podrá disolverse cuando esté en trámite una moción de censura. 4. No procederá ninguna nueva disolución antes de que haya transcurrido un año desde la anterior, exceptuando lo que se dispone en el artículo 54.5 de este Estatuto."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Los Consejos Ejecutivos: Señale la incorrecta.",
+        "opciones": [
+            "Dirigen, bajo la superior dirección del Presidente del Consejo Insular, los sectores de actividad administrativa correspondientes al departamento que encabezan.",
+            "Ejercen la función ejecutiva en relación con las competencias del Consejo Insular.",
+            "La Ley de Consejos Insulares y el reglamento orgánico determinará la estructura interna de los departamentos.",
+            "Está integrado por el Presidente del Consejo Insular, los Vicepresidentes, en su caso, el Secretario y los consejeros ejecutivos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 67. El Consejo Ejecutivo. 1. El Consejo Ejecutivo será integrado por el Presidente del Consejo Insular, los Vicepresidentes, en su caso, y los consejeros ejecutivos. 2. Los consejeros ejecutivos dirigen, bajo la superior dirección del Presidente del Consejo Insular, los sectores de actividad administrativa correspondientes al departamento que encabezan. La Ley de Consejos Insulares y el reglamento orgánico determinarán la estructura interna básica de los departamentos y las atribuciones de sus órganos. 3. Sin perjuicio de las atribuciones conferidas a otros órganos de gobierno, corresponde al Consejo Ejecutivo el ejercicio de la función ejecutiva en relación con las competencias del Consejo Insular. 4. La Ley de Consejos Insulares establecerá el Estatuto personal y las incompatibilidades de los miembros del Consejo Ejecutivo."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El plazo para la constitución de los Consejos Insulares es de:",
+        "opciones": [
+            "Máximo de 30 días desde que se hayan celebrado las elecciones.",
+            "Máximo de 45 días desde que se hayan celebrado las elecciones.",
+            "Máximo de 50 días desde que se hayan celebrado las elecciones.",
+            "Máximo de 60 días desde que se hayan celebrado las elecciones."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 64. Composición y régimen electoral. 1. Cada uno de los Consejos Insulares de Mallorca, Menorca e Ibiza estará integrado por los consejeros elegidos en las respectivas circunscripciones, por sufragio universal, igual, libre, directo y secreto mediante un sistema de representación proporcional respetando el régimen electoral general. 2. La duración del mandato de los consejeros será de cuatro años. 3. El cargo de miembro del Consejo Insular es incompatible con los cargos de Presidente de las Illes Balears, de Presidente del Parlamento, de miembro del Gobierno y de senador de la Comunidad Autónoma. La incompatibilidad subsistirá en el caso de cese, por cualquier causa, en el ejercicio de los cargos incompatibles. En el Consejo Insular que les corresponda, los miembros incompatibles serán sustituidos por aquellos candidatos que ocupen el lugar siguiente al del último elegido en las listas electorales correspondientes. 4. Una ley del Parlamento regulará el número de miembros que deben integrar cada Consejo Insular, así como las causas de inelegibilidad y de incompatibilidad que les afecten. 5. Cada uno de los Consejos Insulares debe constituirse en el plazo máximo de 45 días desde que se hayan celebrado las elecciones."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La memoria anual del Tribunal Superior de Justicia será presentada por su Presidente o Presidenta ante:",
+        "opciones": [
+            "El Pleno.",
+            "Tribunal de Cuentas.",
+            "Parlamento de las Illes Balears.",
+            "Comisión Ejecutiva."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 95. El Presidente o la Presidenta del Tribunal Superior de Justicia de las Illes Balears. 1. El Presidente del Tribunal Superior de Justicia de las Illes Balears será nombrado por el Rey a propuesta del Consejo General del Poder Judicial. El Presidente de la Comunidad Autónoma ordenará la publicación de este nombramiento en el Butlletí Oficial de les Illes Balears. 2. El nombramiento de magistrados, jueces, fiscales y secretarios que deban prestar servicios en las Illes Balears se efectuará en la forma prevista en la Ley Orgánica del Poder Judicial a que hace referencia el artículo 122 de la Constitución. 3. La memoria anual del Tribunal Superior de Justicia será presentada por su Presidente o Presidenta ante el Parlamento de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Qué órgano podrá acordar la disolución del Parlamento de las Illes Balears con anticipación al plazo natural de la legislatura:",
+        "opciones": [
+            "El Presidente del Gobierno.",
+            "El Presidente del Gobierno, previa deliberación del Pleno.",
+            "El Presidente del Gobierno, previa deliberación del Consejo de Gobierno de las Illes Balears.",
+            "El Presidente del Gobierno a petición del Consejo de Gobierno de las Illes Balears."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 55. Disolución del Parlamento. 1. El Presidente del Gobierno, previa deliberación del Consejo de Gobierno de las Illes Balears y bajo su exclusiva responsabilidad, podrá acordar la disolución del Parlamento de las Illes Balears con anticipación al plazo natural de la legislatura. 2. La disolución se acordará por Decreto, en el que se convocarán a su vez elecciones, indicando los requisitos exigidos en la legislación electoral aplicable. 3. El Parlamento de las Illes Balears no podrá disolverse cuando esté en trámite una moción de censura. 4. No procederá ninguna nueva disolución antes de que haya transcurrido un año desde la anterior, exceptuando lo que se dispone en el artículo 54.5 de este Estatuto."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál de las siguientes es una competencia propia de los Consejos Insulares:",
+        "opciones": [
+            "Urbanismo y habitabilidad.",
+            "Sanidad.",
+            "Ferias insulares.",
+            "Estadísticas de interés insular."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 70. Competencias propias. Son competencias propias de los Consejos Insulares, además de las que les vengan atribuidas por la legislación estatal, las siguientes materias: 1. Urbanismo y habitabilidad."
+    },
+    {
+        "pregunta": "La Comunidad Autónoma fundamenta el derecho al autogobierno en los valores del respeto a la dignidad humana, la libertad,__________, la justicia, la paz y los derechos humanos. (Complete la frase con la palabra correcta)",
+        "opciones": [
+            "La cooperación",
+            "La igualdad",
+            "La religión",
+            "La solidaridad"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 12 | Principios rectores de la actividad pública 1. La Comunidad Autónoma fundamenta el derecho al autogobierno en los valores del respeto a la dignidad humana, la libertad, la igualdad, la justicia, la paz y los derechos humanos."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En el ejercicio de las competencias propias, los municipios estarán sujetos al control:",
+        "opciones": [
+            "De constitucionalidad y seguridad jurídica.",
+            "De constitucionalidad y lealtad.",
+            "De constitucionalidad y legalidad.",
+            "De constitucionalidad y fidelidad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 75. Los municipios. 4. Este Estatuto garantiza a los municipios la autonomía para el ejercicio de sus competencias propias, bajo su responsabilidad y en defensa de los intereses de la colectividad que representa. En el ejercicio de las competencias propias, los municipios estarán sujetos al control de constitucionalidad y legalidad. Los municipios tienen en el ámbito de este Estatuto y de las leyes, libertad plena para el ejercicio de su iniciativa en cualquier materia que no esté excluida de su competencia o atribuida en exclusiva a otra administración o autoridad."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál de las siguientes afirmaciones es falsa en relación a las competencias de los órganos jurisdiccionales de las Illes Balears. Su competencia se extiende:",
+        "opciones": [
+            "A las cuestiones de competencia entre órganos jurisdiccionales en las Illes Balears.",
+            "En el orden civil, a todas las instancias y a todos los grados, incluidos los recursos de casación y revisión, en materia de Derecho Civil propio de las Illes Balears.",
+            "En los órdenes penal y social, a todas las instancias y a todos los grados, incluidos los recursos de casación y revisión.",
+            "En el orden contencioso-administrativo, a los recursos que se interpongan contra los actos y las disposiciones de las Administraciones públicas, en los términos que establezca la Ley Orgánica del Poder Judicial."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 94. Competencias. 1. La competencia de los órganos jurisdiccionales de las Illes se extiende, en cualquier caso: a) En el orden civil, a todas las instancias y a todos los grados, incluidos los recursos de casación y revisión, en materia de Derecho Civil propio de las Illes Balears. b) En el orden contencioso-administrativo, a los recursos que se interpongan contra los actos y las disposiciones de las Administraciones públicas, en los términos que establezca la Ley Orgánica del Poder Judicial. c) En los órdenes penal y social, a todas las instancias y a todos los grados, a excepción de los recursos de casación y revisión. d) A las cuestiones de competencia entre órganos jurisdiccionales en las Illes Balears. e) A los recursos sobre calificación de documentos que deban tener acceso a los registros de la propiedad, mercantil o de bienes muebles de las Illes Balears, siempre que estos recursos se fundamenten en una infracción de las normas emanadas de los órganos de la Comunidad Autónoma de las Illes Balears. 2. En las materias restantes se estará a lo que disponga la Ley Orgánica del Poder Judicial."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál de las siguientes NO es una materia en la que los Consejos Insulares tienen función ejecutiva:",
+        "opciones": [
+            "Cultura.",
+            "Sanidad.",
+            "Cooperativas y cámaras.",
+            "Aguas minerales, termales y subterráneas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71. Función ejecutiva de competencias. Los Consejos Insulares, además de las competencias que les son propias, podrán asumir en su ámbito territorial la función ejecutiva y la gestión en las siguientes materias: 2. Recursos y aprovechamientos hidráulicos, canales y regadíos, régimen general de aguas. Aguas minerales, termales y subterráneas  7. Sanidad. 9. Cooperativas y cámaras."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El Decreto de traspaso que propicia la transferencia de las competencias propias a los Consejos Insulares, será acordado en:",
+        "opciones": [
+            "Parlamento.",
+            "Pleno.",
+            "Comisión Mixta de Transferencias.",
+            "Comisión Ejecutiva de Transferencias."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 70. Competencias propias. Son competencias propias de los Consejos Insulares, además de las que les vengan atribuidas por la legislación estatal, las siguientes materias: (...) A la entrada en vigor del presente Estatuto de Autonomía se transferirán las competencias atribuidas como propias a los Consejos Insulares, mediante Decreto de traspaso acordado en Comisión Mixta de Transferencias."
+    },
+    {
+        "pregunta": "Que artículo del EAIB hace referencia a los símbolos de las Ilas Baleares.",
+        "opciones": [
+            "Art. 6",
+            "Art. 5",
+            "Art. 10",
+            "Art. 11"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 6 | Los símbolos de las Illes Balears"
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Es una competencia ejecutiva de los Consejos Insulares:",
+        "opciones": [
+            "Política de género.",
+            "Artesanía.",
+            "Transportes terrestres.",
+            "Recursos y aprovechamientos hidráulicos, canales y regadíos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 71. Función ejecutiva de competencias. Los Consejos Insulares, además de las competencias que les son propias, podrán asumir en su ámbito territorial la función ejecutiva y la gestión en las siguientes materias: 2. Recursos y aprovechamientos hidráulicos, canales y regadíos, régimen general de aguas. Aguas minerales, termales y subterráneas."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En cuál de los siguientes principios NO se fundamenta la financiación de la Comunidad Autónoma:",
+        "opciones": [
+            "Prudencia financiera y austeridad.",
+            "Autonomía financiera.",
+            "Cooperación fiscal.",
+            "Coordinación y transparencia en las relaciones fiscales y financieras entre las Administraciones públicas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 120. Principios. 1. Las relaciones de orden tributario y financiero entre el Estado y la Comunidad Autónoma de las Illes Balears se regulan por la Constitución, el presente Estatuto y la Ley Orgánica prevista en el apartado 3 del artículo 157 de la Constitución. 2. La financiación de la Comunidad Autónoma de las Illes Balears se fundamenta en los siguientes principios: a) Autonomía financiera. b) Lealtad institucional. c) Solidaridad, equidad y suficiencia financiera, atendiendo al reconocimiento específico del hecho diferencial de la insularidad, para garantizar el equilibrio territorial, y a la población real efectiva, determinada de acuerdo con la normativa estatal, así como a su evolución. d) Responsabilidad fiscal. e) Coordinación y transparencia en las relaciones fiscales y financieras entre las Administraciones públicas. f) Garantía de financiación de los servicios educativos, sanitarios y sociales en los términos previstos en el artículo 123.2 de este Estatuto. g) Prudencia financiera y austeridad. 3. La Comunidad Autónoma de las Illes Balears goza del mismo tratamiento fiscal que la legislación establezca para el Estado."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En atención al reconocimiento específico del hecho diferencial de la insularidad, se tendrán en cuenta los siguientes principios, señale la INCORRECTA:",
+        "opciones": [
+            "Solidaridad.",
+            "Igualdad.",
+            "Suficiencia financiera.",
+            "Equidad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 120. Principios. 1. Las relaciones de orden tributario y financiero entre el Estado y la Comunidad Autónoma de las Illes Balears se regulan por la Constitución, el presente Estatuto y la Ley Orgánica prevista en el apartado 3 del artículo 157 de la Constitución. 2. La financiación de la Comunidad Autónoma de las Illes Balears se fundamenta en los siguientes principios: a) Autonomía financiera. b) Lealtad institucional. c) Solidaridad, equidad y suficiencia financiera, atendiendo al reconocimiento específico del hecho diferencial de la insularidad, para garantizar el equilibrio territorial, y a la población real efectiva, determinada de acuerdo con la normativa estatal, así como a su evolución. d) Responsabilidad fiscal. e) Coordinación y transparencia en las relaciones fiscales y financieras entre las Administraciones públicas. f) Garantía de financiación de los servicios educativos, sanitarios y sociales en los términos previstos en el artículo 123.2 de este Estatuto. g) Prudencia financiera y austeridad. 3. La Comunidad Autónoma de las Illes Balears goza del mismo tratamiento fiscal que la legislación establezca para el Estado."
+    },
+    {
+        "pregunta": "Señale de las siguientes normativas, cual es la última reforma del E.A I.B.",
+        "opciones": [
+            "Ley 1/2022 de 8 de febrero",
+            "Ley Orgánica 1/2007 de 28 de febrero",
+            "Ley Orgánica 2/1983 de 25 de febrero",
+            "Ley Orgánica 1/2022 de 8 de febrero"
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 1/2022, de 8 de febrero, de reforma de la Ley Orgánica 1/2007, de 28 de febrero, de reforma del Estatuto de Autonomía de las Illes Balears, para la supresión del aforamiento de los Diputados y las Diputadas del Parlamento de las Illes Balears y de los miembros del Gobierno de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El Presidente del Tribunal Superior de Justicia de las Illes Balears:",
+        "opciones": [
+            "Será nombrado por el Rey a propuesta del Presidente del Gobierno de las Illes Balears.",
+            "Será nombrado por el Rey a propuesta del Consejo General del Poder Judicial.",
+            "Será nombrado por el Rey a propuesta del Presidente del Gobierno.",
+            "Será nombrado por el Rey a propuesta del Fiscal General del Estado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 95. El Presidente o la Presidenta del Tribunal Superior de Justicia de las Illes Balears. 1. El Presidente del Tribunal Superior de Justicia de las Illes Balears será nombrado por el Rey a propuesta del Consejo General del Poder Judicial. El Presidente de la Comunidad Autónoma ordenará la publicación de este nombramiento en el Butlletí Oficial de les Illes Balears. 2. El nombramiento de magistrados, jueces, fiscales y secretarios que deban prestar servicios en las Illes Balears se efectuará en la forma prevista en la Ley Orgánica del Poder Judicial a que hace referencia el artículo 122 de la Constitución. 3. La memoria anual del Tribunal Superior de Justicia será presentada por su Presidente o Presidenta ante el Parlamento de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Las instancias procesales sucesivas se agotarán ante:",
+        "opciones": [
+            "Audiencia Provincial.",
+            "Tribunal Superior de Justicia de las Illes Balears.",
+            "Sala Primera de lo Penal de la Audiencia Provincial.",
+            "Tribunal Constitucional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 93. El Tribunal Superior de Justicia de las Illes Balears. El Tribunal Superior de Justicia de las Illes Balears es el órgano jurisdiccional en que culmina la organización judicial de las Illes Balears en su ámbito territorial correspondiente y ante el que se agotarán las instancias procesales sucesivas, en los términos y en las condiciones que resulten de la Ley Orgánica del Poder Judicial y de las demás leyes procesales, sin perjuicio de las competencias del Tribunal Supremo."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El otorgamiento de la confianza por parte del Pleno al Presidente del Consejo Insular requerirá:",
+        "opciones": [
+            "Mayoría simple tanto en primera como en segunda votación",
+            "Mayoría absoluta en primera votación y mayoría simple en la segunda votación.",
+            "Mayoría absoluta tanto en primera como en segunda votación.",
+            "Mayoría simple en primera votación y mayoría absoluta en segunda votación."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 66. El Presidente. 1. El Presidente del Consejo Insular es elegido por el Pleno entre sus miembros. El candidato propuesto presentará al Pleno su programa de gobierno y solicitará su confianza, cuyo otorgamiento requiere mayoría absoluta en primera votación y mayoría simple en segunda. El mismo quórum se requerirá en las sucesivas propuestas de Presidente que puedan presentarse. 2. El Presidente del Consejo Insular dirige el gobierno y la administración insulares y designa y separa libremente el resto de miembros del Consejo Ejecutivo, coordina su acción y es políticamente responsable ante el Pleno. 3. La aprobación de una moción de censura al Presidente del Consejo Insular o la denegación de una cuestión de confianza que éste plantee se regirán por lo que dispone la legislación electoral general, con la particularidad de que el Presidente puede plantear la cuestión de confianza sobre su programa en conjunto, sobre una declaración de política general o sobre la aprobación de cualquier asunto o actuación de relevancia política."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál de las siguientes NO es una competencia propia de los Consejos Insulares:",
+        "opciones": [
+            "Inspección técnica de vehículos.",
+            "Tutela, acogimiento y adopción de menores.",
+            "Obras públicas.",
+            "Carreteras y caminos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 70. Competencias propias. Son competencias propias de los Consejos Insulares, además de las que les vengan atribuidas por la legislación estatal, las siguientes materias: 5. Inspección técnica de vehículos. 8. Tutela, acogimiento y adopción de menores. 15. Carreteras y caminos."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La responsabilidad política del Gobierno ante el Parlamento es:",
+        "opciones": [
+            "Directa, sin perjuicio de la responsabilidad solidaria de sus miembros.",
+            "Subsidiaria, sin perjuicio de la responsabilidad directa de cada uno de sus miembros.",
+            "Directa, sin perjuicio de la responsabilidad subsidiaria de cada uno de sus miembros.",
+            "Solidaria, sin perjuicio de la responsabilidad directa de cada uno de sus miembros."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 57. El Gobierno y su sede. 1. El Gobierno de las Illes Balears es el órgano colegiado que ejerce funciones ejecutivas y administrativas y dirige la política general. 2. El Gobierno está formado por el Presidente, los Vicepresidentes, en su caso, y los consejeros. 3. Por ley del Parlamento, aprobada por mayoría absoluta, se establecerá la organización del Gobierno, las atribuciones y el Estatuto personal de cada uno de sus componentes. 4. El Gobierno responde políticamente de manera solidaria ante el Parlamento, sin perjuicio de la responsabilidad directa de cada uno de sus miembros por su gestión. 5. La responsabilidad penal de los miembros del Gobierno será exigible en los mismos términos que se establezcan para los Diputados del Parlamento. 6. La sede del Gobierno será la ciudad de Palma, pero, previa convocatoria, podrá reunirse en cualquier otro lugar del territorio de la Comunidad Autónoma. 7. Solamente en el ejercicio de sus competencias, el Gobierno podrá establecer organismos, servicios y dependencias en cualquiera de las Islas, de acuerdo con lo que establece el presente Estatuto. 8. El Gobierno cesa: a) Después de la celebración de elecciones al Parlamento. b) Por dimisión, incapacidad o defunción de su Presidente. c) Por pérdida de la confianza del Parlamento o por la adopción de una moción de censura. El gobierno cesante continuará en funciones hasta la toma de posesión del nuevo gobierno."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La coordinación de la actividad de los Consejos Insulares en todo lo que pueda afectar a los intereses de la Comunidad Autónoma corresponderá:",
+        "opciones": [
+            "Presidente de las Illes Balears.",
+            "Al Pleno.",
+            "Al Gobierno.",
+            "Sindicatura de Greuges."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 72. Potestad reglamentaria. 1. En las competencias que son atribuidas como propias a los Consejos Insulares, éstos ejercen la potestad reglamentaria. 2. La coordinación de la actividad de los Consejos Insulares en todo lo que pueda afectar a los intereses de la Comunidad Autónoma corresponderá al Gobierno. 3. No obstante lo establecido en el párrafo anterior, cuando se trata de la coordinación de la actividad que ejercen los Consejos Insulares en las competencias que tienen atribuidas como propias, deberá contar con la necesaria participación de los mismos."
+    },
+    {
+        "pregunta": "Indique cual son las Instituciones de Gobierno de las Islas según el EAIB.",
+        "opciones": [
+            "Los Ayuntamientos",
+            "La Comunidad Autónoma",
+            "Los Consells",
+            "La Diputación"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 8 | La organización territorial 1. La Comunidad Autónoma articula su organización territorial en islas y en municipios. Las instituciones de gobierno de las islas son los Consejos Insulares, y las de los municipios, los Ayuntamientos."
+    },
+    {
+        "pregunta": "Que artículo del EAIB hace referencia a la Isla de Cabrera como nacionalidad histórica.",
+        "opciones": [
+            "Art. 1. 2",
+            "Art. 2",
+            "Art. 1.1",
+            "Ninguna es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 1 | Illes Balears 1. La nacionalidad histórica que forman las islas de Mallorca, de Menorca, de Ibiza y de Formentera, como expresión de su voluntad colectiva y en el ejercicio del derecho al autogobierno que la Constitución reconoce a las nacionalidades y a las regiones, se constituye en Comunidad Autónoma en el marco de la propia Constitución y del presente Estatuto. LA ISLA DE CABRERA NO ESTA RECONOCIDA COMO NACIONALIDAD HISTÓRICA."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La sede del Gobierno será:",
+        "opciones": [
+            "La ciudad de Palma.",
+            "La ciudad de Palma, pero previa convocatoria, podrá reunirse en cualquier otro lugar del territorio de la Comunidad Autónoma.",
+            "La ciudad de Palma, pero previa autorización del Parlamento, podrá reunirse en cualquier otro lugar del territorio de la Comunidad Autónoma.",
+            "La ciudad de Palma, pero previa autorización del Parlamento, podrá reunirse en cualquier otro lugar de Mallorca."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 57. El Gobierno y su sede. 1. El Gobierno de las Illes Balears es el órgano colegiado que ejerce funciones ejecutivas y administrativas y dirige la política general. 2. El Gobierno está formado por el Presidente, los Vicepresidentes, en su caso, y los consejeros. 3. Por ley del Parlamento, aprobada por mayoría absoluta, se establecerá la organización del Gobierno, las atribuciones y el Estatuto personal de cada uno de sus componentes. 4. El Gobierno responde políticamente de manera solidaria ante el Parlamento, sin perjuicio de la responsabilidad directa de cada uno de sus miembros por su gestión. 5. La responsabilidad penal de los miembros del Gobierno será exigible en los mismos términos que se establezcan para los Diputados del Parlamento. 6. La sede del Gobierno será la ciudad de Palma, pero, previa convocatoria, podrá reunirse en cualquier otro lugar del territorio de la Comunidad Autónoma. 7. Solamente en el ejercicio de sus competencias, el Gobierno podrá establecer organismos, servicios y dependencias en cualquiera de las Islas, de acuerdo con lo que establece el presente Estatuto. 8. El Gobierno cesa: a) Después de la celebración de elecciones al Parlamento. b) Por dimisión, incapacidad o defunción de su Presidente. c) Por pérdida de la confianza del Parlamento o por la adopción de una moción de censura. El gobierno cesante continuará en funciones hasta la toma de posesión del nuevo gobierno."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La organización de los Consejos Insulares vendrá regulada por:",
+        "opciones": [
+            "Su propio Reglamento.",
+            "Ley del Parlamento.",
+            "Decreto del Gobierno.",
+            "Acuerdo del Consejo Ejecutivo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 62. Organización. Los Consejos Insulares establecerán su organización de acuerdo con la Constitución y con este Estatuto. Una ley del Parlamento regulará su organización."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. NO es una función del Pleno de los Consejos Insulares:",
+        "opciones": [
+            "Aprobar los presupuestos del Consejo Insular.",
+            "Ejerce la iniciativa legislativa ante el Parlamento de las Illes Balears.",
+            "Controlar la acción de gobierno del Consejo ejecutivo.",
+            "Designar a los miembros del Consejo Ejecutivo."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 65. El Pleno. 1. El Pleno del Consejo Insular ejerce la iniciativa legislativa ante el Parlamento de las Illes Balears, la función normativa, aprueba los presupuestos del Consejo Insular, controla la acción de gobierno del Consejo Ejecutivo, elige y cesa al Presidente y ejerce todas las funciones que le otorgan este Estatuto, las leyes del Parlamento de las Illes Balears y las propias normas aprobadas por el Consejo Insular. NOTA Es el Presidente del Consejo el que designa a los miembros del Consejo Ejecutivo (ver art 66.2 EAIB)"
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La Ley de los Consejos Insulares deberá ser aprobada por:",
+        "opciones": [
+            "Voto favorable de tres quintas partes de los Diputados del Parlamento de las Illes Balears, y para el Consejo Insular de Formentera una ley específica.",
+            "Voto favorable de dos tercios de los Diputados del Parlamento de las Illes Balears, y para el Consejo Insular de Formentera una ley específica.",
+            "Mayoría simple de los Diputados del Parlamento de las Illes Balears, y para el Consejo Insular de Formentera una ley específica.",
+            "Mayoría absoluta de los Diputados del Parlamento de las Illes Balears, y para el Consejo Insular de Formentera una ley específica."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 68. Funcionamiento y régimen jurídico. La Ley de los Consejos Insulares, aprobada con el voto favorable de dos tercios de los Diputados del Parlamento de las Illes Balears, y para el Consejo Insular de Formentera una ley específica, en su caso, determinarán las reglas de funcionamiento y el régimen jurídico de la actuación de los Consejos Insulares y de sus órganos, así como el régimen de sus funciones y competencias respetando la legislación básica del Estado."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Si el Parlamento le niega la confianza al Presidente de la Comunidad Autónoma, la convocatoria de la sesión plenaria para la elección de nuevo Presidente, deberá efectuarse en el plazo máximo de:",
+        "opciones": [
+            "5 días.",
+            "10 días.",
+            "15 días.",
+            "30 días."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 56. Funciones del Presidente o de la Presidenta. 3. El Presidente, previa deliberación del Consejo de Gobierno, podrá plantear ante el Parlamento la cuestión de confianza sobre su programa o sobre una declaración de política general. La confianza se considerará otorgada cuando vote a favor de la misma la mayoría simple. Si el Parlamento le niega la confianza, el Presidente presentará su dimisión ante el Parlamento, cuyo Presidente convocará, en el plazo máximo de quince días, la sesión plenaria para la elección de un nuevo Presidente de la Comunidad Autónoma, de acuerdo con el procedimiento que se prevé en el artículo 54 de este Estatuto."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Los Consejos Insulares tendrán asignada la actividad de fomento en:",
+        "opciones": [
+            "Ferias insulares.",
+            "Obras públicas.",
+            "Enseñanza.",
+            "Carreteras y caminos."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 73. Actividad de fomento y fijación de políticas propias de los Consejos Insulares. Corresponde a los Consejos Insulares, en las materias que este Estatuto les atribuye competencia propia, el ejercicio de la actividad de fomento, sin perjuicio de la actividad que corresponda la Comunidad Autónoma, y la fijación de políticas propias o, cuando así lo decidan, la fijación de políticas comunes con otros Consejos Insulares, y con otras islas, comunidades o con el Estado de acuerdo con el Gobierno de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. La moción de censura al Presidente de la Comunidad Autónoma deberá ser propuesta como mínimo, por:",
+        "opciones": [
+            "Un quince por ciento de los Diputados.",
+            "Un veinte por ciento de los Diputados.",
+            "Un veinticinco por ciento de los Diputados.",
+            "Un treinta por ciento de los Diputados."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 56. Funciones del Presidente o de la Presidenta. 4. El Presidente será políticamente responsable ante el Parlamento, que podrá exigir la responsabilidad del Gobierno de las Illes Balears mediante la adopción, por mayoría absoluta, de la moción de censura. Esta deberá ser propuesta, como mínimo, por un quince por ciento de los Diputados y deberá incluir un candidato a la Presidencia."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuántos Consejos Insulares existen en las Illes Balears:",
+        "opciones": [
+            "Tres, uno por Mallorca, uno por Menorca y uno por la agrupación de Ibiza y Formentera.",
+            "Cuatro, uno por Mallorca, uno por Menorca, uno por Ibiza y uno por Formentera.",
+            "Dos, uno por Mallorca y uno por la agrupación de Menorca, Ibiza y Formentera.",
+            "Cinco, uno por Mallorca, uno por Menorca, uno por Ibiza, uno por Formentera y uno por el conjunto de todas las islas adyacentes."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 61. Los Consejos Insulares. 1. Los Consejos Insulares son las instituciones de gobierno de cada una de las islas y ostentan el gobierno, la administración y la representación de las islas de Mallorca, Menorca, Ibiza y Formentera, así como de las islas adyacentes a éstas. 2. Los Consejos Insulares gozarán de autonomía en la gestión de sus intereses de acuerdo con la Constitución, este Estatuto y lo establecido en las leyes del Parlamento. 3. Los Consejos Insulares también son instituciones de la Comunidad Autónoma de las Illes Balears."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. El procedimiento de transferencia o delegación de competencias a los Consejos Insulares, se realizará mediante:",
+        "opciones": [
+            "Ley del Parlamento.",
+            "Decreto del Gobierno.",
+            "Decreto de la Comisión Mixta de Transferencias.",
+            "Acuerdo del Pleno."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71. Función ejecutiva de competencias. Los Consejos Insulares, además de las competencias que les son propias, podrán asumir en su ámbito territorial la función ejecutiva y la gestión en las siguientes materias: (...) Una ley del Parlamento establecerá el procedimiento de transferencia o delegación de competencias a los Consejos Insulares."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. Cuál de las siguientes causas supone el cese del Gobierno:",
+        "opciones": [
+            "Por dimisión, incapacidad o defunción de su Presidente.",
+            "Por pérdida de la confianza del Parlamento o por adopción de una moción de censura.",
+            "Las respuestas a y b son correctas.",
+            "Después de la celebración de elecciones al Parlamento además de las opciones a y b."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 57. El Gobierno y su sede. 1. El Gobierno de las Illes Balears es el órgano colegiado que ejerce funciones ejecutivas y administrativas y dirige la política general. 2. El Gobierno está formado por el Presidente, los Vicepresidentes, en su caso, y los consejeros. 3. Por ley del Parlamento, aprobada por mayoría absoluta, se establecerá la organización del Gobierno, las atribuciones y el Estatuto personal de cada uno de sus componentes. 4. El Gobierno responde políticamente de manera solidaria ante el Parlamento, sin perjuicio de la responsabilidad directa de cada uno de sus miembros por su gestión. 5. La responsabilidad penal de los miembros del Gobierno será exigible en los mismos términos que se establezcan para los Diputados del Parlamento. 6. La sede del Gobierno será la ciudad de Palma, pero, previa convocatoria, podrá reunirse en cualquier otro lugar del territorio de la Comunidad Autónoma. 7. Solamente en el ejercicio de sus competencias, el Gobierno podrá establecer organismos, servicios y dependencias en cualquiera de las Islas, de acuerdo con lo que establece el presente Estatuto. 8. El Gobierno cesa: a) Después de la celebración de elecciones al Parlamento. b) Por dimisión, incapacidad o defunción de su Presidente. c) Por pérdida de la confianza del Parlamento o por la adopción de una moción de censura. El gobierno cesante continuará en funciones hasta la toma de posesión del nuevo gobierno."
+    },
+    {
+        "pregunta": "Ley Orgánica 1/2007 de reforma del EAIB. En las competencias asumidas por los Consejos Insulares, el Gobierno:",
+        "opciones": [
+            "Tendrá la competencia de ejecución.",
+            "Tendrá la competencia de desarrollo legislativo.",
+            "Tendrá la competencia para establecer los principios generales.",
+            "Carecerá de cualquier competencia en las materias asumidas por los Consejos Insulares."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 58. Competencias del Gobierno. 1. Corresponde al Gobierno de las Illes Balears el ejercicio de las competencias de la Comunidad Autónoma a que se refiere el título III de este Estatuto, excepto las que son propias de los Consejos Insulares o les hayan sido transferidas, sin perjuicio de las competencias legislativas que corresponden al Parlamento de las Illes Balears. 2. El Gobierno tiene la potestad reglamentaria en sus competencias y elabora los presupuestos de la Comunidad Autónoma sin perjuicio de su examen, enmienda y aprobación por el Parlamento. Se le podrán atribuir otras facultades de acuerdo con la ley. 3. En las competencias que, de acuerdo con este Estatuto, los Consejos Insulares hayan asumido como propias, el Gobierno de las Illes Balears podrá establecer los principios generales sobre la materia, garantizando el ejercicio de la potestad reglamentaria por parte de los Consejos Insulares."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

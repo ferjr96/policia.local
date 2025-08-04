@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Cuando la Policía Local actúa en un accidente de tráfico, dicho accidente abarca una serie de campos o ámbitos: Indique la respuesta correcta.",
+      "opciones": [
+        "El ámbito administrativo porque conlleva la realización de denuncias por infracciones que conllevan a un accidente y el ámbito penal porque los accidentes de tráfico acaban siendo juzgados.",
+        "El ámbito civil debido a los daños materiales causados y el ámbito penal porque siempre conlleva la producción de lesiones a los implicados.",
+        "El ámbito civil, administrativo y penal.",
+        "El ámbito penal porque siempre derivan un delito contra la seguridad vial y el ámbito administrativo porque detrás de un accidente siempre hay una infracción a las normas de circulación."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "2. Cuando un peatón se baja de un vehículo, éste se está alejando y el peatón es atropellado por otro vehículo, ¿estarían implicados los dos vehículos?",
+      "opciones": [
+        "Sí.",
+        "No.",
+        "No, sólo el vehículo que atropella al peatón.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "3. En la fase de información no se deberán recopilar datos sobre:",
+      "opciones": [
+        "Cuando se produjo el accidente.",
+        "Donde se produjo el accidente.",
+        "Causas que determinaron el accidente.",
+        "Los vehículos implicados."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "4. Las medidas de control de tráfico y supervisión policial se consideran elementos:",
+      "opciones": [
+        "Cambiantes dentro del factor humano.",
+        "Estables dentro del factor vía.",
+        "Estables dentro del factor humano.",
+        "Cambiantes dentro del factor vía."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "5. Se denomina colisión por embestida cuando colisionan dos vehículos, indique la correcta:",
+      "opciones": [
+        "La parte delantera de ambos.",
+        "La parte trasera de ambos.",
+        "La parte delantera de uno y la trasera del otro.",
+        "La parte lateral de uno y la parte frontal del otro."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "6. Cuando un vehículo golpea con su parte anterior la parte posterior del vehículo precedente, se denomina:",
+      "opciones": [
+        "Embestida.",
+        "Topetazo.",
+        "Alcance.",
+        "Raspado."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "7. Es aquél punto donde se consuma el accidente:",
+      "opciones": [
+        "Punto de conflicto.",
+        "Punto de percepción.",
+        "Posición final.",
+        "Área de conflicto."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "8. En la fase de percepción es aquel punto en el cual realmente el conductor percibe el peligro del accidente:",
+      "opciones": [
+        "Punto de conflicto real.",
+        "Punto de decisión real.",
+        "Punto de percepción posible.",
+        "Punto de percepción real."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "9. Es aquella fase de respuesta al estímulo de la percepción del riesgo:",
+      "opciones": [
+        "Fase de percepción.",
+        "Fase de conflicto.",
+        "Área de percepción.",
+        "Fase de decisión."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "10. El área de percepción será:",
+      "opciones": [
+        "El espacio existente entre el punto de percepción posible y el punto de conflicto real.",
+        "El espacio existente entre el punto de percepción real y el punto de conflicto real.",
+        "El espacio existente entre el punto de percepción posible y la posición final.",
+        "El espacio existente entre el punto de percepción posible y el punto de decisión."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "11. Como norma general, ¿cuántas fases intervienen en la producción del accidente?",
+      "opciones": [
+        "2.",
+        "4.",
+        "3.",
+        "5."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "12. ¿Cuál de los 3 factores que intervienen en un accidente es el que más influye en la producción del mismo?",
+      "opciones": [
+        "El factor humano.",
+        "El vehículo.",
+        "El factor sorpresa.",
+        "La vía."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "13. ¿Cuál de estos casos no tiene la consideración de accidente de tráfico?",
+      "opciones": [
+        "El vehículo conducido por una persona cuya intención es acabar con la vida de su expareja.",
+        "El vehículo que choca contra un vehículo estacionado, cuyo conductor ha sufrido un paro cardíaco.",
+        "El vehículo cuyo conductor ha sufrido un infarto y se sale de la vía sin colisionar, sufriendo el ocupante lesiones leves.",
+        "Ninguna de las anteriores es correcta."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "14. Se considera accidente de tráfico mortal al accidente con victimas cuando:",
+      "opciones": [
+        "Al menos una de ellas resulte fallecida en el acto o dentro de los 30 días siguientes.",
+        "Al menos haya dos fallecidos.",
+        "Al menos hay tres fallecidos.",
+        "Todas son falsas."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "15. ¿Qué Orden Interna regula la comunicación de la información al Registro Nacional de Víctimas de accidentes de tráfico?",
+      "opciones": [
+        "La Orden del 18 de febrero de 1993.",
+        "La Orden 2223/2014.",
+        "La Orden 818/2009.",
+        "La Orden 6/2015."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "16. ¿Cuál es la primera fase que interviene en un accidente?",
+      "opciones": [
+        "La fase de conflicto.",
+        "La fase de percepción.",
+        "La fase de decisión.",
+        "La fase final."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "17. ¿Cuál de los siguientes elementos de la vía es considerado un elemento estable?",
+      "opciones": [
+        "Las retenciones de tráfico.",
+        "Las medidas de control de tráfico.",
+        "La supervisión policial.",
+        "La calzada."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "18. ¿Cuál de los siguientes elementos de la vía no es considerado un elemento estable?",
+      "opciones": [
+        "El trazado de la vía.",
+        "El diseño de la vía.",
+        "La supervisión policial.",
+        "El número de carriles."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "19. Es aquel punto en el cual el conductor inicia la realización de la maniobra que ha decidido realizar para intentar evitar el accidente:",
+      "opciones": [
+        "Punto de percepción real.",
+        "Punto de decisión.",
+        "Punto de conflicto.",
+        "Disminución de la velocidad."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "20. La localización de las señales en la calzada es considerada un elemento incluido en el factor vía. ¿De qué tipo de elemento estamos hablando?",
+      "opciones": [
+        "Cambiante.",
+        "Estable.",
+        "De corta duración.",
+        "Informativo."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "21. ¿Qué factores se tienen en cuenta dentro del factor vehículo en la producción del accidente?",
+      "opciones": [
+        "La pericia del conductor y el estado del vehículo.",
+        "El estado del vehículo y la antigüedad del mismo.",
+        "La antigüedad del vehículo y su conductor.",
+        "El estado del vehículo y el aseguramiento del mismo."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "22. Es una actuación de urgencia de la Policía Local en casos de accidente de tráfico:",
+      "opciones": [
+        "Realizar medidas correctivas.",
+        "La toma de datos.",
+        "La regulación del trafico.",
+        "Todas las respuestas son correctas."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "23. La LO 2/86, de Fuerzas y Cuerpos de Seguridad, en su título V artículo 53, atribuye a la Policía Local una serie de competencias en materia de tráfico: Señale la correcta.",
+      "opciones": [
+        "Ordenar, señalizar y dirigir el tráfico en el término municipal, de acuerdo con lo establecido en las normas de circulación.",
+        "Instruir atestados por accidentes de circulación en vías urbanas e interurbanas dentro del término municipal.",
+        "Ordenar, señalizar y dirigir el tráfico en el casco urbano y vías interurbanas, de acuerdo con lo establecido en las normas de circulación.",
+        "Instruir atestados por accidentes de circulación dentro del casco urbano."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "24. ¿Qué actuaciones se pueden derivar de la intervención en un accidente de circulación?",
+      "opciones": [
+        "Siempre penales.",
+        "Siempre administrativas de carácter civil.",
+        "Ayuda a la confección de partes amistosos, confección de diligencias preventivas o informes técnicos y confección de atestados en materia penal.",
+        "Confección de partes amistosos por parte de los agentes actuantes y diligencias preventivas únicamente."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "25. En la fase de percepción es aquel punto en el que el conductor debió darse cuenta de la circunstancia anormal que podría desembocar en el accidente.",
+      "opciones": [
+        "Punto de percepción posible.",
+        "Punto de percepción real.",
+        "Punto de decisión.",
+        "Punto inicial."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "26. Los factores que intervienen en un accidente los podemos agrupar en tres grandes grupos:",
+      "opciones": [
+        "La vía, el factor humano y el clima.",
+        "El clima, el vehículo y el factor humano.",
+        "La calzada, el vehículo y el hombre.",
+        "La vía, el factor humano y el vehículo."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "27. Es la posición que adoptan los vehículos y objetos cuando después del accidente llegan a la inmovilidad:",
+      "opciones": [
+        "Punto de conflicto.",
+        "Posición final.",
+        "Área de conflicto.",
+        "Punto de decisión."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "28. En un accidente, dentro del factor vía, ¿qué tipo de elementos podemos encontrar?",
+      "opciones": [
+        "Elementos estables y sorpresivos.",
+        "Elementos fijos y sorpresivos.",
+        "Elementos estables y cambiantes.",
+        "Elementos cambiantes y sorpresivos."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "29. El accidente de tráfico mortal se clasifica por:",
+      "opciones": [
+        "El modo en que se producen.",
+        "Por su ubicación.",
+        "Por su resultado.",
+        "Por su gravedad."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "30. ¿Qué elementos distinguimos dentro de la fase de conflicto?",
+      "opciones": [
+        "El área de conflicto, el punto de conflicto y el área de percepción.",
+        "El área de conflicto, el área de decisión y el punto de decisión.",
+        "El área de percepción real, el punto de decisión y la posición final.",
+        "El área de conflicto, el punto de conflicto y la posición final."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "31. Si en una vía de circulación se encuentra una mancha de aceite que provoca la salida de esta de dos vehículos que colisionan fuera de la vía:",
+      "opciones": [
+        "Es considerado un accidente de trafico.",
+        "Solo se considera accidente si existen personas heridas.",
+        "Se considera accidente si el impacto es dentro de la calzada.",
+        "Nunca es considerado accidente."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "32. El vuelco es un tipo de accidente:",
+      "opciones": [
+        "Múltiple.",
+        "Simple.",
+        "En cadena.",
+        "Imprudente."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "33. En el accidente de tráfico, el conjunto de un “momento” y de un “punto” es conocido como:",
+      "opciones": [
+        "La posición.",
+        "El factor.",
+        "La causa.",
+        "El tipo."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "34. En el accidente de tráfico, ha de darse necesariamente:",
+      "opciones": [
+        "Al menos una persona herida.",
+        "Como mínimo más de una persona herida.",
+        "Persona herida o daños en los vehículos.",
+        "Ninguna de las respuestas es correcta."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "35. Es la última fase del accidente. Comprende el último período cuando el accidente es inevitable:",
+      "opciones": [
+        "Fase de percepción.",
+        "Fase de conflicto.",
+        "Fase final.",
+        "Posición final."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "36. Cuando hay un roce fuerte entre dos laterales de un vehículo se denomina:",
+      "opciones": [
+        "Topetazo.",
+        "Alcance.",
+        "Embestida.",
+        "Raspado."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "37. ¿Cuántos factores intervienen en un accidente?",
+      "opciones": [
+        "1.",
+        "3.",
+        "4.",
+        "5."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "38. Las pruebas de alcoholemia se efectuarán:",
+      "opciones": [
+        "Solo a los conductores implicados en un accidente.",
+        "A todos los conductores y demás usuarios implicados en un accidente.",
+        "Solo a los conductores que hayan provocado el accidente.",
+        "Solo a los conductores noveles implicados en el accidente."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "39. ¿Dónde comenzará el área de maniobra?",
+      "opciones": [
+        "En el momento en que el conductor realiza la maniobra evasiva.",
+        "En el momento en que el conductor finaliza la maniobra evasiva.",
+        "En el punto en el que el conductor se apercibió del peligro.",
+        "En el momento de la colisión."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "40. El objeto de conocer cómo se produce el accidente, entre otros es:",
+      "opciones": [
+        "Determinar las causas que lo produjeron.",
+        "Exigir responsabilidad al responsable.",
+        "Determinar sus consecuencias.",
+        "Todas respuestas son validas."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "41. En el accidente de circulación, la calzada, la cual se encuentra dentro del factor vía, es un elemento:",
+      "opciones": [
+        "Estable.",
+        "Cambiante.",
+        "Sorpresivo.",
+        "A tener en cuenta."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "42. Indique la respuesta incorrecta. Los accidentes de tráfico se clasifican en función de diversos aspectos:",
+      "opciones": [
+        "Resultado: mortales, con heridos, con daños materiales.",
+        "Número de vehículos que intervienen: • Simples: accidente en el cual está implicado un solo vehículo. • Complejos: accidente en el cual están implicados más de un vehículo.",
+        "Fortuitos e intencionados.",
+        "Lugar donde se producen: urbanos e interurbanos."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "43. En la actualidad se considera fallecido en accidente de tráfico, la persona que muere en el acto o dentro de:",
+      "opciones": [
+        "Las 12 horas siguientes.",
+        "Las 48 horas siguientes.",
+        "Los diez días siguientes.",
+        "Los 30 días siguientes."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "44. La LO 2/86, de Fuerzas y Cuerpos de Seguridad, en su título V, atribuye a la Policía Local una serie de competencias en materia de tráfico. ¿En qué artículo están recogidas dichas competencias?",
+      "opciones": [
+        "52.",
+        "54.",
+        "55.",
+        "53."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "45. Será el espacio en el que se realiza la acción de evasión. Esta área comenzará en el punto en el que el conductor se apercibió del peligro:",
+      "opciones": [
+        "Punto de decisión.",
+        "Área de conflicto.",
+        "Área de maniobra.",
+        "Punto de conflicto."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "46. En un accidente de circulación, cuando nada más percibir el peligro del accidente éste ya se ha producido, se dice que no existe:",
+      "opciones": [
+        "La fase de percepción.",
+        "La fase de conflicto.",
+        "La fase de decisión.",
+        "Las fases de decisión y percepción."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "47. En los accidentes de tráfico, para que se consideren tales, al menos ha de haber implicado:",
+      "opciones": [
+        "Ningún vehículo.",
+        "Un vehículo.",
+        "Más de un vehículo.",
+        "Siempre más de dos vehículos."
+      ],
+      "correcta": 1,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "48. Es el espacio en el que se desarrolla la posibilidad del accidente:",
+      "opciones": [
+        "Área de maniobra.",
+        "Posición final.",
+        "Punto de conflicto.",
+        "Área de conflicto."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "49. En los métodos clásicos de investigación de accidentes se suelen distinguir tres fases y por este orden:",
+      "opciones": [
+        "Fase de percepción, fase de decisión y fase final.",
+        "Fase de percepción, fase de conflicto y fase de decisión.",
+        "Fase de conflicto, fase de decisión y fase de percepción.",
+        "Fase de percepción, fase de decisión y fase de conflicto."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "50. Las circunstancias medioambientales han de ser descritas en el informe del accidente:",
+      "opciones": [
+        "Solo si son adversas.",
+        "Solo cuando existan heridos graves.",
+        "Siempre.",
+        "Nunca."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "51. Un atropello es un accidente:",
+      "opciones": [
+        "No es un accidente de tráfico propiamente dicho.",
+        "Simple.",
+        "Múltiple.",
+        "Doloso."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "52. En la actividad policial ante los accidentes de tráfico, ¿en cuántas etapas dividiremos el orden cronológico de las actuaciones?",
+      "opciones": [
+        "En 5.",
+        "En 8.",
+        "En 6.",
+        "En 3."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "53. Cuando la Policía Local actúa en un accidente de tráfico, ¿cuál es la primera medida de seguridad a tomar?",
+      "opciones": [
+        "La regulación del tráfico.",
+        "La asistencia a los heridos graves o muy graves.",
+        "Esclarecer las causas del accidente.",
+        "Asegurar la zona."
+      ],
+      "correcta": 3,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "54. La climatología se considera un elemento:",
+      "opciones": [
+        "Cambiante dentro del factor vía.",
+        "Estable dentro del factor vía.",
+        "Estable dentro del factor humano.",
+        "Cambiante dentro del factor humano."
+      ],
+      "correcta": 0,
+      "explicacion": ""
+    },
+    {
+      "pregunta": "55. Se consideran accidentes de tráfico los que se produzcan en una vía:",
+      "opciones": [
+        "Con circulación.",
+        "Pavimentadas.",
+        "En la que sea de aplicación la Ley de Tráfico.",
+        "Aunque no se aplique la LTSV."
+      ],
+      "correcta": 2,
+      "explicacion": ""
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "La circunstancia de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el núm. 2.º del artículo 21 del Código Penal es:",
+        "opciones": [
+            "Una eximente incompleta.",
+            "Una circunstancia atenuante.",
+            "Una circunstancia modificativa de la responsabilidad criminal (atenuante o agravante según la infracción penal en que concurra).",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior, cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior. 3ª La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante. 4ª La de haber procedido el culpable, antes de conocer que el procedimiento judicial se dirige contra él, a confesar la infracción a las autoridades. 5ª La de haber procedido el culpable a reparar el daño ocasionado a la víctima, o disminuir sus efectos, en cualquier momento del procedimiento y con anterioridad a la celebración del acto del juicio oral. 6ª La dilación extraordinaria e indebida en la tramitación del procedimiento, siempre que no sea atribuible al propio inculpado y que no guarde proporción con la complejidad de la causa. 7ª Cualquier otra circunstancia de análoga significación que las anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La circunstancia de cometer el delito por motivos racistas, antisemitas u otra clase de discriminación referente a la ideología, religión o creencias de la víctima, la etnia, la raza o nación a la que pertenezca, su sexo, orientación o identidad sexual, razones de género, la enfermedad que padezca o su discapacidad:",
+        "opciones": [
+            "Ha desaparecido del vigente CP como circunstancia agravante.",
+            "Es de aplicación sólo a los delitos contra las personas.",
+            "Es de aplicación sólo a los delitos contra las personas y contra el patrimonio.",
+            "El vigente CP la regula de forma genérica como agravante de la responsabilidad criminal, sin limitar los delitos a los que resulta aplicable."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: 1ª Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas empleando en la ejecución medios, modos o formas que tiendan directa o especialmente a asegurarla, sin el riesgo que para su persona pudiera proceder de la defensa por parte del ofendido. 2ª Ejecutar el hecho mediante disfraz, con abuso de superioridad o aprovechando las circunstancias de lugar, tiempo o auxilio de otras personas que debiliten la defensa del ofendido o faciliten la impunidad del delincuente. 3ª Ejecutar el hecho mediante precio, recompensa o promesa. 4ª Cometer el delito por motivos racistas, antisemitas u otra clase de discriminación referente a la ideología, religión o creencias de la víctima, la etnia, raza o nación a la que pertenezca, su sexo, orientación o identidad sexual, razones de género, la enfermedad que padezca o su discapacidad. 5ª Aumentar deliberada e inhumanamente el sufrimiento de la víctima, causando a ésta padecimientos innecesarios para la ejecución del delito. 6ª Obrar con abuso de confianza. 7ª Prevalerse del carácter público que tenga el culpable. 8ª Ser reincidente. Hay reincidencia cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título de este Código, siempre que sea de la misma naturaleza. A los efectos de este número no se computarán los antecedentes penales cancelados o que debieran serlo, ni los que correspondan a delitos leves. Las condenas firmes de jueces o tribunales impuestas en otros Estados de la Unión Europea producirán los efectos de reincidencia salvo que el antecedente penal haya sido cancelado o pudiera serlo con arreglo al Derecho español."
+    },
+    {
+        "pregunta": "¿Qué efecto produce en la legítima defensa la ausencia de ánimo de defensa?",
+        "opciones": [
+            "Ninguno si, en el supuesto concreto, no pudo recurrirse a un medio menos lesivo.",
+            "Que es sustituido por el «pretexto de defensa».",
+            "Depende de la gravedad e inminencia de la agresión.",
+            "Excluye la legítima defensa, incluso como eximente incompleta."
+        ],
+        "correcta": 3,
+        "explicacion": "LEGÍTIMA DEFENSA Es una causa que justifica la realización de una conducta sancionada penalmente, eximiendo de responsabilidad a su autor, conforme prevé el art. 20.4 CP y que, en caso de no cumplirse todos sus requisitos (agresión ilegítima, necesidad racional del medio empleado, falta de provocación por parte del defensor), actúa como una eximente incompleta y permite reducir la pena aplicable."
+    },
+    {
+        "pregunta": "¿Cuál de estas relaciones no es contemplada por la circunstancia mixta de parentesco del artículo 23 del Código Penal?",
+        "opciones": [
+            "Ser cónyuge legítimo del agraviado.",
+            "Haber sido el agraviado cónyuge o persona que esté o haya estado ligado de forma estable por análoga relación de afectividad.",
+            "Ser el agraviado cónyuge o persona que esté ligado de forma estable por análoga relación de afectividad.",
+            "Las tres situaciones anteriores están contempladas por el artículo 23 del Código Penal."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 23 CP Es circunstancia que puede atenuar o agravar la responsabilidad, según la naturaleza, los motivos y los efectos del delito, ser o haber sido el agraviado cónyuge o persona que esté o haya estado ligada de forma estable por análoga relación de afectividad, o ser ascendiente, descendiente o hermano por naturaleza o adopción del ofensor o de su cónyuge o conviviente."
+    },
+    {
+        "pregunta": "El Código Penal considera punible alguna de las siguientes formas de resolución manifiesta:",
+        "opciones": [
+            "Decisión.",
+            "Conspiración.",
+            "Planificación.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 17 CP 1. La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo. 2. La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a participar en él. 3. La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley. NOTA: La decisión y planificación forman parte de la fase interna. La fase interna es por sí sola irrelevante, el derecho penal interviene a partir de la manifestación de la voluntad."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de estos delitos es susceptible de ser cometido por imprudencia?",
+        "opciones": [
+            "Abandono de familia.",
+            "Receptación.",
+            "Desórdenes públicos.",
+            "Ninguno de los tres anteriores."
+        ],
+        "correcta": 3,
+        "explicacion": "En la norma penal se prevén los siguientes delitos imprudentes:"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Las acciones u omisiones imprudentes:",
+        "opciones": [
+            "Se castigarán con la pena inferior en un grado a la señalada por la Ley para el delito doloso.",
+            "Podrán ser castigadas con la pena inferior en uno o dos grados a la señalada por la Ley por el delito doloso.",
+            "Se castigarán con la pena de seis meses a tres años de prisión, salvo que la pena prevista para el delito doloso sea igual o superior a aquélla, en cuyo caso los Tribunales aplicarán la inmediata inferior a esta última en el grado que estimen conveniente.",
+            "Sólo se castigarán cuando expresamente lo disponga la Ley."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 12 CP Las acciones u omisiones imprudentes sólo se castigarán cuando expresamente lo disponga la Ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de estos delitos no es susceptible de ser cometido por imprudencia profesional?",
+        "opciones": [
+            "Homicidio.",
+            "Omisión del deber de socorro.",
+            "Lesiones.",
+            "Aborto."
+        ],
+        "correcta": 1,
+        "explicacion": "Delitos susceptibles de ser cometidos por imprudencia profesional: homicidio (art 142CP), aborto ( art 146CP) y lesiones (art 152 CP)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Cuál de las siguientes circunstancias no puede apreciarse como eximente?",
+        "opciones": [
+            "Miedo insuperable.",
+            "Reparación del daño.",
+            "Cumplimiento de un deber.",
+            "Alteración de la percepción."
+        ],
+        "correcta": 1,
+        "explicacion": "La reparación del daño (con anterioridad a la celebración del juicio oral) es una circunstancia atenuante."
+    },
+    {
+        "pregunta": "De los siguientes, indique cuál puede ser circunstancia atenuante según el Código Penal:",
+        "opciones": [
+            "La obcecación.",
+            "La actuación debido a grave adicción a sustancias pscotrópicas.",
+            "La a y b son válidas.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior, cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior. 3ª La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante. 4ª La de haber procedido el culpable, antes de conocer que el procedimiento judicial se dirige contra él, a confesar la infracción a las autoridades. 5ª La de haber procedido el culpable a reparar el daño ocasionado a la víctima, o disminuir sus efectos, en cualquier momento del procedimiento y con anterioridad a la celebración del acto del juicio oral. 6ª La dilación extraordinaria e indebida en la tramitación del procedimiento, siempre que no sea atribuible al propio inculpado y que no guarde proporción con la complejidad de la causa. 7ª Cualquier otra circunstancia de análoga significación que las anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La apología resulta punible:",
+        "opciones": [
+            "La respuesta c) y d) son correctas.",
+            "Nunca resulta punible por ser contraria a la libertad de expresión consagrada en el artículo 20 de la Constitución Española.",
+            "Sólo será delictiva, como forma de provocación, si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito.",
+            "Será punible siempre que se realice la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción."
+    },
+    {
+        "pregunta": "¿Qué requisitos exige el ap. 5.º del art. 20 del Código Penal para que el que obre en defensa de la persona o derechos propios o ajenos quede exento de responsabilidad criminal?",
+        "opciones": [
+            "Agresión ilegítima, necesidad racional del medio empleado para impedirla o repelerla y que el defensor no tenga, por su oficio o cargo, obligación de sacrificarse.",
+            "Las anteriores a excepción del último.",
+            "Lo señalado en la letra a), a excepción del último y añadiendo la falta de provocación insuficiente por parte del defensor.",
+            "El apartado 5 del art. 20 CP no se refiere a la legítima defensa."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20 CP Están exentos de responsabilidad criminal: (...) 5º El que, en estado de necesidad, para evitar un mal propio o ajeno lesione un bien jurídico de otra persona o infrinja un deber, siempre que concurran los siguientes requisitos: 1. Primero. Que el mal causado no sea mayor que el que se trate de evitar. 2. Segundo. Que la situación de necesidad no haya sido provocada intencionadamente por el sujeto. 3. Tercero. Que el necesitado no tenga, por su oficio o cargo, obligación de sacrificarse."
+    },
+    {
+        "pregunta": "¿Qué dispone el apartado 1 del art.14 del Código Penal?",
+        "opciones": [
+            "El error invencible sobre un hecho constitutivo de la infracción penal, excluye la responsabilidad criminal. Si el error fuera vencible, se aplicará la pena inferior en uno o dos grados.",
+            "El error sobre un hecho que cualifique la infracción o sobre una circunstancia agravante, impedirá su apreciación.",
+            "El error invencible sobre un hecho constitutivo de la infracción penal excluye la responsabilidad criminal. Si el error, atendidas las circunstancias del hecho y las personales del autor, fuera vencible, la infracción será castigada, en su caso, como imprudente.",
+            "El error invencible sobre la ilicitud del hecho constitutivo de la infracción penal excluye la responsabilidad criminal. Si el error fuera vencible, se aplicará la pena inferior en uno o dos grados."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 14 CP 1. El error invencible sobre un hecho constitutivo de la infracción penal excluye la responsabilidad criminal. Si el error, atendidas las circunstancias del hecho y las personales del autor, fuera vencible, la infracción será castigada, en su caso, como imprudente. 2. El error sobre un hecho que cualifique la infracción o sobre una circunstancia agravante, impedirá su apreciación. 3. El error invencible sobre la ilicitud del hecho constitutivo de la infracción penal excluye la responsabilidad criminal. Si el error fuera vencible, se aplicará la pena inferior en uno o dos grados."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Hay reincidencia cuando:",
+        "opciones": [
+            "Cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo capítulo del CP, siempre que sea de la misma naturaleza, no computándose a estos efectos los antecedentes penales cancelados o que debieran serlo.",
+            "Cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título del CP, siempre que sea de la misma naturaleza, no computándose a estos efectos los antecedentes penales cancelados o que debieran serlo.",
+            "Cuando el culpable hubiera cometido tres o más delitos de los comprendidos en un mismo capítulo en un plazo no superior a cinco años y haya sido condenado por ello, no computándose a estos efectos los antecedentes penales cancelados o que debieran serlo.",
+            "Cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título del CP, no computándose a estos efectos los antecedentes penales cancelados o que debieran serlo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: (...) 8ª Ser reincidente. Hay reincidencia cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título de este Código, siempre que sea de la misma naturaleza. A los efectos de este número no se computarán los antecedentes penales cancelados o que debieran serlo, ni los que correspondan a delitos leves. Las condenas firmes de jueces o tribunales impuestas en otros Estados de la Unión Europea producirán los efectos de reincidencia salvo que el antecedente penal haya sido cancelado o pudiera serlo con arreglo al Derecho español."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La atenuante de confesión de la infracción a las autoridades:",
+        "opciones": [
+            "Requiere que la confesión se deba a impulsos de arrepentimiento espontáneo.",
+            "Requiere que la confesión se produzca antes de conocer el culpable que el procedimiento se dirige contra él.",
+            "Requiere que la confesión se deba a impulsos de arrepentimiento espontáneo y que se produzca antes de conocer el culpable que el procedimiento se dirige contra él.",
+            "Es comunicable a los copartícipes del delito."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior, cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior. 3ª La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante. 4ª La de haber procedido el culpable, antes de conocer que el procedimiento judicial se dirige contra él, a confesar la infracción a las autoridades. 5ª La de haber procedido el culpable a reparar el daño ocasionado a la víctima, o disminuir sus efectos, en cualquier momento del procedimiento y con anterioridad a la celebración del acto del juicio oral. 6ª La dilación extraordinaria e indebida en la tramitación del procedimiento, siempre que no sea atribuible al propio inculpado y que no guarde proporción con la complejidad de la causa. 7ª Cualquier otra circunstancia de análoga significación que las anteriores."
+    },
+    {
+        "pregunta": "En Derecho Penal, ¿Cuál de las siguientes circunstancias es comunicable?",
+        "opciones": [
+            "Abuso de superioridad.",
+            "Confesión a las autoridades.",
+            "Reincidencia.",
+            "Parentesco."
+        ],
+        "correcta": 0,
+        "explicacion": "Comunicabilidad de las circunstancias Como elementos del delito, aunque accidentales, se plantea la cuestión de si una circunstancia se extiende a todos, o sólo a alguno de los agentes intervinientes; es decir, por ejemplo, si el autor lleva disfraz, ¿ha de extenderse la agravación a quien no va disfrazado? Estamos ante una cuestión propia del sub‐principio de culpabilidad, que exige la personalidad de las sanciones. En virtud de dicho enunciado, cada agente ha de responder por aquello que es propio suyo, sin que pueda extenderse a uno lo que hace otro. Sin embargo, esta materia no excluye que algunos elementos se extiendan a todos los intervinientes, siempre que se den ciertas garantías derivadas también del sub‐ principio de culpabilidad, en concreto, que sea conocida. Es lo que sucede cuando la circunstancia –sea atenuante, sea agravante– pertenece al hecho, se refiere a los medios de comisión, en cuyo caso se exige para que se comunique a todos el que sea por todos conocida (art. 65.2). En cambio, no admiten excepción a la personalidad de la responsabilidad las circunstancias que radican en disposiciones subjetivas (móviles bajos, por ejemplo), en relaciones subjetivas (parentesco, por ejemplo), o en general cualquier causa personal (reincidencia, confesión, etc). La responsabilidad se restringe entonces a la personalidad, es decir, sólo se aplica a aquellos en quienes concurre (art. 65.1)."
+    },
+    {
+        "pregunta": "¿Cuál de las siguientes proposiciones viene establecida en el artículo 31 del Código Penal?",
+        "opciones": [
+            "El orden de responsabilidades en los delitos cometidos utilizando medios o soportes de difusión mecánicos.",
+            "Que los que actúen como administradores de hecho o de derecho de una persona jurídica responderán personalmente, aunque no concurran en ellos las condiciones, cualidades o relaciones que la correspondiente figura de delito requiera para ser sujeto activo, si tales circunstancias se dan en la entidad.",
+            "Que cuando los hechos delictivos se atribuyeran a personas jurídicas, se impondrá la pena señalada a los administradores o encargados del servicio que hayan sido responsables de los mismos y a quienes conociéndolos y pudiendo remediarlo, no hubieren adoptado medidas para ello.",
+            "Que en los delitos que se cometan utilizando medios o soportes de difusión mecánicos no responderán criminalmente ni los cómplices ni quienes los hubieren favorecido personal o realmente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 31 CP El que actúe como administrador de hecho o de derecho de una persona jurídica, o en nombre o representación legal o voluntaria de otro, responderá personalmente, aunque no concurran en él las condiciones, cualidades o relaciones que la correspondiente figura de delito o falta requiera para poder ser sujeto activo del mismo, si tales circunstancias se dan en la entidad o persona en cuyo nombre o representación obre."
+    },
+    {
+        "pregunta": "Conforme al artículo 13.4 del Código Penal:",
+        "opciones": [
+            "Son faltas las infracciones que la ley castiga con pena leve.",
+            "Cuando la pena, por su extensión, pueda considerarse como leve y como menos grave, el delito se considerará, en todo caso, como leve.",
+            "Cuando la pena, por su extensión, pueda incluirse a la vez entre las mencionadas en los dos primeros números del artículo (grave y menos grave), el delito se considerará, en todo caso, como menos grave.",
+            "La respuestas b y c son correctas ambas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 13 CP 1. Son delitos graves las infracciones que la Ley castiga con pena grave. 2. Son delitos menos graves las infracciones que la Ley castiga con pena menos grave. 3. Son delitos leves las infracciones que la ley castiga con pena leve. 4. Cuando la pena, por su extensión, pueda incluirse a la vez entre las mencionadas en los dos primeros números de este artículo, el delito se considerará, en todo caso, como grave. Cuando la pena, por su extensión, pueda considerarse como leve y como menos grave, el delito se considerará, en todo caso, como leve."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La responsabilidad penal de las personas jurídicas:",
+        "opciones": [
+            "No se contempla en el Código Penal pues no se les puede imponer pena privativa de libertad, la más importante de entre las penas.",
+            "Es objeto de regulación por el artículo 31 bis del Código Penal, introducido por LO 5/2010, de 22 de junio, que sólo contempla la imposición de medidas de seguridad.",
+            "Es objeto de regulación por el artículo 31 bis a 31 quinquies del Código Penal, introducido por LO 1/2015, de 30 de marzo.",
+            "Se introdujo en la redacción original de Código Penal de 1995 ya ha sido objeto de ulteriores modificaciones, la última por LO 1/2015, de 30 de marzo."
+        ],
+        "correcta": 2,
+        "explicacion": "Las personas jurídicas sólo son responsables penalmente si se cumplen los requisitos del art. 31 bis CP. La responsabilidad de la persona jurídica es autónoma de la de la persona física que comete el delito. Una empresa matriz puede ser responsable penalmente de los delitos cometidos en su filial."
+    },
+    {
+        "pregunta": "En el Código Penal, los actos preparatorios:",
+        "opciones": [
+            "Siempre son impunes.",
+            "Generalmente son impunes, salvo que estén especialmente sancionados en la parte especial de forma específica.",
+            "Son castigados con la pena inferior en un grado a la prevista por la Ley para la tentativa del delito de que se trate.",
+            "Ninguna de las tres aseveraciones anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Actos preparatorios En esta fase el autor del delito se provee de los materiales o conocimientos necesarios para llevar a cabo su delito. Tienen tal consideración los siguientes: conspiración, proposición y provocación. Según el articulo 3.° del Código penal, es consustancial a la tentativa un principio de ejecución. De ahí que la actual doctrina española entienda que los actos preparatorios son por regla general impunes, salvo que hayan sido elevados por la propia ley al rango de delitos sui generis"
+    },
+    {
+        "pregunta": "Indique qué circunstancia se contempla en el artículo 22.8.º del Código Penal:",
+        "opciones": [
+            "La circunstancia agravante de abuso de superioridad.",
+            "La circunstancia agravante de alevosía.",
+            "La circunstancia agravante de reincidencia.",
+            "La eximente incompleta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: (...) 8ª Ser reincidente. Hay reincidencia cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título de este Código, siempre que sea de la misma naturaleza. A los efectos de este número no se computarán los antecedentes penales cancelados o que debieran serlo, ni los que correspondan a delitos leves. Las condenas firmes de jueces o tribunales impuestas en otros Estados de la Unión Europea producirán los efectos de reincidencia salvo que el antecedente penal haya sido cancelado o pudiera serlo con arreglo al Derecho español."
+    },
+    {
+        "pregunta": "Indique qué circunstancia modificativa de la responsabilidad criminal se contiene en el artículo 23 del Código Penal:",
+        "opciones": [
+            "La agravante de abuso de confianza.",
+            "La agravante de alevosía.",
+            "La agravante de parentesco.",
+            "La circunstancia mixta de parentesco."
+        ],
+        "correcta": 3,
+        "explicacion": "El Capítulo V del Título I del Código Penal se rubrica “De la circunstancia mixta de parentesco” y está integrado por el artículo 23. Artículo 23 CP Es circunstancia que puede atenuar o agravar la responsabilidad, según la naturaleza, los motivos y los efectos del delito, ser o haber sido el agraviado cónyuge o persona que esté o haya estado ligada de forma estable por análoga relación de afectividad, o ser ascendiente, descendiente o hermano por naturaleza o adopción del ofensor o de su cónyuge o conviviente."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Señale la definición correcta de las siguientes:",
+        "opciones": [
+            "La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito.",
+            "La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo.",
+            "La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a ejecutarlo.",
+            "Todas las definiciones anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 17 CP 1. La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo. 2. La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a participar en él. 3. La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley. Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción."
+    },
+    {
+        "pregunta": "Las sustancias a las que se refiere el artículo 21. 2.º del Código Penal son:",
+        "opciones": [
+            "Bebidas alcohólicas, drogas tóxicas, estupefacientes, sustancias psicotrópicas u otras que produzcan efectos análogos.",
+            "Bebidas alcohólicas y drogas tóxicas.",
+            "Drogas tóxicas, estupefacientes y sustancias psicotrópicas.",
+            "Bebidas alcohólicas, drogas tóxicas, estupefacientes y sustancias psicotrópicas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior, cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior:"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Los grados de ejecución del delito son:",
+        "opciones": [
+            "Provocación, tentativa y consumación.",
+            "Proposición y resolución.",
+            "Decisión, provocación y consumación.",
+            "Tentativa y consumación."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 15 CP Son punibles el delito consumado y la tentativa de delito."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La circunstancia atenuante de dilaciones indebidas:",
+        "opciones": [
+            "Está expresamente recogida como analógica en el artículo 21. 7.º del CP.",
+            "Es inadmisible como circunstancia atenuante de la responsabilidad criminal. (Acuerdo del Pleno no jurisdiccional la Sala Segunda del Tribunal Supremo de 21 de mayo de 1999).",
+            "Se encuentra regulada en el articulo 21.6 de acuerdo con la reforma operada por la LO 5/2010.",
+            "Sólo puede dar lugar a una indemnización por anómalo funcionamiento de la Administración de Justicia."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior, cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior. 3ª La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante. 4ª La de haber procedido el culpable, antes de conocer que el procedimiento judicial se dirige contra él, a confesar la infracción a las autoridades. 5ª La de haber procedido el culpable a reparar el daño ocasionado a la víctima, o disminuir sus efectos, en cualquier momento del procedimiento y con anterioridad a la celebración del acto del juicio oral. 6ª La dilación extraordinaria e indebida en la tramitación del procedimiento, siempre que no sea atribuible al propio inculpado y que no guarde proporción con la complejidad de la causa. 7ª Cualquier otra circunstancia de análoga significación que las anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La acción u omisión inicial generadora del delito imprudente ha de ser necesariamente:",
+        "opciones": [
+            "Lícita.",
+            "Ilícita.",
+            "Consciente y voluntaria.",
+            "No es un elemento necesario para integrar una infracción penal imprudente."
+        ],
+        "correcta": 2,
+        "explicacion": "El artículo 12 del actual Código Penal de nuestro país prevé que \"las acciones u omisiones imprudentes sólo se castigarán cuando expresamente lo disponga la Ley\". Por ello, una imprudencia será punible si está integrada por estos elementos: - Una conducta humana consistente en una acción o en una omisión no dolosa (que no sea malintencionada), consciente y voluntaria. - Que dicha conducta infrinja un deber de cuidado. Esto se refiere a que se podía haber previsto las consecuencias de la conducta (el resultado lesivo) pero no se ha previsto por el descuido del usuario. - Que la conducta produzca un daño a un tercero en un bien de tipo jurídico que se encuentre protegido por la Ley penal. - La existencia de una relación causal entre el daño y la acción u omisión voluntaria."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo existe:",
+        "opciones": [
+            "Proposición.",
+            "Conspiración.",
+            "Provocación.",
+            "Deliberación."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 17 CP 1. La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo. 2. La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a participar en él. 3. La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Son actos preparatorios:",
+        "opciones": [
+            "Conspiración y provocación.",
+            "Provocación y tentativa.",
+            "Tentativa y consumación.",
+            "Ninguna respuesta es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Actos preparatorios En esta fase el autor del delito se provee de los materiales o conocimientos necesarios para llevar a cabo su delito. Tienen tal consideración los siguientes: conspiración, proposición y provocación."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Cuando concurran más de dos circunstancias agravantes y no concurra atenuante alguna:",
+        "opciones": [
+            "Los Jueces y Tribunales podrán aplicar la pena superior en grado a la establecida por la ley, en su mitad inferior.",
+            "Los Jueces y Tribunales aplicarán la pena superior en grado a la establecida por la ley, en su mitad inferior.",
+            "Los Jueces y Tribunales podrán aplicar la pena superior en grado a la establecida por la ley, en toda su extensión.",
+            "Los Jueces y Tribunales aplicarán la pena prevista por la Ley para el delito de que se trate, en su mitad superior."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 66 CP. Aplicación de las penas. 1. En la aplicación de la pena, tratándose de delitos dolosos, los jueces o tribunales observarán, según haya o no circunstancias atenuantes o agravantes, las siguientes reglas: 1.ª Cuando concurra sólo una circunstancia atenuante, aplicarán la pena en la mitad inferior de la que fije la ley para el delito. 2.ª Cuando concurran dos o más circunstancias atenuantes, o una o varias muy cualificadas, y no concurra agravante alguna, aplicarán la pena inferior en uno o dos grados a la establecida por la ley, atendidos el número y la entidad de dichas circunstancias atenuantes. 3.ª Cuando concurra sólo una o dos circunstancias agravantes, aplicarán la pena en la mitad superior de la que fije la ley para el delito. 4.ª Cuando concurran más de dos circunstancias agravantes y no concurra atenuante alguna, podrán aplicar la pena superior en grado a la establecida por la ley, en su mitad inferior. 5.ª Cuando concurra la circunstancia agravante de reincidencia con la cualificación de que el culpable al delinquir hubiera sido condenado ejecutoriamente, al menos, por tres delitos comprendidos en el mismo título de este Código, siempre que sean de la misma naturaleza, podrán aplicar la pena superior en grado a la prevista por la ley para el delito de que se trate, teniendo en cuenta las condenas precedentes, así como la gravedad del nuevo delito cometido. A los efectos de esta regla no se computarán los antecedentes penales cancelados o que debieran serlo. 6.ª Cuando no concurran atenuantes ni agravantes aplicarán la pena establecida por la ley para el delito cometido, en la extensión que estimen adecuada, en atención a las circunstancias personales del delincuente y a la mayor o menor gravedad del hecho. 7.ª Cuando concurran atenuantes y agravantes, las valorarán y compensarán racionalmente para la individualización de la pena. En el caso de persistir un fundamento cualificado de atenuación aplicarán la pena inferior en grado. Si se mantiene un fundamento cualificado de agravación, aplicarán la pena en su mitad superior. 8.ª Cuando los jueces o tribunales apliquen la pena inferior en más de un grado podrán hacerlo en toda su extensión. 2. En los delitos leves y en los delitos imprudentes, los jueces o tribunales aplicarán las penas a su prudente arbitrio, sin sujetarse a las reglas prescritas en el apartado anterior."
+    },
+    {
+        "pregunta": "¿Qué circunstancia agravante se ha introducido en el catálogo del artículo 22 del Código Penal por la lo 1/2015?",
+        "opciones": [
+            "Cometer el delito por razones de género.",
+            "Cometer el delito por discriminación referente a las creencias de la víctima.",
+            "Cometer el delito por la orientación sexual de la víctima.",
+            "Ninguna de las respuestas es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "La Ley Orgánica 1/2015, de 30 de marzo, por la que se modifica la Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal Dicha ley introduce algunas modificaciones para reforzar la protección específica que actualmente dispensa el Código Penal a las víctimas de violencia de género y de trata de seres humanos: 1. Incorpora el género como motivo de discriminación en la agravante de comisión del delito. 2. Introduce un régimen único de suspensión de la ejecución de las penas privativas de libertad, que en el caso de las impuestas a condenados por delitos relacionados con la violencia de género implicará que se impondrán siempre las siguientes prohibiciones y deberes: prohibición de aproximación a la víctima, prohibición de residencia en un lugar determinado y deber de participar en programas de igualdad de trato y no discriminación 3. Con carácter general, la suspensión de la ejecución de la pena privativa de libertad puede condicionarse al pago de una multa. No obstante, en los delitos relacionados con la violencia de género se garantiza que la imposición de la multa no afecte negativamente a los intereses económicos de la víctima 4. Con carácter general, las penas de prisión de más de un año impuestas a un ciudadano extranjero serán sustituidas por su expulsión del territorio español. 5. Efectúa una amplia revisión de la regulación del decomiso. 6. Amplía el ámbito de la medida de libertad vigilada. 7. Elimina las infracciones penales constitutivas de falta y adecúa los tipos penales que implica esta eliminación."
+    },
+    {
+        "pregunta": "Indique qué circunstancia modificativa de la responsabilidad criminal se contiene en el artículo 21.1.º del Código Penal:",
+        "opciones": [
+            "La agravante de disfraz.",
+            "La eximente de anomalía o alteración psíquica.",
+            "La atenuante de grave adicción a las sustancias mencionadas en el número 2 del artículo 20.",
+            "Las eximentes incompletas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior (eximentes), cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior. 3ª La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante. 4ª La de haber procedido el culpable, antes de conocer que el procedimiento judicial se dirige contra él, a confesar la infracción a las autoridades. 5ª La de haber procedido el culpable a reparar el daño ocasionado a la víctima, o disminuir sus efectos, en cualquier momento del procedimiento y con anterioridad a la celebración del acto del juicio oral. 6ª La dilación extraordinaria e indebida en la tramitación del procedimiento, siempre que no sea atribuible al propio inculpado y que no guarde proporción con la complejidad de la causa. 7ª Cualquier otra circunstancia de análoga significación que las anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La imprudencia leve puede ser constitutiva de:",
+        "opciones": [
+            "Delito menos grave o delito leve.",
+            "Sólo de delito leve.",
+            "Sólo de delito menos grave.",
+            "Es impune. Sólo puede ser constitutiva de infracción administrativa."
+        ],
+        "correcta": 3,
+        "explicacion": "La imprudencia de carácter leve queda despenalizada y fuera del ámbito del derecho penal, pues se considera que una conducta que supone una escasa afectación al bien jurídico protegido no es merecedora de reproche penal, en virtud de los principios de última ratio e intervención mínima. Es por ello que tales imprudencias se derivan a la vía civil, pudiendo constituir una infracción administrativa."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La apología es una modalidad delictiva directamente relacionada con:",
+        "opciones": [
+            "La proposición.",
+            "La conspiración.",
+            "La provocación.",
+            "Todas las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Señale de las siguientes circunstancias cuál NO es agravante de la responsabilidad penal:",
+        "opciones": [
+            "Abuso de confianza.",
+            "Reincidencia.",
+            "Obcecación.",
+            "Motivos antisemitas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: 1ª Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas empleando en la ejecución medios, modos o formas que tiendan directa o especialmente a asegurarla, sin el riesgo que para su persona pudiera proceder de la defensa por parte del ofendido. 2ª Ejecutar el hecho mediante disfraz, con abuso de superioridad o aprovechando las circunstancias de lugar, tiempo o auxilio de otras personas que debiliten la defensa del ofendido o faciliten la impunidad del delincuente. 3ª Ejecutar el hecho mediante precio, recompensa o promesa. 4ª Cometer el delito por motivos racistas, antisemitas u otra clase de discriminación referente a la ideología, religión o creencias de la víctima, la etnia, raza o nación a la que pertenezca, su sexo, orientación o identidad sexual, razones de género, la enfermedad que padezca o su discapacidad. 5ª Aumentar deliberada e inhumanamente el sufrimiento de la víctima, causando a ésta padecimientos innecesarios para la ejecución del delito. 6ª Obrar con abuso de confianza. 7ª Prevalerse del carácter público que tenga el culpable. 8ª Ser reincidente. Hay reincidencia cuando, al delinquir, el culpable haya sido condenado ejecutoriamente por un delito comprendido en el mismo título de este Código, siempre que sea de la misma naturaleza. A los efectos de este número no se computarán los antecedentes penales cancelados o que debieran serlo, ni los que correspondan a delitos leves. Las condenas firmes de jueces o tribunales impuestas en otros Estados de la Unión Europea producirán los efectos de reincidencia salvo que el antecedente penal haya sido cancelado o pudiera serlo con arreglo al Derecho español. NOTA: La obcecación es un atenuante"
+    },
+    {
+        "pregunta": "Indique qué circunstancia se contempla en el artículo 22.1.º del Código Penal:",
+        "opciones": [
+            "La circunstancia agravante de abuso de superioridad.",
+            "La circunstancia agravante de alevosía.",
+            "La circunstancia agravante de disfraz.",
+            "La eximente incompleta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: 1ª Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas empleando en la ejecución medios, modos o formas que tiendan directa o especialmente a asegurarla, sin el riesgo que para su persona pudiera proceder de la defensa por parte del ofendido. (...)"
+    },
+    {
+        "pregunta": "Indique qué circunstancia modificativa de la responsabilidad criminal se contiene en el artículo 21.7.º del Código Penal:",
+        "opciones": [
+            "La agravante de alevosía.",
+            "La atenuante de grave adicción a drogas tóxicas, estupefacientes, sustancias psicotrópicas, bebidas alcohólicas u otras que produzcan efectos análogos.",
+            "Las atenuantes analógicas.",
+            "La circunstancia atenuante de reparación o disminución del daño."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior, cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior. 3ª La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante. 4ª La de haber procedido el culpable, antes de conocer que el procedimiento judicial se dirige contra él, a confesar la infracción a las autoridades. 5ª La de haber procedido el culpable a reparar el daño ocasionado a la víctima, o disminuir sus efectos, en cualquier momento del procedimiento y con anterioridad a la celebración del acto del juicio oral. 6ª La dilación extraordinaria e indebida en la tramitación del procedimiento, siempre que no sea atribuible al propio inculpado y que no guarde proporción con la complejidad de la causa. 7ª Cualquier otra circunstancia de análoga significación que las anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Será castigado como infracción imprudente, en su caso:",
+        "opciones": [
+            "El error invencible sobre un hecho constitutivo de infracción penal.",
+            "El error vencible sobre un hecho constitutivo de infracción penal.",
+            "El delito imposible.",
+            "La tentativa inidónea."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 14 CP 1. El error invencible sobre un hecho constitutivo de la infracción penal excluye la responsabilidad criminal. Si el error, atendidas las circunstancias del hecho y las personales del autor, fuera vencible, la infracción será castigada, en su caso, como imprudente. 2. El error sobre un hecho que cualifique la infracción o sobre una circunstancia agravante, impedirá su apreciación. 3. El error invencible sobre la ilicitud del hecho constitutivo de la infracción penal excluye la responsabilidad criminal. Si el error fuera vencible, se aplicará la pena inferior en uno o dos grados."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Qué puede entenderse por legítima defensa putativa?",
+        "opciones": [
+            "En la que incurre un extraño al intervenir en una riña trabada entre otros.",
+            "La representación mental en el delincuente de la defensa efectiva que pueda oponer el agredido, y que le induce a asegurar la ejecución de modo alevoso.",
+            "La existencia de un error en el sujeto sobre la realidad de la agresión, y que recibe el tratamiento de error conforme al art. 14.",
+            "Designa la fase interna de ideación, deliberación y ejecución, de la legítima defensa."
+        ],
+        "correcta": 2,
+        "explicacion": "Por defensa putativa se entiende la acción realizada por el autor en la falsa creencia de encontrarse ante una situación de legítima defensa, ejerciendo una acción frente a un ataque inexistente, frente a quien no era su agresor, o frente a un ataque autorizado, o que ya no existe. Artículo 14 CP 1. El error invencible sobre un hecho constitutivo de la infracción penal excluye la responsabilidad criminal. Si el error, atendidas las circunstancias del hecho y las personales del autor, fuera vencible, la infracción será castigada, en su caso, como imprudente. 2. El error sobre un hecho que cualifique la infracción o sobre una circunstancia agravante, impedirá su apreciación. 3. El error invencible sobre la ilicitud del hecho constitutivo de la infracción penal excluye la responsabilidad criminal. Si el error fuera vencible, se aplicará la pena inferior en uno o dos grados."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito, existe:",
+        "opciones": [
+            "Proposición.",
+            "Conspiración.",
+            "Provocación.",
+            "Deliberación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 18 CP 1. La provocación existe cuando directamente se incita por medio de la imprenta, la radiodifusión o cualquier otro medio de eficacia semejante, que facilite la publicidad, o ante una concurrencia de personas, a la perpetración de un delito. Es apología, a los efectos de este Código, la exposición, ante una concurrencia de personas o por cualquier medio de difusión, de ideas o doctrinas que ensalcen el crimen o enaltezcan a su autor. La apología sólo será delictiva como forma de provocación y si por su naturaleza y circunstancias constituye una incitación directa a cometer un delito. 2. La provocación se castigará exclusivamente en los casos en que la Ley así lo prevea. Si a la provocación hubiese seguido la perpetración del delito, se castigará como inducción."
+    },
+    {
+        "pregunta": "Son circunstancias modificativas de la responsabilidad criminal, según el Código Penal:",
+        "opciones": [
+            "Las atenuantes y agravantes contenidas en los artículos 21 y 22 del CP.",
+            "Las atenuantes del artículo 22 del CP.",
+            "Las agravantes del artículo 22 del CP.",
+            "Las atenuantes del artículo 21, las agravantes del artículo 22 y la circunstancia mixta de parentesco del artículo 23 del CP."
+        ],
+        "correcta": 3,
+        "explicacion": "Circunstancia eximente: impide la aplicación de la pena que en principio debería corresponder. (art 19 y 20 CP) Circunstancia atenuante: rebaja la aplicación de la pena que en principio debería corresponder. (art 21 CP) Circunstancia agravante: aumenta la aplicación de la pena que en principio debería corresponder. (art 22 CP) Circunstancia mixta: atenúa o agrava la aplicación de la pena que en principio debería corresponder. (art 23 CP)"
+    },
+    {
+        "pregunta": "Las circunstancias agravantes en el Código Penal:",
+        "opciones": [
+            "Se regulan con carácter genérico en el artículo 22 y parcialmente en el artículo 23 bajo el sistema de «numerus clausus».",
+            "Se regulan de manera especial en cada tipo delictivo.",
+            "Se regulan en el artículo 22, pero se admite la apreciación de circunstancias agravantes analógicas a las de este artículo.",
+            "Son de interpretación extensiva."
+        ],
+        "correcta": 0,
+        "explicacion": "El Artículo 22 del CP regula las circunstancias agravantes. El Artículo 23 nos dice que la circunstancia mixta de parentesco puede, según ciertos requisitos (naturaleza, motivos y efectos del delito: de ahí el que sea un \"numerus clausus\") suponer un agravante."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La atenuante de obrar por motivos morales, altruistas o patrióticos:",
+        "opciones": [
+            "Está expresamente regulada como atenuante genérica en el artículo 21.4.ª del vigente CP.",
+            "No está expresamente recogida como tal por el vigente CP, pero si estos motivos produjeron arrebato, obcecación u otro estado pasional de semejante entidad, puede ser reconducida como analógica a la atenuante del artículo 21.3.ª del CP.",
+            "Al no estar recogida expresamente en el CP no es susceptible de producir la atenuación de la pena en ningún supuesto.",
+            "Ninguna de las tres aseveraciones anteriores es cierta."
+        ],
+        "correcta": 1,
+        "explicacion": "A pesar de ser una cuestión discutida con la nueva regulación, en la medida en que el actual CP ya no recoge la atenuante de obrar por motivos morales, altruistas o patrióticos de notoria importancia, podría justificarse la atenuación de acuerdo al art. 21.7.º (“Cualquier otra circunstancia de análoga significación que las anteriores”), argumentando que la actuación por motivos altruistas y pasionales podría encajar de forma análoga en el art. 21.3.º (“La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante”)."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. ¿Qué se entiende por estado de necesidad objetivo?",
+        "opciones": [
+            "Aquél en que el conflicto se plantea entre bienes de distinto valor, sacrificando el menor en beneficio del otro.",
+            "El contrapuesto a estado de necesidad putativo.",
+            "Aquél que propiamente constituye causa de justificación.",
+            "La a y la c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Se consideran causas de justificación, y por tanto excluyen la antijuricidad de la acción: - Legítima defensa - Estado de necesidad - Cumplimiento del deber"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La circunstancia atenuante de reparación del daño exige:",
+        "opciones": [
+            "Que la reparación a la víctima sea total.",
+            "Que se reparen los daños causados a la víctima o se disminuyan sus efectos en cualquier momento del procedimiento y con anterioridad a la sentencia.",
+            "Que se reparen los daños causados a la víctima o se disminuyan sus efectos en cualquier momento del procedimiento y con anterioridad a la celebración de juicio oral.",
+            "Ninguna de las anteriores aseveraciones es cierta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 21 CP Son circunstancias atenuantes: 1ª Las causas expresadas en el capítulo anterior, cuando no concurrieren todos los requisitos necesarios para eximir de responsabilidad en sus respectivos casos. 2ª La de actuar el culpable a causa de su grave adicción a las sustancias mencionadas en el número 2.º del artículo anterior. 3ª La de obrar por causas o estímulos tan poderosos que hayan producido arrebato, obcecación u otro estado pasional de entidad semejante. 4ª La de haber procedido el culpable, antes de conocer que el procedimiento judicial se dirige contra él, a confesar la infracción a las autoridades. 5ª La de haber procedido el culpable a reparar el daño ocasionado a la víctima, o disminuir sus efectos, en cualquier momento del procedimiento y con anterioridad a la celebración del acto del juicio oral. 6ª La dilación extraordinaria e indebida en la tramitación del procedimiento, siempre que no sea atribuible al propio inculpado y que no guarde proporción con la complejidad de la causa. 7ª Cualquier otra circunstancia de análoga significación que las anteriores."
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. La alevosía es aplicable:",
+        "opciones": [
+            "En los delitos contra las relaciones familiares.",
+            "En los delitos contra el patrimonio y el orden socioeconómico.",
+            "En los delitos contra las personas.",
+            "En los delitos contra el patrimonio y en los delitos contra las personas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 22 CP Son circunstancias agravantes: 1ª Ejecutar el hecho con alevosía. Hay alevosía cuando el culpable comete cualquiera de los delitos contra las personas empleando en la ejecución medios, modos o formas que tiendan directa o especialmente a asegurarla, sin el riesgo que para su persona pudiera proceder de la defensa por parte del ofendido. (...)"
+    },
+    {
+        "pregunta": "Ley Orgánica 10/1995, de 23 de noviembre, del Código Penal. Cuando el que ha resuelto cometer un delito invita a otra persona a ejecutarlo existe:",
+        "opciones": [
+            "Proposición.",
+            "Conspiración.",
+            "Provocación.",
+            "Deliberación."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17 CP 1. La conspiración existe cuando dos o más personas se conciertan para la ejecución de un delito y resuelven ejecutarlo. 2. La proposición existe cuando el que ha resuelto cometer un delito invita a otra u otras personas a participar en él. 3. La conspiración y la proposición para delinquir sólo se castigarán en los casos especialmente previstos en la ley."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

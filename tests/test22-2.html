@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "La LO 6/1984: Es una técnica de protección de los derechos fundamentales referentes a la libertad personal",
+        "opciones": [
+            "Procedimiento abreviado penal.",
+            "Procedimiento ordinario jurisdiccional.",
+            "Procedimiento de Habeas Corpus.",
+            "Procedimiento de libertad condicional."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Una de estas técnicas de protección de los derechos fundamentales –del más fundamental de todos ellos: el derecho a la libertad personal– es la institución del «Habeas Corpus»"
+    },
+    {
+        "pregunta": "De conformidad con el apartado segundo del artículo 520 de la Ley de Enjuiciamiento Criminal, toda persona detenida o presa será informada ________________, en un lenguaje _______________, en una lengua que comprenda y de forma _____________, de los hechos que se le atribuyan y las razones motivadoras de su ____________________, así como de los derechos que le asisten. Señale la opción que complete correctamente los espacio en blanco:",
+        "opciones": [
+            "Verbalmente; accesible; inmediata; detención.",
+            "Por escrito; sencillo o accesible; expresa; detención.",
+            "Verbalmente; sencillo; expresa; detención.",
+            "Por escrito; sencillo y accesible; inmediata; privación de libertad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 520. LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: (...)"
+    },
+    {
+        "pregunta": "De conformidad con los establecido en el artículo 492 de la LECrim, la Autoridad o agente de Policía judicial tendrá la obligación de detener: Señale la opción que no es correcta.",
+        "opciones": [
+            "Al que intentare cometer un delito en el momento de ir a cometerlo.",
+            "Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad Judicial.",
+            "Al que estuviere procesado por delito que no tenga señalada en el Código pena superior a la de prisión correccional.",
+            "Al delincuente in fraganti."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 492. LECrim La Autoridad o agente de Policía judicial tendrá obligación de detener: 1.º A cualquiera que se halle en alguno de los casos del artículo 490: 1.º Al que intentare cometer un delito en el momento de ir a cometerlo. 2.º Al delincuente in fraganti. 3.º Al que se fugare del establecimiento penal en que se halle extinguiendo condena. 4.º Al que se fugare de la cárcel en que estuviere esperando su traslación al establecimiento penal o lugar en que deba cumplir la condena que se le hubiese impuesto por sentencia firme. 5.º Al que se fugare al ser conducido al establecimiento o lugar mencionado en el número anterior. 6.º Al que se fugare estando detenido o preso por causa pendiente. 7.º Al procesado o condenado que estuviere en rebeldía. 2.º Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional. 3.º Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad judicial. Se exceptúa de lo dispuesto en el párrafo anterior al procesado que preste en el acto fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente. 4.º Al que estuviere en el caso del número anterior, aunque todavía no se hallase procesado, con tal que concurran las dos circunstancias siguientes: 1.ª Que la Autoridad o agente tenga motivos racionalmente bastantes para creer en la existencia de un hecho que presente los caracteres de delito. 2.ª Que los tenga también bastantes para creer que la persona a quien intente detener tuvo participación en él."
+    },
+    {
+        "pregunta": "Según lo estipulado en el artículo 1 del Real Decreto 769/1987, de 19 de junio, sobre regulación de la Policía Judicial, las funciones generales de policía judicial corresponden:",
+        "opciones": [
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado, cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento o aseguramiento de delincuentes.",
+            "A todos los miembros de las Fuerzas y Cuerpos de Seguridad, cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento o aseguramiento de delincuentes, con estricta sujeción al ámbito de sus respectivas competencias, y sin perjuicio de lo dispuesto en el artículo 283 de la Ley de Enjuiciamiento Criminal.",
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado y de las Comunidades Autónomas, cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento o aseguramiento de delincuentes.",
+            "A todos los miembros de las Fuerzas y Cuerpos de Seguridad, cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento o aseguramiento de delincuentes."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 769/1987, de 19 de junio, sobre regulación de la Policía Judicial"
+    },
+    {
+        "pregunta": "La detención ¿Qué le puede ocurrir al particular que detiene a un delincuente que intentare cometer un delito en el momento de ir a cometerlo si no pone al detenido en disposición policial o judicial de forma inmediata?",
+        "opciones": [
+            "No le ocurre nada, puesto que ha evitado la comisión de un delito.",
+            "Puede cometer un delito de secuestro regulado en el artículo 164 CP.",
+            "Puede cometer un delito de detención ilegal regulado en el artículo 165 CP.",
+            "Puede cometer un delito de detención ilegal regulado en el artículo 163.4 CP."
+        ],
+        "correcta": 3,
+        "explicacion": "El particular, como es obvio, no puede llevar a cabo las diligencias necesarias para la investigación de los hechos, por lo que deberá poner al detenido en disposición policial o judicial de forma inmediata. Como mucho podrá hacerlo hasta las 24 horas desde el momento de la detención. Si no lo hiciesen, estarán incurriendo en un delito de detención ilegal del Código Penal (artículo 163.4), castigado con pena de multa de 3 a 6 meses."
+    },
+    {
+        "pregunta": "De conformidad a lo estipulado en el artículo 553 de la Ley de Enjuiciamiento Criminal, los Agentes de policía podrán asimismo proceder de propia autoridad a la inmediata detención de las personas cuando:",
+        "opciones": [
+            "Haya mandamiento de prisión contra ellas.",
+            "Cuando sean sorprendidas en flagrante delito.",
+            "Cuando un delincuente, inmediatamente perseguido por los Agentes de la autoridad, se oculte o refugie en alguna casa.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 553. LECrim Los Agentes de policía podrán asimismo proceder de propia autoridad a la inmediata detención de las personas cuando haya mandamiento de prisión contra ellas, cuando sean sorprendidas en flagrante delito, cuando un delincuente, inmediatamente perseguido por los Agentes de la autoridad, se oculte o refugie en alguna casa o, en casos de excepcional o urgente necesidad, cuando se trate de presuntos responsables de las acciones a que se refiere el artícu­lo 384 bis, cualquiera que fuese el lugar o domicilio donde se ocultasen o refugiasen, así como al registro que, con ocasión de aquélla, se efectúe en dichos lugares y a la ocupación de los efectos e instrumentos que en ellos se hallasen y que pudieran guardar relación con el delito perseguido. Del registro efectuado, conforme a lo establecido en el párrafo anterior, se dará cuenta inmediata al Juez competente, con indicación de las causas que lo motivaron y de los resultados obtenidos en el mismo, con especial referencia a las detenciones que, en su caso, se hubieran practicado. Asimismo, se indicarán las personas que hayan intervenido y los incidentes ocurridos."
+    },
+    {
+        "pregunta": "Según la LECrim, el particular que detiene al delincuente in fraganti, ¿puede llevar a cabo diligencias necesarias para la investigación de los hechos?",
+        "opciones": [
+            "Sí, redactando un acta que facilitará al juzgado.",
+            "Sí, recabando toda la información posible sobre la detención realizada.",
+            "Sí, informando verbalmente al juzgado sobre los hechos acaecidos.",
+            "No, en ningún caso."
+        ],
+        "correcta": 3,
+        "explicacion": "El particular, como es obvio, no puede llevar a cabo las diligencias necesarias para la investigación de los hechos, por lo que deberá poner al detenido en disposición policial o judicial de forma inmediata. Como mucho podrá hacerlo hasta las 24 horas desde el momento de la detención. Si no lo hiciesen, estarán incurriendo en un delito de detención ilegal del Código Penal (artículo 163.4), castigado con pena de multa de 3 a 6 meses."
+    },
+    {
+        "pregunta": "Según el artículo 1 de la LO 6/84 de 24 de Mayo, ¿Cuál de las siguientes personas no son detenidas ilegalmente?",
+        "opciones": [
+            "Las que están ilícitamente internadas en cualquier establecimiento o lugar.",
+            "Las privadas de libertad a quienes se le respeten los derechos que la Constitución y las Leyes Procesales garantizan a toda persona detenida.",
+            "Las que lo estuviesen por plazo superior al señalado en las Leyes.",
+            "Los que lo fueren por agente de la autoridad sin que concurran los supuestos legales."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo primero. Mediante el procedimiento del «Habeas Corpus», regulado en la presente ley, se podrá obtener la inmediata puesta a disposición de la Autoridad judicial competente, de cualquier persona detenida ilegalmente. A los efectos de esta ley se consideran personas ilegalmente detenidas: a) Las que lo fueren por una autoridad, agente de la misma, funcionario público o particular, sin que concurran los supuestos legales, o sin haberse cumplido las formalidades prevenidas y requisitos exigidos por las leyes. b) Las que estén ilícitamente internadas en cualquier establecimiento o lugar. c) Las que lo estuvieran por plazo superior al señalado en las leyes, si transcurrido el mismo, no fuesen puestas en libertad o entregadas al Juez más próximo al lugar de la detención. d) Las privadas de libertad a quienes no les sean respetados los derechos que la Constitución y las leyes procesales garantizan a toda persona detenida."
+    },
+    {
+        "pregunta": "Según la LECrim, referente a elementos terroristas y bandas armadas, la detención de un individuo podrá prolongarse:",
+        "opciones": [
+            "Hasta 3 días.",
+            "Hasta 4 días.",
+            "Hasta 5 días.",
+            "Hasta 6 días."
+        ],
+        "correcta": 2,
+        "explicacion": "LECrim Artículo 520 bis. 1. Toda persona detenida como presunto partícipe de alguno de los delitos a que se refiere el artículo 384 bis (bandas armadas o individuos terroristas o rebeldes) será puesta a disposición del Juez competente dentro de las setenta y dos horas siguientes a la detención. No obstante, podrá prolongarse la detención el tiempo necesario para los fines investigadores, hasta un límite máximo de otras cuarenta y ocho horas, siempre que, solicitada tal prórroga mediante comunicación motivada dentro de las primeras cuarenta y ocho horas desde la detención, sea autorizada por el Juez en las veinticuatro horas siguientes. Tanto la autorización cuanto la denegación de la prórroga se adoptarán en resolución motivada. 2. Detenida una persona por los motivos expresados en el número anterior, podrá solicitarse del Juez que decrete su incomunicación, el cual deberá pronunciarse sobre la misma, en resolución motivada, en el plazo de veinticuatro horas. Solicitada la incomunicación, el detenido quedará en todo caso incomunicado sin perjuicio del derecho de defensa que le asiste y de lo establecido en los artículos 520 y 527, hasta que el Juez hubiere dictado la resolución pertinente. 3. Durante la detención, el Juez podrá en todo momento requerir información y conocer, personalmente o mediante delegación en el Juez de Instrucción del partido o demarcación donde se encuentre el detenido, la situación de éste."
+    },
+    {
+        "pregunta": "Alejandro ha sido detenido por un presunto delito de robo con fuerza y en las dependencias policiales de la Jefatura Superior de Policía de Palma le han informado por escrito de los derechos que le asisten. En ese momento, Alejandro quiere comunicar a su madre y a su pareja todo lo sucedido. ¿Puede hablar él mismo realizando dos llamadas telefónicas?",
+        "opciones": [
+            "Sí. Puede ejercer su derecho a poner en conocimiento de un familiar o persona que desee su privación de libertad y el lugar de custodia en que se halle en ese momento. Además, puede ejercer su derecho a comunicarse telefónicamente con un tercero de su elección. Por tanto, podrá ejercer directamente dos llamadas telefónicas en dependencias policiales.",
+            "No. Podrá ejercer su derecho a que se ponga en conocimiento de un familiar o persona que él desee, sin demora injustificada, su privación de libertad y el lugar de custodia en que se halle en cada momento, pero dicha comunicación la realiza un miembro de las fuerzas y cuerpos de seguridad. No obstante, sí puede ejercer su derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección. Esta comunicación se celebrará en presencia de un funcionario de policía o, en su caso, del funcionario que designen el juez o el fiscal, sin perjuicio de lo dispuesto en el artículo 527.",
+            "Sí. Podrá ejercer su derecho a que se ponga en conocimiento de un familiar o persona que él desee, sin demora injustificada, su privación de libertad y el lugar de custodia en que se halle en cada momento, realizando directamente él mismo la llamada telefónica. Además, podrá ejercer su derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección. No obstante, dicha llamada la realizará un miembro de las fuerzas y cuerpos de seguridad.",
+            "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520. LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: e) Derecho a que se ponga en conocimiento del familiar o persona que desee, sin demora injustificada, su privación de libertad y el lugar de custodia en que se halle en cada momento. Los extranjeros tendrán derecho a que las circunstancias anteriores se comuniquen a la oficina consular de su país. f) Derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección. Esta comunicación se celebrará en presencia de un funcionario de policía o, en su caso, del funcionario que designen el juez o el fiscal, sin perjuicio de lo dispuesto en el artículo 527."
+    },
+    {
+        "pregunta": "Según la LECrim, en qué casos de los siguientes, los agentes de la autoridad policial y judicial podrán hacerle recomendaciones sobre la elección de abogado al detenido:",
+        "opciones": [
+            "Cuando el detenido se considere insolvente.",
+            "Cuando el detenido así se lo pida.",
+            "Cuando el detenido lo sea por delitos dolosos e imprudentes.",
+            "En ningún caso."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 520. LECrim 5. El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio. Ninguna autoridad o agente le efectuará recomendación alguna sobre el abogado a designar más allá de informarle de su derecho."
+    },
+    {
+        "pregunta": "Según la LECrim, un particular que presencia la comisión de un delito, ¿tiene la obligación de detener?",
+        "opciones": [
+            "Sí, siempre.",
+            "Sí, solo en caso de que se trate de un delincuente in fraganti.",
+            "No, es una decisión potestativa.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Detención por particulares Es la detención que pueden llevar a cabo los particulares en supuestos de flagrante delito, fuga o rebeldía del detenido, preso o condenado. Engloba tanto a éstos como a los funcionarios públicos que no actúan en ejercicio de su cargo y al personal de seguridad privada. La detención policial La detención policial es obligatoria, al contrario que la detención por particulares, que es potestativa. En el transcurso de ésta se incoarán las diligencias pertinentes de reconocimiento e investigación, que pasarán a formar parte del atestado, para poner al detenido en libertad o a disposición del Juez que resulte competente."
+    },
+    {
+        "pregunta": "Artículo 17 de la CE ¿Cuál de las siguientes afirmaciones es incorrecta?",
+        "opciones": [
+            "La detención no podrá durar más de 72 horas por norma general.",
+            "Toda persona tiene derecho a la libertad y seguridad.",
+            "La detención preventiva no podrá durar más de 4 años.",
+            "Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17 CE 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, dentro de un escrito de Habeas Corpus, ¿Cuál de las siguientes respuestas no son parte de la composición del escrito?",
+        "opciones": [
+            "El motivo concreto por el que se solicita.",
+            "El lugar en que se halle el privado de libertad.",
+            "La pena que se le ha impuesto y está cumpliendo.",
+            "El nombre y circunstancias personales del solicitante y de la persona para la que se le solicita el amparo judicial."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo cuarto. El procedimiento se iniciará, salvo cuando se incoe de oficio, por medio de escrito o comparecencia, no siendo preceptiva la intervención de Abogado ni de Procurador. En dicho escrito o comparecencia deberán constar: a) El nombre y circunstancias personales del solicitante y de la persona para la que se solicita el amparo judicial regulado en esta ley. b) El lugar en que se halle el privado de libertad, autoridad o persona, bajo cuya custodia se encuentre, si fueren conocidos, y todas aquellas otras circunstancias que pudieran resultar relevantes. c) El motivo concreto por el que se solicita el «Habeas Corpus»."
+    },
+    {
+        "pregunta": "En qué artículo de la LECrim se establece que el particular que detuviere a otro justificará, si éste lo exigiere, haber obrado en virtud de motivos racionalmente suficientes para creer que el detenido se hallaba comprendido en alguno de los casos del artículo anterior:",
+        "opciones": [
+            "El artículo 490.",
+            "El artículo 491.",
+            "El artículo 491.2.",
+            "El artículo 492.1."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 491. LECrim El particular que detuviere a otro justificará, si éste lo exigiere, haber obrado en virtud de motivos racionalmente suficientes para creer que el detenido se hallaba comprendido en alguno de los casos del artículo anterior."
+    },
+    {
+        "pregunta": "Según el artículo 490 de la LECrim, cualquier persona puede detener: Señale la respuesta incorrecta.",
+        "opciones": [
+            "Al delincuente“ in fraganti”.",
+            "Al que se fugue de un Centro Penitenciario.",
+            "Al procesado una vez cumplida su pena.",
+            "Al que intente cometer un delito, en el momento de ir a cometerlo."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal Artículo 490. Cualquier persona puede detener: 1.º Al que intentare cometer un delito en el momento de ir a cometerlo. 2.º Al delincuente in fraganti. 3.º Al que se fugare del establecimiento penal en que se halle extinguiendo condena. 4.º Al que se fugare de la cárcel en que estuviere esperando su traslación al establecimiento penal o lugar en que deba cumplir la condena que se le hubiese impuesto por sentencia firme. 5.º Al que se fugare al ser conducido al establecimiento o lugar mencionado en el número anterior. 6.º Al que se fugare estando detenido o preso por causa pendiente. 7.º Al procesado o condenado que estuviere en rebeldía."
+    },
+    {
+        "pregunta": "Según la LECrim, una vez detenido el reo, cuando deba separarse en dependencias policiales de los otros detenidos, se tendrá en cuenta: Señale la incorrecta.",
+        "opciones": [
+            "El grado de educación del detenido.",
+            "La edad del detenido.",
+            "La naturaleza del delito cometido.",
+            "La pena impuesta al detenido."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal"
+    },
+    {
+        "pregunta": "La Ley de Enjuiciamiento Civil establece que la Autoridad o agente de la Policía judicial tendrá obligación de detener:",
+        "opciones": [
+            "A cualquiera que se halle en alguno de los casos del artículo 490.",
+            "Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional.",
+            "Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad Judicial.",
+            "Dicha norma no regula ninguno de los anteriores supuestos."
+        ],
+        "correcta": 3,
+        "explicacion": "El error está en el enunciado, la ley que lo regula es la LECrim. Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal"
+    },
+    {
+        "pregunta": "Según la LECrim, ¿Qué ocurre cuando un detenido designa libremente a un abogado de su confianza y éste rehusare el encargo o no fuera hallado?",
+        "opciones": [
+            "Debe permanecer en dichas dependencias hasta que se persone el abogado designado.",
+            "El abogado designado debe informar a la autoridad policial o judicial de su negativa a asistir al detenido, debiendo mandar sustituto del mismo despacho.",
+            "El Colegio de Abogado procederá de inmediato al nombramiento de un abogado del turno de oficio.",
+            "Ninguna de las anteriores respuestas es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520. LECrim 5. El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio. Ninguna autoridad o agente le efectuará recomendación alguna sobre el abogado a designar más allá de informarle de su derecho. La autoridad que tenga bajo su custodia al detenido comunicará inmediatamente al Colegio de Abogados el nombre del designado por el detenido para asistirle a los efectos de su localización y transmisión del encargo profesional o, en su caso, le comunicará la petición de nombramiento de abogado de oficio. Si el detenido no hubiere designado abogado, o el elegido rehusare el encargo o no fuere hallado, el Colegio de Abogados procederá de inmediato al nombramiento de un abogado del turno de oficio. El abogado designado acudirá al centro de detención con la máxima premura, siempre dentro del plazo máximo de tres horas desde la recepción del encargo. Si en dicho plazo no compareciera, el Colegio de Abogados designará un nuevo abogado del turno de oficio que deberá comparecer a la mayor brevedad y siempre dentro del plazo indicado, sin perjuicio de la exigencia de la responsabilidad disciplinaria en que haya podido incurrir el incompareciente."
+    },
+    {
+        "pregunta": "¿En qué artículo de la LECrim se regulan los casos de detención policial?",
+        "opciones": [
+            "En el artículo 490 LECrim.",
+            "En el artículo 491 LECrim.",
+            "En el artículo 492 LECrim.",
+            "En el artículo 520 LECrim."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 492. LECrim La Autoridad o agente de Policía judicial tendrá obligación de detener: 1.º A cualquiera que se halle en alguno de los casos del artículo 490. 2.º Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional. 3.º Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad judicial. Se exceptúa de lo dispuesto en el párrafo anterior al procesado que preste en el acto fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente. 4.º Al que estuviere en el caso del número anterior, aunque todavía no se hallase procesado, con tal que concurran las dos circunstancias siguientes: 1.ª Que la Autoridad o agente tenga motivos racionalmente bastantes para creer en la existencia de un hecho que presente los caracteres de delito. 2.ª Que los tenga también bastantes para creer que la persona a quien intente detener tuvo participación en él."
+    },
+    {
+        "pregunta": "Según la LECrim y otras leyes al respecto, el plazo máximo de detención es de:",
+        "opciones": [
+            "24 horas.",
+            "48 horas.",
+            "72 horas.",
+            "72 horas, salvo en los casos de terrorismo y estados de excepción o sitio."
+        ],
+        "correcta": 3,
+        "explicacion": "La detención preventiva se halla regulada en la legislación española: En su artículo 17.2 CE establece el mandato constitucional: «no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial». En su artículo 55.2 matiza que este derecho, mediante una Ley orgánica, puede ser suspendido «para personas determinadas, en relación con las investigaciones correspondientes a la actuación de bandas armadas o elementos terroristas». 1) La Ley de Enjuiciamiento Criminal, en el artículo 520 bis permite ampliar las 72 horas con una prórroga de hasta 48 horas más, autorizada por un juez, en el caso de bandas armadas o elementos terroristas. 2) La Ley Orgánica 4/1981, de 1 de junio, de los Estados de Alarma, Excepción y Sitio, artículo 16, sobre la detención decretada por Autoridad Gubernativa por sospecha de provocar alteraciones del orden público durante el estado de excepción y sitio, que establece un plazo máximo de 10 días ."
+    },
+    {
+        "pregunta": "De conformidad con lo dispuesto en el apartado primero del artículo 29 de la Ley Orgánica 2/1986, de 13 de marzo, de Fuerzas y Cuerpos de Seguridad, las funciones de Policía Judicial que se mencionan en el artículo 126 de la Constitución serán ejercidas por:",
+        "opciones": [
+            "Las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "Las Fuerzas y Cuerpos de Seguridad de las Comunidades Autónomas.",
+            "Las Fuerzas y Cuerpos de Seguridad de las Corporaciones Locales.",
+            "Todas las anteriores respuestas son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo veintinueve. LOFCS 1. Las funciones de Policía Judicial que se mencionan en el artículo 126 de la Constitución serán ejercidas por las Fuerzas y Cuerpos de Seguridad del Estado, a través de las Unidades que se regulan en el presente capítulo. 2. Para el cumplimiento de dicha función tendrán carácter colaborador de las Fuerzas y Cuerpos de Seguridad del Estado el personal de Policía de las Comunidades Autónomas y de las Corporaciones Locales."
+    },
+    {
+        "pregunta": "Según la LECrim, una persona que ha sido detenida y trasladada a dependencias policiales por la comisión de un presunto delito, además de ser informada de los derechos que le asisten:",
+        "opciones": [
+            "Será informada del plazo mínimo legal de duración de la detención hasta la puesta a disposición del Ministerio Fiscal y del procedimiento por medio del cual puede impugnar la legalidad de su detención.",
+            "Será informada del plazo máximo legal de duración de la detención hasta la puesta a disposición de la policía judicial y del procedimiento por medio del cual puede impugnar la legalidad de su detención.",
+            "Será informada del plazo máximo legal de duración de la detención hasta la puesta a disposición de la autoridad judicial y del procedimiento por medio del cual puede impugnar la legalidad de su detención.",
+            "Será informada del plazo mínimo legal de duración de la detención hasta la puesta a disposición de la autoridad judicial y del procedimiento por medio del cual puede impugnar la legalidad de su detención."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 520. LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: (...) Asimismo, se le informará del plazo máximo legal de duración de la detención hasta la puesta a disposición de la autoridad judicial y del procedimiento por medio del cual puede impugnar la legalidad de su detención. Cuando no se disponga de una declaración de derechos en una lengua que comprenda el detenido, se le informará de sus derechos por medio de un intérprete tan pronto resulte posible. En este caso, deberá entregársele, posteriormente y sin demora indebida, la declaración escrita de derechos en una lengua que comprenda. En todos los casos se permitirá al detenido conservar en su poder la declaración escrita de derechos durante todo el tiempo de la detención."
+    },
+    {
+        "pregunta": "La LECrim establece que cualquier persona puede detener en determinados supuestos. Señale la respuesta incorrecta:",
+        "opciones": [
+            "Al que intentare cometer un delito en el momento de ir a cometerlo.",
+            "Al delincuente in fraganti.",
+            "Al que no asistiere a dependencias judiciales tras citación por causa abierta.",
+            "Al que se fugare del establecimiento penal en que se halle extinguiendo condena."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal Artículo 490. Cualquier persona puede detener: 1.º Al que intentare cometer un delito en el momento de ir a cometerlo. 2.º Al delincuente in fraganti. 3.º Al que se fugare del establecimiento penal en que se halle extinguiendo condena. 4.º Al que se fugare de la cárcel en que estuviere esperando su traslación al establecimiento penal o lugar en que deba cumplir la condena que se le hubiese impuesto por sentencia firme. 5.º Al que se fugare al ser conducido al establecimiento o lugar mencionado en el número anterior. 6.º Al que se fugare estando detenido o preso por causa pendiente. 7.º Al procesado o condenado que estuviere en rebeldía."
+    },
+    {
+        "pregunta": "Según la LECrim, el policía que practique una detención y proceda a trasladar al detenido a dependencias policiales o judiciales, deberá velar por los derechos constitucionales del detenido. ¿De qué derechos se trata?",
+        "opciones": [
+            "Derechos al honor, intimidad e imagen del detenido.",
+            "Derecho al honor, libertad e imagen del detenido.",
+            "Derecho al honor, intimidad y libertad del detenido.",
+            "Derecho al honor, intimidad, libertad e imagen del detenido."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 520. LECrim 1. La detención y la prisión provisional deberán practicarse en la forma que menos perjudique al detenido o preso en su persona, reputación y patrimonio. Quienes acuerden la medida y los encargados de practicarla así como de los traslados ulteriores, velarán por los derechos constitucionales al honor, intimidad e imagen de aquéllos, con respeto al derecho fundamental a la libertad de información. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos. Dentro de los plazos establecidos en la presente Ley, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. En el atestado deberá reflejarse el lugar y la hora de la detención y de la puesta a disposición de la autoridad judicial o en su caso, de la puesta en libertad. 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: (...)"
+    },
+    {
+        "pregunta": "La autoridad o funcionario público que practique una detención ilegal estará cometiendo un delito tipificado en:",
+        "opciones": [
+            "El artículo 163.4 CP.",
+            "El artículo 167.1 CP.",
+            "El artículo 164.2 CP.",
+            "El artículo 167.4 CP."
+        ],
+        "correcta": 1,
+        "explicacion": "El artículo 167 del Código Penal español hace referencia a los delitos de detención ilegal o secuestro cometidos por funcionario o autoridad pública."
+    },
+    {
+        "pregunta": "Según la LECrim, ¿en qué caso de los siguientes los funcionarios de Policía Judicial podrán dejar transcurrir más de veinticuatro horas sin dar conocimiento al Ministerio Fiscal o Autoridad judicial de las diligencias practicadas?:",
+        "opciones": [
+            "Siempre que la investigación lo requiera.",
+            "En ningún caso.",
+            "Cuando así lo autorice el Ministerio Fiscal o Autoridad Judicial.",
+            "Por razones de fuerza mayor."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal"
+    },
+    {
+        "pregunta": "En cuanto a los derechos de la persona detenida el artículo 520.2 de la LECrim., no establece:",
+        "opciones": [
+            "Derecho a no declarar sobre sí mismo.",
+            "Derecho a que se ponga en conocimiento de la persona que desee el hecho de la detención.",
+            "Derecho a no ser reconocido por el médico forense o instituto legal.",
+            "Derecho a designar el abogado que él quiera."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal"
+    },
+    {
+        "pregunta": "En virtud del artículo 498 de la Ley de Enjuiciamiento Criminal, si el detenido en virtud de lo dispuesto en el número 6.º y primer caso del 7.º del artículo 490 LECrim y 2.º y 3.º del artículo 492 LECrim, hubiese sido entregado a un Juez distinto del Juez o Tribunal que conozca de la causa: Señale la respuesta incorrecta.",
+        "opciones": [
+            "Extenderá el primero una diligencia expresiva de la persona que hubiera hecho la detención, de su domicilio y demás circunstancias bastantes para buscarla e identificarla.",
+            "Extenderá el primero una diligencia expresiva de los motivos que ésta manifestase haber tenido para la detención.",
+            "Extenderá el primero una diligencia expresiva de los medios utilizados para proceder a su detención.",
+            "Extenderá el primero una diligencia expresiva del nombre, apellidos y circunstancias del detenido."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 498. LECrim Si el detenido en virtud de lo dispuesto en el número 6.º y primer caso del 7.º del artículo 490 y 2.º y 3.º del artículo 492, hubiese sido entregado a un Juez distinto del Juez o Tribunal que conozca de la causa, extenderá el primero una diligencia expresiva de la persona que hubiere hecho la detención, de su domicilio y demás circunstancias bastantes para buscarla e identificarla, de los motivos que ésta manifestase haber tenido para la detención y del nombre, apellidos y circunstancias del detenido. Esta diligencia será firmada por el Juez, el Secretario, la persona que hubiese ejecutado la detención y las demás concurrentes. Por el que no lo hiciere firmarán dos testigos. Inmediatamente después serán remitidas estas diligencias y la persona del detenido a disposición del Juez o Tribunal que conociese de la causa."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, ¿Cuál de las siguientes personas no puede instar el procedimiento de Habeas Corpus?",
+        "opciones": [
+            "El Ministerio Fiscal.",
+            "El Defensor del Pueblo.",
+            "El cónyuge del detenido.",
+            "El Juez Instructor del caso."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo tercero. Podrán instar el procedimiento de «Habeas Corpus» que esta ley establece: a) El privado de libertad, su cónyuge o persona unida por análoga relación de afectividad, descendientes, ascendientes, hermanos y, en su caso, respecto a los menores y personas incapacitadas, sus representantes legales. b) El Ministerio Fiscal. c) El Defensor del Pueblo. Asimismo, lo podrá iniciar, de oficio, el Juez competente a que se refiere el artículo anterior."
+    },
+    {
+        "pregunta": "El derecho a guardar silencio, no declarando si no quiere, o a no contestar a las preguntas que se le formulen, o a declarar sólo ante el Juez, se recoge en:",
+        "opciones": [
+            "El art. 520 de la LECrim.",
+            "El 24.2 de la CE.",
+            "En ambos preceptos.",
+            "En ninguno de los anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 520. LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: a) Derecho a guardar silencio no declarando si no quiere, a no contestar alguna o algunas de las preguntas que le formulen, o a manifestar que sólo declarará ante el juez. b) Derecho a no declarar contra sí mismo y a no confesarse culpable. c) Derecho a designar abogado, sin perjuicio de lo dispuesto en el apartado 1.a) del artículo 527 y a ser asistido por él sin demora injustificada. En caso de que, debido a la lejanía geográfica no sea posible de inmediato la asistencia de letrado, se facilitará al detenido comunicación telefónica o por videoconferencia con aquél, salvo que dicha comunicación sea imposible. d) Derecho a acceder a los elementos de las actuaciones que sean esenciales para impugnar la legalidad de la detención o privación de libertad. e) Derecho a que se ponga en conocimiento del familiar o persona que desee, sin demora injustificada, su privación de libertad y el lugar de custodia en que se halle en cada momento. Los extranjeros tendrán derecho a que las circunstancias anteriores se comuniquen a la oficina consular de su país. f) Derecho a comunicarse telefónicamente, sin demora injustificada, con un tercero de su elección. Esta comunicación se celebrará en presencia de un funcionario de policía o, en su caso, del funcionario que designen el juez o el fiscal, sin perjuicio de lo dispuesto en el artículo 527. g) Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas. h) Derecho a ser asistido gratuitamente por un intérprete, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate, o de personas sordas o con discapacidad auditiva, así como de otras personas con dificultades del lenguaje. i) Derecho a ser reconocido por el médico forense o su sustituto legal y, en su defecto, por el de la institución en que se encuentre, o por cualquier otro dependiente del Estado o de otras Administraciones Públicas. j) Derecho a solicitar asistencia jurídica gratuita, procedimiento para hacerlo y condiciones para obtenerla."
+    },
+    {
+        "pregunta": "Según la LECrim, el particular que detiene a un delincuente in fraganti tiene el deber de ponerlo en disposición policial o judicial de forma inmediata, pero cuántas horas pueden transcurrir como máximo desde la detención para que no se considere delito de detención ilegal?",
+        "opciones": [
+            "3 horas.",
+            "6 horas.",
+            "12 horas.",
+            "24 horas."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal"
+    },
+    {
+        "pregunta": "Ahmad Abdel ha sido detenido por un presunto delito de agresión sexual y en las dependencias policiales de la Jefatura Superior de Policía de Palma le han informado por escrito de los derechos que le asisten. Ahmad tiene nacionalidad marroquí y tiene concedido un permiso de residencia y trabajo en nuestro país por un periodo de cinco años. Entre otros derechos, ¿qué derechos le asisten como extranjero? Señale la opción correcta:",
+        "opciones": [
+            "Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas; Derecho a ser asistido por un intérprete, debiendo sufragar los gastos que origine el servicio de traducción, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate.",
+            "Derecho a comunicarse con las autoridades consulares de su país y a mantener correspondencia con ellas, no siendo posible la visita directa con las mismas; Derecho a ser asistido por un intérprete, debiendo sufragar los gastos que origine el servicio de traducción, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate.",
+            "Derecho a ser visitado por las autoridades consulares de su país; Derecho a ser asistido por un intérprete, debiendo sufragar los gastos que origine el servicio de traducción, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate.",
+            "Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas; Derecho a ser asistido gratuitamente por un intérprete, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 520. LECrim 2. Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: g) Derecho a ser visitado por las autoridades consulares de su país, a comunicarse y a mantener correspondencia con ellas. h) Derecho a ser asistido gratuitamente por un intérprete, cuando se trate de extranjero que no comprenda o no hable el castellano o la lengua oficial de la actuación de que se trate, o de personas sordas o con discapacidad auditiva, así como de otras personas con dificultades del lenguaje."
+    },
+    {
+        "pregunta": "De conformidad con lo estipulado en el apartado tercero del artículo 492 de la Ley de Enjuiciamiento Criminal, la Autoridad o agente de policía judicial, ¿tendrá la obligación de detener al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieran presumir que no comparecerá cuando fuere llamada por la Autoridad judicial?",
+        "opciones": [
+            "Sí, siempre.",
+            "Sí, excepto que el procesado preste en el acto fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente.",
+            "No, ya que el procesado tiene la potestad de prestar fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente.",
+            "Ninguna de las anteriores respuestas es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 492. LECrim La Autoridad o agente de Policía judicial tendrá obligación de detener: 1.º A cualquiera que se halle en alguno de los casos del artículo 490. 2.º Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional. 3.º Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad judicial. Se exceptúa de lo dispuesto en el párrafo anterior al procesado que preste en el acto fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente. 4.º Al que estuviere en el caso del número anterior, aunque todavía no se hallase procesado, con tal que concurran las dos circunstancias siguientes: 1.ª Que la Autoridad o agente tenga motivos racionalmente bastantes para creer en la existencia de un hecho que presente los caracteres de delito. 2.ª Que los tenga también bastantes para creer que la persona a quien intente detener tuvo participación en él."
+    },
+    {
+        "pregunta": "Dasiel Conceiçao Silva ha sido detenido por un presunto delito de hurto y en las dependencias policiales de la Jefatura Superior de Policía de Palma le han informado por escrito de los derechos que le asisten. El detenido tiene nacionalidad cubana y nacionalidad italiana, y quiere ejercer su derecho a comunicarse con el cónsul de su país: Señale la opción correcta.",
+        "opciones": [
+            "Si el detenido fuere extranjero, se comunicará al cónsul de su país el hecho de su detención y el lugar de custodia y se le permitirá la comunicación con la autoridad consular. En caso de que el detenido tenga dos o más nacionalidades, será el funcionario de la policía judicial quien elija a qué autoridades consulares debe informarse de que se encuentra privado de libertad y con quién desea comunicarse.",
+            "Si el detenido fuere extranjero, se comunicará al cónsul de su país el hecho de su detención y el lugar de custodia y se le permitirá la comunicación con la autoridad consular. En caso de que el detenido tenga dos o más nacionalidades, podrá elegir a qué autoridades consulares debe informarse de que se encuentra privado de libertad y con quién desea comunicarse.",
+            "Si el detenido fuere extranjero, se comunicará al cónsul de su país el hecho de su detención y el lugar de custodia y se le permitirá la comunicación con la autoridad consular. En caso de que el detenido tenga dos o más nacionalidades, no podrá elegir a qué autoridades consulares debe informarse de que se encuentra privado de libertad y con quién desea comunicarse.",
+            "Si el detenido fuere extranjero, se comunicará al cónsul de su país el hecho de su detención y el lugar de custodia y se le permitirá la comunicación con la autoridad consular. En caso de que el detenido tenga dos o más nacionalidades, será la autoridad judicial quien designe a qué autoridades consulares debe informarse de que se encuentra privado de libertad y con quién desea comunicarse."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 520. LECrim 3. Si el detenido fuere extranjero, se comunicará al cónsul de su país el hecho de su detención y el lugar de custodia y se le permitirá la comunicación con la autoridad consular. En caso de que el detenido tenga dos o más nacionalidades, podrá elegir a qué autoridades consulares debe informarse de que se encuentra privado de libertad y con quién desea comunicarse."
+    },
+    {
+        "pregunta": "La Ley de Enjuiciamiento Criminal permite la detención por cualquier persona en determinados supuestos. ¿Qué artículo lo regula?",
+        "opciones": [
+            "El artículo 390 LECrim.",
+            "El artículo 520 LECrim.",
+            "El artículo 490 LECrim.",
+            "El artículo 492 LECrim."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 490. LECrim Cualquier persona puede detener: 1.º Al que intentare cometer un delito en el momento de ir a cometerlo. 2.º Al delincuente in fraganti. 3.º Al que se fugare del establecimiento penal en que se halle extinguiendo condena. 4.º Al que se fugare de la cárcel en que estuviere esperando su traslación al establecimiento penal o lugar en que deba cumplir la condena que se le hubiese impuesto por sentencia firme. 5.º Al que se fugare al ser conducido al establecimiento o lugar mencionado en el número anterior. 6.º Al que se fugare estando detenido o preso por causa pendiente. 7.º Al procesado o condenado que estuviere en rebeldía."
+    },
+    {
+        "pregunta": "Según lo estipulado en el artículo 1 del Real Decreto 769/1987, de 19 de junio, sobre regulación de la Policía Judicial, las funciones generales de policía judicial corresponden:",
+        "opciones": [
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado, cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento o aseguramiento de delincuentes.",
+            "A todos los miembros de las Fuerzas y Cuerpos de Seguridad, cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento o aseguramiento de delincuentes, con estricta sujeción al ámbito de sus respectivas competencias, y sin perjuicio de lo dispuesto en el artículo 283 de la Ley de Enjuiciamiento Criminal.",
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado y de las Comunidades Autónomas, cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento o aseguramiento de delincuentes.",
+            "A todos los miembros de las Fuerzas y Cuerpos de Seguridad, cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento o aseguramiento de delincuentes."
+        ],
+        "correcta": 1,
+        "explicacion": "Real Decreto 769/1987, de 19 de junio, sobre regulación de la Policía Judicial Art. 1.º Las funciones generales de policía judicial corresponden a todos los miembros de las Fuerzas y Cuerpos de Seguridad cualquiera que sea su naturaleza y dependencia, en la medida en que deben prestar la colaboración requerida por la Autoridad Judicial o el Ministerio Fiscal en actuaciones encaminadas a la averiguación de delitos o descubrimiento y aseguramiento de delincuentes, con estricta sujeción al ámbito de sus respectivas competencias, y sin perjuicio de lo dispuesto en el artículo 283 de la Ley de Enjuiciamiento Criminal."
+    },
+    {
+        "pregunta": "¿Qué artículo de la Constitución establece que el domicilio es inviolable?",
+        "opciones": [
+            "El artículo 15.2.",
+            "El artículo 16.2.",
+            "El artículo 17.2.",
+            "El artículo 18.2."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 18 CE 1. Se garantiza el derecho al honor, a la intimidad personal y familiar y a la propia imagen. 2. El domicilio es inviolable. Ninguna entrada o registro podrá hacerse en él sin consentimiento del titular o resolución judicial, salvo en caso de flagrante delito. 3. Se garantiza el secreto de las comunicaciones y, en especial, de las postales, telegráficas y telefónicas, salvo resolución judicial. 4. La ley limitará el uso de la informática para garantizar el honor y la intimidad personal y familiar de los ciudadanos y el pleno ejercicio de sus derechos."
+    },
+    {
+        "pregunta": "De conformidad con la Exposición de Motivos de la Ley Orgánica 2/1986, de 13 de marzo, de Fuerzas y Cuerpos de Seguridad, las Policías Locales tienen atribuidas las funciones naturales y constitutivas de toda policía, atribuyéndoles también las funciones de ________________ con las Fuerzas y Cuerpos de Seguridad, en materia de policía judicial y de seguridad ciudadana. Complete el espacio en blanco con la opción correcta:",
+        "opciones": [
+            "Averiguación.",
+            "Colaboración.",
+            "Vigilancia.",
+            "Control."
+        ],
+        "correcta": 1,
+        "explicacion": "PREÁMBULO LOFCS Sin la distinción formal, que aquí no tiene sentido, entre competencias exclusivas y concurrentes, se atribuyen a las Policías Locales las funciones naturales y constitutivas de toda policía; recogiéndose como específica la ya citada ordenación, señalización y dirección del tráfico urbano; añadiendo la de vigilancia y protección de personalidades y bienes de carácter local, en concordancia con los cometidos similares de los demás cuerpos policiales, y atribuyéndoles también las funciones de colaboración con las Fuerzas y Cuerpos de Seguridad, en materia de policía judicial y de seguridad ciudadana."
+    },
+    {
+        "pregunta": "De conformidad con lo dispuesto en el apartado segundo del artículo 29 de la Ley Orgánica 2/1986, de 13 de marzo, de Fuerzas y Cuerpos de Seguridad, para el cumplimiento de las funciones de Policía Judicial que se mencionan en el artículo 126 de la Constitución y que serán ejercidas por las Fuerzas y Cuerpos de Seguridad del Estado, el personal de las Comunidad Autónomas y de las Corporaciones Locales tendrá:",
+        "opciones": [
+            "Carácter subsidiario.",
+            "Carácter solidario.",
+            "Carácter colaborador.",
+            "Carácter obligatorio."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo veintinueve. LOFCS 1. Las funciones de Policía Judicial que se mencionan en el artículo 126 de la Constitución serán ejercidas por las Fuerzas y Cuerpos de Seguridad del Estado, a través de las Unidades que se regulan en el presente capítulo. 2. Para el cumplimiento de dicha función tendrán carácter colaborador de las Fuerzas y Cuerpos de Seguridad del Estado el personal de Policía de las Comunidades Autónomas y de las Corporaciones Locales."
+    },
+    {
+        "pregunta": "Según la LO 6/1985 del Poder Judicial, ¿Cuál de las siguientes funciones no son propias de los funcionarios de Policía Judicial?",
+        "opciones": [
+            "La realización material de las actuaciones que exijan el ejercicio de la coerción y ordenare la autoridad judicial.",
+            "La garantía del cumplimiento de las órdenes y resoluciones de la Autoridad Judicial o Fiscal.",
+            "La averiguación de los responsables y circunstancias de los hechos delictivos, dando cuenta seguidamente a la Autoridad Judicial o Fiscal.",
+            "El auxilio a la Autoridad Judicial y Fiscal en cuantas actuaciones deba realizar dentro de su sede, no siendo así fuera de la misma."
+        ],
+        "correcta": 3,
+        "explicacion": "LO 6/1985 del Poder Judicial"
+    },
+    {
+        "pregunta": "¿En qué artículo de la LECrim se regulan los casos de detención policial?",
+        "opciones": [
+            "En el artículo 490 LECrim.",
+            "En el artículo 491 LECrim.",
+            "En el artículo 492 LECrim.",
+            "En el artículo 520 LECrim."
+        ],
+        "correcta": 2,
+        "explicacion": "La detención policial La detención policial es obligatoria, al contrario que la detención por particulares, que es potestativa. En el transcurso de ésta se incoarán las diligencias pertinentes de reconocimiento e investigación, que pasarán a formar parte del atestado, para poner al detenido en libertad o a disposición del Juez que resulte competente. Se recogen en el artículo 492 de la LECrim. Artículo 492. LECrim La Autoridad o agente de Policía judicial tendrá obligación de detener: 1.º A cualquiera que se halle en alguno de los casos del artículo 490. 2.º Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional. 3.º Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad judicial. Se exceptúa de lo dispuesto en el párrafo anterior al procesado que preste en el acto fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente. 4.º Al que estuviere en el caso del número anterior, aunque todavía no se hallase procesado, con tal que concurran las dos circunstancias siguientes: 1.ª Que la Autoridad o agente tenga motivos racionalmente bastantes para creer en la existencia de un hecho que presente los caracteres de delito. 2.ª Que los tenga también bastantes para creer que la persona a quien intente detener tuvo participación en él."
+    },
+    {
+        "pregunta": "Según la LO 6/1985 del Poder Judicial, la Policía Judicial, desarrollará funciones de averiguación del delito y descubrimiento y aseguramiento del delincuente, bajo la dependencia:",
+        "opciones": [
+            "De Jueces.",
+            "De Tribunales.",
+            "Del Ministerio Fiscal.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "LO 6/1985 del Poder Judicial Artículo 547. La función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla, a todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, ¿En qué casos de los siguientes es preceptiva, la intervención de abogado o procurador, el Procedimiento de Habeas Corpus?",
+        "opciones": [
+            "Cuando el detenido esté en prisión.",
+            "Cuando el detenido esté en cualquier dependencia policial o municipal.",
+            "Cuando se viole el Derecho a la vida e integridad física.",
+            "Nunca es preceptiva la intervención de Abogado o Procurador."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo cuarto. El procedimiento se iniciará, salvo cuando se incoe de oficio, por medio de escrito o comparecencia, no siendo preceptiva la intervención de Abogado ni de Procurador. En dicho escrito o comparecencia deberán constar: a) El nombre y circunstancias personales del solicitante y de la persona para la que se solicita el amparo judicial regulado en esta ley. b) El lugar en que se halle el privado de libertad, autoridad o persona, bajo cuya custodia se encuentre, si fueren conocidos, y todas aquellas otras circunstancias que pudieran resultar relevantes. c) El motivo concreto por el que se solicita el «Habeas Corpus»."
+    },
+    {
+        "pregunta": "Según la LO 6/1984, el auto del Juez que acordare la denegación de la solicitud de Habeas Corpus por ser improcedente será notificada, en todo caso:",
+        "opciones": [
+            "Al privado de libertad y al Ministerio Fiscal.",
+            "Al privado de libertad.",
+            "Al Ministerio Fiscal.",
+            "Al privado de libertad, a su abogado y al Ministerio fiscal."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "De conformidad con lo estipulado en el artículo 547 de la Ley Orgánica del Poder Judicial, la función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla a:",
+        "opciones": [
+            "Únicamente a los miembros de las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado y de las Comunidades Autónomas.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 547. LOPJ La función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla, a todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+    },
+    {
+        "pregunta": "De conformidad con lo estipulado en el artículo 547 de la Ley Orgánica del Poder Judicial, la función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla a:",
+        "opciones": [
+            "Únicamente a los miembros de las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado y de las Comunidades Autónomas.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 547. LOPJ La función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla, a todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+    },
+    {
+        "pregunta": "De conformidad con lo estipulado en el artículo 547 de la Ley Orgánica del Poder Judicial, la función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla a:",
+        "opciones": [
+            "Únicamente a los miembros de las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado y de las Comunidades Autónomas.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 547. LOPJ La función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla, a todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+    },
+    {
+        "pregunta": "De conformidad con lo estipulado en el artículo 547 de la Ley Orgánica del Poder Judicial, la función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla a:",
+        "opciones": [
+            "Únicamente a los miembros de las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado y de las Comunidades Autónomas.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 547. LOPJ La función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla, a todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+    },
+    {
+        "pregunta": "De conformidad con lo estipulado en el artículo 547 de la Ley Orgánica del Poder Judicial, la función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla a:",
+        "opciones": [
+            "Únicamente a los miembros de las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "A los miembros de las Fuerzas y Cuerpos de Seguridad del Estado y de las Comunidades Autónomas.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales.",
+            "Todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 547. LOPJ La función de la Policía Judicial comprende el auxilio a los juzgados y tribunales y al Ministerio Fiscal en la averiguación de los delitos y en el descubrimiento y aseguramiento de los delincuentes. Esta función competerá, cuando fueren requeridos para prestarla, a todos los miembros de las Fuerzas y Cuerpos de Seguridad, tanto si dependen del Gobierno central como de las comunidades autónomas o de los entes locales, dentro del ámbito de sus respectivas competencias."
+    },
+    {
+        "pregunta": "En relación con las funciones de los Cuerpos de la Policía Local, indique qué establece la letra e) del apartado primero del artículo 53 de la Ley Orgánica 2/1986, de 13 de marzo, de Fuerzas y Cuerpos de Seguridad:",
+        "opciones": [
+            "Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia.",
+            "Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación.",
+            "Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley.",
+            "Proteger a las Autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo cincuenta y tres. LOFCS 1. Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: a) Proteger a las Autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones. b) Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación. c) Instruir atestados por accidentes de circulación dentro del casco urbano. d) Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia. e) Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley. f) La prestación de auxilio, en los casos de accidente, catástrofe o calamidad pública, participando, en la forma prevista en las Leyes, en la ejecución de los planes de Protección Civil. g) Efectuar diligencias de prevención y cuantas actuaciones tiendan a evitar la comisión de actos delictivos en el marco de colaboración establecido en las Juntas de Seguridad. h) Vigilar los espacios públicos y colaborar con las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas en la protección de las manifestaciones y el mantenimiento del orden en grandes concentraciones humanas, cuando sean requeridos para ello. i) Cooperar en la resolución de los conflictos privados cuando sean requeridos para ello."
+    },
+    {
+        "pregunta": "De conformidad con el apartado cuarto del artículo 492 de la Ley de Enjuiciamiento Criminal, la Autoridad o agente de la Policía judicial tendrá obligación de detener al que todavía no se hallase procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad judicial, además de concurrir las dos circunstancias siguientes:",
+        "opciones": [
+            "Que la Autoridad o agente no tenga motivos racionalmente bastantes para creer la existencia de un hecho que presente los caracteres de delito; que no los tenga tampoco para creer que la persona a quien intente detener tuvo participación en él.",
+            "Que la Autoridad o agente tenga motivos racionalmente bastantes para no creer la existencia de un hecho que presente los caracteres de delito; que los tenga también bastantes para creer que la persona a quien intente detener no tuvo participación en él.",
+            "Que la Autoridad o agente tenga motivos racionalmente bastantes para creer la existencia de un hecho que presente los caracteres de delito; que los tenga también bastantes para creer que la persona a quien intente detener tuvo participación en él.",
+            "Que la Autoridad o agente tenga motivos racionalmente bastantes para creer la existencia de un hecho que presente los caracteres de delito; que los tenga también bastantes para no creer que la persona a quien intente detener tuvo participación en él."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 492. LECrim La Autoridad o agente de Policía judicial tendrá obligación de detener: 1.º A cualquiera que se halle en alguno de los casos del artículo 490. 2.º Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional. 3.º Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad judicial. Se exceptúa de lo dispuesto en el párrafo anterior al procesado que preste en el acto fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente. 4.º Al que estuviere en el caso del número anterior, aunque todavía no se hallase procesado, con tal que concurran las dos circunstancias siguientes: 1.ª Que la Autoridad o agente tenga motivos racionalmente bastantes para creer en la existencia de un hecho que presente los caracteres de delito. 2.ª Que los tenga también bastantes para creer que la persona a quien intente detener tuvo participación en él."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

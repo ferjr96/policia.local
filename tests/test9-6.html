@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Según el artículo 109 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, indique la respuesta incorrecta:",
+      "opciones": [
+        "La marcha hacia atrás será advertida con la correspondiente luz de marcha atrás, si dispone de ella, o, en caso contrario, extendiendo el brazo horizontalmente con la palma de la mano hacia atrás.",
+        "La intención de inmovilizar el vehículo o de frenar su marcha de modo considerable, aun cuando tales hechos vengan impuestos por las circunstancias del tráfico, deberá advertirse, siempre que sea posible, mediante el empleo reiterado de las luces de frenado y moviendo el brazo alternativamente de arriba abajo con movimientos cortos y rápidos.",
+        "Cuando la inmovilización tenga lugar en una autopista o autovía, o en lugares o circunstancias que disminuyan sensiblemente la visibilidad, se deberá señalizar la presencia del vehículo mediante la utilización de la luz de emergencia, si se dispone de ella, y, en su caso, con las luces de posición.",
+        "Si la inmovilización se realiza para parar o estacionar deberá utilizarse, además, el indicador luminoso de dirección correspondiente al lado hacia el que vaya a efectuarse aquélla, si el vehículo dispone de dicho dispositivo."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 109 Advertencias ópticas 1. El conductor debe advertir mediante señales ópticas toda maniobra que implique un desplazamiento lateral o hacia atrás de su vehículo, así como su propósito de inmovilizarlo o de frenar su marcha de modo considerable. Tales advertencias ópticas se efectuarán con antelación suficiente a la iniciación de la maniobra, y, si son luminosas, permanecerán en funcionamiento hasta que termine aquélla. 2. A los efectos del apartado anterior, deberá tenerse en cuenta, además, lo siguiente: a) El desplazamiento lateral será advertido utilizando la luz indicadora de dirección correspondiente al lado hacia el que se va a realizar, o el brazo, en posición horizontal con la palma de la mano extendida hacia abajo, si el desplazamiento va a ser hacia el lado que la mano indica, o doblado hacia arriba, también con la palma de la mano extendida, si va a ser hacia el contrario. En las maniobras que impliquen un desplazamiento lateral, es éste el que exclusivamente se avisa, por lo que la advertencia deberá concluir tan pronto como el vehículo haya adoptado su nueva trayectoria. b) La marcha hacia atrás será advertida con la correspondiente luz de marcha atrás, si dispone de ella, o, en caso contrario, extendiendo el brazo horizontalmente con la palma de la mano hacia atrás. c) La intención de inmovilizar el vehículo o de frenar su marcha de modo considerable, aun cuando tales hechos vengan impuestos por las circunstancias del tráfico, deberá advertirse, siempre que sea posible, mediante el empleo reiterado de las luces de frenado o bien moviendo el brazo alternativamente de arriba abajo con movimientos cortos y rápidos. Cuando la inmovilización tenga lugar en una autopista o autovía, o en lugares o circunstancias que disminuyan sensiblemente la visibilidad, se deberá señalizar la presencia del vehículo mediante la utilización de la luz de emergencia, si se dispone de ella, y, en su caso, con las luces de posición. Si la inmovilización se realiza para parar o estacionar deberá utilizarse, además, el indicador luminoso de dirección correspondiente al lado hacia el que vaya a efectuarse aquélla, si el vehículo dispone de dicho dispositivo. 3. Con la misma finalidad que para las acústicas se señala en el artículo siguiente y para sustituirlas podrán efectuarse advertencias luminosas, incluso en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento."
+    },
+    {
+      "pregunta": "2. Orden de prioridad entre los distintos tipos de señales de circulación, aunque no esté completo, indique cuál es el orden correcto de los indicados a continuación:",
+      "opciones": [
+        "Semáforos, señales y órdenes de los agentes de circulación, marcas viales",
+        "Señales y órdenes de los agentes de circulación, semáforos, señales circunstanciales.",
+        "Señales circunstanciales, marcas viales, semáforos.",
+        "Semáforos, señales verticales, marcas viales."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 133 del RGCir. Orden de prioridad. Señales y órdenes de los agentes de circulación, señales circunstanciales, semáforos, señales verticales, marcas viales."
+    },
+    {
+      "pregunta": "3. En ausencia de agentes de la circulación o para auxiliar a éstos, y en las circunstancias y condiciones establecidas en este reglamento, ¿Quién de los siguientes NO podrá regular el paso en una supuesta circulación normal?",
+      "opciones": [
+        "Policía Militar.",
+        "Protección Civil.",
+        "Personal de obras en la vía.",
+        "Personal de acompañamiento de los vehículos en régimen de transporte especial."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 143.4 RGCir. Cuando la autoridad competente autorice la celebración de actividades deportivas o actos que aconsejen establecer limitaciones a la circulación en vías urbanas o interurbanas, la autoridad responsable del tráfico podrá habilitar al personal de protección civil o de la organización responsable para impedir el acceso de vehículos o peatones a la zona o itinerario afectados. (En ningún momento regulan el paso, solamente impiden el paso a la zona o itinerario afectados)."
+    },
+    {
+      "pregunta": "4. Según el artículo 109 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, indique la respuesta incorrecta:",
+      "opciones": [
+        "El conductor debe advertir mediante señales ópticas toda maniobra que implique un desplazamiento lateral o hacia atrás de su vehículo, así como su propósito de inmovilizarlo o de frenar su marcha de modo considerable.",
+        "Tales advertencias ópticas se efectuarán con antelación suficiente a la iniciación de la maniobra, y, si son luminosas, permanecerán en funcionamiento hasta que termine aquélla.",
+        "El desplazamiento lateral será advertido utilizando la luz indicadora de dirección correspondiente al lado hacia el que se va a realizar, o el brazo, en posición horizontal con la palma de la mano extendida hacia arriba, si el desplazamiento va a ser hacia el lado que la mano indica, o doblado hacia arriba, también con la palma de la mano extendida, si va a ser hacia el contrario.",
+        "En las maniobras que impliquen un desplazamiento lateral, es éste el que exclusivamente se avisa, por lo que la advertencia deberá concluir tan pronto como el vehículo haya adoptado su nueva trayectoria."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 109 Advertencias ópticas 1. El conductor debe advertir mediante señales ópticas toda maniobra que implique un desplazamiento lateral o hacia atrás de su vehículo, así como su propósito de inmovilizarlo o de frenar su marcha de modo considerable. Tales advertencias ópticas se efectuarán con antelación suficiente a la iniciación de la maniobra, y, si son luminosas, permanecerán en funcionamiento hasta que termine aquélla. 2. A los efectos del apartado anterior, deberá tenerse en cuenta, además, lo siguiente: a) El desplazamiento lateral será advertido utilizando la luz indicadora de dirección correspondiente al lado hacia el que se va a realizar, o el brazo, en posición horizontal con la palma de la mano extendida hacia abajo, si el desplazamiento va a ser hacia el lado que la mano indica, o doblado hacia arriba, también con la palma de la mano extendida, si va a ser hacia el contrario. En las maniobras que impliquen un desplazamiento lateral, es éste el que exclusivamente se avisa, por lo que la advertencia deberá concluir tan pronto como el vehículo haya adoptado su nueva trayectoria. b) La marcha hacia atrás será advertida con la correspondiente luz de marcha atrás, si dispone de ella, o, en caso contrario, extendiendo el brazo horizontalmente con la palma de la mano hacia atrás. c) La intención de inmovilizar el vehículo o de frenar su marcha de modo considerable, aun cuando tales hechos vengan impuestos por las circunstancias del tráfico, deberá advertirse, siempre que sea posible, mediante el empleo reiterado de las luces de frenado o bien moviendo el brazo alternativamente de arriba abajo con movimientos cortos y rápidos. Cuando la inmovilización tenga lugar en una autopista o autovía, o en lugares o circunstancias que disminuyan sensiblemente la visibilidad, se deberá señalizar la presencia del vehículo mediante la utilización de la luz de emergencia, si se dispone de ella, y, en su caso, con las luces de posición. Si la inmovilización se realiza para parar o estacionar deberá utilizarse, además, el indicador luminoso de dirección correspondiente al lado hacia el que vaya a efectuarse aquélla, si el vehículo dispone de dicho dispositivo. 3. Con la misma finalidad que para las acústicas se señala en el artículo siguiente y para sustituirlas podrán efectuarse advertencias luminosas, incluso en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento."
+    },
+    {
+      "pregunta": "5. Según el artículo 105 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, todo vehículo que, por cualquier circunstancia, se encuentre inmovilizado entre la puesta y la salida del sol o bajo las condiciones a que se refiere el artículo 106, en calzada o arcén de una vía, deberá tener encendidas:",
+      "opciones": [
+        "Las luces de posición y, en su caso, las de gálibo.",
+        "Las luces de corto alcance y, en su caso, las de gálibo.",
+        "Las luces de cruce y, en su caso, las de gálibo.",
+        "Las luces de posición únicamente."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 105 Inmovilizaciones 1. Todo vehículo que, por cualquier circunstancia, se encuentre inmovilizado entre la puesta y la salida del sol o bajo las condiciones a que se refiere el artículo 106, en calzada o arcén de una vía, deberá tener encendidas las luces de posición y, en su caso, las de gálibo. 2. Todo vehículo parado o estacionado entre la puesta y la salida del sol en calzada o arcén de una travesía insuficientemente iluminada deberá tener encendidas las luces de posición, que podrá sustituir por las de estacionamiento, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en línea. 3. En vías urbanas que no sean travesías no será obligatorio que los vehículos estacionados tengan encendidas las luces de posición cuando la iluminación permita a otros usuarios distinguirlos a una distancia suficiente. 4. La inmovilización, la parada o el estacionamiento de un vehículo sin alumbrado en situaciones de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "6. En carreteras convencionales con separación física de los dos sentidos de circulación, el titular de la vía podrá fijar un límite máximo de 100 km/h para algunos vehículos. ¿Cuál de los siguientes no está incluido en esos vehículos?.",
+      "opciones": [
+        "Turismos.",
+        "Motocicletas.",
+        "Autocaravanas con masa máxima autorizada igual o inferior a 3.500 kg.",
+        "Furgonetas."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 48.1a del RGCir."
+    },
+    {
+      "pregunta": "7. Según el artículo 110 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señala la respuesta incorrecta. Excepcionalmente o cuando así lo prevea alguna norma de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial, podrán emplearse señales acústicas de sonido no estridente, y queda prohibido su uso inmotivado o exagerado. Las advertencias acústicas sólo se podrán hacer por los conductores de vehículos no prioritarios:",
+      "opciones": [
+        "Para evitar un posible accidente y, de modo especial, en vías estrechas con muchas curvas.",
+        "Para advertir, fuera de poblado, al conductor de otro vehículo el propósito de adelantarlo.",
+        "Para advertir su presencia a los demás usuarios de la vía, de conformidad con lo dispuesto en el artículo 70.",
+        "Para advertir, dentro y fuera de poblado, al conductor de otro vehículo el propósito de adelantarlo."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 110 Advertencias acústicas 1. Excepcionalmente o cuando así lo prevea alguna norma de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial, podrán emplearse señales acústicas de sonido no estridente, y queda prohibido su uso inmotivado o exagerado. 2. Las advertencias acústicas sólo se podrán hacer por los conductores de vehículos no prioritarios: a) Para evitar un posible accidente y, de modo especial, en vías estrechas con muchas curvas. b) Para advertir, fuera de poblado, al conductor de otro vehículo el propósito de adelantarlo. c) Para advertir su presencia a los demás usuarios de la vía, de conformidad con lo dispuesto en el artículo 70."
+    },
+    {
+      "pregunta": "8. Según el artículo 109.3 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, indique la respuesta correcta:",
+      "opciones": [
+        "Con la misma finalidad que para las acústicas se señala en el artículo siguiente y para sustituirlas podrán efectuarse advertencias luminosas, incluso en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento.",
+        "Con la misma finalidad que para las acústicas se señala en el artículo siguiente y para utilizarlas conjuntamente podrán efectuarse advertencias luminosas, incluso en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento.",
+        "Con distinta finalidad que para las acústicas se señala en el artículo siguiente y para sustituirlas podrán efectuarse advertencias luminosas, incluso en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento.",
+        "Con la misma finalidad que para las acústicas se señala en el artículo siguiente y para sustituirlas podrán efectuarse advertencias luminosas, excepto en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 109 Advertencias ópticas 1. El conductor debe advertir mediante señales ópticas toda maniobra que implique un desplazamiento lateral o hacia atrás de su vehículo, así como su propósito de inmovilizarlo o de frenar su marcha de modo considerable. Tales advertencias ópticas se efectuarán con antelación suficiente a la iniciación de la maniobra, y, si son luminosas, permanecerán en funcionamiento hasta que termine aquélla. 2. A los efectos del apartado anterior, deberá tenerse en cuenta, además, lo siguiente: a) El desplazamiento lateral será advertido utilizando la luz indicadora de dirección correspondiente al lado hacia el que se va a realizar, o el brazo, en posición horizontal con la palma de la mano extendida hacia abajo, si el desplazamiento va a ser hacia el lado que la mano indica, o doblado hacia arriba, también con la palma de la mano extendida, si va a ser hacia el contrario.En las maniobras que impliquen un desplazamiento lateral, es éste el que exclusivamente se avisa, por lo que la advertencia deberá concluir tan pronto como el vehículo haya adoptado su nueva trayectoria. b) La marcha hacia atrás será advertida con la correspondiente luz de marcha atrás, si dispone de ella, o, en caso contrario, extendiendo el brazo horizontalmente con la palma de la mano hacia atrás. c) La intención de inmovilizar el vehículo o de frenar su marcha de modo considerable, aun cuando tales hechos vengan impuestos por las circunstancias del tráfico, deberá advertirse, siempre que sea posible, mediante el empleo reiterado de las luces de frenado o bien moviendo el brazo alternativamente de arriba abajo con movimientos cortos y rápidos. Cuando la inmovilización tenga lugar en una autopista o autovía, o en lugares o circunstancias que disminuyan sensiblemente la visibilidad, se deberá señalizar la presencia del vehículo mediante la utilización de la luz de emergencia, si se dispone de ella, y, en su caso, con las luces de posición. Si la inmovilización se realiza para parar o estacionar deberá utilizarse, además, el indicador luminoso de dirección correspondiente al lado hacia el que vaya a efectuarse aquélla, si el vehículo dispone de dicho dispositivo. 3. Con la misma finalidad que para las acústicas se señala en el artículo siguiente y para sustituirlas podrán efectuarse advertencias luminosas, incluso en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento."
+    },
+    {
+      "pregunta": "9. Según el artículo 101 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, ¿qué alumbrado se utilizará cuando se circule por una vía urbana insuficientemente iluminada?",
+      "opciones": [
+        "El alumbrado de largo alcance.",
+        "El alumbrado de posición y el alumbrado de corto alcance.",
+        "El alumbrado de largo alcance junto con el alumbrado de posición.",
+        "El alumbrado de posición."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 101 Alumbrado de corto alcance o de cruce 1. Todo vehículo de motor y ciclomotor que circule entre el ocaso y la salida del sol por vías urbanas o interurbanas suficientemente iluminadas, o a cualquier hora del día por túneles, pasos inferiores y tramos de vías afectados por la señal «Túnel» (S-5) suficientemente iluminados, llevará encendido, además del alumbrado de posición, el alumbrado de corto alcance o de cruce. Igualmente, llevará encendido dicho alumbrado en los poblados, cuando la vía esté insuficientemente iluminada. 2. Todo vehículo de motor y ciclomotor debe llevar encendido el alumbrado de corto alcance o de cruce al circular entre el ocaso y la salida del sol por vías interurbanas insuficientemente iluminadas o a cualquier hora del día por túneles, pasos inferiores y demás tramos afectados por la señal de «Túnel» insuficientemente iluminados, cuando concurra alguna de las siguientes circunstancias: a) No disponer de alumbrado de largo alcance. b) Circular a velocidad no superior a 40 kilómetros por hora y no estar utilizando el alumbrado de largo alcance. c) Posibilidad de producir deslumbramiento a otros usuarios de la vía pública. 3. Los supuestos de circulación en los que se produzca deslumbramiento al resto de los usuarios de la vía y de circulación sin alumbrado en situación de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "10. Según el artículo 109 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, indique la respuesta correcta:",
+      "opciones": [
+        "El conductor debe advertir mediante señales ópticas toda maniobra que implique un desplazamiento lateral o hacia atrás de su vehículo, así como su propósito de frenar su marcha de modo considerable, excepto inmovilizarlo.",
+        "Tales advertencias ópticas se efectuarán con antelación suficiente a la iniciación de la maniobra, y, si son luminosas, permanecerán en funcionamiento hasta que termine aquélla.",
+        "El desplazamiento lateral será advertido utilizando la luz indicadora de dirección correspondiente al lado hacia el que se va a realizar, o el brazo, en posición horizontal con la palma de la mano extendida hacia abajo, si el desplazamiento va a ser hacia el lado que la mano indica, o doblado hacia arriba, también con la palma de la mano extendida, si va a ser hacia el mismo lado.",
+        "En las maniobras que impliquen un desplazamiento lateral, es éste el que exclusivamente se avisa, por lo que la advertencia deberá continuar aunque el vehículo haya adoptado su nueva trayectoria."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 109 Advertencias ópticas 1. El conductor debe advertir mediante señales ópticas toda maniobra que implique un desplazamiento lateral o hacia atrás de su vehículo, así como su propósito de inmovilizarlo o de frenar su marcha de modo considerable. Tales advertencias ópticas se efectuarán con antelación suficiente a la iniciación de la maniobra, y, si son luminosas, permanecerán en funcionamiento hasta que termine aquélla. 2. A los efectos del apartado anterior, deberá tenerse en cuenta, además, lo siguiente: a) El desplazamiento lateral será advertido utilizando la luz indicadora de dirección correspondiente al lado hacia el que se va a realizar, o el brazo, en posición horizontal con la palma de la mano extendida hacia abajo, si el desplazamiento va a ser hacia el lado que la mano indica, o doblado hacia arriba, también con la palma de la mano extendida, si va a ser hacia el contrario.En las maniobras que impliquen un desplazamiento lateral, es éste el que exclusivamente se avisa, por lo que la advertencia deberá concluir tan pronto como el vehículo haya adoptado su nueva trayectoria. b) La marcha hacia atrás será advertida con la correspondiente luz de marcha atrás, si dispone de ella, o, en caso contrario, extendiendo el brazo horizontalmente con la palma de la mano hacia atrás. c) La intención de inmovilizar el vehículo o de frenar su marcha de modo considerable, aun cuando tales hechos vengan impuestos por las circunstancias del tráfico, deberá advertirse, siempre que sea posible, mediante el empleo reiterado de las luces de frenado o bien moviendo el brazo alternativamente de arriba abajo con movimientos cortos y rápidos. Cuando la inmovilización tenga lugar en una autopista o autovía, o en lugares o circunstancias que disminuyan sensiblemente la visibilidad, se deberá señalizar la presencia del vehículo mediante la utilización de la luz de emergencia, si se dispone de ella, y, en su caso, con las luces de posición. Si la inmovilización se realiza para parar o estacionar deberá utilizarse, además, el indicador luminoso de dirección correspondiente al lado hacia el que vaya a efectuarse aquélla, si el vehículo dispone de dicho dispositivo. 3. Con la misma finalidad que para las acústicas se señala en el artículo siguiente y para sustituirlas podrán efectuarse advertencias luminosas, incluso en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento."
+    },
+    {
+      "pregunta": "11. Según el artículo 107 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, si, por inutilización o avería irreparable en ruta del alumbrado correspondiente, se hubiera de circular con alumbrado de intensidad inferior:",
+      "opciones": [
+        "Se detendrá inmediatamente el vehículo.",
+        "Se circulará a velocidad normal utilizando las luces de emergencia.",
+        "Se circulará a velocidad por debajo de la mínima permitida.",
+        "Se deberá reducir la velocidad hasta la que permita la detención del vehículo dentro de la zona iluminada."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 107 Inutilización o avería del alumbrado Si, por inutilización o avería irreparable en ruta del alumbrado correspondiente, se hubiera de circular con alumbrado de intensidad inferior, se deberá reducir la velocidad hasta la que permita la detención del vehículo dentro de la zona iluminada."
+    },
+    {
+      "pregunta": "12. Qué tipo de vehículo de los siguientes, no puede utilizar el carril habilitado para VAO.",
+      "opciones": [
+        "Motocicletas.",
+        "Turismos.",
+        "Ciclomotores.",
+        "Vehículos mixtos adaptables."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 35.2a del RGCir. La utilización del carril habilitado para VAO queda limitada a motocicletas, turismos y vehículos mixtos adaptables, y está prohibida, por tanto, al resto de los vehículos y conjuntos de vehículos, incluidos los turismos con remolque, así como a peatones, ciclos, ciclomotores, vehículos de tracción animal y animales."
+    },
+    {
+      "pregunta": "13. Según el artículo 104 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, deberán llevar encendida durante el día la luz de corto alcance o cruce:",
+      "opciones": [
+        "Las motocicletas y ciclomotores que circulen por cualquier vía objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial. Todos los vehículos que circulen por un carril reversible, adicional o habilitado para circular en sentido contrario al habitual.",
+        "Las motocicletas que circulen por cualquier vía objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial. Todos los vehículos que circulen por un carril reversible, adicional o habilitado para circular en sentido contrario al habitual y los que circulen por el carril normal de circulación contiguo al utilizado en sentido contrario al habitual y los que circulen por los arcenes cuando se haya habilitado un carril adicional.",
+        "Las motocicletas que circulen por cualquier vía objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial. Todos los vehículos que circulen por un carril reversible, adicional o habilitado para circular en sentido contrario al habitual y los que circulen por el carril normal de circulación contiguo al utilizado en sentido contrario al habitual, los que circulen por los arcenes cuando se haya habilitado un carril adicional y los que circulen por un carril contiguo al reversible.",
+        "Las motocicletas y ciclomotores que circulen por cualquier vía objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial. Todos los vehículos que circulen por un carril reversible, adicional o habilitado para circular en sentido contrario al habitual y los que circulen por el carril normal de circulación contiguo al utilizado en sentido contrario al habitual, los que circulen por los arcenes cuando se haya habilitado un carril adicional y los que circulen por un carril contiguo al reversible."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 104 Uso del alumbrado durante el día Deberán llevar encendida durante el día la luz de corto alcance o cruce: a) Las motocicletas que circulen por cualquier vía objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial. b) Todos los vehículos que circulen por un carril reversible, por un carril adicional circunstancial o por un carril habilitado para circular en sentido contrario al normalmente utilizado en la calzada donde se encuentre situado, bien sea un carril que les esté exclusivamente reservado, bien esté abierto excepcionalmente a la circulación en dicho sentido, así como aquellos obligados en virtud de lo establecido en los artículos 41 y 42."
+    },
+    {
+      "pregunta": "14. Según el orden de preferencia en ausencia de señalización entre los distintos tipos de vehículos cuando uno de ellos tenga que dar marcha atrás, ¿Cuál de los siguientes es el último en la citada prioridad y en consecuencia debería dar marcha atrás?",
+      "opciones": [
+        "Vehículos destinados al transporte colectivo de viajeros.",
+        "Vehículos especiales y en régimen de transporte especial que excedan de las masas o dimensiones establecidas en las normas reguladoras de los vehículos.",
+        "Autocaravanas.",
+        "Vehículos de tracción animal."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 62.1 del RGCir."
+    },
+    {
+      "pregunta": "15. Indique la opción correcta: las bicicletas, no podrá adelantar a otro si la duración de la marcha de los vehículos colocados paralelamente excede...",
+      "opciones": [
+        "Los 15 segundos o el recorrido efectuado en dicha forma supera los 200 metros",
+        "Los 10 segundos o el recorrido efectuado en dicha forma supera los 100 metros",
+        "Los 20 segundos o el recorrido efectuado en dicha forma supera los 150 metros",
+        "Ninguna de las anteriores es correcta."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 36.3 del RGCir. El conductor de cualquiera de los vehículos enumerados en el apartado 1, excepto las bicicletas, no podrá adelantar a otro si la duración de la marcha de los vehículos colocados paralelamente excede los 15 segundos o el recorrido efectuado en dicha forma supera los 200 metros."
+    },
+    {
+      "pregunta": "16. ¿A qué velocidad máxima puede circular un autobús que está realizando un transporte escolar por una carretera convencional?",
+      "opciones": [
+        "100 km/h.",
+        "90 km/h.",
+        "80 km/h.",
+        "70 km/h."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 48 del RGCir. Velocidades máximas fuera de poblado. 90 km/h del autobús, menos 10 km/h por el transporte escolar."
+    },
+    {
+      "pregunta": "17. ¿A qué velocidad máxima puede circular un vehículo mixto adaptable por una autopista?",
+      "opciones": [
+        "120 km/h.",
+        "100 km/h.",
+        "90 km/h.",
+        "80 km/h."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 48 del RGCir."
+    },
+    {
+      "pregunta": "18. Los vehículos especiales o en régimen de transporte especial que excedan de las masas o dimensiones establecidas en el Reglamento General de Vehículos podrán circular, excepcionalmente, por autopistas y autovías cuando así se indique en la autorización complementaria de la que deben ir provistos, y los que no excedan de dichas masas o dimensiones, cuando, con arreglo a sus características, puedan desarrollar una velocidad superior a…",
+      "opciones": [
+        "60 km/h en llano.",
+        "60 km/h cuesta arriba.",
+        "60 km/h cuesta abajo.",
+        "Los vehículos especiales no pueden circular por las autopistas y autovías nunca."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 38.3 RGCir."
+    },
+    {
+      "pregunta": "19. Según el artículo 103 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, todo vehículo que se encuentre en las circunstancias aludidas en los artículos 99 ó 106 debe llevar siempre iluminada la placa posterior de matrícula y, en su caso, las otras placas o distintivos iluminados de los que reglamentariamente haya de estar dotado, teniendo en cuenta sus características o el servicio que preste. ¿A qué circunstancias se refieren los artículos 99 y 106?",
+      "opciones": [
+        "A circular en condiciones que disminuyan la velocidad.",
+        "A circular en condiciones que disminuyan la visibilidad.",
+        "Cuando lleven encendido al alumbrado de posición y, si la anchura excede de 2’10 metros, también la de gálibo.",
+        "Las respuestas b y c son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 103 Alumbrado de placa de matricula Todo vehículo que se encuentre en las circunstancias aludidas en los artículos 99 ó 106 debe llevar siempre iluminada la placa posterior de matrícula y, en su caso, las otras placas o distintivos iluminados de los que reglamentariamente haya de estar dotado, teniendo en cuenta sus características o el servicio que preste. Artículo 99 Alumbrados de posición y de gálibo 1. Todo vehículo que circule entre el ocaso y la salida del sol o bajo las condiciones a las que se refiere el artículo 106 y en el paso por túneles, pasos inferiores o tramos de vías afectados por la señal «Túnel» (S-5) deberá llevar encendidas las luces de posición y, si la anchura del vehículo excede de 2,10 metros, también la de gálibo. 2. La circulación sin alumbrado en situaciones de falta o disminución de visibilidad tendrá la consideración de infracción grave, conforme se prevé en el artículo 65.4.e) del texto articulado. Artículo 106 Condiciones que disminuyen la visibilidad 1. También será obligatorio utilizar el alumbrado cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga (artículo 43 del texto articulado). 2. En los casos a que se refiere el apartado anterior deberá utilizarse la luz antiniebla delantera o la luz de corto o largo alcance. La luz antiniebla delantera puede utilizarse aislada o simultáneamente con la de corto alcance o, incluso, con la de largo alcance. La luz antiniebla delantera sólo podrá utilizarse en dichos casos o en tramos de vías estrechas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 6,50 metros de anchura o inferior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149. La luz antiniebla trasera solamente deberá llevarse encendida cuando las condiciones meteorológicas o ambientales sean especialmente desfavorables, como en caso de niebla espesa, lluvia muy intensa, fuerte nevada o nubes densas de polvo o humo. 3. El hecho de circular sin alumbrado en situaciones de falta o disminución de la visibilidad tendrá la consideración de infracción grave, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "20. Según el artículo 106 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, la luz antiniebla delantera sólo podrá utilizarse cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga:",
+      "opciones": [
+        "Únicamente en los casos señalados en el enunciado.",
+        "O en tramos de vías estrechas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 6,50 metros de anchura o inferior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149.",
+        "O en tramos de vías anchas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 6,50 metros de anchura o superior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149.",
+        "O en tramos de vías estrechas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 7,50 metros de anchura o inferior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 106 Condiciones que disminuyen la visibilidad 1. También será obligatorio utilizar el alumbrado cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga (artículo 43 del texto articulado). 2. En los casos a que se refiere el apartado anterior deberá utilizarse la luz antiniebla delantera o la luz de corto o largo alcance. La luz antiniebla delantera puede utilizarse aislada o simultáneamente con la de corto alcance o, incluso, con la de largo alcance. La luz antiniebla delantera sólo podrá utilizarse en dichos casos o en tramos de vías estrechas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 6,50 metros de anchura o inferior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149. La luz antiniebla trasera solamente deberá llevarse encendida cuando las condiciones meteorológicas o ambientales sean especialmente desfavorables, como en caso de niebla espesa, lluvia muy intensa, fuerte nevada o nubes densas de polvo o humo. 3. El hecho de circular sin alumbrado en situaciones de falta o disminución de la visibilidad tendrá la consideración de infracción grave, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "21. Según el artículo 102.3 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, en caso de deslumbramiento, el conductor que lo sufra:",
+      "opciones": [
+        "Reducirá la velocidad hasta detenerse, para evitar el alcance de vehículos o peatones que circulen en el mismo sentido.",
+        "Reducirá la velocidad lo necesario, sin llegar a la detención total, para evitar el alcance de vehículos o peatones que circulen en el mismo sentido.",
+        "Reducirá la velocidad lo necesario, incluso hasta la detención total, para evitar el alcance de vehículos o peatones que circulen en el mismo sentido.",
+        "Aumentará la velocidad lo necesario, incluso hasta la detención total, para evitar el alcance de vehículos o peatones que circulen en el mismo sentido."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 102 Deslumbramiento 1. El alumbrado de largo alcance o de carretera deberá ser sustituido por el de corto alcance o de cruce tan pronto como se aprecie la posibilidad de producir deslumbramiento a otros usuarios de la misma vía o de cualquier otra vía de comunicación, y muy especialmente a los conductores de vehículos que circulen en sentido contrario y aunque éstos no cumplan esta prescripción, y no se restablecerá el alumbrado de carretera hasta rebasar, en el cruce, la posición del vehículo cruzado. 2. La misma precaución se guardará respecto a los vehículos que circulen en el mismo sentido y cuyos conductores puedan ser deslumbrados a través del espejo retrovisor. 3. En caso de deslumbramiento, el conductor que lo sufra reducirá la velocidad lo necesario, incluso hasta la detención total, para evitar el alcance de vehículos o peatones que circulen en el mismo sentido. 4. Las infracciones a las normas de este precepto tendrán la consideración de graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "22. Según el RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta correcta:",
+      "opciones": [
+        "Los vehículos de servicios de urgencia, públicos, vehículos especiales y transportes especiales excepto privados, podrán utilizar otras señales ópticas y acústicas en los casos y en las condiciones que se determinan en los artículos siguientes de esta sección.",
+        "Los conductores de vehículos de los servicios de policía, extinción de incendios, protección civil y salvamento, y asistencia sanitaria, pública o privada, cuando circulen o no en servicio urgente, advertirán su presencia de conformidad con lo dispuesto en el artículo 68.2.",
+        "De conformidad con lo dispuesto en el artículo 71, los conductores de vehículos destinados a obras o servicios y los de tractores y maquinaria agrícola y demás vehículos o transportes especiales advertirán su presencia mediante la utilización de la señal luminosa V-2 a que se refiere el artículo 173, o mediante la utilización del alumbrado que se determine en las normas reguladoras de los vehículos.",
+        "De conformidad con lo dispuesto en el artículo 71, los conductores de vehículos destinados a obras o servicios y los de tractores y maquinaria agrícola y demás vehículos o transportes especiales advertirán su presencia mediante la utilización de la señal luminosa V-1 a que se refiere el artículo 173, o mediante la utilización del alumbrado que se determine en las normas reguladoras de los vehículos."
+      ],
+      "correcta": 2,
+      "explicacion": "SECCIÓN 2 ADVERTENCIAS DE LOS VEHÍCULOS DE SERVICIOS DE URGENCIA Y DE OTROS SERVICIOS ESPECIALES Artículo 111 Normas generales Los vehículos de servicios de urgencia, públicos o privados, vehículos especiales y transportes especiales podrán utilizar otras señales ópticas y acústicas en los casos y en las condiciones que se determinan en los artículos siguientes de esta sección. Artículo 112 Advertencias de los vehículos de servicios de urgencia Los conductores de vehículos de los servicios de policía, extinción de incendios, protección civil y salvamento, y asistencia sanitaria, pública o privada, cuando circulen en servicio urgente, advertirán su presencia de conformidad con lo dispuesto en el artículo 68.2. Artículo 113 Advertencias de otros vehículos De conformidad con lo dispuesto en el artículo 71, los conductores de vehículos destinados a obras o servicios y los de tractores y maquinaria agrícola y demás vehículos, transportes especiales o vehículos destinados al servicio de auxilio en vías públicas, advertirán su presencia mediante la utilización de la señal luminosa V-2 a que se refiere el artículo 173, o mediante la utilización del alumbrado que se determine en las normas reguladoras de los vehículos."
+    },
+    {
+      "pregunta": "23. Según el artículo 105.2 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, todo vehículo parado o estacionado entre la puesta y la salida del sol en calzada o arcén de una travesía insuficientemente iluminada deberá tener encendidas:",
+      "opciones": [
+        "Las luces de posición, que podrá sustituir por las de estacionamiento, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en batería.",
+        "Las luces de posición, que podrá sustituir por las de corto alcance o cruce, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en línea.",
+        "Las luces de corto alcance, que podrá sustituir por las de posición, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en línea.",
+        "Las luces de posición, que podrá sustituir por las de estacionamiento, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en línea."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 105 Inmovilizaciones 1. Todo vehículo que, por cualquier circunstancia, se encuentre inmovilizado entre la puesta y la salida del sol o bajo las condiciones a que se refiere el artículo 106, en calzada o arcén de una vía, deberá tener encendidas las luces de posición y, en su caso, las de gálibo. 2. Todo vehículo parado o estacionado entre la puesta y la salida del sol en calzada o arcén de una travesía insuficientemente iluminada deberá tener encendidas las luces de posición, que podrá sustituir por las de estacionamiento, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en línea. 3. En vías urbanas que no sean travesías no será obligatorio que los vehículos estacionados tengan encendidas las luces de posición cuando la iluminación permita a otros usuarios distinguirlos a una distancia suficiente. 4. La inmovilización, la parada o el estacionamiento de un vehículo sin alumbrado en situaciones de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "24. ¿A partir de qué edad puede un conductor de bicicleta circular por los arcenes de las autovías si no existe la prohibición expresa mediante su correspondiente señal?",
+      "opciones": [
+        "A ninguna.",
+        "14 años.",
+        "16 años.",
+        "18 años."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 38.1 RGCir. Circulación en autopistas y autovías."
+    },
+    {
+      "pregunta": "25. Según el artículo 110 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, excepcionalmente o cuando así lo prevea alguna norma de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial, podrán emplearse señales acústicas de sonido no estridente, y queda prohibido su uso inmotivado o exagerado. Las advertencias acústicas sólo se podrán hacer por los conductores de vehículos no prioritarios. Señale la respuesta correcta:",
+      "opciones": [
+        "Para evitar un posible accidente y, de modo especial, en vías estrechas con muchas curvas.",
+        "Para advertir, dentro o fuera de poblado, al conductor de otro vehículo el propósito de adelantarlo.",
+        "Para advertir su presencia a los demás usuarios de la vía, de conformidad con lo dispuesto en el artículo 80.",
+        "Para advertir su presencia a los demás usuarios de la vía, de conformidad con lo dispuesto en el artículo 60."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 110 Advertencias acústicas 1. Excepcionalmente o cuando así lo prevea alguna norma de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial, podrán emplearse señales acústicas de sonido no estridente, y queda prohibido su uso inmotivado o exagerado. 2. Las advertencias acústicas sólo se podrán hacer por los conductores de vehículos no prioritarios: a) Para evitar un posible accidente y, de modo especial, en vías estrechas con muchas curvas. b) Para advertir, fuera de poblado, al conductor de otro vehículo el propósito de adelantarlo. c) Para advertir su presencia a los demás usuarios de la vía, de conformidad con lo dispuesto en el artículo 70."
+    },
+    {
+      "pregunta": "26. Según el artículo 105.3 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, ¿en qué tipo de vías no será obligatorio que los vehículos estacionados tengan encendidas las luces de posición cuando la iluminación permita a otros usuarios distinguirlos a una distancia suficiente?",
+      "opciones": [
+        "En vías urbanas que sean travesías.",
+        "En vías urbanas que no sean travesías.",
+        "En vías interurbanas insuficientemente iluminadas cuando estén parados en el arcén.",
+        "En vías urbanas y en travesías insuficientemente iluminadas."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 105 Inmovilizaciones 1. Todo vehículo que, por cualquier circunstancia, se encuentre inmovilizado entre la puesta y la salida del sol o bajo las condiciones a que se refiere el artículo 106, en calzada o arcén de una vía, deberá tener encendidas las luces de posición y, en su caso, las de gálibo. 2. Todo vehículo parado o estacionado entre la puesta y la salida del sol en calzada o arcén de una travesía insuficientemente iluminada deberá tener encendidas las luces de posición, que podrá sustituir por las de estacionamiento, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en línea. 3. En vías urbanas que no sean travesías no será obligatorio que los vehículos estacionados tengan encendidas las luces de posición cuando la iluminación permita a otros usuarios distinguirlos a una distancia suficiente. 4. La inmovilización, la parada o el estacionamiento de un vehículo sin alumbrado en situaciones de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "27. Según el artículo 108 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, los conductores están obligados a advertir al resto de los usuarios de la vía acerca de las maniobras que vayan a efectuar con sus vehículos.",
+      "opciones": [
+        "Como norma general, dichas advertencias se harán utilizando la señalización luminosa del vehículo o, en su defecto, con el brazo.",
+        "Dichas advertencias serán siempre hechas con el brazo.",
+        "Dichas advertencias deberán ser realizadas siempre utilizando la señal luminosa.",
+        "Como norma general, dichas advertencias se harán utilizando el brazo o, en su defecto, con la señalización luminosa del vehículo."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 108 Obligación de advertir las maniobras 1. Los conductores están obligados a advertir al resto de los usuarios de la vía acerca de las maniobras que vayan a efectuar con sus vehículos (artículo 44.1 del texto articulado). 2. Como norma general, dichas advertencias se harán utilizando la señalización luminosa del vehículo o, en su defecto, con el brazo (artículo 44.2 del texto articulado). La validez de las realizadas con el brazo quedará subordinada a que sean perceptibles por los demás usuarios de la vía y se efectúen de conformidad con lo dispuesto en el artículo siguiente, y anularán cualquier otra indicación óptica que las contradiga."
+    },
+    {
+      "pregunta": "28. Según el artículo 101 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, indique la respuesta correcta:",
+      "opciones": [
+        "Todo vehículo de motor y motocicleta que circule entre el ocaso y la salida del sol por vías urbanas o interurbanas suficientemente iluminadas, o a cualquier hora del día por túneles, pasos inferiores y tramos de vías afectados por la señal «Túnel» (S-5) suficientemente iluminados, llevará encendido, además del alumbrado de posición, el alumbrado de corto alcance o de cruce.",
+        "Todo vehículo de motor y ciclomotor que circule entre el ocaso y la salida del sol por vías urbanas o interurbanas suficientemente iluminadas, o a cualquier hora del día por túneles, pasos inferiores y tramos de vías afectados por la señal «Túnel» (S-5) suficientemente iluminados, llevará encendido, además del alumbrado de posición, el alumbrado de corto alcance o de cruce.",
+        "Todo vehículo de motor y ciclomotor que circule entre la salida y el ocaso del sol por vías urbanas o interurbanas suficientemente iluminadas, o a cualquier hora del día por túneles, pasos inferiores y tramos de vías afectados por la señal «Túnel» (S-5) suficientemente iluminados, llevará encendido, además del alumbrado de posición, el alumbrado de corto alcance o de cruce.",
+        "Todo vehículo de motor y ciclomotor que circule entre el ocaso y la salida del sol por vías urbanas o interurbanas suficientemente iluminadas, o a cualquier hora del día por túneles, pasos inferiores y tramos de vías afectados por la señal «Túnel» (S-5) suficientemente iluminados, llevará encendido, excepto el alumbrado de posición, el alumbrado de corto alcance o de cruce."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 101 Alumbrado de corto alcance o de cruce 1. Todo vehículo de motor y ciclomotor que circule entre el ocaso y la salida del sol por vías urbanas o interurbanas suficientemente iluminadas, o a cualquier hora del día por túneles, pasos inferiores y tramos de vías afectados por la señal «Túnel» (S-5) suficientemente iluminados, llevará encendido, además del alumbrado de posición, el alumbrado de corto alcance o de cruce. Igualmente, llevará encendido dicho alumbrado en los poblados, cuando la vía esté insuficientemente iluminada. 2. Todo vehículo de motor y ciclomotor debe llevar encendido el alumbrado de corto alcance o de cruce al circular entre el ocaso y la salida del sol por vías interurbanas insuficientemente iluminadas o a cualquier hora del día por túneles, pasos inferiores y demás tramos afectados por la señal de «Túnel» insuficientemente iluminados, cuando concurra alguna de las siguientes circunstancias: a) No disponer de alumbrado de largo alcance. b) Circular a velocidad no superior a 40 kilómetros por hora y no estar utilizando el alumbrado de largo alcance. c) Posibilidad de producir deslumbramiento a otros usuarios de la vía pública. 3. Los supuestos de circulación en los que se produzca deslumbramiento al resto de los usuarios de la vía y de circulación sin alumbrado en situación de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "29. Según el artículo 100.3 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, se entiende por vía insuficientemente iluminada:",
+      "opciones": [
+        "Aquella en la que, con vista normal, en algún punto de su calzada, no pueda leerse la placa de matrícula a 10 metros o no se distinga un vehículo pintado de oscuro a 50 metros de distancia.",
+        "Aquella en la que, con vista normal, en algún punto de su calzada, no pueda leerse la placa de matrícula a 50 metros o no se distinga un vehículo pintado de oscuro a 10 metros de distancia.",
+        "Aquella en la que, con vista normal, en algún punto de su calzada, no pueda leerse la placa de matrícula a 10 metros o no se distinga un vehículo pintado de claro a 50 metros de distancia.",
+        "Aquella en la que, con vista normal, en algún punto de su calzada, pueda leerse la placa de matrícula a 10 metros o se distinga un vehículo pintado de oscuro a 50 metros de distancia."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 100 Alumbrado de largo alcance o carretera 1. Todo vehículo equipado con luz de largo alcance o carretera que circule a más de 40 kilómetros por hora, entre el ocaso y la salida del sol, fuera de poblado, por vías insuficientemente iluminadas o a cualquier hora del día por túneles, pasos inferiores y tramos de vía afectados por la señal «Túnel» (S-5) insuficientemente iluminados, la llevará encendida, excepto cuando haya de utilizarse la de corto alcance o de cruce, de acuerdo con lo previsto en los artículos 101 y 102, especialmente para evitar los deslumbramientos. La luz de largo alcance o de carretera podrá utilizarse aisladamente o con la de corto alcance. 2. Se prohíbe la utilización de la luz de largo alcance o de carretera siempre que el vehículo se encuentre parado o estacionado, así como el empleo alternativo, en forma de destellos de la luz de largo alcance o de carretera y de la luz de corto alcance o de cruce, con finalidades distintas a las previstas en este reglamento. 3. Se entiende por vía insuficientemente iluminada aquella en la que, con vista normal, en algún punto de su calzada, no pueda leerse la placa de matrícula a 10 metros o no se distinga un vehículo pintado de oscuro a 50 metros de distancia. 4. Los supuestos de circulación en los que se produzca deslumbramiento al resto de los usuarios de la vía y de circulación sin alumbrado en situaciones de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "30. Según el artículo 106 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, la luz antiniebla trasera solamente deberá llevarse encendida:",
+      "opciones": [
+        "Cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la velocidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga.",
+        "Cuando las condiciones meteorológicas o ambientales sean desfavorables, como en caso de niebla, lluvia muy, fuerte nevada o nubes de polvo o humo.",
+        "Cuando las condiciones meteorológicas o ambientales sean especialmente desfavorables, como en caso de niebla espesa, lluvia muy intensa, fuerte nevada o nubes densas de polvo o humo.",
+        "Cuando existan condiciones meteorológicas o ambientales que aumenten sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 106 Condiciones que disminuyen la visibilidad 1. También será obligatorio utilizar el alumbrado cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga (artículo 43 del texto articulado). 2. En los casos a que se refiere el apartado anterior deberá utilizarse la luz antiniebla delantera o la luz de corto o largo alcance. La luz antiniebla delantera puede utilizarse aislada o simultáneamente con la de corto alcance o, incluso, con la de largo alcance. La luz antiniebla delantera sólo podrá utilizarse en dichos casos o en tramos de vías estrechas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 6,50 metros de anchura o inferior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149. La luz antiniebla trasera solamente deberá llevarse encendida cuando las condiciones meteorológicas o ambientales sean especialmente desfavorables, como en caso de niebla espesa, lluvia muy intensa, fuerte nevada o nubes densas de polvo o humo. 3. El hecho de circular sin alumbrado en situaciones de falta o disminución de la visibilidad tendrá la consideración de infracción grave, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "31. Según el artículo 106 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, la luz antiniebla delantera:",
+      "opciones": [
+        "Puede utilizarse aislada o simultáneamente con la de corto alcance o, incluso, con la de largo alcance.",
+        "Debe utilizarse simultáneamente con la de corto alcance o, incluso, con la de largo alcance.",
+        "Debe utilizarse con la de largo alcance.",
+        "Debe utilizarse aisladamente siempre."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 106 Condiciones que disminuyen la visibilidad 1. También será obligatorio utilizar el alumbrado cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga (artículo 43 del texto articulado). 2. En los casos a que se refiere el apartado anterior deberá utilizarse la luz antiniebla delantera o la luz de corto o largo alcance. La luz antiniebla delantera puede utilizarse aislada o simultáneamente con la de corto alcance o, incluso, con la de largo alcance. La luz antiniebla delantera sólo podrá utilizarse en dichos casos o en tramos de vías estrechas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 6,50 metros de anchura o inferior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149. La luz antiniebla trasera solamente deberá llevarse encendida cuando las condiciones meteorológicas o ambientales sean especialmente desfavorables, como en caso de niebla espesa, lluvia muy intensa, fuerte nevada o nubes densas de polvo o humo. 3. El hecho de circular sin alumbrado en situaciones de falta o disminución de la visibilidad tendrá la consideración de infracción grave, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "32. Según el artículo 106 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, también será obligatorio utilizar el alumbrado cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga. ¿A qué alumbrado se refiere?",
+      "opciones": [
+        "A la luz antiniebla delantera o la luz de largo alcance.",
+        "A la luz antiniebla delantera únicamente.",
+        "A la luz antiniebla delantera o la luz de corto o largo alcance.",
+        "A la luz de corto alcance únicamente."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 106 Condiciones que disminuyen la visibilidad 1. También será obligatorio utilizar el alumbrado cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga (artículo 43 del texto articulado). 2. En los casos a que se refiere el apartado anterior deberá utilizarse la luz antiniebla delantera o la luz de corto o largo alcance. La luz antiniebla delantera puede utilizarse aislada o simultáneamente con la de corto alcance o, incluso, con la de largo alcance. La luz antiniebla delantera sólo podrá utilizarse en dichos casos o en tramos de vías estrechas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 6,50 metros de anchura o inferior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149. La luz antiniebla trasera solamente deberá llevarse encendida cuando las condiciones meteorológicas o ambientales sean especialmente desfavorables, como en caso de niebla espesa, lluvia muy intensa, fuerte nevada o nubes densas de polvo o humo. 3. El hecho de circular sin alumbrado en situaciones de falta o disminución de la visibilidad tendrá la consideración de infracción grave, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "33. A partir de qué longitud, los de conjuntos de vehículos circularán normalmente por el carril situado más a su derecha, y podrán utilizar el inmediato con igual condición y en las mismas circunstancias citadas en el artículo 31.?",
+      "opciones": [
+        "5 metros.",
+        "7 metros.",
+        "10 metros.",
+        "12 metros."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 32 RGCir. los de conjuntos de vehículos de más de siete metros de longitud circularán normalmente por el situado más a su derecha, y podrán utilizar el inmediato con igual condición y en las mismas circunstancias citadas en el artículo 31."
+    },
+    {
+      "pregunta": "34. Según el artículo 101.2 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señala la incorrecta. Todo vehículo de motor y ciclomotor debe llevar encendido el alumbrado de corto alcance o de cruce al circular entre el ocaso y la salida del sol por vías interurbanas insuficientemente iluminadas o a cualquier hora del día por túneles, pasos inferiores y demás tramos afectados por la señal de «Túnel» insuficientemente iluminados, cuando concurra alguna de las siguientes circunstancias:",
+      "opciones": [
+        "No disponer de alumbrado de largo alcance.",
+        "Circular a velocidad no superior a 40 kilómetros por hora y no estar utilizando el alumbrado de largo alcance.",
+        "Posibilidad de producir deslumbramiento a otros usuarios de la vía pública.",
+        "Circular a velocidad superior a 40 kilómetros por hora y no estar utilizando el alumbrado de largo alcance."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 101 Alumbrado de corto alcance o de cruce 1. Todo vehículo de motor y ciclomotor que circule entre el ocaso y la salida del sol por vías urbanas o interurbanas suficientemente iluminadas, o a cualquier hora del día por túneles, pasos inferiores y tramos de vías afectados por la señal «Túnel» (S-5) suficientemente iluminados, llevará encendido, además del alumbrado de posición, el alumbrado de corto alcance o de cruce. Igualmente, llevará encendido dicho alumbrado en los poblados, cuando la vía esté insuficientemente iluminada. 2. Todo vehículo de motor y ciclomotor debe llevar encendido el alumbrado de corto alcance o de cruce al circular entre el ocaso y la salida del sol por vías interurbanas insuficientemente iluminadas o a cualquier hora del día por túneles, pasos inferiores y demás tramos afectados por la señal de «Túnel» insuficientemente iluminados, cuando concurra alguna de las siguientes circunstancias: a) No disponer de alumbrado de largo alcance. b) Circular a velocidad no superior a 40 kilómetros por hora y no estar utilizando el alumbrado de largo alcance. c) Posibilidad de producir deslumbramiento a otros usuarios de la vía pública. 3. Los supuestos de circulación en los que se produzca deslumbramiento al resto de los usuarios de la vía y de circulación sin alumbrado en situación de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "35. Según el artículo 102 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, el alumbrado de largo alcance o carretera deberá ser sustituido por:",
+      "opciones": [
+        "El de corto alcance o de cruce tan pronto como se aprecie la posibilidad de producir deslumbramiento a otros usuarios de la misma vía o de cualquier otra vía de comunicación, y muy especialmente a los conductores de vehículos que circulen en sentido contrario y aunque éstos no cumplan esta prescripción, y no se restablecerá el alumbrado de carretera hasta rebasar, en el cruce, la posición del vehículo cruzado.",
+        "El de corto alcance o posición tan pronto como se aprecie la posibilidad de producir deslumbramiento a otros usuarios de la misma vía o de cualquier otra vía de comunicación, y muy especialmente a los conductores de vehículos que circulen en sentido contrario y aunque éstos no cumplan esta prescripción, y no se restablecerá el alumbrado de carretera hasta rebasar, en el cruce, la posición del vehículo cruzado.",
+        "El de corto alcance o de cruce tan pronto como se aprecie la posibilidad de producir deslumbramiento a otros usuarios de la misma vía o de cualquier otra vía de comunicación, y muy especialmente a los conductores de vehículos que circulen en sentido contrario y siempre que cumplan esta prescripción, y no se restablecerá el alumbrado de carretera hasta rebasar, en el cruce, la posición del vehículo cruzado.",
+        "El de corto alcance o de cruce tan pronto como se aprecie la posibilidad de producir deslumbramiento a otros usuarios de la misma vía o de cualquier otra vía de comunicación, y muy especialmente a los conductores de vehículos que circulen en sentido contrario y aunque éstos no cumplan esta prescripción, y no se restablecerá el alumbrado de carretera hasta antes de llegar a la posición del vehículo cruzado."
+      ],
+      "correcta": 0,
+      "explicacion": "Artículo 102 Deslumbramiento 1. El alumbrado de largo alcance o de carretera deberá ser sustituido por el de corto alcance o de cruce tan pronto como se aprecie la posibilidad de producir deslumbramiento a otros usuarios de la misma vía o de cualquier otra vía de comunicación, y muy especialmente a los conductores de vehículos que circulen en sentido contrario y aunque éstos no cumplan esta prescripción, y no se restablecerá el alumbrado de carretera hasta rebasar, en el cruce, la posición del vehículo cruzado. 2. La misma precaución se guardará respecto a los vehículos que circulen en el mismo sentido y cuyos conductores puedan ser deslumbrados a través del espejo retrovisor. 3. En caso de deslumbramiento, el conductor que lo sufra reducirá la velocidad lo necesario, incluso hasta la detención total, para evitar el alcance de vehículos o peatones que circulen en el mismo sentido. 4. Las infracciones a las normas de este precepto tendrán la consideración de graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "36. Según el artículo 105.2 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, deberá tener encendidas las luces de posición, que podrá sustituir por las de estacionamiento, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en línea, todo vehículo:",
+      "opciones": [
+        "Parado o estacionado entre la puesta y la salida del sol en calzada o arcén de una travesía suficientemente iluminada.",
+        "Parado entre la puesta y la salida del sol en calzada o arcén de una travesía suficientemente iluminada.",
+        "Parado o estacionado entre la puesta y la salida del sol en calzada o arcén de una travesía insuficientemente iluminada.",
+        "Estacionado entre la puesta y la salida del sol en calzada o arcén de una travesía suficientemente iluminada."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 105 Inmovilizaciones 1. Todo vehículo que, por cualquier circunstancia, se encuentre inmovilizado entre la puesta y la salida del sol o bajo las condiciones a que se refiere el artículo 106, en calzada o arcén de una vía, deberá tener encendidas las luces de posición y, en su caso, las de gálibo. 2. Todo vehículo parado o estacionado entre la puesta y la salida del sol en calzada o arcén de una travesía insuficientemente iluminada deberá tener encendidas las luces de posición, que podrá sustituir por las de estacionamiento, o por las dos de posición del lado correspondiente a la calzada, cuando se halle estacionado en línea. 3. En vías urbanas que no sean travesías no será obligatorio que los vehículos estacionados tengan encendidas las luces de posición cuando la iluminación permita a otros usuarios distinguirlos a una distancia suficiente. 4. La inmovilización, la parada o el estacionamiento de un vehículo sin alumbrado en situaciones de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "37. Según el artículo 109 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, indique la respuesta correcta:",
+      "opciones": [
+        "La marcha hacia atrás será advertida con la correspondiente luz de marcha atrás, si dispone de ella, o, en caso contrario, extendiendo el brazo horizontalmente con la palma de la mano hacia adelante.",
+        "La intención de inmovilizar el vehículo o de frenar su marcha de modo considerable, aun cuando tales hechos vengan impuestos por las circunstancias del tráfico, deberá advertirse, siempre que sea posible, mediante el empleo reiterado de las luces de frenado o bien moviendo el brazo alternativamente de arriba abajo con movimientos cortos y rápidos.",
+        "Cuando la inmovilización tenga lugar en una autopista o autovía, o en lugares o circunstancias que disminuyan sensiblemente la visibilidad, se deberá señalizar la presencia del vehículo mediante la utilización de la luz de emergencia, si se dispone de ella, y, en su caso, con las luces de corto alcance o cruce.",
+        "Si la inmovilización se realiza para parar o estacionar deberá utilizarse, además, el indicador luminoso de dirección correspondiente al lado hacia el que vaya a efectuarse aquélla, aunque el vehículo no disponga de dicho dispositivo."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 109 Advertencias ópticas 1. El conductor debe advertir mediante señales ópticas toda maniobra que implique un desplazamiento lateral o hacia atrás de su vehículo, así como su propósito de inmovilizarlo o de frenar su marcha de modo considerable. Tales advertencias ópticas se efectuarán con antelación suficiente a la iniciación de la maniobra, y, si son luminosas, permanecerán en funcionamiento hasta que termine aquélla. 2. A los efectos del apartado anterior, deberá tenerse en cuenta, además, lo siguiente: a) El desplazamiento lateral será advertido utilizando la luz indicadora de dirección correspondiente al lado hacia el que se va a realizar, o el brazo, en posición horizontal con la palma de la mano extendida hacia abajo, si el desplazamiento va a ser hacia el lado que la mano indica, o doblado hacia arriba, también con la palma de la mano extendida, si va a ser hacia el contrario. En las maniobras que impliquen un desplazamiento lateral, es éste el que exclusivamente se avisa, por lo que la advertencia deberá concluir tan pronto como el vehículo haya adoptado su nueva trayectoria. b) La marcha hacia atrás será advertida con la correspondiente luz de marcha atrás, si dispone de ella, o, en caso contrario, extendiendo el brazo horizontalmente con la palma de la mano hacia atrás. c) La intención de inmovilizar el vehículo o de frenar su marcha de modo considerable, aun cuando tales hechos vengan impuestos por las circunstancias del tráfico, deberá advertirse, siempre que sea posible, mediante el empleo reiterado de las luces de frenado o bien moviendo el brazo alternativamente de arriba abajo con movimientos cortos y rápidos. Cuando la inmovilización tenga lugar en una autopista o autovía, o en lugares o circunstancias que disminuyan sensiblemente la visibilidad, se deberá señalizar la presencia del vehículo mediante la utilización de la luz de emergencia, si se dispone de ella, y, en su caso, con las luces de posición. Si la inmovilización se realiza para parar o estacionar deberá utilizarse, además, el indicador luminoso de dirección correspondiente al lado hacia el que vaya a efectuarse aquélla, si el vehículo dispone de dicho dispositivo. 3. Con la misma finalidad que para las acústicas se señala en el artículo siguiente y para sustituirlas podrán efectuarse advertencias luminosas, incluso en poblado, utilizando en forma intermitente los alumbrados de corto o de largo alcance, o ambos alternativamente, a intervalos muy cortos y de modo que se evite el deslumbramiento."
+    },
+    {
+      "pregunta": "38. Según el artículo 103 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, todo vehículo que se encuentre en las circunstancias aludidas en los artículos 99 ó 106 debe llevar siempre iluminada la placa posterior de matrícula y, en su caso, las otras placas o distintivos iluminados de los que reglamentariamente haya de estar dotado, teniendo en cuenta sus características o el servicio que preste. ¿A qué circunstancias se refieren los artículos 99 y 106?",
+      "opciones": [
+        "A circular en condiciones que disminuyan la velocidad.",
+        "A circular en condiciones que disminuyan la visibilidad.",
+        "Cuando lleven encendido al alumbrado de posición y, si la anchura excede de 2’10 metros, podrá llevar encendida la de gálibo.",
+        "Las respuestas b y c son correctas."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 103 Alumbrado de placa de matricula Todo vehículo que se encuentre en las circunstancias aludidas en los artículos 99 ó 106 debe llevar siempre iluminada la placa posterior de matrícula y, en su caso, las otras placas o distintivos iluminados de los que reglamentariamente haya de estar dotado, teniendo en cuenta sus características o el servicio que preste. Artículo 99 Alumbrados de posición y de gálibo 1. Todo vehículo que circule entre el ocaso y la salida del sol o bajo las condiciones a las que se refiere el artículo 106 y en el paso por túneles, pasos inferiores o tramos de vías afectados por la señal «Túnel» (S-5) deberá llevar encendidas las luces de posición y, si la anchura del vehículo excede de 2,10 metros, también la de gálibo. 2. La circulación sin alumbrado en situaciones de falta o disminución de visibilidad tendrá la consideración de infracción grave, conforme se prevé en el artículo 65.4.e) del texto articulado. Artículo 106 Condiciones que disminuyen la visibilidad 1. También será obligatorio utilizar el alumbrado cuando existan condiciones meteorológicas o ambientales que disminuyan sensiblemente la visibilidad, como en caso de niebla, lluvia intensa, nevada, nubes de humo o de polvo o cualquier otra circunstancia análoga (artículo 43 del texto articulado). 2. En los casos a que se refiere el apartado anterior deberá utilizarse la luz antiniebla delantera o la luz de corto o largo alcance. La luz antiniebla delantera puede utilizarse aislada o simultáneamente con la de corto alcance o, incluso, con la de largo alcance. La luz antiniebla delantera sólo podrá utilizarse en dichos casos o en tramos de vías estrechas con muchas curvas, entendiéndose por tales las que, teniendo una calzada de 6,50 metros de anchura o inferior, estén señalizadas con señales que indiquen una sucesión de curvas próximas entre sí, reguladas en el artículo 149. La luz antiniebla trasera solamente deberá llevarse encendida cuando las condiciones meteorológicas o ambientales sean especialmente desfavorables, como en caso de niebla espesa, lluvia muy intensa, fuerte nevada o nubes densas de polvo o humo. 3. El hecho de circular sin alumbrado en situaciones de falta o disminución de la visibilidad tendrá la consideración de infracción grave, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "39. Según el artículo 101.2 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, los supuestos de circulación en los que se produzca deslumbramiento al resto de los usuarios de la vía y de circulación sin alumbrado en situación de falta o disminución de visibilidad tendrán la consideración de infracciones:",
+      "opciones": [
+        "Leves.",
+        "Graves.",
+        "Muy graves.",
+        "Graves o muy graves."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 101 Alumbrado de corto alcance o de cruce 1. Todo vehículo de motor y ciclomotor que circule entre el ocaso y la salida del sol por vías urbanas o interurbanas suficientemente iluminadas, o a cualquier hora del día por túneles, pasos inferiores y tramos de vías afectados por la señal «Túnel» (S-5) suficientemente iluminados, llevará encendido, además del alumbrado de posición, el alumbrado de corto alcance o de cruce. Igualmente, llevará encendido dicho alumbrado en los poblados, cuando la vía esté insuficientemente iluminada. 2. Todo vehículo de motor y ciclomotor debe llevar encendido el alumbrado de corto alcance o de cruce al circular entre el ocaso y la salida del sol por vías interurbanas insuficientemente iluminadas o a cualquier hora del día por túneles, pasos inferiores y demás tramos afectados por la señal de «Túnel» insuficientemente iluminados, cuando concurra alguna de las siguientes circunstancias: a) No disponer de alumbrado de largo alcance. b) Circular a velocidad no superior a 40 kilómetros por hora y no estar utilizando el alumbrado de largo alcance. c) Posibilidad de producir deslumbramiento a otros usuarios de la vía pública. 3. Los supuestos de circulación en los que se produzca deslumbramiento al resto de los usuarios de la vía y de circulación sin alumbrado en situación de falta o disminución de visibilidad tendrán la consideración de infracciones graves, conforme se prevé en el artículo 65.4.e) del texto articulado."
+    },
+    {
+      "pregunta": "40. ¿En carreteras convencionales con separación física de los dos sentidos de circulación, en que el titular de la vía ha fijado un límite máximo de 100 km/h A qué velocidad máxima puede circular un vehículo mixto adaptable?",
+      "opciones": [
+        "100 km/h",
+        "90 km/h",
+        "80 km/h",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 48.1 a 1º del RGCir. En carreteras convencionales con separación física de los dos sentidos de circulación, el titular de la vía podrá fijar un límite máximo de 100 km/h para turismos, motocicletas y autocaravanas con masa máxima autorizada igual o inferior a 3.500 kg. (no están incluidos los vehículos mixtos adaptables por lo que se les aplica la velocidad de cualquier carretera convencional 90 km/h)"
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

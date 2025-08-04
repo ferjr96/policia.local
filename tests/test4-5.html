@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. Cuál de los siguientes es el órgano más relevante del ejecutivo autonómico:",
+        "opciones": [
+            "El Parlamento.",
+            "El Consejo de Gobierno.",
+            "El Presidente.",
+            "Todas son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 152 CE 1. En los Estatutos aprobados por el procedimiento a que se refiere el artículo anterior, la organización institucional autonómica se basará en una Asamblea Legislativa, elegida por sufragio universal, con arreglo a un sistema de representación proporcional que asegure, además, la representación de las diversas zonas del territorio; un Consejo de Gobierno con funciones ejecutivas y administrativas y un Presidente, elegido por la Asamblea, de entre sus miembros, y nombrado por el Rey, al que corresponde la dirección del Consejo de Gobierno, la suprema representación de la respectiva Comunidad y la ordinaria del Estado en aquélla. El Presidente y los miembros del Consejo de Gobierno serán políticamente responsables ante la Asamblea. Un Tribunal Superior de Justicia, sin perjuicio de la jurisdicción que corresponde al Tribunal Supremo, culminará la organización judicial en el ámbito territorial de la Comunidad Autónoma. En los Estatutos de las Comunidades Autónomas podrán establecerse los supuestos y las formas de participación de aquéllas en la organización de las demarcaciones judiciales del territorio. Todo ello de conformidad con lo previsto en la ley orgánica del poder judicial y dentro de la unidad e independencia de éste. Sin perjuicio de lo dispuesto en el artículo 123, las sucesivas instancias procesales, en su caso, se agotarán ante órganos judiciales radicados en el mismo territorio de la Comunidad Autónoma en que esté el órgano competente en primera instancia. 2. Una vez sancionados y promulgados los respectivos Estatutos, solamente podrán ser modificados mediante los procedimientos en ellos establecidos y con referéndum entre los electores inscritos en los censos correspondientes. 3. Mediante la agrupación de municipios limítrofes, los Estatutos podrán establecer circunscripciones territoriales propias, que gozarán de plena personalidad jurídica."
+    },
+    {
+        "pregunta": "Que porcentaje de los municipios cuya población represente una Diputación, será necesaria para la iniciativa en el proceso autonómico a que hace referencia el art. 143 de la Constitución.",
+        "opciones": [
+            "¾ partes",
+            "Mayoría absoluta del censo",
+            "3/5 partes",
+            "2/3 partes"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 143 La iniciativa del proceso autonómico corresponde a todas las Diputaciones interesadas o al órgano interinsular correspondiente y a las dos terceras partes de los municipios cuya población represente, al menos, la mayoría del censo electoral de cada provincia o isla. Estos requisitos deberán ser cumplidos en el plazo de seis meses desde el primer acuerdo adoptado al respecto por alguna de las Corporaciones locales interesadas."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale de los siguientes cuales son órganos básicos institucionales de una comunidad autónoma:",
+        "opciones": [
+            "Asamblea Legislativa.",
+            "Consejo de Gobierno.",
+            "Presidente del Consejo de Gobierno.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "La Constitución establece (art. 152.1 CE), en relación con la organización institucional básica de las Comunidades Autónomas, tres clases de órganos:"
+    },
+    {
+        "pregunta": "En qué parte de la CE viene reflejada la posibilidad de que Ceuta y Melilla podrían constituirse en Cominufdades u ciudades autonómicas:",
+        "opciones": [
+            "Art. 143.",
+            "Art. 151.",
+            "Disposición transitoria 5ª.",
+            "Disposición transitoria 1ª."
+        ],
+        "correcta": 2,
+        "explicacion": "DISPOSICIONES TRANSITORIAS CE Quinta. Las ciudades de Ceuta y Melilla podrán constituirse en Comunidades Autónomas si así lo deciden sus respectivos Ayuntamientos, mediante acuerdo adoptado por la mayoría absoluta de sus miembros y así lo autorizan las Cortes Generales, mediante una ley orgánica, en los términos previstos en el artículo 144."
+    },
+    {
+        "pregunta": "Qué artículo de la CE, hace referencia a la posibilidad de que los territorios que no cuenten con las características a que hace referencia el art. 143 de la CE, puedan constituirse como comunidades autónomas previa autorización de las Cortes Generales:",
+        "opciones": [
+            "144.",
+            "137.",
+            "148.",
+            "149."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 144 CE Las Cortes Generales, mediante ley orgánica, podrán, por motivos de interés nacional: a) Autorizar la constitución de una comunidad autónoma cuando su ámbito territorial no supere el de una provincia y no reúna las condiciones del apartado 1 del artículo 143. b) Autorizar o acordar, en su caso, un Estatuto de autonomía para territorios que no estén integrados en la organización provincial. c) Sustituir la iniciativa de las Corporaciones locales a que se refiere el apartado 2 del artículo 143."
+    },
+    {
+        "pregunta": "Pueden los Estatutos de autonomía establecer circunscripciones electorales propias mediante la agrupación de municipios limítrofes.",
+        "opciones": [
+            "Si.",
+            "No.",
+            "Solo si ha sido propuesto y aprobado por el Congreso.",
+            "Solo si ha sido propuesto y aprobado por la cámara de representación territorial (Senado)."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 152. Mediante la agrupación de municipios limítrofes, los Estatutos podrán establecer circunscripciones territoriales propias, que gozarán de plena personalidad jurídica."
+    },
+    {
+        "pregunta": "Qué parte del Título VIII dedica la CE a las Comunidades autónomas:",
+        "opciones": [
+            "Capitulo 2º.",
+            "Sección 1ª.",
+            "Capítulo 3º.",
+            "Capítulo 4º."
+        ],
+        "correcta": 2,
+        "explicacion": "TÍTULO VIII | DE LA ORGANIZACIÓN TERRITORIAL DEL ESTADO (arts. 137 a 158)               CAPÍTULO PRIMERO | PRINCIPIOS GENERALES (arts. 137 a 139).              CAPÍTULO SEGUNDO | DE LA ADMINISTRACIÓN LOCAL (arts. 140 a 142).              CAPÍTULO TERCERO | DE LAS COMUNIDADES AUTÓNOMAS (arts. 143 a 158)."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Puede una Asamblea Legislativa crear normas con rango de Decreto Ley y Decreto Legislativo?",
+        "opciones": [
+            "No.",
+            "Sí.",
+            "Solo si lo aprueban los Consells.",
+            "Ese tipo de normas son potestad del Congreso."
+        ],
+        "correcta": 1,
+        "explicacion": "NOTA No existe oposición a la utilización de estas técnicas legislativas (Decretos-leyes y decretos legislativos) por parte de los Gobiernos Autonómicos siempre que esté expresamente previsto en los respectivos Estatutos."
+    },
+    {
+        "pregunta": "Ud, como Presidente del Gobierno de España, podrá autorizar mediante un Decreto ley convertido posteriormente en Ley ordinaria, la constitución de una comunidad autónoma cuando su ámbito territorial no supere el de una provincia y no reúna las condiciones del apartado 1 del artículo 143.",
+        "opciones": [
+            "Si",
+            "Si, por motivos de interés nacional",
+            "No, son las Cortes Generales",
+            "No, son las cortes Generales mediante Ley Orgánica."
+        ],
+        "correcta": 3,
+        "explicacion": "CORRECTA: D Artículo 144 Las Cortes Generales, mediante ley orgánica, podrán, por motivos de interés nacional: a) Autorizar la constitución de una comunidad autónoma cuando su ámbito territorial no supere el de una provincia y no reúna las condiciones del apartado 1 del artículo 143."
+    },
+    {
+        "pregunta": "En qué artículo de la CE, viene garantizado el derecho de autonomía de las nacionalidades y regiones que integran la Nación Española:",
+        "opciones": [
+            "Art. 137.",
+            "Art. 1.",
+            "Art. 2.",
+            "Art. 138."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 2 CE La Constitución se fundamenta en la indisoluble unidad de la Nación española, patria común e indivisible de todos los españoles, y reconoce y garantiza el derecho a la autonomía de las nacionalidades y regiones que la integran y la solidaridad entre todas ellas."
+    },
+    {
+        "pregunta": "El artículo 142 de la CE, hace referencia a:",
+        "opciones": [
+            "A la creación de tributos autonómicos.",
+            "Las haciendas locales.",
+            "A la capacidad de crear impuestos de las administraciones.",
+            "Todas son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 142 CE Las Haciendas locales deberán disponer de los medios suficientes para el desempeño de las funciones que la ley atribuye a las Corporaciones respectivas y se nutrirán fundamentalmente de tributos propios y de participación en los del Estado y de las Comunidades Autónomas."
+    },
+    {
+        "pregunta": "Según la CE, el país se organiza territorialmente en:",
+        "opciones": [
+            "Municipios, provincias y comunidades autónomas.",
+            "Municipios, provincias, comunidades autónomas e Islas.",
+            "Municipios, provincias y comunidades autónomas que se constituyan.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 137 CE El Estado se organiza territorialmente en municipios, en provincias y en las Comunidades Autónomas que se constituyan. Todas estas entidades gozan de autonomía para la gestión de sus respectivos intereses. NOTA La CE nos habla del Estado, no del país."
+    },
+    {
+        "pregunta": "Qué artículo de la CE, hace referencia al Principio de prevalencia de las normas:",
+        "opciones": [
+            "149.3.",
+            "148.4.",
+            "149.5.",
+            "148.2."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 149 CE 1. El Estado tiene competencia exclusiva sobre las siguientes materias: (...) 2. Sin perjuicio de las competencias que podrán asumir las Comunidades Autónomas, el Estado considerará el servicio de la cultura como deber y atribución esencial y facilitará la comunicación cultural entre las Comunidades Autónomas, de acuerdo con ellas. 3. Las materias no atribuidas expresamente al Estado por esta Constitución podrán corresponder a las Comunidades Autónomas, en virtud de sus respectivos Estatutos. La competencia sobre las materias que no se hayan asumido por los Estatutos de Autonomía corresponderá al Estado, cuyas normas prevalecerán, en caso de conflicto, sobre las de las Comunidades Autónomas en todo lo que no esté atribuido a la exclusiva competencia de éstas. El derecho estatal será, en todo caso, supletorio del derecho de las Comunidades Autónomas."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Puede ser sustituida la iniciativa de las corporaciones locales a que se refiere el apartado 2 del artículo 143.",
+        "opciones": [
+            "No.",
+            "Si.",
+            "Si, pero solo por interés nacional.",
+            "Solo la iniciativa a que se refiere el art. 151."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 144. Las Cortes Generales, mediante ley orgánica, podrán, por motivos de interés nacional:"
+    },
+    {
+        "pregunta": "Quién tiene legitimación para presentar la Cuestión de Confianza en una Comunidad Autónoma?",
+        "opciones": [
+            "El Rey.",
+            "El líder de la oposición.",
+            "El Presidente del consejo de gobierno.",
+            "Cualquier diputado autonónmico."
+        ],
+        "correcta": 2,
+        "explicacion": "De manera análoga a lo que sucede a nivel estatal, donde el Presidente del Gobierno plantea la cuestión de confianza al Congreso, a nivel autonómico, es el Presidente del Consejo de Gobierno el que plantea la cuestión de confianza."
+    },
+    {
+        "pregunta": "Según el artículo 151 de la CE, qué porcentaje de municipios de las provincias afectadas es necesario para la iniciativa autonómica:",
+        "opciones": [
+            "2/3 partes.",
+            "3/4 partes.",
+            "1/5 parte.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 151 CE 1. No será preciso dejar transcurrir el plazo de cinco años, a que se refiere el apartado 2 del artículo 148, cuando la iniciativa del proceso autonómico sea acordada dentro del plazo del artículo 143.2, además de por las Diputaciones o los órganos interinsulares correspondientes, por las tres cuartas partes de los municipios de cada una de las provincias afectadas que representen, al menos, la mayoría del censo electoral de cada una de ellas y dicha iniciativa sea ratificada mediante referéndum por el voto afirmativo de la mayoría absoluta de los electores de cada provincia en los términos que establezca una ley orgánica."
+    },
+    {
+        "pregunta": "Señale de los siguientes cuales son Principios Generales de la Organización Territorial del Estado, según la CE:",
+        "opciones": [
+            "Principio de Constitucionalidad.",
+            "Principio de Independencia.",
+            "Principio de Voluntariedad.",
+            "La a y la c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Principios generales de la Organización territorial del Estado:  (artículos 137-139 CE) P. de Constitucionalidad,  P. de Unidad,  P. de Autonomía,  P. de Solidaridad,  P. de Igualdad de las CCAA,  P. de Voluntariedad,  P. de no heredabilidad."
+    },
+    {
+        "pregunta": "Según el artículo 148 de la CE, señale cuáles son competencias de una Comunidad Autónoma:",
+        "opciones": [
+            "Organización de las instituciones de gobierno.",
+            "Ordenación del territorio, urbanismo e infraestructuras.",
+            "Ferias interiores.",
+            "Todas son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 148 CE 1. Las Comunidades Autónomas podrán asumir competencias en las siguientes materias: 1.ª Organización de sus instituciones de autogobierno. 2.ª Las alteraciones de los términos municipales comprendidos en su territorio y, en general, las funciones que correspondan a la Administración del Estado sobre las Corporaciones locales y cuya transferencia autorice la legislación sobre Régimen Local. 3.ª Ordenación del territorio, urbanismo y vivienda. 4.ª Las obras públicas de interés de la Comunidad Autónoma en su propio territorio. 5.ª Los ferrocarriles y carreteras cuyo itinerario se desarrolle íntegramente en el territorio de la Comunidad Autónoma y, en los mismos términos, el transporte desarrollado por estos medios o por cable. 6.ª Los puertos de refugio, los puertos y aeropuertos deportivos y, en general, los que no desarrollen actividades comerciales. 7.ª La agricultura y ganadería, de acuerdo con la ordenación general de la economía. 8.ª Los montes y aprovechamientos forestales. 9.ª La gestión en materia de protección del medio ambiente. 10.ª Los proyectos, construcción y explotación de los aprovechamientos hidráulicos, canales y regadíos de interés de la Comunidad Autónoma; las aguas minerales y termales. 11.ª La pesca en aguas interiores, el marisqueo y la acuicultura, la caza y la pesca fluvial. 12.ª Ferias interiores. 13.ª El fomento del desarrollo económico de la Comunidad Autónoma dentro de los objetivos marcados por la política económica nacional. 14.ª La artesanía. 15.ª Museos, bibliotecas y conservatorios de música de interés para la Comunidad Autónoma. 16.ª Patrimonio monumental de interés de la Comunidad Autónoma. 17.ª El fomento de la cultura, de la investigación y, en su caso, de la enseñanza de la lengua de la Comunidad Autónoma. 18.ª Promoción y ordenación del turismo en su ámbito territorial. 19.ª Promoción del deporte y de la adecuada utilización del ocio. 20.ª Asistencia social. 21.ª Sanidad e higiene. 22.ª La vigilancia y protección de sus edificios e instalaciones. La coordinación y demás facultades en relación con las policías locales en los términos que establezca una ley orgánica. 2. Transcurridos cinco años, y mediante la reforma de sus Estatutos, las Comunidades Autónomas podrán ampliar sucesivamente sus competencias dentro del marco establecido en el artículo 149."
+    },
+    {
+        "pregunta": "Según el art. 158 de la Constitución Española, con el fin de corregir desequilibrios económicos interterritoriales y hacer efectivo el principio de solidaridad, se constituirá:",
+        "opciones": [
+            "Un fondo solidario.",
+            "El Estado avalará los préstamos de las Comunidades autónomas.",
+            "Un fondo de compensación.",
+            "Un régimen especial financiero."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 158. 2. Con el fin de corregir desequilibrios económicos interterritoriales y hacer efectivo el principio de solidaridad, se constituirá un Fondo de Compensación con destino a gastos de inversión, cuyos recursos serán distribuidos por las Cortes Generales entre las Comunidades Autónomas y provincias, en su caso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Comunidades Autónomas gozan de potestad:",
+        "opciones": [
+            "Ejecutiva.",
+            "Judicial.",
+            "Territorial.",
+            "Todas son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 152 CE 1. En los Estatutos aprobados por el procedimiento a que se refiere el artículo anterior, la organización institucional autonómica se basará en una Asamblea Legislativa, elegida por sufragio universal, con arreglo a un sistema de representación proporcional que asegure, además, la representación de las diversas zonas del territorio; un Consejo de Gobierno con funciones ejecutivas y administrativas y un Presidente, elegido por la Asamblea, de entre sus miembros, y nombrado por el Rey, al que corresponde la dirección del Consejo de Gobierno, la suprema representación de la respectiva Comunidad y la ordinaria del Estado en aquélla. El Presidente y los miembros del Consejo de Gobierno serán políticamente responsables ante la Asamblea. (...) NOTA Las CCAA gozan de potestas ejecutiva y legislativa."
+    },
+    {
+        "pregunta": "Señale de las siguientes, cuáles son competencia exclusiva del Estado, según el art. 149 de la CE:",
+        "opciones": [
+            "Administración de Justicia.",
+            "Sanidad Exterior.",
+            "Bases de régimen minero y energético.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 149 CE 1. El Estado tiene competencia exclusiva sobre las siguientes materias: 1.ª La regulación de las condiciones básicas que garanticen la igualdad de todos los españoles en el ejercicio de los derechos y en el cumplimiento de los deberes constitucionales. 2.ª Nacionalidad, inmigración, emigración, extranjería y derecho de asilo. 3.ª Relaciones internacionales. 4.ª Defensa y Fuerzas Armadas. 5.ª Administración de Justicia. 6.ª Legislación mercantil, penal y penitenciaria; legislación procesal, sin perjuicio de las necesarias especialidades que en este orden se deriven de las particularidades del derecho sustantivo de las Comunidades Autónomas. 7.ª Legislación laboral; sin perjuicio de su ejecución por los órganos de las Comunidades Autónomas. 8.ª Legislación civil, sin perjuicio de la conservación, modificación y desarrollo por las Comunidades Autónomas de los derechos civiles, forales o especiales, allí donde existan. En todo caso, las reglas relativas a la aplicación y eficacia de las normas jurídicas, relaciones jurídico-civiles relativas a las formas de matrimonio, ordenación de los registros e instrumentos públicos, bases de las obligaciones contractuales, normas para resolver los conflictos de leyes y determinación de las fuentes del Derecho, con respeto, en este último caso, a las normas de derecho foral o especial. 9.ª Legislación sobre propiedad intelectual e industrial. 10.ª Régimen aduanero y arancelario; comercio exterior. 11.ª Sistema monetario: divisas, cambio y convertibilidad; bases de la ordenación de crédito, banca y seguros. 12.ª Legislación sobre pesas y medidas, determinación de la hora oficial. 13.ª Bases y coordinación de la planificación general de la actividad económica. 14.ª Hacienda general y Deuda del Estado. 15.ª Fomento y coordinación general de la investigación científica y técnica. 16.ª Sanidad exterior. Bases y coordinación general de la sanidad. Legislación sobre productos farmacéuticos. 17.ª Legislación básica y régimen económico de la Seguridad Social, sin perjuicio de la ejecución de sus servicios por las Comunidades Autónomas. 18.ª Las bases del régimen jurídico de las Administraciones públicas y del régimen estatutario de sus funcionarios que, en todo caso, garantizarán a los administrados un tratamiento común ante ellas; el procedimiento administrativo común, sin perjuicio de las especialidades derivadas de la organización propia de las Comunidades Autónomas; legislación sobre expropiación forzosa; legislación básica sobre contratos y concesiones administrativas y el sistema de responsabilidad de todas las Administraciones públicas. 19.ª Pesca marítima, sin perjuicio de las competencias que en la ordenación del sector se atribuyan a las Comunidades Autónomas. 20.ª Marina mercante y abanderamiento de buques; iluminación de costas y señales marítimas; puertos de interés general; aeropuertos de interés general; control del espacio aéreo, tránsito y transporte aéreo, servicio meteorológico y matriculación de aeronaves. 21.ª Ferrocarriles y transportes terrestres que transcurran por el territorio de más de una Comunidad Autónoma; régimen general de comunicaciones; tráfico y circulación de vehículos a motor; correos y telecomunicaciones; cables aéreos, submarinos y radiocomunicación. 22.ª La legislación, ordenación y concesión de recursos y aprovechamientos hidráulicos cuando las aguas discurran por más de una Comunidad Autónoma, y la autorización de las instalaciones eléctricas cuando su aprovechamiento afecte a otra Comunidad o el transporte de energía salga de su ámbito territorial. 23.ª Legislación básica sobre protección del medio ambiente, sin perjuicio de las facultades de las Comunidades Autónomas de establecer normas adicionales de protección. La legislación básica sobre montes, aprovechamientos forestales y vías pecuarias. 24.ª Obras públicas de interés general o cuya realización afecte a más de una Comunidad Autónoma. 25.ª Bases de régimen minero y energético. 26.ª Régimen de producción, comercio, tenencia y uso de armas y explosivos. 27.ª Normas básicas del régimen de prensa, radio y televisión y, en general, de todos los medios de comunicación social, sin perjuicio de las facultades que en su desarrollo y ejecución correspondan a las Comunidades Autónomas. 28.ª Defensa del patrimonio cultural, artístico y monumental español contra la exportación y la expoliación; museos, bibliotecas y archivos de titularidad estatal, sin perjuicio de su gestión por parte de las Comunidades Autónomas. 29.ª Seguridad pública, sin perjuicio de la posibilidad de creación de policías por las Comunidades Autónomas en la forma que se establezca en los respectivos Estatutos en el marco de lo que disponga una ley orgánica. 30.ª Regulación de las condiciones de obtención, expedición y homologación de títulos académicos y profesionales y normas básicas para el desarrollo del artículo 27 de la Constitución, a fin de garantizar el cumplimiento de las obligaciones de los poderes públicos en esta materia. 31.ª Estadística para fines estatales. 32.ª Autorización para la convocatoria de consultas populares por vía de referéndum. 2. Sin perjuicio de las competencias que podrán asumir las Comunidades Autónomas, el Estado considerará el servicio de la cultura como deber y atribución esencial y facilitará la comunicación cultural entre las Comunidades Autónomas, de acuerdo con ellas. 3. Las materias no atribuidas expresamente al Estado por esta Constitución podrán corresponder a las Comunidades Autónomas, en virtud de sus respectivos Estatutos. La competencia sobre las materias que no se hayan asumido por los Estatutos de Autonomía corresponderá al Estado, cuyas normas prevalecerán, en caso de conflicto, sobre las de las Comunidades Autónomas en todo lo que no esté atribuido a la exclusiva competencia de éstas. El derecho estatal será, en todo caso, supletorio del derecho de las Comunidades Autónomas."
+    },
+    {
+        "pregunta": "Cual es la norma institucional básica de cada Comunidad autónoma.",
+        "opciones": [
+            "La Constitución",
+            "Los Estatutos",
+            "La a y la b son correctas",
+            "Ninguna es correcta"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 147 Dentro de los términos de la presente Constitución, los Estatutos serán la norma institucional básica de cada Comunidad Autónoma y el Estado los reconocerá y amparará como parte integrante de su ordenamiento jurídico."
+    },
+    {
+        "pregunta": "Según el art. 143 de la Constitución, donde se reconoce el derecho de autonomía.",
+        "opciones": [
+            "En los estatutos",
+            "En el art. 2",
+            "En el Preámbulo",
+            "En los derechos y libertades de los ciudadanos"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 143 1. En el ejercicio del derecho a la autonomía reconocido en el artículo 2 de la Constitución, las provincias limítrofes con características históricas, culturales y económicas comunes, los territorios insulares y las provincias con entidad regional histórica podrán acceder a su autogobierno y constituirse en Comunidades Autónomas con arreglo a lo previsto en este Título y en los respectivos Estatutos."
+    },
+    {
+        "pregunta": "Según el art. 142 de la Constitución Española, existe la Hacienda Local.",
+        "opciones": [
+            "No, solo Hacienda del Estado.",
+            "No, solo la Hacienda de la Comunidad autónoma correspondiente.",
+            "No, solo la Hacienda del Estado y las de las comunidades.",
+            "Si."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 142. Las Haciendas locales deberán disponer de los medios suficientes para el desempeño de las funciones que la ley atribuye a las Corporaciones respectivas y se nutrirán fundamentalmente de tributos propios y de participación en los del Estado y de las Comunidades Autónomas."
+    },
+    {
+        "pregunta": "A quien corresponde el gobierno y la administración de los municipios.",
+        "opciones": [
+            "Los Alcaldes",
+            "Los Alcaldes y Concejales",
+            "A los Ayuntamientos",
+            "El Consejo de gobierno"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 140 La Constitución garantiza la autonomía de los municipios. Estos gozarán de personalidad jurídica plena. Su gobierno y administración corresponde a sus respectivos Ayuntamientos, integrados por los Alcaldes y los Concejales. Los Concejales serán elegidos por los vecinos del municipio mediante sufragio universal, igual, libre, directo y secreto, en la forma establecida por la ley. Los Alcaldes serán elegidos por los Concejales o por los"
+    },
+    {
+        "pregunta": "Imagine que se ha presentado un proyecto para constituir una Comunidad Autónoma a través del art. 151 de la Constitución, siguiendo los preceptos previstos en dicho artículo, puntos 1, 2. 1º, 2º, 3º y 4º. Cual será el procedimiento a seguir en caso de no alcanzar acuerdo para la aprobación del mismo.",
+        "opciones": [
+            "El Gobierno convocará a todos los Diputados y Senadores elegidos en las circunscripciones comprendidas en el ámbito territorial que pretenda acceder al autogobierno, para que se constituyan en Asamblea.",
+            "Se remitirá a la Comisión Constitucional del Congreso",
+            "Será tramitado como proyecto de ley ante las Cortes",
+            "No será preciso dejar transcurrir el plazo de cinco años, a que se refiere el apartado 2 del artículo 143"
+        ],
+        "correcta": 2,
+        "explicacion": "CORRECTA: C Artículo 151 1. No será preciso dejar transcurrir el plazo de cinco años, a que se refiere el apartado 2 del artículo 148, cuando la iniciativa del proceso autonómico sea acordada dentro del plazo del artículo 143.2, además de por las Diputaciones o los órganos interinsulares correspondientes, por las tres cuartas partes de los municipios de cada una de las provincias afectadas que representen, al menos, la mayoría del censo electoral de cada una de ellas y dicha iniciativa sea ratificada mediante referéndum por el voto afirmativo de la mayoría absoluta de los electores de cada provincia en los términos que establezca una ley orgánica. 2. En el supuesto previsto en el apartado anterior, el procedimiento para la elaboración del Estatuto será el siguiente: 1º El Gobierno convocará a todos los Diputados y Senadores elegidos en las circunscripciones comprendidas en el ámbito territorial que pretenda acceder al autogobierno, para que se constituyan en Asamblea, a los solos efectos de elaborar el correspondiente proyecto de Estatuto de autonomía, mediante el acuerdo de la mayoría absoluta de sus miembros. 2º Aprobado el proyecto de Estatuto por la Asamblea de Parlamentarios, se remitirá a la Comisión Constitucional del Congreso, la cual, dentro del plazo de dos meses, lo examinará con el concurso y asistencia de una delegación de la Asamblea proponente para determinar de común acuerdo su formulación definitiva. 3º Si se alcanzare dicho acuerdo, el texto resultante será sometido a referéndum del cuerpo electoral de las provincias comprendidas en el ámbito territorial del proyectado Estatuto. 4º Si el proyecto de Estatuto es aprobado en cada provincia por la mayoría de los votos válidamente emitidos, será elevado a las Cortes Generales. Los plenos de ambas Cámaras decidirán sobre el texto mediante un voto de ratificación. Aprobado el Estatuto, el Rey lo sancionará y lo promulgará como ley. 5º De no alcanzarse el acuerdo a que se refiere el apartado 2 de este número, el proyecto de Estatuto será tramitado como proyecto de ley ante las Cortes  Generales. El texto aprobado por éstas será sometido a referéndum del cuerpo electoral de las provincias comprendidas en el ámbito territorial del proyectado Estatuto. En caso de ser aprobado por la mayoría de los votos válidamente emitidos en cada provincia, procederá su promulgación en los términos del párrafo anterior. 1. En los casos de los párrafos 4.º y 5.º del apartado anterior, la no aprobación del proyecto de Estatuto por una o varias provincias no impedirá la constitución entre las restantes de la Comunidad Autónoma proyectada, en la forma que establezca la ley orgánica prevista en el apartado 1 de este artículo."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

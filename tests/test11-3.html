@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            {
+      "pregunta": "1. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Qué tipo de transporte podrá realizar una persona que ha obtenido el permiso de la clase D+E con 21 años debido a que es titular del CAP obtenido por la modalidad de cualificación acelerada?",
+      "opciones": [
+        "Transporte de viajeros de servicios discrecionales cuyo trayecto no supere los 50 km.",
+        "Transporte de viajeros de servicios regulares cuyo trayecto no supere los 50 km.",
+        "Transporte de viajeros de servicios regulares cuyo trayecto supere los 50 km.",
+        "Transporte de viajeros de servicios regulares y discrecionales cuyo trayecto no supere los 50 km."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos.24 La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria»."
+    },
+    {
+      "pregunta": "2. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Si una persona obtiene el permiso de la clase D+E con 20 años debido a que es titular del CAP, obtenido por la modalidad de cualificación ordinaria:",
+      "opciones": [
+        "Podrá realizar cualquier tipo de transporte de viajeros.",
+        "Sólo podrá realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "Podrá realizar cualquier tipo de transporte de viajeros, pero hasta los 21 cumplidos no podrá hacerlo fuera del territorio nacional.",
+        "Sólo podrá realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, y al cumplir los 21 podrá realizar cualquier tipo de transporte."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos.24 La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria»."
+    },
+    {
+      "pregunta": "3. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase D+E:",
+      "opciones": [
+        "La edad mínima de obtención será de 21 años cumplidos.",
+        "La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria»."
+    },
+    {
+      "pregunta": "4. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase D:",
+      "opciones": [
+        "La edad mínima de obtención será de 24 años cumplidos.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada.",
+        "La edad mínima será de 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. Sin ningún tipo de restricción"
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "5. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase D+E:",
+      "opciones": [
+        "La edad mínima de obtención será de 24 años cumplidos.",
+        "La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios discrecionales cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria»."
+    },
+    {
+      "pregunta": "6. ¿Qué norma modificó el RD 818/2009 y entró en vigor el 12 de noviembre de 2020?",
+      "opciones": [
+        "El RDL 970/2020.",
+        "El RD 971/2020.",
+        "El RD 1428/2020.",
+        "El RD 2822/2020."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 971/2020, de 10 de noviembre, por el que se modifica el Reglamento General de Conductores, aprobado por Real Decreto 818/2009, de 8 de mayo"
+    },
+    {
+      "pregunta": "7. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase D+E:",
+      "opciones": [
+        "La edad mínima de obtención será de 24 años cumplidos.",
+        "La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial ordinaria."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria»."
+    },
+    {
+      "pregunta": "8. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase D+E:",
+      "opciones": [
+        "La edad mínima de obtención será de 24 años cumplidos.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada.",
+        "La edad mínima será de 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial acelerada."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria»."
+    },
+    {
+      "pregunta": "9. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Si una persona obtiene el permiso de la clase D con 20 años debido a que es titular del CAP, obtenido por la modalidad de cualificación ordinaria:",
+      "opciones": [
+        "Podrá realizar cualquier tipo de transporte de viajeros.",
+        "Sólo podrá realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "Podrá realizar cualquier tipo de transporte de viajeros, pero hasta los 21 cumplidos no podrá hacerlo fuera del territorio nacional.",
+        "Sólo podrá realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, y al cumplir los 21 podrá realizar cualquier tipo de transporte."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "10. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Qué permisos de conducir no expedirán las Jefaturas Provinciales de Tráfico?",
+      "opciones": [
+        "Los permisos de conducción.",
+        "Las licencias de conducción.",
+        "Los permisos de conducción, las licencias de conducción y el permiso internacional para conducir.",
+        "Los que autorizan a conducir vehículos de las Fuerzas armadas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 2 Competencia para expedir los permisos y las licencias de conducción Los permisos y licencias de conducción, así como las autorizaciones administrativas que provisionalmente los sustituyan, serán expedidos por las Jefaturas Provinciales de Tráfico, con excepción de los que autorizan a conducir vehículos de las Fuerzas Armadas o de la Dirección General de Policía y de la Guardia Civil. Asimismo, será expedido por las Jefaturas Provinciales de Tráfico el permiso internacional para conducir regulado en la sección 2.ª del capítulo III del título I"
+    },
+    {
+      "pregunta": "11. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Puede conducir fuera del territorio nacional una persona que ha obtenido el permiso de la clase D con 21 años debido a que es titular del CAP por la modalidad de cualificación ordinaria?",
+      "opciones": [
+        "Sí.",
+        "Sí, pero el trayecto no puede superar los 50km.",
+        "No.",
+        "No, hasta que cumpla los 24."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "12. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase D:",
+      "opciones": [
+        "La edad mínima de obtención será de 24 años cumplidos.",
+        "La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios discrecionales cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "13. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Puede conducir fuera del territorio nacional una persona que ha obtenido el permiso de la clase D+E con 21 años debido a que es titular del CAP por la modalidad de cualificación ordinaria?",
+      "opciones": [
+        "Sí.",
+        "Sí, pero el trayecto no puede superar los 50 km.",
+        "No.",
+        "No, hasta que cumpla los 24."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos.24 La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria». NOTA: NO SE LE APLICA NINGUNA RESTRICCIÓN."
+    },
+    {
+      "pregunta": "14. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Cuál será la relación potencia/peso máxima de una motocicleta para poder ser conducida con el permiso de la clase A1?",
+      "opciones": [
+        "0,2 kW/kg.",
+        "0,3 kW/kg.",
+        "0,4 kW/kg.",
+        "0,1 kW/kg."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase A1 1. Motocicletas con una cilindrada máxima de 125 cm3, una potencia máxima de 11 kW y una relación potencia/peso máxima de 0,1 kW/kg y triciclos de motor cuya potencia máxima no exceda de 15 kW. 2. Vehículos para personas de movilidad reducida."
+    },
+    {
+      "pregunta": "15. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Qué tipo de transporte podrá realizar una persona que ha obtenido el permiso de la clase D+E con 18 años debido a que es titular del CAP obtenido por la modalidad de cualificación ordinaria?",
+      "opciones": [
+        "Podrá conducir vehículos sin pasajeros.",
+        "Podrá realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "Podrá conducir vehículos sin pasajeros, realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "Podrá conducir vehículos sin pasajeros, realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. Pero hasta los 21 años cumplidos no podrá conducirlos fuera del territorio nacional."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos.24 La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria»."
+    },
+    {
+      "pregunta": "16. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase D:",
+      "opciones": [
+        "La edad mínima de obtención será de 21 años cumplidos.",
+        "La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "17. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Qué tipo de transporte podrá realizar una persona que ha obtenido el permiso de la clase D con 21 años debido a que es titular del CAP obtenido por la modalidad de cualificación acelerada?",
+      "opciones": [
+        "Transporte de viajeros de servicios discrecionales cuyo trayecto no supere los 50 km.",
+        "Transporte de viajeros de servicios regulares cuyo trayecto no supere los 50 km.",
+        "Transporte de viajeros de servicios regulares cuyo trayecto supere los 50 km.",
+        "Transporte de viajeros de servicios regulares y discrecionales cuyo trayecto no supere los 50 km."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "18. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta respecto al permiso de la clase D:",
+      "opciones": [
+        "La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial acelerada.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial ordinaria y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima de obtención será de 24 años cumplidos."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "19. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Señale la respuesta correcta respecto a la edad mínima de obtención del permiso de la clase D+E cuando el titular del CAP lo ha obtenido por la modalidad de cualificación inicial ordinaria y pueda conducir estos vehículos fuera del territorio nacional:",
+      "opciones": [
+        "21.",
+        "18.",
+        "20.",
+        "23."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos.24 La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria». NOTA: NO SE LE APLICA NINGUNA RESTRICCIÓN."
+    },
+    {
+      "pregunta": "20. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta correcta respecto al permiso de la clase D+E:",
+      "opciones": [
+        "La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial acelerada.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial ordinaria y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima de obtención será de 24 años cumplidos."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria»."
+    },
+    {
+      "pregunta": "21. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Señale la respuesta correcta respecto a la edad mínima de obtención del permiso de la clase D+E cuando el titular del CAP lo ha obtenido por la modalidad de cualificación inicial acelerada y pueda conducir estos vehículos fuera del territorio nacional sin ningún tipo de limitación",
+      "opciones": [
+        "21.",
+        "20.",
+        "18.",
+        "23."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D+E: Conjuntos de vehículos acoplados compuestos por un vehículo tractor de los que autoriza a conducir el permiso de la clase D y un remolque cuya masa máxima autorizada exceda de 750 kg, sin perjuicio de las disposiciones que las normas de aprobación de tipo establezcan para estos vehículos.24 La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria». NOTA: NO SE LE APLICA NINGUNA RESTRICCIÓN."
+    },
+    {
+      "pregunta": "22. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Cuál será la potencia máxima en kW, de una motocicleta para poder ser conducida con el permiso de la clase A1?",
+      "opciones": [
+        "15 kW.",
+        "11 kW.",
+        "35 kW.",
+        "0,1 kW."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase A1 1. Motocicletas con una cilindrada máxima de 125 cm3, una potencia máxima de 11 kW y una relación potencia/peso máxima de 0,1 kW/kg y triciclos de motor cuya potencia máxima no exceda de 15 kW. 2. Vehículos para personas de movilidad reducida."
+    },
+    {
+      "pregunta": "23. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. ¿Qué tipo de transporte podrá realizar una persona que ha obtenido el permiso de la clase D con 18 años debido a que es titular del CAP obtenido por la modalidad de cualificación ordinaria?",
+      "opciones": [
+        "Podrá conducir vehículos sin pasajeros.",
+        "Podrá realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "Podrá conducir vehículos sin pasajeros, realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "Podrá conducir vehículos sin pasajeros, realizar transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. Pero hasta los 21 años cumplidos no podrá conducirlos fuera del territorio nacional."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    },
+    {
+      "pregunta": "24. Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores. Indique la respuesta incorrecta respecto al permiso de la clase D:",
+      "opciones": [
+        "La edad mínima de obtención será de 24 años cumplidos.",
+        "La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria.",
+        "La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km.",
+        "La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial ordinaria."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 818/2009, de 8 de mayo, por el que se aprueba el Reglamento General de Conductores Artículo 4: Permiso de la clase D: Automóviles diseñados y construidos para el transporte de más de ocho pasajeros además del conductor. Dichos automóviles podrán llevar enganchado un remolque cuya masa máxima autorizada no exceda de 750 kg. Edad mínima de obtención: 24 años cumplidos. La edad mínima será de 21 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. La edad mínima será de 21 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada y se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km. La edad mínima será de 23 años cumplidos si lo han obtenido realizando la modalidad de cualificación inicial acelerada. Dentro del territorio nacional y hasta que el titular del permiso tenga 21 años cumplidos, se podrá conducir a las siguientes edades: a) 18 años cumplidos en caso de que se conduzcan estos vehículos sin pasajeros o si se trata de transporte de viajeros en servicios regulares cuyo trayecto no supere los 50 km, para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria. b) 20 años cumplidos para los titulares del certificado de aptitud profesional (CAP) que lo hayan obtenido realizando la modalidad de cualificación inicial ordinaria."
+    }
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

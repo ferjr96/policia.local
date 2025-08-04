@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "El sindicato policial de un ayuntamiento de les Illes Balears denuncia que los armeros no se ajustan a la normativa vigente en el Decreto 40/2019, ya que se niegan a instalar cámaras de vigilancia cuando en la actualidad ya son una plantilla de 50 todos ellos con armas reglamentarias, siendo que:",
+        "opciones": [
+            "El ayuntamiento además debería instalar acceso restringido con clave o tarjeta",
+            "El ayuntamiento debe disponer de zona de seguridad especifica y armero homologado",
+            "El ayuntamiento también dispondrá de un recipiente de plástico para cargarlas",
+            "Las respuestas a y b son correctas"
+        ],
+        "correcta": 1,
+        "explicacion": "Solución en el artículo 68 del Decreto 40/2019 que se estudia en el tema 20, y debe quedar claro que tienen que ser “mas de 50 armas reglamentarias”"
+    },
+    {
+        "pregunta": "¿Quién asume la responsabilidad de uso del bastón extensible en casos de servicios colectivos?",
+        "opciones": [
+            "El policía que la use.",
+            "El mando inmediatamente superior.",
+            "El encargado de dar las órdenes.",
+            "El jefe de policía"
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 80.1 Decreto 40/2019 por el que se aprueba el Reglamento marco de coordinación [...]"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 73, procedimientos de habilitación y uso del arma. Las pruebas psicotécnicas que permitan detectar disfunciones o anomalías de carácter no compatibles con el uso de armas deben llevarse a cabo…",
+        "opciones": [
+            "Cada 3 años y debe certificarse que se han hecho ante la Dirección General de Emergencias e Interior, competente en materia de coordinación de policías locales.",
+            "Cada 4 años y debe certificarse que se han hecho ante la Dirección General de Emergencias e Interior, competente en materia de coordinación de policías locales.",
+            "Como mínimo con una periodicidad de 3 años y debe certificarse que se han hecho ante la Dirección General de Emergencias e Interior, competente en materia de coordinación de policías locales.",
+            "Como mínimo con una periodicidad de 4 años y debe certificarse que se han hecho ante la Dirección General de Emergencias e Interior, competente en materia de coordinación de policías locales."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20  Artículo 73 | Procedimientos de habilitación y de uso del arma 3. Las pruebas psicotécnicas que permitan detectar disfunciones o anomalías de carácter no compatibles con el uso de armas deben llevarse a cabo como mínimo con una periodicidad de 3 años y debe certificarse que se han hecho ante la Dirección General de Emergencias e Interior, competente en materia de coordinación de policías locales."
+    },
+    {
+        "pregunta": "El equipamiento básico incluye (señale la INCORRECTA):",
+        "opciones": [
+            "Los grilletes o las esposas.",
+            "Un aerosol defensivo",
+            "El silbato y cordón",
+            "Un equipo reflector homologado"
+        ],
+        "correcta": 1,
+        "explicacion": "Art. 103.3 Decreto 40/2019 por el que se aprueba el Reglamento marco de coordinación [...]"
+    },
+    {
+        "pregunta": "¿Por qué deben superarse pruebas psicotécnicas como mínimo cada tres años para poder tener un arma asignada?",
+        "opciones": [
+            "Porque los certificados psicológicos tienen un plazo de vigencia de tres años.",
+            "Porque así lvo determina la Ley 4/2013 de coordinación de las Policías Locales [...]",
+            "Porque así lo determina el psicólogo o psicóloga competente del ayuntamiento.",
+            "Ninguna respuesta es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 49.7 Decreto 40/2019 por el que se aprueba el Reglamento marco de coordinación [...]"
+    },
+    {
+        "pregunta": "Decreto 40/2019. Artículo 49, Armamento y equipamiento básico. Señale la opción correcta respecto a las armas largas de fuego.",
+        "opciones": [
+            "Sólo se podrán disponer en determinados casos y como armamento complementario si el alcalde/sa lo autoriza.",
+            "Todo cuerpo policial debe tener a disposición al menos, una arma larga, con la autorización del director/a general competente en materia de coordinación de policías locales.",
+            "Siempre tiene que haber una autorización del director/a general competente en materia de coordinación de policías locales.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 4. En determinados casos y como armamento complementario, los cuerpos policiales pueden disponer de armas largas de fuego si el alcalde o alcaldesa lo solicita previamente y siempre que dispongan de las autorizaciones previstas en la normativa vigente en materia de armas, incluida la autorización del director o la directora general competente en materia de coordinación de las policías locales. - A: Es incorrecta porque el alcalde/sa lo solicita, no lo autoriza. B: Es incorrecta porque el arma larga es opcional, no obligatoria."
+    },
+    {
+        "pregunta": "El responsable de armamento hará un informe si encuentra en tu armero:",
+        "opciones": [
+            "Arma descargada",
+            "Arma sin munición",
+            "Arma cargada",
+            "Arma sin cargadores"
+        ],
+        "correcta": 2,
+        "explicacion": "Solución en el artículo 68.3 del Decreto 40/2019 donde se aclara como deben quedar las armas en el armero. Respuesta correcta la c"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 49, ¿Quién es el encargado de asignar el equipo básico de autodefensa y protección?",
+        "opciones": [
+            "El ayuntamiento, y está formado por el armamento y el equipo básico.",
+            "El jefe/jefa de policía, y está formado por el armamento y el equipamiento básico.",
+            "El ayuntamiento, y está formado por el armamento y el equipamiento básico.",
+            "El jefe/jefa de policía, y está formado por el armamento y el equipo básico."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20  Artículo 49 | Armamento y equipamiento básico 1. El ayuntamiento debe asignar el equipo básico de autodefensa y protección a los miembros de los cuerpos de policía local o policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local para el ejercicio de sus funciones, de acuerdo con lo dispuesto en este reglamento. 2. El equipo básico de autodefensa y protección es el previsto en el artículo 103 de este reglamento y está integrado por el armamento y el equipamiento básico. Corresponde al ayuntamiento, y el equipo básico de autodefensa y protección está formado por ARMAMENTO y EQUIPAMIENTO BÁSICO."
+    },
+    {
+        "pregunta": "Una policía local asignada a la unidad de violencia doméstica y ejerciendo funciones no uniformadas de protección a una victima debe llevar su bastón extensible:",
+        "opciones": [
+            "Fuera de las dependencias policiales, deberá llevarla encima y en su funda",
+            "Fuera de las dependencias policiales, encima, en su funda y en cinturón",
+            "Dentro de las dependencias policiales, encima, en su funda y en el cinturón",
+            "Ninguna de las respuestas es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "La solución se encuentra en el artículo 78.1 del Decreto 40/2019 y deja bien claro que habla de los servicios “uniformados” por lo que la respuesta es la d"
+    },
+    {
+        "pregunta": "En el uso del bastón extensible los agentes de policía local tendrán muy claro que siempre y en todos los casos será en partes no vitales:",
+        "opciones": [
+            "Si, en todos los casos",
+            "Podrá ser en partes vitales cuando el individuo sea muy agresivo",
+            "Debe utilizarse, cuando sea imprescindible, contra partes no vitales",
+            "La normativa no habla de partes vitales en el uso del bastón extensible"
+        ],
+        "correcta": 2,
+        "explicacion": "La solución se encuentra en el artículo 81.2 del Decreto 40/2019 y deja claro que será en partes no vitales cuando sea imprescindible, la respuesta correcta es la c"
+    },
+    {
+        "pregunta": "En la base de datos del municipio de Llucmajor en lo referente a las armas, se recibe la queja por parte de un sindicato policial debido a que los expedientes de armas son:",
+        "opciones": [
+            "Colectivos",
+            "Informatizados",
+            "Con datos referentes a los cursos realizados",
+            "todas son correctas"
+        ],
+        "correcta": 0,
+        "explicacion": "Solución en el articulo 50 del Decreto 40/2019 y la respuesta correcta es la a, ya que deben ser individualizados."
+    },
+    {
+        "pregunta": "Tenemos que realizar la prueba de tiro obligatoria y en la galería de tiro las mismas serán dirigidas por:",
+        "opciones": [
+            "Monitores de tiro",
+            "Mandos competentes",
+            "Encargados de dar las órdenes",
+            "Responsables de armamento"
+        ],
+        "correcta": 0,
+        "explicacion": "Solución en el artículo 73. 4 del Decreto 40/2019 donde tipifica claramente que deben ser los monitores de tiro. Respuesta correcta es a"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 49, Armamento y equipamiento básico. El armamento de los miembros de los cuerpos de policía local y de las policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, que debe ajustarse a lo dispuesto en la normativa vigente en materia de armas, es…",
+        "opciones": [
+            "El arma corta de fuego, el bastón extensible y la defensa.",
+            "El arma corta de fuego, el bastón extensible o defensa, el aerosol defensivo y el arma larga.",
+            "El arma corta de fuego, el bastón extensible o defensa y el aerosol defensivo.",
+            "El arma larga de fuego, el bastón extensible o defensa y el aerosol defensivo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 49 | Armamento y equipamiento básico 3. El armamento de los miembros de los cuerpos de policía local y de las policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, que debe ajustarse a lo dispuesto en la normativa vigente en materia de armas, es el arma corta de fuego, el bastón extensible o defensa y el aerosol defensivo."
+    },
+    {
+        "pregunta": "Los distintivos señalan:",
+        "opciones": [
+            "Las diferentes unidades de los servicios.",
+            "Las diferentes categorías.",
+            "Los diferentes cuerpos de policía de los diferentes municipios.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Art. 97.1 Decreto 40/2019 por el que se aprueba el Reglamento marco de coordinación [...]"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 51. ¿Quién tiene como función específica llevar a cabo la gestión administrativa relativa a licencias, guías y revista de armas, de acuerdo con la normativa vigente y realizar el control del material?",
+        "opciones": [
+            "El mando encargado de armas.",
+            "El responsable de armamento.",
+            "El monitor de tiro.",
+            "Cualquiera de los anteriores, si es designado por el jefe/a de policía."
+        ],
+        "correcta": 1,
+        "explicacion": "D.º Policial - Tema 20  Artículo 51 | Responsable de armamento 1. En cada cuerpo policial, en los ayuntamientos sin cuerpo de policía y en la asociación de municipios, si procede, debe designarse un agente o una agente responsable de armamento con la capacitación correspondiente, que tiene como función específica llevar a cabo la gestión administrativa relativa a licencias, guías y revista de armas, de acuerdo con la normativa vigente y realizar el control del material"
+    },
+    {
+        "pregunta": "Se nos encomienda vigilar la puerta de acceso del ayuntamiento donde existe un acto oficial por lo que nos vamos a ver obligados a saludar cuando llevamos la pieza de cabeza con una ligera extensión del brazo derecho hacia la misma en forma de saludo militar, pero sin exageración:",
+        "opciones": [
+            "A las autoridades locales que vengan al acto y a nuestros superiores jerárquicos",
+            "A los ciudadanos que pregunten en la puerta",
+            "A los himnos oficiales que suenen",
+            "Todas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "La lectura correcta del artículo 126 del Decreto 40/2019, nos tipifica todos los casos que debemos saludar, siendo las respuesta correcta la d"
+    },
+    {
+        "pregunta": "Decreto 40/2019. Aplicando el artículo 68, Custodia del arma de fuego y de la cartuchería. ¿Cuándo será necesario que las dependencias municipales habilitadas para custodiar las armas dispongan de espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia?",
+        "opciones": [
+            "Siempre, ya que la Ley no especifica ningún mínimo al tratarse de medidas de seguridad en materia de armas de fuego.",
+            "En las plantillas que dispongan de más de cincuenta miembros de policía.",
+            "Todas las opciones son incorrectas.",
+            "En las plantillas que dispongan de sesenta armas reglamentarias."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 68 | Custodia del arma de fuego y de la cartuchería 2. En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 48, normativa específica. Señale la opción más correcta y completa:",
+        "opciones": [
+            "La tenencia y la utilización del equipo básico de autodefensa y protección por parte del personal de las policías locales de las Illes Balears debe ajustarse a los criterios de la Ley 4/2013.",
+            "“A” es correcta, y además también debe ajustarse al presente reglamento.",
+            "“B” es correcta, y además también debe ajustarse a las disposiciones del Real Decreto 137/1993, de 29 de enero, por el que se aprueba el Reglamento de armas, y del Real Decreto 740/1983, de 30 de marzo, por el que se regula la licencia de armas correspondientes a los miembros de la Policía de las Comunidades Autónomas y de las Entidades Locales.",
+            "Todas las opciones anteriores son correctas, y además los ayuntamientos no pueden aprobar normas sobre este aspecto en el ejercicio de su potestad normativa."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20  Artículo 48 | Normativa específica La tenencia y la utilización del equipo básico de autodefensa y protección por parte del personal de las policías locales de las Illes Balears debe ajustarse a los criterios de la Ley 4/2013, a este reglamento, a las disposiciones del Real Decreto 137/1993, de 29 de enero, por el que se aprueba el Reglamento de armas, y del Real Decreto 740/1983, de 30 de marzo, por el que se regula la licencia de armas correspondientes a los miembros de la Policía de las Comunidades Autónomas y de las Entidades Locales, y a las normas que los ayuntamientos puedan aprobar sobre este aspecto en el ejercicio de su potestad normativa. “A”, “B” y “C” son correctas, pero la “C” es la más correcta, ya que engloba a las anteriores. “D” es incorrecta porque los ayuntamientos sí pueden aprobar normas sobre este aspecto en el ejercicio de su potestad normativa."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 50, expediente de armas. Señale la correcta.",
+        "opciones": [
+            "Todos los cuerpos de policía local y policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, deben disponer de un expediente tipo de armas, informatizado e individualizado por agente.",
+            "Deben constar los datos referentes a la tenencia, la conservación y el uso, como cualquier otro dato relacionado.",
+            "Los datos referentes a la realización y el resultado de las pruebas, prácticas y cursos que lleven a cabo.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 50 | Expediente de armas Todos los cuerpos de policía local y policías locales de los ayuntamientos que no hayan constituido cuerpo de policía local, deben disponer de un expediente tipo de armas, informatizado e individualizado por agente, en el que consten los datos referentes a la tenencia, la conservación y el uso, como cualquier otro dato relacionado, incluida la realización y el resultado de las pruebas, prácticas y cursos que lleven a cabo."
+    },
+    {
+        "pregunta": "Cual de estas características NO debe cumplir una funda de dotación:",
+        "opciones": [
+            "Antirrobo",
+            "Sistema de retención de nivel dos.",
+            "Amoldada",
+            "Que permita extraer y enfundar el arma con una sola mano.."
+        ],
+        "correcta": 1,
+        "explicacion": "Art. 49.5 Decreto 40/2019 por el que se aprueba el Reglamento marco de coordinación [...]"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 91, de la apariencia externa. Señale la incorrecta. Las piezas y los efectos de uniforme y de equipo de las policías locales de las Illes Balears se consideran agrupados:",
+        "opciones": [
+            "Distintivos y medallas.",
+            "Equipo y armamento.",
+            "Escudos.",
+            "Vestuario."
+        ],
+        "correcta": 2,
+        "explicacion": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares.  Artículo 91 | Apariencia externa 2. Las piezas y los efectos de uniforme y de equipo de las policías locales de las Illes Balears se consideran agrupados en las siguientes clases: a) Vestuario b) Emblemas c) Distintivos y medallas d) Equipo y armamento"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 90, Elementos de identificación externa. Los únicos elementos de identificación externa son…",
+        "opciones": [
+            "La placa, la tarjeta profesional y las medallas previstos en el anexo 1 de este reglamento.",
+            "La placa, la tarjeta profesional y el armamento previstos en el anexo 1 de este reglamento.",
+            "La placa, la tarjeta profesional, los escudos y equipo previstos en el anexo 1 de este reglamento.",
+            "La placa, la tarjeta profesional y los escudos previstos en el anexo 1 de este reglamento."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 90 | Elementos de identificación externa Los únicos elementos de identificación externa son la placa, la tarjeta profesional y los escudos previstos en el anexo 1 de este reglamento."
+    },
+    {
+        "pregunta": "Una patrulla de policía local podrá usar el aerosol defensivo en los siguientes casos:",
+        "opciones": [
+            "Siempre que lo estimen congruente para evitar altercados graves",
+            "Ante peleas tumultuarias",
+            "Ante personas con una actitud agresiva que hayan amenazado con antelación a los policías",
+            "Todas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "La solución se encuentra en el articulo 82 del Decreto 40/2019 siendo que todas las respuestas encuadran en lo tipificado en dicho artículo por lo que es correcta la d"
+    },
+    {
+        "pregunta": "Un agente presenta una queja al inmediatamente superior, ya que al parecer la funda de su arma corta de fuego es:",
+        "opciones": [
+            "Negra",
+            "Amoldada",
+            "Antirrobo",
+            "Flexible"
+        ],
+        "correcta": 3,
+        "explicacion": "Solución en el artículo 49.5 del Decreto 40/2019 que se estudia en el tema 20, y la respuesta correcta será d, ya que la funda debe ser rígida."
+    },
+    {
+        "pregunta": "El agente de policía local Juan (evitaremos sus apellidos por seguridad) tiene como arma reglamentaria la pistola Glock-17, por lo que ha decidido instalar a la misma un láser para una mayor eficiencia en el uso del arma, por lo que deberá tener:",
+        "opciones": [
+            "La autorización expresa del alcalde o alcaldesa",
+            "La autorización del jefe o jefa del Cuerpo de Policía Local",
+            "La autorización del responsable de armamento",
+            "La autorización expresa del responsable de armamento"
+        ],
+        "correcta": 3,
+        "explicacion": "Solución en el artículo 69.2 del Decreto 40/2019 donde tipifica que hacer en caso de modificar el arma. Respuesta correcta es la d"
+    },
+    {
+        "pregunta": "El monitor de tiro decide realizar un tiro obligatorio semestral en el cual ha decidido que se hará un ejercicio específico donde se efectuarán 5 disparos desde un vehículo policial a una silueta en movimiento:",
+        "opciones": [
+            "Este ejercicio será válido mientras se haga mínimo semestralmente",
+            "Este ejercicio será válido mientras se haga trimestralmente",
+            "Este ejercicio únicamente será válido si está determinado por el EBAP",
+            "Este ejercicio será válido si está autorizado por el alcalde o alcaldesa"
+        ],
+        "correcta": 2,
+        "explicacion": "Solución el artículo 73.4 del Decreto 40/2019 donde se tipifica claramente que será la Escuela Balear de Administración Pública. Respuesta la C"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 68, custodia del arma de fuego y de la cartuchería. Señale la correcta.",
+        "opciones": [
+            "En las plantillas que dispongan de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia.",
+            "En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante un/a agente designado/a.",
+            "En las plantillas que dispongan de cincuenta o más armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia.",
+            "En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia."
+        ],
+        "correcta": 3,
+        "explicacion": "D.º Policial - Tema 20  Artículo 68 | Custodia del arma de fuego y de la cartuchería 2. En las plantillas que dispongan de más de cincuenta armas reglamentarias, las zonas de seguridad mencionadas en el apartado anterior para custodiar las armas deben situarse en espacios con acceso restringido con clave o tarjeta y controlados mediante cámaras de vigilancia."
+    },
+    {
+        "pregunta": "En una actuación un agente hace uso de la defensa para cargar contra varios individuos que estaban lanzado vasos de cristal contra los allí presentes en una riña tumultuaria, uno de ellos cae al suelo y al darle directrices para que se levante, el mismo hace una resistencia pasiva no grave, por la tanto actuaremos:",
+        "opciones": [
+            "Dejaremos de usar la defensa y usaremos otra táctica proporcional en el uso de la fuerza",
+            "Usaremos la defensa como una amenaza del uso coercitivo para que se levante",
+            "Cargaremos para despejar la zona tal y como teníamos ordenado",
+            "Usaremos la defensa para realizar una llave de defensa personal"
+        ],
+        "correcta": 0,
+        "explicacion": "La solución se encuentra en el artículo 81 del Decreto 40/2019 donde tipifica que no podemos amenazar ni pegar con la defensa a personas que hayan caído o que no ofrezcan una resistencia grave. La respuesta correcta es la a"
+    },
+    {
+        "pregunta": "¿Quién determinará los servicios en los cuales NO deben llevarse armasde fuego?",
+        "opciones": [
+            "El Alcalde o Alcaldesa.",
+            "El concejal en quién el Alcalde delegue de forma expresa.",
+            "El jefe de policía por delegación expresas del Alcalde.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Art. 52.1 Decreto 40/2019 por el que se aprueba el Reglamento marco de coordinación [...]"
+    },
+    {
+        "pregunta": "Apruebas la oposición y te conviertes en policía local en prácticas por lo que te ponen unas hombreras con distintivos color morado vino tal y como dice el artículo 101 del Decreto 40/2019 hasta:",
+        "opciones": [
+            "Que finalices la parte teórica",
+            "Seas nombrado personal funcionario de carrera",
+            "Finalices las prácticas",
+            "Finalices el curso básico de policía local en el EBAP"
+        ],
+        "correcta": 1,
+        "explicacion": "Tal y como dice la propia pregunta hay que ver el artículo 101 del Decreto 40/2019 y el mismo tipifica que habrá que esperar a ser nombrado funcionario de carrera por lo que la respuesta correcta es la b"
+    },
+    {
+        "pregunta": "La agente con numero de placa YY-YYYY ha sido designada como “policía tutor/a” por lo que debe ponerse el emblema:",
+        "opciones": [
+            "Emblema de la unidad de policía tutor en el hombro derecho",
+            "Emblema de policía tutor en el pecho izquierdo",
+            "Emblema de policía tutor en el pecho derecho",
+            "Emblema de la unidad de policía tutor en el hombro izquierdo"
+        ],
+        "correcta": 1,
+        "explicacion": "La Solución será la respuesta c ya que así lo tipifica el artículo 100"
+    },
+    {
+        "pregunta": "¿Pueden los agentes de policía local marcharse y depositar dentro de una furgoneta policial las armas reglamentarias, si están en el garaje de las dependencias policiales?:",
+        "opciones": [
+            "Al tratarse de un garaje oficial si se puede",
+            "En caso de que el garaje sea vigilado si se puede",
+            "Si es en caso motivado, si se puede",
+            "Todas son incorrectas"
+        ],
+        "correcta": 3,
+        "explicacion": "Solución en el artículo 70 del Decreto 40/2019 donde queda tipificado la prohibición de depositar armas incluso en garajes vigilados"
+    },
+    {
+        "pregunta": "Un ayuntamiento de les Illes Balears pretende modificar la uniformidad y solicita que se homologue por lo que dicha homologación saldrá publicada como:",
+        "opciones": [
+            "Un reglamento del alcalde o alcaldesa competente en materia de coordinación",
+            "Una orden del Conseller/a de emergencias competente en materia de coordinación",
+            "Una orden del Conseller/a de Hacienda y administraciones públicas competente…",
+            "Un Decreto del director general de emergencias competente en materia…"
+        ],
+        "correcta": 2,
+        "explicacion": "la solución se encuentra en el articulo 91.4 del Decreto 40/2019 siendo la respuesta “c” la más correcta"
+    },
+    {
+        "pregunta": "En una intervención se presume la necesidad de hacer un uso y ostentación del arma por parte de una agente que se encuentra realizando un servicio en un parque público, por lo que:",
+        "opciones": [
+            "Se pondrá a cubierto antes de hacer un uso del arma",
+            "Pedirá apoyo a sus compañeros por la emisora",
+            "Realizará un tiro preventivo con aviso de que es un agente de la autoridad",
+            "Adoptará las medidas preventivas que estime adecuada a dicha situación"
+        ],
+        "correcta": 3,
+        "explicacion": "La solución se encuentra en el artículo 77 del Decreto 40/2019 del tema 20 y el mismo tipifica de adoptar medidas preventivas por lo que la respuesta correcta es la d"
+    },
+    {
+        "pregunta": "Decreto 40/2019. Un miembro del cuerpo de policía local que ha manipulado y modificado las características originales del arma y de su munición y, además, algunos elementos del equipamiento de autodefensa, con autorización expresa del responsable de armamento. ¿Qué infracción ha cometido?",
+        "opciones": [
+            "Leve, ya que no presenta una autorización expresa del jefe/a del cuerpo.",
+            "Incurre en una infracción grave, ya que nunca se pueden manipular ni modificar las características originales del arma, de su munición o de los elementos del equipamiento básico.",
+            "No incurre en infracción en lo relativo a la manipulación y modificación del arma, ya que con la autorización expresa de la persona responsable de armamento del cuerpo sí se podría realizar estas modificaciones, pero no se pueden realizar manipulaciones en las municiones y en los elementos del equipamiento de autodefensa bajo ninguna circunstancia.",
+            "No ha incurrido en ninguna infracción, ya que presenta una autorización expresa de la persona responsable de armamento del cuerpo."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 69 | Conservación 2. Las características originales del arma, la munición y otros elementos del equipamiento de autodefensa no se pueden manipular ni modificar, excepto con una autorización expresa de la persona responsable de armamento del cuerpo."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 48, normativa específica. Señale la opción incorrecta: Los agentes, en caso de utilización de estos medios, deben regirse por los principios de…",
+        "opciones": [
+            "Proporcionalidad.",
+            "Competencia.",
+            "Congruencia.",
+            "Oportunidad."
+        ],
+        "correcta": 1,
+        "explicacion": "D.º Policial - Tema 20  Artículo 48 | Normativa específica Los agentes, en caso de utilización de estos medios, deben regirse por los principios de congruencia, oportunidad y proporcionalidad. El principio de “competencia” no está recogido, por tanto es la opción a marcar al pedir la incorrecta."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 52, servicios armados. ¿A quién corresponde determinar de forma motivada los servicios en los cuales no deben llevarse armas de fuego?",
+        "opciones": [
+            "Al alcalde o alcaldesa.",
+            "Al concejal/a en quien delegue.",
+            "Al jefe/a en quien delegue.",
+            "Todas pueden son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares."
+    },
+    {
+        "pregunta": "La base comisiona a una unidad de policía local para que acuda a un servicio, donde al parecer se está produciendo una violencia doméstica, por lo que los agentes deberán regirse en su actuación:",
+        "opciones": [
+            "Con sentido común",
+            "De forma congruente",
+            "De forma oportuna y proporcional",
+            "Las respuestas b y c son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "**Solución en el artículo 48 respuesta correcta la d"
+    },
+    {
+        "pregunta": "En una pelea multitudinaria llegan al lugar de los hechos 3 patrullas de policía local por lo que el agente más veterano asume la responsabilidad del servicio y se hace el encargado de dar las órdenes, manifestando que trabajarán como servicio colectivo en ese momento:",
+        "opciones": [
+            "Todos los agentes deberán seguir las órdenes para usar el bastón extensible",
+            "Todos los agentes deberán seguir las órdenes para sacar o guardar el bastón extensible",
+            "Todos los agentes podrán usar el bastón sin orden previa si es estrictamente necesario",
+            "Todas las respuestas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "La solución se encuentra tipificada en el artículo 80 del Decreto 40/2019, tipificando exactamente los servicios colectivos, por lo que la respuesta correcta será la d"
+    },
+    {
+        "pregunta": "¿De qué color es la anilla del distintivo de los policías auxiliares?",
+        "opciones": [
+            "Color dorado",
+            "Color morado vino",
+            "Color azul marino",
+            "No debe llevar anilla"
+        ],
+        "correcta": 2,
+        "explicacion": "Art 97.4 Decreto 40/2019 por el que se aprueba el Reglamento marco de coordinación [...]"
+    },
+    {
+        "pregunta": "Decreto 40/2019. Artículo 90, Elementos de identificación externa. ¿Cuáles de los siguientes son elementos de identificación externa?",
+        "opciones": [
+            "La tarjeta profesional, las insignias y los escudos, provistos en el Anexo I de este reglamento.",
+            "La placa y la tarjeta profesional, provistos en el Anexo I de este reglamento.",
+            "La placa, la tarjeta profesional y los distintivos, provistos en el Anexo I de este reglamento.",
+            "La tarjeta profesional, las medallas y las insignias, provistos en el Anexo I de este reglamento."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 90 | Elementos de identificación externa Los únicos elementos de identificación externa son la placa, la tarjeta profesional y los escudos previstos en el anexo 1 de este reglamento. La respuesta más correcta, aunque incompleta, es la B"
+    },
+    {
+        "pregunta": "La agente de policía local del municipio de Calvià ha recibido el equipo básico de autodefensa y protección, el cual está integrado por:",
+        "opciones": [
+            "Arma corta de fuego, defensa o bastón extensible y el aerosol defensivo",
+            "Grilletes, guantes anticorte, silbato",
+            "Equipo reflector (Chaleco reflectante)",
+            "Todas las respuestas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "**Solución en el articulo 49 y en el artículo 103 del Decreto 40/2019 que se estudia en el tema 20, y donde hay que entender todo lo que integra el equipo básico de autodefensa y protección, respuesta correcta la d"
+    },
+    {
+        "pregunta": "El agente de policía local de Palma con C.P. 1000 acaba de superar el tiro semestral con un revolver de la marca Astra, si bien se le asigna una pistola Glock-17 al día siguiente por lo que:",
+        "opciones": [
+            "El instructor de tiro lo llamará cuando le toque la siguiente tirada semestral",
+            "Deberá someterse de nuevo a las pruebas de tiro obligatorias",
+            "El responsable de armamento le autorizará a llevarla",
+            "El mando responsable le autoriza a portarla"
+        ],
+        "correcta": 1,
+        "explicacion": "Respuesta en el artículo 73.2 del Decreto 40/2019 donde dice que si se asigna un arma hay que tener superada la prueba, por lo tanto, en cada asignación de arma toca hacer el tiro. Respuesta correcta la b"
+    },
+    {
+        "pregunta": "Un agente fuera de servicio ha hecho uso justificado y no abusivo de su bastón extensible en una actuación en una pelea grave entre sus vecinos, si bien el órgano competente decide abrirle un expediente, por lo tanto:",
+        "opciones": [
+            "El agente será sancionado por una falta disciplinaria",
+            "El agente será apercibido o suspendido de empleo y sueldo",
+            "El agente no será sancionado porque su actuación encuadra con la normativa",
+            "El agente tendrá una separación del servicio"
+        ],
+        "correcta": 2,
+        "explicacion": "Solución en el artículo 52.2 del Decreto 40/2019, donde tiene que quedar claro el concepto del uso indebido y uso abusivo. Respuesta es correcta es c"
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 49. ¿Pueden los miembros de policía local poseer un arma corta de su propiedad, además de las que puedan recibir como dotación reglamentaria?",
+        "opciones": [
+            "Sí, como titulares de la licencia tipo “a” a la que se refiere el Real Decreto 137/1993.",
+            "Sí, como titulares de la licencia tipo “b” a la que se refiere el Real Decreto 137/1993.",
+            "No, como titulares de la licencia tipo “a” a la que se refiere el Real Decreto 137/1993.",
+            "No, como titulares de la licencia tipo “b” a la que se refiere el Real Decreto 137/1993."
+        ],
+        "correcta": 0,
+        "explicacion": "D.º Policial - Tema 20  Artículo 49 | Armamento y equipamiento básico 6. Sin perjuicio de lo establecido en el punto anterior, los miembros de los cuerpos de policía local, como titulares de la licencia tipo «a» a la que se refiere el Real Decreto 137/1993, pueden poseer un arma corta de su propiedad, además de las que puedan recibir como dotación reglamentaria. La licencia es de tipo “a”, y sí pueden poseer un arma corta de su propiedad."
+    },
+    {
+        "pregunta": "Decreto 40/2019, de 24 de mayo, por el que se aprueba el Reglamento marco de coordinación de las policías locales de las Islas Baleares. Artículo 76, ostentación del arma. ¿Debe evitarse hacer ostentación del arma?",
+        "opciones": [
+            "Se puede hacer toda ostentación que el agente crea necesario.",
+            "Sí, debe evitarse, siempre.",
+            "Sí, debe evitarse la ostentación excepto que sea imprescindible por las características del servicio que debe prestarse.",
+            "Sí, debe evitarse la ostentación excepto que sea prescindible por las características del servicio que debe prestarse."
+        ],
+        "correcta": 2,
+        "explicacion": "D.º Policial - Tema 20  Artículo 76 | Ostentación del arma Debe evitarse hacer ostentación del arma, excepto que sea imprescindible por las características del servicio que debe prestarse."
+    },
+    {
+        "pregunta": "La compañera de policía local Catalina (obviamos apellidos por su seguridad) está realizando en su municipio las funciones administrativas relativas a las licencias, guía y revista de las armas, debido a que está capacitada como:",
+        "opciones": [
+            "Mando responsable",
+            "Instructora de tiro",
+            "Responsable de armamento",
+            "Delegada de forma expresa por el Alcalde"
+        ],
+        "correcta": 2,
+        "explicacion": "Solución en el articulo 51 del Decreto 40/2019, donde tipifica las funciones del responsable de armamento, respuesta correcta la c"
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

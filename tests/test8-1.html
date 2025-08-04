@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+            
+    {
+      "pregunta": "1. Según el artículo 3 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, se deberá conducir con la diligencia y precaución necesarias para evitar todo daño, propio o ajeno, cuidando de no poner en peligro: Señale la respuesta correcta.",
+      "opciones": [
+        "Tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente prohibido conducir de modo negligente o temerario.",
+        "A los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente prohibido conducir de modo negligente o temerario.",
+        "Tanto al mismo conductor como a los demás ocupantes del vehículo. Queda terminantemente prohibido conducir de modo negligente o temerario.",
+        "Tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente permitido conducir de modo negligente o temerario."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 3 Conductores 1. Se deberá conducir con la diligencia y precaución necesarias para evitar todo daño, propio o ajeno, cuidando de no poner en peligro, tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente prohibido conducir de modo negligente o temerario"
+    },
+    {
+      "pregunta": "2. Un conductor de un camión destinado al transporte de mercancías con una masa máxima autorizada de 3.200 kilogramos que se puede conducir con el permiso de la clase B, ¿qué tasa de alcohol no deberá superar si va conduciendo dicho vehículo?",
+      "opciones": [
+        "0,50 gramos por litro en aire espirado.",
+        "0,25 miligramos por litro en aire espirado.",
+        "0,30 gramos por litro en aire espirado.",
+        "0,15 miligramos por litro en aire espirado."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 20 RGCir Tasas. No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro. Cuando se trate de vehículos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kilogramos, vehículos destinados al transporte de viajeros de más de nueve plazas, o de servicio público, al transporte escolar y de menores, al de mercancías peligrosas o de servicio de urgencia o transportes especiales, los conductores no podrán hacerlo con una tasa de alcohol en sangre superior a 0,3 gramos por litro, o de alcohol en aire espirado superior a 0,15 miligramos por litro."
+    },
+    {
+      "pregunta": "3. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Otras obligaciones del conductor: Indique la respuesta correcta.",
+      "opciones": [
+        "Se considera compatible el uso por el conductor de dispositivos tales como internet, monitores de televisión y reproductores de video o DVD.",
+        "Se considera incompatible el uso por el conductor de dispositivos tales como internet, monitores de televisión y reproductores de video o DVD.",
+        "Se incluye, el uso de monitores para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS.",
+        "La a y la c son correctas."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 18 Otras obligaciones del conductor 1. El conductor de un vehículo está obligado a mantener su propia libertad de movimientos, el campo necesario de visión y la atención permanente a la conducción, que garanticen su propia seguridad, la del resto de los ocupantes del vehículo y la de los demás usuarios de la vía. A estos efectos, deberá cuidar especialmente de mantener la posición adecuada y que la mantengan el resto de los pasajeros, y la adecuada colocación de los objetos o animales transportados para que no haya interferencia entre el conductor y cualquiera de ellos (artículo 11.2 del texto articulado). Se considera incompatible con la obligatoria atención permanente a la conducción el uso por el conductor con el vehículo en movimiento de dispositivos tales como pantallas con acceso a internet, monitores de televisión y reproductores de vídeo o DVD. Se exceptúan, a estos efectos, el uso de monitores que estén a la vista del conductor y cuya utilización sea necesaria para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS. En la opción C: Se incluye (debería poner \"se exceptúan), el uso de monitores para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS."
+    },
+    {
+      "pregunta": "4. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique de las siguientes definiciones cual es correcta: (Artículo 7. Emisión de perturbaciones y contaminantes).",
+      "opciones": [
+        "Todos los conductores de vehículos quedan obligados a colaborar en las pruebas de detección que permitan comprobar las posibles deficiencias indicadas.",
+        "Se prohíbe la circulación de vehículos a motor y ciclomotores con el llamado escape libre, únicamente en las vías urbanas.",
+        "Los agentes de la autoridad podrán denunciar, pero no inmovilizar, el vehículo en el caso de que supere los niveles de gases, humos y ruidos permitidos.",
+        "Quedan prohibidos, en concreto, los vertederos de basuras y residuos fuera de la zona de afección de las carreteras, en todo caso, y dentro de ella cuando exista peligro de que el humo producido por la incineración de las basuras o incendios ocasionales pueda alcanzar la carretera."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo a) Todos los conductores de vehículos quedan obligados a colaborar en las pruebas de detección que permitan comprobar las posibles deficiencias indicadas. b) Se prohíbe la circulación de vehículos a motor y ciclomotores con el llamado escape libre, únicamente en las vías urbanas. (Tanto en las vías públicas urbanas como en las interurbanas se prohíbe la circulación de vehículos a motor y ciclomotores con el llamado escape libre, sin el preceptivo dispositivo silenciador de las explosiones. ) c) Los agentes de la autoridad podrán denunciar, pero no inmovilizar, el vehículo en el caso de que supere los niveles de gases, humos y ruidos permitidos. (Los agentes de la autoridad podrán inmovilizar el vehículo en el caso de que supere los niveles de gases, humos y ruidos permitidos reglamentariamente, según el tipo de vehículo, conforme al artículo 70.2 del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial.) d) Quedan prohibidos, en concreto, los vertederos de basuras y residuos fuera de la zona de afección de las carreteras, en todo caso, y dentro de ella cuando exista peligro de que el humo producido por la incineración de las basuras o incendios ocasionales pueda alcanzar la carretera. (Quedan prohibidos, en concreto, los vertederos de basuras y residuos dentro de la zona de afección de las carreteras, en todo caso, y fuera de ella cuando exista peligro de que el humo producido por la incineración de las basuras o incendios ocasionales pueda alcanzar la carretera.) Artículo 7 Emisión de perturbaciones y contaminantes 1. Los vehículos no podrán circular por las vías o terrenos objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial si emiten perturbaciones electromagnéticas, con niveles de emisión de ruido superiores a los límites establecidos por las normas específicamente reguladoras de la materia, así como tampoco podrán emitir gases o humos en valores superiores a los límites establecidos ni en los supuestos de haber sido objeto de una reforma de importancia no autorizada, todo ello de acuerdo con lo dispuesto en el anexo I del Reglamento General de Vehículos. Todos los conductores de vehículos quedan obligados a colaborar en las pruebas de detección que permitan comprobar las posibles deficiencias indicadas. 2. Tanto en las vías públicas urbanas como en las interurbanas se prohíbe la circulación de vehículos a motor y ciclomotores con el llamado escape libre, sin el preceptivo dispositivo silenciador de las explosiones. Se prohíbe, asimismo, la circulación de los vehículos mencionados cuando los gases expulsados por los motores, en lugar de atravesar un silenciador eficaz, salgan desde el motor a través de uno incompleto, inadecuado, deteriorado o a través de tubos resonadores, y la de los de motor de combustión interna que circulen sin hallarse dotados de un dispositivo que evite la proyección descendente al exterior de combustible no quemado, o lancen humos que puedan dificultar la visibilidad a los conductores de otros vehículos o resulten nocivos. Los agentes de la autoridad podrán inmovilizar el vehículo en el caso de que supere los niveles de gases, humos y ruidos permitidos reglamentariamente, según el tipo de vehículo, conforme al artículo 70.2 del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial. 3. Queda prohibida la emisión de los contaminantes a que se refiere el apartado 1 producida por vehículos a motor por encima de las limitaciones previstas en las normas reguladoras de los vehículos. 4. Igualmente, queda prohibida dicha emisión por otros focos emisores de contaminantes distintos de los producidos por vehículos a motor, cualquiera que fuese su naturaleza, por encima de los niveles que el Gobierno establezca con carácter general. Quedan prohibidos, en concreto, los vertederos de basuras y residuos dentro de la zona de afección de las carreteras, en todo caso, y fuera de ella cuando exista peligro de que el humo producido por la incineración de las basuras o incendios ocasionales pueda alcanzar la carretera."
+    },
+    {
+      "pregunta": "5. Indique la opción correcta: ¿En qué título del RD 1428/2003 se regulan las Normas generales de comportamiento en la circulación?",
+      "opciones": [
+        "Título I",
+        "Título II",
+        "Título III",
+        "Título IV"
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo REGLAMENTO GENERAL DE CIRCULACIÓN TÍTULO PRELIMINAR. Ámbito de aplicación de las normas sobre tráfico, circulación de vehículos a motor y seguridad vial Artículo 1 Ámbito de aplicación TÍTULO I. Normas generales de comportamiento en la circulación CAPÍTULO I. Normas generales Artículo 2 Usuarios Artículo 3 Conductores Artículo 4 Actividades que afectan a la seguridad de la circulación Artículo 5 Señalización de obstáculos y peligros Artículo 6 Prevención de incendios Artículo 7 Emisión de perturbaciones y contaminantes CAPÍTULO II. De la carga de vehículos y del transporte de personas y mercancías o cosas"
+    },
+    {
+      "pregunta": "6. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique la opción correcta: (Artículo 25. Inmovilización del vehículo). En el supuesto de que el resultado de las pruebas y de los análisis, en su caso, fuera positivo, el agente podrá proceder a la inmovilización del vehículo. Además, podrá proceder a la inmediata inmovilización del vehículo...",
+      "opciones": [
+        "Siempre deberá inmovilizarlo mediante su precinto.",
+        "Cuando pueda hacerse cargo otra persona debidamente habilitada.",
+        "Cuando se niegue a someterse a la prueba.",
+        "Nunca."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 25 Inmovilización del vehículo 1. En el supuesto de que el resultado de las pruebas y de los análisis, en su caso, fuera positivo, el agente podrá proceder, además, a la inmediata inmovilización del vehículo, mediante su precinto u otro procedimiento efectivo que impida su circulación, a no ser que pueda hacerse cargo de su conducción otra persona debidamente habilitada, y proveerá cuanto fuese necesario en orden a la seguridad de la circulación, la de las personas transportadas en general, especialmente si se trata de niños, ancianos, enfermos o inválidos, la del propio vehículo y la de su carga. 2. También podrá inmovilizarse el vehículo en los casos de negativa a efectuar las pruebas de detección alcohólica"
+    },
+    {
+      "pregunta": "7. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique de las siguientes definiciones cual es correcta: (Artículo 2. Usuarios) Los usuarios de la vía están obligados a comportarse de forma que:",
+      "opciones": [
+        "No entorpezcan indebidamente la circulación ni causen peligro.",
+        "Ni causen perjuicios o molestias innecesarias a las personas.",
+        "Ni causen daños a los bienes.",
+        "Todas las anteriores son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 2 Usuarios Los usuarios de la vía están obligados a comportarse de forma que no entorpezcan indebidamente la circulación ni causen peligro, perjuicios o molestias innecesarias a las personas, o daños a los bienes"
+    },
+    {
+      "pregunta": "8. Un conductor que ha obtenido el permiso de conducir hace 20 meses, ¿qué tasa de alcohol no deberá superar si va conduciendo un turismo?",
+      "opciones": [
+        "0,50 gramos por litro en aire espirado.",
+        "0,25 miligramos por litro en aire espirado.",
+        "0,30 gramos por litro en aire espirado.",
+        "0,15 miligramos por litro en aire espirado."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 20 RGCir Tasas. Los conductores de cualquier vehículo no podrán superar la tasa de alcohol en sangre de 0,3 gramos por litro ni de alcohol en aire espirado de 0,15 miligramos por litro durante los dos años siguientes a la obtención del permiso o licencia que les habilita para conducir."
+    },
+    {
+      "pregunta": "9. Según el artículo 3 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta incorrecta:",
+      "opciones": [
+        "Las conductas referidas a la conducción negligente tendrán la consideración de infracciones graves.",
+        "Las referidas a la conducción temeraria tendrán la consideración de infracciones muy graves.",
+        "Las conductas referidas a la conducción negligente tendrán la consideración de infracciones muy graves.",
+        "La a y b son correctas."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 3 Conductores 1. Se deberá conducir con la diligencia y precaución necesarias para evitar todo daño, propio o ajeno, cuidando de no poner en peligro, tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente prohibido conducir de modo negligente o temerario (artículo 9.2 del texto articulado). 2. Las conductas referidas a la conducción negligente tendrán la consideración de infracciones graves y las referidas a la conducción temeraria tendrán la consideración de infracciones muy graves, de acuerdo con lo dispuesto en el artículo 65.4.a) y 5.c) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, respectivamente"
+    },
+    {
+      "pregunta": "10. Según el artículo 17.2 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, a los conductores de caballerías, ganados y vehículos de carga de tracción animal les está prohibido:",
+      "opciones": [
+        "Llevarlos corriendo por la vía en las inmediaciones de otros de la misma especie, así como abandonar su conducción, dejándoles marchar libremente por el camino o detenerse en él.",
+        "Llevarlos al paso por la vía en las inmediaciones de otros de la misma especie o de las personas que van a pie, así como abandonar su conducción, dejándoles marchar libremente por el camino o detenerse en él.",
+        "Llevarlos corriendo por la vía en las inmediaciones de otros de la misma especie o de las personas que van a pie, así como abandonar su conducción, dejándoles marchar libremente por el camino o detenerse en él.",
+        "Llevarlos corriendo por la vía en las inmediaciones de otros de la misma especie o de las personas que van a pie, así como abandonar su conducción, dejándoles marchar libremente por el camino pero no detenerse en él."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 17 Control del vehículo o de animales 1. Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas (artículo 11.1 del texto articulado). 2. A los conductores de caballerías, ganados y vehículos de carga de tracción animal les está prohibido llevarlos corriendo por la vía en las inmediaciones de otros de la misma especie o de las personas que van a pie, así como abandonar su conducción, dejándoles marchar libremente por el camino o detenerse en él."
+    },
+    {
+      "pregunta": "11. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Tasas de alcohol en sangre y aire espirado: (complete los espacios en blanco) No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a _________, o de alcohol en aire espirado superior a __________. Los conductores profesionales y los noveles, no podrán hacerlo con una tasa de alcohol en sangre superior a _________, o de alcohol en aire espirado superior a __________.",
+      "opciones": [
+        "0,5 miligramos por litro – 0,25 gramos por litro - 0,3 miligramos por litro – 0,15 gramos por litro.",
+        "0,25 gramos por litro – 0,5 miligramos por litro - 0,15 miligramos por litro – 0,3 gramos por litro.",
+        "0,5 gramos por litro – 0,25 miligramos por litro - 0,3 gramos por litro – 0,15 miligramos por litro.",
+        "0,25 miligramos por litro – 0,5 gramos por litro - 0,15 gramos por litro – 0,3 miligramos por litro."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 20 Tasas de alcohol en sangre y aire espirado No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro. Cuando se trate de vehículos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kilogramos, vehículos destinados al transporte de viajeros de más de nueve plazas, o de servicio público, al transporte escolar y de menores, al de mercancías peligrosas o de servicio de urgencia o transportes especiales, los conductores no podrán hacerlo con una tasa de alcohol en sangre superior a 0,3 gramos por litro, o de alcohol en aire espirado superior a 0,15 miligramos por litro. Los conductores de cualquier vehículo no podrán superar la tasa de alcohol en sangre de 0,3 gramos por litro ni de alcohol en aire espirado de 0,15 miligramos por litro durante los dos años siguientes a la obtención del permiso o licencia que les habilita para conducir."
+    },
+    {
+      "pregunta": "12. Según el artículo 2 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, indique la respuesta correcta:",
+      "opciones": [
+        "Los usuarios de la vía están obligados a comportarse de forma que entorpezcan debidamente la circulación y causen peligro, perjuicios o molestias innecesarias a las personas, o daños a los bienes.",
+        "Los usuarios de la vía están obligados a comportarse de forma que no entorpezcan indebidamente la circulación ni causen peligro, perjuicios o molestias innecesarias a las personas, o daños a los bienes.",
+        "Únicamente los conductores de vehículos están obligados a comportarse de forma que no entorpezcan indebidamente la circulación ni causen peligro, perjuicios o molestias innecesarias a las personas, o daños a los bienes.",
+        "Los usuarios de la vía están obligados a comportarse de forma que no entorpezcan indebidamente la circulación ni causen peligro, perjuicios o molestias innecesarias a las personas."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 2 Usuarios Los usuarios de la vía están obligados a comportarse de forma que no entorpezcan indebidamente la circulación ni causen peligro, perjuicios o molestias innecesarias a las personas, o daños a los bienes (artículo 9.1 del texto articulado)."
+    },
+    {
+      "pregunta": "13. Según el artículo 20 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, no podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de los siguientes vehículos cuando arrojen una tasa de alcohol en sangre superior a 0,3 gramos por litro, o de alcohol en aire espirado superior a 0,15 miligramos por litro. Señale la incorrecta:",
+      "opciones": [
+        "Vehículos destinados al transporte de viajeros de más de nueve plazas, o de servicio público, al transporte escolar y de menores.",
+        "Vehículos destinados al transporte de mercancías.",
+        "Los conductores de cualquier vehículo no podrán superar la tasa de alcohol en sangre de 0,3 gramos por litro ni de alcohol en aire espirado de 0,15 miligramos por litro durante los dos años siguientes a la obtención del permiso o licencia que les habilita para conducir.",
+        "Vehículos destinados al transporte de mercancías peligrosas o de servicio de urgencia o transportes especiales."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 20 Tasas de alcohol en sangre y aire espirado No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro. Cuando se trate de vehículos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kilogramos, vehículos destinados al transporte de viajeros de más de nueve plazas, o de servicio público, al transporte escolar y de menores, al de mercancías peligrosas o de servicio de urgencia o transportes especiales, los conductores no podrán hacerlo con una tasa de alcohol en sangre superior a 0,3 gramos por litro, o de alcohol en aire espirado superior a 0,15 miligramos por litro. Los conductores de cualquier vehículo no podrán superar la tasa de alcohol en sangre de 0,3 gramos por litro ni de alcohol en aire espirado de 0,15 miligramos por litro durante los dos años siguientes a la obtención del permiso o licencia que les habilita para conducir. A estos efectos, sólo se computará la antigüedad de la licencia de conducción cuando se trate de la conducción de vehículos para los que sea suficiente dicha licencia."
+    },
+    {
+      "pregunta": "14. Según el artículo 5 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación: Señale la respuesta incorrecta.",
+      "opciones": [
+        "La actuación de los equipos de los servicios de urgencia, así como la de los de asistencia mecánica y de conservación de carreteras, deberá procurar en todo momento la menor afectación posible sobre el resto de la circulación, ocupando el mínimo posible de la calzada y siguiendo en todo momento las instrucciones que imparta el organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes. El comportamiento de los conductores y usuarios en caso de emergencia se ajustará a lo establecido en los artículos 69, 129 y 130 y, en particular, el de los conductores de los vehículos de servicio de urgencia, a lo dispuesto en los artículos 67, 68, 111 y 112.",
+        "Los supuestos de parada o estacionamiento en lugares distintos de los fijados por los agentes de la autoridad responsable del tráfico tendrán la consideración de infracción grave de acuerdo con lo dispuesto en el artículo 65.4.d) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial.",
+        "La detención, parada o estacionamiento de los vehículos destinados a los servicios citados deberá efectuarse de forma que no cree un nuevo peligro, y donde cause menor obstáculo a la circulación.",
+        "La actuación de los equipos de los servicios de urgencia, así como la de los de asistencia mecánica y de conservación de carreteras, deberá procurar en todo momento la menor afectación posible sobre el resto de la circulación, ocupando el mínimo posible de la calzada y siguiendo en todo momento las instrucciones que imparta el organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico. El comportamiento de los conductores y usuarios en caso de emergencia se ajustará a lo establecido en los artículos 69, 129 y 130 y, en particular, el de los conductores de los vehículos de servicio de urgencia, a lo dispuesto en los artículos 67, 68, 111 y 112."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 5 Señalización de obstáculos y peligros 1. Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y adoptarán entre tanto las medidas necesarias para que pueda ser advertido por los demás usuarios y para que no se dificulte la circulación (artículo 10.3 del texto articulado). 2. No se considerarán obstáculos en la calzada los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los ciclistas. 3. Para advertir la presencia en la vía de cualquier obstáculo o peligro creado, el causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche, de conformidad con lo dispuesto en los artículos 130.3, 140 y 173. 4. Todas las actuaciones que deban desarrollar los servicios de asistencia mecánica, sanitaria o cualquier otro tipo de intervención deberán regirse por los principios de utilización de los recursos idóneos y estrictamente necesarios en cada caso. El organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes, acordarán la presencia y permanencia en la zona de intervención de todo el personal y equipo que sea imprescindible y garantizará la ausencia de personas ajenas a las labores propias de la asistencia; además, será la encargada de señalar en cada caso concreto los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, atendiendo a la prestación de la mejor asistencia y velando por el mejor auxilio de las personas. 5. La actuación de los quipos de los servicios de urgencia, así como la de los de asistencia mecánica y de conservación de carreteras, deberá procurar en todo momento la menor afectación posible sobre el resto de la circulación, ocupando el mínimo posible de la calzada y siguiendo en todo momento las instrucciones que imparta el organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes. El comportamiento de los conductores y usuarios en caso de emergencia se ajustará a lo establecido en los artículos 69, 129 y 130 y, en particular, el de los conductores de los vehículos de servicio de urgencia, a lo dispuesto en los artículos 67, 68, 111 y 112. En la opción que hay que señalar como incorrecta, debería aparecer \"o sus agentes\""
+    },
+    {
+      "pregunta": "15. Si el resultado de la segunda prueba practicada por el agente, o el de los análisis efectuados a instancia del interesado, fuera positivo, el agente de la autoridad deberá: Indique la opción incorrecta.",
+      "opciones": [
+        "Describir con precisión, en el boletín de denuncia o en el atestado de las diligencias que practique, el procedimiento seguido para efectuar la prueba o pruebas de detección alcohólica, haciendo constar los datos necesarios para la identificación del instrumento o instrumentos de detección empleados, cuyas características genéricas también detallará.",
+        "Consignar las advertencias hechas al interesado, especialmente la del derecho que le asiste a contrastar los resultados y acreditar en las diligencias las pruebas o análisis practicados en el centro sanitario al que fue trasladado el interesado.",
+        "Conducir al sometido a examen, o al que se negase a someterse a las pruebas de detección alcohólica, al juzgado.",
+        "Consignar el vehículo policial en el que está instalado el aparato medidor de alcohol, marca y modelo, así como su placa de matrícula."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 24 del RGCir. Diligencias del agente de la autoridad."
+    },
+    {
+      "pregunta": "16. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique la opción correcta: (Artículo 23. Práctica de las pruebas). De la misma forma advertirá a la persona sometida a examen del derecho que tiene a controlar, por sí o por cualquiera de sus acompañantes o testigos presentes, que entre la realización de la primera y de la segunda prueba medie un tiempo mínimo de…",
+      "opciones": [
+        "5 minutos.",
+        "10 minutos.",
+        "15 minutos.",
+        "No hay tiempo mínimo."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 23 Práctica de las pruebas 1. Si el resultado de la prueba practicada diera un grado de impregnación alcohólica superior a 0,5 gramos de alcohol por litro de sangre o a 0,25 miligramos de alcohol por litro de aire espirado, o al previsto para determinados conductores en el artículo 20 o, aun sin alcanzar estos límites, presentara la persona examinada síntomas evidentes de encontrarse bajo la influencia de bebidas alcohólicas, el agente someterá al interesado, para una mayor garantía y a efecto de contraste, a la práctica de una segunda prueba de detección alcohólica por el aire espirado, mediante un procedimiento similar al que sirvió para efectuar la primera prueba, de lo que habrá de informarle previamente. 2. De la misma forma advertirá a la persona sometida a examen del derecho que tiene a controlar, por sí o por cualquiera de sus acompañantes o testigos presentes, que entre la realización de la primera y de la segunda prueba medie un tiempo mínimo de 10 minutos."
+    },
+    {
+      "pregunta": "17. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique la opción incorrecta: (Artículo 21. Investigación de la alcoholemia. Personas obligadas). Los agentes de la autoridad encargados de la vigilancia del tráfico podrán someter a dichas pruebas:",
+      "opciones": [
+        "Al conductor de vehículo implicado directamente como posible responsable en un accidente de circulación, pero nunca a los peatones.",
+        "A quienes conduzcan cualquier vehículo con síntomas evidentes, manifestaciones que denoten o hechos que permitan razonablemente presumir que lo hacen bajo la influencia de bebidas alcohólicas.",
+        "A los conductores que sean denunciados por la comisión de alguna de las infracciones a las normas contenidas en este reglamento.",
+        "A los que, con ocasión de conducir un vehículo, sean requeridos al efecto por la autoridad o sus agentes dentro de los programas de controles preventivos de alcoholemia ordenados por dicha autoridad."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 21 Investigación de la alcoholemia. Personas obligadas Todos los conductores de vehículos y de bicicletas quedan obligados a someterse a las pruebas que se establezcan para la detección de las posibles intoxicaciones por alcohol. Igualmente quedan obligados los demás usuarios de la vía cuando se hallen implicados en algún accidente de circulación (artículo 12.2, párrafo primero, del texto articulado). Los agentes de la autoridad encargados de la vigilancia del tráfico podrán someter a dichas pruebas: a) A cualquier usuario de la vía (incluye también a los peatones) o conductor de vehículo implicado directamente como posible responsable en un accidente de circulación. b) A quienes conduzcan cualquier vehículo con síntomas evidentes, manifestaciones que denoten o hechos que permitan razonablemente presumir que lo hacen bajo la influencia de bebidas alcohólicas. c) A los conductores que sean denunciados por la comisión de alguna de las infracciones a las normas contenidas en este reglamento. d) A los que, con ocasión de conducir un vehículo, sean requeridos al efecto por la autoridad o sus agentes dentro de los programas de controles preventivos de alcoholemia ordenados por dicha autoridad."
+    },
+    {
+      "pregunta": "18. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique la opción correcta: (Artículo 18. Otras obligaciones del conductor.) El conductor de un vehículo está obligado a mantener...",
+      "opciones": [
+        "Su propia libertad de movimientos.",
+        "El campo necesario de visión.",
+        "La atención permanente en la conducción.",
+        "Todas las anteriores son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 18 Otras obligaciones del conductor 1. El conductor de un vehículo está obligado a mantener su propia libertad de movimientos, el campo necesario de visión y la atención permanente a la conducción, que garanticen su propia seguridad, la del resto de los ocupantes del vehículo y la de los demás usuarios de la vía. A estos efectos, deberá cuidar especialmente de mantener la posición adecuada y que la mantengan el resto de los pasajeros, y la adecuada colocación de los objetos o animales transportados para que no haya interferencia entre el conductor y cualquiera de ellos (artículo 11.2 del texto articulado)."
+    },
+    {
+      "pregunta": "19. Según el artículo 5 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, ¿qué no se considerará obstáculo en la calzada? Señale la respuesta correcta:",
+      "opciones": [
+        "Los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los peatones.",
+        "Los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los menores de edad.",
+        "Los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los ciclistas.",
+        "Los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio del Interior y se garantice la seguridad vial de los usuarios y, en particular, de los ciclistas."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 5 Señalización de obstáculos y peligros 1. Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y adoptarán entre tanto las medidas necesarias para que pueda ser advertido por los demás usuarios y para que no se dificulte la circulación (artículo 10.3 del texto articulado). 2. No se considerarán obstáculos en la calzada los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los ciclistas."
+    },
+    {
+      "pregunta": "20. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Los agentes de la autoridad encargados de la vigilancia del tráfico podrán someter a las pruebas de alcoholemia: Señale la respuesta incorrecta.",
+      "opciones": [
+        "A cualquier usuario de la vía o conductor de vehículo implicado directamente como posible responsable en un accidente de circulación.",
+        "A quienes conduzcan cualquier vehículo con síntomas evidentes, manifestaciones que denoten o hechos que permitan razonablemente presumir que lo hacen bajo la influencia de bebidas alcohólicas.",
+        "A los conductores que sean denunciados por la comisión de alguna de las infracciones a las normas contenidas en este reglamento.",
+        "A los que, vayan de acompañantes de un vehículo y sean requeridos al efecto por la autoridad o sus agentes dentro de los programas de controles preventivos de alcoholemia ordenados por dicha autoridad."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 21 Investigación de la alcoholemia. Personas obligadas Todos los conductores de vehículos y de bicicletas quedan obligados a someterse a las pruebas que se establezcan para la detección de las posibles intoxicaciones por alcohol. Igualmente quedan obligados los demás usuarios de la vía cuando se hallen implicados en algún accidente de circulación (artículo 12.2, párrafo primero, del texto articulado). Los agentes de la autoridad encargados de la vigilancia del tráfico podrán someter a dichas pruebas: a) A cualquier usuario de la vía o conductor de vehículo implicado directamente como posible responsable en un accidente de circulación. b) A quienes conduzcan cualquier vehículo con síntomas evidentes, manifestaciones que denoten o hechos que permitan razonablemente presumir que lo hacen bajo la influencia de bebidas alcohólicas. c) A los conductores que sean denunciados por la comisión de alguna de las infracciones a las normas contenidas en este reglamento. d) A los que, con ocasión de conducir un vehículo, sean requeridos al efecto por la autoridad o sus agentes dentro de los programas de controles preventivos de alcoholemia ordenados por dicha autoridad."
+    },
+    {
+      "pregunta": "21. Según el artículo 4 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta correcta:",
+      "opciones": [
+        "La realización de obras, instalaciones, colocación de contenedores, mobiliario urbano o cualquier otro elemento u objeto de forma permanente o provisional en las vías o terrenos objeto de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial necesitará la autorización previa de su titular y se regirán por lo dispuesto en la legislación de carreteras y en sus reglamentos de desarrollo.",
+        "La realización de obras, instalaciones, colocación de contenedores, mobiliario urbano o cualquier otro elemento u objeto de forma permanente o provisional en las vías o terrenos objeto de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial necesitará la autorización previa de su titular y se regirán por lo dispuesto en la legislación de carreteras.",
+        "La realización de obras, instalaciones, colocación de contenedores, mobiliario urbano o cualquier otro elemento u objeto de forma permanente en las vías o terrenos objeto de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial necesitará la autorización previa de su titular y se regirán por lo dispuesto en la legislación de carreteras y en sus reglamentos de desarrollo, y en las normas municipales.",
+        "La realización de obras, instalaciones, colocación de contenedores, mobiliario urbano o cualquier otro elemento u objeto de forma permanente o provisional en las vías o terrenos objeto de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial necesitará la autorización previa de su titular y se regirán por lo dispuesto en la legislación de carreteras y en sus reglamentos de desarrollo, y en las normas municipales."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 4 Actividades que afectan a la seguridad de la circulación 1. La realización de obras, instalaciones, colocación de contenedores, mobiliario urbano o cualquier otro elemento u objeto de forma permanente o provisional en las vías o terrenos objeto de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial necesitará la autorización previa de su titular y se regirán por lo dispuesto en la legislación de carreteras y en sus reglamentos de desarrollo, y en las normas municipales."
+    },
+    {
+      "pregunta": "22. Según el artículo 18.4 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, las infracciones a este precepto tendrán la consideración de:",
+      "opciones": [
+        "Graves.",
+        "Muy graves.",
+        "Leves o graves.",
+        "Graves o muy graves."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 18 Otras obligaciones del conductor 1. El conductor de un vehículo está obligado a mantener su propia libertad de movimientos, el campo necesario de visión y la atención permanente a la conducción, que garanticen su propia seguridad, la del resto de los ocupantes del vehículo y la de los demás usuarios de la vía. A estos efectos, deberá cuidar especialmente de mantener la posición adecuada y que la mantengan el resto de los pasajeros, y la adecuada colocación de los objetos o animales transportados para que no haya interferencia entre el conductor y cualquiera de ellos (artículo 11.2 del texto articulado). Se considera incompatible con la obligatoria atención permanente a la conducción el uso por el conductor con el vehículo en movimiento de dispositivos tales como pantallas con acceso a internet, monitores de televisión y reproductores de vídeo o DVD. Se exceptúan, a estos efectos, el uso de monitores que estén a la vista del conductor y cuya utilización sea necesaria para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS. 2. Queda prohibido conducir y utilizar cascos o auriculares conectados a aparatos receptores o reproductores de sonido, excepto durante la correspondiente enseñanza y la realización de las pruebas de aptitud en circuito abierto para la obtención del permiso de conducción de motocicletas de dos ruedas cuando así lo exija el Reglamento General de Conductores. Se prohíbe la utilización durante la conducción de dispositivos de telefonía móvil y cualquier otro medio o sistema de comunicación, excepto cuando el desarrollo de la comunicación tenga lugar sin emplear las manos ni usar cascos, auriculares o instrumentos similares (artículo 11.3, párrafo segundo, del texto articulado). Quedan exentos de dicha prohibición los agentes de la autoridad en el ejercicio de las funciones que tengan encomendadas (artículo 11.3, párrafo tercero, del texto articulado). 3. Se prohíbe que en los vehículos se instalen mecanismos o sistemas, se lleven instrumentos o se acondicionen de forma encaminada a eludir la vigilancia de los agentes de tráfico, o que se emitan o hagan señales con dicha finalidad, así como la utilización de mecanismos de detección de radar. 4. Las infracciones a este precepto tendrán la consideración de graves conforme se prevé en el artículo 65.4.f) y g) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial."
+    },
+    {
+      "pregunta": "23. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique la opción más adecuada: (Artículo 28. Pruebas para la detección de \"drogas\"). ¿A petición de quién o quiénes, se podrán repetir las pruebas a efectos de contraste?",
+      "opciones": [
+        "Del interesado",
+        "Por orden de la autoridad judicial",
+        "La a y la b son correctas",
+        "La a y la b son incorrectas"
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 28 Pruebas para la detección de sustancias estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas 1. Las pruebas para la detección de estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas, así como las personas obligadas a su realización, se ajustarán a lo dispuesto en los párrafos siguientes: a) Las pruebas consistirán normalmente en el reconocimiento médico de la persona obligada y en los análisis clínicos que el médico forense u otro titular experimentado, o personal facultativo del centro sanitario o instituto médico al que sea trasladada aquélla, estimen más adecuados.A petición del interesado o por orden de la autoridad judicial, se podrán repetir las pruebas a efectos de contraste, que podrán consistir en análisis de sangre, orina u otros análogos (artículo 12.2, párrafo segundo, in fine, del texto articulado)."
+    },
+    {
+      "pregunta": "24. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique de las siguientes definiciones cual es correcta: (Artículo 3. Conductores).",
+      "opciones": [
+        "Las conductas referidas a la conducción negligente tendrán la consideración de infracciones muy graves y las referidas a la conducción temeraria tendrán la consideración de infracciones graves.",
+        "Las conductas referidas a la conducción negligente tendrán la consideración de infracciones graves y las referidas a la conducción temeraria tendrán la consideración de infracciones muy graves.",
+        "Las conductas referidas a la conducción negligente y las referidas a la conducción temeraria tendrán la consideración de infracciones muy graves.",
+        "Las conductas referidas a la conducción negligente y las referidas a la conducción temeraria tendrán la consideración de infracciones graves."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 3 Conductores 1. Se deberá conducir con la diligencia y precaución necesarias para evitar todo daño, propio o ajeno, cuidando de no poner en peligro, tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente prohibido conducir de modo negligente o temerario (artículo 9.2 del texto articulado). 2. Las conductas referidas a la conducción negligente tendrán la consideración de infracciones graves y las referidas a la conducción temeraria tendrán la consideración de infracciones muy graves, de acuerdo con lo dispuesto en el artículo 65.4.a) y 5.c) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, respectivamente"
+    },
+    {
+      "pregunta": "25. Según el artículo 18 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, indique la respuesta incorrecta:",
+      "opciones": [
+        "Queda prohibido conducir y utilizar cascos o auriculares conectados a aparatos receptores o reproductores de sonido, excepto durante la correspondiente enseñanza y la realización de las pruebas de aptitud en circuito abierto para la obtención del permiso de conducción de motocicletas de dos ruedas cuando así lo exija el Reglamento General de Conductores.",
+        "Se prohíbe la utilización durante la conducción de dispositivos de telefonía móvil y cualquier otro medio o sistema de comunicación, excepto cuando el desarrollo de la comunicación tenga lugar sin emplear las manos ni usar cascos, auriculares o instrumentos similares.",
+        "Quedan exentos de dicha prohibición los agentes de la autoridad en el ejercicio de las funciones que tengan encomendadas.",
+        "Se prohíbe que en los vehículos se instalen mecanismos o sistemas, se lleven instrumentos o se acondicionen de forma encaminada a eludir la vigilancia de los agentes de tráfico, o que se emitan o hagan señales con dicha finalidad, excepto la utilización de mecanismos de detección de radar."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 18 Otras obligaciones del conductor 1. El conductor de un vehículo está obligado a mantener su propia libertad de movimientos, el campo necesario de visión y la atención permanente a la conducción, que garanticen su propia seguridad, la del resto de los ocupantes del vehículo y la de los demás usuarios de la vía. A estos efectos, deberá cuidar especialmente de mantener la posición adecuada y que la mantengan el resto de los pasajeros, y la adecuada colocación de los objetos o animales transportados para que no haya interferencia entre el conductor y cualquiera de ellos (artículo 11.2 del texto articulado). Se considera incompatible con la obligatoria atención permanente a la conducción el uso por el conductor con el vehículo en movimiento de dispositivos tales como pantallas con acceso a internet, monitores de televisión y reproductores de vídeo o DVD. Se exceptúan, a estos efectos, el uso de monitores que estén a la vista del conductor y cuya utilización sea necesaria para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS. 2. Queda prohibido conducir y utilizar cascos o auriculares conectados a aparatos receptores o reproductores de sonido, excepto durante la correspondiente enseñanza y la realización de las pruebas de aptitud en circuito abierto para la obtención del permiso de conducción de motocicletas de dos ruedas cuando así lo exija el Reglamento General de Conductores. Se prohíbe la utilización durante la conducción de dispositivos de telefonía móvil y cualquier otro medio o sistema de comunicación, excepto cuando el desarrollo de la comunicación tenga lugar sin emplear las manos ni usar cascos, auriculares o instrumentos similares (artículo 11.3, párrafo segundo, del texto articulado). Quedan exentos de dicha prohibición los agentes de la autoridad en el ejercicio de las funciones que tengan encomendadas (artículo 11.3, párrafo tercero, del texto articulado). 3. Se prohíbe que en los vehículos se instalen mecanismos o sistemas, se lleven instrumentos o se acondicionen de forma encaminada a eludir la vigilancia de los agentes de tráfico, o que se emitan o hagan señales con dicha finalidad, así como la utilización de mecanismos de detección de radar. 4. Las infracciones a este precepto tendrán la consideración de graves conforme se prevé en el artículo 65.4.f) y g) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial."
+    },
+    {
+      "pregunta": "26. Según el artículo 19 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta incorrecta:",
+      "opciones": [
+        "La superficie acristalada del vehículo deberá permitir, en todo caso, la visibilidad diáfana del conductor sobre toda la vía por la que circule, sin interferencias de láminas o adhesivos.",
+        "No obstante, la utilización de láminas adhesivas en los vehículos se permitirá en las condiciones establecidas en la reglamentación de vehículos.",
+        "Únicamente se permitirá circular con láminas adhesivas o cortinillas contra el sol en las ventanillas posteriores cuando el vehículo lleve dos espejos retrovisores exteriores que cumplan las especificaciones técnicas necesarias.",
+        "Queda prohibida, en todo caso, la colocación de vidrios tintados o coloreados homologados."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 19 Visibilidad en el vehículo 1. La superficie acristalada del vehículo deberá permitir, en todo caso, la visibilidad diáfana del conductor sobre toda la vía por la que circule, sin interferencias de láminas o adhesivos. Únicamente se permitirá circular con láminas adhesivas o cortinillas contra el sol en las ventanillas posteriores cuando el vehículo lleve dos espejos retrovisores exteriores que cumplan las especificaciones técnicas necesarias. No obstante, la utilización de láminas adhesivas en los vehículos se permitirá en las condiciones establecidas en la reglamentación de vehículos. La colocación de los distintivos previstos en la legislación de transportes o en otras disposiciones deberá realizarse de forma que no impidan la correcta visión del conductor. 2. Queda prohibida, en todo caso, la colocación de vidrios tintados o coloreados no homologados. 3. Las infracciones a las normas de este precepto serán sancionadas con arreglo a lo dispuesto en el artículo 67.2 del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial."
+    },
+    {
+      "pregunta": "27. Indique la opción correcta: ¿Cuál es el Real Decreto por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo?",
+      "opciones": [
+        "1824/2005",
+        "1428/2003",
+        "1824/2003",
+        "1428/2005"
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo"
+    },
+    {
+      "pregunta": "28. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique la opción correcta: (Artículo 20. Tasas de alcohol en sangre y aire espirado.) No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial:",
+      "opciones": [
+        "Los conductores de vehículos con una tasa de alcohol en sangre superior a 0,25 gramos por litro.",
+        "Los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro.",
+        "Los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en aire espirado superior a 0,25 gramos por litro.",
+        "Ninguna de las anteriores es correcta."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 20 Tasas de alcohol en sangre y aire espirado No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro. a) Los conductores de vehículos con una tasa de alcohol en sangre superior a 0,25 gramos por litro. Debería ser 0,5 gramos por litro. b) Los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro. c) Los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en aire espirado superior a 0,25 gramos por litro. La tasa en aire espirado se mide en miligramos por litro. d) Ninguna de las anteriores es correcta."
+    },
+    {
+      "pregunta": "29. Según el artículo 21 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta correcta:",
+      "opciones": [
+        "Sólo los conductores de vehículos a motor y ciclomotores quedan obligados a someterse a las pruebas que se establezcan para la detección de las posibles intoxicaciones por alcohol. Igualmente quedan obligados los demás usuarios de la vía cuando se hallen implicados en algún accidente de circulación.",
+        "Todos los conductores de vehículos y de bicicletas quedan obligados a someterse a las pruebas que se establezcan para la detección de las posibles intoxicaciones por alcohol. Igualmente quedan obligados los demás usuarios de la vía cuando se hallen implicados como presuntos responsables de algún accidente de circulación.",
+        "Todos los conductores de vehículos y de ciclomotores quedan obligados a someterse a las pruebas que se establezcan para la detección de las posibles intoxicaciones por alcohol.",
+        "Todos los conductores de vehículos y de bicicletas quedan obligados a someterse a las pruebas que se establezcan para la detección de las posibles intoxicaciones por alcohol. Igualmente quedan obligados los demás usuarios de la vía cuando se hallen implicados en algún accidente de circulación."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 21 Investigación de la alcoholemia. Personas obligadas Todos los conductores de vehículos y de bicicletas quedan obligados a someterse a las pruebas que se establezcan para la detección de las posibles intoxicaciones por alcohol. Igualmente quedan obligados los demás usuarios de la vía cuando se hallen implicados en algún accidente de circulación (artículo 12.2, párrafo primero, del texto articulado)."
+    },
+    {
+      "pregunta": "30. Según el artículo 20 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta correcta:",
+      "opciones": [
+        "No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro.",
+        "No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos de motor ni ciclomotores con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro.",
+        "No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 miligramos por litro, o de alcohol en aire espirado superior a 0,25 gramos por litro.",
+        "No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre igual o superior a 0,5 gramos por litro, o de alcohol en aire espirado igual o superior a 0,25 miligramos por litro."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 20 Tasas de alcohol en sangre y aire espirado No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro."
+    },
+    {
+      "pregunta": "31. Un conductor de ambulancia que ha obtenido el permiso hace 25 meses, ¿qué tasa de alcohol no deberá superar si va conduciendo una ambulancia?",
+      "opciones": [
+        "0,50 gramos por litro en sangre.",
+        "0,25 miligramos por litro en sangre.",
+        "0,30 gramos por litro en sangre.",
+        "0,15 miligramos por litro en sangre."
+      ],
+      "correcta": 2,
+      "explicacion": "Artículo 20 RGCir Tasas. Cuando se trate de vehículos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kilogramos, vehículos destinados al transporte de viajeros de más de nueve plazas, o de servicio público, al transporte escolar y de menores, al de mercancías peligrosas o de servicio de urgencia o transportes especiales, los conductores no podrán hacerlo con una tasa de alcohol en sangre superior a 0,3 gramos por litro, o de alcohol en aire espirado superior a 0,15 miligramos por litro."
+    },
+    {
+      "pregunta": "32. Según el artículo 4 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, la realización de obras, instalaciones, colocación de contenedores, mobiliario urbano o cualquier otro elemento u objeto de forma permanente o provisional en las vías o terrenos objeto de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial necesitará la autorización previa de su titular y se regirán por lo dispuesto en la legislación de carreteras y en sus reglamentos de desarrollo, y en las normas municipales, señale la respuesta correcta:",
+      "opciones": [
+        "Las mismas normas serán aplicables a la interrupción de las obras en razón de las circunstancias o características especiales de tráfico, que podrán llevarse a efecto a petición del organismo autónomo Jefatura Provincial de Tráfico.",
+        "Las mismas normas serán aplicables a la interrupción de las obras en razón de las circunstancias o características especiales de tráfico, que podrán llevarse a efecto a petición del organismo autónomo Jefatura Central de Tráfico.",
+        "Las mismas normas serán aplicables a la interrupción de las obras en razón de las circunstancias o características especiales de tráfico, que podrán llevarse a efecto a petición del organismo autónomo Dirección General de Tráfico.",
+        "Las mismas normas serán aplicables a la interrupción de las obras en razón de las circunstancias o características especiales de tráfico, que podrán llevarse a efecto a petición del organismo autónomo Jefatura Local de Tráfico."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 4 Actividades que afectan a la seguridad de la circulación 1. La realización de obras, instalaciones, colocación de contenedores, mobiliario urbano o cualquier otro elemento u objeto de forma permanente o provisional en las vías o terrenos objeto de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial necesitará la autorización previa de su titular y se regirán por lo dispuesto en la legislación de carreteras y en sus reglamentos de desarrollo, y en las normas municipales. Las mismas normas serán aplicables a la interrupción de las obras en razón de las circunstancias o características especiales de tráfico, que podrán llevarse a efecto a petición del organismo autónomo Jefatura Central de Tráfico"
+    },
+    {
+      "pregunta": "33. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique la opción correcta: (Artículo 27. Estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas). No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial…",
+      "opciones": [
+        "Los conductores de vehículos con una tasa en sangre superior a 0,25 gramos por litro.",
+        "Los conductores de bicicletas con una tasa en sangre superior a 0,5 gramos por litro.",
+        "Los conductores de vehículos ni los conductores de bicicletas que hayan ingerido medicamentos cuyo efecto altere el estado físico o mental apropiado para circular sin peligro.",
+        "La a y la b son correctas."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 27 Estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas 1. No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos o bicicletas que hayan ingerido o incorporado a su organismo psicotrópicos, estimulantes u otras sustancias análogas, entre las que se incluirán, en cualquier caso, los medicamentos u otras sustancias bajo cuyo efecto se altere el estado físico o mental apropiado para circular sin peligro."
+    },
+    {
+      "pregunta": "34. Según el artículo 19 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta correcta:",
+      "opciones": [
+        "La colocación de los distintivos previstos en la legislación de transportes o en otras disposiciones deberá realizarse de forma que impidan la correcta visión del conductor.",
+        "Las infracciones a las normas de este precepto serán sancionadas con arreglo a lo dispuesto en el artículo 67.2 del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial.",
+        "Únicamente se permitirá circular con láminas adhesivas o cortinillas contra el sol en las ventanillas posteriores cuando el vehículo lleve dos espejos retrovisores exteriores aunque no cumplan las especificaciones técnicas necesarias.",
+        "No obstante, la utilización de láminas adhesivas en los vehículos se permitirá en las condiciones establecidas en la reglamentación de conductores."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo a) La colocación de los distintivos previstos en la legislación de transportes o en otras disposiciones deberá realizarse de forma que impidan la correcta visión del conductor. b) Las infracciones a las normas de este precepto serán sancionadas con arreglo a lo dispuesto en el artículo 67.2 del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial. c) Únicamente se permitirá circular con láminas adhesivas o cortinillas contra el sol en las ventanillas posteriores cuando el vehículo lleve dos espejos retrovisores exteriores aunque no cumplan las especificaciones técnicas necesarias. d) No obstante, la utilización de láminas adhesivas en los vehículos se permitirá en las condiciones establecidas en la reglamentación de conductores. Artículo 19 Visibilidad en el vehículo 1. La superficie acristalada del vehículo deberá permitir, en todo caso, la visibilidad diáfana del conductor sobre toda la vía por la que circule, sin interferencias de láminas o adhesivos. Únicamente se permitirá circular con láminas adhesivas o cortinillas contra el sol en las ventanillas posteriores cuando el vehículo lleve dos espejos retrovisores exteriores que cumplan las especificaciones técnicas necesarias. No obstante, la utilización de láminas adhesivas en los vehículos se permitirá en las condiciones establecidas en la reglamentación de vehículos. La colocación de los distintivos previstos en la legislación de transportes o en otras disposiciones deberá realizarse de forma que no impidan la correcta visión del conductor. 2. Queda prohibida, en todo caso, la colocación de vidrios tintados o coloreados no homologados. 3. Las infracciones a las normas de este precepto serán sancionadas con arreglo a lo dispuesto en el artículo 67.2 del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial."
+    },
+    {
+      "pregunta": "35. ¿Cuál es la Ley Orgánica por la que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo?",
+      "opciones": [
+        "6/2015",
+        "1428/2003",
+        "1248/2015",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 3,
+      "explicacion": "No es una Ley Orgánica si no un Real Decreto. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo"
+    },
+    {
+      "pregunta": "36. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique de las siguientes definiciones cual es correcta: (Artículo 5. Señalización de obstáculos y peligros).",
+      "opciones": [
+        "Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y no adoptarán entre tanto las medidas necesarias para que pueda ser advertido por los demás.",
+        "Se considerarán obstáculos en la calzada los resaltos en los pasos para peatones y bandas transversales.",
+        "Para advertir la presencia en la vía de cualquier obstáculo o peligro creado, el causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche.",
+        "La detención, parada o estacionamiento de los vehículos destinados a servicios de urgencia, deberá efectuarse de forma que, aunque cree un nuevo peligro sea más cómodo."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo a) Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y no adoptarán (adoptarán)entre tanto las medidas necesarias para que pueda ser advertido por los demás. b) Se considerarán obstáculos en la calzada (no se consideran) los resaltos en los pasos para peatones y bandas transversales. c) Para advertir la presencia en la vía de cualquier obstáculo o peligro creado, el causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche. d) La detención, parada o estacionamiento de los vehículos destinados a servicios de urgencia, deberá efectuarse de forma que, aunque cree un nuevo peligro sea más cómodo. ( de forma que no cree un nuevo peligro, y donde cause menor obstáculo a la circulación. )"
+    },
+    {
+      "pregunta": "37. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Si el resultado de la prueba de alcoholemia practicada diera negativo, el agente someterá al interesado, para una mayor garantía a efecto de contraste, a la práctica de una segunda prueba, pasados ___________.",
+      "opciones": [
+        "5 minutos",
+        "10 minutos",
+        "15 minutos",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 23 Práctica de las pruebas 1. Si el resultado de la prueba practicada diera un grado de impregnación alcohólica superior a 0,5 gramos de alcohol por litro de sangre o a 0,25 miligramos de alcohol por litro de aire espirado, o al previsto para determinados conductores en el artículo 20 o, aun sin alcanzar estos límites, presentara la persona examinada síntomas evidentes de encontrarse bajo la influencia de bebidas alcohólicas, el agente someterá al interesado, para una mayor garantía y a efecto de contraste, a la práctica de una segunda prueba de detección alcohólica por el aire espirado, mediante un procedimiento similar al que sirvió para efectuar la primera prueba, de lo que habrá de informarle previamente. 2. De la misma forma advertirá a la persona sometida a examen del derecho que tiene a controlar, por sí o por cualquiera de sus acompañantes o testigos presentes, que entre la realización de la primera y de la segunda prueba medie un tiempo mínimo de 10 minutos. El enunciado de la pregunta dice que da negativo en la primera prueba, por lo tanto, al no superar las tasa máximas permitidas no se le someterá a una segunda prueba."
+    },
+    {
+      "pregunta": "38. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique de las siguientes definiciones cual es correcta:",
+      "opciones": [
+        "Las conductas referidas a la conducción temeraria tendrán la consideración de infracciones leves.",
+        "Las conductas referidas a la conducción temeraria tendrán la consideración de infracciones graves.",
+        "Las conductas referidas a la conducción temeraria tendrán la consideración de infracciones muy graves.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 3 Conductores 1. Se deberá conducir con la diligencia y precaución necesarias para evitar todo daño, propio o ajeno, cuidando de no poner en peligro, tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente prohibido conducir de modo negligente o temerario (artículo 9.2 del texto articulado). 2. Las conductas referidas a la conducción negligente tendrán la consideración de infracciones graves y las referidas a la conducción temeraria tendrán la consideración de infracciones muy graves, de acuerdo con lo dispuesto en el artículo 65.4.a) y 5.c) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, respectivamente"
+    },
+    {
+      "pregunta": "39. Según el artículo 5 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, para advertir la presencia en la vía de cualquier obstáculo o peligro creado:",
+      "opciones": [
+        "El causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche, de conformidad con lo dispuesto en los artículos 130.3, 140 y 173.",
+        "El causante de éste deberá señalizarlo de forma eficaz, de día, de conformidad con lo dispuesto en los artículos 130.3, 140 y 173.",
+        "El causante de éste deberá señalizarlo de forma eficaz, de noche, de conformidad con lo dispuesto en los artículos 30.3, 40 y 73.",
+        "El causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche, de conformidad con lo dispuesto en los artículos 30.3, 40 y 73."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 5 Señalización de obstáculos y peligros 1. Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y adoptarán entre tanto las medidas necesarias para que pueda ser advertido por los demás usuarios y para que no se dificulte la circulación (artículo 10.3 del texto articulado). 2. No se considerarán obstáculos en la calzada los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los ciclistas. 3. Para advertir la presencia en la vía de cualquier obstáculo o peligro creado, el causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche, de conformidad con lo dispuesto en los artículos 130.3, 140 y 173."
+    },
+    {
+      "pregunta": "40. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Señalización de obstáculos y peligros: Indique la respuesta correcta.",
+      "opciones": [
+        "Los supuestos de parada o estacionamiento en lugares distintos de los fijados por los agentes de la autoridad responsable del tráfico tendrán la consideración de infracción leve.",
+        "Los supuestos de parada o estacionamiento en lugares distintos de los fijados por los agentes de la autoridad responsable del tráfico tendrán la consideración de infracción grave.",
+        "Los supuestos de parada o estacionamiento en lugares distintos de los fijados por los agentes de la autoridad responsable del tráfico tendrán la consideración de infracción muy grave.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 5 Señalización de obstáculos y peligros 1. Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y adoptarán entre tanto las medidas necesarias para que pueda ser advertido por los demás usuarios y para que no se dificulte la circulación (artículo 10.3 del texto articulado). 2. No se considerarán obstáculos en la calzada los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los ciclistas. 3. Para advertir la presencia en la vía de cualquier obstáculo o peligro creado, el causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche, de conformidad con lo dispuesto en los artículos 130.3, 140 y 173. 4. Todas las actuaciones que deban desarrollar los servicios de asistencia mecánica, sanitaria o cualquier otro tipo de intervención deberán regirse por los principios de utilización de los recursos idóneos y estrictamente necesarios en cada caso. El organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes, acordarán la presencia y permanencia en la zona de intervención de todo el personal y equipo que sea imprescindible y garantizará la ausencia de personas ajenas a las labores propias de la asistencia; además, será la encargada de señalar en cada caso concreto los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, atendiendo a la prestación de la mejor asistencia y velando por el mejor auxilio de las personas. 5. La actuación de los quipos de los servicios de urgencia, así como la de los de asistencia mecánica y de conservación de carreteras, deberá procurar en todo momento la menor afectación posible sobre el resto de la circulación, ocupando el mínimo posible de la calzada y siguiendo en todo momento las instrucciones que imparta el organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes. El comportamiento de los conductores y usuarios en caso de emergencia se ajustará a lo establecido en los artículos 69, 129 y 130 y, en particular, el de los conductores de los vehículos de servicio de urgencia, a lo dispuesto en los artículos 67, 68, 111 y 112. 6. La detención, parada o estacionamiento de los vehículos destinados a los servicios citados deberá efectuarse de forma que no cree un nuevo peligro, y donde cause menor obstáculo a la circulación. 7. Los supuestos de parada o estacionamiento en lugares distintos de los fijados por los agentes de la autoridad responsable del tráfico tendrán la consideración de infracción grave de acuerdo con lo dispuesto en el artículo 65.4.d) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial."
+    },
+    {
+      "pregunta": "41. No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos o bicicletas que hayan ingerido o incorporado a su organismo psicotrópicos, estimulantes u otras sustancias análogas, entre las que se incluirán, en cualquier caso, los medicamentos u otras sustancias bajo cuyo efecto se altere el estado físico o mental apropiado para circular sin peligro. ¿Qué tasa se le aplicaría a un conductor nóbel?",
+      "opciones": [
+        "0,50 miligramos en sangre.",
+        "0,25 miligramos en sangre.",
+        "0,30 gramos en sangre.",
+        "Ninguna es correcta."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 27 del RGCir. No hay tasas"
+    },
+    {
+      "pregunta": "42. Según el artículo 17 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta correcta:",
+      "opciones": [
+        "Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas.",
+        "Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, únicamente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas.",
+        "Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate únicamente de niños o ancianos.",
+        "Los conductores podrán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 17 Control del vehículo o de animales 1. Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas a) Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas. b) Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, únicamente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas. c) Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate únicamente de niños o ancianos. Falta invidentes u otras personas manifiestamente impedidas. d) Los conductores podrán (debe poner \"deberán\") estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas."
+    },
+    {
+      "pregunta": "43. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Señalización de obstáculos y peligros: Indique la respuesta incorrecta.",
+      "opciones": [
+        "Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y adoptarán entre tanto las medidas necesarias.",
+        "Serán considerados obstáculos en la calzada los resaltos en los pasos para peatones y bandas transversales.",
+        "Cualquier obstáculo o peligro creado, el causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche.",
+        "Todas las actuaciones que deban desarrollar los servicios de asistencia mecánica, sanitaria o cualquier otro tipo, deberá regirse por sus agentes, garantizando la ausencia de personas ajenas, y además, serán los encargados de señalar los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, velando por el mejor auxilio de las personas."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 5 Señalización de obstáculos y peligros 1. Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y adoptarán entre tanto las medidas necesarias para que pueda ser advertido por los demás usuarios y para que no se dificulte la circulación (artículo 10.3 del texto articulado). 2. No se considerarán obstáculos en la calzada los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los ciclistas. 3. Para advertir la presencia en la vía de cualquier obstáculo o peligro creado, el causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche, de conformidad con lo dispuesto en los artículos 130.3, 140 y 173. 4. Todas las actuaciones que deban desarrollar los servicios de asistencia mecánica, sanitaria o cualquier otro tipo de intervención deberán regirse por los principios de utilización de los recursos idóneos y estrictamente necesarios en cada caso. El organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes, acordarán la presencia y permanencia en la zona de intervención de todo el personal y equipo que sea imprescindible y garantizará la ausencia de personas ajenas a las labores propias de la asistencia; además, será la encargada de señalar en cada caso concreto los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, atendiendo a la prestación de la mejor asistencia y velando por el mejor auxilio de las personas. 5. La actuación de los quipos de los servicios de urgencia, así como la de los de asistencia mecánica y de conservación de carreteras, deberá procurar en todo momento la menor afectación posible sobre el resto de la circulación, ocupando el mínimo posible de la calzada y siguiendo en todo momento las instrucciones que imparta el organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes. El comportamiento de los conductores y usuarios en caso de emergencia se ajustará a lo establecido en los artículos 69, 129 y 130 y, en particular, el de los conductores de los vehículos de servicio de urgencia, a lo dispuesto en los artículos 67, 68, 111 y 112. 6. La detención, parada o estacionamiento de los vehículos destinados a los servicios citados deberá efectuarse de forma que no cree un nuevo peligro, y donde cause menor obstáculo a la circulación. 7. Los supuestos de parada o estacionamiento en lugares distintos de los fijados por los agentes de la autoridad responsable del tráfico tendrán la consideración de infracción grave de acuerdo con lo dispuesto en el artículo 65.4.d) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo"
+    },
+    {
+      "pregunta": "44. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Control del vehículo o de animales: Indique la respuesta correcta.",
+      "opciones": [
+        "A los conductores de caballerías, ganados y vehículos de carga de tracción animal les está prohibido llevarlos corriendo por la vía en las inmediaciones de otros de la misma especie.",
+        "A los conductores de caballerías, ganados y vehículos de carga de tracción animal les está prohibido llevarlos corriendo por la vía en las inmediaciones de las personas que van a pie.",
+        "A los conductores de caballerías, ganados y vehículos de carga de tracción animal les está prohibido abandonar su conducción, dejándoles marchar libremente por el camino o detenerse en él.",
+        "Todas las anteriores son correctas."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 17 Control del vehículo o de animales 1. Los conductores deberán estar en todo momento en condiciones de controlar sus vehículos o animales. Al aproximarse a otros usuarios de la vía, deberán adoptar las precauciones necesarias para su seguridad, especialmente cuando se trate de niños, ancianos, invidentes u otras personas manifiestamente impedidas (artículo 11.1 del texto articulado). 2. A los conductores de caballerías, ganados y vehículos de carga de tracción animal les está prohibido llevarlos corriendo por la vía en las inmediaciones de otros de la misma especie o de las personas que van a pie, así como abandonar su conducción, dejándoles marchar libremente por el camino o detenerse en él."
+    },
+    {
+      "pregunta": "45. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique de las siguientes definiciones cual es correcta: (Artículo 3. Conductores) .",
+      "opciones": [
+        "Se deberá conducir con la diligencia y precaución necesarias para evitar todo daño, propio o ajeno.",
+        "Cuidando de no poner en peligro, tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía.",
+        "a y b son correctas.",
+        "a y b son incorrectas."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 3 Conductores 1. Se deberá conducir con la diligencia y precaución necesarias para evitar todo daño, propio o ajeno, cuidando de no poner en peligro, tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente prohibido conducir de modo negligente o temerario"
+    },
+    {
+      "pregunta": "46. Según el artículo 7 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta incorrecta:",
+      "opciones": [
+        "Los vehículos no podrán circular por las vías o terrenos objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial si emiten perturbaciones electromagnéticas, con niveles de emisión de ruido superiores a los límites establecidos por las normas específicamente reguladoras de la materia, así como tampoco podrán emitir gases o humos en valores superiores a los límites establecidos ni en los supuestos de haber sido objeto de una reforma de importancia no autorizada, todo ello de acuerdo con lo dispuesto en el anexo I del Reglamento General de Vehículos.",
+        "Todos los conductores de vehículos quedan obligados a colaborar en las pruebas de detección que permitan comprobar las posibles deficiencias indicadas.",
+        "Tanto en las vías públicas urbanas como en las interurbanas se prohíbe la circulación de vehículos a motor y ciclomotores con el llamado escape libre, sin el preceptivo dispositivo silenciador de las explosiones.",
+        "Los vehículos no podrán circular por las vías o terrenos objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial si emiten perturbaciones electromagnéticas, con niveles de emisión de ruido superiores a los límites establecidos por las normas específicamente reguladoras de la materia, así como tampoco podrán emitir gases o humos en valores superiores a los límites establecidos ni en los supuestos de haber sido objeto de una reforma de importancia no autorizada, todo ello de acuerdo con lo dispuesto en el anexo X del Reglamento General de Vehículos."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 7 Emisión de perturbaciones y contaminantes 1. Los vehículos no podrán circular por las vías o terrenos objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial si emiten perturbaciones electromagnéticas, con niveles de emisión de ruido superiores a los límites establecidos por las normas específicamente reguladoras de la materia, así como tampoco podrán emitir gases o humos en valores superiores a los límites establecidos ni en los supuestos de haber sido objeto de una reforma de importancia no autorizada, todo ello de acuerdo con lo dispuesto en el anexo I del Reglamento General de Vehículos. Todos los conductores de vehículos quedan obligados a colaborar en las pruebas de detección que permitan comprobar las posibles deficiencias indicadas. 2. Tanto en las vías públicas urbanas como en las interurbanas se prohíbe la circulación de vehículos a motor y ciclomotores con el llamado escape libre, sin el preceptivo dispositivo silenciador de las explosiones. Es incorrecta la opción D porque hace alusión al anexo X y debe ser el anexo I: Los vehículos no podrán circular por las vías o terrenos objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial si emiten perturbaciones electromagnéticas, con niveles de emisión de ruido superiores a los límites establecidos por las normas específicamente reguladoras de la materia, así como tampoco podrán emitir gases o humos en valores superiores a los límites establecidos ni en los supuestos de haber sido objeto de una reforma de importancia no autorizada, todo ello de acuerdo con lo dispuesto en el anexo X del Reglamento General de Vehículos."
+    },
+    {
+      "pregunta": "47. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique la opción incorrecta: (Artículo 28. Pruebas para la detección de \"drogas\"). Las pruebas para la detección de estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas, así como las personas obligadas a su realización, se ajustarán a lo dispuesto en los párrafos siguientes:",
+      "opciones": [
+        "Las pruebas consistirán normalmente en el reconocimiento médico y en los análisis clínicos que el médico estime más adecuadas.",
+        "A petición del interesado o por orden de la autoridad judicial, se podrán repetir las pruebas a efectos de contraste.",
+        "Deben someterse a las pruebas de detección de ‘drogas’, los conductores que del mismo modo estén obligados a someterse a las pruebas de detección alcohólica en las mismas condiciones.",
+        "Las infracciones a este precepto, tendrán consideración de infracciones graves."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 28 Pruebas para la detección de sustancias estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas 1. Las pruebas para la detección de estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas, así como las personas obligadas a su realización, se ajustarán a lo dispuesto en los párrafos siguientes: a) Las pruebas consistirán normalmente en el reconocimiento médico de la persona obligada y en los análisis clínicos que el médico forense u otro titular experimentado, o personal facultativo del centro sanitario o instituto médico al que sea trasladada aquélla, estimen más adecuados.A petición del interesado o por orden de la autoridad judicial, se podrán repetir las pruebas a efectos de contraste, que podrán consistir en análisis de sangre, orina u otros análogos (artículo 12.2, párrafo segundo, in fine, del texto articulado). b) Toda persona que se encuentre en una situación análoga a cualquiera de las enumeradas en el artículo 21, respecto a la investigación de la alcoholemia, queda obligada a someterse a las pruebas señaladas en el párrafo anterior. En los casos de negativa a efectuar dichas pruebas, el agente podrá proceder a la inmediata inmovilización del vehículo en la forma prevista en el artículo 25. c) El agente de la autoridad encargado de la vigilancia del tráfico que advierta síntomas evidentes o manifestaciones que razonablemente denoten la presencia de cualquiera de las sustancias aludidas en el organismo de las personas a que se refiere el artículo anterior se ajustará a lo establecido en la Ley de Enjuiciamiento Criminal y a cuanto ordene, en su caso, la autoridad judicial, y deberá ajustar su actuación, en cuanto sea posible, a lo dispuesto en este reglamento para las pruebas para la detección alcohólica. d) La autoridad competente determinará los programas para llevar a efecto los controles preventivos para la comprobación de estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas en el organismo de cualquier conductor. 2. Las infracciones a este precepto relativas a la conducción bajo los efectos de estupefacientes, psicotrópicos, estimulantes u otras sustancias análogas, así como la infracción de la obligación de someterse a las pruebas para su detección, tendrán la consideración de infracciones muy graves, conforme se prevé en el artículo 65.5.a) y b) del texto articulado."
+    },
+    {
+      "pregunta": "48. Según el artículo 4 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta incorrecta:",
+      "opciones": [
+        "Se prohíbe arrojar, depositar o abandonar sobre la vía objetos o materias que puedan entorpecer la libre circulación, parada o estacionamiento, hacerlos peligrosos o deteriorar aquélla o sus instalaciones, o producir en ella o en sus inmediaciones efectos que modifiquen las condiciones apropiadas para circular, parar o estacionar.",
+        "Se prohíbe arrojar, depositar o abandonar sobre la vía objetos o materias que puedan entorpecer la libre circulación, parada o estacionamiento, hacerlos peligrosos o deteriorar aquélla o sus instalaciones, o producir en ella o en sus inmediaciones efectos que modifiquen las condiciones apropiadas para circular, excepto parar o estacionar.",
+        "No se instalará en vías o terrenos objeto del ámbito de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial ningún aparato, instalación o construcción, ni se realizarán actuaciones como rodajes, encuestas o ensayos, aunque sea con carácter provisional o temporal, que pueda entorpecer la circulación.",
+        "La a y c son correctas."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 4 Actividades que afectan a la seguridad de la circulación 1. La realización de obras, instalaciones, colocación de contenedores, mobiliario urbano o cualquier otro elemento u objeto de forma permanente o provisional en las vías o terrenos objeto de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial necesitará la autorización previa de su titular y se regirán por lo dispuesto en la legislación de carreteras y en sus reglamentos de desarrollo, y en las normas municipales. Las mismas normas serán aplicables a la interrupción de las obras en razón de las circunstancias o características especiales de tráfico, que podrán llevarse a efecto a petición del organismo autónomo Jefatura Central de Tráfico (artículo 10.1 del texto articulado). 2. Se prohíbe arrojar, depositar o abandonar sobre la vía objetos o materias que puedan entorpecer la libre circulación, parada o estacionamiento, hacerlos peligrosos o deteriorar aquélla o sus instalaciones, o producir en ella o en sus inmediaciones efectos que modifiquen las condiciones apropiadas para circular, parar o estacionar 3. No se instalará en vías o terrenos objeto del ámbito de aplicación de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial ningún aparato, instalación o construcción, ni se realizarán actuaciones como rodajes, encuestas o ensayos, aunque sea con carácter provisional o temporal, que pueda entorpecer la circulación."
+    },
+    {
+      "pregunta": "49. Según el artículo 5 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, todas las actuaciones que deban desarrollar los servicios de asistencia mecánica, sanitaria o cualquier otro tipo de intervención deberán regirse por los principios de utilización de los recursos idóneos y estrictamente necesarios en cada caso, señale la respuesta correcta:",
+      "opciones": [
+        "El organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes, acordarán la presencia y permanencia en la zona de intervención de todo el personal y equipo que sea imprescindible y garantizará la ausencia de personas ajenas a las labores propias de la asistencia; además, la Jefatura Provincial de Tráfico será la encargada de señalar en cada caso concreto los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, atendiendo a la prestación de la mejor asistencia y velando por el mejor auxilio de las personas.",
+        "El organismo autónomo Jefatura Provincial de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes, acordarán la presencia y permanencia en la zona de intervención de todo el personal y equipo que sea imprescindible y garantizará la ausencia de personas ajenas a las labores propias de la asistencia; además, será la encargada de señalar en cada caso concreto los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, atendiendo a la prestación de la mejor asistencia y velando por el mejor auxilio de las personas.",
+        "El organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes, acordarán la presencia y permanencia en la zona de intervención de todo el personal y equipo que sea imprescindible y garantizará la ausencia de personas ajenas a las labores propias de la asistencia; además, será la encargada de señalar en cada caso concreto los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, atendiendo a la prestación de la mejor asistencia y velando por el mejor auxilio de las personas.",
+        "El organismo autónomo Jefatura Central de Tráfico, acordará la presencia y permanencia en la zona de intervención de todo el personal y equipo que sea imprescindible y garantizará la ausencia de personas ajenas a las labores propias de la asistencia; además, será la encargada de señalar en cada caso concreto los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, atendiendo a la prestación de la mejor asistencia y velando por el mejor auxilio de las personas."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 5 Señalización de obstáculos y peligros 1. Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y adoptarán entre tanto las medidas necesarias para que pueda ser advertido por los demás usuarios y para que no se dificulte la circulación (artículo 10.3 del texto articulado). 2. No se considerarán obstáculos en la calzada los resaltos en los pasos para peatones y bandas transversales, siempre que cumplan la regulación básica establecida al efecto por el Ministerio de Fomento y se garantice la seguridad vial de los usuarios y, en particular, de los ciclistas. 3. Para advertir la presencia en la vía de cualquier obstáculo o peligro creado, el causante de éste deberá señalizarlo de forma eficaz, tanto de día como de noche, de conformidad con lo dispuesto en los artículos 130.3, 140 y 173. 4. Todas las actuaciones que deban desarrollar los servicios de asistencia mecánica, sanitaria o cualquier otro tipo de intervención deberán regirse por los principios de utilización de los recursos idóneos y estrictamente necesarios en cada caso. El organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes, acordarán la presencia y permanencia en la zona de intervención de todo el personal y equipo que sea imprescindible y garantizará la ausencia de personas ajenas a las labores propias de la asistencia; además, será la encargada de señalar en cada caso concreto los lugares donde deben situarse los vehículos de servicios de urgencia o de otros servicios especiales, atendiendo a la prestación de la mejor asistencia y velando por el mejor auxilio de las personas. 5. La actuación de los quipos de los servicios de urgencia, así como la de los de asistencia mecánica y de conservación de carreteras, deberá procurar en todo momento la menor afectación posible sobre el resto de la circulación, ocupando el mínimo posible de la calzada y siguiendo en todo momento las instrucciones que imparta el organismo autónomo Jefatura Central de Tráfico o, en su caso, la autoridad autonómica o local responsable de la regulación del tráfico, o sus agentes. El comportamiento de los conductores y usuarios en caso de emergencia se ajustará a lo establecido en los artículos 69, 129 y 130 y, en particular, el de los conductores de los vehículos de servicio de urgencia, a lo dispuesto en los artículos 67, 68, 111 y 112."
+    },
+    {
+      "pregunta": "50. Según el artículo 7 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, ¿cuál de las siguientes respuestas no es correcta?",
+      "opciones": [
+        "Quedan prohibidos, en concreto, los vertederos de basuras y residuos dentro de la zona de afección de las carreteras, en todo caso, y fuera de ella cuando no exista peligro de que el humo producido por la incineración de las basuras o incendios ocasionales pueda alcanzar la carretera.",
+        "Se prohíbe, asimismo, la circulación de los vehículos mencionados cuando los gases expulsados por los motores, en lugar de atravesar un silenciador eficaz, salgan desde el motor a través de uno incompleto, inadecuado, deteriorado o a través de tubos resonadores, y la de los de motor de combustión interna que circulen sin hallarse dotados de un dispositivo que evite la proyección descendente al exterior de combustible no quemado, o lancen humos que puedan dificultar la visibilidad a los conductores de otros vehículos o resulten nocivos.",
+        "Los agentes de la autoridad podrán inmovilizar el vehículo en el caso de que supere los niveles de gases, humos y ruidos permitidos reglamentariamente, según el tipo de vehículo, conforme al artículo 70.2 del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial.",
+        "Queda prohibida la emisión de los contaminantes a que se refiere el apartado 1 producida por vehículos a motor por encima de las limitaciones previstas en las normas reguladoras de los vehículos."
+      ],
+      "correcta": 0,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 7 Emisión de perturbaciones y contaminantes 1. Los vehículos no podrán circular por las vías o terrenos objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial si emiten perturbaciones electromagnéticas, con niveles de emisión de ruido superiores a los límites establecidos por las normas específicamente reguladoras de la materia, así como tampoco podrán emitir gases o humos en valores superiores a los límites establecidos ni en los supuestos de haber sido objeto de una reforma de importancia no autorizada, todo ello de acuerdo con lo dispuesto en el anexo I del Reglamento General de Vehículos. Todos los conductores de vehículos quedan obligados a colaborar en las pruebas de detección que permitan comprobar las posibles deficiencias indicadas. 2. Tanto en las vías públicas urbanas como en las interurbanas se prohíbe la circulación de vehículos a motor y ciclomotores con el llamado escape libre, sin el preceptivo dispositivo silenciador de las explosiones. Se prohíbe, asimismo, la circulación de los vehículos mencionados cuando los gases expulsados por los motores, en lugar de atravesar un silenciador eficaz, salgan desde el motor a través de uno incompleto, inadecuado, deteriorado o a través de tubos resonadores, y la de los de motor de combustión interna que circulen sin hallarse dotados de un dispositivo que evite la proyección descendente al exterior de combustible no quemado, o lancen humos que puedan dificultar la visibilidad a los conductores de otros vehículos o resulten nocivos. Los agentes de la autoridad podrán inmovilizar el vehículo en el caso de que supere los niveles de gases, humos y ruidos permitidos reglamentariamente, según el tipo de vehículo, conforme al artículo 70.2 del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial. 3. Queda prohibida la emisión de los contaminantes a que se refiere el apartado 1 producida por vehículos a motor por encima de las limitaciones previstas en las normas reguladoras de los vehículos. 4. Igualmente, queda prohibida dicha emisión por otros focos emisores de contaminantes distintos de los producidos por vehículos a motor, cualquiera que fuese su naturaleza, por encima de los niveles que el Gobierno establezca con carácter general. Quedan prohibidos, en concreto, los vertederos de basuras y residuos dentro de la zona de afección de las carreteras, en todo caso, y fuera de ella cuando exista peligro de que el humo producido por la incineración de las basuras o incendios ocasionales pueda alcanzar la carretera."
+    },
+    {
+      "pregunta": "51. Según el artículo 18.1 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, el conductor de un vehículo está obligado a mantener su propia libertad de movimientos, el campo necesario de visión y la atención permanente a la conducción, que garanticen su propia seguridad, la del resto de los ocupantes del vehículo y la de los demás usuarios de la vía. A estos efectos, deberá cuidar especialmente de mantener la posición adecuada y que la mantengan el resto de los pasajeros, y la adecuada colocación de los objetos o animales transportados para que no haya interferencia entre el conductor y cualquiera de ellos: Señale la respuesta correcta.",
+      "opciones": [
+        "Se considera compatible con la obligatoria atención permanente a la conducción el uso por el conductor con el vehículo en movimiento de dispositivos tales como pantallas con acceso a internet, monitores de televisión y reproductores de vídeo o DVD. Se exceptúan, a estos efectos, el uso de monitores que estén a la vista del conductor y cuya utilización sea necesaria para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS.",
+        "Se considera incompatible con la obligatoria atención permanente a la conducción el uso por el conductor con el vehículo en movimiento de dispositivos tales como pantallas con acceso a internet, monitores de televisión y reproductores de vídeo o DVD. Se exceptúan, a estos efectos, el uso de monitores que estén a la vista del conductor y cuya utilización sea necesaria para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS.",
+        "Se considera incompatible con la obligatoria atención permanente a la conducción el uso por el conductor con el vehículo en movimiento de dispositivos tales como pantallas con acceso a internet, monitores de televisión, reproductores de vídeo o DVD y el dispositivo GPS. Se exceptúan, a estos efectos, el uso de monitores que estén a la vista del conductor y cuya utilización sea necesaria para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras.",
+        "Se considera incompatible con la obligatoria atención permanente a la conducción el uso por el conductor con el vehículo en movimiento de dispositivos tales como pantallas con acceso a internet y monitores de televisión. Se exceptúan, a estos efectos, el uso de monitores que estén a la vista del conductor y cuya utilización sea necesaria para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS y reproductores de vídeo o DVD."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 18 Otras obligaciones del conductor 1. El conductor de un vehículo está obligado a mantener su propia libertad de movimientos, el campo necesario de visión y la atención permanente a la conducción, que garanticen su propia seguridad, la del resto de los ocupantes del vehículo y la de los demás usuarios de la vía. A estos efectos, deberá cuidar especialmente de mantener la posición adecuada y que la mantengan el resto de los pasajeros, y la adecuada colocación de los objetos o animales transportados para que no haya interferencia entre el conductor y cualquiera de ellos (artículo 11.2 del texto articulado). Se considera incompatible con la obligatoria atención permanente a la conducción el uso por el conductor con el vehículo en movimiento de dispositivos tales como pantallas con acceso a internet, monitores de televisión y reproductores de vídeo o DVD. Se exceptúan, a estos efectos, el uso de monitores que estén a la vista del conductor y cuya utilización sea necesaria para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS."
+    },
+    {
+      "pregunta": "52. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Indique de las siguientes definiciones cual es correcta:",
+      "opciones": [
+        "Las conductas referidas a la conducción negligente tendrán la consideración de infracciones leves.",
+        "Las conductas referidas a la conducción negligente tendrán la consideración de infracciones graves.",
+        "Las conductas referidas a la conducción negligente tendrán la consideración de infracciones muy graves.",
+        "Ninguna de las anteriores."
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 3 Conductores 1. Se deberá conducir con la diligencia y precaución necesarias para evitar todo daño, propio o ajeno, cuidando de no poner en peligro, tanto al mismo conductor como a los demás ocupantes del vehículo y al resto de los usuarios de la vía. Queda terminantemente prohibido conducir de modo negligente o temerario (artículo 9.2 del texto articulado). 2. Las conductas referidas a la conducción negligente tendrán la consideración de infracciones graves y las referidas a la conducción temeraria tendrán la consideración de infracciones muy graves, de acuerdo con lo dispuesto en el artículo 65.4.a) y 5.c) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, respectivamente"
+    },
+    {
+      "pregunta": "53. Según el artículo 5 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, ¿quién deberá hacer desaparecer de la vía, lo antes posible, el obstáculo o peligro creado y adoptar entre tanto las medidas necesarias para que pueda ser advertido por los demás usuarios y para que no se dificulte la circulación?",
+      "opciones": [
+        "Todos los usuarios de la vía.",
+        "Los Agentes encargados de la vigilancia y control del tráfico.",
+        "El conductor del vehículo.",
+        "Quienes lo hubieran creado."
+      ],
+      "correcta": 3,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 5 Señalización de obstáculos y peligros 1. Quienes hubieran creado sobre la vía algún obstáculo o peligro deberán hacerlo desaparecer lo antes posible, y adoptarán entre tanto las medidas necesarias para que pueda ser advertido por los demás usuarios y para que no se dificulte la circulación (artículo 10.3 del texto articulado)."
+    },
+    {
+      "pregunta": "54. Un conductor que ha sido requerido en un control preventivo de alcoholemia, ¿qué tasa de alcohol no deberá superar si va conduciendo un turismo?",
+      "opciones": [
+        "0,50 gramos por litro en aire espirado.",
+        "0,25 miligramos por litro en aire espirado.",
+        "0,30 gramos por litro en aire espirado.",
+        "0,15 miligramos por litro en aire espirado."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 20 RGCir Tasas."
+    },
+    {
+      "pregunta": "55. Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación. Rellene el espacio en blanco: (Artículo 20. Tasas de alcohol en sangre y aire espirado). Los conductores de cualquier vehículo no podrán superar la tasa de alcohol en sangre de 0,3 gramos por litro ni de alcohol en aire espirado de 0,15 miligramos por litro durante los ____ años siguientes a la obtención del permiso.",
+      "opciones": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "correcta": 1,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 20 Tasas de alcohol en sangre y aire espirado No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro. Cuando se trate de vehículos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kilogramos, vehículos destinados al transporte de viajeros de más de nueve plazas, o de servicio público, al transporte escolar y de menores, al de mercancías peligrosas o de servicio de urgencia o transportes especiales, los conductores no podrán hacerlo con una tasa de alcohol en sangre superior a 0,3 gramos por litro, o de alcohol en aire espirado superior a 0,15 miligramos por litro. Los conductores de cualquier vehículo no podrán superar la tasa de alcohol en sangre de 0,3 gramos por litro ni de alcohol en aire espirado de 0,15 miligramos por litro durante los dos años siguientes a la obtención del permiso o licencia que les habilita para conducir. A estos efectos, sólo se computará la antigüedad de la licencia de conducción cuando se trate de la conducción de vehículos para los que sea suficiente dicha licencia."
+    },
+    {
+      "pregunta": "56. Según el artículo 6 del RD 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación, señale la respuesta correcta:",
+      "opciones": [
+        "Se prohíbe arrojar a la vía únicamente cualquier objeto que pueda dar lugar a la producción de incendios o, en general, poner en peligro la seguridad vial.",
+        "Las infracciones a este precepto tendrán la consideración de infracción muy grave de acuerdo con lo dispuesto en el artículo 65.4.b) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial.",
+        "Se prohíbe arrojar a la vía o en sus inmediaciones cualquier objeto que pueda dar lugar a la producción de incendios o, en general, poner en peligro la seguridad vial.",
+        "Las infracciones a este precepto tendrán la consideración de infracción muy grave de acuerdo con lo dispuesto en el artículo 62.4.b) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial."
+      ],
+      "correcta": 2,
+      "explicacion": "Real Decreto 1428/2003, de 21 de noviembre, por el que se aprueba el Reglamento General de Circulación para la aplicación y desarrollo del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial, aprobado por el Real Decreto Legislativo 339/1990, de 2 de marzo Artículo 6 Prevención de incendios 1. Se prohíbe arrojar a la vía o en sus inmediaciones cualquier objeto que pueda dar lugar a la producción de incendios o, en general, poner en peligro la seguridad vial (artículo 10.4 del texto articulado). 2. Las infracciones a este precepto tendrán la consideración de infracción grave de acuerdo con lo dispuesto en el artículo 65.4.b) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial."
+    },
+    {
+      "pregunta": "57. ¿Cuál de estos artículos no se considera incompatible el uso por el conductor de un vehículo?",
+      "opciones": [
+        "Internet",
+        "GPS",
+        "Monitores de televisión.",
+        "Reproductores de video o DVD."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 18 RGCir. Se considera incompatible el uso por el conductor de dispositivos tales como internet, monitores de televisión y reproductores de video o DVD. Se exceptúan, el uso de monitores para la visión de acceso o bajada de peatones o para la visión en vehículos con cámara de maniobras traseras, así como el dispositivo GPS."
+    },
+    {
+      "pregunta": "58. Un conductor de un vehículo destinado al transporte de mercancías cuya masa máxima autorizada es de 3200 kg, ¿qué tasa de alcohol no deberá superar si va conduciendo el citado vehículo?",
+      "opciones": [
+        "0,50 miligramos por litro en aire espirado.",
+        "0,25 miligramos por litro en aire espirado.",
+        "0,30 gramos por litro en sangre.",
+        "0,15 gramos por litro en sangre."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 20 RGCir Tasas. No podrán circular por las vías objeto de la legislación sobre tráfico, circulación de vehículos a motor y seguridad vial los conductores de vehículos ni los conductores de bicicletas con una tasa de alcohol en sangre superior a 0,5 gramos por litro, o de alcohol en aire espirado superior a 0,25 miligramos por litro. Cuando se trate de vehículos destinados al transporte de mercancías con una masa máxima autorizada superior a 3.500 kilogramos, vehículos destinados al transporte de viajeros de más de nueve plazas, o de servicio público, al transporte escolar y de menores, al de mercancías peligrosas o de servicio de urgencia o transportes especiales, los conductores no podrán hacerlo con una tasa de alcohol en sangre superior a 0,3 gramos por litro, o de alcohol en aire espirado superior a 0,15 miligramos por litro."
+    },
+    {
+      "pregunta": "59. Alcoholemia. Práctica de las pruebas: De la misma forma advertirá a la persona sometida a examen del derecho que tiene a controlar, por sí o por cualquiera de sus acompañantes o testigos presentes, que entre la realización de la primera y de la segunda prueba medie un tiempo",
+      "opciones": [
+        "Máximo de 10 minutos.",
+        "Mínimo de 10 minutos.",
+        "Máximo de 15 minutos.",
+        "Mínimo de 15 minutos."
+      ],
+      "correcta": 1,
+      "explicacion": "Artículo 23 RGCir. Práctica de las pruebas Documento adjunto Explicación detallada"
+    },
+    {
+      "pregunta": "60. Los supuestos de parada o estacionamiento de los equipos de los servicios de urgencia, así como la de los de asistencia mecánica y de conservación de carreteras en lugares distintos de los fijados por los agentes de la autoridad responsable del tráfico",
+      "opciones": [
+        "Tendrán la consideración de infracción muy grave de acuerdo con lo dispuesto en el artículo 65.4.a) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial.",
+        "Tendrán la consideración de infracción muy grave de acuerdo con lo dispuesto en el artículo 65.4.b) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial.",
+        "Tendrán la consideración de infracción muy grave de acuerdo con lo dispuesto en el artículo 65.4.c) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial.",
+        "Ninguno de los anteriores es correcto."
+      ],
+      "correcta": 3,
+      "explicacion": "Artículo 5.7 RGCir. tendrán la consideración de infracción grave de acuerdo con lo dispuesto en el artículo 65.4.d) del texto articulado de la Ley sobre tráfico, circulación de vehículos a motor y seguridad vial. (truco: no está en la lista de muy graves)"
+    }
+
+        ];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

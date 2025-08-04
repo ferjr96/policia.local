@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Según la Constitución Española de 1978 y la inviolabilidad de las comunicaciones:",
+        "opciones": [
+            "Sólo son inviolables las comunicaciones postales y telefónicas.",
+            "La Constitución garantiza el secreto de todas las comunicaciones.",
+            "El secreto de las comunicaciones no se puede levantar ni siquiera mediante resolución judicial.",
+            "La inviolabilidad de las comunicaciones se exceptúa en el caso de matrimonio."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 18 1. Se garantiza el derecho al honor, a la intimidad personal y familiar y a la propia imagen. 2. El domicilio es inviolable. Ninguna entrada o registro podrá hacerse en él sin consentimiento del titular o resolución judicial, salvo en caso de flagrante delito. 3. Se garantiza el secreto de las comunicaciones y, en especial, de las postales, telegráficas y telefónicas, salvo resolución judicial. 4. La ley limitará el uso de la informática para garantizar el honor y la intimidad personal y familiar de los ciudadanos y el pleno ejercicio de sus derechos."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, quedan excluidos de la extradición:",
+        "opciones": [
+            "Los delitos políticos",
+            "Los delitos de terrorismo",
+            "Las respuestas a y b son correctas",
+            "Ninguna respuesta es correcta"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 13 1. Los extranjeros gozarán en España de las libertades públicas que garantiza el presente Título en los términos que establezcan los tratados y la ley. 2. Solamente los españoles serán titulares de los derechos reconocidos en el artículo 23, salvo lo que, atendiendo a criterios de reciprocidad, pueda establecerse por tratado o ley para el derecho de sufragio activo y pasivo en las elecciones municipales. 3. La extradición sólo se concederá en cumplimiento de un tratado o de la ley, atendiendo al principio de reciprocidad. Quedan excluidos de la extradición los delitos políticos, no considerándose como tales los actos de terrorismo. 4. La ley establecerá los términos en que los ciudadanos de otros países y los apátridas podrán gozar del derecho de asilo en España."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, mediante el recurso de amparo del artículo 53 se protegen los derechos y libertades de:",
+        "opciones": [
+            "El Titulo I de la Constitución.",
+            "La Secc. 1ª del Capitulo II del Titulo I.",
+            "La Secc. 1ª del Capitulo II del Titulo I, además del derecho a la igualdad.",
+            "La Secc. 1ª del Capitulo II del Titulo I. Además del derecho a la igualdad y a la objeción de conciencia."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 53 1. Los derechos y libertades reconocidos en el Capítulo segundo del presente Título vinculan a todos los poderes públicos. Sólo por ley, que en todo caso deberá respetar su contenido esencial, podrá regularse el ejercicio de tales derechos y libertades, que se tutelarán de acuerdo con lo previsto en el artículo 161, 1, a). 2. Cualquier ciudadano podrá recabar la tutela de las libertades y derechos reconocidos en el artículo 14 y la Sección primera del Capítulo segundo ante los Tribunales ordinarios por un procedimiento basado en los principios de preferencia y sumariedad y, en su caso, a través del recurso de amparo ante el Tribunal Constitucional. Este último recurso será aplicable a la objeción de conciencia reconocida en el artículo 30. 3. El reconocimiento, el respeto y la protección de los principios reconocidos en el Capítulo tercero informarán la legislación positiva, la práctica judicial y la actuación de los poderes públicos. Sólo podrán ser alegados ante la Jurisdicción ordinaria de acuerdo con lo que dispongan las leyes que los desarrollen."
+    },
+    {
+        "pregunta": "La Constitución Española de 1978 establece como límite expreso de la libertad ideológica, religiosa y de culto:",
+        "opciones": [
+            "El derecho al honor, a la intimidad y a la propia imagen.",
+            "La protección de la juventud y de la infancia.",
+            "La función social de la propiedad.",
+            "El mantenimiento del orden público protegido por la ley."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 16 1. Se garantiza la libertad ideológica, religiosa y de culto de los individuos y las comunidades sin más limitación, en sus manifestaciones, que la necesaria para el mantenimiento del orden público protegido por la ley. 2. Nadie podrá ser obligado a declarar sobre su ideología, religión o creencias. 3. Ninguna confesión tendrá carácter estatal. Los poderes públicos tendrán en cuenta las creencias religiosas de la sociedad española y mantendrán las consiguientes relaciones de cooperación con la Iglesia Católica y las demás confesiones."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, al reconocer el derecho de reunión y manifestación, se establece que:",
+        "opciones": [
+            "Cabe celebrar una reunión con armas, siempre que se obtenga la correspondiente autorización.",
+            "Sólo la autoridad judicial puede prohibir una manifestación.",
+            "Sólo se puede prohibir una manifestación cuando existan razones fundadas de alteración del orden público, con peligro para personas y bienes.",
+            "En ningún caso se puede autorizar una manifestación en defensa de ideas contrarias a la Constitución."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 21 1. Se reconoce el derecho de reunión pacífica y sin armas. El ejercicio de este derecho no necesitará autorización previa. 2. En los casos de reuniones en lugares de tránsito público y manifestaciones se dará comunicación previa a la autoridad, que sólo podrá prohibirlas cuando existan razones fundadas de alteración del orden público, con peligro para personas o bienes."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, en su artículo 55.2 se prevé la posibilidad de que una ley orgánica determine la suspensión individual de derechos para personas determinadas, en relación con las investigaciones correspondientes a la actuación de bandas armadas o elementos terroristas. Indique cuál de los siguientes derechos no es susceptible de este tipo de medidas:",
+        "opciones": [
+            "Derecho del detenido a ser puesto en libertad o a disposición de la autoridad judicial en el plazo máximo de setenta y dos horas.",
+            "Inviolabilidad del domicilio.",
+            "Secreto de las comunicaciones.",
+            "Habeas Corpus."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 55 1. Los derechos reconocidos en los artículos 17, 18, apartados 2 y 3, artículos 19, 20, apartados 1, a) y d), y 5, artículos 21, 28, apartado 2, y artículo 37, apartado 2, podrán ser suspendidos cuando se acuerde la declaración del estado de excepción o de sitio en los términos previstos en la Constitución. Se exceptúa de lo establecido anteriormente el apartado 3 del artículo 17 para el supuesto de declaración de estado de excepción. 2. Una ley orgánica podrá determinar la forma y los casos en los que, de forma individual y con la necesaria intervención judicial y el adecuado control parlamentario, los derechos reconocidos en los artículos 17, apartado 2, y 18, apartados 2 y 3, pueden ser suspendidos para personas determinadas, en relación con las investigaciones correspondientes a la actuación de bandas armadas o elementos terroristas. La utilización injustificada o abusiva de las facultades reconocidas en dicha ley orgánica producirá responsabilidad penal, como violación de los derechos y libertades reconocidos por las leyes."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿quién autoriza el estado de Excepción?",
+        "opciones": [
+            "El Congreso",
+            "El Gobierno en Consejo de Ministros",
+            "El Senado",
+            "Todas son correctas"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 116 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 2. El estado de alarma será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso de los Diputados, reunido inmediatamente al efecto y sin cuya autorización no podrá ser prorrogado dicho plazo. El decreto determinará el ámbito territorial a que se extienden los efectos de la declaración. 3. El estado de excepción será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros, previa autorización del Congreso de los Diputados. La autorización y proclamación del estado de excepción deberá determinar expresamente los efectos del mismo, el ámbito territorial a que se extiende y su duración, que no podrá exceder de treinta días, prorrogables por otro plazo igual, con los mismos requisitos. 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones. 5. No podrá procederse a la disolución del Congreso mientras estén declarados algunos de los estados comprendidos en el presente artículo, quedando automáticamente convocadas las Cámaras si no estuvieren en período de sesiones. Su funcionamiento, así como el de los demás poderes constitucionales del Estado, no podrán interrumpirse durante la vigencia de estos estados. Disuelto el Congreso o expirado su mandato, si se produjere alguna de las situaciones que dan lugar a cualquiera de dichos estados, las competencias del Congreso serán asumidas por su Diputación Permanente. 6. La declaración de los estados de alarma, de excepción y de sitio no modificarán el principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, respecto de la libertad de expresión y la libertad de información, no es cierto que:",
+        "opciones": [
+            "La Constitución reconoce el derecho de comunicar y recibir libremente información veraz por cualquier medio de difusión.",
+            "La libertad de expresión es libertad de expresar y difundir libremente los pensamientos, ideas y opiniones mediante la palabra, el escrito o cualquier otro medio de reproducción.",
+            "El honor, la intimidad y la propia imagen limitan tales derechos.",
+            "El ejercicio de tales derechos puede ser restringido mediante censura previa, si está justificada."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20 1. Se reconocen y protegen los derechos: a) A expresar y difundir libremente los pensamientos, ideas y opiniones mediante la palabra, el escrito o cualquier otro medio de reproducción. b) A la producción y creación literaria, artística, científica y técnica. c) A la libertad de cátedra. d) A comunicar o recibir libremente información veraz por cualquier medio de difusión. La ley regulará el derecho a la cláusula de conciencia y al secreto profesional en el ejercicio de estas libertades. 2. El ejercicio de estos derechos no puede restringirse mediante ningún tipo de censura previa. 3. La ley regulará la organización y el control parlamentario de los medios de comunicación social dependientes del Estado o de cualquier ente público y garantizará el acceso a dichos medios de los grupos sociales y políticos significativos, respetando el pluralismo de la sociedad y de las diversas lenguas de España. 4. Estas libertades tienen su límite en el respeto a los derechos reconocidos en este Título, en los preceptos de las leyes que lo desarrollen y, especialmente, en el derecho al honor, a la intimidad, a la propia imagen y a la protección de la juventud y de la infancia. 5. Sólo podrá acordarse el secuestro de publicaciones, grabaciones y otros medios de información en virtud de resolución judicial."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿pueden ser suspendidos los derechos comprendidos en el art. 16 de la CE, en los estados de excepción y sitio?",
+        "opciones": [
+            "Sí",
+            "Solo en el de sitio",
+            "No",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 55 1. Los derechos reconocidos en los artículos 17, 18, apartados 2 y 3, artículos 19, 20, apartados 1, a) y d), y 5, artículos 21, 28, apartado 2, y artículo 37, apartado 2, podrán ser suspendidos cuando se acuerde la declaración del estado de excepción o de sitio en los términos previstos en la Constitución. Se exceptúa de lo establecido anteriormente el apartado 3 del artículo 17 para el supuesto de declaración de estado de excepción. 2. Una ley orgánica podrá determinar la forma y los casos en los que, de forma individual y con la necesaria intervención judicial y el adecuado control parlamentario, los derechos reconocidos en los artículos 17, apartado 2, y 18, apartados 2 y 3, pueden ser suspendidos para personas determinadas, en relación con las investigaciones correspondientes a la actuación de bandas armadas o elementos terroristas. La utilización injustificada o abusiva de las facultades reconocidas en dicha ley orgánica producirá responsabilidad penal, como violación de los derechos y libertades reconocidos por las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Determine cuál de las siguientes afirmaciones no es correcta:",
+        "opciones": [
+            "Los españoles tienen derecho a elegir libremente su residencia y a circular por el territorio nacional.",
+            "La Constitución garantiza la libertad ideológica, religiosa y de culto de los individuos.",
+            "Nadie puede ser obligado a declarar sobre su ideología, religión o creencias.",
+            "La Constitución no reconoce la libertad de cátedra."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 20 1. Se reconocen y protegen los derechos: a) A expresar y difundir libremente los pensamientos, ideas y opiniones mediante la palabra, el escrito o cualquier otro medio de reproducción. b) A la producción y creación literaria, artística, científica y técnica. c) A la libertad de cátedra. d) A comunicar o recibir libremente información veraz por cualquier medio de difusión. La ley regulará el derecho a la cláusula de conciencia y al secreto profesional en el ejercicio de estas libertades. 2. El ejercicio de estos derechos no puede restringirse mediante ningún tipo de censura previa. 3. La ley regulará la organización y el control parlamentario de los medios de comunicación social dependientes del Estado o de cualquier ente público y garantizará el acceso a dichos medios de los grupos sociales y políticos significativos, respetando el pluralismo de la sociedad y de las diversas lenguas de España. 4. Estas libertades tienen su límite en el respeto a los derechos reconocidos en este Título, en los preceptos de las leyes que lo desarrollen y, especialmente, en el derecho al honor, a la intimidad, a la propia imagen y a la protección de la juventud y de la infancia. 5. Sólo podrá acordarse el secuestro de publicaciones, grabaciones y otros medios de información en virtud de resolución judicial."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, la administración civil:",
+        "opciones": [
+            "Puede imponer todo tipo de sanciones.",
+            "Puede imponer sanciones que impliquen privación de libertad.",
+            "No puede imponer sanciones que impliquen, directa o indirectamente, privación de libertad.",
+            "No está sujeta al principio de legalidad en materia sancionadora."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 25 1. Nadie puede ser condenado o sancionado por acciones u omisiones que en el momento de producirse no constituyan delito, falta o infracción administrativa, según la legislación vigente en aquel momento. 2. Las penas privativas de libertad y las medidas de seguridad estarán orientadas hacia la reeducación y reinserción social y no podrán consistir en trabajos forzados. El condenado a pena de prisión que estuviere cumpliendo la misma gozará de los derechos fundamentales de este Capítulo, a excepción de los que se vean expresamente limitados por el contenido del fallo condenatorio, el sentido de la pena y la ley penitenciaria. En todo caso, tendrá derecho a un trabajo remunerado y a los beneficios correspondientes de la Seguridad Social, así como al acceso a la cultura y al desarrollo integral de su personalidad. 3. La Administración civil no podrá imponer sanciones que, directa o subsidiariamente, impliquen privación de libertad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, el art. 20 de la CE, hace referencia a:",
+        "opciones": [
+            "Libertad de sindicación",
+            "Libertad de expresión",
+            "Al derecho a la huelga",
+            "Todas son correctas"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 20 1. Se reconocen y protegen los derechos: a) A expresar y difundir libremente los pensamientos, ideas y opiniones mediante la palabra, el escrito o cualquier otro medio de reproducción. b) A la producción y creación literaria, artística, científica y técnica. c) A la libertad de cátedra. d) A comunicar o recibir libremente información veraz por cualquier medio de difusión. La ley regulará el derecho a la cláusula de conciencia y al secreto profesional en el ejercicio de estas libertades. 2. El ejercicio de estos derechos no puede restringirse mediante ningún tipo de censura previa. 3. La ley regulará la organización y el control parlamentario de los medios de comunicación social dependientes del Estado o de cualquier ente público y garantizará el acceso a dichos medios de los grupos sociales y políticos significativos, respetando el pluralismo de la sociedad y de las diversas lenguas de España. 4. Estas libertades tienen su límite en el respeto a los derechos reconocidos en este Título, en los preceptos de las leyes que lo desarrollen y, especialmente, en el derecho al honor, a la intimidad, a la propia imagen y a la protección de la juventud y de la infancia. 5. Sólo podrá acordarse el secuestro de publicaciones, grabaciones y otros medios de información en virtud de resolución judicial."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, el artículo 17.2 dice que:",
+        "opciones": [
+            "La detención preventiva no puede durar en ningún caso más de veinticuatro horas.",
+            "La detención preventiva no puede durar en ningún caso más de setenta y dos horas.",
+            "La prisión provisional no puede durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos.",
+            "La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y en todo caso transcurridas treinta y seis horas el detenido debe ser puesto en libertad o a disposición judicial."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 17 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, con respecto al derecho a la libertad personal:",
+        "opciones": [
+            "Todas las personas están obligadas a declarar.",
+            "Las personas detenidas sólo tienen derecho a ser asistidos por abogados del turno de oficio.",
+            "La detención preventiva no puede durar más de setenta y dos horas.",
+            "Transcurridas setenta y dos horas, la policía puede acordar la prórroga de la detención preventiva por causa justificada."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 17 1. Toda persona tiene derecho a la libertad y a la seguridad. Nadie puede ser privado de su libertad, sino con la observancia de lo establecido en este artículo y en los casos y en la forma previstos en la ley. 2. La detención preventiva no podrá durar más del tiempo estrictamente necesario para la realización de las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial. 3. Toda persona detenida debe ser informada de forma inmediata, y de modo que le sea comprensible, de sus derechos y de las razones de su detención, no pudiendo ser obligada a declarar. Se garantiza la asistencia de abogado al detenido en las diligencias policiales y judiciales, en los términos que la ley establezca. 4. La ley regulará un procedimiento de «habeas corpus» para producir la inmediata puesta a disposición judicial de toda persona detenida ilegalmente. Asimismo, por ley se determinará el plazo máximo de duración de la prisión provisional."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿puede durar en el estado de sitio, más de 72 horas la detención preventiva?",
+        "opciones": [
+            "Sí, si así se establece",
+            "No, nunca",
+            "Es un derecho inviolable",
+            "Ninguna es correcta"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 55 1. Los derechos reconocidos en los artículos 17, 18, apartados 2 y 3, artículos 19, 20, apartados 1, a) y d), y 5, artículos 21, 28, apartado 2, y artículo 37, apartado 2, podrán ser suspendidos cuando se acuerde la declaración del estado de excepción o de sitio en los términos previstos en la Constitución. Se exceptúa de lo establecido anteriormente el apartado 3 del artículo 17 para el supuesto de declaración de estado de excepción."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, los derechos fundamentales respecto a los poderes públicos:",
+        "opciones": [
+            "Son meros principios programáticos.",
+            "Informarán su actuación.",
+            "Tienen eficacia vinculante.",
+            "Constituyen valores superiores no vinculantes."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 53 1. Los derechos y libertades reconocidos en el Capítulo segundo del presente Título vinculan a todos los poderes públicos. Sólo por ley, que en todo caso deberá respetar su contenido esencial, podrá regularse el ejercicio de tales derechos y libertades, que se tutelarán de acuerdo con lo previsto en el artículo 161, 1, a). 2. Cualquier ciudadano podrá recabar la tutela de las libertades y derechos reconocidos en el artículo 14 y la Sección primera del Capítulo segundo ante los Tribunales ordinarios por un procedimiento basado en los principios de preferencia y sumariedad y, en su caso, a través del recurso de amparo ante el Tribunal Constitucional. Este último recurso será aplicable a la objeción de conciencia reconocida en el artículo 30. 3. El reconocimiento, el respeto y la protección de los principios reconocidos en el Capítulo tercero informarán la legislación positiva, la práctica judicial y la actuación de los poderes públicos. Sólo podrán ser alegados ante la Jurisdicción ordinaria de acuerdo con lo que dispongan las leyes que los desarrollen."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, el ejercicio del derecho de manifestación requiere de:",
+        "opciones": [
+            "Autorización del Subdelegado del Gobierno cuando se pretenda desarrollar en vías de tránsito público y pueda provocar alteraciones de orden publico.",
+            "Autorización de las autoridades gubernativas competentes cuando se solicite por más de cien personas y se pretenda desarrollar en lugares cerrados.",
+            "Comunicación por escrito a la autoridad gubernativa solo cuando la organización corresponda a un partido político.",
+            "Comunicación de los organizadores a la autoridad gubernativa."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 21 1. Se reconoce el derecho de reunión pacífica y sin armas. El ejercicio de este derecho no necesitará autorización previa. 2. En los casos de reuniones en lugares de tránsito público y manifestaciones se dará comunicación previa a la autoridad, que sólo podrá prohibirlas cuando existan razones fundadas de alteración del orden público, con peligro para personas o bienes."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, el progreso social y económico viene regulado en el art._____de la CE:",
+        "opciones": [
+            "40",
+            "41",
+            "30",
+            "50"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 40 1. Los poderes públicos promoverán las condiciones favorables para el progreso social y económico y para una distribución de la renta regional y personal más equitativa, en el marco de una política de estabilidad económica. De manera especial realizarán una política orientada al pleno empleo. 2. Asimismo, los poderes públicos fomentarán una política que garantice la formación y readaptación profesionales; velarán por la seguridad e higiene en el trabajo y garantizarán el descanso necesario, mediante la limitación de la jornada laboral, las vacaciones periódicas retribuidas y la promoción de centros adecuados."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, señale de los siguientes derechos, aquellos que están contemplados en el apartado primero del artículo 20:",
+        "opciones": [
+            "A la creación y producción industrial.",
+            "A la libertad de cátedra.",
+            "A comunicar y recibir información dirigida.",
+            "Todas son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 20 1. Se reconocen y protegen los derechos: a) A expresar y difundir libremente los pensamientos, ideas y opiniones mediante la palabra, el escrito o cualquier otro medio de reproducción. b) A la producción y creación literaria, artística, científica y técnica. c) A la libertad de cátedra. d) A comunicar o recibir libremente información veraz por cualquier medio de difusión. La ley regulará el derecho a la cláusula de conciencia y al secreto profesional en el ejercicio de estas libertades. 2. El ejercicio de estos derechos no puede restringirse mediante ningún tipo de censura previa. 3. La ley regulará la organización y el control parlamentario de los medios de comunicación social dependientes del Estado o de cualquier ente público y garantizará el acceso a dichos medios de los grupos sociales y políticos significativos, respetando el pluralismo de la sociedad y de las diversas lenguas de España. 4. Estas libertades tienen su límite en el respeto a los derechos reconocidos en este Título, en los preceptos de las leyes que lo desarrollen y, especialmente, en el derecho al honor, a la intimidad, a la propia imagen y a la protección de la juventud y de la infancia. 5. Sólo podrá acordarse el secuestro de publicaciones, grabaciones y otros medios de información en virtud de resolución judicial."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, ¿qué artículo hace referencia a los derechos de los trabajadores y empresarios a adoptar medidas de conflicto colectivo?",
+        "opciones": [
+            "36. 1",
+            "36. 2",
+            "37. 2",
+            "37. 3"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 37 1. La ley garantizará el derecho a la negociación colectiva laboral entre los representantes de los trabajadores y empresarios, así como la fuerza vinculante de los convenios. 2. Se reconoce el derecho de los trabajadores y empresarios a adoptar medidas de conflicto colectivo. La ley que regule el ejercicio de este derecho, sin perjuicio de las limitaciones que puedan establecer, incluirá las garantías precisas para asegurar el funcionamiento de los servicios esenciales de la comunidad."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, son fundamento del orden político y la Paz Social:",
+        "opciones": [
+            "Los principios rectores de la política social.",
+            "La soberanía nacional.",
+            "El libre desarrollo de la personalidad.",
+            "El pluralismo político."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 10 1. La dignidad de la persona, los derechos inviolables que le son inherentes, el libre desarrollo de la personalidad, el respeto a la ley y a los derechos de los demás son fundamento del orden político y de la paz social. 2. Las normas relativas a los derechos fundamentales y a las libertades que la Constitución reconoce se interpretarán de conformidad con la Declaración Universal de Derechos Humanos y los tratados y acuerdos internacionales sobre las mismas materias ratificados por España."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿cuánto durará el Estado de Sitio?",
+        "opciones": [
+            "Un mes",
+            "15 días",
+            "Un mes prorrogable",
+            "El tiempo necesario para la vuelta a la normalidad"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 116 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 2. El estado de alarma será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso de los Diputados, reunido inmediatamente al efecto y sin cuya autorización no podrá ser prorrogado dicho plazo. El decreto determinará el ámbito territorial a que se extienden los efectos de la declaración. 3. El estado de excepción será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros, previa autorización del Congreso de los Diputados. La autorización y proclamación del estado de excepción deberá determinar expresamente los efectos del mismo, el ámbito territorial a que se extiende y su duración, que no podrá exceder de treinta días, prorrogables por otro plazo igual, con los mismos requisitos. 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones. 5. No podrá procederse a la disolución del Congreso mientras estén declarados algunos de los estados comprendidos en el presente artículo, quedando automáticamente convocadas las Cámaras si no estuvieren en período de sesiones. Su funcionamiento, así como el de los demás poderes constitucionales del Estado, no podrán interrumpirse durante la vigencia de estos estados. Disuelto el Congreso o expirado su mandato, si se produjere alguna de las situaciones que dan lugar a cualquiera de dichos estados, las competencias del Congreso serán asumidas por su Diputación Permanente. 6. La declaración de los estados de alarma, de excepción y de sitio no modificarán el principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, la promoción de la participación de la juventud la reconoce el art.____ de la CE:",
+        "opciones": [
+            "47",
+            "48",
+            "57",
+            "63"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 48 Los poderes públicos promoverán las condiciones para la participación libre y eficaz de la juventud en el desarrollo político, social, económico y cultural."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿cuál de estos derechos puede ser suspendido en el supuesto de que se declare el estado de excepción?",
+        "opciones": [
+            "La libertad de cátedra.",
+            "El derecho de asociación.",
+            "El derecho a la inviolabilidad del domicilio.",
+            "El derecho de sufragio activo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 55 1. Los derechos reconocidos en los artículos 17, 18, apartados 2 y 3, artículos 19, 20, apartados 1, a) y d), y 5, artículos 21, 28, apartado 2, y artículo 37, apartado 2, podrán ser suspendidos cuando se acuerde la declaración del estado de excepción o de sitio en los términos previstos en la Constitución. Se exceptúa de lo establecido anteriormente el apartado 3 del artículo 17 para el supuesto de declaración de estado de excepción. 2. Una ley orgánica podrá determinar la forma y los casos en los que, de forma individual y con la necesaria intervención judicial y el adecuado control parlamentario, los derechos reconocidos en los artículos 17, apartado 2, y 18, apartados 2 y 3, pueden ser suspendidos para personas determinadas, en relación con las investigaciones correspondientes a la actuación de bandas armadas o elementos terroristas. La utilización injustificada o abusiva de las facultades reconocidas en dicha ley orgánica producirá responsabilidad penal, como violación de los derechos y libertades reconocidos por las leyes."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿de qué libertades públicas gozarán los extranjeros, según el artículo 13?",
+        "opciones": [
+            "De las contenidas en el Título Preliminar CE.",
+            "De las contenidas en el Título I CE, en los términos que establezcan los tratados y la Ley",
+            "De las contenidas en los derechos fundamentales.",
+            "Solamente de las establecidas en los tratados y la Ley."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 13 1. Los extranjeros gozarán en España de las libertades públicas que garantiza el presente Título en los términos que establezcan los tratados y la ley. 2. Solamente los españoles serán titulares de los derechos reconocidos en el artículo 23, salvo lo que, atendiendo a criterios de reciprocidad, pueda establecerse por tratado o ley para el derecho de sufragio activo y pasivo en las elecciones municipales. 3. La extradición sólo se concederá en cumplimiento de un tratado o de la ley, atendiendo al principio de reciprocidad. Quedan excluidos de la extradición los delitos políticos, no considerándose como tales los actos de terrorismo. 4. La ley establecerá los términos en que los ciudadanos de otros países y los apátridas podrán gozar del derecho de asilo en España."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, la extradición de ciudadanos extranjeros por el estado español:",
+        "opciones": [
+            "Sólo se concederá en cumplimiento de un tratado o de la ley.",
+            "No habrá que atender al principio de reciprocidad.",
+            "Quedan incluidos en la extradición los delitos políticos.",
+            "Todas son ciertas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 13 1. Los extranjeros gozarán en España de las libertades públicas que garantiza el presente Título en los términos que establezcan los tratados y la ley. 2. Solamente los españoles serán titulares de los derechos reconocidos en el artículo 23, salvo lo que, atendiendo a criterios de reciprocidad, pueda establecerse por tratado o ley para el derecho de sufragio activo y pasivo en las elecciones municipales. 3. La extradición sólo se concederá en cumplimiento de un tratado o de la ley, atendiendo al principio de reciprocidad. Quedan excluidos de la extradición los delitos políticos, no considerándose como tales los actos de terrorismo. 4. La ley establecerá los términos en que los ciudadanos de otros países y los apátridas podrán gozar del derecho de asilo en España."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, en su art. 15, Todos tienen derecho a la vida y...",
+        "opciones": [
+            "La integridad psíquica y moral",
+            "La integridad física y moral",
+            "La independencia judicial",
+            "Ninguna es correcta"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 15 Todos tienen derecho a la vida y a la integridad física y moral, sin que, en ningún caso, puedan ser sometidos a tortura ni a penas o tratos inhumanos o degradantes. Queda abolida la pena de muerte, salvo lo que puedan disponer las leyes penales militares para tiempos de guerra."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, el derecho al secreto de las comunicaciones puede ser suspendido:",
+        "opciones": [
+            "No, en ningún caso.",
+            "Sí, en caso de investigaciones relacionadas con bandas armadas o elementos terroristas.",
+            "Sí, en caso de investigaciones relacionadas con cualquier tipo de delincuencia organizada.",
+            "La b, y en los supuestos de declaración de los estados de excepción o sitio."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 55 1. Los derechos reconocidos en los artículos 17, 18, apartados 2 y 3, artículos 19, 20, apartados 1, a) y d), y 5, artículos 21, 28, apartado 2, y artículo 37, apartado 2, podrán ser suspendidos cuando se acuerde la declaración del estado de excepción o de sitio en los términos previstos en la Constitución. Se exceptúa de lo establecido anteriormente el apartado 3 del artículo 17 para el supuesto de declaración de estado de excepción. 2. Una ley orgánica podrá determinar la forma y los casos en los que, de forma individual y con la necesaria intervención judicial y el adecuado control parlamentario, los derechos reconocidos en los artículos 17, apartado 2, y 18, apartados 2 y 3, pueden ser suspendidos para personas determinadas, en relación con las investigaciones correspondientes a la actuación de bandas armadas o elementos terroristas. La utilización injustificada o abusiva de las facultades reconocidas en dicha ley orgánica producirá responsabilidad penal, como violación de los derechos y libertades reconocidos por las leyes."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, se establece el principio de reserva de Ley Orgánica para el desarrollo de los derechos:",
+        "opciones": [
+            "De su Título I.",
+            "De la sección 1ª del Capítulo II del Título I.",
+            "De la sección 1ª del Capítulo II de su Título I, así como la objeción de conciencia del artículo 30.",
+            "De la sección 1ª del Capítulo II de su Título I, el derecho a la igualdad y la objeción de conciencia del artículo 30."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 81 1. Son leyes orgánicas las relativas al desarrollo de los derechos fundamentales y de las libertades públicas, las que aprueben los Estatutos de Autonomía y el régimen electoral general y las demás previstas en la Constitución. 2. La aprobación, modificación o derogación de las leyes orgánicas exigirá mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿a qué edad se alcanza la mayoría de edad a tenor de lo dispuesto en el artículo 10?",
+        "opciones": [
+            "A los 18 años.",
+            "A los 18 años, pero se establece en el art. 15 CE.",
+            "A los 18 años, pero no se establece en el art. 10 CE.",
+            "A los 18 años, pero se regula en el art. 18 CE."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 12 Los españoles son mayores de edad a los dieciocho años."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, entre los derechos fundamentales proclamados en la sección 1ª del capítulo II del Título I se incluyen:",
+        "opciones": [
+            "El derecho a contraer matrimonio con plena igualdad jurídica, el derecho a sindicarse libremente y el derecho a la educación.",
+            "El derecho a la educación, el derecho a sindicarse libremente y el derecho al trabajo.",
+            "El derecho a la igualdad, el derecho al trabajo y el derecho a la libertad.",
+            "El derecho a la tutela judicial efectiva, el derecho a sindicarse libremente y el derecho de petición."
+        ],
+        "correcta": 3,
+        "explicacion": "Sección 1º son los artículos 15-29 Artículo 24 1. Todas las personas tienen derecho a obtener la tutela efectiva de los jueces y tribunales en el ejercicio de sus derechos e intereses legítimos, sin que, en ningún caso, pueda producirse indefensión. 2. Asimismo, todos tienen derecho al Juez ordinario predeterminado por la ley, a la defensa y a la asistencia de letrado, a ser informados de la acusación formulada contra ellos, a un proceso público sin dilaciones indebidas y con todas las garantías, a utilizar los medios de prueba pertinentes para su defensa, a no declarar contra sí mismos, a no confesarse culpables y a la presunción de inocencia. La ley regulará los casos en que, por razón de parentesco o de secreto profesional, no se estará obligado a declarar sobre hechos presuntamente delictivos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, la protección de los derechos ______________________ están recogidos en el Capítulo 3º del Título I. (Complete la frase):",
+        "opciones": [
+            "Civiles y sociales.",
+            "Económicos y sociales.",
+            "Sociales y prioritarios.",
+            "Civiles y prioritarios."
+        ],
+        "correcta": 1,
+        "explicacion": "CAPÍTULO TERCERO De los principios rectores de la política social y económica"
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, art. 30.1: todos los españoles tienen el derecho y el deber de defender...",
+        "opciones": [
+            "al estado",
+            "a su comunidad",
+            "a su país",
+            "a España"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 30 1. Los españoles tienen el derecho y el deber de defender a España. 2. La ley fijará las obligaciones militares de los españoles y regulará, con las debidas garantías, la objeción de conciencia, así como las demás causas de exención del servicio militar obligatorio, pudiendo imponer, en su caso, una prestación social sustitutoria. 3. Podrá establecerse un servicio civil para el cumplimiento de fines de interés general. 4. Mediante ley podrán regularse los deberes de los ciudadanos en los casos de grave riesgo, catástrofe o calamidad pública."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, ¿qué artículo de los indicados a continuación abre el Título VII?",
+        "opciones": [
+            "El artículo 127 CE.",
+            "El artículo 128 CE.",
+            "El artículo 130 CE.",
+            "El artículo 132 CE."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La Constitución Española de 1978 no reconoce, como derecho fundamental:",
+        "opciones": [
+            "El derecho a la reunión pacífica y sin armas.",
+            "La libertad de asociación.",
+            "El derecho a la educación.",
+            "El derecho a la propiedad privada."
+        ],
+        "correcta": 3,
+        "explicacion": "NOTA Los derechos fundamentales se encuentran recogidos en los artículos 15-29"
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, todos los españoles y extranjeros tienen derecho de petición:",
+        "opciones": [
+            "Individual",
+            "Colectiva",
+            "La a y la b son correctas",
+            "Ninguna es correcta"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 29 1. Todos los españoles tendrán el derecho de petición individual y colectiva, por escrito, en la forma y con los efectos que determine la ley. 2. Los miembros de las Fuerzas o Institutos armados o de los Cuerpos sometidos a disciplina militar podrán ejercer este derecho sólo individualmente y con arreglo a lo dispuesto en su legislación específica."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, son derechos proclamados en la sección 2ª del capítulo II del Título I:",
+        "opciones": [
+            "El derecho de reunión.",
+            "El derecho de asociación.",
+            "El derecho de sindicación.",
+            "El derecho de fundación."
+        ],
+        "correcta": 3,
+        "explicacion": "Sección 2º son los artículos 30-38 Artículo 34 1. Se reconoce el derecho de fundación para fines de interés general, con arreglo a la ley. 2. Regirá también para las fundaciones lo dispuesto en los apartados 2 y 4 del artículo 22."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, no hay vulneración del derecho a la inviolabilidad del domicilio en los supuestos de:",
+        "opciones": [
+            "Consentimiento del titular, resolución judicial, delito flagrante, y estado de necesidad.",
+            "Consentimiento del titular, resolución judicial, y delito flagrante.",
+            "Consentimiento del titular, resolución judicial, y estado de necesidad.",
+            "Resolución judicial, delito flagrante, y estado de necesidad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 18 1. Se garantiza el derecho al honor, a la intimidad personal y familiar y a la propia imagen. 2. El domicilio es inviolable. Ninguna entrada o registro podrá hacerse en él sin consentimiento del titular o resolución judicial, salvo en caso de flagrante delito. 3. Se garantiza el secreto de las comunicaciones y, en especial, de las postales, telegráficas y telefónicas, salvo resolución judicial. 4. La ley limitará el uso de la informática para garantizar el honor y la intimidad personal y familiar de los ciudadanos y el pleno ejercicio de sus derechos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, ¿qué artículos forman la sección denominada “Derechos fundamentales y libertades públicas”?",
+        "opciones": [
+            "Los artículos 14 al 29 inclusive.",
+            "Los artículos 15 al 29 inclusive.",
+            "Los artículos 14 al 30 inclusive.",
+            "Los artículos 15 al 30 inclusive."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, la protección del principio de igualdad:",
+        "opciones": [
+            "La vulneración del principio de igualdad sólo se puede proteger en la jurisdicción ordinaria.",
+            "La vulneración del principio de igualdad no es invocable en casación.",
+            "El principio de igualdad se protege mediante el recurso de amparo ante el Tribunal Constitucional.",
+            "El principio de igualdad no se puede proteger mediante el recurso de inconstitucionalidad contra la ley que lo vulnere."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 53 1. Los derechos y libertades reconocidos en el Capítulo segundo del presente Título vinculan a todos los poderes públicos. Sólo por ley, que en todo caso deberá respetar su contenido esencial, podrá regularse el ejercicio de tales derechos y libertades, que se tutelarán de acuerdo con lo previsto en el artículo 161, 1, a). 2. Cualquier ciudadano podrá recabar la tutela de las libertades y derechos reconocidos en el artículo 14 y la Sección primera del Capítulo segundo ante los Tribunales ordinarios por un procedimiento basado en los principios de preferencia y sumariedad y, en su caso, a través del recurso de amparo ante el Tribunal Constitucional. Este último recurso será aplicable a la objeción de conciencia reconocida en el artículo 30. 3. El reconocimiento, el respeto y la protección de los principios reconocidos en el Capítulo tercero informarán la legislación positiva, la práctica judicial y la actuación de los poderes públicos. Sólo podrán ser alegados ante la Jurisdicción ordinaria de acuerdo con lo que dispongan las leyes que los desarrollen."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, el derecho reconocido en el art. 17.2 ce puede ser suspendido:",
+        "opciones": [
+            "No, en ningún caso.",
+            "Sí, en caso de investigaciones relacionadas con bandas armadas o elementos terroristas.",
+            "Sí, en caso de investigaciones relacionadas con cualquier tipo de delincuencia organizada.",
+            "Sí, por medio de Ley Ordinaria, y con la necesaria intervención judicial."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 55 1. Los derechos reconocidos en los artículos 17, 18, apartados 2 y 3, artículos 19, 20, apartados 1, a) y d), y 5, artículos 21, 28, apartado 2, y artículo 37, apartado 2, podrán ser suspendidos cuando se acuerde la declaración del estado de excepción o de sitio en los términos previstos en la Constitución. Se exceptúa de lo establecido anteriormente el apartado 3 del artículo 17 para el supuesto de declaración de estado de excepción. 2. Una ley orgánica podrá determinar la forma y los casos en los que, de forma individual y con la necesaria intervención judicial y el adecuado control parlamentario, los derechos reconocidos en los artículos 17, apartado 2, y 18, apartados 2 y 3, pueden ser suspendidos para personas determinadas, en relación con las investigaciones correspondientes a la actuación de bandas armadas o elementos terroristas. La utilización injustificada o abusiva de las facultades reconocidas en dicha ley orgánica producirá responsabilidad penal, como violación de los derechos y libertades reconocidos por las leyes."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿cuál de las siguientes afirmaciones relativas al condenado a pena privativa de libertad que se halle cumpliendo la misma no es correcta?",
+        "opciones": [
+            "Gozará de la plenitud de los derechos fundamentales comprendidos en los arts. 14 a 29 CE, cualquiera que sea el contenido del fallo condenatorio.",
+            "Tiene derecho a un trabajo remunerado.",
+            "Tiene derecho a los beneficios de la Seguridad Social.",
+            "Tiene derecho al acceso a la cultura."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 25 1. Nadie puede ser condenado o sancionado por acciones u omisiones que en el momento de producirse no constituyan delito, falta o infracción administrativa, según la legislación vigente en aquel momento. 2. Las penas privativas de libertad y las medidas de seguridad estarán orientadas hacia la reeducación y reinserción social y no podrán consistir en trabajos forzados. El condenado a pena de prisión que estuviere cumpliendo la misma gozará de los derechos fundamentales de este Capítulo, a excepción de los que se vean expresamente limitados por el contenido del fallo condenatorio, el sentido de la pena y la ley penitenciaria. En todo caso, tendrá derecho a un trabajo remunerado y a los beneficios correspondientes de la Seguridad Social, así como al acceso a la cultura y al desarrollo integral de su personalidad. 3. La Administración civil no podrá imponer sanciones que, directa o subsidiariamente, impliquen privación de libertad."
+    },
+    {
+        "pregunta": "La Constitución Española de 1978 establece como límite expreso del derecho a la inviolabilidad del domicilio:",
+        "opciones": [
+            "El derecho al honor, a la intimidad y a la propia imagen.",
+            "La existencia de flagrante delito.",
+            "La función social de la propiedad.",
+            "El mantenimiento del orden público protegido por la ley."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 18 1. Se garantiza el derecho al honor, a la intimidad personal y familiar y a la propia imagen. 2. El domicilio es inviolable. Ninguna entrada o registro podrá hacerse en él sin consentimiento del titular o resolución judicial, salvo en caso de flagrante delito. 3. Se garantiza el secreto de las comunicaciones y, en especial, de las postales, telegráficas y telefónicas, salvo resolución judicial. 4. La ley limitará el uso de la informática para garantizar el honor y la intimidad personal y familiar de los ciudadanos y el pleno ejercicio de sus derechos."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, El art. 52 hace referencia a:",
+        "opciones": [
+            "Los consumidores",
+            "Organizaciones empresariales",
+            "La tercera edad",
+            "Las organizaciones profesionales"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 52 La ley regulará las organizaciones profesionales que contribuyan a la defensa de los intereses económicos que les sean propios. Su estructura interna y funcionamiento deberán ser democráticos."
+    },
+    {
+        "pregunta": "Según la Constitución Española, ¿puede ser condenada una persona por una falta penal si NO está tipificada como tal?",
+        "opciones": [
+            "No",
+            "Sí",
+            "Solo si es sentenciado",
+            "En última instancia"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 25 1. Nadie puede ser condenado o sancionado por acciones u omisiones que en el momento de producirse no constituyan delito, falta o infracción administrativa, según la legislación vigente en aquel momento. 2. Las penas privativas de libertad y las medidas de seguridad estarán orientadas hacia la reeducación y reinserción social y no podrán consistir en trabajos forzados. El condenado a pena de prisión que estuviere cumpliendo la misma gozará de los derechos fundamentales de este Capítulo, a excepción de los que se vean expresamente limitados por el contenido del fallo condenatorio, el sentido de la pena y la ley penitenciaria. En todo caso, tendrá derecho a un trabajo remunerado y a los beneficios correspondientes de la Seguridad Social, así como al acceso a la cultura y al desarrollo integral de su personalidad. 3. La Administración civil no podrá imponer sanciones que, directa o subsidiariamente, impliquen privación de libertad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978, el capítulo I del Título I lleva por rúbrica:",
+        "opciones": [
+            "Derechos y libertades.",
+            "De los españoles y los extranjeros.",
+            "De las garantías de las libertades y derechos fundamentales.",
+            "Ninguna es cierta."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, una ley regulará el procedimiento de «Habeas Corpus». Esta ley es:",
+        "opciones": [
+            "La Ley 6/1984, de 24 de mayo.",
+            "La Ley 6/1984, de 27 de mayo.",
+            "La Ley Orgánica 6/1984, de 24 de mayo.",
+            "La Ley Orgánica 6/1984, de 27 de mayo."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»"
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, señale el estado en el que se podrá limitar el derecho de libre circulación:",
+        "opciones": [
+            "Sitio",
+            "Excepción",
+            "Alarma",
+            "La b y la c son correctas"
+        ],
+        "correcta": 2,
+        "explicacion": "Durante el Estado de Alarma no se puede suspender ningún derecho, pero sí LIMITARLOS."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿son legales y regulados por Ley los Tribunales de Honor?",
+        "opciones": [
+            "Si",
+            "No",
+            "Algunos",
+            "Están regulados por reglamentos"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 26 Se prohíben los Tribunales de Honor en el ámbito de la Administración civil y de las organizaciones profesionales."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿qué carácter tiene el Estado español a tenor de lo dispuesto en el art. 16 de la misma?",
+        "opciones": [
+            "Laico.",
+            "Multireligioso.",
+            "Aconfesional.",
+            "Preeminentemente católico."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 16 1. Se garantiza la libertad ideológica, religiosa y de culto de los individuos y las comunidades sin más limitación, en sus manifestaciones, que la necesaria para el mantenimiento del orden público protegido por la ley. 2. Nadie podrá ser obligado a declarar sobre su ideología, religión o creencias. 3. Ninguna confesión tendrá carácter estatal. Los poderes públicos tendrán en cuenta las creencias religiosas de la sociedad española y mantendrán las consiguientes relaciones de cooperación con la Iglesia Católica y las demás confesiones."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

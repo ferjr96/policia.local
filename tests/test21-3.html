@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 1. Constitución Española 1978</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+    <h1>Tema 1. Constitución Española 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+        const preguntas = [
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. ¿Es responsable de sus actos un miembro de las Fuerzas y Cuerpos de Seguridad?",
+        "opciones": [
+            "No, ya que responde la Administración Pública correspondiente.",
+            "Sí, siempre.",
+            "Sí, son responsables personal y directamente por los actos que en su actuación profesional llevaren a cabo, siempre.",
+            "Ninguna de las anteriores respustas es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Responsabilidad Son responsables personal y directamente por los actos que en su actuación profesional llevaren a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión y los principios enunciados anteriormente, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas. Ninguna de las respuestas es correcta. C parece correcta, pero el “siempre” del final la hace incorrecta, ya que la Ley especifica que serán responsables si infringen o vulneran las normas legales."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale de entre los siguientes enunciados el que corresponda a “adecuación al ordenamiento jurídico”.",
+        "opciones": [
+            "Colaborar con la Administración de Justicia y auxiliarla en los términos establecidos en la Ley.",
+            "Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior.",
+            "Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en el momento de efectuar una detención.",
+            "Deberán llevar a cabo sus funciones con total dedicación, debiendo intervenir siempre, en cualquier tiempo y lugar, se hallaren o no de servicio, en defensa de la Ley y de la seguridad ciudadana."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Adecuación al ordenamiento jurídico Ejercer su función con absoluto respeto a la Constitución y el resto del ordenamiento jurídico. Actuar, en el cumplimiento de sus funciones, con absoluta neutralidad política e imparcialidad y, en consecuencia, sin discriminación alguna por razón de raza, religión u opinión. Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente. Sujetarse en su actuación profesional a los principios de jerarquía y subordinación. En ningún caso la obediencia debida podrá amparar órdenes que entrañen la ejecución de actos que manifiestamente constituyan delito o sean contrarios a la Constitución o a las Leyes. Colaborar con la Administración de Justicia y auxiliarla en los términos establecidos en la Ley."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale la correcta.",
+        "opciones": [
+            "Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas.",
+            "Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En algunas de sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas.",
+            "Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre, o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas.",
+            "Observar en todo momento un trato incorrecto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Relaciones con la comunidad b) Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. En base a la presente Ley orgánica, las funciones de los cuerpos de policía local se regulan en el…",
+        "opciones": [
+            "Artículo 51",
+            "Artículo 52",
+            "Artículo 53",
+            "Artículo 54"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 53 | Funciones 1. Los Cuerpos de Policía Local deberán ejercer las siguientes funciones:"
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 54, junta local de seguridad. La constitución de dichas Juntas y su composición se determinará…",
+        "opciones": [
+            "De acuerdo con el alcalde.",
+            "Según disponga la Ley.",
+            "Reglamentariamente.",
+            "Arbitrariamente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 54 | Junta local de seguridad La constitución de dichas Juntas y su composición se determinará reglamentariamente. La presidencia corresponderá al Alcalde, salvo que concurriera a sus sesiones el Gobernador civil de la provincia, en cuyo caso, la presidencia será compartida con éste."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale de entre los siguientes enunciados el que corresponda a “relaciones con la comunidad”.",
+        "opciones": [
+            "Velarán por la vida e integridad física de las personas a quienes detuvieren o que se encuentren bajo su custodia y respetarán el honor y la dignidad de las personas.",
+            "Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente.",
+            "Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral.",
+            "Son responsables personal y directamente por los actos que en su actuación profesional llevaren a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión y los principios enunciados anteriormente, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Relaciones con la comunidad Impedir, en el ejercicio de su actuación profesional, cualquier práctica abusiva, arbitraria o discriminatoria que entrañe violencia física o moral. Observar en todo momento un trato correcto y esmerado en sus relaciones con los ciudadanos, a quienes procurarán auxiliar y proteger, siempre que las circunstancias lo aconsejen o fueren requeridos para ello. En todas sus intervenciones, proporcionarán información cumplida, y tan amplia como sea posible, sobre las causas y finalidad de las mismas. En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance. Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale de entre los siguientes enunciados el que corresponda a “tratamiento de detenidos”.",
+        "opciones": [
+            "Actuar, en el cumplimiento de sus funciones, con absoluta neutralidad política e imparcialidad y, en consecuencia, sin discriminación alguna por razón de raza, religión u opinión.",
+            "Deberán llevar a cabo sus funciones con total dedicación, debiendo intervenir siempre, en cualquier tiempo y lugar, se hallaren o no de servicio, en defensa de la Ley y de la seguridad ciudadana.",
+            "Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en el momento de efectuar una detención.",
+            "Ejercer su función con absoluto respeto a la Constitución y el resto del ordenamiento jurídico."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Tratamiento de detenidos Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en el momento de efectuar una detención. b) Velarán por la vida e integridad física de las personas a quienes detuvieren o que se encuentren bajo su custodia y respetarán el honor y la dignidad de las personas. Darán cumplimiento y observarán con la debida diligencia los trámites, plazos y requisitos exigidos por el ordenamiento jurídico, cuando se proceda a la detención de una persona."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale la respuesta correcta.",
+        "opciones": [
+            "Deberán llevar a cabo sus funciones con total dedicación.",
+            "Debiendo intervenir siempre, en cualquier tiempo y lugar, se hallaren o no de servicio.",
+            "En defensa de la Ley y de la seguridad ciudadana.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Dedicación profesional Deberán llevar a cabo sus funciones con total dedicación, debiendo intervenir siempre, en cualquier tiempo y lugar, se hallaren o no de servicio, en defensa de la Ley y de la seguridad ciudadana."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 53, funciones. ¿Cuál de las siguientes funciones no corresponde a los Cuerpos de Policía Local?",
+        "opciones": [
+            "Proteger a las autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones.",
+            "Ordenar, señalizar y dirigir el tráfico en el casco urbano e interurbano, de acuerdo con lo establecido en las normas de circulación.",
+            "Instruir atestados por accidentes de circulación dentro del casco urbano.",
+            "Todas las anteriores corresponden a sus funciones."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 53 | Funciones Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: b) Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación. B no corresponde, ya que especifica en casco urbano."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 7, agentes de la autoridad. Señale la correcta.",
+        "opciones": [
+            "En el ejercicio de sus funciones, los miembros de las Fuerzas y Cuerpos de Seguridad tendrán a todos los efectos legales el carácter de agentes de la autoridad.",
+            "Cuando se cometa delito de atentado, empleando en su ejecución armas de fuego, explosivos u otros medios de agresión de análoga peligrosidad, que puedan poner en peligro grave la integridad física de los miembros de las Fuerzas y Cuerpos de Seguridad, tendrán al efecto de su protección penal la consideración de autoridad.",
+            "La Guardia Civil sólo tendrá consideración de fuerza armada en el cumplimiento de las misiones de carácter militar que se le encomienden, de acuerdo con el ordenamiento jurídico.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 7 | Agentes de la autoridad En el ejercicio de sus funciones, los miembros de las Fuerzas y Cuerpos de Seguridad tendrán a todos los efectos legales el carácter de agentes de la autoridad. Cuando se cometa delito de atentado, empleando en su ejecución armas de fuego, explosivos u otros medios de agresión de análoga peligrosidad, que puedan poner en peligro grave la integridad física de los miembros de las Fuerzas y Cuerpos de Seguridad, tendrán al efecto de su protección penal la consideración de autoridad. La Guardia Civil sólo tendrá consideración de fuerza armada en el cumplimiento de las misiones de carácter militar que se le encomienden, de acuerdo con el ordenamiento jurídico."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale la respuesta correcta.",
+        "opciones": [
+            "Deberán guardar riguroso secreto respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. Estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera.",
+            "Deberán guardar riguroso secreto respecto de algunas informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. No estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera.",
+            "Deberán guardar riguroso secreto respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. No estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Secreto profesional Deberán guardar riguroso secreto respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. No estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale la correcta.",
+        "opciones": [
+            "Actuar con integridad o dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente.",
+            "Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción o oponerse a él resueltamente.",
+            "Actuar con integridad o dignidad. En particular, deberán abstenerse de todo acto de corrupción o oponerse a él resueltamente.",
+            "Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Adecuación al ordenamiento jurídico c) Actuar con integridad y dignidad. En particular, deberán abstenerse de todo acto de corrupción y oponerse a él resueltamente."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 54, junta local de seguridad. ¿A quién corresponde la presidencia de la Junta Local de Seguridad?",
+        "opciones": [
+            "Al Alcalde.",
+            "Al Gobernador civil.",
+            "Al Gobernador civil, salvo que concurriera a sus sesiones el Alcalde, en cuyo caso, la presidencia será compartida con éste.",
+            "Al Alcalde, salvo que concuriera a sus sesiones el Gobernador civil de la provincia, en cuyo caso, la presidencia será compartida con éste."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 54 | Junta local de seguridad La constitución de dichas Juntas y su composición se determinará reglamentariamente. La presidencia corresponderá al Alcalde, salvo que concurriera a sus sesiones el Gobernador civil de la provincia, en cuyo caso, la presidencia será compartida con éste."
+    },
+    {
+        "pregunta": "¿A quién corresponde la presidencia de la Junta Local de Seguridad?",
+        "opciones": [
+            "Al conseller de la Consellería competente en materia de coordinación.",
+            "Al Jefe de Policía.",
+            "Al Alcalde.",
+            "Al Presidente del Gobierno autonómico."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 54.2 Ley orgánica 2/1986 de fuerzas y cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 53, funciones. ¿Cuál de las siguientes funciones no corresponde a los Cuerpos de Policía Local?",
+        "opciones": [
+            "Efectuar diligencias de prevención y cuantas actuaciones tiendan a evitar la comisión de actos delictivos en el marco de colaboración establecido en las Juntas de Seguridad.",
+            "Vigilar los espacios públicos y colaborar con las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas en la protección de las manifestaciones y el mantenimiento del orden en grandes concentraciones humanas.",
+            "Cooperar en la resolución de los conflictos privados cuando sean requeridos para ello.",
+            "Todas las anteriores corresponden a sus funciones."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 53 | Funciones Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: h) Vigilar los espacios públicos y colaborar con las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas en la protección de las manifestaciones y el mantenimiento del orden en grandes concentraciones humanas, cuando sean requeridos para ello. Muy importante, en este caso debemos ser requridos para colaborar."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, de los principios básicos de actuación. Señale la incorrecta.",
+        "opciones": [
+            "Adecuación al ordenamiento jurídico.",
+            "Relaciones con la comunidad.",
+            "Tratamiento de detenidos.",
+            "Irresponsabilidad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 Son principios básicos de actuación de los miembros de las Fuerzas y Cuerpos de Seguridad los siguientes: 1. Adecuación al ordenamiento jurídico. 2. Relaciones con la comunidad. 3. Tratamiento de detenidos. 4. Dedicación profesional. 5. Secreto profesional. 6. Responsabilidad."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 51, cuerpos de policía local. Señale la correcta.",
+        "opciones": [
+            "Dichos cuerpos sólo podrán actuar en el ámbito territorial del municipio respectivo, salvo en situaciones de emergencia y previo requerimiento de las autoridades competentes. No obstante, cuando ejerzan funciones de protección de autoridades de las corporaciones locales, podrán actuar fuera del término municipal respectivo, con autorización del Ministerio del Interior o de la correspondiente autoridad de la comunidad autónoma que cuente con cuerpo de policía autonómica, cuando desarrollen íntegramente esas actuaciones en el ámbito territorial de dicha comunidad autónoma.",
+            "Los cuerpos de policía deben actuar en el ámbito territorial de sus municipios. Ello no obstante, sus miembros pueden actuar fuera de su término municipal cuando sean requeridos por la autoridad competente en situaciones de emergencia y con la autorización previa de los alcaldes o alcaldesas respectivos. En estos casos deben actuar bajo la dependencia del alcalde o alcaldesa del municipio que los haya requerido y bajo el mando del jefe del cuerpo de dicho municipio, sin perjuicio de las tareas de coordinación que correspondan a la consejería competente en materia de coordinación de policías locales y emergencias.",
+            "Eventualmente, cuando, por necesidades estacionales o circunstancias extraordinarias, resulte insuficiente la plantilla de la Policía Local de algún municipio, se podrá reforzar su dotación mediante la asociación con otros municipios, de acuerdo con lo establecido en el artículo 8 de esta ley, o mediante acuerdos bilaterales subscritos entre los respectivos ayuntamientos,",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 51 | Cuerpos de policía local Dichos cuerpos sólo podrán actuar en el ámbito territorial del municipio respectivo, salvo en situaciones de emergencia y previo requerimiento de las autoridades competentes. No obstante, cuando ejerzan funciones de protección de autoridades de las corporaciones locales, podrán actuar fuera del término municipal respectivo, con autorización del Ministerio del Interior o de la correspondiente autoridad de la comunidad autónoma que cuente con cuerpo de policía autonómica, cuando desarrollen íntegramente esas actuaciones en el ámbito territorial de dicha comunidad autónoma. A es correcta. Mucho cuidado, ya que B y C nos “suena” y con razón, es lo detallado en la Ley 4/2013 (tema 18), pero ahora nos está preguntando por la Ley 2/86."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 53, funciones. Señale la correcta de entre las siguientes condiciones para poder asignar el ejercicio exclusivo de las funciones previstas en el párrafo b) del apartado 1.",
+        "opciones": [
+            "Se podrá asignar en cualquier municipio donde lo asigne el Pleno de la Corporación.",
+            "Estos miembros tendrán la consideración de agentes de la autoridad.",
+            "Estos miembros quedan integrados en las Fuerzas y Cuerpos de Seguridad.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 53 | Funciones En los municipios de gran población y en las Ciudades con Estatuto de Autonomía podrá asignarse, por el Pleno de la Corporación o por sus respectivas Asambleas, al ejercicio exclusivo de las funciones previstas en el párrafo b) del apartado 1 a parte de los funcionarios pertenecientes a las mismas, que tendrán la consideración de agentes de la autoridad, subordinados a los miembros de los respectivos Cuerpos de Policía Local, sin integrarse en las Fuerzas y Cuerpos de Seguridad y de manera que ello no comporte un incremento en el número de efectivos ni en los costes de personal."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale de entre los siguientes enunciados el que corresponda a “dedicación profesional”.",
+        "opciones": [
+            "Deberán guardar riguroso secreto respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. No estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera.",
+            "Son responsables personal y directamente por los actos que en su actuación profesional llevaren a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión y los principios enunciados anteriormente, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas.",
+            "Sujetarse en su actuación profesional a los principios de jerarquía y subordinación. En ningún caso la obediencia debida podrá amparar órdenes que entrañen la ejecución de actos que manifiestamente constituyan delito o sean contrarios a la Constitución o a las Leyes.",
+            "Deberán llevar a cabo sus funciones con total dedicación, debiendo intervenir siempre, en cualquier tiempo y lugar, se hallaren o no de servicio, en defensa de la Ley y de la seguridad ciudadana."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Dedicación profesional Deberán llevar a cabo sus funciones con total dedicación, debiendo intervenir siempre, en cualquier tiempo y lugar, se hallaren o no de servicio, en defensa de la Ley y de la seguridad ciudadana."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 52, definición. Señale la correcta.",
+        "opciones": [
+            "Los Cuerpos de Policía Local son Institutos armados de naturaleza civil, con estructura y organización jerarquizada.",
+            "Bajo la jefatura superior y dependencia directa del alcalde o alcaldesa respectiva",
+            "En cada municipio se integran en un cuerpo propio y único con la denominación genérica de cuerpo de policía local, y sus dependencias con la denominación de jefatura de la policía local, sin perjuicio de la organización interna que adopte cada ayuntamiento.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 52 | Definición Los Cuerpos de Policía Local son Institutos armados de naturaleza civil, con estructura y organización jerarquizada, rigiéndose, en cuanto a su régimen estatutario, por los principios generales de los capítulos II y III del título I y por la sección 4.a del capítulo IV del título II de la presente Ley, con la adecuación que exija la dependencia de la Administración correspondiente, las disposiciones dictadas al respecto por las Comunidades Autónomas y los Reglamentos específicos para cada Cuerpo y demás normas dictadas por los correspondientes Ayuntamientos. A es correcta. Mucho cuidado, ya que B y C nos “suena” y con razón, es lo detallado en la Ley 4/2013 (tema 18), pero ahora nos está preguntando por la Ley 2/86."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale la respuesta correcta.",
+        "opciones": [
+            "Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en cualquier momento de una detención.",
+            "Velarán por la vida e integridad física de las personas a quienes detuvieren o que se encuentren bajo su custodia y no es necesario respetar el honor y la dignidad de las personas.",
+            "Darán cumplimiento y observarán con la debida diligencia los trámites, plazos y requisitos exigidos por el ordenamiento jurídico, cuando se proceda a la detención de una persona.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Tratamiento de detenidos Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en el momento de efectuar una detención. Velarán por la vida e integridad física de las personas a quienes detuvieren o que se encuentren bajo su custodia y respetarán el honor y la dignidad de las personas. Darán cumplimiento y observarán con la debida diligencia los trámites, plazos y requisitos exigidos por el ordenamiento jurídico, cuando se proceda a la detención de una persona."
+    },
+    {
+        "pregunta": "¿Qué principios fundamentales deberán observar los policías en el ejercicio de sus funciones?",
+        "opciones": [
+            "Congruencia, Oportunidad y Proporcionalidad.",
+            "Inmediatez, Auxilio y Autoridad.",
+            "Dedicación, Secreto y Responsabilidad.",
+            "Ninguna de las anteriores."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 5.2.c) Ley orgánica 2/1986 de fuerzas y cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 53, funciones. ¿Cuál de las siguientes funciones no corresponde a los Cuerpos de Policía Local?",
+        "opciones": [
+            "Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia.",
+            "Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley.",
+            "La prestación de auxilio, en los casos de accidente, catástrofe o calamidad pública, participando, en la forma prevista en las Leyes, en la ejecución de los planes de Protección Civil.",
+            "Todas las anteriores corresponden a sus funciones."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 53 | Funciones Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: Proteger a las autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones. Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación. Instruir atestados por accidentes de circulación dentro del casco urbano. Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia. Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley. La prestación de auxilio, en los casos de accidente, catástrofe o calamidad pública, participando, en la forma prevista en las Leyes, en la ejecución de los planes de Protección Civil. Efectuar diligencias de prevención y cuantas actuaciones tiendan a evitar la comisión de actos delictivos en el marco de colaboración establecido en las Juntas de Seguridad. Vigilar los espacios públicos y colaborar con las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas en la protección de las manifestaciones y el mantenimiento del orden en grandes concentraciones humanas, cuando sean requeridos para ello. Cooperar en la resolución de los conflictos privados cuando sean requeridos para ello."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 8, precesamiento de los agentes. Señale la correcta.",
+        "opciones": [
+            "El cumplimiento de la prisión preventiva y de las penas privativas de libertad por los miembros de las Fuerzas y Cuerpos de Seguridad, se realizarán en establecimientos penitenciarios ordinarios, sin separación del resto de detenidos o presos.",
+            "El cumplimiento de la prisión preventiva y de las penas privativas de libertad por los miembros de las Fuerzas y Cuerpos de Seguridad, se realizarán en establecimientos penitenciarios especiales, sin separación del resto de detenidos o presos.",
+            "El cumplimiento de la prisión preventiva y de las penas privativas de libertad por los miembros de las Fuerzas y Cuerpos de Seguridad, se realizarán en establecimientos penitenciarios ordinarios, con separación del resto de detenidos o presos.",
+            "El cumplimiento de la prisión preventiva y de las penas privativas de libertad por los miembros de las Fuerzas y Cuerpos de Seguridad, se realizarán en establecimientos penitenciarios especiales, con separación del resto de detenidos o presos."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 8 | Precesamiento de los agentes El cumplimiento de la prisión preventiva y de las penas privativas de libertad por los miembros de las Fuerzas y Cuerpos de Seguridad, se realizarán en establecimientos penitenciarios ordinarios, con separación del resto de detenidos o presos."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 51, cuerpos de policía local. Señale la correcta.",
+        "opciones": [
+            "En los municipios donde no exista policía municipal, los cometidos de ésta serán ejercidos por el personal que desempeñe funciones de custodia y vigilancia de bienes, servicios e instalaciones, con la denominación de guardas, vigilantes, agentes, alguaciles o análogos.",
+            "En los municipios donde no exista cuerpo de policía local, la coordinación se extiende a los policías locales que formen parte de la plantilla del ayuntamiento.",
+            "A y B son correctas.",
+            "A y B son incorrectas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 51 | Cuerpos de policía local En los municipios donde no exista policía municipal, los cometidos de ésta serán ejercidos por el personal que desempeñe funciones de custodia y vigilancia de bienes, servicios e instalaciones, con la denominación de guardas, vigilantes, agentes, alguaciles o análogos. A es correcta. Mucho cuidado, ya que B nos “suena” y con razón, es lo detallado en la Ley 4/2013 (tema 18), pero ahora nos está preguntando por la Ley 2/86."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale de entre los siguientes enunciados el que corresponda a “secreto profesional”.",
+        "opciones": [
+            "Deberán guardar riguroso secreto respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. No estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera.",
+            "Darán cumplimiento y observarán con la debida diligencia los trámites, plazos y requisitos exigidos por el ordenamiento jurídico, cuando se proceda a la detención de una persona.",
+            "En el ejercicio de sus funciones deberán actuar con la decisión necesaria, y sin demora cuando de ello dependa evitar un daño grave, inmediato e irreparable; rigiéndose al hacerlo por los principios de congruencia, oportunidad y proporcionalidad en la utilización de los medios a su alcance.",
+            "Ejercer su función con absoluto respeto a la Constitución y el resto del ordenamiento jurídico."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Secreto profesional Deberán guardar riguroso secreto respecto a todas las informaciones que conozcan por razón o con ocasión del desempeño de sus funciones. No estarán obligados a revelar las fuentes de información, salvo que el ejercicio de sus funciones o las disposiciones de la Ley les impongan actuar de otra manera."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. ¿Cuál de los siguientes no es un principio básico de actuación?",
+        "opciones": [
+            "Adecuación al ordenamiento jurídico.",
+            "Tratamiento de detenidos.",
+            "Secreto profesional.",
+            "Todos los anteriores son principios básicos de actuación."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Adecuación al ordenamiento jurídico Relaciones con la comunidad Tratamiento de detenidos Dedicación profesional Secreto profesional Responsabilidad."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 51, cuerpos de policía local. Los municipios podrán crear cuerpos de policía propios, de acuerdo con lo previsto en…",
+        "opciones": [
+            "La presente Ley.",
+            "La Ley de Bases de Régimen Local.",
+            "La legislación autonómica.",
+            "Todas las anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 51 | Cuerpos de policía local Los municipios podrán crear cuerpos de policía propios, de acuerdo con lo previsto en la presente ley, en la Ley de Bases de Régimen Local y en la legislación autonómica."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 6, formación y derechos. Los Poderes Públicos promoverán las condiciones más favorables para una adecuada promoción profesional, social y humana de los miembros de las Fuerzas y Cuerpos de Seguridad, de acuerdo con los principios de…",
+        "opciones": [
+            "Objetividad, igualdad de oportunidades, mérito y antigüedad.",
+            "Objetividad, igualdad de oportunidades, mérito y capacidad.",
+            "Objetividad, mérito y antigüedad.",
+            "Mérito, capacidad y antigüedad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 6 | Formación y derechos Los Poderes Públicos promoverán las condiciones más favorables para una adecuada promoción profesional, social y humana de los miembros de las Fuerzas y Cuerpos de Seguridad, de acuerdo con los principios de objetividad, igualdad de oportunidades, mérito y capacidad."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 6, formación y derechos. Los puestos de servicio en las respectivas categorías se proveerán conforme a los principios de…",
+        "opciones": [
+            "Objetividad, igualdad de oportunidades, mérito y antigüedad.",
+            "Objetividad, igualdad de oportunidades, mérito y capacidad.",
+            "Objetividad, mérito y antigüedad.",
+            "Mérito, capacidad y antigüedad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 6 | Formación y derechos 6. Los puestos de servicio en las respectivas categorías se proveerán conforme a los principios de mérito, capacidad y antigüedad, a tenor de lo dispuesto en la correspondiente reglamentación."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 53, de las funciones. Señale la incorrecta.",
+        "opciones": [
+            "Proteger a las autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones.",
+            "Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación.",
+            "Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley.",
+            "Cooperar en la resolución de los conflictos privados, siempre."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 53 | Funciones 1. Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: i) Cooperar en la resolución de los conflictos privados cuando sean requeridos para ello."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. Señale de entre los siguientes enunciados el que corresponda a “responsabilidad”.",
+        "opciones": [
+            "Solamente deberán utilizar las armas en las situaciones en que exista un riesgo racionalmente grave para su vida, su integridad física o las de terceras personas, o en aquellas circunstancias que puedan suponer un grave riesgo para la seguridad ciudadana y de conformidad con los principios a que se refiere el apartado anterior.",
+            "Los miembros de las Fuerzas y Cuerpos de Seguridad deberán identificarse debidamente como tales en el momento de efectuar una detención.",
+            "Deberán llevar a cabo sus funciones con total dedicación, debiendo intervenir siempre, en cualquier tiempo y lugar, se hallaren o no de servicio, en defensa de la Ley y de la seguridad ciudadana.",
+            "Son responsables personal y directamente por los actos que en su actuación profesional llevaren a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión y los principios enunciados anteriormente, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Responsabilidad Son responsables personal y directamente por los actos que en su actuación profesional llevaren a cabo, infringiendo o vulnerando las normas legales, así como las reglamentarias que rijan su profesión y los principios enunciados anteriormente, sin perjuicio de la responsabilidad patrimonial que pueda corresponder a las Administraciones Públicas por las mismas."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 5, principios básicos de actuación. ¿Cuál de los siguientes no es un principio básico de actuación?",
+        "opciones": [
+            "Ordenación al ordenamiento jurídico.",
+            "Relaciones con la comunidad.",
+            "Dedicación profesional.",
+            "Todos los anteriores son principios básicos de actuación."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 5 | Principios Básicos de Actuación Adecuación al ordenamiento jurídico Relaciones con la comunidad Tratamiento de detenidos Dedicación profesional Secreto profesional Responsabilidad."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 54, junta local de seguridad. Señale la correcta.",
+        "opciones": [
+            "En municipios de gran población, podrá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial.",
+            "En los municipios que tengan Cuerpo de Policía propio, deberá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial.",
+            "En municipios de gran población, podrá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito Nacional.",
+            "En los municipios que tengan Cuerpo de Policía propio, podrá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 54 | Junta local de seguridad En los municipios que tengan Cuerpo de Policía propio, podrá constituirse una Junta Local de Seguridad, que será el órgano competente para establecer las formas y procedimientos de colaboración entre los miembros de las Fuerzas y Cuerpos de Seguridad en su ámbito territorial."
+    },
+    {
+        "pregunta": "Ley Orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 54, Junta local de seguridad. Señale la correcta.",
+        "opciones": [
+            "La constitución y composición de estas Juntas se determinará en lo dispuesto a esta Ley, y la presidencia corresponde al alcalde/sa.",
+            "La opción a) y, además, la presidencia puede ser compartida si asiste el Gobernador civil de la provincia.",
+            "La opción a) y, además, la presidencia debe ser compartida si asiste el Gobernador civil de la provincia.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 54 | Junta local de seguridad 2. La constitución de dichas Juntas y su composición se determinará reglamentariamente. La presidencia corresponderá al Alcalde, salvo que concurriera a sus sesiones el Gobernador civil de la provincia, en cuyo caso, la presidencia será compartida con éste. - Tal y como vemos en el punto 2 del artículo 54, la constitución y composición de estas Juntas se determinará reglamentariamente. Así, la opción A es incorrecta, y por tanto B y C (que se basan en A) también son incorrectas."
+    },
+    {
+        "pregunta": "Ley orgánica 2/1986, de 13 de marzo, de fuerzas y cuerpos de seguridad. Artículo 53, funciones. ¿Cuántas funciones contempla este artículo?",
+        "opciones": [
+            "6",
+            "7",
+            "8",
+            "9"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 53 | Funciones Los Cuerpos de Policía Local deberán ejercer las siguientes funciones: Proteger a las autoridades de las Corporaciones Locales, y vigilancia o custodia de sus edificios e instalaciones. Ordenar, señalizar y dirigir el tráfico en el casco urbano, de acuerdo con lo establecido en las normas de circulación. Instruir atestados por accidentes de circulación dentro del casco urbano. Policía Administrativa, en lo relativo a las Ordenanzas, Bandos y demás disposiciones municipales dentro del ámbito de su competencia. Participar en las funciones de Policía Judicial, en la forma establecida en el artículo 29.2 de esta Ley. La prestación de auxilio, en los casos de accidente, catástrofe o calamidad pública, participando, en la forma prevista en las Leyes, en la ejecución de los planes de Protección Civil. Efectuar diligencias de prevención y cuantas actuaciones tiendan a evitar la comisión de actos delictivos en el marco de colaboración establecido en las Juntas de Seguridad. Vigilar los espacios públicos y colaborar con las Fuerzas y Cuerpos de Seguridad del Estado y con la Policía de las Comunidades Autónomas en la protección de las manifestaciones y el mantenimiento del orden en grandes concentraciones humanas, cuando sean requeridos para ello. Cooperar en la resolución de los conflictos privados cuando sean requeridos para ello. En total son 9 funciones dedicadas a los Cuerpos de Policía Local."
+    }
+];
+  </script>
+    <script src="../js/main.js"></script>
+
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>
