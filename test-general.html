@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OposPolicia - Test general</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: white;
+        }
+        h1 {
+            color: #bb9402;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        #resumen-test-general {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        .volver-inicio {
+            display: inline-block;
+            margin: 0 auto 20px auto;
+            padding: 8px 14px;
+            background: #0a1a2f;
+            color: white;
+            border: 2px solid #c29a04;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .volver-wrapper {
+            text-align: center;
+        }
+        .error-carga {
+            background: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .descargas-resultados {
+            display: none;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 15px 0 25px 0;
+        }
+        .descargas-resultados button {
+            margin: 5px;
+        }
+        #descargar-incorrectas-btn {
+            background-color: #e67e22;
+        }
+        #descargar-sin-contestar-btn {
+            background-color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div id="modo-switch">
+        <label class="switch">
+            <input type="checkbox" id="toggleModo">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <h1>Test general - Todas las categorías</h1>
+    <div class="volver-wrapper"><a class="volver-inicio" href="index.html">← Volver al inicio</a></div>
+    <div id="resumen-test-general">Cargando preguntas...</div>
+
+    <form id="testForm"></form>
+
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+
+    <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">0</span></div>
+    <div id="indice"></div>
+    <div id="resultado"></div>
+    <button type="button" id="reintentar-incorrectas-btn" onclick="reintentarIncorrectas()" style="display:none;">Reintentar incorrectas y no contestadas</button>
+    <div id="descargas-resultados" class="descargas-resultados">
+        <button type="button" id="descargar-incorrectas-btn" onclick="descargarPreguntasIncorrectas()">Descargar preguntas falladas</button>
+        <button type="button" id="descargar-sin-contestar-btn" onclick="descargarPreguntasSinResponder()">Descargar preguntas sin contestar</button>
+    </div>
+
+    <script>
+        const testsPorTema = {
+            1: 4, 2: 8, 3: 13, 4: 6, 5: 5, 6: 2,
+            7: 2, 8: 1, 9: 6, 10: 1, 11: 3, 12: 1, 13: 1, 14: 1, 15: 3, 16: 3, 17: 2,
+            18: 7, 19: 4, 20: 4, 21: 4,
+            22: 5, 23: 2,
+            24: 5, 25: 4, 26: 2, 27: 1,
+            28: 2,
+            29: 5,
+            30: 2
+        };
+
+        const reglasTestGeneral = [
+            { categoria: 'Constitucional', temas: [1, 2, 3, 4, 5, 6], porTema: { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1 }, extraTemasDistintos: 2 },
+            { categoria: 'Tráfico', temas: [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17], porDefecto: 2, excepciones: { 10: 1, 12: 1 } },
+            { categoria: 'Dº policial', temas: [18, 19, 20, 21], porDefecto: 2, excepciones: { 21: 1 } },
+            { categoria: 'Dº procesal', temas: [22, 23], porDefecto: 2, excepciones: { 23: 1 } },
+            { categoria: 'Dº penal', temas: [24, 25, 26, 27], porDefecto: 2, excepciones: { 26: 1 } },
+            { categoria: 'L.O.P.D', temas: [28], total: 1 },
+            { categoria: 'Ley de igualdad', temas: [29], total: 2 },
+            { categoria: 'LGTBI+', temas: [30], total: 2 }
+        ];
+
+        let preguntas = [];
+        let preguntaActual = 0;
+        let respuestasUsuario = [];
+
+        document.addEventListener('DOMContentLoaded', iniciarTestGeneral);
+
+        async function iniciarTestGeneral() {
+            activarModoPolicial();
+            try {
+                const bancoPorTema = await cargarBancoPreguntas();
+                preguntas = crearTestGeneral(bancoPorTema);
+                preguntas = ordenarPreguntasPorTema(preguntas);
+                preguntas.forEach(mezclarOpcionesPregunta);
+
+                respuestasUsuario = Array(preguntas.length).fill(null);
+                document.getElementById('total-preguntas').textContent = preguntas.length;
+                document.getElementById('resumen-test-general').textContent = `Test generado con ${preguntas.length} preguntas según el porcentaje configurado.`;
+
+                generarIndice();
+                mostrarPregunta(0);
+                actualizarControlesNavegacion();
+            } catch (error) {
+                document.getElementById('resumen-test-general').innerHTML = `<div class="error-carga"><strong>No se pudo generar el test general.</strong><br>${error.message}</div>`;
+                console.error(error);
+            }
+        }
+
+        const posiblesCarpetasTests = [
+            'tests/',   // estructura recomendada: /tests/test1-1.html
+            './tests/',
+            '',         // por si los test están en la misma carpeta que test-general.html
+            'test/',
+            'Tests/'
+        ];
+
+        async function cargarBancoPreguntas() {
+            const bancoPorTema = {};
+            const errores = [];
+            const cargados = [];
+
+            for (const tema of Object.keys(testsPorTema).map(Number)) {
+                bancoPorTema[tema] = [];
+                for (let test = 1; test <= testsPorTema[tema]; test++) {
+                    const resultado = await cargarArchivoTest(tema, test);
+
+                    if (!resultado) {
+                        errores.push(`test${tema}-${test}.html`);
+                        continue;
+                    }
+
+                    cargados.push(resultado.ruta);
+                    resultado.preguntas.forEach((p, idx) => {
+                        bancoPorTema[tema].push({
+                            ...p,
+                            tema,
+                            test,
+                            origen: `Tema ${tema} - Test ${test}`,
+                            idOrigen: `${tema}-${test}-${idx}`
+                        });
+                    });
+                }
+            }
+
+            console.log('Archivos cargados:', cargados);
+            if (errores.length) {
+                console.warn('Archivos no cargados:', errores);
+            }
+            return bancoPorTema;
+        }
+
+        async function cargarArchivoTest(tema, test) {
+            for (const carpeta of posiblesCarpetasTests) {
+                const ruta = `${carpeta}test${tema}-${test}.html`;
+                try {
+                    const res = await fetch(ruta, { cache: 'no-store' });
+                    if (!res.ok) continue;
+
+                    const html = await res.text();
+                    const preguntasArchivo = extraerPreguntasDesdeHtml(html);
+                    if (preguntasArchivo.length > 0) {
+                        return { ruta, preguntas: preguntasArchivo };
+                    }
+                } catch (e) {
+                    // Probamos la siguiente ruta posible.
+                }
+            }
+            return null;
+        }
+
+        function extraerPreguntasDesdeHtml(html) {
+            const match = html.match(/(?:const|let|var)\s+preguntas\s*=\s*(\[[\s\S]*?\])\s*;/);
+            if (!match) return [];
+
+            try {
+                const datos = Function(`"use strict"; return (${match[1]});`)();
+                return Array.isArray(datos) ? datos : [];
+            } catch (e) {
+                console.warn('No se pudo leer el bloque de preguntas de un archivo:', e);
+                return [];
+            }
+        }
+
+        function crearTestGeneral(bancoPorTema) {
+            const seleccionadas = [];
+            const usadas = new Set();
+
+            function seleccionarDeTema(tema, cantidad) {
+                const disponibles = mezclarArray((bancoPorTema[tema] || []).filter(p => !usadas.has(p.idOrigen)));
+                const elegidas = disponibles.slice(0, cantidad);
+                elegidas.forEach(p => usadas.add(p.idOrigen));
+                seleccionadas.push(...elegidas);
+            }
+
+            reglasTestGeneral.forEach(regla => {
+                if (regla.total) {
+                    const bolsa = mezclarArray(regla.temas.flatMap(t => bancoPorTema[t] || []).filter(p => !usadas.has(p.idOrigen)));
+                    const elegidas = bolsa.slice(0, regla.total);
+                    elegidas.forEach(p => usadas.add(p.idOrigen));
+                    seleccionadas.push(...elegidas);
+                    return;
+                }
+
+                regla.temas.forEach(tema => {
+                    const cantidad = regla.porTema?.[tema] ?? regla.excepciones?.[tema] ?? regla.porDefecto ?? 0;
+                    seleccionarDeTema(tema, cantidad);
+                });
+
+                if (regla.extraTemasDistintos) {
+                    const temasExtra = mezclarArray(regla.temas).slice(0, regla.extraTemasDistintos);
+                    temasExtra.forEach(tema => seleccionarDeTema(tema, 1));
+                }
+            });
+
+            if (!seleccionadas.length) {
+                throw new Error('No se ha encontrado ninguna pregunta. He probado las rutas tests/testX-Y.html, testX-Y.html, test/testX-Y.html y Tests/testX-Y.html. Revisa que estás abriendo la web desde GitHub Pages o desde un servidor local, no con doble clic en el archivo HTML.');
+            }
+            return seleccionadas;
+        }
+
+        function ordenarPreguntasPorTema(lista) {
+            return [...lista].sort((a, b) => {
+                if ((a.tema || 0) !== (b.tema || 0)) return (a.tema || 0) - (b.tema || 0);
+                if ((a.test || 0) !== (b.test || 0)) return (a.test || 0) - (b.test || 0);
+                return 0;
+            });
+        }
+
+        function mezclarOpcionesPregunta(p) {
+            const correctaOriginal = p.opciones[p.correcta];
+            p.opciones = mezclarArray(p.opciones);
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        }
+
+        function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+        }
+
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = () => irAPregunta(index);
+                indice.appendChild(numero);
+            });
+        }
+
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            const pregunta = preguntas[num];
+            if (!pregunta) return;
+
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+
+            const origen = document.createElement('div');
+            origen.style.fontSize = '13px';
+            origen.style.color = '#7f8c8d';
+            origen.style.marginBottom = '8px';
+            origen.textContent = pregunta.origen || '';
+            divPregunta.appendChild(origen);
+
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = () => verificarRespuesta(index);
+
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    input.checked = respuestasUsuario[num] === index;
+                    if (index === pregunta.correcta) label.classList.add('correcta');
+                    else if (index === respuestasUsuario[num]) label.classList.add('incorrecta');
+                }
+
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+
+            if (respuestasUsuario[num] !== null && pregunta.explicacion) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            actualizarIndice();
+        }
+
+        function verificarRespuesta(opcionSeleccionada) {
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            mostrarPregunta(preguntaActual);
+            mostrarResultadoParcial();
+            actualizarControlesNavegacion();
+        }
+
+        function contarCorrectas() {
+            return respuestasUsuario.filter((r, i) => r !== null && r === preguntas[i].correcta).length;
+        }
+
+        function mostrarResultadoParcial() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const correctas = contarCorrectas();
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${correctas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((correctas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+        }
+
+        function actualizarIndice() {
+            document.querySelectorAll('.numero-pregunta').forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                if (respuestasUsuario[index] !== null) {
+                    numero.classList.add(respuestasUsuario[index] === preguntas[index].correcta ? 'respondida' : 'respondida-incorrecta');
+                }
+            });
+        }
+
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) irAPregunta(preguntaActual + 1);
+        }
+
+        function anteriorPregunta() {
+            if (preguntaActual > 0) irAPregunta(preguntaActual - 1);
+        }
+
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const correctas = contarCorrectas();
+            document.getElementById('resultado').innerHTML = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${correctas} (${preguntasRespondidas > 0 ? ((correctas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - correctas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').style.display = 'block';
+
+            const incorrectas = preguntas.filter((p, i) => respuestasUsuario[i] !== null && respuestasUsuario[i] !== p.correcta);
+            const sinContestar = preguntas.filter((p, i) => respuestasUsuario[i] === null);
+            const hayIncorrectasOSinContestar = incorrectas.length > 0 || sinContestar.length > 0;
+
+            document.getElementById('reintentar-incorrectas-btn').style.display = hayIncorrectasOSinContestar ? 'block' : 'none';
+            document.getElementById('descargas-resultados').style.display = hayIncorrectasOSinContestar ? 'flex' : 'none';
+            document.getElementById('descargar-incorrectas-btn').style.display = incorrectas.length > 0 ? 'block' : 'none';
+            document.getElementById('descargar-sin-contestar-btn').style.display = sinContestar.length > 0 ? 'block' : 'none';
+        }
+
+        function prepararPreguntaParaGuardar(pregunta, index) {
+            const respuestaUsuario = respuestasUsuario[index];
+            return {
+                numero_en_test: index + 1,
+                tema: pregunta.tema || '',
+                test: pregunta.test || '',
+                origen: pregunta.origen || '',
+                pregunta: pregunta.pregunta,
+                opciones: pregunta.opciones,
+                respuesta_marcada: respuestaUsuario === null ? null : pregunta.opciones[respuestaUsuario],
+                respuesta_correcta: pregunta.opciones[pregunta.correcta],
+                explicacion: pregunta.explicacion || ''
+            };
+        }
+
+        function descargarArchivo(nombreArchivo, datos) {
+            const contenido = JSON.stringify(datos, null, 2);
+            const blob = new Blob([contenido], { type: 'application/json;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const enlace = document.createElement('a');
+            enlace.href = url;
+            enlace.download = nombreArchivo;
+            document.body.appendChild(enlace);
+            enlace.click();
+            enlace.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        function descargarPreguntasIncorrectas() {
+            const datos = preguntas
+                .map((p, i) => ({ pregunta: p, index: i }))
+                .filter(item => respuestasUsuario[item.index] !== null && respuestasUsuario[item.index] !== item.pregunta.correcta)
+                .map(item => prepararPreguntaParaGuardar(item.pregunta, item.index));
+
+            if (!datos.length) {
+                alert('No tienes preguntas falladas para guardar.');
+                return;
+            }
+            descargarArchivo('preguntas-falladas.json', datos);
+        }
+
+        function descargarPreguntasSinResponder() {
+            const datos = preguntas
+                .map((p, i) => ({ pregunta: p, index: i }))
+                .filter(item => respuestasUsuario[item.index] === null)
+                .map(item => prepararPreguntaParaGuardar(item.pregunta, item.index));
+
+            if (!datos.length) {
+                alert('No tienes preguntas sin contestar para guardar.');
+                return;
+            }
+            descargarArchivo('preguntas-sin-contestar.json', datos);
+        }
+
+        function reintentarIncorrectas() {
+            const preguntasIncorrectas = preguntas.filter((p, i) => respuestasUsuario[i] === null || respuestasUsuario[i] !== p.correcta);
+            if (!preguntasIncorrectas.length) {
+                alert('No has fallado ninguna pregunta.');
+                return;
+            }
+            preguntas = mezclarArray(preguntasIncorrectas);
+            preguntas.forEach(mezclarOpcionesPregunta);
+            preguntaActual = 0;
+            respuestasUsuario = Array(preguntas.length).fill(null);
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+            document.getElementById('descargas-resultados').style.display = 'none';
+            document.getElementById('resultado').style.display = 'none';
+            generarIndice();
+            mostrarPregunta(0);
+            actualizarControlesNavegacion();
+        }
+
+        function activarModoPolicial() {
+            const toggle = document.getElementById('toggleModo');
+            if (!toggle) return;
+            if (localStorage.getItem('modoPolicial') === 'true') {
+                document.body.classList.add('modo-policial');
+                toggle.checked = true;
+            }
+            toggle.addEventListener('change', () => {
+                document.body.classList.toggle('modo-policial', toggle.checked);
+                localStorage.setItem('modoPolicial', toggle.checked ? 'true' : 'false');
+            });
+        }
+    </script>
+</body>
+</html>
