@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test sobre La Unión Europea</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Según el artículo 69.3 de la Constitución Española de 1978 en el reparto de senadores a las provincias insulares, corresponde un senador a:",
+        "opciones": [
+            "Ibiza-Formentera, Mallorca, Menorca, Fuerteventura, Gomera, Hierro y Lanzarote.",
+            "Tenerife, Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma.",
+            "Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma.",
+            "Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál es la Cámara de representación territorial en España?",
+        "opciones": [
+            "El Senado.",
+            "Las Asambleas Legislativas de las Comunidades Autónomas.",
+            "El Consejo de Estado.",
+            "El Congreso."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El número total de diputados en cada circunscripción se hará:",
+        "opciones": [
+            "Asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población.",
+            "Asignando una representación máxima inicial a cada circunscripción y distribuyendo los demás en proporción a las necesidades económicas.",
+            "Asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción al territorio.",
+            "Asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población y al territorio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En las provincias insulares constituirá una circunscripción a efectos de elección de Senadores:",
+        "opciones": [
+            "Cada isla o agrupación de islas, con Cabildo o Consejo Insular.",
+            "Cada isla.",
+            "Cada isla o agrupación de islas con más de 10.000 habitantes.",
+            "Cada isla o agrupación de islas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para ejercer las competencias no legislativas que el Título relativo a la Corona atribuye expresamente a las Cortes Generales:",
+        "opciones": [
+            "Éstas se reunirán en sesión ordinaria.",
+            "Éstas se reunirán en sesión conjunta.",
+            "Éstas se reunirán en sesión especial.",
+            "Éstas se reunirán en sesión extraordinaria."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 74 1. Las Cámaras se reunirán en sesión conjunta para ejercer las competencias no legislativas que el Título II atribuye expresamente a las Cortes Generales. 2. Las decisiones de las Cortes Generales previstas en los artículos 94, 1, 145, 2 y 158, 2, se adoptarán por mayoría de cada una de las Cámaras. En el primer caso, el procedimiento se iniciará por el Congreso, y en los otros dos, por el Senado. En ambos casos, si no hubiera acuerdo entre Senado y Congreso, se intentará obtener por una Comisión Mixta compuesta de igual número de Diputados y Senadores. La Comisión presentará un texto que será votado por ambas Cámaras. Si no se aprueba en la forma establecida, decidirá el Congreso por mayoría absoluta."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Indique a cuál de las siguientes islas o agrupaciones de islas le corresponde más de un senador, según el reparto establecido en el artículo 69.3 de la CE:",
+        "opciones": [
+            "Mallorca.",
+            "Gomera.",
+            "Lanzarote.",
+            "Menorca."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El voto de los Diputados y Senadores:",
+        "opciones": [
+            "Es personal y delegable en miembros de su mismo grupo parlamentario.",
+            "Es personal e indelegable.",
+            "Es personal y transferible.",
+            "Es personal y delegable en circunstancias excepcionales."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 79 1. Para adoptar acuerdos, las Cámaras deben estar reunidas reglamentariamente y con asistencia de la mayoría de sus miembros. 2. Dichos acuerdos, para ser válidos, deberán ser aprobados por la mayoría de los miembros presentes, sin perjuicio de las mayorías especiales que establezcan la Constitución o las leyes orgánicas y las que para elección de personas establezcan los Reglamentos de las Cámaras. 3. El voto de Senadores y Diputados es personal e indelegable."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La asignación de los Senadores:",
+        "opciones": [
+            "Será fijada por el Ministerio de Hacienda.",
+            "Será fijada por el propio Senado.",
+            "Será fijada por el Gobierno.",
+            "Será fijada por el Congreso en pleno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 71 1. Los Diputados y Senadores gozarán de inviolabilidad por las opiniones manifestadas en el ejercicio de sus funciones. 2. Durante el período de su mandato los Diputados y Senadores gozarán asimismo de inmunidad y sólo podrán ser detenidos en caso de flagrante delito. No podrán ser inculpados ni procesados sin la previa autorización de la Cámara respectiva. 3. En las causas contra Diputados y Senadores será competente la Sala de lo Penal del Tribunal Supremo. 4. Los Diputados y Senadores percibirán una asignación que será fijada por las respectivas Cámaras."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El número exacto de diputados que componen el Congreso se determina:",
+        "opciones": [
+            "En la Constitución Española.",
+            "En la Ley Orgánica del Régimen Electoral General.",
+            "En el Reglamento de las Cortes Generales.",
+            "En el Reglamento del Congreso."
+        ],
+        "correcta": 1,
+        "explicacion": "Ley Orgánica 5/1985, de 19 de junio, del Régimen Electoral General. Artículo 162 1. El Congreso está formado por trescientos cincuenta Diputados"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las conclusiones de las Comisiones de investigación del Congreso de los Diputados:",
+        "opciones": [
+            "Serán vinculantes para los Tribunales.",
+            "No serán vinculantes para los Tribunales.",
+            "Tendrán carácter oficial y vinculante para los Tribunales.",
+            "Podrán ser vinculantes para los Tribunales si afectan a las instituciones básicas del Estado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 76 1. El Congreso y el Senado, y, en su caso, ambas Cámaras conjuntamente, podrán nombrar Comisiones de investigación sobre cualquier asunto de interés público. Sus conclusiones no serán vinculantes para los Tribunales, ni afectarán a las resoluciones judiciales, sin perjuicio de que el resultado de la investigación sea comunicado al Ministerio Fiscal para el ejercicio, cuando proceda, de las acciones oportunas. 2. Será obligatorio comparecer a requerimiento de las Cámaras. La ley regulará las sanciones que puedan imponerse por incumplimiento de esta obligación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los diputados:",
+        "opciones": [
+            "Son elegidos por sufragio universal, libre, igual, indirecto y secreto, en los términos que establezca la ley.",
+            "Son elegidos por sufragio igual, directo, libre y secreto, en los términos que establezca la Constitución.",
+            "Son elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley.",
+            "Son elegidos por sufragio particular, igual, directo y secreto, en los términos que establezca la Constitución."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta incorrecta:",
+        "opciones": [
+            "Está prohibida la presentación directa de peticiones por manifestaciones ciudadanas.",
+            "El Senado puede recibir peticiones individuales o colectivas.",
+            "Las Cámaras pueden remitir al Gobierno las peticiones que reciban.",
+            "Las peticiones que reciban las Cámaras legislativas se pueden hacer oralmente o por escrito."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 77 1. Las Cámaras pueden recibir peticiones individuales y colectivas, siempre por escrito, quedando prohibida la presentación directa por manifestaciones ciudadanas. 2. Las Cámaras pueden remitir al Gobierno las peticiones que reciban. El Gobierno está obligado a explicarse sobre su contenido, siempre que las Cámaras lo exijan."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Se adoptarán por mayoría de cada una de las Cámaras:",
+        "opciones": [
+            "La decisión de conceder autorización para que el Estado se obligue por Tratados Internacionales en las materias recogidas en el artículo 94.1 de la Constitución.",
+            "La decisión de autorizar acuerdos de cooperación entre Comunidades Autónomas cuando los Estatutos de Autonomía no prevean esta posibilidad.",
+            "La decisión de distribución de los recursos del Fondo de Compensación Interterritorial.",
+            "Todas las respuestas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 74 1. Las Cámaras se reunirán en sesión conjunta para ejercer las competencias no legislativas que el Título II atribuye expresamente a las Cortes Generales. 2. Las decisiones de las Cortes Generales previstas en los artículos 94, 1, 145, 2 y 158, 2, se adoptarán por mayoría de cada una de las Cámaras. En el primer caso, el procedimiento se iniciará por el Congreso, y en los otros dos, por el Senado. En ambos casos, si no hubiera acuerdo entre Senado y Congreso, se intentará obtener por una Comisión Mixta compuesta de igual número de Diputados y Senadores. La Comisión presentará un texto que será votado por ambas Cámaras. Si no se aprueba en la forma establecida, decidirá el Congreso por mayoría absoluta. NOTA Esos tres artículos son a los que se refieren cada una de las opciones de respuesta de esta pregunta."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las sesiones conjuntas del Congreso y del Senado:",
+        "opciones": [
+            "Se regirán por un Reglamento de las Cortes Generales aprobado por mayoría absoluta de cada Cámara.",
+            "Se regirán por un Reglamento de las Cortes Generales aprobado por mayoría de tres quintos del Congreso y mayoría absoluta del Senado.",
+            "Se regirán por un Reglamento de las Cortes Generales aprobado por mayoría absoluta del Congreso y mayoría simple del Senado.",
+            "Se regirán por un Reglamento de las Cortes Generales aprobado por mayoría simple de cada Cámara."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 72 1. Las Cámaras establecen sus propios Reglamentos, aprueban autónomamente sus presupuestos y, de común acuerdo, regulan el Estatuto del Personal de las Cortes Generales. Los Reglamentos y su reforma serán sometidos a una votación final sobre su totalidad, que requerirá la mayoría absoluta. 2. Las Cámaras eligen sus respectivos Presidentes y los demás miembros de sus Mesas. Las sesiones conjuntas serán presididas por el Presidente del Congreso y se regirán por un Reglamento de las Cortes Generales aprobado por mayoría absoluta de cada Cámara. 3. Los Presidentes de las Cámaras ejercen en nombre de las mismas todos los poderes administrativos y facultades de policía en el interior de sus respectivas sedes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si un ciudadano es requerido a comparecer ante una Comisión de investigación del Congreso de los Diputados:",
+        "opciones": [
+            "Sólo tendrá obligación de comparecer cuando la investigación afecte a cuestiones de interés nacional.",
+            "No tendrá obligación de comparecer.",
+            "Debe comparecer obligatoriamente y si no lo hace podrá ser sancionado, en los términos que determine la ley.",
+            "Sólo tendrá obligación de comparecer cuando haya intervenido personalmente en la actividad o inactividad objeto de la investigación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 76 1. El Congreso y el Senado, y, en su caso, ambas Cámaras conjuntamente, podrán nombrar Comisiones de investigación sobre cualquier asunto de interés público. Sus conclusiones no serán vinculantes para los Tribunales, ni afectarán a las resoluciones judiciales, sin perjuicio de que el resultado de la investigación sea comunicado al Ministerio Fiscal para el ejercicio, cuando proceda, de las acciones oportunas. 2. Será obligatorio comparecer a requerimiento de las Cámaras. La ley regulará las sanciones que puedan imponerse por incumplimiento de esta obligación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La autorización para refundir textos legales determinará:",
+        "opciones": [
+            "El ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos.",
+            "El objeto y alcance de la delegación legislativa, los principios y criterios que han de seguirse en su ejercicio y las fórmulas adicionales de control.",
+            "El objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio.",
+            "El ámbito normativo a que se refiere el contenido de la delegación, el objeto y alcance de la misma y los principios y criterios que han de seguirse en su ejercicio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta incorrecta en relación con la delegación legislativa:",
+        "opciones": [
+            "No podrá entenderse concedida de modo implícito o por tiempo indeterminado.",
+            "No es necesario que se fije un plazo para su ejercicio.",
+            "La delegación legislativa habrá de otorgarse al Gobierno.",
+            "La delegación legislativa habrá de otorgarse de forma expresa para materia concreta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las elecciones al Congreso se verificará en cada circunscripción:",
+        "opciones": [
+            "Atendiendo a criterios de representación mayoritaria.",
+            "Atendiendo a criterios de representación igualitaria.",
+            "Ninguna respuesta es correcta.",
+            "Atendiendo a criterios de representación proporcional."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Según el artículo 70 de la Constitución Española de 1978 las causas de inelegibilidad e incompatibilidad de los Diputados y Senadores comprenderán en todo caso:",
+        "opciones": [
+            "A los miembros de las Juntas Electorales.",
+            "A los funcionarios públicos.",
+            "A los miembros de las Corporaciones locales.",
+            "A los Jueces y Fiscales jubilados."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 70 1. La ley electoral determinará las causas de inelegibilidad e incompatibilidad de los Diputados y Senadores, que comprenderán, en todo caso: a) A los componentes del Tribunal Constitucional. b) A los altos cargos de la Administración del Estado que determine la ley, con la excepción de los miembros del Gobierno. c) Al Defensor del Pueblo. d) A los Magistrados, Jueces y Fiscales en activo. e) A los militares profesionales y miembros de las Fuerzas y Cuerpos de Seguridad y Policía en activo. f) A los miembros de las Juntas Electorales. 2. La validez de las actas y credenciales de los miembros de ambas Cámaras estará sometida al control judicial, en los términos que establezca la ley electoral."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Con carácter general, ¿Cuál es la mayoría exigida para la aprobación de los acuerdos de las Cámaras legislativas?",
+        "opciones": [
+            "Mayoría de todos los miembros.",
+            "Mayoría absoluta de todos los miembros de la Cámara respectiva.",
+            "Mayoría absoluta de los miembros presentes.",
+            "Mayoría de los miembros presentes."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 79 1. Para adoptar acuerdos, las Cámaras deben estar reunidas reglamentariamente y con asistencia de la mayoría de sus miembros. 2. Dichos acuerdos, para ser válidos, deberán ser aprobados por la mayoría de los miembros presentes, sin perjuicio de las mayorías especiales que establezcan la Constitución o las leyes orgánicas y las que para elección de personas establezcan los Reglamentos de las Cámaras. 3. El voto de Senadores y Diputados es personal e indelegable."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La aprobación de proposiciones de Ley:",
+        "opciones": [
+            "Podrá delegarse por las Cámaras en la Diputación Permanente.",
+            "Podrá delegarse por las Cámaras en las Comisiones Legislativas Permanentes.",
+            "Podrá delegarse por las Cámaras en las Comisiones",
+            "No será susceptible de delegación por las Cámaras."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 75 1. Las Cámaras funcionarán en Pleno y por Comisiones. 2. Las Cámaras podrán delegar en las Comisiones Legislativas Permanentes la aprobación de proyectos o proposiciones de ley. El Pleno podrá, no obstante, recabar en cualquier momento el debate y votación de cualquier proyecto o proposición de ley que haya sido objeto de esta delegación. 3. Quedan exceptuados de lo dispuesto en el apartado anterior la reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos Generales del Estado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La distribución del número de diputados en cada circunscripción:",
+        "opciones": [
+            "Se establecerá por orden ministerial.",
+            "Se establecerá por Real Decreto del Consejo de Ministros.",
+            "Se establecerá por orden de la Junta Electoral Central.",
+            "Se establecerá por ley."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Leyes de Bases:",
+        "opciones": [
+            "Delimitarán el objeto y alcance de la delegación legislativa.",
+            "Delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio.",
+            "Determinará el ámbito normativo a que se refiere el contenido de la delegación.",
+            "Delimitarán con precisión el objeto y alcance de la delegación legislativa y las fórmulas adicionales de control."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuándo termina el mandato de los Diputados?",
+        "opciones": [
+            "Cuatro años después de su elección.",
+            "El día de la disolución de la Cámara.",
+            "Cuando así lo decida el Presidente del Congreso.",
+            "Son correctas la a y b."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Pueden las Cámaras recibir peticiones?",
+        "opciones": [
+            "Sí, pero solo peticiones individuales.",
+            "Sí, pero solo peticiones colectivas.",
+            "No, no pueden recibir ningún tipo de petición.",
+            "Sí, tanto individuales como colectivas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 77 1. Las Cámaras pueden recibir peticiones individuales y colectivas, siempre por escrito, quedando prohibida la presentación directa por manifestaciones ciudadanas. 2. Las Cámaras pueden remitir al Gobierno las peticiones que reciban. El Gobierno está obligado a explicarse sobre su contenido, siempre que las Cámaras lo exijan."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿A cuántos senadores designarán las Comunidades Autónomas?",
+        "opciones": [
+            "A dos senadores y otros dos más por cada millón de habitantes de su respectivo territorio.",
+            "A un senador y otro más por cada millón de habitantes de su respectivo territorio.",
+            "A dos senadores y otro más por cada millón de habitantes de su respectivo territorio.",
+            "A cuatro senadores y otro más por cada millón de habitantes de su respectivo territorio."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los Presidentes de las Cámaras ejercen en nombre de las mismas:",
+        "opciones": [
+            "Todos los poderes administrativos y facultades de policía en relación con los miembros de su Cámara.",
+            "Todos los poderes normativos y facultades administrativas en sus respectivas sedes.",
+            "Todos los poderes normativos en el interior de sus respectivas sedes.",
+            "Todos los poderes administrativos y facultades de policía en el interior de sus respectivas sedes."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 72 1. Las Cámaras establecen sus propios Reglamentos, aprueban autónomamente sus presupuestos y, de común acuerdo, regulan el Estatuto del Personal de las Cortes Generales. Los Reglamentos y su reforma serán sometidos a una votación final sobre su totalidad, que requerirá la mayoría absoluta. 2. Las Cámaras eligen sus respectivos Presidentes y los demás miembros de sus Mesas. Las sesiones conjuntas serán presididas por el Presidente del Congreso y se regirán por un Reglamento de las Cortes Generales aprobado por mayoría absoluta de cada Cámara. 3. Los Presidentes de las Cámaras ejercen en nombre de las mismas todos los poderes administrativos y facultades de policía en el interior de sus respectivas sedes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El segundo periodo ordinario anual de sesiones de las Cámaras abarca:",
+        "opciones": [
+            "De febrero a junio.",
+            "De enero a junio.",
+            "De enero a julio.",
+            "De febrero a julio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 73 1. Las Cámaras se reunirán anualmente en dos períodos ordinarios de sesiones: el primero, de septiembre a diciembre, y el segundo, de febrero a junio. 2. Las Cámaras podrán reunirse en sesiones extraordinarias a petición del Gobierno, de la Diputación Permanente o de la mayoría absoluta de los miembros de cualquiera de las Cámaras. Las sesiones extraordinarias deberán convocarse sobre un orden del día determinado y serán clausuradas una vez que éste haya sido agotado."
+    },
+    {
+        "pregunta": "Según el artículo 69.4 de la Constitución Española de 1978, ¿cuántos senadores elegirán las poblaciones de Ceuta y Melilla?",
+        "opciones": [
+            "Cada una de ellas elegirá un senador.",
+            "Cada una de ellas elegirá a tres senadores.",
+            "Cada una de ellas elegirá a dos senadores.",
+            "Elegirán un senador que representará a ambas ciudades autónomas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Por las opiniones manifestadas en el ejercicio de sus funciones:",
+        "opciones": [
+            "Los diputados y senadores tendrán presunción de veracidad.",
+            "Los diputados y senadores gozarán de violabilidad.",
+            "Los cargos electos gozarán de inviolabilidad.",
+            "Los diputados y senadores gozarán de inviolabilidad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 71 1. Los Diputados y Senadores gozarán de inviolabilidad por las opiniones manifestadas en el ejercicio de sus funciones. 2. Durante el período de su mandato los Diputados y Senadores gozarán asimismo de inmunidad y sólo podrán ser detenidos en caso de flagrante delito. No podrán ser inculpados ni procesados sin la previa autorización de la Cámara respectiva. 3. En las causas contra Diputados y Senadores será competente la Sala de lo Penal del Tribunal Supremo. 4. Los Diputados y Senadores percibirán una asignación que será fijada por las respectivas Cámaras."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Diputaciones Permanentes estarán presididas:",
+        "opciones": [
+            "Por el miembro de más edad.",
+            "Por el Presidente del Congreso.",
+            "Por el miembro de mayor antigüedad en la Cámara.",
+            "Por el Presidente de la Cámara respectiva."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 78 1. En cada Cámara habrá una Diputación Permanente compuesta por un mínimo de veintiún miembros, que representarán a los grupos parlamentarios, en proporción a su importancia numérica. 2. Las Diputaciones Permanentes estarán presididas por el Presidente de la Cámara respectiva y tendrán como funciones la prevista en el artículo 73, la de asumir las facultades que correspondan a las Cámaras, de acuerdo con los artículos 86 y 116, en caso de que éstas hubieren sido disueltas o hubiere expirado su mandato y la de velar por los poderes de las Cámaras cuando éstas no estén reunidas. 3. Expirado el mandato o en caso de disolución, las Diputaciones Permanentes seguirán ejerciendo sus funciones hasta la constitución de las nuevas Cortes Generales. 4. Reunida la Cámara correspondiente, la Diputación Permanente dará cuenta de los asuntos tratados y de sus decisiones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para adoptar acuerdos, las Cámaras:",
+        "opciones": [
+            "Deben estar reunidas reglamentariamente y con asistencia de todos sus miembros.",
+            "Deben estar reunidas reglamentariamente.",
+            "Deben estar reunidas reglamentariamente y con asistencia de la mayoría absoluta de sus miembros.",
+            "Deben estar reunidas reglamentariamente y con asistencia de la mayoría de sus miembros."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 79 1. Para adoptar acuerdos, las Cámaras deben estar reunidas reglamentariamente y con asistencia de la mayoría de sus miembros. 2. Dichos acuerdos, para ser válidos, deberán ser aprobados por la mayoría de los miembros presentes, sin perjuicio de las mayorías especiales que establezcan la Constitución o las leyes orgánicas y las que para elección de personas establezcan los Reglamentos de las Cámaras. 3. El voto de Senadores y Diputados es personal e indelegable."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para procesar a un diputado:",
+        "opciones": [
+            "Se requiere previa autorización del Congreso.",
+            "No se exige requisito alguno especial, sólo se requiere autorización previa del Congreso para la detención de un diputado.",
+            "Se requiere comunicación inmediata al Congreso.",
+            "Se previa autorización, previa o posterior, del Congreso."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71 1. Los Diputados y Senadores gozarán de inviolabilidad por las opiniones manifestadas en el ejercicio de sus funciones. 2. Durante el período de su mandato los Diputados y Senadores gozarán asimismo de inmunidad y sólo podrán ser detenidos en caso de flagrante delito. No podrán ser inculpados ni procesados sin la previa autorización de la Cámara respectiva. 3. En las causas contra Diputados y Senadores será competente la Sala de lo Penal del Tribunal Supremo. 4. Los Diputados y Senadores percibirán una asignación que será fijada por las respectivas Cámaras."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Con carácter general las sesiones plenarias del Congreso:",
+        "opciones": [
+            "Serán a puerta cerrada.",
+            "Serán privadas.",
+            "Serán públicas.",
+            "Serán secretas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 80 Las sesiones plenarias de las Cámaras serán públicas, salvo acuerdo en contrario de cada Cámara, adoptado por mayoría absoluta o con arreglo al Reglamento."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Están exceptuadas de la delegación legislativa a favor de las Comisiones Legislativas Permanentes:",
+        "opciones": [
+            "Las cuestiones relativas al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas y al Derecho electoral general.",
+            "La reforma constitucional, las leyes orgánicas y de bases y los Presupuestos Generales del Estado.",
+            "Las cuestiones internacionales, la reforma constitucional, las leyes orgánicas y de bases y los Presupuestos Generales del Estado.",
+            "Las cuestiones internacionales, la reforma constitucional, las leyes orgánicas y los Presupuestos Generales del Estado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 75 1. Las Cámaras funcionarán en Pleno y por Comisiones. 2. Las Cámaras podrán delegar en las Comisiones Legislativas Permanentes la aprobación de proyectos o proposiciones de ley. El Pleno podrá, no obstante, recabar en cualquier momento el debate y votación de cualquier proyecto o proposición de ley que haya sido objeto de esta delegación. 3. Quedan exceptuados de lo dispuesto en el apartado anterior la reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos Generales del Estado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La designación de los senadores correspondientes a las Comunidades Autónomas, ¿a quién corresponde?",
+        "opciones": [
+            "A la Asamblea Legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos.",
+            "A la Asamblea Legislativa de la Comunidad Autónoma.",
+            "Al órgano colegiado superior de la Comunidad Autónoma.",
+            "Al Presidente de la respectiva Comunidad Autónoma o, en su defecto, a la Asamblea Legislativa, de acuerdo con lo que establezcan los Estatutos."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La aprobación del Reglamento del Congreso:",
+        "opciones": [
+            "Requerirá mayoría simple del Congreso.",
+            "Requerirá mayoría absoluta del Congreso, en una votación final sobre su totalidad.",
+            "Requerirá mayoría de tres quintos del Congreso, en una votación final sobre su totalidad.",
+            "Requerirá mayoría absoluta de ambas Cámaras, en una votación final sobre su totalidad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 72 1. Las Cámaras establecen sus propios Reglamentos, aprueban autónomamente sus presupuestos y, de común acuerdo, regulan el Estatuto del Personal de las Cortes Generales. Los Reglamentos y su reforma serán sometidos a una votación final sobre su totalidad, que requerirá la mayoría absoluta. 2. Las Cámaras eligen sus respectivos Presidentes y los demás miembros de sus Mesas. Las sesiones conjuntas serán presididas por el Presidente del Congreso y se regirán por un Reglamento de las Cortes Generales aprobado por mayoría absoluta de cada Cámara. 3. Los Presidentes de las Cámaras ejercen en nombre de las mismas todos los poderes administrativos y facultades de policía en el interior de sus respectivas sedes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién puede nombrar Comisiones de investigación sobre cualquier asunto de interés público?",
+        "opciones": [
+            "El Congreso y el Senado conjuntamente.",
+            "El Senado.",
+            "El Congreso.",
+            "Todas las respuestas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 76 1. El Congreso y el Senado, y, en su caso, ambas Cámaras conjuntamente, podrán nombrar Comisiones de investigación sobre cualquier asunto de interés público. Sus conclusiones no serán vinculantes para los Tribunales, ni afectarán a las resoluciones judiciales, sin perjuicio de que el resultado de la investigación sea comunicado al Ministerio Fiscal para el ejercicio, cuando proceda, de las acciones oportunas. 2. Será obligatorio comparecer a requerimiento de las Cámaras. La ley regulará las sanciones que puedan imponerse por incumplimiento de esta obligación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Cuando el objeto de la delegación legislativa sea refundir varios textos legales en uno solo:",
+        "opciones": [
+            "Podrá otorgarse mediante una Ley de bases o una Ley ordinaria a elección del órgano delegante.",
+            "Deberá otorgarse mediante una Ley Ordinaria.",
+            "Deberá otorgarse mediante una Ley Orgánica.",
+            "Deberá otorgarse mediante una Ley de bases."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El mandato de los senadores termina:",
+        "opciones": [
+            "El mandato de los senadores no termina nunca, es un mandato vitalicio.",
+            "Cuatro años después de su elección o el día de la disolución de la Cámara.",
+            "Únicamente cuando renuncian a su escaño.",
+            "Cuando lo disponga el Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las causas de inelegibilidad e incompatibilidad de los Diputados y Senadores se determinarán:",
+        "opciones": [
+            "En la Constitución.",
+            "En la ley electoral.",
+            "En los reglamentos del Congreso y del Senado respectivamente.",
+            "En el reglamento de las Cortes Generales."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 70 1. La ley electoral determinará las causas de inelegibilidad e incompatibilidad de los Diputados y Senadores, que comprenderán, en todo caso: a) A los componentes del Tribunal Constitucional. b) A los altos cargos de la Administración del Estado que determine la ley, con la excepción de los miembros del Gobierno. c) Al Defensor del Pueblo. d) A los Magistrados, Jueces y Fiscales en activo. e) A los militares profesionales y miembros de las Fuerzas y Cuerpos de Seguridad y Policía en activo. f) A los miembros de las Juntas Electorales. 2. La validez de las actas y credenciales de los miembros de ambas Cámaras estará sometida al control judicial, en los términos que establezca la ley electoral."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La inviolabilidad de los Senadores:",
+        "opciones": [
+            "Se produce en relación únicamente a las opiniones manifestadas en el ejercicio de sus funciones.",
+            "Se produce en relación a cualquier opinión manifestada durante su mandato.",
+            "Se produce en relación únicamente a las opiniones manifestadas en sede parlamentaria.",
+            "Se produce en relación únicamente a las opiniones manifestadas en público."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71 1. Los Diputados y Senadores gozarán de inviolabilidad por las opiniones manifestadas en el ejercicio de sus funciones. 2. Durante el período de su mandato los Diputados y Senadores gozarán asimismo de inmunidad y sólo podrán ser detenidos en caso de flagrante delito. No podrán ser inculpados ni procesados sin la previa autorización de la Cámara respectiva. 3. En las causas contra Diputados y Senadores será competente la Sala de lo Penal del Tribunal Supremo. 4. Los Diputados y Senadores percibirán una asignación que será fijada por las respectivas Cámaras."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las elecciones al Congreso tendrán lugar:",
+        "opciones": [
+            "Entre los veinticinco días y sesenta días desde la terminación del mandato.",
+            "Entre los veinticinco días y cinco días desde la terminación del mandato.",
+            "Entre los treinta días y cuarenta y cinco días desde la terminación del mandato.",
+            "Entre los treinta días y sesenta días desde la terminación del mandato."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La autorización de acuerdos de cooperación entre Comunidades Autónomas:",
+        "opciones": [
+            "Requerirá mayoría del Congreso y mayoría absoluta del Senado.",
+            "Requerirá mayoría del Congreso previo dictamen del Consejo de Estado.",
+            "Requerirá mayoría absoluta del Senado.",
+            "Requerirá mayoría del Congreso y del Senado."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 74 1. Las Cámaras se reunirán en sesión conjunta para ejercer las competencias no legislativas que el Título II atribuye expresamente a las Cortes Generales. 2. Las decisiones de las Cortes Generales previstas en los artículos 94, 1, 145, 2 y 158, 2, se adoptarán por mayoría de cada una de las Cámaras. En el primer caso, el procedimiento se iniciará por el Congreso, y en los otros dos, por el Senado. En ambos casos, si no hubiera acuerdo entre Senado y Congreso, se intentará obtener por una Comisión Mixta compuesta de igual número de Diputados y Senadores. La Comisión presentará un texto que será votado por ambas Cámaras. Si no se aprueba en la forma establecida, decidirá el Congreso por mayoría absoluta. Artículo 145 1. En ningún caso se admitirá la federación de Comunidades Autónomas. 2. Los Estatutos podrán prever los supuestos, requisitos y términos en que las Comunidades Autónomas podrán celebrar convenios entre sí para la gestión y prestación de servicios propios de las mismas, así como el carácter y efectos de la correspondiente comunicación a las Cortes Generales. En los demás supuestos, los acuerdos de cooperación entre las Comunidades Autónomas necesitarán la autorización de las Cortes Generales."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Cámaras podrán delegar en las Comisiones Legislativas Permanentes:",
+        "opciones": [
+            "La aprobación de proyectos o proposiciones de ley.",
+            "Sólo la aprobación de proyectos de ley.",
+            "Sólo la aprobación de proposiciones de ley.",
+            "No existe la delegación de las Cámaras a favor de las Comisiones Legislativas Permanentes."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 75 1. Las Cámaras funcionarán en Pleno y por Comisiones. 2. Las Cámaras podrán delegar en las Comisiones Legislativas Permanentes la aprobación de proyectos o proposiciones de ley. El Pleno podrá, no obstante, recabar en cualquier momento el debate y votación de cualquier proyecto o proposición de ley que haya sido objeto de esta delegación. 3. Quedan exceptuados de lo dispuesto en el apartado anterior la reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos Generales del Estado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuándo finaliza el segundo periodo ordinario anual de sesiones del Congreso?",
+        "opciones": [
+            "En julio.",
+            "En mayo.",
+            "Cuando así lo decida su Presidente.",
+            "En junio."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 73 1. Las Cámaras se reunirán anualmente en dos períodos ordinarios de sesiones: el primero, de septiembre a diciembre, y el segundo, de febrero a junio. 2. Las Cámaras podrán reunirse en sesiones extraordinarias a petición del Gobierno, de la Diputación Permanente o de la mayoría absoluta de los miembros de cualquiera de las Cámaras. Las sesiones extraordinarias deberán convocarse sobre un orden del día determinado y serán clausuradas una vez que éste haya sido agotado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para que las reuniones de Parlamentarios vinculen a las Cámaras:",
+        "opciones": [
+            "Deben celebrarse mediante la convocatoria reglamentaria.",
+            "Cualquier reunión de Parlamentarios vincula a las Cámaras.",
+            "Deberán celebrarse con la asistencia de la mitad más uno de los parlamentarios.",
+            "Deberán celebrarse con la asistencia de todos ellos."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 67 1. Nadie podrá ser miembro de las dos Cámaras simultáneamente, ni acumular el acta de una Asamblea de Comunidad Autónoma con la de Diputado al Congreso. 2. Los miembros de las Cortes Generales no estarán ligados por mandato imperativo. 3. Las reuniones de Parlamentarios que se celebren sin convocatoria reglamentaria no vincularán a las Cámaras, y no podrán ejercer sus funciones ni ostentar sus privilegios."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El mandato de los Diputados:",
+        "opciones": [
+            "No está sometido a mandato imperativo.",
+            "Está sometido a mandato imperativo, debiendo actuar de conformidad con las indicaciones dadas por los votantes.",
+            "Está sometido a mandato imperativo, debiendo actuar de conformidad con las indicaciones de su partido.",
+            "Está sometido a mandato imperativo, debiendo actuar de conformidad con las indicaciones del Presidente del Congreso."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 67 1. Nadie podrá ser miembro de las dos Cámaras simultáneamente, ni acumular el acta de una Asamblea de Comunidad Autónoma con la de Diputado al Congreso. 2. Los miembros de las Cortes Generales no estarán ligados por mandato imperativo. 3. Las reuniones de Parlamentarios que se celebren sin convocatoria reglamentaria no vincularán a las Cámaras, y no podrán ejercer sus funciones ni ostentar sus privilegios."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Cámaras podrán reunirse en sesiones extraordinarias:",
+        "opciones": [
+            "A petición exclusiva del Presidente del Gobierno.",
+            "A petición del Gobierno, de la Diputación Permanente o de la mayoría absoluta de los miembros de cualquiera de las Cámaras.",
+            "A petición exclusiva de la Diputación Permanente.",
+            "A petición exclusiva del Presidente de cualquiera de las Cámaras."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 73 1. Las Cámaras se reunirán anualmente en dos períodos ordinarios de sesiones: el primero, de septiembre a diciembre, y el segundo, de febrero a junio. 2. Las Cámaras podrán reunirse en sesiones extraordinarias a petición del Gobierno, de la Diputación Permanente o de la mayoría absoluta de los miembros de cualquiera de las Cámaras. Las sesiones extraordinarias deberán convocarse sobre un orden del día determinado y serán clausuradas una vez que éste haya sido agotado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién es competente para conocer de las causas contra Diputados y Senadores?",
+        "opciones": [
+            "La Sala de lo Penal del Tribunal Supremo.",
+            "La Sala de lo Penal del Tribunal Superior de Justicia.",
+            "El Tribunal Constitucional.",
+            "La Audiencia Nacional."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71 1. Los Diputados y Senadores gozarán de inviolabilidad por las opiniones manifestadas en el ejercicio de sus funciones. 2. Durante el período de su mandato los Diputados y Senadores gozarán asimismo de inmunidad y sólo podrán ser detenidos en caso de flagrante delito. No podrán ser inculpados ni procesados sin la previa autorización de la Cámara respectiva. 3. En las causas contra Diputados y Senadores será competente la Sala de lo Penal del Tribunal Supremo. 4. Los Diputados y Senadores percibirán una asignación que será fijada por las respectivas Cámaras."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las peticiones colectivas que reciban las Cámaras:",
+        "opciones": [
+            "Pueden remitirse al Gobierno.",
+            "Las Cámaras no pueden recibir peticiones colectivas.",
+            "Deben remitirse al Gobierno.",
+            "Deben remitirse al Gobierno, sólo cuando afecten a cuestiones de interés general."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 77 1. Las Cámaras pueden recibir peticiones individuales y colectivas, siempre por escrito, quedando prohibida la presentación directa por manifestaciones ciudadanas. 2. Las Cámaras pueden remitir al Gobierno las peticiones que reciban. El Gobierno está obligado a explicarse sobre su contenido, siempre que las Cámaras lo exijan."
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>
