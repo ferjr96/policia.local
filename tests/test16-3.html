@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 16. Reglamento general de vehículos</h1>
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Castellón será:",
+        "opciones": [
+            "CS.",
+            "CA.",
+            "C.",
+            "CT."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Navarra será:",
+        "opciones": [
+            "NR.",
+            "NV.",
+            "NA.",
+            "N."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Cádiz será:",
+        "opciones": [
+            "C.",
+            "CD.",
+            "CA.",
+            "CZ."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Palencia será:",
+        "opciones": [
+            "PC.",
+            "PA.",
+            "P.",
+            "PL."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Tarragona será:",
+        "opciones": [
+            "TA.",
+            "T.",
+            "TG.",
+            "TR."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Segovia será:",
+        "opciones": [
+            "SE.",
+            "S.",
+            "SG.",
+            "SV."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Girona será:",
+        "opciones": [
+            "GE.",
+            "GI.",
+            "G.",
+            "B."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Ciudad Real será:",
+        "opciones": [
+            "CR.",
+            "CL.",
+            "CC.",
+            "CD."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Huelva será:",
+        "opciones": [
+            "HU.",
+            "HL.",
+            "H.",
+            "HV."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Jaén será:",
+        "opciones": [
+            "JN.",
+            "JE.",
+            "JA.",
+            "J."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Zaragoza será:",
+        "opciones": [
+            "Z.",
+            "ZA.",
+            "ZG.",
+            "ZR."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Almería será:",
+        "opciones": [
+            "A.",
+            "AM.",
+            "ALM.",
+            "AL."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Pontevedra será:",
+        "opciones": [
+            "P.",
+            "PO.",
+            "PT.",
+            "PV."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Vizcaya será:",
+        "opciones": [
+            "VI.",
+            "BI.",
+            "V.",
+            "BZ."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Sevilla será:",
+        "opciones": [
+            "SE.",
+            "S.",
+            "SI.",
+            "SV."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Illes Balears será:",
+        "opciones": [
+            "PDM.",
+            "IB.",
+            "PMM.",
+            "IBZ."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Burgos será:",
+        "opciones": [
+            "BU.",
+            "BUG.",
+            "B.",
+            "BG."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Cantabria será:",
+        "opciones": [
+            "CA.",
+            "S.",
+            "C.",
+            "CT."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Las Palmas será:",
+        "opciones": [
+            "GC.",
+            "TF.",
+            "LP.",
+            "PM."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Asturias será:",
+        "opciones": [
+            "A.",
+            "AS",
+            "AT.",
+            "O."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Ceuta será:",
+        "opciones": [
+            "C.",
+            "CU.",
+            "CE.",
+            "CT."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Salamanca será:",
+        "opciones": [
+            "SA.",
+            "SL.",
+            "S.",
+            "SM."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Barcelona será:",
+        "opciones": [
+            "B.",
+            "BAC.",
+            "CAT.",
+            "BA."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Soria será:",
+        "opciones": [
+            "SO.",
+            "SI.",
+            "SE.",
+            "S."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Granada será:",
+        "opciones": [
+            "GN.",
+            "GA.",
+            "G.",
+            "GR."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Santa Cruz de Tenerife será:",
+        "opciones": [
+            "TF.",
+            "SCTF.",
+            "SC.",
+            "GC."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Córdoba será:",
+        "opciones": [
+            "C.",
+            "CO.",
+            "CC.",
+            "CD."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Cuenca será:",
+        "opciones": [
+            "C.",
+            "CA.",
+            "CU.",
+            "CC."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Guadalajara será:",
+        "opciones": [
+            "GU.",
+            "GG.",
+            "G.",
+            "GA."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Lugo será:",
+        "opciones": [
+            "LG.",
+            "LU.",
+            "L.",
+            "LO."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Guipúzcoa será:",
+        "opciones": [
+            "GA.",
+            "GU.",
+            "GI.",
+            "SS."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Ourense será:",
+        "opciones": [
+            "CO.",
+            "OR.",
+            "OU.",
+            "O."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de La Rioja será:",
+        "opciones": [
+            "LA.",
+            "LR.",
+            "LO.",
+            "L."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Ávila será:",
+        "opciones": [
+            "AL.",
+            "A.",
+            "AVL.",
+            "AV."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Murcia será:",
+        "opciones": [
+            "M.",
+            "MU.",
+            "MC.",
+            "MA."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Melilla será:",
+        "opciones": [
+            "ML.",
+            "MLL.",
+            "ME.",
+            "M."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Valladolid será:",
+        "opciones": [
+            "VL.",
+            "VA.",
+            "VD.",
+            "V."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Lleida será:",
+        "opciones": [
+            "LL.",
+            "LE.",
+            "LLE.",
+            "L."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Málaga será:",
+        "opciones": [
+            "MA.",
+            "ML.",
+            "MG.",
+            "M."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Zamora será:",
+        "opciones": [
+            "ZM.",
+            "ZO.",
+            "Z.",
+            "ZA."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Toledo será:",
+        "opciones": [
+            "TL.",
+            "TO.",
+            "TD.",
+            "T."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Valencia será:",
+        "opciones": [
+            "VL.",
+            "V.",
+            "VC.",
+            "VA."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Cáceres será:",
+        "opciones": [
+            "C.",
+            "CA.",
+            "CC.",
+            "CCA."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de A Coruña será:",
+        "opciones": [
+            "CO.",
+            "LC.",
+            "C.",
+            "AC."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Teruel será:",
+        "opciones": [
+            "T.",
+            "TL.",
+            "TR.",
+            "TE."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de Madrid será:",
+        "opciones": [
+            "M.",
+            "MA.",
+            "MD.",
+            "MR."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de León será:",
+        "opciones": [
+            "LE.",
+            "LO.",
+            "L.",
+            "LN."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "La sigla provincial perteneciente a la provincia de León será:",
+        "opciones": [
+            "LE.",
+            "LO.",
+            "L.",
+            "LN."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

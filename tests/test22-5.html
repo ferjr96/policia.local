@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 22. Policía judicial. La detención. Habeas Corpus </h1>
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Señale la respuesta incorrecta. Podrán instar el procedimiento de «Habeas Corpus»:",
+        "opciones": [
+            "El hijo del detenido.",
+            "El Ministerio Fiscal.",
+            "El Defensor del Pueblo.",
+            "El primo del detenido."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus». Artículo 3 Podrán instar el procedimiento de “Habeas Corpus” que esta ley establece: a) El privado de libertad, su cónyuge o persona unida por análoga relación de afectividad, descendientes, ascendientes, hermanos y, en su caso, respecto a los menores, sus representantes legales, y respecto a las personas con discapacidad con medidas de apoyo judiciales, la persona que preste su apoyo con facultad de representación específica para este acto concreto. b) El Ministerio Fiscal. c) El Defensor del Pueblo. d) El abogado defensor del privado de libertad. Asimismo, lo podrá iniciar, de oficio, el Juez competente a que se refiere el artículo anterior."
+    },
+    {
+        "pregunta": "Según el artículo 489 LECrim, ¿quién no podrá ser detenido sino en los casos y en la forma que las leyes prescriban?",
+        "opciones": [
+            "Los españoles.",
+            "Los españoles y comunitarios.",
+            "Los españoles y extranjeros.",
+            "Los extranjeros no comunitarios."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 489 LECRIM: Ningún español ni extranjero podrá ser detenido sino en los casos y en la forma que las leyes prescriban."
+    },
+    {
+        "pregunta": "Señale la respuesta incorrecta. Puede realizar una detención:",
+        "opciones": [
+            "Un vigilante de seguridad que observa como se comete un delito de hurto en el establecimiento que vigila.",
+            "Un particular a una persona que esta cometiendo un delito\" in franganti\".",
+            "Un Policía Nacional en una reyerta en un bar al que avisa el dueño del bar.",
+            "Un particular que reconoce a un delincuente que sale por la televisión."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 490 LECrim: Cualquier persona puede detener: 1.º Al que intentare cometer un delito en el momento de ir a cometerlo. 2.º Al delincuente in fraganti. 3.º Al que se fugare del establecimiento penal en que se halle extinguiendo condena. 4.º Al que se fugare de la cárcel en que estuviere esperando su traslación al establecimiento penal o lugar en que deba cumplir la condena que se le hubiese impuesto por sentencia firme. 5.º Al que se fugare al ser conducido al establecimiento o lugar mencionado en el número anterior. 6.º Al que se fugare estando detenido o preso por causa pendiente. 7.º Al procesado o condenado que estuviere en rebeldía."
+    },
+    {
+        "pregunta": "¿Cuándo está obligada la policía a detener a un procesado?",
+        "opciones": [
+            "Sólo cuando estuviera procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional.",
+            "Siempre está obligada a detener a los procesados.",
+            "Cuando estuviera procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional o se presuma que no comparecerá al llamamiento judicial.",
+            "Sólo cuando se presuma que no comparecerá al llamamiento judicial."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 492 LECrim: La Autoridad o agente de Policía judicial tendrá obligación de detener: 1.º A cualquiera que se halle en alguno de los casos del artículo 490. 2.º Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional. 3.º Al procesado por delito a que esté señalada pena inferior, si sus antecedentes o las circunstancias del hecho hicieren presumir que no comparecerá cuando fuere llamado por la Autoridad judicial. Se exceptúa de lo dispuesto en el párrafo anterior al procesado que preste en el acto fianza bastante, a juicio de la Autoridad o agente que intente detenerlo, para presumir racionalmente que comparecerá cuando le llame el Juez o Tribunal competente. 4.º Al que estuviere en el caso del número anterior, aunque todavía no se hallase procesado, con tal que concurran las dos circunstancias siguientes: 1.ª Que la Autoridad o agente tenga motivos racionalmente bastantes para creer en la existencia de un hecho que presente los caracteres de delito. 2.ª Que los tenga también bastantes para creer que la persona a quien intente detener tuvo participación en él."
+    },
+    {
+        "pregunta": "El abogado del detenido le informará de las consecuencias de la prestación o denegación del consentimiento a la práctica de determinadas diligencias. Con referencia a la recogida de muestras de ADN mediante frotis bucal:",
+        "opciones": [
+            "El detenido deberá acceder a la recogida de la muestra, siempre que le sea solicitada por la policía judicial, en el curso de una investigación.",
+            "Si el detenido no accede a la recogida de la muestra bucal, se recabará la intervención del médico forense que determinará otro medio de recogida idóneo.",
+            "El detenido podrá oponerse a la recogida de la muestra, y no se podrá forzar nunca para que la facilite.",
+            "El detenido podrá oponerse a la recogida de la muestra, pero el juez podrá imponer la ejecución forzosa de tal diligencia con medidas coactivas."
+        ],
+        "correcta": 3,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal. Artículo 520. 6. La asistencia del abogado consistirá en: a) Solicitar, en su caso, que se informe al detenido o preso de los derechos establecidos en el apartado 2 y que se proceda, si fuera necesario, al reconocimiento médico señalado en su letra i). b) Intervenir en las diligencias de declaración del detenido, en las diligencias de reconocimiento de que sea objeto y en las de reconstrucción de los hechos en que participe el detenido. El abogado podrá solicitar al juez o funcionario que hubiesen practicado la diligencia en la que haya intervenido, una vez terminada ésta, la declaración o ampliación de los extremos que considere convenientes, así como la consignación en el acta de cualquier incidencia que haya tenido lugar durante su práctica. c) Informar al detenido de las consecuencias de la prestación o denegación de consentimiento a la práctica de diligencias que se le soliciten. Si el detenido se opusiera a la recogida de las muestras mediante frotis bucal, conforme a las previsiones de la Ley Orgánica 10/2007, de 8 de octubre, reguladora de la base de datos policial sobre identificadores obtenidos a partir del ADN, el juez de instrucción, a instancia de la Policía Judicial o del Ministerio Fiscal, podrá imponer la ejecución forzosa de tal diligencia mediante el recurso a las medidas coactivas mínimas indispensables, que deberán ser proporcionadas a las circunstancias del caso y respetuosas con su dignidad. d) Entrevistarse reservadamente con el detenido, incluso antes de que se le reciba declaración por la policía, el fiscal o la autoridad judicial, sin perjuicio de lo dispuesto en el artículo 527."
+    },
+    {
+        "pregunta": "¿Cuál es el órgano competente para conocer la solicitud de «Habeas Corpus» en el caso de que no conste el lugar donde se encuentra el detenido?",
+        "opciones": [
+            "El Juez de Instrucción del lugar en que se produjo la detención.",
+            "El Juez de Instrucción del lugar en que se el detenido hubiere cometido los hechos que motivaron su detención.",
+            "Ambas respuestas son correctas.",
+            "Ambas respuestas son incorrectas."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus». Artículo 2. Es competente para conocer la solicitud de «Habeas Corpus» el Juez de Instrucción del lugar en que se encuentre la persona privada de libertad; si no constare, el del lugar en que se produzca la detención, y, en defecto de los anteriores, el del lugar donde se hayan tenido las últimas noticias sobre el paradero del detenido. Si la detención obedece a la aplicación de la ley orgánica que desarrolla los supuestos previstos en el art. 55.2 de la Constitución, el procedimiento deberá seguirse ante el Juez Central de Instrucción correspondiente. En el ámbito de la Jurisdicción Militar será competente para conocer de la solicitud de «Habeas Corpus» el Juez Togado Militar de Instrucción constituido en la cabecera de la circunscripción jurisdiccional en la que se efectuó la detención."
+    },
+    {
+        "pregunta": "La diferencia entre la detención realizada por un particular y por una agente de la policía judicial en caso de delincuentes infragantis:",
+        "opciones": [
+            "El particular deberá dar inmediata cuenta de la detención a la policía judicial y éste dará inmediata cuenta al Ministerio Fiscal.",
+            "Ambos están obligados a detener por lo que no existe ninguna diferencia.",
+            "El particular puede detener mientras que el policía judicial está obligado a detener.",
+            "El particular no puede realizar esa detención mientras que el policía si podrá realizarla."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 490 de la LECRIM. Cualquier persona puede detener: 1.º Al que intentare cometer un delito en el momento de ir a cometerlo. 2.º Al delincuente in fraganti. Art. 492 de la LECrim.: La Autoridad o agente de Policía judicial tendrá obligación de detener: 1.º A cualquiera que se halle en alguno de los casos del artículo 490."
+    },
+    {
+        "pregunta": "La decisión que adopte el Juez en un procedimiento de habeas corpus, adoptará la forma de:",
+        "opciones": [
+            "Providencia.",
+            "Decreto.",
+            "Sentencia.",
+            "Auto."
+        ],
+        "correcta": 3,
+        "explicacion": "Art. 8 de la LO 6/1984.: Practicadas las actuaciones a que se refiere el artículo anterior, el Juez, mediante auto motivado, adoptará seguidamente alguna de estas resoluciones: (...)"
+    },
+    {
+        "pregunta": "Según el artículo 29 de la Ley Orgánica 2/1986, de fuerzas y cuerpos de seguridad, ¿cómo actuarán las policías locales y autonómicas en sus funciones de Policía Judicial?",
+        "opciones": [
+            "Ayudarán a las fuerzas y cuerpos de seguridad del Estado.",
+            "Colaborarán con las fuerzas y cuerpos de seguridad del Estado.",
+            "Auxiliarán a las fuerzas y cuerpos de seguridad del Estado.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Explicación: Artículo veintinueve. 1. Las funciones de Policía Judicial que se mencionan en el artículo 126 de la Constitución serán ejercidas por las Fuerzas y Cuerpos de Seguridad del Estado, a través de las Unidades que se regulan en el presente capítulo. 2. Para el cumplimiento de dicha función tendrán carácter colaborador de las Fuerzas y Cuerpos de Seguridad del Estado el personal de Policía de las Comunidades Autónomas y de las Corporaciones Locales."
+    },
+    {
+        "pregunta": "¿En qué caso será condenado al pago de las costas el solicitante del procedimiento de \"habeas corpus\"?",
+        "opciones": [
+            "En todos aquellos casos que no se estime el procedimiento.",
+            "En todo caso, si se apreciase temeridad o mala fe, en el solicitante.",
+            "En todo caso, son declaradas de oficio.",
+            "Este procedimiento no recoge el pago de costas al ser un mandato constitucional y un compromiso de los poderes públicos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 9 de la Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»: El Juez deducirá testimonio de los particulares pertinentes para la persecución y castigo de los delitos que hayan podido cometerse por quienes hubieran ordenado la detención, o tenido bajo su custodia a la persona privada de libertad. En los casos de delito de denuncia falsa o simulación de delito se deducirá asimismo, testimonio de los particulares pertinentes, al efecto de determinar las responsabilidades penales correspondientes. En todo caso, si se apreciase temeridad o mala fe, será condenado el solicitante al pago de las costas del procedimiento, en caso contrario, éstas se declararán de oficio."
+    },
+    {
+        "pregunta": "Señale cuál de los siguientes sólo puede ser detenido en caso de flagrante delito de hurto:",
+        "opciones": [
+            "Un Senador.",
+            "Un Guardia Civil.",
+            "Todas las respuestas son correctas.",
+            "El Rey."
+        ],
+        "correcta": 0,
+        "explicacion": "Constitución Española. Artículo 71. 2. Durante el período de su mandato los Diputados y Senadores gozarán asimismo de inmunidad y sólo podrán ser detenidos en caso de flagrante delito. No podrán ser inculpados ni procesados sin la previa autorización de la Cámara respectiva."
+    },
+    {
+        "pregunta": "Según la Ley Orgánica reguladora del procedimiento de habeas Corpus, ¿cuál será la duración máxima del procedimiento de habeas Corpus desde que el detenido solicite el procedimiento hasta el auto de finalización del juez?.",
+        "opciones": [
+            "Tendrá una duración de 24 horas.",
+            "Tendrá una duración de 12 horas.",
+            "Tendrá una duración de 48 horas.",
+            "No se establece una duración máxima a tal efecto."
+        ],
+        "correcta": 3,
+        "explicacion": "Explicación: Artículo séptimo. En el plazo de veinticuatro horas, contadas desde que sea dictado el auto de incoación, los Jueces practicarán todas las actuaciones a que se refiere este artículo y dictarán la resolución que proceda. Es decir, la Ley Orgánica establece un plazo desde el auto de incoación del juez, no desde que el detenido solicite el procedimiento."
+    },
+    {
+        "pregunta": "¿Qué duración máxima establece la Constitución Española en su artículo 17 para la detención preventiva ordinaria?",
+        "opciones": [
+            "72 horas.",
+            "48 horas.",
+            "120 horas.",
+            "24 horas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 17.2 de la Constitución Española señala que \"la detención preventiva no podrá durar más del tiempo estrictamente necesario para realizar las averiguaciones tendentes al esclarecimiento de los hechos, y, en todo caso, en el plazo máximo de setenta y dos horas, el detenido deberá ser puesto en libertad o a disposición de la autoridad judicial\"."
+    },
+    {
+        "pregunta": "El detenido tiene derecho:",
+        "opciones": [
+            "Todas las respuestas son correctas.",
+            "Derecho a designar abogado.",
+            "Derecho a guardar silencio no declarando si no quiere, a no contestar alguna o algunas de las preguntas que le formulen, o a manifestar que sólo declarará ante el juez.",
+            "Derecho a no declarar contra sí mismo y a no confesarse culpable."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 520.2 de la LECrim.: Toda persona detenida o presa será informada por escrito, en un lenguaje sencillo y accesible, en una lengua que comprenda y de forma inmediata, de los hechos que se le atribuyan y las razones motivadoras de su privación de libertad, así como de los derechos que le asisten y especialmente de los siguientes: a) Derecho a guardar silencio no declarando si no quiere, a no contestar alguna o algunas de las preguntas que le formulen, o a manifestar que sólo declarará ante el juez. b) Derecho a no declarar contra sí mismo y a no confesarse culpable. c) Derecho a designar abogado"
+    },
+    {
+        "pregunta": "Si el detenido fuese menor:",
+        "opciones": [
+            "Será puesto a disposición de las Secciones de Menores de la Fiscalía o del Juez de Menores comunicándose el hecho y el lugar de custodia a quienes el menor designe, tan pronto se tenga constancia de la minoría de edad.",
+            "Será puesto a disposición del Juez de Menores y se comunicará el hecho y el lugar de custodia a quienes ejerzan la patria potestad, la tutela o la guarda de hecho del mismo, tan pronto se tenga constancia de la minoría de edad.",
+            "Será puesto a disposición de las Secciones de Menores de la Fiscalía y se comunicará el hecho y el lugar de custodia a quienes ejerzan la patria potestad, la tutela o la guarda de hecho del mismo, tan pronto se tenga constancia de la minoría de edad.",
+            "Será puesto a disposición del Juzgado de Menores teniendo éste que comunicar el hecho y el lugar de custodia a quienes ejerzan la patria potestad, la tutela o la guarda de hecho del mismo, tan pronto se tenga constancia de la minoría de edad."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 520. 4 de la LECrim. 4. Si se tratare de un menor, será puesto a disposición de las Secciones de Menores de la Fiscalía y se comunicará el hecho y el lugar de custodia a quienes ejerzan la patria potestad, la tutela o la guarda de hecho del mismo, tan pronto se tenga constancia de la minoría de edad."
+    },
+    {
+        "pregunta": "Los detenidos estarán, a ser posible, separados los unos de los otros. Para esta separación se tendrá en cuenta:",
+        "opciones": [
+            "El grado de educación del detenido.",
+            "La edad del detenido.",
+            "La naturaleza del delito que se le impute.",
+            "Todas las respuestas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Art. 521 de la LECrim.: Los detenidos estarán, a ser posible, separados los unos de los otros. Si la separación no fuese posible, el Juez instructor o Tribunal cuidará de que no se reúnan personas de diferente sexo ni los correos en una misma prisión, y de que los jóvenes y los no reincidentes se hallen separados de los de edad madura y de los reincidentes. Para esta separación se tendrá en cuenta el grado de educación del detenido, su edad y la naturaleza del delito que se le impute."
+    },
+    {
+        "pregunta": "Según la Ley Orgánica 2/1986, ¿Cuál es la naturaleza de la función que desempeña la Policía Local en relación con la Policía Judicial?",
+        "opciones": [
+            "Depende directamente del Ministerio Fiscal en todas sus actuaciones.",
+            "Realiza la totalidad de las funciones de Policía Judicial en exclusiva.",
+            "Tiene un carácter colaborador respecto de las Fuerzas y Cuerpos de Seguridad del Estado.",
+            "Solo ejerce funciones de Policía Judicial si no está presente la Guardia Civil."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 29.2 Ley Orgánica 2/1986, de 13 de marzo, de Fuerzas y Cuerpos de Seguridad establece que para el cumplimiento de las funciones de Policía Judicial, el personal de Policía de las Comunidades Autónomas y de las Corporaciones Locales tendrá carácter colaborador con las Fuerzas y Cuerpos de Seguridad del Estado (Cuerpo Nacional de Policía y Guardia Civil)."
+    },
+    {
+        "pregunta": "A prevención con las Autoridades y agentes de Policía judicial, Juez o Tribunal acordará la detención:",
+        "opciones": [
+            "Todas las respuestas son correctas.",
+            "Al procesado o condenado que estuviere en rebeldía.",
+            "Al que estuviere procesado por delito que tenga señalada en el Código pena superior a la de prisión correccional.",
+            "Al que se fugare estando detenido o preso por causa pendiente."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 494 de la LECrim. Dicho Juez o Tribunal acordará también la detención de los comprendidos en el artículo 492, a prevención con las Autoridades y agentes de Policía judicial."
+    },
+    {
+        "pregunta": "¿A qué Juez le corresponderá conocer la solicitud de \"Habeas Corpus\", si no constare el del lugar en que se encuentre la persona privada de libertad?",
+        "opciones": [
+            "Al Juez de Instrucción del lugar donde se hayan tenido las últimas noticias sobre el paradero del detenido.",
+            "Al Juez de Instrucción de cualquier lugar donde se presente la solicitud.",
+            "Al Juez de Instrucción del lugar de residencia del detenido.",
+            "Al Juez de Instrucción del lugar en que se produzca la detención."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo segundo de la Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»: Es competente para conocer la solicitud de «Habeas Corpus» el Juez de Instrucción del lugar en que se encuentre la persona privada de libertad; si no constare, el del lugar en que se produzca la detención, y, en defecto de los anteriores, el del lugar donde se hayan tenido las últimas noticias sobre el paradero del detenido. Si la detención obedece a la aplicación de la ley orgánica que desarrolla los supuestos previstos en el art. 55.2 de la Constitución, el procedimiento deberá seguirse ante el Juez Central de Instrucción correspondiente. En el ámbito de la Jurisdicción Militar será competente para conocer de la solicitud de «Habeas Corpus» el Juez Togado Militar de Instrucción constituido en la cabecera de la circunscripción jurisdiccional en la que se efectuó la detención."
+    },
+    {
+        "pregunta": "El procedimiento de \"Habeas Corpus\" se inspira en varios principios, uno de ellos es el de \"Generalidad\". Señale la proposición CORRECTA:",
+        "opciones": [
+            "Alcanza no solo a los supuestos de detención ilegal –ya porque la detención se produzca contra lo legalmente establecido, ya porque tenga lugar sin cobertura jurídica–, sino también a las detenciones que, ajustándose originariamente a la legalidad, se mantienen o prolongan ilegalmente o tienen lugar en condiciones ilegales.",
+            "Supone la legitimación de una pluralidad de personas para instar el procedimiento.",
+            "Implica que ningún particular o agente de la autoridad puede sustraerse al control judicial de la legalidad de la detención de las personas.",
+            "Las proposiciones B) y C) son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Exposición de Motivos de la Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»: Estos son los objetivos de la presente ley orgánica, que se inspira para ello en cuatro principios complementarios. El primero de estos principios es la agilidad, absolutamente necesaria para conseguir que la violación ilegal de la libertad de la persona sea reparada con la máxima celeridad, y que se consigue instituyendo un procedimiento judicial sumario y extraordinariamente rápido, hasta el punto de que tiene que finalizar en veinticuatro horas. Ello supone una evidente garantía de que las detenciones ilegales o mantenidas en condiciones ilegales, finalizarán a la mayor brevedad. En segundo lugar, la sencillez y la carencia de formalismos, que se manifiestan en la posibilidad de la comparecencia verbal y en la no necesidad del Abogado y Procurador, evitarán dilaciones indebidas y permitirán el acceso de todos los ciudadanos, con independencia de su nivel de conocimiento de sus derechos y de sus medios económicos, al recurso de «Habeas Corpus». En tercer lugar, el procedimiento establecido por esta ley se caracteriza por la generalidad que implica, por un lado, que ningún particular o agente de la autoridad pueda sustraerse al control judicial de la legalidad de la detención de las personas sin que quepa en este sentido excepción de ningún género, ni siquiera en lo referente a la Autoridad Militar, y que supone, por otro lado, la legitimación de una pluralidad de personas para instar el procedimiento, siendo de destacar a este respecto la legitimación conferida al Ministerio Fiscal y al Defensor del Pueblo como garantes, respectivamente, de la legalidad y de la defensa de los derechos de los ciudadanos. En fin, la ley está presidida por una pretensión de universalidad, de manera que el procedimiento de «Habeas Corpus» que regula alcanza no sólo a los supuestos de detención ilegal –ya porque la detención se produzca contra lo legalmente establecido, ya porque tenga lugar sin cobertura jurídica–, sino también a las detenciones que, ajustándose originariamente a la legalidad, se mantienen o prolongan ilegalmente o tienen lugar en condiciones ilegales."
+    },
+    {
+        "pregunta": "La Ley de Habeas Corpus se inspira en cuatro principios complementarios. ¿A cuál de ellos nos referimos cuando decimos: \"que ningún particular o agente de la autoridad puede sustraerse al control judicial de la legalidad de la detención de las personas sin excepción de ningún género\"?",
+        "opciones": [
+            "Agilidad.",
+            "Universalidad.",
+            "Sencillez y carencia de formalismos.",
+            "Generalidad."
+        ],
+        "correcta": 3,
+        "explicacion": "Exposición de Motivos de la Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus»: Estos son los objetivos de la presente ley orgánica, que se inspira para ello en cuatro principios complementarios. El primero de estos principios es la agilidad, absolutamente necesaria para conseguir que la violación ilegal de la libertad de la persona sea reparada con la máxima celeridad, y que se consigue instituyendo un procedimiento judicial sumario y extraordinariamente rápido, hasta el punto de que tiene que finalizar en veinticuatro horas. Ello supone una evidente garantía de que las detenciones ilegales o mantenidas en condiciones ilegales, finalizarán a la mayor brevedad. En segundo lugar, la sencillez y la carencia de formalismos, que se manifiestan en la posibilidad de la comparecencia verbal y en la no necesidad del Abogado y Procurador, evitarán dilaciones indebidas y permitirán el acceso de todos los ciudadanos, con independencia de su nivel de conocimiento de sus derechos y de sus medios económicos, al recurso de «Habeas Corpus». En tercer lugar, el procedimiento establecido por esta ley se caracteriza por la generalidad que implica, por un lado, que ningún particular o agente de la autoridad pueda sustraerse al control judicial de la legalidad de la detención de las personas sin que quepa en este sentido excepción de ningún género, ni siquiera en lo referente a la Autoridad Militar, y que supone, por otro lado, la legitimación de una pluralidad de personas para instar el procedimiento, siendo de destacar a este respecto la legitimación conferida al Ministerio Fiscal y al Defensor del Pueblo como garantes, respectivamente, de la legalidad y de la defensa de los derechos de los ciudadanos. En fin, la ley está presidida por una pretensión de universalidad, de manera que el procedimiento de «Habeas Corpus» que regula alcanza no sólo a los supuestos de detención ilegal –ya porque la detención se produzca contra lo legalmente establecido, ya porque tenga lugar sin cobertura jurídica–, sino también a las detenciones que, ajustándose originariamente a la legalidad, se mantienen o prolongan ilegalmente o tienen lugar en condiciones ilegales."
+    },
+    {
+        "pregunta": "Según el artículo 495 LECrim, ¿por qué delitos se puede detener?",
+        "opciones": [
+            "Solo se podrá detener por delitos leves si el presunto reo no tuviese domicilio conocido.",
+            "Por todos los delitos, cualquiera que sea su gravedad.",
+            "Solo se podrá detener por delitos leves si el presunto reo no tuviese domicilio conocido ni diese fianza bastante.",
+            "Nunca se podrá detener por delitos leves."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal. Artículo 495. No se podrá detener por la presunta comisión de delitos leves, a no ser que el presunto reo no tuviese domicilio conocido ni diese fianza bastante, a juicio de la autoridad o agente que intente detenerle. *Téngase en cuenta que, desde el 1 de julio de 2015, las menciones contenidas en esta ley a las \"faltas\" se entenderán referidas a los \"delitos leves\", según establece la disposición adicional 2 de la Ley Orgánica 1/2015, de 30 de marzo."
+    },
+    {
+        "pregunta": "Señale la respuesta incorrecta. La asistencia del abogado consistirá en:",
+        "opciones": [
+            "Informar al detenido de las consecuencias de la prestación o denegación de consentimiento a la práctica de diligencias que se le soliciten.",
+            "Entrevistarse reservadamente con el detenido, incluso antes de que se le reciba declaración por la policía, el fiscal o la autoridad judicial.",
+            "Entrevistarse reservadamente con el detenido, una vez que se le reciba declaración por la policía.",
+            "Intervenir en las diligencias de declaración del detenido, en las diligencias de reconocimiento de que sea objeto y en las de reconstrucción de los hechos en que participe el detenido."
+        ],
+        "correcta": 2,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882 por el que se aprueba la Ley de Enjuiciamiento Criminal. Artículo 520 6. La asistencia del abogado consistirá en: d) Entrevistarse reservadamente con el detenido, incluso antes de que se le reciba declaración por la policía, el fiscal o la autoridad judicial, sin perjuicio de lo dispuesto en el artículo 527."
+    },
+    {
+        "pregunta": "El juez de instrucción o tribunal podrá acordar excepcionalmente, mediante resolución motivada, la detención incomunicada. ¿De cuál de los siguientes derechos se puede privar al detenido?",
+        "opciones": [
+            "Comunicarse con el Juez o el Ministerio Fiscal.",
+            "Ser informado de sus derechos.",
+            "Designar un abogado de su confianza.",
+            "Acceder él o su abogado a las actuaciones sumariales que sean esenciales para impugnar la legalidad de la detención."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 527 de la LECrim.: En los supuestos del artículo 509, el detenido o preso podrá ser privado de los siguientes derechos si así lo justifican las circunstancias del caso: a) Designar un abogado de su confianza. b) Comunicarse con todas o alguna de las personas con las que tenga derecho a hacerlo, salvo con la autoridad judicial, el Ministerio Fiscal y el Médico Forense. c) Entrevistarse reservadamente con su abogado. d) Acceder él o su abogado a las actuaciones, salvo a los elementos esenciales para poder impugnar la legalidad de la detención."
+    },
+    {
+        "pregunta": "Los reconocimientos médicos al detenido a quien se le restrinja el derecho a comunicarse con todas o alguna de las personas con las que tenga derecho a hacerlo se realizarán con una frecuencia:",
+        "opciones": [
+            "De al menos un reconocimiento cada veinticuatro horas, según criterio facultativo.",
+            "De al menos tres reconocimientos cada cuarenta y ocho horas, según criterio facultativo.",
+            "De al menos dos reconocimientos cada veinticuatro horas, según criterio facultativo.",
+            "De al menos dos reconocimientos cada cuarenta y ocho horas, según criterio facultativo."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 527.3 de la LECrim: Los reconocimientos médicos al detenido a quien se le restrinja el derecho a comunicarse con todas o alguna de las personas con las que tenga derecho a hacerlo se realizarán con una frecuencia de al menos dos reconocimientos cada veinticuatro horas, según criterio facultativo."
+    },
+    {
+        "pregunta": "¿Qué recurso cabe interponer contra el auto que deniegue la solicitud de habeas corpus por considerarla improcedente?",
+        "opciones": [
+            "Recurso de queja.",
+            "Recurso de apelación.",
+            "Recurso de súplica.",
+            "No cabrá recurso alguno."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 6 Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus». Promovida la solicitud de «Habeas Corpus» el Juez examinará la concurrencia de los requisitos para su tramitación y dará traslado de la misma al Ministerio Fiscal. Seguidamente, mediante auto, acordará la incoación del procedimiento, o, en su caso, denegará la solicitud por ser ésta improcedente. Dicho auto se notificará, en todo caso, al Ministerio Fiscal. Contra la resolución que en uno u otro caso se adopte, no cabrá recurso alguno."
+    },
+    {
+        "pregunta": "El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio designado por el Colegio de Abogados. El abogado designado acudirá al centro de detención con la máxima premura:",
+        "opciones": [
+            "Siempre dentro del plazo máximo de tres horas desde la recepción del encargo.",
+            "Siempre dentro del plazo máximo de cuarenta y ocho horas desde la recepción del encargo.",
+            "Siempre dentro del plazo máximo de veinticuatro horas desde la recepción del encargo.",
+            "Siempre dentro del plazo máximo de ocho horas desde la recepción del encargo."
+        ],
+        "correcta": 0,
+        "explicacion": "Real Decreto de 14 de septiembre de 1882, aprobatorio de la Ley de Enjuiciamiento Criminal. Artículo 520. 5. El detenido designará libremente abogado y si no lo hace será asistido por un abogado de oficio. Ninguna autoridad o agente le efectuará recomendación alguna sobre el abogado a designar más allá de informarle de su derecho. La autoridad que tenga bajo su custodia al detenido comunicará inmediatamente al Colegio de Abogados el nombre del designado por el detenido para asistirle a los efectos de su localización y transmisión del encargo profesional o, en su caso, le comunicará la petición de nombramiento de abogado de oficio. Si el detenido no hubiere designado abogado, o el elegido rehusare el encargo o no fuere hallado, el Colegio de Abogados procederá de inmediato al nombramiento de un abogado del turno de oficio. El abogado designado acudirá al centro de detención con la máxima premura, siempre dentro del plazo máximo de tres horas desde la recepción del encargo. Si en dicho plazo no compareciera, el Colegio de Abogados designará un nuevo abogado del turno de oficio que deberá comparecer a la mayor brevedad y siempre dentro del plazo indicado, sin perjuicio de la exigencia de la responsabilidad disciplinaria en que haya podido incurrir el incompareciente."
+    },
+    {
+        "pregunta": "Desde que se haya dictado el auto de incoación del procedimiento de habeas corpus, el Juez deberá practicar todas las actuaciones y dictar la resolución que proceda en el plazo de:",
+        "opciones": [
+            "48 horas.",
+            "5 días.",
+            "3 días.",
+            "24 horas."
+        ],
+        "correcta": 3,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus» Artículo 7 En el auto de incoación, el Juez ordenará a la autoridad a cuya disposición se halle la persona privada de libertad o a aquél en cuyo poder se encuentre, que la ponga de manifiesto ante él, sin pretexto ni demora alguna o se constituirá en el lugar donde aquélla se encuentre. Antes de dictar resolución, oirá el Juez a la persona privada de libertad o, en su caso, a su representante legal y Abogado, si lo hubiera designado, así como al Ministerio Fiscal; acto seguido oirá en justificación de su proceder a la autoridad, agentes, funcionario público o representante de la institución o persona que hubiere ordenado o practicado la detención o internamiento y, en todo caso, a aquélla bajo cuya custodia se encontrase la persona privada de libertad; a todos ellos dará a conocer el Juez las declaraciones del privado de libertad. El Juez admitirá, si las estima pertinentes, las pruebas que aporten las personas a que se refiere el párrafo anterior y las que propongan que puedan practicarse en el acto. En el plazo de veinticuatro horas, contadas desde que sea dictado el auto de incoación, los Jueces practicarán todas las actuaciones a que se refiere este artículo y dictarán la resolución que proceda."
+    },
+    {
+        "pregunta": "El procedimiento de Habeas Corpus, cuando se inicie a instancia de parte: Señale la proposición INCORRECTA.",
+        "opciones": [
+            "Deberá constar el motivo concreto por el que se solicita el Habeas Corpus.",
+            "Deberá constar nombre y circunstancias personales de la persona para la que se solicita el amparo judicial.",
+            "Deberá estar suscrito por abogado y procurador.",
+            "Deberá constar nombre y circunstancias personales del solicitante."
+        ],
+        "correcta": 2,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus». Artículo cuarto. El procedimiento se iniciará, salvo cuando se incoe de oficio, por medio de escrito o comparecencia, no siendo preceptiva la intervención de Abogado ni de Procurador. En dicho escrito o comparecencia deberán constar: a) El nombre y circunstancias personales del solicitante y de la persona para la que se solicita el amparo judicial regulado en esta ley. b) El lugar en que se halle el privado de libertad, autoridad o persona, bajo cuya custodia se encuentre, si fueren conocidos, y todas aquellas otras circunstancias que pudieran resultar relevantes. c) El motivo concreto por el que se solicita el «Habeas Corpus»."
+    },
+    {
+        "pregunta": "La solicitud de la prórroga de la detención preventiva en caso de terrorismo se realizará en el plazo de:",
+        "opciones": [
+            "Cuarenta y ocho horas desde la puesta a disposición judicial del presunto responsable.",
+            "Veinticuatro horas desde la detención.",
+            "Cuarenta y ocho horas desde la detención.",
+            "Veinticuatro horas desde la puesta a disposición judicial del presunto responsable."
+        ],
+        "correcta": 2,
+        "explicacion": "Art. 520 bis.1 de la LECrim.: Toda persona detenida como presunto partícipe de alguno de los delitos a que se refiere el artículo 384 bis será puesta a disposición del Juez competente dentro de las setenta y dos horas siguientes a la detención. No obstante, podrá prolongarse la detención el tiempo necesario para los fines investigadores, hasta un límite máximo de otras cuarenta y ocho horas, siempre que, solicitada tal prórroga mediante comunicación motivada dentro de las primeras cuarenta y ocho horas desde la detención, sea autorizada por el Juez en las veinticuatro horas siguientes. Tanto la autorización cuanto la denegación de la prórroga se adoptarán en resolución motivada."
+    },
+    {
+        "pregunta": "Se consideran personas ilegalmente detenidas:",
+        "opciones": [
+            "Todas las respuestas son correctas.",
+            "Las privadas de libertad a quienes no les sean respetados los derechos que la Constitución y las leyes procesales garantizan a toda persona detenida.",
+            "Las que lo fueren por una autoridad, agente de la misma, funcionario público o particular, sin que concurran los supuestos legales.",
+            "Las que lo estuvieran por plazo superior al señalado en las leyes, si transcurrido el mismo, no fuesen puestas en libertad o entregadas al Juez más próximo al lugar de la detención."
+        ],
+        "correcta": 0,
+        "explicacion": "Art. 1 LO 6/1984.: Mediante el procedimiento del «Habeas Corpus», regulado en la presente ley, se podrá obtener la inmediata puesta a disposición de la Autoridad judicial competente, de cualquier persona detenida ilegalmente. A los efectos de esta ley se consideran personas ilegalmente detenidas: a) Las que lo fueren por una autoridad, agente de la misma, funcionario público o particular, sin que concurran los supuestos legales, o sin haberse cumplido las formalidades prevenidas y requisitos exigidos por las leyes. b) Las que estén ilícitamente internadas en cualquier establecimiento o lugar. c) Las que lo estuvieran por plazo superior al señalado en las leyes, si transcurrido el mismo, no fuesen puestas en libertad o entregadas al Juez más próximo al lugar de la detención. d) Las privadas de libertad a quienes no les sean respetados los derechos que la Constitución y las leyes procesales garantizan a toda persona detenida."
+    },
+    {
+        "pregunta": "En relación con el procedimiento de Habeas Corpus. Señale la proposición INCORRECTA:",
+        "opciones": [
+            "Mediante el procedimiento de \"Habeas Corpus\" se obtiene la inmediata puesta en libertad de cualquier persona detenida ilegalmente.",
+            "Es competente para conocer la solicitud de \"Habeas Corpus\" el Juez de Instrucción del lugar en que se encuentre la persona privada de libertad; si no constare, el del lugar en que se produzca la detención y, en defecto de los anteriores, el del lugar donde se hayan tenido las últimas noticias sobre el paradero del detenido.",
+            "El procedimiento se iniciará, salvo cuando se incoe de oficio, por medio de escrito o comparecencia, no siendo preceptiva la intervención de Abogado ni de Procurador.",
+            "En el ámbito de la Jurisdicción Militar será competente para conocer de la solicitud de \"Habeas Corpus\" el Juez Togado Militar de Instrucción constituido en la cabecera de la circunscripción jurisdiccional en la que se efectuó la detención."
+        ],
+        "correcta": 0,
+        "explicacion": "Ley Orgánica 6/1984, de 24 de mayo, reguladora del procedimiento de «Habeas Corpus». Artículo primero. Mediante el procedimiento del «Habeas Corpus», regulado en la presente ley, se podrá obtener la inmediata puesta a disposición de la Autoridad judicial competente, de cualquier persona detenida ilegalmente. [...] Artículo segundo. Es competente para conocer la solicitud de «Habeas Corpus» el Juez de Instrucción del lugar en que se encuentre la persona privada de libertad; si no constare, el del lugar en que se produzca la detención, y, en defecto de los anteriores, el del lugar donde se hayan tenido las últimas noticias sobre el paradero del detenido. Si la detención obedece a la aplicación de la ley orgánica que desarrolla los supuestos previstos en el art. 55.2 de la Constitución, el procedimiento deberá seguirse ante el Juez Central de Instrucción correspondiente. En el ámbito de la Jurisdicción Militar será competente para conocer de la solicitud de «Habeas Corpus» el Juez Togado Militar de Instrucción constituido en la cabecera de la circunscripción jurisdiccional en la que se efectuó la detención. Artículo cuarto. El procedimiento se iniciará, salvo cuando se incoe de oficio, por medio de escrito o comparecencia, no siendo preceptiva la intervención de Abogado ni de Procurador. [...]"
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 19. Ley 4/2013 Coordinación PL </h1>
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Los “criterios de graduación de sanciones” corresponde al artículo:",
+        "opciones": [
+            "Ninguna es correcta.",
+            "73.",
+            "71.",
+            "72."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 72 | Criterios de graduación de sanciones"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta muy grave:",
+        "opciones": [
+            "Haber sido condenado en virtud de sentencia firme por un delito doloso relacionado con el servicio o que cause grave perjuicio a la administración o a las personas.",
+            "Ninguna de las anteriores es correcta.",
+            "La omisión de la obligación de dar cuenta por escrito a la superioridad con la diligencia debida de todo asunto que por su entidad requiera su conocimiento o urgente decisión.",
+            "El hecho de prescindir del conducto reglamentario al formular cualquier solicitud o reclamación, excepto en el caso de urgencia o imposibilidad física, así como la interrupción de la tramitación a la persona destinataria. Quedan exceptuadas del conducto reglamentario las que formulan los representantes de las organizaciones sindicales en el ejercicio de la actividad sindical. Ref. #112063 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 66, de la extensión de la responsabilidad. Señale la correcta.",
+        "opciones": [
+            "Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubran a otros a cometer actos o tener conductas constitutivas de falta disciplinaria incurren en la misma responsabilidad que el autor de la falta.",
+            "Sólo los miembros de los cuerpos de policía local que induzcan a otros a cometer actos o tener conductas constitutivas de falta disciplinaria incurren en la misma responsabilidad que el autor de la falta.",
+            "Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que induzcan a otros a cometer actos o tener conductas constitutivas de falta disciplinaria incurren en la misma responsabilidad que el autor de la falta.",
+            "Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que induzcan a otros a cometer actos o tener conductas constitutivas de falta disciplinaria no incurren en la misma responsabilidad que el autor de la falta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 66 | Extensión de la responsabilidad 1. Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que induzcan a otros a cometer actos o tener conductas constitutivas de falta disciplinaria incurren en la misma responsabilidad que el autor de la falta."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El Capítulo II comprende…",
+        "opciones": [
+            "El régimen disciplinario.",
+            "Los principios generales.",
+            "Las infracciones, sanciones y potestad sancionadora.",
+            "La extinción y prescripción."
+        ],
+        "correcta": 2,
+        "explicacion": "Capítulo II: Infracciones, sanciones y potestad sancionadora → artículos 67 a 73"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta grave:",
+        "opciones": [
+            "Ser condenado o condenada en virtud de sentencia firme por falta dolosa o delito leve doloso cuando la infracción penal cause perjuicio a la administración o a los administrados.",
+            "La obstaculización grave en el ejercicio de las libertades públicas y derechos sindicales.",
+            "La no prestación de auxilio con urgencia en hechos o circunstancias en que sea obligada su actuación, a no ser que sea constitutivo de delito.",
+            "Ninguna de las anteriores es correcta. Ref. #112069 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 68 corresponde a:",
+        "opciones": [
+            "Faltas muy graves.",
+            "Faltas graves.",
+            "Faltas disciplinarias.",
+            "Faltas leves."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 68 | Faltas muy graves"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El “régimen aplicable” corresponde al artículo:",
+        "opciones": [
+            "66.",
+            "65.",
+            "63.",
+            "64."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 63 | Régimen aplicable"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Las infracciones, sanciones y potestad sancionadora se encuentran en el…",
+        "opciones": [
+            "Capítulo III.",
+            "Capítulo II.",
+            "Capítulo IV.",
+            "Capítulo I."
+        ],
+        "correcta": 1,
+        "explicacion": "Capítulo II: Infracciones, sanciones y potestad sancionadora → artículos 67 a 73"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. La “comunicación de infracciones” corresponde al artículo:",
+        "opciones": [
+            "66.",
+            "64.",
+            "63.",
+            "65."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 65 | Comunicación de infracciones"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta leve:",
+        "opciones": [
+            "El hecho de prescindir del conducto reglamentario al formular cualquier solicitud o reclamación, excepto en el caso de urgencia o imposibilidad física, así como la interrupción de la tramitación a la persona destinataria. Quedan exceptuadas del conducto reglamentario las que formulan los representantes de las organizaciones sindicales en el ejercicio de la actividad sindical.",
+            "La omisión de la obligación de dar cuenta por escrito a la superioridad con la diligencia debida de todo asunto que por su entidad requiera su conocimiento o urgente decisión.",
+            "Ninguna de las anteriores es correcta.",
+            "Haber sido condenado en virtud de sentencia firme por un delito doloso relacionado con el servicio o que cause grave perjuicio a la administración o a las personas. Ref. #112055 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 64 corresponde a:",
+        "opciones": [
+            "Comunicación de infracciones.",
+            "Responsabilidad civil y penal.",
+            "Régimen aplicable.",
+            "Extensión de la responsabilidad."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 64 | Responsabilidad civil y penal"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Del Capítulo II. Señale la correcta.",
+        "opciones": [
+            "Las sanciones disciplinarias se encuentran en la sección 2ª.",
+            "La potestad sancionadora se encuentra en la sección 3ª.",
+            "La infracciones disciplinarias se encuentran en la sección 1ª.",
+            "Todas son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Capítulo II: Infracciones, sanciones y potestad sancionadora → artículos 67 a 73 ➢ Sección 1ª: Infracciones disciplinarias → artículos 67 a 70 ➢ Sección 2ª: Sanciones disciplinarias → artículos 71 y 72 ➢ Sección 3ª: Potestad sancionadora → artículo 73"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 65, de la comunicación de las infracciones. Señale la correcta.",
+        "opciones": [
+            "Sólo los miembros de los cuerpos de policía local tienen la obligación de comunicar por escrito a su superior jerárquico los hechos de los cuales tengan conocimiento que consideren constitutivos de faltas graves y muy graves, excepto cuando éste sea el presunto infractor; en este caso, la comunicación se realizará al inmediatamente superior al presunto infractor.",
+            "Sólo los policías en los ayuntamientos que no hayan constituido cuerpo de policía local tienen la obligación de comunicar por escrito a su superior jerárquico los hechos de los cuales tengan conocimiento que consideren constitutivos de faltas graves y muy graves, excepto cuando éste sea el presunto infractor; en este caso, la comunicación se realizará al inmediatamente superior al presunto infractor.",
+            "Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local pueden elegir si comunicar o no por escrito a su superior jerárquico los hechos de los cuales tengan conocimiento que consideren constitutivos de faltas graves y muy graves, excepto cuando éste sea el presunto infractor; en este caso, la comunicación se realizará al inmediatamente superior al presunto infractor.",
+            "Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local tienen la obligación de comunicar por escrito a su superior jerárquico los hechos de los cuales tengan conocimiento que consideren constitutivos de faltas graves y muy graves, excepto cuando éste sea el presunto infractor; en este caso, la comunicación se realizará al inmediatamente superior al presunto infractor."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 65 | Comunicación de infracciones Los miembros de los cuerpos de policía local y los policías en los ayuntamientos que no hayan constituido cuerpo de policía local tienen la obligación de comunicar por escrito a su superior jerárquico los hechos de los cuales tengan conocimiento que consideren constitutivos de faltas graves y muy graves, excepto cuando éste sea el presunto infractor; en este caso, la comunicación se realizará al inmediatamente superior al presunto infractor."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta grave:",
+        "opciones": [
+            "Ostentar insignias, condecoraciones u otros distintivos, sin autorización, cuando no merezca una consideración más grave.",
+            "La violación del secreto profesional cuando no perjudique el desarrollo de la labor policial, a las entidades con personalidad jurídica o a cualquier ciudadano.",
+            "Ninguna de las anteriores es correcta.",
+            "La insubordinación individual o colectiva respecto de las autoridades o mandos de que dependen. Ref. #112083 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta leve:",
+        "opciones": [
+            "Ninguna de las anteriores es correcta.",
+            "La violación del secreto profesional cuando no perjudique el desarrollo de la labor policial, a las entidades con personalidad jurídica o a cualquier ciudadano.",
+            "Ostentar insignias, condecoraciones u otros distintivos, sin autorización, cuando no merezca una consideración más grave.",
+            "La insubordinación individual o colectiva respecto de las autoridades o mandos de que dependen. Ref. #112079 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 2,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta leve:",
+        "opciones": [
+            "Embriagarse o consumir drogas tóxicas, estupefacientes o sustancias psicotrópicas fuera del servicio cuando sea con carácter habitual o afecten a la imagen del cuerpo. Se entiende que hay habitualidad cuando se acrediten tres o más episodios de embriaguez o consumo de dichas sustancias en un periodo de un año.",
+            "La omisión intencionada de saludo a un o a una superior, que no la devuelva o la infracción de las normas que la regulen.",
+            "Ninguna de las anteriores es correcta.",
+            "La publicación o la utilización indebida de secretos oficiales, así declarados de acuerdo con la legislación específica en esta materia. Ref. #112073 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 70 corresponde a:",
+        "opciones": [
+            "Faltas graves.",
+            "Faltas muy graves.",
+            "Faltas disciplinarias.",
+            "Faltas leves."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 70 | Faltas leves"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. La “prescripción de las sanciones” se encuentra en el artículo:",
+        "opciones": [
+            "74.",
+            "76.",
+            "73.",
+            "75."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 76 | Prescripción de las sanciones"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 65 corresponde a:",
+        "opciones": [
+            "Régimen aplicable.",
+            "Extensión de la responsabilidad.",
+            "Comunicación de infracciones.",
+            "Responsabilidad civil y penal."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 65 | Comunicación de infracciones"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 66 corresponde a:",
+        "opciones": [
+            "Responsabilidad civil.",
+            "Régimen aplicable.",
+            "Extensión de la responsabilidad.",
+            "Responsabilidad civil y penal."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 66 | Extensión de la responsabilidad"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 63 corresponde a:",
+        "opciones": [
+            "Comunicación de infracciones.",
+            "Régimen aplicable.",
+            "Extensión de la responsabilidad.",
+            "Responsabilidad civil y penal."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 63 | Régimen aplicable"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta leve:",
+        "opciones": [
+            "La obstaculización grave en el ejercicio de las libertades públicas y derechos sindicales.",
+            "La no prestación de auxilio con urgencia en hechos o circunstancias en que sea obligada su actuación, a no ser que sea constitutivo de delito.",
+            "Ninguna de las anteriores es correcta.",
+            "El descuido en la presentación y la limpieza personal y el incumplimiento de las normas de uniformidad.  Ref. #112064 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 66, de la extensión de la responsabilidad. Señale la correcta.",
+        "opciones": [
+            "Sólo los miembros de los cuerpos de policía local que encubran las faltas muy graves y graves consumadas y los mandos que las toleren incurren en falta de un grado inferior.",
+            "Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubran las faltas muy graves, graves y leves y los mandos que las toleren incurren en falta de un grado inferior.",
+            "Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que induzcan a cometer faltas muy graves y graves consumadas y los mandos que las toleren incurren en falta de un grado inferior.",
+            "Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubran las faltas muy graves y graves consumadas y los mandos que las toleren incurren en falta de un grado inferior."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 66 | Extensión de la responsabilidad 2. Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubran las faltas muy graves y graves consumadas y los mandos que las toleren incurren en falta de un grado inferior. Se entiende por encubrimiento no dar cuenta por escrito a la persona jerárquicamente superior, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 71 corresponde a:",
+        "opciones": [
+            "Sanciones.",
+            "Competencia sancionadora.",
+            "Faltas leves.",
+            "Criterios de graduación de sanciones."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71 | Sanciones"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Las “faltas graves” corresponde al artículo:",
+        "opciones": [
+            "69.",
+            "67.",
+            "68.",
+            "70."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 69 | Faltas graves"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Las “faltas disciplinarias” corresponde al artículo:",
+        "opciones": [
+            "67.",
+            "69.",
+            "68.",
+            "70."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 67 | Faltas disciplinarias"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 66, de la extensión de la responsabilidad. Se entiende por encubrimiento…",
+        "opciones": [
+            "No dar cuenta por escrito a la persona jerárquicamente superior, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento.",
+            "No dar cuenta por escrito a la persona jerárquicamente inferior, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento.",
+            "Dar cuenta por escrito a la persona jerárquicamente superior, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento.",
+            "Dar cuenta por escrito a la persona jerárquicamente inferior, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 66 | Extensión de la responsabilidad 2. Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubran las faltas muy graves y graves consumadas y los mandos que las toleren incurren en falta de un grado inferior. Se entiende por encubrimiento no dar cuenta por escrito a la persona jerárquicamente superior, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta muy grave:",
+        "opciones": [
+            "Ninguna de las anteriores es correcta.",
+            "La publicación o la utilización indebida de secretos oficiales, así declarados de acuerdo con la legislación específica en esta materia.",
+            "La omisión intencionada de saludo a un o a una superior, que no la devuelva o la infracción de las normas que la regulen.",
+            "Embriagarse o consumir drogas tóxicas, estupefacientes o sustancias psicotrópicas fuera del servicio cuando sea con carácter habitual o afecten a la imagen del cuerpo. Se entiende que hay habitualidad cuando se acrediten tres o más episodios de embriaguez o consumo de dichas sustancias en un periodo de un año. Ref. #112071 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 69 corresponde a:",
+        "opciones": [
+            "Faltas graves.",
+            "Faltas leves.",
+            "Faltas disciplinarias.",
+            "Faltas muy graves."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 69 | Faltas graves"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Las “sanciones” corresponde al artículo:",
+        "opciones": [
+            "Ninguna es correcta.",
+            "73.",
+            "71.",
+            "72."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 71 | Sanciones"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 66, de la extensión de la responsabilidad. Se entiende por encubrimiento…",
+        "opciones": [
+            "No dar cuenta de palabra a la persona jerárquicamente superior, cuando se considere, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento.",
+            "No dar cuenta por escrito a la persona jerárquicamente superior, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento.",
+            "No dar cuenta por escrito a la persona jerárquicamente superior, cuando se considere, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento.",
+            "No dar cuenta por escrito a la persona jerárquicamente superior, de forma inmediata, de los hechos constitutivos de falta muy grave, grave o leve de las que se tenga conocimiento."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 66 | Extensión de la responsabilidad 2. Los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpo de policía local que encubran las faltas muy graves y graves consumadas y los mandos que las toleren incurren en falta de un grado inferior. Se entiende por encubrimiento no dar cuenta por escrito a la persona jerárquicamente superior, de forma inmediata, de los hechos constitutivos de falta muy grave o grave de las que se tenga conocimiento."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El Capítulo I comprende…",
+        "opciones": [
+            "La extinción y la prescripción.",
+            "Los principios generales.",
+            "La potestad sancionadora.",
+            "Las infracciones y las sanciones."
+        ],
+        "correcta": 1,
+        "explicacion": "Capítulo I: Principios generales → artículos 63 a 66"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. La extinción y prescripción se encuentra en…",
+        "opciones": [
+            "Capítulo III.",
+            "Capítulo II.",
+            "Capítulo IV.",
+            "Capítulo I."
+        ],
+        "correcta": 0,
+        "explicacion": "Capítulo III: Extinción y prescripción → artículos 74 a 76"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. La “extensión de la responsabilidad” corresponde al artículo:",
+        "opciones": [
+            "63.",
+            "65.",
+            "66.",
+            "64."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 66 | Extensión de la responsabilidad"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta leve:",
+        "opciones": [
+            "La práctica de cualquier clase de juego que se lleve a cabo en las dependencias policiales, siempre que perjudique la prestación del servicio o menoscabe la imagen policial.",
+            "Ninguna de las anteriores es correcta.",
+            "La publicación o la utilización indebida de secretos oficiales, así declarados de acuerdo con la legislación específica en esta materia.",
+            "Las infracciones de lo que dispone la legislación vigente sobre utilización de videocámaras por los cuerpos y fuerzas de seguridad en lugares públicos, cuando no constituya falta muy grave. Ref. #112085 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta leve:",
+        "opciones": [
+            "Ser condenado o condenada en virtud de sentencia firme por falta dolosa o delito leve doloso cuando la infracción penal cause perjuicio a la administración o a los administrados.",
+            "La obstaculización grave en el ejercicio de las libertades públicas y derechos sindicales.",
+            "Ninguna de las anteriores es correcta.",
+            "La no prestación de auxilio con urgencia en hechos o circunstancias en que sea obligada su actuación, a no ser que sea constitutivo de delito. Ref. #112060 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 63. Señale la correcta respecto a la Ley Orgánica 4/2010, de 20 de mayo, del régimen disciplinario del Cuerpo Nacional de Policía.",
+        "opciones": [
+            "La mencionada Ley Orgánica podrá ser aplicada de forma supletoria a nuestro Régimen Disciplinario.",
+            "Nuestro Régimen Disciplinario se podrá aplicar de forma supletoria a la mencionada Ley Orgánica.",
+            "Nuestro Régimen Disciplinario se se debe ajustar a la mencionada Ley Orgánica.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 63 | Régimen aplicable 1. El régimen disciplinario de los miembros de los cuerpos de policía local y policías en los ayuntamientos que no hayan constituido cuerpos de policía local de las Illes Balears se ha de ajustar a lo que establece la Ley Orgánica 4/2010, de 20 de mayo, del régimen disciplinario del Cuerpo Nacional de Policía, de acuerdo con lo previsto en la legislación orgánica reguladora de las fuerzas y cuerpos de seguridad, con la correspondiente adaptación a los cuerpos de la policía local, y a lo que dispone esta ley."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. La “prescripción de las faltas” se encuentra en el artículo:",
+        "opciones": [
+            "75.",
+            "73.",
+            "76.",
+            "74."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 75 | Prescripción de las faltas"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. La “extinción de la responsabilidad” se encuentra en el artículo:",
+        "opciones": [
+            "74.",
+            "76.",
+            "73.",
+            "75."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 73 corresponde a:",
+        "opciones": [
+            "Faltas muy graves.",
+            "Criterios de graduación de sanciones.",
+            "Sanciones.",
+            "Competencia sancionadora."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 73 | Competencia Sancionadora"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Las “faltas leves” corresponde al artículo:",
+        "opciones": [
+            "70.",
+            "67.",
+            "68.",
+            "69."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 70 | Faltas leves"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. La “competencia sancionadora” corresponde al artículo:",
+        "opciones": [
+            "73.",
+            "71.",
+            "Ninguna es correcta.",
+            "72."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 73 | Competencia Sancionadora"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 63. Señale la correcta.",
+        "opciones": [
+            "La Ley Orgánica 4/2010, de 20 de mayo, del régimen disciplinario del Cuerpo Nacional de Policía es de aplicación supletoria en todo lo que no prevén esta ley y las disposiciones reglamentarias que la desplieguen.",
+            "Las normas reguladoras del régimen disciplinario del personal al servicio de la Administración de la comunidad autónoma de las Illes Balears no es de aplicación supletoria en todo lo que no prevén esta ley y las disposiciones reglamentarias que la desplieguen.",
+            "Las normas reguladoras del régimen disciplinario del personal al servicio de la Administración de la comunidad autónoma de las Illes Balears son de aplicación supletoria en todo lo que no prevén esta ley y las disposiciones reglamentarias que la desplieguen.",
+            "Todas son incorrectas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 63 | Régimen aplicable 2. Las normas reguladoras del régimen disciplinario del personal al servicio de la Administración de la comunidad autónoma de las Illes Balears son de aplicación supletoria en todo lo que no prevén esta ley y las disposiciones reglamentarias que la desplieguen."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Los Principios Generales se encuentran en el…",
+        "opciones": [
+            "Capítulo III.",
+            "Capítulo I",
+            "Capítulo IV.",
+            "Capítulo II."
+        ],
+        "correcta": 1,
+        "explicacion": "Capítulo I: Principios generales → artículos 63 a 66"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 67 corresponde a:",
+        "opciones": [
+            "Faltas disciplinarias.",
+            "Faltas leves.",
+            "Faltas muy graves.",
+            "Faltas graves."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 67 | Faltas disciplinarias"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta grave:",
+        "opciones": [
+            "La omisión intencionada de saludo a un o a una superior, que no la devuelva o la infracción de las normas que la regulen.",
+            "Embriagarse o consumir drogas tóxicas, estupefacientes o sustancias psicotrópicas fuera del servicio cuando sea con carácter habitual o afecten a la imagen del cuerpo. Se entiende que hay habitualidad cuando se acrediten tres o más episodios de embriaguez o consumo de dichas sustancias en un periodo de un año.",
+            "Ninguna de las anteriores es correcta.",
+            "La publicación o la utilización indebida de secretos oficiales, así declarados de acuerdo con la legislación específica en esta materia. Ref. #112052 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 1,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El capítulo III comprende…",
+        "opciones": [
+            "El régimen disciplinario.",
+            "Los principios generales.",
+            "Las infracciones, sanciones y potestad sancionadora.",
+            "La extinción y prescripción."
+        ],
+        "correcta": 3,
+        "explicacion": "Capítulo III: Extinción y prescripción → artículos 74 a 76"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta grave:",
+        "opciones": [
+            "La omisión de la obligación de dar cuenta por escrito a la superioridad con la diligencia debida de todo asunto que por su entidad requiera su conocimiento o urgente decisión.",
+            "Ninguna de las anteriores es correcta.",
+            "Haber sido condenado en virtud de sentencia firme por un delito doloso relacionado con el servicio o que cause grave perjuicio a la administración o a las personas.",
+            "El hecho de prescindir del conducto reglamentario al formular cualquier solicitud o reclamación, excepto en el caso de urgencia o imposibilidad física, así como la interrupción de la tramitación a la persona destinataria. Quedan exceptuadas del conducto reglamentario las que formulan los representantes de las organizaciones sindicales en el ejercicio de la actividad sindical. Ref. #112080 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Señale de las siguientes la que corresponda a una falta grave:",
+        "opciones": [
+            "La publicación o la utilización indebida de secretos oficiales, así declarados de acuerdo con la legislación específica en esta materia.",
+            "Ninguna de las anteriores es correcta.",
+            "La práctica de cualquier clase de juego que se lleve a cabo en las dependencias policiales, siempre que perjudique la prestación del servicio o menoscabe la imagen policial.",
+            "Las infracciones de lo que dispone la legislación vigente sobre utilización de videocámaras por los cuerpos y fuerzas de seguridad en lugares públicos, cuando no constituya falta muy grave.  Ref. #112091 | Derecho Policial - Tema 19: Ley 4/2013, de 17 de julio, de coordinación de las policías locales de las Islas Baleares. Régimen disciplinario: principios generales, infracciones, sanciones y potestad sancionadora, extinción y prescripción."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 72 corresponde a:",
+        "opciones": [
+            "Criterios de graduación de sanciones.",
+            "Competencia sancionadora.",
+            "Faltas graves.",
+            "Sanciones."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 72 | Criterios de graduación de sanciones"
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

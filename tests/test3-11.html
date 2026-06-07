@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 3. Constitución española de 1978</h1>
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Según el art. 57 de la CE, extinguidas todas las líneas de sucesión a la Corona, llamadas en Derecho, ¿cómo proveerán las Cortes Generales, dicha sucesión?",
+        "opciones": [
+            "Según la cercanía familiar al Rey.",
+            "Por orden de primogenitura.",
+            "De la forma que más convenga a los intereses de España.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España."
+    },
+    {
+        "pregunta": "¿Cómo responde el Gobierno, respecto a su gestión política?",
+        "opciones": [
+            "Ninguna es correcta.",
+            "Solidariamente.",
+            "Colectivamente.",
+            "Individualmente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 108 Responsabilidad El Gobierno responde solidariamente en su gestión política ante el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "Señale de los siguientes actos del Rey cuales considera que no son válidos por no estar refrendados, siendo obligatorio el mismo.",
+        "opciones": [
+            "Nombrar al Ministro de Asuntos Exteriores",
+            "Nombrar al Jefe de Seguridad de la Casa Real",
+            "Conceder el ascenso a Teniente General a un General de División",
+            "La a y la c son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 56 | Característica del Monarca 1. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2. Corresponde al Rey: e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes."
+    },
+    {
+        "pregunta": "El Capítulo II del Título III de la CE, hace referencia a:",
+        "opciones": [
+            "De las Cortes Generales.",
+            "Dela elaboración de las leyes.",
+            "De los Tratados internacionales.",
+            "De las Cámaras."
+        ],
+        "correcta": 1,
+        "explicacion": "LAS CORTES GENERALES La regulación constitucional de las Cortes Generales se recoge en el Título III de la misma, artículos 66 a 96, ambos incluidos. En este Título encontramos tres partes diferenciadas que responden a una estructura interna dedicada al tratamiento de los siguientes aspectos relacionados con la función legislativa: • Capítulo I- De las Cámaras. Artículos 66 a 80 CE. • Capítulo II- De la elaboración de las leyes. Artículos 81 a 92 CE. • Capítulo III-De los Tratados Internacionales. Artículos 93 a 96 CE."
+    },
+    {
+        "pregunta": "Ud., ha sido elegido diputado nacional en las elecciones generales y ha salido ganador el Partido Vecinal. ¿En cuanto tiempo tiene que ser Ud., convocado para recibir su acta?",
+        "opciones": [
+            "25 días",
+            "Un mes",
+            "30 días",
+            "Dos meses"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 68 | El Congreso de los Diputados 1. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "¿Quién puede plantear la CUESTION DE INCONSTITUCIONALIDAD?",
+        "opciones": [
+            "Las administraciones.",
+            "Los ciudadanos.",
+            "Cualquier órgano jurisdiccional.",
+            "El Gobierno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 163 Cuestión de inconstitucionalidad Cuando un órgano judicial considere, en algún proceso, que una norma con rango de ley, aplicable al caso, de cuya validez dependa el fallo, pueda ser contraria a la Constitución, planteará la cuestión ante el Tribunal Constitucional en los supuestos, en la forma y con los efectos que establezca la ley, que en ningún caso serán suspensivos."
+    },
+    {
+        "pregunta": "¿Ante quién puede impugnar el Gobierno las resoluciones de las Comunidades Autónomas?",
+        "opciones": [
+            "Tribunal Constitucional.",
+            "Audiencia Nacional.",
+            "Tribunal de lo Contencioso Administrativo.",
+            "Tribunal Supremo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 161.- 2. El Gobierno podrá impugnar ante el Tribunal Constitucional las disposiciones y resoluciones adoptadas por los órganos de las Comunidades Autónomas. La impugnación producirá la suspensión de la disposición o resolución recurrida, pero el Tribunal, en su caso, deberá ratificarla o levantarla en un plazo no superior a cinco meses."
+    },
+    {
+        "pregunta": "¿Qué artículo de la CE, hace referencia al procedimiento de la Cuestión de Confianza?",
+        "opciones": [
+            "115.",
+            "113.",
+            "112.",
+            "123."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 112 Cuestión de confianza El Presidente del Gobierno, previa deliberación del Consejo de Ministros, puede plantear ante el Congreso de los Diputados la cuestión de confianza sobre su programa o sobre una declaración de política general. La confianza se entenderá otorgada cuando vote a favor de la misma la mayoría simple de los Diputados."
+    },
+    {
+        "pregunta": "Que institución aprueba los presupuestos del Estado y tiene las demás competencias que le atribuye la Constitución.",
+        "opciones": [
+            "El Gobierno",
+            "Las Cortes Generales.",
+            "La Corona",
+            "El Consejo de Ministros"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 66 | Características 1. Las Cortes Generales representan al pueblo español y están formadas por el Congreso de los Diputados y el Senado. 2. Las Cortes Generales ejercen la potestad legislativa del Estado, aprueban sus Presupuestos, controlan la acción del Gobierno y tienen las demás competencias que les atribuya la Constitución."
+    },
+    {
+        "pregunta": "Según el art. 57 de la CE, y siguiendo el orden del Derecho de sucesión a la Corona de España, ¿qué lugar ocupará la S.A.R. Infanta Dª Cristina de Borbón y Grecia?",
+        "opciones": [
+            "3º.",
+            "6º.",
+            "8º.",
+            "No tiene derecho de sucesión."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 57 La Sucesión La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos."
+    },
+    {
+        "pregunta": "Según el art. 62 de la CE, señale cuales de las siguientes son funciones del Rey:",
+        "opciones": [
+            "Convocar a Referendum cuando lo determinen las Cortes Generales y las Comunidades Autónomas.",
+            "Sancionar y promulgar las Normas.",
+            "La a y la b son correctas.",
+            "Ser informado de los asuntos de Estado."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 62 Funciones del Rey Corresponde al Rey: a) Sancionar y promulgar las leyes. b) Convocar y disolver las Cortes Generales y convocar elecciones en los términos previstos en la Constitución. c) Convocar a referéndum en los casos previstos en la Constitución. d) Proponer el candidato a Presidente del Gobierno y, en su caso, nombrarlo, así como poner fin a sus funciones en los términos previstos en la Constitución. e) Nombrar y separar a los miembros del Gobierno, a propuesta de su Presidente. f) Expedir los decretos acordados en el Consejo de Ministros, conferir los empleos civiles y militares y conceder honores y distinciones con arreglo a las leyes. g) Ser informado de los asuntos de Estado y presidir, a estos efectos, las sesiones del Consejo de Ministros, cuando lo estime oportuno, a petición del Presidente del Gobierno. h) El mando supremo de las Fuerzas Armadas. i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales. j) El Alto Patronazgo de las Reales Academias."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién disuelve las cámaras, transcurridos dos meses desde la primera votación de investidura del Presidente del Gobierno?",
+        "opciones": [
+            "Se decide en Consejo de Ministros.",
+            "El Rey.",
+            "La Presidenta del Congreso.",
+            "El Propio Presidente."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Según el art. 104 de la CE, ¿de quién dependen los Policías Locales?",
+        "opciones": [
+            "Del Gobierno.",
+            "De La Consejería de Interior de la C. Autónoma.",
+            "De sus respectivos Ayuntamientos.",
+            "Del Gobierno Autonómico."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Señale de los siguientes actos cuales serán en sesión conjunta de las Cortes Generales.",
+        "opciones": [
+            "Declarar la Guerra",
+            "Toma de posesión del Presidente del Gobierno",
+            "Declaración Estado de sitio.",
+            "Nombramiento de Princesa a Reina por abdicación del Rey."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 74 | Competencias no legislativas 1. Las Cámaras se reunirán en sesión conjunta para ejercer las competencias no legislativas que el Título II atribuye expresamente a las Cortes Generales."
+    },
+    {
+        "pregunta": "Las Fuerzas y Cuerpos de seguridad, bajo la dependencia ____________, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. (Complete la frase).",
+        "opciones": [
+            "De sus propios mandos.",
+            "Del Gobierno.",
+            "Del Estado.",
+            "Del Director de Seguridad del Estado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 104 Fuerzas y Cuerpos de seguridad Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana."
+    },
+    {
+        "pregunta": "¿Quién nombra a los ministros?",
+        "opciones": [
+            "El Presidente del Gobierno.",
+            "Ninguna es correcta.",
+            "Las Cortes Generales.",
+            "El Rey."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 100 Nombramiento de otros miembros Los demás miembros del Gobierno serán nombrados y separados por el Rey, a propuesta de su Presidente."
+    },
+    {
+        "pregunta": "Señale de los siguientes quienes no podrán ser diputados ni senadores.",
+        "opciones": [
+            "Un miembro de la Junta electoral autonómica",
+            "Un componente jubilado del Tribunal Constitucional",
+            "Todas son correctas",
+            "Los Militares Españoles en reserva"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 70 | Incompatibilidades 1. La ley electoral determinará las causas de inelegibilidad e incompatibilidad de los Diputados y Senadores, que comprenderán, en todo caso: a) A los componentes del Tribunal Constitucional. b) A los altos cargos de la Administración del Estado que determine la ley, con la excepción de los miembros del Gobierno. c) Al Defensor del Pueblo. d) A los Magistrados, Jueces y Fiscales en activo. e) A los militares profesionales y miembros de las Fuerzas y Cuerpos de Seguridad y Policía en activo. f) A los miembros de las Juntas Electorales. 2. La validez de las actas y credenciales de los miembros de ambas Cámaras estará sometida al control judicial, en los términos que establezca la ley electoral."
+    },
+    {
+        "pregunta": "¿Qué Órgano Jurisdiccional será el competente para entender de las causas contra Diputados y Senadores?",
+        "opciones": [
+            "Tribunal Supremo.",
+            "Audiencia Nacional.",
+            "Tribunal Superior de Justicia.",
+            "Todas son correctas, dependiendo del delito cometido."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71 Inviolabilidad e inmunidad 2. En las causas contra Diputados y Senadores será competente la Sala de lo Penal del Tribunal Supremo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién aprueba un Proyecto de Ley?",
+        "opciones": [
+            "El Consejo de Ministros.",
+            "El Senado.",
+            "El Congreso.",
+            "Las Cortes Generales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 88 Los proyectos de ley serán aprobados en Consejo de Ministros, que los someterá al Congreso, acompañados de una exposición de motivos y de los antecedentes necesarios para pronunciarse sobre ellos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Según el art. 91, las decisiones políticas de especial trascendencia serán sometidas a:",
+        "opciones": [
+            "Referéndum Pro Quo.",
+            "Referéndum constitucional.",
+            "Ninguna es correcta.",
+            "Referéndum consultivo."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 92 1. Las decisiones políticas de especial trascendencia podrán ser sometidas a referéndum consultivo de todos los ciudadanos. NOTA Es el artículo 92, no el 91"
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cómo se regulará la Iniciativa Popular?",
+        "opciones": [
+            "Mediante Ley Orgánica.",
+            "Mediante la recogida de firmas.",
+            "Mediante recogida de formas (Mínimo 500.000).",
+            "Mediante Ley Ordinaria."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 87 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. 2. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa. 3. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "Que quiere decir que un Diputado o un Senador no están ligados por mandato imperativo.",
+        "opciones": [
+            "Que están sujetos al mandato del Presidente del Congreso o Senado",
+            "Libertad de voto",
+            "Que puede ir a las Cortes cuando quiera",
+            "Sujeto a las indicaciones del grupo parlamentario al que pertenezca."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 67 | Miembros 1. Los miembros de las Cortes Generales no estarán ligados por mandato imperativo."
+    },
+    {
+        "pregunta": "¿Ante quién presenta su dimisión el Gobierno si el Congreso le niega su confianza en una moción de censura?",
+        "opciones": [
+            "Ante el propio Congreso.",
+            "Ante las Cortes Generales.",
+            "Ante el Rey.",
+            "Ante su grupo parlamentario."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 114 Procedimiento de moción de censura 1. Si el Congreso niega su confianza al Gobierno, éste presentará su dimisión al Rey, procediéndose a continuación a la designación de Presidente del Gobierno, según lo dispuesto en el artículo 99."
+    },
+    {
+        "pregunta": "El artículo 89 de la Constitución Española, establece que la tramitación de las proposiciones de ley se regulará por:",
+        "opciones": [
+            "Los Reglamentos de las Cámaras.",
+            "El Congreso.",
+            "El Gobierno.",
+            "El Consejo de Ministros."
+        ],
+        "correcta": 0,
+        "explicacion": "Constitución Española, 1978 Artículo 89 1. La tramitación de las proposiciones de ley se regulará por los Reglamentos de las Cámaras, sin que la prioridad debida a los proyectos de ley impida el ejercicio de la iniciativa legislativa en los términos regulados por el artículo 87. 2. Las proposiciones de ley que, de acuerdo con el artículo 87, tome en consideración el Senado, se remitirán al Congreso para su trámite en éste como tal proposición."
+    },
+    {
+        "pregunta": "La Constitución Española establece que las Cortes Generales podrán delegar en el Gobierno la potestad de poder dictar normas con rango de ley. Para que el Gobierno pueda dictar un texto refundido se requiere:",
+        "opciones": [
+            "Que una Ley de Bases lo autorice previamente.",
+            "Una Ley ordinaria que contenga la autorización.",
+            "Un acuerdo del Congreso habilitándole.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Constitución Española, 1978 Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Ud., es elegido en las elecciones generales, Senador por la provincia de Albacete, ¿Cuántas personas más serán elegidas para ese cargo, sin contarle a Ud.?",
+        "opciones": [
+            "Según los habitantes que tenga la Comunidad Autónoma",
+            "Cinco.",
+            "Imposible de saber, hasta que no se sepa el número de personas que han votado.",
+            "Tres."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 69 | El Senado 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica."
+    },
+    {
+        "pregunta": "El Presidente del Tribunal Constitucional, será nombrado por:",
+        "opciones": [
+            "El Rey.",
+            "Por el presidente del Congreso.",
+            "Por el Presidente del Gobierno.",
+            "Por las Cortes Generales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 160 Presidente El Presidente del Tribunal Constitucional será nombrado entre sus miembros por el Rey, a propuesta del mismo Tribunal en pleno y por un período de tres años."
+    },
+    {
+        "pregunta": "Si una comisión de investigación determina que un partido político se ha lucrado con fondos públicos, ¿eso quiere decir que un Juzgado deberá sentenciar a la pena que corresponda a los miembros que lo hayan hecho?",
+        "opciones": [
+            "Si, si esta no excede de 15 años.",
+            "No.",
+            "Debe ponerse en conocimiento del Ministerio Fiscal.",
+            "Si"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 76 | Comisiones de investigación 1. El Congreso y el Senado, y, en su caso, ambas Cámaras conjuntamente, podrán nombrar Comisiones de investigación sobre cualquier asunto de interés público. Sus conclusiones no serán vinculantes para los Tribunales, ni afectarán a las resoluciones judiciales, sin perjuicio de que el resultado de la investigación sea comunicado al Ministerio Fiscal para el ejercicio, cuando proceda, de las acciones oportunas. 2. Será obligatorio comparecer a requerimiento de las Cámaras. La ley regulará las sanciones que puedan imponerse por incumplimiento de esta obligación."
+    },
+    {
+        "pregunta": "Los Reglamentos estatales que se dictan para desarrollar una Ley previa se aprueban a través de:",
+        "opciones": [
+            "Real Decreto.",
+            "Decreto-ley.",
+            "Ley orgánica.",
+            "Decreto Legislativo."
+        ],
+        "correcta": 0,
+        "explicacion": "No hay que confundir un Real Decreto, que es una disposición reglamentaria que emana del Gobierno, en forma de Real Decreto del Presidente del Gobierno o RD del Consejo de Ministros, y por lo tanto no tiene rango de ley, con los Decretos Ley y Decretos legislativos que son disposiciones que emanan del Gobierno, pero que sí tienen rango de ley. Mientras un Real Decreto es una norma Reglamentaria que dicta el Gobierno en virtud de la potestad reglamentaria que le es reconocida en el artículo 97 de la CE. Los Decretos Ley y los Decretos Legislativos también van a ser dictados por el Gobierno pero sí van a tener rango de ley. Pero si aquí en España con carácter general, el poder legislativo lo ostentan las Cortes Generales, ¿cuándo el Gobierno, que no ostenta este poder, puede dictar disposiciones con rango de ley?. Tal y como previene el artículo 86 de la CE, el Gobierno, en caso de extraordinaria y urgente necesidad podrá dictar disposiciones legislativas provisionales que van a recibir el nombre de Decreto Ley. Dichas disposiciones no podrán versar sobre, las Instituciones básicas del Estado, los derechos, deberes y libertades de los ciudadanos del Título I, el Régimen de las CCAA, ni el Derecho General Electoral. A su vez, estas disposiciones legislativas de carácter provisional deberán de ser , dentro de los 30 días a su promulgación, convalidadas o derogadas por el Congreso. Por otra parte las Cortes Generales, en virtud de lo dispuesto en el artículo 82 de la CE, podrán delegar en el Gobierno la capacidad de poder dictar normas con rango de ley, en forma de texto articulado mediante una ley de bases, o bien, en forma de texto refundido mediante una Ley Ordinaria. Estas disposiciones que dicta el Gobierno que contienen potestad legislativa delegada recibirán el nombre de Decretos legislativos y no podrán versar sobre materia reservada a Ley Orgánica. (art 81 CE) Es por ello, que la respuesta correcta sea la C."
+    },
+    {
+        "pregunta": "¿Qué artículo de la CE, hace referencia al Consejo de Estado?",
+        "opciones": [
+            "117.",
+            "110.",
+            "107.",
+            "105."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 107 Consejo de Estado El Consejo de Estado es el supremo órgano consultivo del Gobierno. Una ley orgánica regulará su composición y competencia."
+    },
+    {
+        "pregunta": "Según el art. 60 de la CE, Las Cortes Generales ejercen el poder:",
+        "opciones": [
+            "Legislativo.",
+            "Judicial.",
+            "Ejecutivo.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 66 Características 1. Las Cortes Generales representan al pueblo español y están formadas por el Congreso de los Diputados y el Senado. 2. Las Cortes Generales ejercen la potestad legislativa del Estado, aprueban sus Presupuestos, controlan la acción del Gobierno y tienen las demás competencias que les atribuya la Constitución. 3. Las Cortes Generales son inviolables."
+    },
+    {
+        "pregunta": "El Tribunal Constitucional está regulado en el Título:",
+        "opciones": [
+            "X.",
+            "IV.",
+            "IX.",
+            "VIII."
+        ],
+        "correcta": 2,
+        "explicacion": "El Tribunal Constitucional está regulado en el Título IX de la Constitución, en los artículos 159 a 165, ambos inclusive."
+    },
+    {
+        "pregunta": "Según la CE, ¿cuántos diputados representarán como mínimo a las ciudades autónomas de Ceuta y Melilla?",
+        "opciones": [
+            "1 cada una de ellas.",
+            "2 cada una de ellas.",
+            "Ninguna es correcta.",
+            "4 cada una de ellas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 68 El Congreso de los Diputados 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población."
+    },
+    {
+        "pregunta": "¿Cuántos senadores serán elegidos por la Isla de Gomera?",
+        "opciones": [
+            "Depende de la población.",
+            "Uno.",
+            "Tres.",
+            "Dos."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 69.- 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma."
+    },
+    {
+        "pregunta": "¿Pueden 30 diputados del PP, 10 de Vox y 10 de Ciudadanos en conjunto interponer un recurso de inconstitucionalidad?",
+        "opciones": [
+            "Sí, pero por separado.",
+            "Tienen que ser solo de un partido.",
+            "Sí, todos juntos.",
+            "No."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 162 Legitimación 1. Están legitimados: a) Para interponer el recurso de inconstitucionalidad, el Presidente del Gobierno, el Defensor del Pueblo, 50 Diputados, 50 Senadores, los órganos colegiados ejecutivos de las Comunidades Autónomas y, en su caso, las Asambleas de las mismas."
+    },
+    {
+        "pregunta": "A quien corresponde previa autorización de las Cortes declarar la guerra y hacer la paz.",
+        "opciones": [
+            "Congreso de los Diputados.",
+            "Presidente del Gobierno",
+            "Jefe del Estado",
+            "Consejo de Ministros"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 63 | Funciones internacionales 1. Al Rey corresponde, previa autorización de las Cortes Generales, declarar la guerra y hacer la paz."
+    },
+    {
+        "pregunta": "Ud., es un Ujier (Personal de servicio) de las Cortes Generales, ¿Quien regulará su estatuto?",
+        "opciones": [
+            "El Gobierno.",
+            "Las Cámaras.",
+            "El Senado.",
+            "El Congreso"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 72 | Funcionamiento 1. Las Cámaras establecen sus propios Reglamentos, aprueban autónomamente sus presupuestos y, de común acuerdo, regulan el Estatuto del Personal de las Cortes Generales. Los Reglamentos y su reforma serán sometidos a una votación final sobre su totalidad, que requerirá la mayoría absoluta."
+    },
+    {
+        "pregunta": "Señale De los siguientes, quien cree Ud., que representa a España en las naciones de su comunidad histórica, que arbitra y modera el funcionamiento regular de las instituciones del Estado.",
+        "opciones": [
+            "Ministro de asuntos exteriores",
+            "El Presidente de la Cámara del Congreso.",
+            "Presidente del Estado",
+            "El Jefe del Estado"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 56 | Característica del Monarca 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes."
+    },
+    {
+        "pregunta": "¿Quién dirige la acción del Gobierno?",
+        "opciones": [
+            "Las Cortes Generales.",
+            "El Presidente.",
+            "El Consejo de ministros.",
+            "El Rey."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 98 Composición y funciones 1. El Gobierno se compone del Presidente, de los Vicepresidentes, en su caso, de los Ministros y de los demás miembros que establezca la ley. 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión."
+    },
+    {
+        "pregunta": "A tenor de lo que dispone la Constitución Española, las Cámaras podrán delegar en las Comisiones Legislativas Permanentes la aprobación de proyectos o proposiciones de ley. El Pleno podrá, no obstante, recabar en cualquier momento el debate y votación de cualquier proyecto o proposición de ley que haya sido objeto de esta delegación. Quedan exceptuados de lo dispuesto en el apartado anterior:",
+        "opciones": [
+            "Las materias propias de ley orgánica, tributarias o de carácter internacional, ni lo relativo a la prerrogativa de gracia.",
+            "La reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos Generales del estado.",
+            "Cuestiones que afecten al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas, ni al Derecho electoral general.",
+            "Las opciones a) y b) son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Constitución Española, 1978 Artículo 75 1. Las Cámaras funcionarán en Pleno y por Comisiones. 2. Las Cámaras podrán delegar en las Comisiones Legislativas Permanentes la aprobación de proyectos o proposiciones de ley. El Pleno podrá, no obstante, recabar en cualquier momento el debate y votación de cualquier proyecto o proposición de ley que haya sido objeto de esta delegación. 3. Quedan exceptuados de lo dispuesto en el apartado anterior la reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos Generales del Estado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué plazo tiene el Rey para sancionar una Ley Ordinaria?",
+        "opciones": [
+            "15 días.",
+            "Leyes orgánicas 15 días y Leyes ordinarias 1º días.",
+            "20 días.",
+            "10 días."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 91 El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación."
+    },
+    {
+        "pregunta": "Según el art. 67 de la Constitución quien no puede acumular un acta de diputado autonómico y otra de Diputado del Congreso.",
+        "opciones": [
+            "Nadie",
+            "Cualquier miembro del Gobierno",
+            "Los Ministros",
+            "Los Senadores"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 67 | Miembros 1. Nadie podrá ser miembro de las dos Cámaras simultáneamente, ni acumular el acta de una Asamblea de Comunidad Autónoma con la de Diputado al Congreso."
+    },
+    {
+        "pregunta": "Las elecciones una vez terminado el mandato, ¿se realizarán?",
+        "opciones": [
+            "Entre los 30 y 60 días.",
+            "Entre los 30 y 50 días.",
+            "A los dos meses.",
+            "A los 30 días."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 68. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Que tipo de criterio se utilizará para verificar los diputados que pertenecen elegir en una circunscripción.",
+        "opciones": [
+            "Organización territorial",
+            "Criterios de representación proporcional",
+            "Ley de Ohm",
+            "Lo que indique la Ley Electoral General"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 68 | El Congreso de los Diputados 1. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional."
+    },
+    {
+        "pregunta": "Según la CE, ¿puede la Reina consorte asumir funciones constitucionales?",
+        "opciones": [
+            "No, salvo lo dispuesto para la Regencia.",
+            "Sí, si el Rey lo autoriza previamente.",
+            "No.",
+            "Sí."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 58 Reina consorte La Reina consorte o el consorte de la Reina no podrán asumir funciones constitucionales, salvo lo dispuesto para la Regencia."
+    },
+    {
+        "pregunta": "Según la CE, ¿podrá ser indultado el Presidente del Gobierno si fuere sentenciado por haber cometido delito de traición?",
+        "opciones": [
+            "Sí, si así lo aprueba el nuevo gobierno.",
+            "No.",
+            "Sí, como cualquier persona.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 102 Responsabilidades 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "¿Qué artículo de la CE, hace referencia a las incompatibilidades de Jueces y Magistrados?",
+        "opciones": [
+            "125.",
+            "127.",
+            "138.",
+            "135."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 127 Incompatibilidades 1. Los Jueces y Magistrados así como los Fiscales, mientras se hallen en activo, no podrán desempeñar otros cargos públicos, ni pertenecer a partidos políticos o sindicatos. La ley establecerá el sistema y modalidades de asociación profesional de los Jueces, Magistrados y Fiscales. 2. La ley establecerá el régimen de incompatibilidades de los miembros del poder judicial, que deberá asegurar la total independencia de los mismos."
+    },
+    {
+        "pregunta": "Señale de los siguientes quienes podrán ser tutores del Rey/Reina menor de edad.",
+        "opciones": [
+            "La madre que una vez viuda, contrajo matrimonio al año con un español mayor de edad.",
+            "El Presidente del Consejo de Estado",
+            "Una persona Española de origen y que el Rey difunto dejó escrito en su testamento",
+            "El Presidente del Gobierno"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 60 | Tutela 1. Será tutor del Rey menor la persona que en su testamento hubiese nombrado el Rey difunto, siempre que sea mayor de edad y español de nacimiento; si no lo hubiese nombrado, será tutor el padre o la madre mientras permanezcan viudos. En su defecto, lo nombrarán las Cortes Generales, pero no podrán acumularse los cargos de Regente y de tutor sino en el padre, madre o ascendientes directos del Rey. 2. El ejercicio de la tutela es también incompatible con el de todo cargo o representación política."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Cortes Generales pueden exigir la responsabilidad del Gobierno, mediante la:",
+        "opciones": [
+            "Moción de Censura.",
+            "Cuestión de Confianza.",
+            "La a y la b son correctas.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 113 1. El Congreso de los Diputados puede exigir la responsabilidad política del Gobierno mediante la adopción por mayoría absoluta de la moción de censura."
+    },
+    {
+        "pregunta": "¿Cuántos senadores se elegirán en cada provincia?",
+        "opciones": [
+            "Dos.",
+            "Cuatro.",
+            "Tres.",
+            "Seis."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 69 El Senado 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica."
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

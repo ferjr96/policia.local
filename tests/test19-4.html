@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 19. Ley 4/2013 Coordinación PL </h1>
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 71, de las sanciones. Punto 4. Señale la correcta:",
+        "opciones": [
+            "En los casos de infracciones muy graves o graves se puede imponer la sanción accesoria de cambio de destino dentro de la estructura de cada cuerpo cuando se motive adecuadamente y por un hecho que haya afectado o pueda afectar el funcionamiento normal de los destinos.",
+            "En los casos de infracciones muy graves o graves se puede imponer la sanción accesoria de cambio de destino fuera de la estructura de cada cuerpo cuando se motive adecuadamente y por un hecho que haya afectado o pueda afectar el funcionamiento normal de los destinos.",
+            "En los casos de infracciones leves o graves se puede imponer la sanción accesoria de cambio de destino dentro de la estructura de cada cuerpo cuando se motive adecuadamente y por un hecho que haya afectado o pueda afectar el funcionamiento normal de los destinos.",
+            "En los casos de infracciones muy graves o graves se puede imponer la sanción accesoria de cambio de destino dentro de la estructura de cada cuerpo cuando se motive adecuadamente y por un hecho que no haya afectado o pueda afectar el funcionamiento normal de los destinos."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71 | Sanciones 4. En los casos de infracciones muy graves o graves se puede imponer la sanción accesoria de cambio de destino dentro de la estructura de cada cuerpo cuando se motive adecuadamente y por un hecho que haya afectado o pueda afectar el funcionamiento normal de los destinos."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 71, de las sanciones. Una sanción de suspensión de funciones y pérdida de remuneraciones de 4 días, correspondería a una sanción:",
+        "opciones": [
+            "Por falta menos grave.",
+            "Por falta grave.",
+            "Por falta leve.",
+            "Por falta grave."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 71 | Sanciones 3. Las sanciones que se pueden imponer por la comisión de faltas leves son: a) La suspensión de funciones y la pérdida de la remuneración de uno a cuatro días. b) La advertencia."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 73, competencia sancionadora. Corresponde al órgano competente del ayuntamiento…",
+        "opciones": [
+            "Incoar los expedientes disciplinarios por la comisión de las faltas muy graves, graves y leves a los miembros de los cuerpos de polícia local.",
+            "La respuesta anterior es correcta, y también resolver dichos expedientes.",
+            "Las respuestas a) y b) son correctas, pero además también para los policías en los ayuntamientos que no hayan constituido cuerpo de policía local.",
+            "Incoar y resolver los expedientes disciplinarios que se puedan originar durante la realización de los cursos de capacitación de las diferentes categorías de las Escuela Balear de la Administración Pública."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 73 | Competencia sancionadora 1. Corresponde al órgano competente del ayuntamiento incoar los expedientes disciplinarios e imponer las sanciones por la comisión de las faltas muy graves, graves y leves a los miembros de los cuerpos de policía local o a los policías en los ayuntamientos que no hayan constituido cuerpo de policía local. 2. Corresponde a la consejería competente en materia de formación de policías locales incoar y resolver los expedientes disciplinarios que se puedan originar durante la realización de los cursos de capacitación de las diferentes categorías en la Escuela Balear de Administración Pública."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 74, extinción de la responsabilidad. Señale la correcta.",
+        "opciones": [
+            "Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente, se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir, y se ordenará el archivo de las actuaciones, salvo que por la parte interesada se inste la continuación del procedimiento siempre que se instruya por falta muy grave; en este caso, se continuará hasta su resolución. También se dejarán sin efecto las medidas cautelares adoptadas en relación con el funcionario.",
+            "Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente, se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir, y se ordenará el archivo de las actuaciones, salvo que por la parte interesada se inste la continuación del procedimiento o se instruya por falta muy grave; en este caso, se continuará hasta su resolución. Las medidas cautelares adoptadas en relación con el funcionario seguiran vigentes.",
+            "Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente, se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir, y se ordenará el archivo de las actuaciones, salvo que por la parte interesada se inste la continuación del procedimiento o se instruya por falta muy grave; en este caso, se continuará hasta su resolución. También se dejarán sin efecto las medidas cautelares adoptadas en relación con el funcionario.",
+            "Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente, se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir, y se ordenará el archivo de las actuaciones, siempre. También se dejarán sin efecto las medidas cautelares adoptadas en relación con el funcionario."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad 2. Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente, se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir, y se ordenará el archivo de las actuaciones, salvo que por la parte interesada se inste la continuación del procedimiento o se instruya por falta muy grave; en este caso, se continuará hasta su resolución. También se dejarán sin efecto las medidas cautelares adoptadas en relación con el funcionario."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 76, prescripción de las sanciones. En caso de concurrencia de diferentes sanciones, el plazo de prescripción de las sanciones firmes que estén pendientes de cumplimiento…",
+        "opciones": [
+            "Se empieza a contar desde el día siguiente al que quede extinguida la sanción que la precede en el orden de cumplimiento señalado en lo que se ha citado.",
+            "Se empieza a contar desde el mismo día al que quede extinguida la sanción que la precede en el orden de cumplimiento señalado en lo que se ha citado.",
+            "a) es correcta, o en su caso desde la fecha en que se haya producido la inejecución de la sanción.",
+            "b) es correcta, o en su caso desde la fecha en que se haya producido la inejecución de la sanción."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 76 | Prescripción de las sanciones 2. En caso de concurrencia de diferentes sanciones, el plazo de prescripción de las sanciones firmes que estén pendientes de cumplimiento se empieza a contar desde el día siguiente al que quede extinguida la sanción que la precede en el orden de cumplimiento señalado en lo que se ha citado, o, en su caso, desde la fecha en que se haya producido la inejecución de la sanción."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 71, de las sanciones. Señale de las siguientes sanciones la que corresponda a “muy grave”:",
+        "opciones": [
+            "La advertencia.",
+            "La suspensión de funciones y pérdida de remuneraciones de 3 meses.",
+            "La separación del servicio.",
+            "Las opciones b) y c) son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 71 | Sanciones 1. Las sanciones que se pueden imponer por la comisión de faltas muy graves son: a) La separación del servicio. b) La suspensión de funciones y la pérdida de remuneraciones desde tres meses y un día hasta un máximo de seis años."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 76 corresponde a:",
+        "opciones": [
+            "Competencia sancionadora.",
+            "Prescripción de las sanciones.",
+            "Extinción de la responsabilidad.",
+            "Prescripción de las faltas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 76 | Prescripción de las sanciones"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 75.4, prescripción de las faltas. Señale la correcta.",
+        "opciones": [
+            "Cuando se inicie un procedimiento penal contra un funcionario de los cuerpos de policía local o policías auxiliares, la prescripción de las infracciones disciplinarias no se suspenderá por la incoación del procedimiento, aunque no se haya tomado ninguna medida disciplinaria. En estos supuestos, el plazo volverá a computar desde la fecha de la firmeza de la resolución judicial.",
+            "Cuando se inicie un procedimiento administrativo contra un funcionario de los cuerpos de policía local o policías auxiliares, la prescripción de las infracciones disciplinarias se suspenderá por la incoación del procedimiento, aunque no se haya tomado ninguna medida disciplinaria. En estos supuestos, el plazo volverá a computar desde la fecha de la firmeza de la resolución judicial.",
+            "Cuando se inicie un procedimiento penal contra un funcionario de los cuerpos de policía local o policías auxiliares, la prescripción de las infracciones disciplinarias se suspenderá por la incoación del procedimiento, aunque no se haya tomado ninguna medida disciplinaria. En estos supuestos, el plazo volverá a computar desde la fecha de la firmeza de la resolución judicial.",
+            "Cuando se inicie un procedimiento penal contra un funcionario de los cuerpos de policía local o policías auxiliares, la prescripción de las infracciones disciplinarias se suspenderá por la incoación del procedimiento, aunque no se haya tomado ninguna medida disciplinaria. En estos supuestos, el plazo volverá a computar desde el dia siguiente de la fecha de la firmeza de la resolución judicial."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 75 | Prescripción de las faltas 4. Cuando se inicie un procedimiento penal contra un funcionario de los cuerpos de policía local o policías auxiliares, la prescripción de las infracciones disciplinarias se suspenderá por la incoación del procedimiento, aunque no se haya tomado ninguna medida disciplinaria. En estos supuestos, el plazo volverá a computar desde la fecha de la firmeza de la resolución judicial."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 74, extinción de la responsabilidad. ¿Cabe la posibilidad de declarar extinguido un procedimiento sancionador?",
+        "opciones": [
+            "Ninguna de las anteriores son correctas.",
+            "Se podría declarar extinguido, siempre que lo autorice el Ministerio Fiscal.",
+            "Sí, si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente.",
+            "No, en todo caso se continúa hasta el final del procedimiento."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad 2. Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente, se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir, y se ordenará el archivo de las actuaciones, salvo que por la parte interesada se inste la continuación del procedimiento o se instruya por falta muy grave; en este caso, se continuará hasta su resolución. También se dejarán sin efecto las medidas cautelares adoptadas en relación con el funcionario."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 71, de las sanciones. Una sanción de suspensión de funciones y pérdida de remuneraciones de 2 meses, correspondería a una sanción:",
+        "opciones": [
+            "Por falta menos grave.",
+            "Por falta muy grave.",
+            "Por falta leve.",
+            "Por falta grave."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 71 | Sanciones 2. Por faltas graves se puede imponer la sanción de suspensión de funciones y pérdida de remuneraciones desde cinco días hasta tres meses."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 71, de las sanciones. Una sanción de suspensión de funciones y pérdida de remuneraciones de 5 años, correspondería a una sanción:",
+        "opciones": [
+            "Por falta menos grave.",
+            "Por falta muy grave.",
+            "Por falta leve.",
+            "Por falta grave."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 71 | Sanciones 1. Las sanciones que se pueden imponer por la comisión de faltas muy graves son: a) La separación del servicio. b) La suspensión de funciones y la pérdida de remuneraciones desde tres meses y un día hasta un máximo de seis años."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 75 corresponde a:",
+        "opciones": [
+            "Prescripción de las faltas.",
+            "Competencia sancionadora.",
+            "Extinción de la responsabilidad.",
+            "Prescripción de las sanciones."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 75 | Prescripción de las faltas"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 71, de las sanciones. Las sanciones que se pueden imponer por la comisión de faltas graves son:",
+        "opciones": [
+            "La suspensión de funciones y pérdida de remuneraciones desde cuatro días hasta 3 meses y un día.",
+            "La suspensión de funciones y pérdida de remuneraciones desde cuatro días hasta 3 meses.",
+            "La suspensión de funciones y pérdida de remuneraciones desde cinco días hasta 3 meses y un día.",
+            "La suspensión de funciones y pérdida de remuneraciones desde cinco días hasta 3 meses."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 71 | Sanciones 2. Por faltas graves se puede imponer la sanción de suspensión de funciones y pérdida de remuneraciones desde cinco días hasta tres meses."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 75.3, prescripción de las faltas. Señale la correcta.",
+        "opciones": [
+            "La prescripción no se interrumpe por el inicio del procedimiento; a estos efectos, la resolución que disponga la iniciación será debidamente registrada y notificada al funcionario expedientado o publicada, siempre que este no sea localizado. El plazo de prescripción se reprenderá si el procedimiento se paraliza durante más de tres meses por causa no imputable al funcionario sometido a expediente.",
+            "La prescripción no se interrumpe por el inicio del procedimiento; a estos efectos, la resolución que disponga la iniciación será debidamente registrada y notificada al funcionario expedientado o publicada, siempre que este no sea localizado. El plazo de prescripción se reprenderá si el procedimiento se paraliza durante más de seis meses por causa no imputable al funcionario sometido a expediente.",
+            "La prescripción se interrumpe por el inicio del procedimiento; a estos efectos, la resolución que disponga la iniciación será debidamente registrada y notificada al funcionario expedientado o publicada, siempre que este no sea localizado. El plazo de prescripción se reprenderá si el procedimiento se paraliza durante más de seis meses por causa no imputable al funcionario sometido a expediente.",
+            "La prescripción se interrumpe por el inicio del procedimiento; a estos efectos, la resolución que disponga la iniciación será debidamente registrada y notificada al funcionario expedientado o publicada, siempre que este no sea localizado. El plazo de prescripción se reprenderá si el procedimiento se paraliza durante más de tres meses por causa no imputable al funcionario sometido a expediente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 75 | Prescripción de las faltas 3. La prescripción se interrumpe por el inicio del procedimiento; a estos efectos, la resolución que disponga la iniciación será debidamente registrada y notificada al funcionario expedientado o publicada, siempre que este no sea localizado. El plazo de prescripción se reprenderá si el procedimiento se paraliza durante más de seis meses por causa no imputable al funcionario sometido a expediente."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 76.3, prescripción de las sanciones. Señale la correcta:",
+        "opciones": [
+            "El cumplimiento de los plazos de prescripción de la sanción no determina la cancelación de las anotaciones correspondientes en el expediente personal. Transcurrido el plazo para la prescripción de la sanción, el órgano competente lo acordará de oficio y lo notificará a los interesados.",
+            "El incumplimiento de los plazos de prescripción de la sanción determina la cancelación de las anotaciones correspondientes en el expediente personal. Transcurrido el plazo para la prescripción de la sanción, el órgano competente lo acordará de oficio y lo notificará a los interesados.",
+            "El cumplimiento de los plazos de prescripción de la sanción determina la cancelación de las anotaciones correspondientes en el expediente personal. Transcurrido el plazo para la prescripción de la sanción, el órgano competente lo acordará de oficio y lo notificará a los interesados.",
+            "El cumplimiento de los plazos de prescripción de la sanción determina la cancelación de las anotaciones correspondientes en el expediente personal. Transcurrido el plazo para la prescripción de la sanción, el órgano competente lo acordará de oficio y puede notificarlo a los interesados en algunas ocasiones."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 76 | Prescripción de las sanciones 3. El cumplimiento de los plazos de prescripción de la sanción determina la cancelación de las anotaciones correspondientes en el expediente personal. Transcurrido el plazo para la prescripción de la sanción, el órgano competente lo acordará de oficio y lo notificará a los interesados."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. El artículo 74 corresponde a:",
+        "opciones": [
+            "Prescripción de las sanciones.",
+            "Prescripción de las faltas.",
+            "Competencia sancionadora.",
+            "Extinción de la responsabilidad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad"
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 73, competencia sancionadora. Corresponde a la consejería competente en materia de formación de policías locales…",
+        "opciones": [
+            "Incoar los expedientes disciplinarios que se puedan originar durante la realización de los cursos de capacitación de las diferentes categorías en la Escuela Balear de Administración Pública.",
+            "La respuesta anterior es correcta, y también resolver dichos expedientes.",
+            "Las respuestas a) y b) son correctas, pero además también para los policías en los ayuntamientos que no hayan constituido cuerpo de policia local.",
+            "Incoar los expedientes disciplinarios e imponer las sanciones por la comisión de las faltas muy graves, graves y leves a los miembros de los cuerpos de policía local o a los policías en los ayuntamientos que no hayan constituido cuerpo de policía local."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 73 | Competencia sancionadora 1. Corresponde al órgano competente del ayuntamiento incoar los expedientes disciplinarios e imponer las sanciones por la comisión de las faltas muy graves, graves y leves a los miembros de los cuerpos de policía local o a los policías en los ayuntamientos que no hayan constituido cuerpo de policía local. 2. Corresponde a la consejería competente en materia de formación de policías locales incoar y resolver los expedientes disciplinarios que se puedan originar durante la realización de los cursos de capacitación de las diferentes categorías en la Escuela Balear de Administración Pública."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 75, prescripción de las faltas. Señale la correcta.",
+        "opciones": [
+            "El plazo de prescripción se empieza a contar desde que la falta se haya cometido, a no ser que esta derive de hechos que hayan sido objeto de condena por delito doloso; en este caso, el plazo se empezará a contar desde el día siguiente de la fecha de la firmeza de la sentencia condenatoria.",
+            "Ninguna de las anteriores es correcta.",
+            "El plazo de prescripción se empieza a contar desde que la falta se haya cometido, a no ser que esta derive de hechos que hayan sido objeto de condena por delito; en este caso, el plazo se empezará a contar desde la fecha de la firmeza de la sentencia condenatoria.",
+            "El plazo de prescripción se empieza a contar desde que la falta se haya cometido, a no ser que esta derive de hechos que hayan sido objeto de condena por delito doloso; en este caso, el plazo se empezará a contar desde la fecha de la firmeza de la sentencia condenatoria."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 75 | Prescripción de las faltas 2. El plazo de prescripción se empieza a contar desde que la falta se haya cometido, a no ser que esta derive de hechos que hayan sido objeto de condena por delito doloso; en este caso, el plazo se empezará a contar desde la fecha de la firmeza de la sentencia condenatoria."
+    },
+    {
+        "pregunta": "Ley 4/2013, de 17 de julio, de coordinación de las Policías Locales de les Illes Balears. Del Régimen Disciplinario. Artículo 74, extinción de la responsabilidad. Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente…",
+        "opciones": [
+            "Se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, anulando la responsabilidad civil o penal que se pueda exigir.",
+            "Se dictará una resolución en la cual, con invocación de la causa, se continúa el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir.",
+            "Se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir.",
+            "Ninguna de las anteriores es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 74 | Extinción de la responsabilidad 2. Si durante la sustanciación del procedimiento sancionador se produce la pérdida o el cese en la condición del funcionario sometido al expediente, se dictará una resolución en la cual, con invocación de la causa, se declarará extinguido el procedimiento sancionador, sin perjuicio de la responsabilidad civil o penal que se pueda exigir, y se ordenará el archivo de las actuaciones, salvo que por la parte interesada se inste la continuación del procedimiento o se instruya por falta muy grave; en este caso, se continuará hasta su resolución. También se dejarán sin efecto las medidas cautelares adoptadas en relación con el funcionario."
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

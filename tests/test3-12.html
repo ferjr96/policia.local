@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 3. Constitución española de 1978</h1>
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Ante quien responde solidariamente el Gobierno, de su gestión política.",
+        "opciones": [
+            "Ante el Congreso de los Diputados",
+            "Ante los Tribunales",
+            "Ante las Cortes Generales",
+            "Ante el Rey"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 108 | Responsabilidad El Gobierno responde solidariamente en su gestión política ante el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "Ud., como Policía Local ha sido adscrito a una unidad de policía judicial formada por GC, CNP y PL, ¿de quien dependerá Ud.?",
+        "opciones": [
+            "De los Jueces, de los Tribunales y del Ministerio Fiscal en sus funciones de averiguación del delito.",
+            "De sus jefes.",
+            "Del Jefe de GC o CNP que mande la unidad.",
+            "Todas son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 126 | La policía judicial La policía judicial depende de los Jueces, de los Tribunales y del Ministerio Fiscal en sus funciones de averiguación del delito y descubrimiento y aseguramiento del delincuente, en los términos que la ley establezca."
+    },
+    {
+        "pregunta": "¿Hasta cuantos miembros de una asamblea autonómica podrán defender una proposición de Ley propuesta a través de la mesa del Congreso de los Diputados?",
+        "opciones": [
+            "Dos",
+            "Cinco",
+            "Tres",
+            "Ninguno"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 87 | Iniciativa legislativa 1. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa."
+    },
+    {
+        "pregunta": "¿Ante quien presenta su dimisión el Gobierno si se ha presentado una moción de censura y la ha perdido?",
+        "opciones": [
+            "Ante el pueblo.",
+            "El Congreso.",
+            "Ante el Rey.",
+            "Las Cortes Generales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 114 | Procedimiento de moción de censura Si el Congreso niega su confianza al Gobierno, éste presentará su dimisión al Rey, procediéndose a continuación a la designación de Presidente del Gobierno, según lo dispuesto en el artículo 99. 2. Si el Congreso adopta una moción de censura, el Gobierno presentará su dimisión al Rey y el candidato incluido en aquélla se entenderá investido de la confianza de la Cámara a los efectos previstos en el artículo 99. El Rey le nombrará Presidente del Gobierno."
+    },
+    {
+        "pregunta": "Según el art. 57 de la Constitución Española, quien es el legítimo heredero de la dinastía histórica.",
+        "opciones": [
+            "Todas son correctas",
+            "Felipe VI",
+            "La Princesa Leonor",
+            "Juan Carlos I"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 57 | La Sucesión La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica."
+    },
+    {
+        "pregunta": "Como se le denominará a una disposición del gobierno, que haya sido por delegación del Congreso de los Diputados.",
+        "opciones": [
+            "Decreto Legislativo",
+            "Decreto Ley",
+            "Proyecto de Ley",
+            "Proposición de Ley"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 85 | Decretos legislativos Las disposiciones del Gobierno que contengan legislación delegada recibirán el título de Decretos Legislativos."
+    },
+    {
+        "pregunta": "¿Quién tiene como misión promover la acción de la justicia en defensa de la legalidad, de los derechos de los ciudadanos y del interés público tutelado por la ley?",
+        "opciones": [
+            "El Ministerio Fiscal.",
+            "Los Jueces.",
+            "La a y la b son correctas.",
+            "Los Magistrados."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 124 | Ministerio Fiscal 1. El Ministerio Fiscal, sin perjuicio de las funciones encomendadas a otros órganos, tiene por misión promover la acción de la justicia en defensa de la legalidad, de los derechos de los ciudadanos y del interés público tutelado por la ley, de oficio o a petición de los interesados, así como velar por la independencia de los Tribunales y procurar ante éstos la satisfacción del interés social."
+    },
+    {
+        "pregunta": "A quien emite informes no vinculantes el Consejo de Estado.",
+        "opciones": [
+            "Al Rey",
+            "Consejo de Ministros",
+            "Gobierno",
+            "Congreso"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 107 | Consejo de Estado El Consejo de Estado es el supremo órgano consultivo del Gobierno. Una ley orgánica regulará su composición y competencia."
+    },
+    {
+        "pregunta": "Las Cortes Generales tienen pendientes de aprobación una serie de Tratados Internacionales, indique cuáles de ellos son de su competencia:",
+        "opciones": [
+            "Todas son correctas",
+            "Tratados de carácter Ético",
+            "Tratados que modifiquen una ley",
+            "Tratado o convenio de carácter paramilitar"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 94 | Autorización de las Cortes 1. La prestación del consentimiento del Estado para obligarse por medio de tratados o convenios requerirá la previa autorización de las Cortes Generales, en los siguientes casos: a) Tratados de carácter político. b) Tratados o convenios de carácter militar. c) Tratados o convenios que afecten a la integridad territorial del Estado o a los derechos y deberes fundamentales establecidos en el Título I. d) Tratados o convenios que impliquen obligaciones financieras para la Hacienda Pública. e) Tratados o convenios que supongan modificación o derogación de alguna ley o exijan medidas legislativas para su ejecución. 2. El Congreso y el Senado serán inmediatamente informados de la conclusión de los restantes tratados o convenios."
+    },
+    {
+        "pregunta": "¿Cómo será el procedimiento en materia criminal?",
+        "opciones": [
+            "Estricto.",
+            "Oral.",
+            "Escrito.",
+            "Reducido."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 120 | Publicidad 1. Las actuaciones judiciales serán públicas, con las excepciones que prevean las leyes de procedimiento. 2. El procedimiento será predominantemente oral, sobre todo en materia criminal. 3. Las sentencias serán siempre motivadas y se pronunciarán en audiencia pública."
+    },
+    {
+        "pregunta": "Como serán las peticiones que reciban las Cámaras, de ciudadanos u organizaciones, según el art. 77 de la Constitución.",
+        "opciones": [
+            "Individuales",
+            "Por escrito",
+            "Todas son correctas",
+            "Colectivas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 77 | Peticiones 1. Las Cámaras pueden recibir peticiones individuales y colectivas, siempre por escrito, quedando prohibida la presentación directa por manifestaciones ciudadanas."
+    },
+    {
+        "pregunta": "Complete la siguiente frase: “. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con ……”",
+        "opciones": [
+            "La Ley",
+            "Ninguna es correcta",
+            "La Constitución",
+            "La legislación vigente"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 103 | Características de la Administración Pública Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley."
+    },
+    {
+        "pregunta": "El Gobierno de la nación, una vez aprobado en Consejo de Ministros ha presentado al Congreso de los Diputados el proyecto de presupuestos generales del estado, para el año próximo, que tipo de normativa es dicho proyecto?",
+        "opciones": [
+            "Decreto Ley",
+            "Decreto legislativo",
+            "Proposición de ley",
+            "Proyecto de ley"
+        ],
+        "correcta": 3,
+        "explicacion": "CORRECTA: D Artículo 88 | Proyectos de ley Los proyectos de ley serán aprobados en Consejo de Ministros, que los someterá al Congreso, acompañados de una exposición de motivos y de los antecedentes necesarios para pronunciarse sobre ellos."
+    },
+    {
+        "pregunta": "Según el art. 64 de la Constitución Española, puede ser responsable el Presidente del Tribunal Supremo de los actos que pueda realizar el Rey en el acto solemne de la apertura del Año Judicial.",
+        "opciones": [
+            "Dependerá si el Presidente del TS ha realizado el, la convocatoria del acto.",
+            "No.",
+            "Si, es al que le corresponde.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 64 | El Refrendo. 1. Los actos del Rey serán refrendados por el Presidente del Gobierno y, en su caso, por los Ministros competentes. La propuesta y el nombramiento del Presidente del Gobierno, y la disolución prevista en el artículo 99, serán refrendados por el Presidente del Congreso."
+    },
+    {
+        "pregunta": "¿Cual es la base de la organización y funcionamiento de los Tribunales?",
+        "opciones": [
+            "El Principio de legalidad.",
+            "El Principio de unidad jurisdiccional.",
+            "La Constitución.",
+            "El Poder Judicial."
+        ],
+        "correcta": 1,
+        "explicacion": "Art. 117 4. El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales."
+    },
+    {
+        "pregunta": "Señal de las siguientes Normas jurídicas cuales pertenecen a la iniciativa del Gobierno.",
+        "opciones": [
+            "Leyes orgánicas",
+            "Proyecto de Ley",
+            "Proposición de Ley",
+            "Decreto Legislativo"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 87 | Iniciativa legislativa 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. ( Al Gobierno los Proyectos de Ley y los Decretos Ley)"
+    },
+    {
+        "pregunta": "¿A que Título de la Constitución pertenece el artículo 100?",
+        "opciones": [
+            "Título III",
+            "Titulo V",
+            "Título IV",
+            "Título VI"
+        ],
+        "correcta": 2,
+        "explicacion": "En el Título IV CE encontramos regulado el Gobierno y la Administración en los artículos 97 a 107 ambos incluidos."
+    },
+    {
+        "pregunta": "¿En que artículo de la Constitución viene regulado que los ciudadanos no podrán acceder a los archivos que contengan datos sobre la intimidad de las personas?",
+        "opciones": [
+            "100",
+            "105",
+            "106",
+            "110"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 105 | Ciudadanía La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Una Ley de Bases no podrá contener?",
+        "opciones": [
+            "Una modificación así misma",
+            "Una modificación de una ley de rango superior.",
+            "La a y la d son correctas",
+            "Aplicar las normas con carácter retroactivo"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 83 | Leyes de bases Las leyes de bases no podrán en ningún caso: a) Autorizar la modificación de la propia ley de bases. b) Facultar para dictar normas con carácter retroactivo."
+    },
+    {
+        "pregunta": "Ud., como Policía Local, ¿podría ser miembro del Tribunal Constitucional?",
+        "opciones": [
+            "Si, si tengo el grado de derecho.",
+            "Si.",
+            "Si pero con 15 años de ejercicio profesional.",
+            "No."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 159 | Características principales 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres."
+    },
+    {
+        "pregunta": "¿Que tipo de mayoría se necesita en el Congreso de los Diputados para declarar el Estado de Sitio?",
+        "opciones": [
+            "3/4 partes.",
+            "Mayoría Simple.",
+            "2/3 de la cámara.",
+            "Mayoría Absoluta."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 116 | Estados de alarma, excepción y de sitio 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones."
+    },
+    {
+        "pregunta": "¿Como se denomina cuando una décima parte de diputados exige la responsabilidad política del Gobierno, presentando un candidato al mismo.?",
+        "opciones": [
+            "Confianza parlamentaria",
+            "Cuestión de confianza.",
+            "Censura política",
+            "Moción de censura"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 113 | Moción de censura 1. El Congreso de los Diputados puede exigir la responsabilidad política del Gobierno mediante la adopción por mayoría absoluta de la moción de censura. 2. La moción de censura deberá ser propuesta al menos por la décima parte de los Diputados, y habrá de incluir un candidato a la Presidencia del Gobierno. 3. La moción de censura no podrá ser votada hasta que transcurran cinco días desde su presentación. En los dos primeros días de dicho plazo podrán presentarse mociones alternativas. 4. Si la moción de censura no fuere aprobada por el Congreso, sus signatarios no podrán presentar otra durante el mismo período de sesiones."
+    },
+    {
+        "pregunta": "Según el art. 72 de la Constitución Española, por qué reglamento se regirán durante las sesiones conjuntas de ambas cámaras:",
+        "opciones": [
+            "Depende de donde se reúnan.",
+            "Por el Reglamento del Congreso.",
+            "Por el Reglamento de las Cortes Generales.",
+            "Por el Reglamento del Senado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 72 | Funcionamiento. 1. Las Cámaras eligen sus respectivos Presidentes y los demás miembros de sus Mesas. Las sesiones conjuntas serán presididas por el Presidente del Congreso y se regirán por un Reglamento de las Cortes Generales aprobado por mayoría absoluta de cada Cámara."
+    },
+    {
+        "pregunta": "El voto de un Senador, ¿es?",
+        "opciones": [
+            "colectivo y personal",
+            "personal y delegable",
+            "individual e indelegable",
+            "personal e indelegable"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 79 | Adopción de acuerdos 1. Para adoptar acuerdos, las Cámaras deben estar reunidas reglamentariamente y con asistencia de la mayoría de sus miembros. 2. Dichos acuerdos, para ser válidos, deberán ser aprobados por la mayoría de los miembros presentes, sin perjuicio de las mayorías especiales que establezcan la Constitución o las leyes orgánicas y las que para elección de personas establezcan los Reglamentos de las Cámaras. 3. El voto de Senadores y Diputados es personal e indelegable."
+    },
+    {
+        "pregunta": "Podría Ud., iniciar una recogida de firmas para reformar el Código Penal y que este contenga la cadena perpetua y que una vez supere las 500.000, sean admitidas por la mesa del congreso.",
+        "opciones": [
+            "Si con cualquier número de firmas",
+            "Si pero bastaría con 200.000 firmas",
+            "No",
+            "Si, pero se necesitan más firmas"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 87 | Iniciativa legislativa 1. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "¿Quien formula al Gobierno las interpelaciones y preguntas, según el art. 111 de la Constitución?",
+        "opciones": [
+            "La oposición",
+            "El Congreso.",
+            "Las cámaras",
+            "El Senado"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 111 | Interpelaciones y peguntas 1. El Gobierno y cada uno de sus miembros están sometidos a las interpelaciones y preguntas que se le formulen en las Cámaras. Para esta clase de debate los Reglamentos establecerán un tiempo mínimo semanal."
+    },
+    {
+        "pregunta": "Señale de los siguientes quienes pueden ser miembros del Consejo General del Poder Judicial:",
+        "opciones": [
+            "Abogados y juristas de reconocida competencia.",
+            "Jueces",
+            "Magistrados.",
+            "Todas son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 122 | Consejo General del Poder Judicial 1. La ley orgánica del poder judicial determinará la constitución, funcionamiento y gobierno de los Juzgados y Tribunales, así como el estatuto jurídico de los Jueces y Magistrados de carrera, que formarán un Cuerpo único, y del personal al servicio de la Administración de Justicia. 2. El Consejo General del Poder Judicial es el órgano de gobierno del mismo. La ley orgánica establecerá su estatuto y el régimen de incompatibilidades de sus miembros y sus funciones, en particular en materia de nombramientos, ascensos, inspección y régimen disciplinario. 3. El Consejo General del Poder Judicial estará integrado por el Presidente del Tribunal Supremo, que lo presidirá, y por veinte miembros nombrados por el Rey por un período de cinco años. De éstos, doce entre Jueces y Magistrados de todas las categorías judiciales, en los términos que establezca la ley orgánica; cuatro a propuesta del Congreso de los Diputados, y cuatro a propuesta del Senado, elegidos en ambos casos por mayoría de tres quintos de sus miembros, entre abogados y otros juristas, todos ellos de reconocida competencia y con más de quince años de ejercicio en su profesión."
+    },
+    {
+        "pregunta": "Según el art. 57 de la Constitución Española, cualquier duda de hecho o de derecho en el orden de sucesión a la corona, se resolverá mediante:",
+        "opciones": [
+            "Se seguirá el orden de sucesión establecido.",
+            "Una Ley.",
+            "Una Ley Orgánica.",
+            "Un Real Decreto."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Si Ud, es Presidente del Gobierno y le han presentado una moción de censura, pero la misma aún no se ha votado, ¿Puede Ud., disolver las Cortes para convocar elecciones?",
+        "opciones": [
+            "No.",
+            "Depende solo podría 24 horas antes de la votación.",
+            "Si.",
+            "Ninguna es correcta"
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 115 | Proposición de disolución 1. El Presidente del Gobierno, previa deliberación del Consejo de Ministros, y bajo su exclusiva responsabilidad, podrá proponer la disolución del Congreso, del Senado o de las Cortes Generales, que será decretada por el Rey. El decreto de disolución fijará la fecha de las elecciones. 2. La propuesta de disolución no podrá presentarse cuando esté en trámite una moción de censura. 3. No procederá nueva disolución antes de que transcurra un año desde la anterior, salvo lo dispuesto en el artículo 99, apartado 5."
+    },
+    {
+        "pregunta": "Si Ud., es Presidente del Gobierno en funciones ya que se han disuelto las cámaras por que se van a realizar elecciones generales, ¿ante quien deberá dar cuenta una vez decretado el Estado de Alarma, así como solicitar la autorización de las prórrogas si fueran necesarias?",
+        "opciones": [
+            "Ante la Diputación permanente",
+            "Ninguna es correcta",
+            "No puede decretarlo",
+            "Ante el Rey."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 116 | Estados de alarma, excepción y de sitio 5. No podrá procederse a la disolución del Congreso mientras estén declarados algunos de los estados comprendidos en el presente artículo, quedando automáticamente convocadas las Cámaras si no estuvieren en período de sesiones. Su funcionamiento, así como el de los demás poderes constitucionales del Estado, no podrán interrumpirse durante la vigencia de estos estados. Disuelto el Congreso o expirado su mandato, si se produjere alguna de las situaciones que dan lugar a cualquiera de dichos estados, las competencias del Congreso serán asumidas por su Diputación Permanente."
+    },
+    {
+        "pregunta": "Ud., como Policía Local de Inca, según la Constitución está bajo la dependencia, ¿de?",
+        "opciones": [
+            "El Ayuntamiento",
+            "El Alcalde",
+            "La Comunidad Autónoma",
+            "El Gobierno"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 104 | Fuerzas y Cuerpos de seguridad 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana."
+    },
+    {
+        "pregunta": "Según el art. 68 de la Constitución, quienes pueden ser electores y elegibles.",
+        "opciones": [
+            "Los Ciudadanos mayores de edad",
+            "Los españoles",
+            "Los extranjeros",
+            "La b y la c son correctas"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 68 | El Congreso de los Diputados 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España."
+    },
+    {
+        "pregunta": "¿ Puede ser indultado el Ministro de Defensa cuando haya sido sentenciado a 20 años de prisión por delitos contra la seguridad del Estado?",
+        "opciones": [
+            "No si ha sido condenado por el Código Penal Militar",
+            "Si.",
+            "No.",
+            "Si pero tiene que mostrar arrepentimiento"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 102 | Responsabilidades 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Según la Constitución Española, cuando se reunirán las Cortes Generales en sesión conjunta.",
+        "opciones": [
+            "Nunca",
+            "Para aprobar leyes referidas a los derechos fundamentales comprendidas en el Título I",
+            "Para ejercer las competencias legislativas que el Título IV atribuye expresamente a las Cortes Generales.",
+            "Para ejercer las competencias no legislativas que el Título II atribuye expresamente a las Cortes Generales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 74 | Competencias no legislativas Las Cámaras se reunirán en sesión conjunta para ejercer las competencias no legislativas que el Título II atribuye expresamente a las Cortes Generales."
+    },
+    {
+        "pregunta": "¿Quien aprobará un Proyecto de Ley, para ser votado posteriormente en el Congreso?",
+        "opciones": [
+            "Las Cortes Generales",
+            "Consejo de Ministros",
+            "Ninguna es correcta",
+            "El Gobierno"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 88 | Proyectos de ley Los proyectos de ley serán aprobados en Consejo de Ministros, que los someterá al Congreso, acompañados de una exposición de motivos y de los antecedentes necesarios para pronunciarse sobre ellos."
+    },
+    {
+        "pregunta": "Señale de las siguientes cuales cree Ud., que son Leyes Orgánicas.",
+        "opciones": [
+            "Código Penal",
+            "Estatuto de Autonomía de la Ciudad de Melilla",
+            "Ley de Seguridad Privada",
+            "La a y la b son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 81 | Leyes Orgánicas 1. Son leyes orgánicas las relativas al desarrollo de los derechos fundamentales y de las libertades públicas, las que aprueben los Estatutos de Autonomía y el régimen electoral general y las demás previstas en la Constitución. 2. La aprobación, modificación o derogación de las leyes orgánicas exigirá mayoría absoluta del Congreso, en una votación final sobre el conjunto del proyecto."
+    },
+    {
+        "pregunta": "¿Quien propone al Presidente del Tribunal Supremo?",
+        "opciones": [
+            "El Gobierno.",
+            "El Rey",
+            "El Consejo General del Poder Judicial.",
+            "Las Cortes Generales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 123 | Tribunal Supremo 1. El Tribunal Supremo, con jurisdicción en toda España, es el órgano jurisdiccional superior en todos los órdenes, salvo lo dispuesto en materia de garantías constitucionales. 2. El Presidente del Tribunal Supremo será nombrado por el Rey, a propuesta del Consejo General del Poder Judicial, en la forma que determine la ley."
+    },
+    {
+        "pregunta": "Tendría derechos de sucesión a la Corona de España, una hija de S.A.R. La Princesa de Asturias, teniendo en cuenta que contrajo matrimonio sin pedir autorización a su padre el Rey de España.",
+        "opciones": [
+            "Si",
+            "Ella no, sus descendientes si",
+            "No",
+            "No, ni ella ni sus descendientes"
+        ],
+        "correcta": 0,
+        "explicacion": "RESPUESTA: A Artículo 57 | La Sucesión 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes."
+    },
+    {
+        "pregunta": "¿Que plazo tiene el Senado para vetar o enmendar un proyecto de Ley Orgánica que haya sido declarada urgente por el Gobierno?",
+        "opciones": [
+            "30 días",
+            "Veinte días naturales",
+            "Veinte días hábiles",
+            "Dos meses"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 90 | Procedimiento 1. Aprobado un proyecto de ley ordinaria u orgánica por el Congreso de los Diputados, su Presidente dará inmediata cuenta del mismo al Presidente del Senado, el cual lo someterá a la deliberación de éste. 2. El Senado en el plazo de dos meses, a partir del día de la recepción del texto, puede, mediante mensaje motivado, oponer su veto o introducir enmiendas al mismo. El veto deberá ser aprobado por mayoría absoluta. El proyecto no podrá ser sometido al Rey para sanción sin que el Congreso ratifique por mayoría absoluta, en caso de veto, el texto inicial, o por mayoría simple, una vez transcurridos dos meses desde la interposición del mismo, o se pronuncie sobre las enmiendas, aceptándolas o no por mayoría simple. 1. El plazo de dos meses de que el Senado dispone para vetar o enmendar el proyecto se reducirá al de veinte días naturales en los proyectos declarados urgentes por el Gobierno o por el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "¿Qué tipo de norma jurídica regulará la tramitación de una Proposición de Ley.",
+        "opciones": [
+            "Una Ley de Bases",
+            "Los reglamentos de las Cámaras.",
+            "Un Decreto ley",
+            "Una Ley Ordinaria"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 89 | Tramitación 1. La tramitación de las proposiciones de ley se regulará por los Reglamentos de las Cámaras, sin que la prioridad debida a los proyectos de ley impida el ejercicio de la iniciativa legislativa en los términos regulados por el artículo 87."
+    },
+    {
+        "pregunta": "¿Quién ejerce la potestad reglamentaria de acuerdo con la Constitución y las Leyes, según el art. 97 de la Constitución?",
+        "opciones": [
+            "Las Cortes Generales",
+            "El Senado",
+            "El Gobierno",
+            "El Congreso"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 97 | Funciones El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Según el art. 71 de la Constitución Española, quien fijará la asignación que percibirán los diputados y senadores:",
+        "opciones": [
+            "Las respectivas cámaras.",
+            "Ninguna es correcta.",
+            "Los Reglamentos.",
+            "La Ley."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 71 | Inviolabilidad e inmunidad. 4. Los Diputados y Senadores percibirán una asignación que será fijada por las respectivas Cámaras."
+    },
+    {
+        "pregunta": "El último Estado de Alarma decretado por el Gobierno, durante la pandemia y que duro 6 meses fue declarado inconstitucional por el Tribunal Constitucional, señale de las siguientes respuestas cual cree Ud., ¿que fue el motivo de dicha sentencia?",
+        "opciones": [
+            "Solo se podía autorizar por 5 meses",
+            "No cumplió con el requisito de solicitar las prórrogas de 15 días al Congreso, dando explicaciones del motivo de las mismas.",
+            "No se puede declarar por una pandemia.",
+            "Ninguna es correcta"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 116 | Estados de alarma, excepción y de sitio 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 2. El estado de alarma será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso de los Diputados, reunido inmediatamente al efecto y sin cuya autorización no podrá ser prorrogado dicho plazo. El decreto determinará el ámbito territorial a que se extienden los efectos de la declaración."
+    },
+    {
+        "pregunta": "Que dignidad tendrá el Príncipe heredero desde su nacimiento.",
+        "opciones": [
+            "Príncipe de Andorra",
+            "Futuro Rey",
+            "Príncipe de Asturias",
+            "Heredero de la Corona"
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57 | La Sucesión 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España."
+    },
+    {
+        "pregunta": "¿Que tipo de norma jurídica regula el Estado de Alarma.?",
+        "opciones": [
+            "Decreto Ley",
+            "Ley Orgánica.",
+            "Un Real Decreto.",
+            "Ley Ordinaria"
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 116 | Estados de alarma, excepción y de sitio 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes."
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

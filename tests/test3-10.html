@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 3. Constitución española de 1978</h1>
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué órgano constitucional ejerce la potestad reglamentaria?",
+        "opciones": [
+            "El Gobierno.",
+            "El Rey.",
+            "El Presidente del Gobierno.",
+            "El jefe del Estado español."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Dentro de qué título de la CE se regulan las Fuerzas y Cuerpos de Seguridad?",
+        "opciones": [
+            "Del Título Cuarto.",
+            "Del Título Quinto.",
+            "Del Título Preliminar.",
+            "Del Título Primero."
+        ],
+        "correcta": 0,
+        "explicacion": "En el Título IV CE encontramos regulado el Gobierno y la Administración en los artículos 97 a 107 ambos incluidos. Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "¿Qué título de la Constitución Española de 1978 habla sobre las relaciones entre el Gobierno y las Cortes Generales?",
+        "opciones": [
+            "El Título Quinto.",
+            "El Título Cuarto.",
+            "El Título Tercero.",
+            "El Título Sexto."
+        ],
+        "correcta": 0,
+        "explicacion": "Las relaciones entre el gobierno y las cortes generales se regulan en el Título V de la Constitución española de 1978, artículos 108 a 116 incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los miembros del Tribunal Constitucional son nombrados:",
+        "opciones": [
+            "Por las Cortes Generales.",
+            "Por el Gobierno.",
+            "Por el Rey.",
+            "Por el Congreso de los Diputados."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Cámaras funcionarán:",
+        "opciones": [
+            "Autónomamente.",
+            "En Pleno.",
+            "En Comisiones.",
+            "Las respuestas b y la c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 75 1. Las Cámaras funcionarán en Pleno y por Comisiones. 2. Las Cámaras podrán delegar en las Comisiones Legislativas Permanentes la aprobación de proyectos o proposiciones de ley. El Pleno podrá, no obstante, recabar en cualquier momento el debate y votación de cualquier proyecto o proposición de ley que haya sido objeto de esta delegación. 3. Quedan exceptuados de lo dispuesto en el apartado anterior la reforma constitucional, las cuestiones internacionales, las leyes orgánicas y de bases y los Presupuestos Generales del Estado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿A través de quien puede una comisión permanente del Congreso de los Diputados recabar información del Gobierno?",
+        "opciones": [
+            "Del Presidente del Congreso.",
+            "De los Tribunales.",
+            "Las respuestas a y b son correctas.",
+            "Las respuestas a y b son incorrectas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 109 Las Cámaras y sus Comisiones podrán recabar, a través de los Presidentes de aquéllas, la información y ayuda que precisen del Gobierno y de sus Departamentos y de cualesquiera autoridades del Estado y de las Comunidades Autónomas."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes leyes no podrá autorizar la modificación de sí misma:",
+        "opciones": [
+            "Real decreto legislativo.",
+            "Ley de Bases.",
+            "Ley Ordinaria.",
+            "Ley Orgánica."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 83 Las leyes de bases no podrán en ningún caso: a) Autorizar la modificación de la propia ley de bases. b) Facultar para dictar normas con carácter retroactivo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién es el encargado de controlar la legalidad de la actuación administrativa?",
+        "opciones": [
+            "El Tribunal Supremo en su Sala contenciosa-administrativa.",
+            "El Congreso de los Diputados.",
+            "Los Tribunales.",
+            "El Tribunal Constitucional."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 106 1. Los Tribunales controlan la potestad reglamentaria y la legalidad de la actuación administrativa, así como el sometimiento de ésta a los fines que la justifican. 2. Los particulares, en los términos establecidos por la ley, tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo en los casos de fuerza mayor, siempre que la lesión sea consecuencia del funcionamiento de los servicios públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Título V de la CE se refiere a:",
+        "opciones": [
+            "Ninguna respuesta es correcta.",
+            "Las relaciones entre el Gobierno y las Cortes Generales.",
+            "El Poder Judicial.",
+            "El Gobierno y la Administración."
+        ],
+        "correcta": 1,
+        "explicacion": "Las relaciones entre el gobierno y las cortes generales se regulan en el Título V de la Constitución española de 1978, artículos 108 a 116 incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Según el art. 74 de la CE, para tratar las competencias no legislativas previstas en el Título II , será necesario:",
+        "opciones": [
+            "Que se reúna primero el Senado.",
+            "Se reunirán de forma extraordinaria.",
+            "Que se reúnan conjuntamente ambas cámaras.",
+            "Que se reúna primero el Congreso."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 74 1. Las Cámaras se reunirán en sesión conjunta para ejercer las competencias no legislativas que el Título II atribuye expresamente a las Cortes Generales. 2. Las decisiones de las Cortes Generales previstas en los artículos 94, 1, 145, 2 y 158, 2, se adoptarán por mayoría de cada una de las Cámaras. En el primer caso, el procedimiento se iniciará por el Congreso, y en los otros dos, por el Senado. En ambos casos, si no hubiera acuerdo entre Senado y Congreso, se intentará obtener por una Comisión Mixta compuesta de igual número de Diputados y Senadores. La Comisión presentará un texto que será votado por ambas Cámaras. Si no se aprueba en la forma establecida, decidirá el Congreso por mayoría absoluta."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta incorrecta según lo establecido en el artículo 109 de la CE:",
+        "opciones": [
+            "Las Cámaras podrán recabar información de cualquier autoridad de las Entidades Locales.",
+            "Las Cámaras podrán recabar información del Gobierno.",
+            "Las Cámaras podrán recabar información de cualquier autoridad del Estado.",
+            "Las Cámaras podrán recabar información de cualquier autoridad de las Comunidades Autónomas."
+        ],
+        "correcta": 0,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Consejo de Estado es:",
+        "opciones": [
+            "El supremo órgano consultivo de la Nación.",
+            "El supremo órgano consultivo del Gobierno.",
+            "El supremo órgano consultivo del Congreso de los Diputados.",
+            "El supremo órgano consultivo de las Cámaras legislativas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 107 El Consejo de Estado es el supremo órgano consultivo del Gobierno. Una ley orgánica regulará su composición y competencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál de los siguientes actos no necesitará la autorización previa del Congreso de los Diputados?",
+        "opciones": [
+            "Las dos necesitarán la autorización del Congreso de los Diputados.",
+            "La declaración del Estado de sitio.",
+            "La declaración del Estado de excepción.",
+            "Ninguna de ellas necesita la autorización del Congreso de los Diputados ya que se necesita la autorización de las Cortes Generales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 116 1. Una ley orgánica regulará los estados de alarma, de excepción y de sitio, y las competencias y limitaciones correspondientes. 2. El estado de alarma será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros por un plazo máximo de quince días, dando cuenta al Congreso de los Diputados, reunido inmediatamente al efecto y sin cuya autorización no podrá ser prorrogado dicho plazo. El decreto determinará el ámbito territorial a que se extienden los efectos de la declaración. 3. El estado de excepción será declarado por el Gobierno mediante decreto acordado en Consejo de Ministros, previa autorización del Congreso de los Diputados. La autorización y proclamación del estado de excepción deberá determinar expresamente los efectos del mismo, el ámbito territorial a que se extiende y su duración, que no podrá exceder de treinta días, prorrogables por otro plazo igual, con los mismos requisitos. 4. El estado de sitio será declarado por la mayoría absoluta del Congreso de los Diputados, a propuesta exclusiva del Gobierno. El Congreso determinará su ámbito territorial, duración y condiciones. 5. No podrá procederse a la disolución del Congreso mientras estén declarados algunos de los estados comprendidos en el presente artículo, quedando automáticamente convocadas las Cámaras si no estuvieren en período de sesiones. Su funcionamiento, así como el de los demás poderes constitucionales del Estado, no podrán interrumpirse durante la vigencia de estos estados. Disuelto el Congreso o expirado su mandato, si se produjere alguna de las situaciones que dan lugar a cualquiera de dichos estados, las competencias del Congreso serán asumidas por su Diputación Permanente. 6. La declaración de los estados de alarma, de excepción y de sitio no modificarán el principio de responsabilidad del Gobierno y de sus agentes reconocidos en la Constitución y en las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El título que utiliza el Rey es el de:",
+        "opciones": [
+            "Rey de todos los españoles.",
+            "Rey de la monarquía Borbónica.",
+            "Rey de la Orden del Toisón de Oro.",
+            "Rey de España."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 56 1. El Rey es el Jefe del Estado, símbolo de su unidad y permanencia, arbitra y modera el funcionamiento regular de las instituciones, asume la más alta representación del Estado español en las relaciones internacionales, especialmente con las naciones de su comunidad histórica, y ejerce las funciones que le atribuyen expresamente la Constitución y las leyes. 2. Su título es el de Rey de España y podrá utilizar los demás que correspondan a la Corona. 3. La persona del Rey es inviolable y no está sujeta a responsabilidad. Sus actos estarán siempre refrendados en la forma establecida en el artículo 64, careciendo de validez sin dicho refrendo, salvo lo dispuesto en el artículo 65, 2."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién controla la acción del Gobierno según la CE?",
+        "opciones": [
+            "Las Cortes Generales.",
+            "El Congreso.",
+            "El líder de la oposición.",
+            "Los Presidentes de ambas cámaras."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 66 1. Las Cortes Generales representan al pueblo español y están formadas por el Congreso de los Diputados y el Senado. 2. Las Cortes Generales ejercen la potestad legislativa del Estado, aprueban sus Presupuestos, controlan la acción del Gobierno y tienen las demás competencias que les atribuya la Constitución. 3. Las Cortes Generales son inviolables."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Tribunal Constitucional se compone:",
+        "opciones": [
+            "Ninguna respuesta es correcta.",
+            "De 10 miembros más el presidente.",
+            "De 12 miembros más el presidente.",
+            "De 11 miembros más el presidente."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuál es el supremo órgano consultivo del Gobierno?",
+        "opciones": [
+            "El Consejo de Estado.",
+            "El Tribunal Constitucional.",
+            "El Tribunal Supremo.",
+            "Todas las respuestas son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 107 El Consejo de Estado es el supremo órgano consultivo del Gobierno. Una ley orgánica regulará su composición y competencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes afirmaciones se recoge en el Título IV:",
+        "opciones": [
+            "El Gobierno responde solidariamente en su gestión política ante el Congreso de los Diputados.",
+            "Las Cámaras y sus Comisiones podrán recabar, a través de los Presidentes de aquéllas, la información y ayuda que precisen del Gobierno",
+            "El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión.",
+            "Las Cámaras y sus Comisiones pueden reclamar la presencia de los miembros del Gobierno."
+        ],
+        "correcta": 2,
+        "explicacion": "En el Título IV CE encontramos regulado el Gobierno y la Administración en los artículos 97 a 107 ambos incluidos. Artículo 98 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Con arreglo a qué instrumentos normativos ejerce la función ejecutiva el Gobierno?",
+        "opciones": [
+            "Con la Constitución y las Leyes.",
+            "Con la Constitución, las Leyes y los Tratados Internacionales.",
+            "Con la Constitución y los Tratados internacionales.",
+            "Con la Constitución y el resto del ordenamiento jurídico."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Un Senador elegido por la Asamblea de una Comunidad Autónoma, finaliza su mandato:",
+        "opciones": [
+            "Cuando se disuelva la Asamblea previa ratificación del senador una vez disuelto el senado y nombramiento de los nuevos senadores después de elecciones generales.",
+            "Cuando se disuelva el Senado, teniendo que ser ratificado el senador por la CA cuando tomen posesión los nuevos senadores después de elecciones generales.",
+            "Cuando se disuelvan las Cortes Generales.",
+            "La a y la b son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 69 1. El Senado es la Cámara de representación territorial. 2. En cada provincia se elegirán cuatro Senadores por sufragio universal, libre, igual, directo y secreto por los votantes de cada una de ellas, en los términos que señale una ley orgánica. 3. En las provincias insulares, cada isla o agrupación de ellas, con Cabildo o Consejo Insular, constituirá una circunscripción a efectos de elección de Senadores, correspondiendo tres a cada una de las islas mayores –Gran Canaria, Mallorca y Tenerife– y uno a cada una de las siguientes islas o agrupaciones: Ibiza-Formentera, Menorca, Fuerteventura, Gomera, Hierro, Lanzarote y La Palma. 4. Las poblaciones de Ceuta y Melilla elegirán cada una de ellas dos Senadores. 5. Las Comunidades Autónomas designarán además un Senador y otro más por cada millón de habitantes de su respectivo territorio. La designación corresponderá a la Asamblea legislativa o, en su defecto, al órgano colegiado superior de la Comunidad Autónoma, de acuerdo con lo que establezcan los Estatutos, que asegurarán, en todo caso, la adecuada representación proporcional. 6. El Senado es elegido por cuatro años. El mandato de los Senadores termina cuatro años después de su elección o el día de la disolución de la Cámara."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Según el artículo 117 de la CE, los Jueces y Magistrados:",
+        "opciones": [
+            "Están sometidos únicamente al imperio de la ley.",
+            "Están sometidos al Rey.",
+            "Están sometidos a la Constitución y al resto del Ordenamiento Jurídico.",
+            "Están sometidos al Congreso de los Diputados."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 117 1. La justicia emana del pueblo y se administra en nombre del Rey por Jueces y Magistrados integrantes del poder judicial, independientes, inamovibles, responsables y sometidos únicamente al imperio de la ley. 2. Los Jueces y Magistrados no podrán ser separados, suspendidos, trasladados ni jubilados, sino por alguna de las causas y con las garantías previstas en la ley. 3. El ejercicio de la potestad jurisdiccional en todo tipo de procesos, juzgando y haciendo ejecutar lo juzgado, corresponde exclusivamente a los Juzgados y Tribunales determinados por las leyes, según las normas de competencia y procedimiento que las mismas establezcan. 4. Los Juzgados y Tribunales no ejercerán más funciones que las señaladas en el apartado anterior y las que expresamente les sean atribuidas por ley en garantía de cualquier derecho. 5. El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales. La ley regulará el ejercicio de la jurisdicción militar en el ámbito estrictamente castrense y en los supuestos de estado de sitio, de acuerdo con los principios de la Constitución. 6. Se prohíben los Tribunales de excepción."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si la Infanta Cristina, 6ª en la línea de sucesión renuncia a esta, ¿Cómo se resolverá dicha renuncia?",
+        "opciones": [
+            "Mediante un Real Decreto.",
+            "Mediante una Ley Orgánica.",
+            "No hay problema, correrá la línea y su hijo ocupara su puesto en la misma.",
+            "Basta con una carta al Rey indicando tal extremo."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿Quiénes no pueden ser jubilados si no es de la forma establecida en la Ley?",
+        "opciones": [
+            "Los Jueces y Magistrados.",
+            "Los Fiscales.",
+            "La policía judicial.",
+            "Ninguna de las anteriores respuestas es correcta."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 117 1. La justicia emana del pueblo y se administra en nombre del Rey por Jueces y Magistrados integrantes del poder judicial, independientes, inamovibles, responsables y sometidos únicamente al imperio de la ley. 2. Los Jueces y Magistrados no podrán ser separados, suspendidos, trasladados ni jubilados, sino por alguna de las causas y con las garantías previstas en la ley. 3. El ejercicio de la potestad jurisdiccional en todo tipo de procesos, juzgando y haciendo ejecutar lo juzgado, corresponde exclusivamente a los Juzgados y Tribunales determinados por las leyes, según las normas de competencia y procedimiento que las mismas establezcan. 4. Los Juzgados y Tribunales no ejercerán más funciones que las señaladas en el apartado anterior y las que expresamente les sean atribuidas por ley en garantía de cualquier derecho. 5. El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales. La ley regulará el ejercicio de la jurisdicción militar en el ámbito estrictamente castrense y en los supuestos de estado de sitio, de acuerdo con los principios de la Constitución. 6. Se prohíben los Tribunales de excepción."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué órgano constitucional dirige la defensa del Estado?",
+        "opciones": [
+            "El jefe del Estado español.",
+            "El Presidente del Gobierno.",
+            "El Rey.",
+            "El Gobierno."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes materias se tendrá que regular por una Ley Ordinaria:",
+        "opciones": [
+            "El texto refundido de contratos en el Sector Público.",
+            "El Código Penal.",
+            "El derecho de huelga.",
+            "La libertad sindical."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale de las siguientes funciones del Rey, cuales no necesitan refrendo, por estar comprendidas en el art. 65. 2 de la CE.",
+        "opciones": [
+            "Presidir una toma de posesión del Presidente de Colombia.",
+            "Ninguna es correcta.",
+            "Nombrar al Secretario General de la Casa de S.M. El Rey.",
+            "Nombrar al Ministro de Interior."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 65 1. El Rey recibe de los Presupuestos del Estado una cantidad global para el sostenimiento de su Familia y Casa, y distribuye libremente la misma. 2. El Rey nombra y releva libremente a los miembros civiles y militares de su Casa."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La composición y competencia del Consejo de Estado se regulará:",
+        "opciones": [
+            "Por Reglamento.",
+            "Por Ley Orgánica.",
+            "Por Ley Ordinaria.",
+            "Por Directiva."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 107 El Consejo de Estado es el supremo órgano consultivo del Gobierno. Una ley orgánica regulará su composición y competencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Podrá aplicarse con carácter retroactivo, si beneficia a alguna persona física o jurídica, una Ley de Bases?",
+        "opciones": [
+            "Sí.",
+            "Solo en los últimos 4 años.",
+            "No.",
+            "Ninguna es correcta."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 83 Las leyes de bases no podrán en ningún caso: a) Autorizar la modificación de la propia ley de bases. b) Facultar para dictar normas con carácter retroactivo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién controla la potestad reglamentaría?",
+        "opciones": [
+            "El Gobierno.",
+            "Los Tribunales.",
+            "El Tribunal Supremo.",
+            "El Tribunal Constitucional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 106 1. Los Tribunales controlan la potestad reglamentaria y la legalidad de la actuación administrativa, así como el sometimiento de ésta a los fines que la justifican. 2. Los particulares, en los términos establecidos por la ley, tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo en los casos de fuerza mayor, siempre que la lesión sea consecuencia del funcionamiento de los servicios públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El control de la actuación administrativa por parte de los Tribunales se recoge en el artículo:",
+        "opciones": [
+            "106.2.",
+            "106.1.",
+            "105.",
+            "106.3."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 106 1. Los Tribunales controlan la potestad reglamentaria y la legalidad de la actuación administrativa, así como el sometimiento de ésta a los fines que la justifican. 2. Los particulares, en los términos establecidos por la ley, tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo en los casos de fuerza mayor, siempre que la lesión sea consecuencia del funcionamiento de los servicios públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las elecciones, según el art. 68 de la CE, tendrán lugar:",
+        "opciones": [
+            "Entre los 30 y 60 días desde la terminación del mandato.",
+            "En los 30 días siguientes a la terminación del mandato.",
+            "Entre los 15 y los 30 días siguientes a la disolución de las Cortes.",
+            "A los 20 días siguientes a la terminación del mandato."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los particulares tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos:",
+        "opciones": [
+            "Siempre que la lesión sea consecuencia del funcionamiento anormal de la Administración de Justicia.",
+            "En los términos establecidos por la Ley.",
+            "Siempre que la lesión sea consecuencia del funcionamiento anormal de la Administración.",
+            "Las respuestas b y c son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 106 1. Los Tribunales controlan la potestad reglamentaria y la legalidad de la actuación administrativa, así como el sometimiento de ésta a los fines que la justifican. 2. Los particulares, en los términos establecidos por la ley, tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo en los casos de fuerza mayor, siempre que la lesión sea consecuencia del funcionamiento de los servicios públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién preside una sesión conjunta de las Cortes Generales según el art. 72 de la CE?",
+        "opciones": [
+            "El Rey.",
+            "Presidente del Congreso.",
+            "Presidente Congreso y Senado.",
+            "El Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 72 1. Las Cámaras establecen sus propios Reglamentos, aprueban autónomamente sus presupuestos y, de común acuerdo, regulan el Estatuto del Personal de las Cortes Generales. Los Reglamentos y su reforma serán sometidos a una votación final sobre su totalidad, que requerirá la mayoría absoluta. 2. Las Cámaras eligen sus respectivos Presidentes y los demás miembros de sus Mesas. Las sesiones conjuntas serán presididas por el Presidente del Congreso y se regirán por un Reglamento de las Cortes Generales aprobado por mayoría absoluta de cada Cámara. 3. Los Presidentes de las Cámaras ejercen en nombre de las mismas todos los poderes administrativos y facultades de policía en el interior de sus respectivas sedes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En que términos los particulares tendrán derecho a ser indemnizados por toda lesión que sufran en sus bienes y derechos cuando la lesión sea consecuencia del funcionamiento de los servicios públicos?",
+        "opciones": [
+            "En los términos convenidos por las partes.",
+            "En los términos establecidos por la Ley.",
+            "Ninguna respuesta es correcta.",
+            "En los términos establecidos en la Constitución Española."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 106 1. Los Tribunales controlan la potestad reglamentaria y la legalidad de la actuación administrativa, así como el sometimiento de ésta a los fines que la justifican. 2. Los particulares, en los términos establecidos por la ley, tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo en los casos de fuerza mayor, siempre que la lesión sea consecuencia del funcionamiento de los servicios públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los particulares tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo:",
+        "opciones": [
+            "En los casos de imprudencia.",
+            "En los casos de negligencia profesional.",
+            "En los casos de fuerza mayor.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 106 1. Los Tribunales controlan la potestad reglamentaria y la legalidad de la actuación administrativa, así como el sometimiento de ésta a los fines que la justifican. 2. Los particulares, en los términos establecidos por la ley, tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo en los casos de fuerza mayor, siempre que la lesión sea consecuencia del funcionamiento de los servicios públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes no es una función del Gobierno:",
+        "opciones": [
+            "Requerir al Tribunal Constitucional para que declare si existe contradicción o no entre la Constitución Española y los tratados Internacionales.",
+            "La aprobación de los Presupuestos Generales del Estado.",
+            "Todas las respuestas anteriores son funciones del Gobierno.",
+            "La garantía del cumplimiento de los Tratados."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 134 1. Corresponde al Gobierno la elaboración de los Presupuestos Generales del Estado y a las Cortes Generales, su examen, enmienda y aprobación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuántos miembros como mínimo componen la diputación permanente?",
+        "opciones": [
+            "Entre 10 y 20.",
+            "35.",
+            "Entre 20 y 30.",
+            "21."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 78 1. En cada Cámara habrá una Diputación Permanente compuesta por un mínimo de veintiún miembros, que representarán a los grupos parlamentarios, en proporción a su importancia numérica. 2. Las Diputaciones Permanentes estarán presididas por el Presidente de la Cámara respectiva y tendrán como funciones la prevista en el artículo 73, la de asumir las facultades que correspondan a las Cámaras, de acuerdo con los artículos 86 y 116, en caso de que éstas hubieren sido disueltas o hubiere expirado su mandato y la de velar por los poderes de las Cámaras cuando éstas no estén reunidas. 3. Expirado el mandato o en caso de disolución, las Diputaciones Permanentes seguirán ejerciendo sus funciones hasta la constitución de las nuevas Cortes Generales. 4. Reunida la Cámara correspondiente, la Diputación Permanente dará cuenta de los asuntos tratados y de sus decisiones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale de los siguientes cuales no podrán ser Diputados:",
+        "opciones": [
+            "Un Policía Local retirado.",
+            "Un miembro de la Junta Electoral.",
+            "Un Juez en activo.",
+            "La b y la c son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 70 1. La ley electoral determinará las causas de inelegibilidad e incompatibilidad de los Diputados y Senadores, que comprenderán, en todo caso: a) A los componentes del Tribunal Constitucional. b) A los altos cargos de la Administración del Estado que determine la ley, con la excepción de los miembros del Gobierno. c) Al Defensor del Pueblo. d) A los Magistrados, Jueces y Fiscales en activo. e) A los militares profesionales y miembros de las Fuerzas y Cuerpos de Seguridad y Policía en activo. f) A los miembros de las Juntas Electorales. 2. La validez de las actas y credenciales de los miembros de ambas Cámaras estará sometida al control judicial, en los términos que establezca la ley electoral."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál no es una característica de los Jueces y Magistrados.",
+        "opciones": [
+            "Sometidos al imperio de la Ley.",
+            "Inamovibles.",
+            "Dependientes.",
+            "Responsables."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 117 1. La justicia emana del pueblo y se administra en nombre del Rey por Jueces y Magistrados integrantes del poder judicial, independientes, inamovibles, responsables y sometidos únicamente al imperio de la ley. 2. Los Jueces y Magistrados no podrán ser separados, suspendidos, trasladados ni jubilados, sino por alguna de las causas y con las garantías previstas en la ley. 3. El ejercicio de la potestad jurisdiccional en todo tipo de procesos, juzgando y haciendo ejecutar lo juzgado, corresponde exclusivamente a los Juzgados y Tribunales determinados por las leyes, según las normas de competencia y procedimiento que las mismas establezcan. 4. Los Juzgados y Tribunales no ejercerán más funciones que las señaladas en el apartado anterior y las que expresamente les sean atribuidas por ley en garantía de cualquier derecho. 5. El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales. La ley regulará el ejercicio de la jurisdicción militar en el ámbito estrictamente castrense y en los supuestos de estado de sitio, de acuerdo con los principios de la Constitución. 6. Se prohíben los Tribunales de excepción."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La delegación en el Gobierno por parte de las Cortes para dictar normas con rango de Ley, se le denomina:",
+        "opciones": [
+            "Decreto legislativo.",
+            "Proposición de Ley.",
+            "Proyecto de Ley.",
+            "Decreto Ley."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 85 Las disposiciones del Gobierno que contengan legislación delegada recibirán el título de Decretos Legislativos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta correcta. En función de lo establecido en el artículo 106.1:",
+        "opciones": [
+            "La legalidad de la actuación administrativa será controlada por el Tribunal de Cuentas.",
+            "La legalidad de la actuación administrativa será controlada por el Tribunal Constitucional.",
+            "La legalidad de la actuación administrativa será controlada por el Congreso de los Diputados.",
+            "La legalidad de la actuación administrativa será controlada por los Tribunales."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 106 1. Los Tribunales controlan la potestad reglamentaria y la legalidad de la actuación administrativa, así como el sometimiento de ésta a los fines que la justifican. 2. Los particulares, en los términos establecidos por la ley, tendrán derecho a ser indemnizados por toda lesión que sufran en cualquiera de sus bienes y derechos, salvo en los casos de fuerza mayor, siempre que la lesión sea consecuencia del funcionamiento de los servicios públicos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿A través de quien puede el Congreso de los Diputados recabar información del Gobierno?",
+        "opciones": [
+            "Del Presidente del Congreso.",
+            "Del Presidente del Gobierno.",
+            "Del Rey.",
+            "Todas las respuestas son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 109 Las Cámaras y sus Comisiones podrán recabar, a través de los Presidentes de aquéllas, la información y ayuda que precisen del Gobierno y de sus Departamentos y de cualesquiera autoridades del Estado y de las Comunidades Autónomas."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuántos miembros del Tribunal Constitucional propone el Congreso de los Diputados?",
+        "opciones": [
+            "Dos.",
+            "Cuatro.",
+            "Ocho.",
+            "Seis."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Por cuantos diputados están representadas cada una de las Ciudades Autónomas de Ceuta y Melilla?",
+        "opciones": [
+            "1.",
+            "2.",
+            "4.",
+            "3."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 68 1. El Congreso se compone de un mínimo de 300 y un máximo de 400 Diputados, elegidos por sufragio universal, libre, igual, directo y secreto, en los términos que establezca la ley. 2. La circunscripción electoral es la provincia. Las poblaciones de Ceuta y Melilla estarán representadas cada una de ellas por un Diputado. La ley distribuirá el número total de Diputados, asignando una representación mínima inicial a cada circunscripción y distribuyendo los demás en proporción a la población. 3. La elección se verificará en cada circunscripción atendiendo a criterios de representación proporcional. 4. El Congreso es elegido por cuatro años. El mandato de los Diputados termina cuatro años después de su elección o el día de la disolución de la Cámara. 5. Son electores y elegibles todos los españoles que estén en pleno uso de sus derechos políticos. La ley reconocerá y el Estado facilitará el ejercicio del derecho de sufragio a los españoles que se encuentren fuera del territorio de España. 6. Las elecciones tendrán lugar entre los treinta días y sesenta días desde la terminación del mandato. El Congreso electo deberá ser convocado dentro de los veinticinco días siguientes a la celebración de las elecciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Dentro de qué título de la CE se recoge el Consejo de Estado?",
+        "opciones": [
+            "Del Título Tercero.",
+            "Del Título Quinto.",
+            "Del Título Segundo.",
+            "Del Título Cuarto."
+        ],
+        "correcta": 3,
+        "explicacion": "En el Título IV CE encontramos regulado el Gobierno y la Administración en los artículos 97 a 107 ambos incluidos. Artículo 107 El Consejo de Estado es el supremo órgano consultivo del Gobierno. Una ley orgánica regulará su composición y competencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cuántos miembros del Tribunal Constitucional propone el Gobierno?",
+        "opciones": [
+            "Dos.",
+            "Seis.",
+            "Cuatro.",
+            "Ocho."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 159 1. El Tribunal Constitucional se compone de 12 miembros nombrados por el Rey; de ellos, cuatro a propuesta del Congreso por mayoría de tres quintos de sus miembros; cuatro a propuesta del Senado, con idéntica mayoría; dos a propuesta del Gobierno, y dos a propuesta del Consejo General del Poder Judicial. 2. Los miembros del Tribunal Constitucional deberán ser nombrados entre Magistrados y Fiscales, Profesores de Universidad, funcionarios públicos y Abogados, todos ellos juristas de reconocida competencia con más de quince años de ejercicio profesional. 3. Los miembros del Tribunal Constitucional serán designados por un período de nueve años y se renovarán por terceras partes cada tres. 4. La condición de miembro del Tribunal Constitucional es incompatible: con todo mandato representativo; con los cargos políticos o administrativos; con el desempeño de funciones directivas en un partido político o en un sindicato y con el empleo al servicio de los mismos; con el ejercicio de las carreras judicial y fiscal, y con cualquier actividad profesional o mercantil. En lo demás los miembros del Tribunal Constitucional tendrán las incompatibilidades propias de los miembros del poder judicial. 5. Los miembros del Tribunal Constitucional serán independientes e inamovibles en el ejercicio de su mandato."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Que dignidad tendrá el Príncipe heredero desde que se produzca el hecho que origine su llamamiento, según el art. 57.2 de la CE.",
+        "opciones": [
+            "Sucesor de la Corona.",
+            "Príncipe consorte.",
+            "Príncipe de Asturias.",
+            "Regente."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 57 1. La Corona de España es hereditaria en los sucesores de S. M. Don Juan Carlos I de Borbón, legítimo heredero de la dinastía histórica. La sucesión en el trono seguirá el orden regular de primogenitura y representación, siendo preferida siempre la línea anterior a las posteriores; en la misma línea, el grado más próximo al más remoto; en el mismo grado, el varón a la mujer, y en el mismo sexo, la persona de más edad a la de menos. 2. El Príncipe heredero, desde su nacimiento o desde que se produzca el hecho que origine el llamamiento, tendrá la dignidad de Príncipe de Asturias y los demás títulos vinculados tradicionalmente al sucesor de la Corona de España. 3. Extinguidas todas las líneas llamadas en Derecho, las Cortes Generales proveerán a la sucesión en la Corona en la forma que más convenga a los intereses de España. 4. Aquellas personas que teniendo derecho a la sucesión en el trono contrajeren matrimonio contra la expresa prohibición del Rey y de las Cortes Generales, quedarán excluidas en la sucesión a la Corona por sí y sus descendientes. 5. Las abdicaciones y renuncias y cualquier duda de hecho o de derecho que ocurra en el orden de sucesión a la Corona se resolverán por una ley orgánica."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién es el encargado de administrar la justicia?",
+        "opciones": [
+            "El Pueblo.",
+            "Jueces y Magistrados.",
+            "Las Cortes Generales.",
+            "El Rey."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 117 1. La justicia emana del pueblo y se administra en nombre del Rey por Jueces y Magistrados integrantes del poder judicial, independientes, inamovibles, responsables y sometidos únicamente al imperio de la ley. 2. Los Jueces y Magistrados no podrán ser separados, suspendidos, trasladados ni jubilados, sino por alguna de las causas y con las garantías previstas en la ley. 3. El ejercicio de la potestad jurisdiccional en todo tipo de procesos, juzgando y haciendo ejecutar lo juzgado, corresponde exclusivamente a los Juzgados y Tribunales determinados por las leyes, según las normas de competencia y procedimiento que las mismas establezcan. 4. Los Juzgados y Tribunales no ejercerán más funciones que las señaladas en el apartado anterior y las que expresamente les sean atribuidas por ley en garantía de cualquier derecho. 5. El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales. La ley regulará el ejercicio de la jurisdicción militar en el ámbito estrictamente castrense y en los supuestos de estado de sitio, de acuerdo con los principios de la Constitución. 6. Se prohíben los Tribunales de excepción."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En qué artículo de la CE se recoge que el Gobierno cesante continuará en funciones hasta la toma de posesión del nuevo Gobierno?",
+        "opciones": [
+            "En el artículo 102.",
+            "En el artículo 103.",
+            "Ninguna respuesta es correcta.",
+            "En el artículo 101."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 101 1. El Gobierno cesa tras la celebración de elecciones generales, en los casos de pérdida de la confianza parlamentaria previstos en la Constitución, o por dimisión o fallecimiento de su Presidente. 2. El Gobierno cesante continuará en funciones hasta la toma de posesión del nuevo Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El ejercicio de la potestad jurisdiccional la tienen:",
+        "opciones": [
+            "Jueces y Magistrados.",
+            "Sólo los Jueces.",
+            "Sólo los Magistrados.",
+            "Por Jueces, Magistrados y Fiscales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 117 1. La justicia emana del pueblo y se administra en nombre del Rey por Jueces y Magistrados integrantes del poder judicial, independientes, inamovibles, responsables y sometidos únicamente al imperio de la ley. 2. Los Jueces y Magistrados no podrán ser separados, suspendidos, trasladados ni jubilados, sino por alguna de las causas y con las garantías previstas en la ley. 3. El ejercicio de la potestad jurisdiccional en todo tipo de procesos, juzgando y haciendo ejecutar lo juzgado, corresponde exclusivamente a los Juzgados y Tribunales determinados por las leyes, según las normas de competencia y procedimiento que las mismas establezcan. 4. Los Juzgados y Tribunales no ejercerán más funciones que las señaladas en el apartado anterior y las que expresamente les sean atribuidas por ley en garantía de cualquier derecho. 5. El principio de unidad jurisdiccional es la base de la organización y funcionamiento de los Tribunales. La ley regulará el ejercicio de la jurisdicción militar en el ámbito estrictamente castrense y en los supuestos de estado de sitio, de acuerdo con los principios de la Constitución. 6. Se prohíben los Tribunales de excepción."
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

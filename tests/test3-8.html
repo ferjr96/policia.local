@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 3. Constitución española de 1978</h1>
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. La iniciativa popular:",
+        "opciones": [
+            "Se regulará mediante una Ley de bases.",
+            "Se regulará por Ley Orgánica.",
+            "Se regulará mediante Reglamento.",
+            "Se regulará por Ley Ordinaria."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 87 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. 2. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa. 3. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Queda prohibido a los miembros del Gobierno la realización de funciones relativas a la función pública:",
+        "opciones": [
+            "Siempre.",
+            "Nunca.",
+            "Sin la expresa autorización del Presidente del Gobierno.",
+            "Que no deriven de su cargo."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 98 1. El Gobierno se compone del Presidente, de los Vicepresidentes, en su caso, de los Ministros y de los demás miembros que establezca la ley. 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión. 3. Los miembros del Gobierno no podrán ejercer otras funciones representativas que las propias del mandato parlamentario, ni cualquier otra función pública que no derive de su cargo, ni actividad profesional o mercantil alguna. 4. La ley regulará el estatuto e incompatibilidades de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los Decretos-leyes no podrán afectar:",
+        "opciones": [
+            "Al desarrollo de los derechos fundamentales y de las libertades públicas, al régimen reconocido en los Estatutos de Autonomía y el régimen electoral general.",
+            "Al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general.",
+            "Al ordenamiento de las instituciones básicas del Estado, a los derechos fundamentales reconocidos en el Capítulo Segundo del Título I, al régimen de las Comunidades Autónomas ni a las leyes de presupuestos.",
+            "Al ordenamiento de las instituciones básicas del Estado, a los derechos fundamentales reconocidos en el Capítulo Segundo del Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Gobierno podrá dictar Decretos-leyes:",
+        "opciones": [
+            "Siempre que lo considere necesario.",
+            "En caso de extraordinaria y urgente necesidad.",
+            "En caso de alteración del orden público con peligro para personas o bienes.",
+            "En caso de especial urgencia."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién promulga las leyes aprobadas por las Cortes Generales?",
+        "opciones": [
+            "El Presidente del Congreso de los Diputados.",
+            "El Rey.",
+            "El Ministro de Justicia.",
+            "El Presidente del Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 91 El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La iniciativa legislativa popular se ejerce a través:",
+        "opciones": [
+            "De propuestas.",
+            "De proyectos de ley.",
+            "De peticiones colectivas.",
+            "De proposiciones de ley."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 87 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. 2. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa. 3. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En qué plazo puede el Senado introducir enmiendas a un proyecto de ley orgánica remitido por el Congreso?",
+        "opciones": [
+            "En el plazo de tres meses, a partir del día de la recepción del texto.",
+            "En el plazo de dos meses, a partir del día de la recepción del texto.",
+            "En el plazo de tres meses, a partir del día de la aprobación del texto en el Congreso.",
+            "En el plazo de dos meses, a partir del día de la aprobación del texto en el Congreso."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 90 1. Aprobado un proyecto de ley ordinaria u orgánica por el Congreso de los Diputados, su Presidente dará inmediata cuenta del mismo al Presidente del Senado, el cual lo someterá a la deliberación de éste. 2. El Senado en el plazo de dos meses, a partir del día de la recepción del texto, puede, mediante mensaje motivado, oponer su veto o introducir enmiendas al mismo. El veto deberá ser aprobado por mayoría absoluta. El proyecto no podrá ser sometido al Rey para sanción sin que el Congreso ratifique por mayoría absoluta, en caso de veto, el texto inicial, o por mayoría simple, una vez transcurridos dos meses desde la interposición del mismo, o se pronuncie sobre las enmiendas, aceptándolas o no por mayoría simple. 3. El plazo de dos meses de que el Senado dispone para vetar o enmendar el proyecto se reducirá al de veinte días naturales en los proyectos declarados urgentes por el Gobierno o por el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los Decretos-leyes:",
+        "opciones": [
+            "Podrán ser tramitados como proyectos o proposiciones de ley:",
+            "Podrán ser tramitados como proyectos de ley.",
+            "Podrán ser tramitados como proposiciones de ley.",
+            "No podrán ser tramitados como proyectos de ley."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Según lo establecido en la Constitución Española de 1978, la renovación que se ha de dar para que el rey proponga candidato a la presidencia del gobierno, ¿de qué órgano constitucional será?",
+        "opciones": [
+            "Del Senado.",
+            "Del Congreso de los Diputados.",
+            "De Las Cortes Generales.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Leyes de Bases no podrán en ningún caso:",
+        "opciones": [
+            "Autorizar la modificación de la propia Ley de bases.",
+            "Autorizar la supresión de normas jurídicas existentes.",
+            "Autorizar el aumento del gasto público.",
+            "Facultar para dictar normas con carácter irretroactivo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 83 Las leyes de bases no podrán en ningún caso: a) Autorizar la modificación de la propia ley de bases. b) Facultar para dictar normas con carácter retroactivo."
+    },
+    {
+        "pregunta": "En función de lo establecido en la Constitución Española de 1978, las incompatibilidades de los miembros del gobierno habrán de regularse por:",
+        "opciones": [
+            "Ley Orgánica.",
+            "Real Decreto Legislativo.",
+            "Ley Ordinaria.",
+            "Reglamento."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 98 1. El Gobierno se compone del Presidente, de los Vicepresidentes, en su caso, de los Ministros y de los demás miembros que establezca la ley. 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión. 3. Los miembros del Gobierno no podrán ejercer otras funciones representativas que las propias del mandato parlamentario, ni cualquier otra función pública que no derive de su cargo, ni actividad profesional o mercantil alguna. 4. La ley regulará el estatuto e incompatibilidades de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta incorrecta:",
+        "opciones": [
+            "El candidato a la Presidencia del Gobierno solicitará la confianza de las Cámaras Legislativas.",
+            "El candidato a la Presidencia del Gobierno solicitará la confianza del Congreso de los Diputados.",
+            "El candidato a la Presidencia del Gobierno expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar.",
+            "Las respuestas b y c son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los Decretos-leyes:",
+        "opciones": [
+            "Son disposiciones legislativas provisionales.",
+            "Son disposiciones legislativas retroactivas.",
+            "Son disposiciones legislativas permanentes.",
+            "Son disposiciones legislativas generales."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Con respecto a la iniciativa legislativa las Asambleas de las Comunidades Autónomas:",
+        "opciones": [
+            "Podrán remitir a la Mesa del Congreso un proyecto de ley.",
+            "Podrán solicitar del Gobierno la adopción de un proyecto de ley o remitirlo a la Mesa del Congreso.",
+            "Podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley.",
+            "Las Asambleas de las Comunidades Autónomas no tienen ningún tipo de iniciativa legislativa, la iniciativa legislativa corresponde a los órganos de gobierno de la Comunidad."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 87 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. 2. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa. 3. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si se decidiese someter a referéndum consultivo de todos los ciudadanos una decisión política de especial transcendencia, ¿Quién convocará dicho referéndum?",
+        "opciones": [
+            "El Presidente del Gobierno, previamente autorizado por el Congreso de los Diputados.",
+            "El Rey mediante propuesta del Presidente del Gobierno, previamente autorizada por las Cortes Generales.",
+            "El Presidente del Gobierno, mediante propuesta del Rey, previamente autorizada por el Congreso de los Diputados.",
+            "El Rey mediante propuesta del Presidente del Gobierno, previamente autorizada por el Congreso de los Diputados."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 92 1. Las decisiones políticas de especial trascendencia podrán ser sometidas a referéndum consultivo de todos los ciudadanos. 2. El referéndum será convocado por el Rey, mediante propuesta del Presidente del Gobierno, previamente autorizada por el Congreso de los Diputados. 3. Una ley orgánica regulará las condiciones y el procedimiento de las distintas modalidades de referéndum previstas en esta Constitución."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los proyectos de ley serán sometidos al Congreso:",
+        "opciones": [
+            "Acompañados de un informe técnico de los servicios jurídicos del Estado.",
+            "Acompañados de una exposición de motivos, un informe técnico de los servicios jurídicos del Estado y los antecedentes necesarios para pronunciarse sobre ellos.",
+            "Acompañados de una exposición de motivos y de los antecedentes necesarios para pronunciarse sobre ellos.",
+            "Acompañados de una exposición de motivos y de un informe técnico de los servicios jurídicos del Estado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 88 Los proyectos de ley serán aprobados en Consejo de Ministros, que los someterá al Congreso, acompañados de una exposición de motivos y de los antecedentes necesarios para pronunciarse sobre ellos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Cortes podrán tramitar los Decretos-leyes como proyectos de ley:",
+        "opciones": [
+            "Por el procedimiento ordinario.",
+            "Por el procedimiento especial.",
+            "No se pueden tramitar los Decretos-leyes como proyectos de ley debido a su excepcionalidad.",
+            "Por el procedimiento de urgencia."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En qué plazo sancionará el Rey las leyes aprobadas por las Cortes Generales?",
+        "opciones": [
+            "En el plazo de treinta días.",
+            "En el plazo de quince días.",
+            "En el plazo de veinte días.",
+            "En el plazo de diez días."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 91 El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué tendrá que solicitar el candidato a la Presidencia del Gobierno?",
+        "opciones": [
+            "Las directrices básicas de su programa político.",
+            "La confianza de la Cámara.",
+            "Los miembros de los que se va a conformar su gobierno.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Indique a cuál de los siguientes sujetos no le corresponde ningún tipo de iniciativa legislativa:",
+        "opciones": [
+            "Al Senado.",
+            "A las Asambleas Legislativas de las Comunidades Autónomas.",
+            "Al Gobierno.",
+            "Todos tienen iniciativa legislativa."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 87 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. 2. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa. 3. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Cuando el Estado firme un tratado internacional:",
+        "opciones": [
+            "Deberá informar inmediatamente al Congreso y al Senado.",
+            "Deberá informar inmediatamente al Congreso.",
+            "Deberá informar inmediatamente al Consejo de Estado.",
+            "No deberá informar a ninguna institución constitucional si no se trata de los tratados específicos recogidos en el artículo 94.1 CE."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 94 1. La prestación del consentimiento del Estado para obligarse por medio de tratados o convenios requerirá la previa autorización de las Cortes Generales, en los siguientes casos: a) Tratados de carácter político. b) Tratados o convenios de carácter militar. c) Tratados o convenios que afecten a la integridad territorial del Estado o a los derechos y deberes fundamentales establecidos en el Título I. d) Tratados o convenios que impliquen obligaciones financieras para la Hacienda Pública. e) Tratados o convenios que supongan modificación o derogación de alguna ley o exijan medidas legislativas para su ejecución. 2. El Congreso y el Senado serán inmediatamente informados de la conclusión de los restantes tratados o convenios."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién es el encargado constitucionalmente de coordinar las funciones de los miembros del Gobierno?",
+        "opciones": [
+            "Los Ministros.",
+            "El Gobierno en pleno.",
+            "Los Vicepresidentes del Gobierno.",
+            "El Presidente del Gobierno."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 98 1. El Gobierno se compone del Presidente, de los Vicepresidentes, en su caso, de los Ministros y de los demás miembros que establezca la ley. 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión. 3. Los miembros del Gobierno no podrán ejercer otras funciones representativas que las propias del mandato parlamentario, ni cualquier otra función pública que no derive de su cargo, ni actividad profesional o mercantil alguna. 4. La ley regulará el estatuto e incompatibilidades de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Mediante que instrumento normativo se podrá autorizar la celebración de tratados por los que se atribuya a una organización o institución internacional el ejercicio de competencias derivadas de la Constitución?",
+        "opciones": [
+            "Por Real Decreto-Ley.",
+            "Por Ley Orgánica.",
+            "Por Ley Ordinaria.",
+            "Por Ley de Bases."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 93 Mediante ley orgánica se podrá autorizar la celebración de tratados por los que se atribuya a una organización o institución internacional el ejercicio de competencias derivadas de la Constitución. Corresponde a las Cortes Generales o al Gobierno, según los casos, la garantía del cumplimiento de estos tratados y de las resoluciones emanadas de los organismos internacionales o supranacionales titulares de la cesión."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En cuál de las siguientes materias se podría ejercer la iniciativa legislativa popular?",
+        "opciones": [
+            "En relación a la prerrogativa de gracia.",
+            "En materias de carácter internacional.",
+            "En materia administrativa.",
+            "En materia tributaria."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 87 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. 2. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa. 3. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta correcta en relación con los Decretos-leyes:",
+        "opciones": [
+            "No pueden dictarse en todas las materias.",
+            "Sólo pueden dictarse cuando las Cámaras no estén reunidas.",
+            "Pueden dictarse en relación con cualquier materia.",
+            "Sólo pueden dictarse durante la vigencia de los estados de alarma, excepción o sitio."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿En qué plazo deben someterse a debate y votación de totalidad los Decretos-leyes?",
+        "opciones": [
+            "En el plazo de los veinte días siguientes a su promulgación.",
+            "En el plazo de los treinta días siguientes a su promulgación.",
+            "En el plazo de los veinte días siguientes a su entrada en vigor.",
+            "En el plazo de los treinta días siguientes a su entrada en vigor."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, ¿a quién ha de consultar el Rey previamente a la proposición de candidato a la Presidencia del Gobierno?",
+        "opciones": [
+            "A los portavoces de los Grupos parlamentarios con representación parlamentaria.",
+            "A los representantes designados por los Grupos políticos con representación parlamentaria.",
+            "Todas las repuestas anteriores son incorrectas.",
+            "A los representantes designados por los Grupos políticos aunque no tengan representación parlamentaria."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "En función de lo establecido en la Constitución Española de 1978, señale qué miembro no conforma el gobierno siempre:",
+        "opciones": [
+            "Los Vicepresidentes.",
+            "El Presidente del Gobierno.",
+            "Los demás miembros que establezca la ley.",
+            "Los Ministros."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 98 1. El Gobierno se compone del Presidente, de los Vicepresidentes, en su caso, de los Ministros y de los demás miembros que establezca la ley. 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión. 3. Los miembros del Gobierno no podrán ejercer otras funciones representativas que las propias del mandato parlamentario, ni cualquier otra función pública que no derive de su cargo, ni actividad profesional o mercantil alguna. 4. La ley regulará el estatuto e incompatibilidades de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Con arreglo a qué instrumentos normativos ejerce la potestad reglamentaria el Gobierno?",
+        "opciones": [
+            "Con la Constitución y el resto del ordenamiento jurídico.",
+            "Con la Constitución y los Tratados internacionales.",
+            "Con la Constitución y las leyes.",
+            "Con la Constitución, las Leyes y los Tratados Internacionales."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La garantía del cumplimiento de un tratado por el que se atribuya a una organización o institución internacional el ejercicio de competencias derivadas de la Constitución, ¿a quién corresponde?",
+        "opciones": [
+            "Siempre a las Cortes Generales.",
+            "A las Cortes Generales o al Gobierno, según los casos.",
+            "Al Congreso o al Gobierno, según los casos.",
+            "Siempre al Gobierno."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 93 Mediante ley orgánica se podrá autorizar la celebración de tratados por los que se atribuya a una organización o institución internacional el ejercicio de competencias derivadas de la Constitución. Corresponde a las Cortes Generales o al Gobierno, según los casos, la garantía del cumplimiento de estos tratados y de las resoluciones emanadas de los organismos internacionales o supranacionales titulares de la cesión."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién es designado constitucionalmente para dirigir la acción del Gobierno?",
+        "opciones": [
+            "Los Vicepresidentes del Gobierno.",
+            "Los Ministros.",
+            "El Presidente del Gobierno.",
+            "El Gobierno en pleno."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 98 1. El Gobierno se compone del Presidente, de los Vicepresidentes, en su caso, de los Ministros y de los demás miembros que establezca la ley. 2. El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo, sin perjuicio de la competencia y responsabilidad directa de éstos en su gestión. 3. Los miembros del Gobierno no podrán ejercer otras funciones representativas que las propias del mandato parlamentario, ni cualquier otra función pública que no derive de su cargo, ni actividad profesional o mercantil alguna. 4. La ley regulará el estatuto e incompatibilidades de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Las Asambleas de las Comunidades Autónomas:",
+        "opciones": [
+            "Podrán remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa.",
+            "Podrán remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de cinco miembros de la Asamblea encargados de su defensa.",
+            "Podrán remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres representantes encargados de su defensa.",
+            "Podrán remitir a la Mesa del Congreso una proyecto de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 87 1. La iniciativa legislativa corresponde al Gobierno, al Congreso y al Senado, de acuerdo con la Constitución y los Reglamentos de las Cámaras. 2. Las Asambleas de las Comunidades Autónomas podrán solicitar del Gobierno la adopción de un proyecto de ley o remitir a la Mesa del Congreso una proposición de ley, delegando ante dicha Cámara un máximo de tres miembros de la Asamblea encargados de su defensa. 3. Una ley orgánica regulará las formas de ejercicio y requisitos de la iniciativa popular para la presentación de proposiciones de ley. En todo caso se exigirán no menos de 500.000 firmas acreditadas. No procederá dicha iniciativa en materias propias de ley orgánica, tributarias o de carácter internacional, ni en lo relativo a la prerrogativa de gracia."
+    },
+    {
+        "pregunta": "¿Qué título dedica la Constitución Española de 1978 al Gobierno y la Administración?",
+        "opciones": [
+            "Título VI.",
+            "Título III.",
+            "Título IV.",
+            "Título V."
+        ],
+        "correcta": 2,
+        "explicacion": "En el Título IV CE encontramos regulado el Gobierno y la Administración en los artículos 97 a 107 ambos incluidos."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para la convalidación de los Decretos-leyes:",
+        "opciones": [
+            "El Reglamento del Congreso establecerá un procedimiento especial y sumario.",
+            "El Reglamento de las Cortes Generales establecerá un procedimiento especial y plenario.",
+            "El Reglamento del Congreso establecerá un procedimiento especial y plenario.",
+            "El Reglamento de las Cortes Generales establecerá un procedimiento especial y sumario."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El control de la delegación legislativa a favor del Gobierno:",
+        "opciones": [
+            "Se establecerá a través de fórmulas adicionales de control.",
+            "Corresponde a los Tribunales, sin perjuicio de que las leyes de delegación puedan establecer fórmulas adicionales de control.",
+            "Corresponde en exclusiva a los Tribunales.",
+            "Corresponde las Cortes Generales, sin perjuicio de que las leyes de delegación puedan establecer fórmulas adicionales de control."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 82 1. Las Cortes Generales podrán delegar en el Gobierno la potestad de dictar normas con rango de ley sobre materias determinadas no incluidas en el artículo anterior. 2. La delegación legislativa deberá otorgarse mediante una ley de bases cuando su objeto sea la formación de textos articulados o por una ley ordinaria cuando se trate de refundir varios textos legales en uno solo. 3. La delegación legislativa habrá de otorgarse al Gobierno de forma expresa para materia concreta y con fijación del plazo para su ejercicio. La delegación se agota por el uso que de ella haga el Gobierno mediante la publicación de la norma correspondiente. No podrá entenderse concedida de modo implícito o por tiempo indeterminado. Tampoco podrá permitir la subdelegación a autoridades distintas del propio Gobierno. 4. Las leyes de bases delimitarán con precisión el objeto y alcance de la delegación legislativa y los principios y criterios que han de seguirse en su ejercicio. 5. La autorización para refundir textos legales determinará el ámbito normativo a que se refiere el contenido de la delegación, especificando si se circunscribe a la mera formulación de un texto único o si se incluye la de regularizar, aclarar y armonizar los textos legales que han de ser refundidos. 6. Sin perjuicio de la competencia propia de los Tribunales, las leyes de delegación podrán establecer en cada caso fórmulas adicionales de control."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En el caso de que una proposición de ley fuere contraria a una delegación legislativa en vigor:",
+        "opciones": [
+            "Podrá presentarse una enmienda para la derogación total o parcial de la ley de delegación.",
+            "Podrá presentarse una proposición de ley para la derogación total o parcial de la ley de delegación.",
+            "La delegación legislativa se entenderá tácitamente revocada.",
+            "Podrá presentarse un proyecto de ley para la derogación total o parcial de la ley de delegación."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 84 Cuando una proposición de ley o una enmienda fuere contraria a una delegación legislativa en vigor, el Gobierno está facultado para oponerse a su tramitación. En tal supuesto, podrá presentarse una proposición de ley para la derogación total o parcial de la ley de delegación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿A quién le corresponde efectuar la propuesta para la celebración de un referéndum consultivo?",
+        "opciones": [
+            "Al Senado.",
+            "Al Congreso.",
+            "Al Gobierno.",
+            "Al Presidente del Gobierno."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 92 1. Las decisiones políticas de especial trascendencia podrán ser sometidas a referéndum consultivo de todos los ciudadanos. 2. El referéndum será convocado por el Rey, mediante propuesta del Presidente del Gobierno, previamente autorizada por el Congreso de los Diputados. 3. Una ley orgánica regulará las condiciones y el procedimiento de las distintas modalidades de referéndum previstas en esta Constitución."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién ordenará la publicación de las leyes aprobadas por las Cortes Generales?",
+        "opciones": [
+            "El Rey.",
+            "El Ministro de Justicia.",
+            "El Presidente del Gobierno.",
+            "El Presidente del Congreso de los Diputados."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 91 El Rey sancionará en el plazo de quince días las leyes aprobadas por las Cortes Generales, y las promulgará y ordenará su inmediata publicación."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Para otorgar la confianza al candidato a la Presidencia del Gobierno en primera votación se necesitará:",
+        "opciones": [
+            "El voto favorable de la mayoría simple de los miembros de las Cámaras Legislativas.",
+            "El voto favorable de la mayoría simple de los miembros del Congreso de los Diputados.",
+            "El voto favorable de la mayoría absoluta de los miembros del Congreso de los Diputados.",
+            "El voto favorable de la mayoría absoluta de los miembros de las Cámaras Legislativas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué órgano constitucional otorgará la confianza al candidato a la Presidencia del Gobierno?",
+        "opciones": [
+            "El Rey.",
+            "El Congreso de los Diputados.",
+            "El Congreso de los Diputados y el Senado de forma conjunta.",
+            "El Senado."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién puede dictar Decretos-leyes?",
+        "opciones": [
+            "El Congreso y el Senado conjuntamente.",
+            "El Congreso.",
+            "El Gobierno.",
+            "El Senado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 86 1. En caso de extraordinaria y urgente necesidad, el Gobierno podrá dictar disposiciones legislativas provisionales que tomarán la forma de Decretos-leyes y que no podrán afectar al ordenamiento de las instituciones básicas del Estado, a los derechos, deberes y libertades de los ciudadanos regulados en el Título I, al régimen de las Comunidades Autónomas ni al Derecho electoral general. 2. Los Decretos-leyes deberán ser inmediatamente sometidos a debate y votación de totalidad al Congreso de los Diputados, convocado al efecto si no estuviere reunido, en el plazo de los treinta días siguientes a su promulgación. El Congreso habrá de pronunciarse expresamente dentro de dicho plazo sobre su convalidación o derogación, para lo cual el Reglamento establecerá un procedimiento especial y sumario. 3. Durante el plazo establecido en el apartado anterior, las Cortes podrán tramitarlos como proyectos de ley por el procedimiento de urgencia."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Cuando el Rey propone a un candidato a la presidencia del Gobierno, habrá de realizar consultas con los representantes de los Grupos políticos con representación parlamentaria, ¿cómo son elegidos dichos representantes?",
+        "opciones": [
+            "Por cada uno de los Grupos políticos a los que representan.",
+            "Por los Senadores.",
+            "Por las Cortes Generales.",
+            "Por los portavoces de cada uno de los Grupos parlamentarios."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién es el encargado constitucionalmente de proponer al candidato a la presidencia del Gobierno?",
+        "opciones": [
+            "El Senado.",
+            "El Rey.",
+            "Las Cortes Generales en sesión conjunta.",
+            "El Congreso de los Diputados."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si en primera votación, el candidato a la Presidencia del Gobierno no hubiese obtenido la confianza del Congreso de los Diputados, se repetirá dicha votación:",
+        "opciones": [
+            "Veinticuatro horas después de la anterior.",
+            "Treinta y seis horas después de la anterior.",
+            "Cuarenta y ocho horas después de la anterior.",
+            "Setenta y dos horas después de la anterior."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El candidato a la presidencia del gobierno, expondrá el programa político del Gobierno que pretenda formar, ¿ante qué órgano constitucional?",
+        "opciones": [
+            "Ante el Congreso de los Diputados.",
+            "Ante el Senado.",
+            "Ante las Cortes Generales.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿De qué plazo dispondrá el Senado para vetar un proyecto de ley si dicho proyecto es declarado urgente por el Gobierno?",
+        "opciones": [
+            "15 días naturales.",
+            "20 días naturales.",
+            "15 días hábiles.",
+            "20 días hábiles."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 90 1. Aprobado un proyecto de ley ordinaria u orgánica por el Congreso de los Diputados, su Presidente dará inmediata cuenta del mismo al Presidente del Senado, el cual lo someterá a la deliberación de éste. 2. El Senado en el plazo de dos meses, a partir del día de la recepción del texto, puede, mediante mensaje motivado, oponer su veto o introducir enmiendas al mismo. El veto deberá ser aprobado por mayoría absoluta. El proyecto no podrá ser sometido al Rey para sanción sin que el Congreso ratifique por mayoría absoluta, en caso de veto, el texto inicial, o por mayoría simple, una vez transcurridos dos meses desde la interposición del mismo, o se pronuncie sobre las enmiendas, aceptándolas o no por mayoría simple. 3. El plazo de dos meses de que el Senado dispone para vetar o enmendar el proyecto se reducirá al de veinte días naturales en los proyectos declarados urgentes por el Gobierno o por el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En caso de que el Senado oponga su veto a un proyecto de Ley Ordinaria:",
+        "opciones": [
+            "El proyecto no podrá ser aprobado.",
+            "El proyecto no podrá ser sometido al Rey para sanción sin que el Congreso ratifique por mayoría simple el texto inicial.",
+            "El proyecto volverá al Congreso y se someterá nuevamente a debate y votación de totalidad.",
+            "El proyecto no podrá ser sometido al Rey para sanción sin que el Congreso ratifique por mayoría absoluta el texto inicial."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 90 1. Aprobado un proyecto de ley ordinaria u orgánica por el Congreso de los Diputados, su Presidente dará inmediata cuenta del mismo al Presidente del Senado, el cual lo someterá a la deliberación de éste. 2. El Senado en el plazo de dos meses, a partir del día de la recepción del texto, puede, mediante mensaje motivado, oponer su veto o introducir enmiendas al mismo. El veto deberá ser aprobado por mayoría absoluta. El proyecto no podrá ser sometido al Rey para sanción sin que el Congreso ratifique por mayoría absoluta, en caso de veto, el texto inicial, o por mayoría simple, una vez transcurridos dos meses desde la interposición del mismo, o se pronuncie sobre las enmiendas, aceptándolas o no por mayoría simple. 3. El plazo de dos meses de que el Senado dispone para vetar o enmendar el proyecto se reducirá al de veinte días naturales en los proyectos declarados urgentes por el Gobierno o por el Congreso de los Diputados."
+    },
+    {
+        "pregunta": "¿En qué artículo de la Constitución Española de1978 se recogen las funciones del Gobierno?",
+        "opciones": [
+            "No se establece en la Constitución Española las funciones del Gobierno.",
+            "En el artículo 98.",
+            "En el artículo 97.",
+            "En el artículo 96."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Indique en qué tipo de Tratados internacionales es necesaria la previa autorización de las Cortes Generales para que el Estado preste su consentimiento:",
+        "opciones": [
+            "Tratados de carácter económico.",
+            "Tratados de carácter político.",
+            "Tratados que contengan estipulaciones contrarias a la Constitución.",
+            "Todos los tratados necesitan autorización previa de las Cortes Generales."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 94 1. La prestación del consentimiento del Estado para obligarse por medio de tratados o convenios requerirá la previa autorización de las Cortes Generales, en los siguientes casos: a) Tratados de carácter político. b) Tratados o convenios de carácter militar. c) Tratados o convenios que afecten a la integridad territorial del Estado o a los derechos y deberes fundamentales establecidos en el Título I. d) Tratados o convenios que impliquen obligaciones financieras para la Hacienda Pública. e) Tratados o convenios que supongan modificación o derogación de alguna ley o exijan medidas legislativas para su ejecución. 2. El Congreso y el Senado serán inmediatamente informados de la conclusión de los restantes tratados o convenios."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En función de la separación de poderes establecida constitucionalmente, el Gobierno sería el poder:",
+        "opciones": [
+            "Ejecutivo.",
+            "Todas las repuestas son correctas.",
+            "Legislativo.",
+            "Judicial."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 97 El Gobierno dirige la política interior y exterior, la Administración civil y militar y la defensa del Estado. Ejerce la función ejecutiva y la potestad reglamentaria de acuerdo con la Constitución y las leyes."
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>

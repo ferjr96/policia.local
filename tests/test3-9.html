@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test sobre La Unión Europea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;            
+            font-size: 15px;
+        }
+        .pregunta {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .pregunta p {
+            font-weight: bold;
+            margin-top: 0;
+        }
+        label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .correcta {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .incorrecta {
+            color: #e74c3c;
+            text-decoration: line-through;
+        }
+        .respuesta-correcta {
+            color: #27ae60;
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            display: none;
+        }
+        #contador {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #7f8c8d;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .explicacion {
+            font-style: italic;
+            color: #7f8c8d;
+            margin-top: 5px;
+            display: none;
+        }
+        #indice {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .numero-pregunta {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .numero-pregunta:hover {
+            background-color: #bdc3c7;
+        }
+        .numero-pregunta.respondida {
+            background-color: #2ecc71;
+            color: white;
+        }
+        .numero-pregunta.respondida-incorrecta {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .controles-navegacion {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        #anterior-btn {
+            background-color: #95a5a6;
+        }
+        #anterior-btn:hover {
+            background-color: #7f8c8d;
+        }
+        #finalizar-btn {
+            background-color: #e67e22;
+            display: none;
+        }
+        #finalizar-btn:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tema 3. Constitución española de 1978</h1>
+
+    
+    <form id="testForm">
+        <!-- Las preguntas se insertarán aquí dinámicamente -->
+    </form>
+    
+    <div class="controles-navegacion">
+        <button type="button" id="anterior-btn" onclick="anteriorPregunta()">Anterior</button>
+        <button type="button" id="siguiente-btn" onclick="siguientePregunta()">Siguiente</button>
+        <button type="button" id="finalizar-btn" onclick="finalizarTest()">Ver resultados finales</button>
+    </div>
+        <div id="contador">Pregunta <span id="pregunta-actual">1</span> de <span id="total-preguntas">30</span></div>
+    
+    <div id="indice">
+        <!-- Los números de pregunta se generarán aquí -->
+    </div>
+    <div id="resultado"></div>
+    
+    <script>
+               // Reemplazar "[a-d]\) --> por "
+        const preguntas = [
+    {
+        "pregunta": "Constitución Española de 1978. La audiencia de los ciudadanos en el procedimiento de elaboración de las disposiciones administrativas que les afecten, se regulará:",
+        "opciones": [
+            "Por Ley.",
+            "Por Ley Orgánica.",
+            "Por la Constitución Española.",
+            "Las respuestas b y c son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién nombra al Presidente del Gobierno?",
+        "opciones": [
+            "El Ministro de la Presidencia.",
+            "Ninguna respuesta es correcta.",
+            "El Rey.",
+            "El Presidente del Congreso de los Diputados."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Según la Constitución Española de 1978, ¿el acceso a qué archivos y registros administrativos no se regulará por Ley?",
+        "opciones": [
+            "Las respuestas b y c son correctas.",
+            "Los que afecten a la seguridad y defensa del Estado.",
+            "Los que afecten a la intimidad de las personas.",
+            "Las respuestas b y c son incorrectas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La prerrogativa real de gracia a la que alude el artículo 102.3 de la CE:",
+        "opciones": [
+            "Está excluida para los delitos de traición cometan los miembros del Gobierno en el ejercicio de sus funciones.",
+            "Está excluida para los delitos contra la seguridad del Estado que cometan los miembros del Gobierno en el ejercicio de sus funciones.",
+            "Las respuestas a y b son correctas.",
+            "Las respuestas a y b son incorrectas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Según lo establecido en el artículo 105, el procedimiento a través del cual deben producirse los actos administrativos garantizando la audiencia del interesado se regulará:",
+        "opciones": [
+            "Por Ley Orgánica.",
+            "Por Ley.",
+            "Por la Constitución Española.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién nombra y separa a los miembros del Gobierno?",
+        "opciones": [
+            "El Rey.",
+            "El Presidente del Gobierno.",
+            "El Presidente del Congreso.",
+            "El Ministro de la Presidencia."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 100 Los demás miembros del Gobierno serán nombrados y separados por el Rey, a propuesta de su Presidente."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta incorrecta en relación con el cese del Gobierno:",
+        "opciones": [
+            "El Gobierno cesa tras la celebración de elecciones generales.",
+            "El Gobierno cesa por fallecimiento de su Presidente.",
+            "El Gobierno cesa por dimisión de su Presidente.",
+            "El Gobierno cesa a petición de la mayoría absoluta de sus miembros."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 101 1. El Gobierno cesa tras la celebración de elecciones generales, en los casos de pérdida de la confianza parlamentaria previstos en la Constitución, o por dimisión o fallecimiento de su Presidente. 2. El Gobierno cesante continuará en funciones hasta la toma de posesión del nuevo Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los órganos de la Administración del Estado son coordinados de acuerdo:",
+        "opciones": [
+            "Con lo dispuesto por el Congreso de los Diputados.",
+            "Con lo dispuesto por las Cortes Generales.",
+            "Con la ley.",
+            "Con las directrices dictadas por la Administración General del Estado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Los estatutos de las Fuerzas y Cuerpos de seguridad se determinarán:",
+        "opciones": [
+            "Por Ley Orgánica.",
+            "Por Ley Ordinaria.",
+            "Las respuestas a y b son correctas.",
+            "Las respuestas a y b son incorrectas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿A quién le correspondería ejercer el derecho de gracia al que hace referencia el artículo 102.3 de la CE?",
+        "opciones": [
+            "Al Rey.",
+            "Al Presidente del Congreso.",
+            "Al Presidente del Gobierno.",
+            "Al Tribunal Supremo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 102 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo. Artículo 62 Corresponde al Rey: i) Ejercer el derecho de gracia con arreglo a la ley, que no podrá autorizar indultos generales."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La audiencia de los ciudadanos en el procedimiento de elaboración de las disposiciones administrativas que les afecten, podrá llevarse a cabo:",
+        "opciones": [
+            "A través de las asociaciones reconocidas por la ley.",
+            "A través de organizaciones reconocidas por la ley.",
+            "De forma directa.",
+            "Todas las respuestas anteriores son correctas"
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Con qué mayoría se deberá aprobar la iniciativa por la cuál se podrá acusar a algún miembro del gobierno del delito de traición en el ejercicio de sus funciones?",
+        "opciones": [
+            "Mayoría absoluta de los miembros de las Cámaras Legislativas.",
+            "Mayoría absoluta del Congreso de los Diputados.",
+            "Mayoría simple de los miembros de las Cámaras legislativas.",
+            "Mayoría simple de los miembros del Congreso de los Diputados."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La Administración Pública actúa de acuerdo: Señale la respuesta incorrecta.",
+        "opciones": [
+            "Con los principios de subordinación y jerarquía.",
+            "De acuerdo con los principios de eficacia y jerarquía.",
+            "Con los principios de descentralización y desconcentración.",
+            "Con los principios de descentralización y coordinación, con sometimiento pleno a la ley y al derecho."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El gobierno cesante continuará en funciones:",
+        "opciones": [
+            "Hasta el nombramiento del nuevo Presidente del Gobierno.",
+            "Hasta la toma de posesión del nuevo Gobierno.",
+            "Hasta que el Congreso de los Diputados otorgue la confianza al candidato a la Presidencia del Gobierno.",
+            "Hasta que se convoquen nuevas elecciones."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 101 1. El Gobierno cesa tras la celebración de elecciones generales, en los casos de pérdida de la confianza parlamentaria previstos en la Constitución, o por dimisión o fallecimiento de su Presidente. 2. El Gobierno cesante continuará en funciones hasta la toma de posesión del nuevo Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Ante qué Tribunal se exigirá la responsabilidad criminal del Ministro de Economía?",
+        "opciones": [
+            "Ante el Tribunal Supremo.",
+            "Ante la Audiencia Nacional.",
+            "Ninguna respuesta es correcta, se exigirá ante las Cortes Generales.",
+            "Ante el Tribunal Constitucional."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué instrumento normativo determinará los principios básicos de actuación de las Fuerzas y Cuerpos de seguridad?",
+        "opciones": [
+            "Una Directiva Europea.",
+            "Una Ley Orgánica.",
+            "Un Reglamento.",
+            "Una Ley Ordinaria."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si el candidato a Presidente del Gobierno no hubiera obtenido la confianza del Congreso de los Diputados ni en primera ni en segunda votación, ¿Cómo se procederá?",
+        "opciones": [
+            "A través de la tramitación de sucesivas propuestas en la forma prevista en el artículo 99 de la Constitución Española.",
+            "A través de la tramitación de sucesivas propuestas en la forma prevista en el artículo 97 de la Constitución Española.",
+            "Ninguna respuesta es correcta.",
+            "A través de la tramitación de sucesivas propuestas en la forma prevista en el artículo 98 de la Constitución Española."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Quién separa al Vicepresidente del Gobierno en caso de existir?",
+        "opciones": [
+            "El Presidente del Gobierno.",
+            "El Rey.",
+            "El Ministro de la Presidencia.",
+            "El Presidente del Congreso."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 100 Los demás miembros del Gobierno serán nombrados y separados por el Rey, a propuesta de su Presidente."
+    },
+    {
+        "pregunta": "En función de lo establecido en la Constitución Española de 1978, garantizar la seguridad ciudadana es una misión de:",
+        "opciones": [
+            "El Ministerio de Defensa.",
+            "El Ministerio del Interior.",
+            "El Gobierno.",
+            "Las Fuerzas y Cuerpos de Seguridad."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La responsabilidad criminal de los miembros del gobierno será exigible:",
+        "opciones": [
+            "Ante una Sala especial del Tribunal Constitucional.",
+            "Ante la Sala de lo Penal de la Audiencia Nacional.",
+            "Ante una Sala especial compuesta por Magistrados del Tribunal Supremo y Magistrados del Tribunal Constitucional.",
+            "Ante la Sala de lo Penal del Tribunal Supremo."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En función de lo establecido en el artículo 104, la protección del libre ejercicio de los derechos y libertades es una misión de:",
+        "opciones": [
+            "El Ministerio del Interior.",
+            "Las Fuerzas y Cuerpos de seguridad.",
+            "El Gobierno.",
+            "El Tribunal Constitucional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Cómo son creados los órganos de la Administración del Estado?",
+        "opciones": [
+            "Por Reglamento.",
+            "Por Ley Orgánica.",
+            "De acuerdo con la ley.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Si el Presidente del Gobierno cometiera un delito de estafa, conocerá de este delito:",
+        "opciones": [
+            "El Congreso de los Diputados.",
+            "El Tribunal Supremo.",
+            "La Audiencia Nacional.",
+            "El Tribunal Constitucional."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿De qué órgano constitucional dependen las Fuerzas y Cuerpos de Seguridad?",
+        "opciones": [
+            "Del Gobierno.",
+            "De las Cortes generales.",
+            "Del Senado.",
+            "Del Ministerio del Interior."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La audiencia de los ciudadanos en el procedimiento de elaboración de las disposiciones administrativas que les afecten, se recoge en el artículo:",
+        "opciones": [
+            "104.",
+            "105.",
+            "102.",
+            "103."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale en cuál de los siguientes supuestos no se produce el cese del Gobierno:",
+        "opciones": [
+            "Por fallecimiento del Presidente del Gobierno.",
+            "Por dimisión del Presidente del Gobierno.",
+            "En caso de convocatoria de nuevas elecciones.",
+            "En los casos de pérdida de la confianza parlamentaria."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 101 1. El Gobierno cesa tras la celebración de elecciones generales, en los casos de pérdida de la confianza parlamentaria previstos en la Constitución, o por dimisión o fallecimiento de su Presidente. 2. El Gobierno cesante continuará en funciones hasta la toma de posesión del nuevo Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. En el caso de comisión de un hecho delictivo contra la seguridad del Estado por un miembro del Gobierno en el ejercicio de sus funciones, la acusación corresponde:",
+        "opciones": [
+            "Al Ministerio Fiscal.",
+            "Al Tribunal Supremo.",
+            "Al Congreso de los Diputados.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El acceso a los archivos y registros administrativos por parte de los ciudadanos se reconoce en el artículo:",
+        "opciones": [
+            "102.",
+            "100.",
+            "105.",
+            "104."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿A partir de qué momento empieza a transcurrir el plazo para que el Rey disuelva las Cámaras si el Congreso de los Diputados no otorga la confianza a ningún candidato a la Presidencia del Gobierno?",
+        "opciones": [
+            "Todas las respuestas son incorrectas.",
+            "De la primera votación de investidura.",
+            "Desde que se constituyen las Cámaras.",
+            "De la segunda votación de investidura."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 99 1. Después de cada renovación del Congreso de los Diputados, y en los demás supuestos constitucionales en que así proceda, el Rey, previa consulta con los representantes designados por los Grupos políticos con representación parlamentaria, y a través del Presidente del Congreso, propondrá un candidato a la Presidencia del Gobierno. 2. El candidato propuesto conforme a lo previsto en el apartado anterior expondrá ante el Congreso de los Diputados el programa político del Gobierno que pretenda formar y solicitará la confianza de la Cámara. 3. Si el Congreso de los Diputados, por el voto de la mayoría absoluta de sus miembros, otorgare su confianza a dicho candidato, el Rey le nombrará Presidente. De no alcanzarse dicha mayoría, se someterá la misma propuesta a nueva votación cuarenta y ocho horas después de la anterior, y la confianza se entenderá otorgada si obtuviere la mayoría simple. 4. Si efectuadas las citadas votaciones no se otorgase la confianza para la investidura, se tramitarán sucesivas propuestas en la forma prevista en los apartados anteriores. 5. Si transcurrido el plazo de dos meses, a partir de la primera votación de investidura, ningún candidato hubiere obtenido la confianza del Congreso, el Rey disolverá ambas Cámaras y convocará nuevas elecciones con el refrendo del Presidente del Congreso."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El sistema de incompatibilidades de los funcionarios públicos se regirá por:",
+        "opciones": [
+            "Decreto.",
+            "Ley Ordinaria.",
+            "Reglamento.",
+            "Ley Orgánica."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "Señale la respuesta incorrecta. De conformidad con lo dispuesto en la Constitución Española de 1978, la Administración Pública actúa de acuerdo con los principios de:",
+        "opciones": [
+            "Jerarquía.",
+            "Eficacia.",
+            "Eficiencia.",
+            "Coordinación."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "¿En que artículo de la Constitución Española de 1978 se recoge el órgano judicial ante el que habrán de responder criminalmente los miembros del Gobierno?",
+        "opciones": [
+            "Ninguna respuesta es correcta.",
+            "En el artículo 102.2.",
+            "En el artículo 102.1.",
+            "En el artículo 102.3."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "En función de lo establecido en la Constitución Española de 1978, ¿Qué instrumento regulará el estatuto de los funcionarios públicos?",
+        "opciones": [
+            "La Ley.",
+            "Una Ley Orgánica.",
+            "Un Reglamento.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "De conformidad con lo dispuesto en la Constitución Española de 1978, ¿Quién nombra a los Ministros?",
+        "opciones": [
+            "El Presidente del Congreso.",
+            "El Presidente del Gobierno.",
+            "El Ministro de la Presidencia.",
+            "El Rey."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 100 Los demás miembros del Gobierno serán nombrados y separados por el Rey, a propuesta de su Presidente."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta incorrecta en relación con el art. 103.1 de la CE:",
+        "opciones": [
+            "La Administración Pública sirve con objetividad los intereses generales.",
+            "La Administración Pública actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación.",
+            "La Administración Pública actúa con sometimiento pleno a la Ley y al Derecho.",
+            "La Administración Pública sirve con objetividad el interés público tutelado por la Ley."
+        ],
+        "correcta": 3,
+        "explicacion": ""
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Conforme a lo establecido en el artículo 103, señale la respuesta incorrecta:",
+        "opciones": [
+            "La ley regulará el estatuto de los funcionarios públicos.",
+            "La Administración Pública actúa con sometimiento pleno a la Ley y al Derecho.",
+            "La Administración Pública sirve con objetividad los intereses generales.",
+            "Los órganos contencioso-administrativos son creados, regidos y coordinados de acuerdo con la Ley."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El Tribunal Supremo como Sala de lo Penal conocerá:",
+        "opciones": [
+            "De la responsabilidad civil de los miembros del Gobierno.",
+            "De la responsabilidad criminal de los miembros del Gobierno.",
+            "Las respuestas a y b son correctas.",
+            "Las respuestas a y b son incorrectas."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale cuál de las siguientes afirmaciones es correcta:",
+        "opciones": [
+            "El procedimiento a través del cuál deben producirse los actos administrativos, garantizando cuando proceda la audiencia a los interesados se regulará por Ley.",
+            "La Ley regulará la audiencia de los ciudadanos en el procedimiento de elaboración de las disposiciones normativas que les afecten.",
+            "La Ley regulará el acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "¿En qué artículo de la Constitución Española de 1978 se recoge el cese del Gobierno?",
+        "opciones": [
+            "En el artículo 101.",
+            "En el artículo 100.",
+            "En el artículo 99.",
+            "En el artículo 98."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 101 1. El Gobierno cesa tras la celebración de elecciones generales, en los casos de pérdida de la confianza parlamentaria previstos en la Constitución, o por dimisión o fallecimiento de su Presidente. 2. El Gobierno cesante continuará en funciones hasta la toma de posesión del nuevo Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta correcta de conformidad con el art. 104.1 CE. No es una misión de las Fuerzas y Cuerpos de Seguridad:",
+        "opciones": [
+            "Proteger el orden público.",
+            "Proteger el libre ejercicio de los derechos.",
+            "Garantizar la seguridad ciudadana.",
+            "Proteger el libre ejercicio de las libertades."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿A propuesta de quién nombrará el Rey a los Ministros?",
+        "opciones": [
+            "Del Presidente del Gobierno.",
+            "Del portavoz del grupo parlamentario.",
+            "Del Ministro de la Presidencia.",
+            "El Presidente del Congreso."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 100 Los demás miembros del Gobierno serán nombrados y separados por el Rey, a propuesta de su Presidente."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Conforme a lo establecido en el artículo 103:",
+        "opciones": [
+            "La Administración Pública actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación.",
+            "Los órganos de la Administración del Estado son creados de acuerdo con los Estatutos de autonomía.",
+            "Un reglamento de desarrollo regulará el estatuto de los funcionarios públicos.",
+            "Las respuestas a y c son correctas."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. ¿Qué Sala del Tribunal Supremo conocerá de la responsabilidad criminal de los miembros del Gobierno?",
+        "opciones": [
+            "La Sala de lo Penal.",
+            "La Sala Primera.",
+            "La Sala de lo Civil.",
+            "La Sala de lo Contencioso-administrativo."
+        ],
+        "correcta": 0,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta correcta en función de lo establecido en el artículo 104:",
+        "opciones": [
+            "La Constitución española determinará los principios básicos de actuación de las Fuerzas y Cuerpos de Seguridad.",
+            "Por Ley se determinarán los estatutos de las Fuerzas y Cuerpos de Seguridad.",
+            "Una Ley Orgánica determinará las funciones de las Fuerzas y Cuerpo de Seguridad.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 104 1. Las Fuerzas y Cuerpos de seguridad, bajo la dependencia del Gobierno, tendrán como misión proteger el libre ejercicio de los derechos y libertades y garantizar la seguridad ciudadana. 2. Una ley orgánica determinará las funciones, principios básicos de actuación y estatutos de las Fuerzas y Cuerpos de seguridad."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. La Constitución dispone que el procedimiento a través del cuál deben producirse los actos administrativos, garantizará (cuando proceda):",
+        "opciones": [
+            "La defensa del interesado.",
+            "La asistencia técnica al interesado.",
+            "La audiencia al interesado.",
+            "La notificación al interesado."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Con carácter general, el acceso de los ciudadanos a los archivos y registros administrativos se regulará por:",
+        "opciones": [
+            "La Constitución Española.",
+            "Ley Orgánica.",
+            "Ley Ordinaria.",
+            "Todas las repuestas anteriores son correctas."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 105 La ley regulará: a) La audiencia de los ciudadanos, directamente o a través de las organizaciones y asociaciones reconocidas por la ley, en el procedimiento de elaboración de las disposiciones administrativas que les afecten. b) El acceso de los ciudadanos a los archivos y registros administrativos, salvo en lo que afecte a la seguridad y defensa del Estado, la averiguación de los delitos y la intimidad de las personas. c) El procedimiento a través del cual deben producirse los actos administrativos, garantizando, cuando proceda, la audiencia del interesado."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta correcta. El Gobierno cesa:",
+        "opciones": [
+            "Por dimisión del Presidente del Gobierno.",
+            "Tras la celebración de elecciones generales.",
+            "En los casos de pérdida de la confianza parlamentaria previstos en la Constitución.",
+            "Todas las respuestas anteriores son correctas."
+        ],
+        "correcta": 3,
+        "explicacion": "Artículo 101 1. El Gobierno cesa tras la celebración de elecciones generales, en los casos de pérdida de la confianza parlamentaria previstos en la Constitución, o por dimisión o fallecimiento de su Presidente. 2. El Gobierno cesante continuará en funciones hasta la toma de posesión del nuevo Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta incorrecta:",
+        "opciones": [
+            "El Gobierno dirige la política interior y exterior.",
+            "Las incompatibilidades de los miembros del gobierno se regularán por una Ley Orgánica.",
+            "El Presidente dirige la acción del Gobierno y coordina las funciones de los demás miembros del mismo.",
+            "Los miembros del Gobierno no podrán ejercer otras funciones representativas que las propias del mandato parlamentario."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 98 4. La ley regulará el estatuto e incompatibilidades de los miembros del Gobierno."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. Señale la respuesta correcta:",
+        "opciones": [
+            "Siempre que un miembro del gobierno sea acusado de un delito de traición, sólo podrá ser planteada la acusación por iniciativa de la cuarta parte de los miembros del Congreso.",
+            "Si un miembro del gobierno es acusado de un delito contra la seguridad del Estado en el ejercicio de sus funciones, la acusación sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso.",
+            "Todas las repuestas son correctas.",
+            "Siempre que un miembro del gobierno sea acusado de un delito contra la seguridad del Estado, sólo podrá ser planteada la acusación por iniciativa de la cuarta parte de los miembros del Congreso."
+        ],
+        "correcta": 1,
+        "explicacion": "Artículo 102 1. La responsabilidad criminal del Presidente y los demás miembros del Gobierno será exigible, en su caso, ante la Sala de lo Penal del Tribunal Supremo. 2. Si la acusación fuere por traición o por cualquier delito contra la seguridad del Estado en el ejercicio de sus funciones, sólo podrá ser planteada por iniciativa de la cuarta parte de los miembros del Congreso, y con la aprobación de la mayoría absoluta del mismo. 3. La prerrogativa real de gracia no será aplicable a ninguno de los supuestos del presente artículo."
+    },
+    {
+        "pregunta": "Constitución Española de 1978. El art. 103 CE dispone que el acceso a la función pública se hará de acuerdo con los principios de:",
+        "opciones": [
+            "Eficiencia y coordinación.",
+            "Profesionalidad y experiencia.",
+            "Mérito y capacidad.",
+            "Competencia y eficacia."
+        ],
+        "correcta": 2,
+        "explicacion": "Artículo 103 1. La Administración Pública sirve con objetividad los intereses generales y actúa de acuerdo con los principios de eficacia, jerarquía, descentralización, desconcentración y coordinación, con sometimiento pleno a la ley y al Derecho. 2. Los órganos de la Administración del Estado son creados, regidos y coordinados de acuerdo con la ley. 3. La ley regulará el estatuto de los funcionarios públicos, el acceso a la función pública de acuerdo con los principios de mérito y capacidad, las peculiaridades del ejercicio de su derecho a sindicación, el sistema de incompatibilidades y las garantías para la imparcialidad en el ejercicio de sus funciones."
+    }
+];
+
+        let preguntaActual = 0;
+        let respuestasCorrectas = 0;
+        let respuestasUsuario = Array(preguntas.length).fill(null);
+
+        // Mostrar la primera pregunta al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+        preguntas.forEach(p => {
+            // Guardamos la opción correcta original
+            const correctaOriginal = p.opciones[p.correcta];
+            // Mezclamos las opciones
+            p.opciones = mezclarArray(p.opciones);
+            // Actualizamos el índice de la nueva correcta
+            p.correcta = p.opciones.indexOf(correctaOriginal);
+        });
+
+            document.getElementById('total-preguntas').textContent = preguntas.length;
+            generarIndice();
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+        });
+        
+        //para mezclar
+            function mezclarArray(array) {
+            const copia = [...array];
+            for (let i = copia.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copia[i], copia[j]] = [copia[j], copia[i]];
+            }
+            return copia;
+            }
+
+        
+
+
+        // Función para generar el índice de preguntas
+        function generarIndice() {
+            const indice = document.getElementById('indice');
+            indice.innerHTML = '';
+            
+            preguntas.forEach((_, index) => {
+                const numero = document.createElement('div');
+                numero.className = 'numero-pregunta';
+                numero.textContent = index + 1;
+                numero.onclick = function() { irAPregunta(index); };
+                indice.appendChild(numero);
+            });
+        }
+
+        // Función para ir a una pregunta específica
+        function irAPregunta(num) {
+            preguntaActual = num;
+            mostrarPregunta(preguntaActual);
+            actualizarControlesNavegacion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para mostrar una pregunta
+        function mostrarPregunta(num) {
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
+            
+            const pregunta = preguntas[num];
+            
+            const divPregunta = document.createElement('div');
+            divPregunta.className = 'pregunta';
+            
+            const pTexto = document.createElement('p');
+            pTexto.textContent = pregunta.pregunta;
+            divPregunta.appendChild(pTexto);
+            
+            // Crear opciones de respuesta
+            pregunta.opciones.forEach((opcion, index) => {
+                const label = document.createElement('label');
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'pregunta';
+                input.value = index;
+                input.onclick = function() { verificarRespuesta(index); };
+                
+                // Verificar si ya se respondió esta pregunta
+                if (respuestasUsuario[num] !== null) {
+                    input.disabled = true;
+                    if (index === pregunta.correcta) {
+                        label.classList.add('correcta');
+                    } else if (index === respuestasUsuario[num] && respuestasUsuario[num] !== pregunta.correcta) {
+                        label.classList.add('incorrecta');
+                    }
+                }
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opcion));
+                divPregunta.appendChild(label);
+            });
+            
+            // Mostrar explicación si ya se respondió
+            if (respuestasUsuario[num] !== null) {
+                const divExplicacion = document.createElement('div');
+                divExplicacion.className = 'explicacion';
+                divExplicacion.textContent = pregunta.explicacion;
+                divExplicacion.style.display = 'block';
+                divPregunta.appendChild(divExplicacion);
+            }
+            
+            form.appendChild(divPregunta);
+            document.getElementById('pregunta-actual').textContent = num + 1;
+            
+            // Actualizar el índice
+            actualizarIndice();
+        }
+
+        // Función para actualizar el índice
+        function actualizarIndice() {
+            const numeros = document.querySelectorAll('.numero-pregunta');
+            numeros.forEach((numero, index) => {
+                numero.classList.remove('respondida', 'respondida-incorrecta');
+                
+                if (respuestasUsuario[index] !== null) {
+                    if (respuestasUsuario[index] === preguntas[index].correcta) {
+                        numero.classList.add('respondida');
+                    } else {
+                        numero.classList.add('respondida-incorrecta');
+                    }
+                }
+            });
+        }
+
+        // Función para verificar la respuesta seleccionada
+        function verificarRespuesta(opcionSeleccionada) {
+            const pregunta = preguntas[preguntaActual];
+            respuestasUsuario[preguntaActual] = opcionSeleccionada;
+            
+            if (opcionSeleccionada === pregunta.correcta) {
+                respuestasCorrectas++;
+            } else if (respuestasUsuario[preguntaActual] !== null && pregunta.correcta === respuestasUsuario[preguntaActual]) {
+                // Si antes estaba correcta y ahora no, restamos
+                respuestasCorrectas--;
+            }
+            
+            // Actualizar la visualización de las opciones
+            mostrarPregunta(preguntaActual);
+            
+            // Mostrar resultado parcial
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <p>Respuestas correctas: ${respuestasCorrectas} de ${preguntasRespondidas}</p>
+                <p>Porcentaje de aciertos: ${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%</p>
+            `;
+            resultadoDiv.style.display = 'block';
+            
+            // Actualizar controles de navegación
+            actualizarControlesNavegacion();
+        }
+
+        // Función para actualizar controles de navegación
+        function actualizarControlesNavegacion() {
+            document.getElementById('anterior-btn').style.display = preguntaActual === 0 ? 'none' : 'block';
+            document.getElementById('siguiente-btn').style.display = preguntaActual === preguntas.length - 1 ? 'none' : 'block';
+            document.getElementById('finalizar-btn').style.display = preguntaActual === preguntas.length - 1 ? 'block' : 'none';
+        }
+
+        // Función para avanzar a la siguiente pregunta
+        function siguientePregunta() {
+            if (preguntaActual < preguntas.length - 1) {
+                preguntaActual++;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para retroceder a la pregunta anterior
+        function anteriorPregunta() {
+            if (preguntaActual > 0) {
+                preguntaActual--;
+                mostrarPregunta(preguntaActual);
+                actualizarControlesNavegacion();
+            }
+        }
+
+        // Función para finalizar el test
+        function finalizarTest() {
+            const preguntasRespondidas = respuestasUsuario.filter(r => r !== null).length;
+            const resultadoFinal = `
+                <h3>Test completado</h3>
+                <p>Has respondido ${preguntasRespondidas} de ${preguntas.length} preguntas.</p>
+                <p>Respuestas correctas: ${respuestasCorrectas} (${preguntasRespondidas > 0 ? ((respuestasCorrectas / preguntasRespondidas) * 100).toFixed(1) : 0}%)</p>
+                <p>Respuestas incorrectas: ${preguntasRespondidas - respuestasCorrectas}</p>
+                <p>Preguntas sin responder: ${preguntas.length - preguntasRespondidas}</p>
+            `;
+            document.getElementById('resultado').innerHTML = resultadoFinal;
+            document.getElementById('reintentar-incorrectas-btn').style.display = 'block';
+        }
+        
+        function reintentarIncorrectas() {
+    const preguntasIncorrectas = preguntas
+        .map((pregunta, index) => ({ ...pregunta, indexOriginal: index }))
+        .filter((_, index) => respuestasUsuario[index] !== null && respuestasUsuario[index] !== preguntas[index].correcta);
+
+    if (preguntasIncorrectas.length === 0) {
+        alert('No has fallado ninguna pregunta.');
+        return;
+    }
+
+    preguntasIncorrectas.forEach(p => {
+        // Desordenar las opciones
+        const opcionesOriginales = [...p.opciones];
+        const correctaOriginal = p.opciones[p.correcta];
+
+        // Mezclar opciones
+        for (let i = opcionesOriginales.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [opcionesOriginales[i], opcionesOriginales[j]] = [opcionesOriginales[j], opcionesOriginales[i]];
+        }
+
+        p.opciones = opcionesOriginales;
+        p.correcta = opcionesOriginales.indexOf(correctaOriginal);
+    });
+
+    // Reiniciar variables con solo las incorrectas
+    preguntaActual = 0;
+    respuestasCorrectas = 0;
+    respuestasUsuario = Array(preguntasIncorrectas.length).fill(null);
+    preguntas.splice(0, preguntas.length, ...preguntasIncorrectas); // reemplaza el array de preguntas
+
+    // Actualizar interfaz
+    document.getElementById('reintentar-incorrectas-btn').style.display = 'none';
+    document.getElementById('resultado').style.display = 'none';
+    document.getElementById('finalizar-btn').style.display = 'none';
+
+    generarIndice();
+    mostrarPregunta(preguntaActual);
+    actualizarControlesNavegacion();
+}
+    </script>
+    <button type="button" id="reintentar-incorrectas-btn" style="display:none;" onclick="reintentarIncorrectas()">Reintentar preguntas falladas</button>
+</body>
+</html>
