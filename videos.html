@@ -1,18 +1,20 @@
+
+
 <!DOCTYPE html>
 
 <html lang="">
-
 <head>
-    <meta charset="utf-8" />
-    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link href="../style.css" rel="stylesheet" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;500&amp;display=swap" rel="stylesheet" />
-    <script src="../../main.js" type="text/javascript"></script>
-    <title>/ / /  POLICIA LOCAL</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="../style.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;500&amp;display=swap" rel="stylesheet"/>
+<script src="../../main.js" type="text/javascript"></script>
+<title>/ / / POLICIA LOCAL</title>
+<style>
+
         :root {
             --page-bg: #0f172a;
             --card-bg: rgba(255, 255, 255, 0.08);
@@ -30,45 +32,53 @@
                 var(--page-bg);
         }
 
+
+
+        .hoja,
+        .hoja2 {
+            overflow: visible !important;
+        }
         #videos {
-            width: min(1100px, calc(100% - 28px));
+            width: min(1120px, calc(100% - 18px));
+            min-height: 100dvh;
             margin: 0 auto;
-            padding: 28px 0 48px;
+            padding: 12px 0;
+            box-sizing: border-box;
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .videos-title {
             color: var(--text-main);
             text-align: center;
-            margin: 0 0 8px;
-            font-size: clamp(1.8rem, 4vw, 3rem);
+            margin: 15px 4px;
+            font-size: clamp(1.15rem, 3vw, 2.05rem);
+            line-height: 1.05;
             letter-spacing: -0.04em;
             font-weight: 800;
+            flex: 0 0 auto;
         }
 
-        .videos-subtitle {
-            color: var(--text-muted);
-            text-align: center;
-            margin: 0 auto 28px;
-            max-width: 720px;
-            line-height: 1.6;
-            font-size: 0.98rem;
-        }
 
         .category {
             --cat-color: #64748b;
             --cat-text: #ffffff;
             --cat-soft: rgba(255, 255, 255, 0.10);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
             border: 1px solid var(--card-border);
             border-radius: 22px;
             box-shadow: var(--shadow);
             overflow: hidden;
-            margin: 18px 0;
+            margin: 0;
             backdrop-filter: blur(12px);
+            flex: 0 0 auto;
         }
 
         .category[open] {
             border-color: color-mix(in srgb, var(--cat-color) 60%, white 12%);
+            min-height: 0;
         }
 
         .category-summary,
@@ -85,33 +95,34 @@
 
         .category-summary {
             display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 14px;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            gap: 10px;
             align-items: center;
-            padding: 20px 22px;
+            padding: clamp(9px, 1.55dvh, 15px) 16px;
             color: var(--cat-text);
             background: linear-gradient(135deg, var(--cat-color), color-mix(in srgb, var(--cat-color) 75%, #000 25%));
         }
 
         .category-title {
-            font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+            font-size: clamp(0.92rem, 2.2vw, 1.25rem);
             font-weight: 800;
             letter-spacing: -0.02em;
         }
 
         .category-count,
         .theme-count {
-            font-size: 0.78rem;
+            font-size: clamp(0.62rem, 1.45vw, 0.78rem);
             font-weight: 800;
             border-radius: 999px;
-            padding: 7px 11px;
+            padding: 5px 9px;
             background: rgba(255, 255, 255, 0.22);
             white-space: nowrap;
         }
 
         .chevron {
-            width: 34px;
-            height: 34px;
+            width: clamp(26px, 5.8vw, 34px);
+            height: clamp(26px, 5.8vw, 34px);
+            min-width: clamp(26px, 5.8vw, 34px);
             border-radius: 999px;
             display: grid;
             place-items: center;
@@ -121,16 +132,19 @@
             font-weight: 900;
         }
 
-        .category[open]>.category-summary .chevron,
-        .theme-card[open]>.theme-summary .chevron {
+        .category[open] > .category-summary .chevron,
+        .theme-card[open] > .theme-summary .chevron {
             transform: rotate(90deg);
         }
 
         .theme-list {
-            padding: 16px;
+            padding: 10px;
             display: grid;
-            gap: 12px;
+            gap: 9px;
             background: rgba(15, 23, 42, 0.55);
+            max-height: none;
+            min-height: 0;
+            overflow: visible;
         }
 
         .theme-card {
@@ -144,10 +158,10 @@
 
         .theme-summary {
             display: grid;
-            grid-template-columns: 1fr auto auto;
-            gap: 10px;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            gap: 8px;
             align-items: center;
-            padding: 15px 16px;
+            padding: 11px 12px;
             color: var(--theme-text);
             background: var(--theme-color);
         }
@@ -198,89 +212,40 @@
             box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
         }
 
-        .cat-constitucional {
-            --cat-color: darkred;
-            --cat-text: #fff;
-        }
-
-        .cat-trafico {
-            --cat-color: #facc15;
-            --cat-text: #111827;
-        }
-
-        .cat-policial {
-            --cat-color: #2563eb;
-            --cat-text: #fff;
-        }
-
-        .cat-procesal {
-            --cat-color: orange;
-            --cat-text: #111827;
-        }
-
-        .cat-penal {
-            --cat-color: orangered;
-            --cat-text: #fff;
-        }
-
-        .cat-lopd {
-            --cat-color: darkgreen;
-            --cat-text: #fff;
-        }
-
-        .cat-igualdad {
-            --cat-color: purple;
-            --cat-text: #fff;
-        }
-
+        .cat-constitucional { --cat-color: darkred; --cat-text: #fff; }
+        .cat-trafico { --cat-color: #facc15; --cat-text: #111827; }
+        .cat-policial { --cat-color: #2563eb; --cat-text: #fff; }
+        .cat-procesal { --cat-color: orange; --cat-text: #111827; }
+        .cat-penal { --cat-color: orangered; --cat-text: #fff; }
+        .cat-lopd { --cat-color: darkgreen; --cat-text: #fff; }
+        .cat-igualdad { --cat-color: purple; --cat-text: #fff; }
         .cat-lgtbi {
             --cat-color: #675997;
             --cat-text: #fff;
         }
 
-        .tema01,
-        .tema02,
-        .tema03,
-        .tema04,
-        .tema05,
-        .tema06 {
+        .tema01, .tema02, .tema03, .tema04, .tema05, .tema06 {
             --theme-color: darkred;
             --theme-text: #fff;
         }
 
-        .tema07,
-        .tema08,
-        .tema09,
-        .tema10,
-        .tema11,
-        .tema12,
-        .tema13,
-        .tema14,
-        .tema15,
-        .tema16,
-        .tema17 {
+        .tema07, .tema08, .tema09, .tema10, .tema11, .tema12,
+        .tema13, .tema14, .tema15, .tema16, .tema17 {
             --theme-color: #facc15;
             --theme-text: #111827;
         }
 
-        .tema18,
-        .tema19,
-        .tema20,
-        .tema21 {
+        .tema18, .tema19, .tema20, .tema21 {
             --theme-color: #2563eb;
             --theme-text: #fff;
         }
 
-        .tema22,
-        .tema23 {
+        .tema22, .tema23 {
             --theme-color: orange;
             --theme-text: #111827;
         }
 
-        .tema24,
-        .tema25,
-        .tema26,
-        .tema27 {
+        .tema24, .tema25, .tema26, .tema27 {
             --theme-color: orangered;
             --theme-text: #fff;
         }
@@ -300,8 +265,8 @@
             --theme-text: #fff;
         }
 
-        .tema30>.theme-summary,
-        .cat-lgtbi>.category-summary {
+        .tema30 > .theme-summary,
+        .cat-lgtbi > .category-summary {
             background-image: linear-gradient(90deg,
                     #d04b36 0%,
                     #d04b36 16.6666%,
@@ -319,476 +284,559 @@
 
         @media (max-width: 640px) {
             #videos {
-                width: min(100% - 16px, 1100px);
-                padding-top: 18px;
+                width: calc(100% - 10px);
+                padding: 7px 0;
+            }
+
+            .category {
+                border-radius: 15px;
             }
 
             .category-summary,
             .theme-summary {
-                grid-template-columns: 1fr auto;
+                grid-template-columns: minmax(0, 1fr) auto auto;
+                gap: 6px;
+            }
+
+            .category-title,
+            .theme-name {
+                min-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
             .category-count,
             .theme-count {
-                grid-column: 1 / -1;
-                justify-self: start;
+                grid-column: auto;
+                justify-self: auto;
+                white-space: nowrap;
+            }
+
+            .theme-list {
+                padding: 8px;
+                gap: 8px;
+                max-height: none;
+            }
+
+            .links {
+                padding: 9px;
+                gap: 8px;
             }
 
             .links a {
-                align-items: flex-start;
-                line-height: 1.35;
+                align-items: center;
+                line-height: 1.25;
+                padding: 10px 11px;
             }
         }
+
+        @media (max-width: 430px) {
+            .category-count,
+            .theme-count {
+                font-size: 0.58rem;
+                padding: 4px 6px;
+            }
+
+            .category-summary {
+                padding-left: 10px;
+                padding-right: 8px;
+            }
+
+            .theme-summary {
+                padding-left: 10px;
+                padding-right: 8px;
+            }
+        }
+
+        @media (max-height: 620px) {
+            #videos {
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+
+            .videos-title {
+                font-size: 1rem;
+            }
+
+            .category-summary {
+                padding-top: 7px;
+                padding-bottom: 7px;
+            }
+
+            .theme-list {
+                max-height: none;
+                min-height: 0;
+            }
+        }
+
     </style>
 </head>
-
 <body>
-    <div class="hoja">
-        <div class="hoja2">
-            <div id="videos">
-                <h1 class="videos-title">Vídeos del temario</h1>
-                <p class="videos-subtitle"> </p>
-                <details class="category cat-constitucional">
-                    <summary class="category-summary">
-                        <span class="category-title">Constitucional Temas 01-06</span>
-                        <span class="category-count">6 temas · 27 vídeos</span>
-                        <span class="chevron">›</span>
-                    </summary>
-                    <div class="theme-list">
-                        <details class="theme-card tema01">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 01</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/01. Tema 01/01. Tema 01.mp4">tema 1 (primera parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema02">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 02</span>
-                                <span class="theme-count">6 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/01. Tema 02 (primera parte).mp4">tema 2 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/02. Tema 02 (segunda parte).mp4">tema 2 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/03. Tema 02 (tercera parte).mp4">tema 2 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/04. Tema 02 (cuarta parte).mp4">tema 2 (cuarta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/05. Tema 02 (quinta parte).mp4">tema 2 (quinta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/06. Tema 02 (sexta parte).mp4">tema 2 (sexta parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema03">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 03</span>
-                                <span class="theme-count">8 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/01. Tema 03 (Primera parte).mp4">tema 3 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/02. Tema 03 (Segunda parte).mp4">tema (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/03. Tema 03 (Tercera parte).mp4">tema 3 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/04. Tema 03 (Cuarta parte).mp4">tema 3 (cuarta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/05. Tema 03 (Quinta parte).mp4">tema 3 (quinta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/06. Tema 03 (Sexta parte).mp4">tema 3 (sexta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/07. Tema 03 (Séptima parte).mp4">tema 3 (septima parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/08. Tema 03 (Octava parte).mp4">tema 3 (octava parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema04">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 04</span>
-                                <span class="theme-count">4 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/04. Tema 04/01. Tema 04 (Primera parte).mp4">tema 4 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/04. Tema 04/02. Tema 04 (Segunda parte).mp4">tema 4 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/04. Tema 04/03. Tema 04 (Tercera parte).mp4">tema 4 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/04. Tema 04/04. Tema 04 (Cuarta parte).mp4">tema 4 (cuarta parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema05">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 05</span>
-                                <span class="theme-count">6 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/01. Tema 05 (Primera parte).mp4">tema 5 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/02. Tema 05 (Segunda parte).mp4">tema 5 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/03. Tema 05 (Tercera parte).mp4">tema 5 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/04. Tema 05 (Cuarta parte).mp4">tema 5 (cuarta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/05. Tema 05 (Quinta parte).mp4">tema 5 (quinta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/06. Tema 05 (Sexta parte).mp4">tema 5 (sexta parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema06">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 06</span>
-                                <span class="theme-count">2 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/06. Tema 06/01. Tema 06 (Primera parte).mp4">tema 6 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/06. Tema 06/02. Tema 06 (Segunda parte).mp4">tema 6 (segunda parte)</a>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-                <details class="category cat-trafico">
-                    <summary class="category-summary">
-                        <span class="category-title">Tráfico - Temas 07-17</span>
-                        <span class="category-count">11 temas · 44 vídeos</span>
-                        <span class="chevron">›</span>
-                    </summary>
-                    <div class="theme-list">
-                        <details class="theme-card tema07">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 07</span>
-                                <span class="theme-count">5 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/01. Tema 07 (primera parte).mp4">tema 7 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/02. Tema 07 (segunda parte).mp4">tema 7 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/03. Tema 07 (tercera parte).mp4">tema 7 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/04. Tema 07 (cuarta parte).mp4">tema 7 (cuarta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/05. Tema 07 (quinta parte).mp4">tema 7 (quinta parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema08">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 08</span>
-                                <span class="theme-count">6 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/01. Tema 08 (primera parte).mp4">tema 8 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/02. Tema 08 (segunda parte).mp4">tema 8 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/03. Tema 08 (tercera parte).mp4">tema 8 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/04. Tema 08 (cuarta parte).mp4">tema 8 (cuarta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/05. Tema 08 (quinta parte).mp4">tema 8 (quinta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/06. Tema 08 (sexta parte).mp4">tema 8 (sexta parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema09">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 09</span>
-                                <span class="theme-count">15 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/01. Tema 09 (primera parte).mp4">tema 09 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/02. Tema 09 (segunda parte).mp4">tema 09 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/03. Tema 09 (tercera parte).mp4">tema 09 (tercer parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/04. Tema 09 (cuarta parte).mp4">tema 09 (cuarta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/05. Tema 09 (quinta parte).mp4">tema 09 (quinta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/06. Tema 09 (sexta parte).mp4">tema 09 (sexta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/07. Tema 09 (séptima parte).mp4">tema 09 (septima parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/08. Tema 09 (octava parte).mp4">tema 09 (octaba parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/09. Tema 09 (novena parte).mp4">tema 09 (novena parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/10. Tema 09 (décima parte).mp4">tema 09 (decima parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/11. Tema 09 (undécima parte).mp4">tema 09 (undecima parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/12. Tema 09 (duodécima parte).mp4">tema 09 (duodecima parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/13. Tema 09 (decimotercera parte).mp4">tema 09 (decimotercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/14. Tema 09 (decimocuarta parte).mp4">tema 09 (decimocuarta parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/15. Tema 09 (decimoquinta parte).mp4">tema 09 (decimoquinta parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema10">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 10</span>
-                                <span class="theme-count">2 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/10. Tema 10/01. Tema 10 (primera parte).mp4">tema 10 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/10. Tema 10/02. Tema 10 (segunda parte).mp4">tema 10 (segunda parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema11">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 11</span>
-                                <span class="theme-count">4 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/11. Tema 11/01. Tema 11 (primera parte).mp4">tema 11 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/11. Tema 11/02. Tema 11 (segunda parte).mp4">tema 11 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/11. Tema 11/03. Tema 11 (tercera parte).mp4">tema 11 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/11. Tema 11/04. Tema 11 (cuarta parte).mp4">tema 11 (cuarta parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema12">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 12</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/12. Tema 12/01. Tema 12.mp4">tema 12</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema13">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 13</span>
-                                <span class="theme-count">2 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/13. Tema 13/01. Tema 13 (primera parte).mp4">tema 13 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/13. Tema 13/02. Tema 13 (segunda parte).mp4">tema 13 (segunda parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema14">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 14</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/14. Tema 14/01. Tema 14.mp4">tema 14 (primera parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema15">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 15</span>
-                                <span class="theme-count">3 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/15. Tema 15/01. Tema 15 (primera parte).mp4">tema15 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/15. Tema 15/02. Tema 15 (segunda parte).mp4">tema15 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/15. Tema 15/03. Tema 15 (tercera parte).mp4">tema15 (tercera parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema16">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 16</span>
-                                <span class="theme-count">2 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/16. Tema 16/01. Tema 16 (primera parte).mp4">tema16 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/16. Tema 16/02. Tema 16 (segunda parte).mp4">tema16 (segunda parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema17">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 17</span>
-                                <span class="theme-count">3 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/17. Tema 17/01. Tema 17 (primera parte).mp4">tema17 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/17. Tema 17/02. Tema 17 (segunda parte).mp4">tema17 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/17. Tema 17/03. Tema 17 (tercera parte).mp4">tema17 (tercera parte)</a>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-                <details class="category cat-policial">
-                    <summary class="category-summary">
-                        <span class="category-title">Dº Policial - Temas 18-21</span>
-                        <span class="category-count">4 temas · 4 vídeos</span>
-                        <span class="chevron">›</span>
-                    </summary>
-                    <div class="theme-list">
-                        <details class="theme-card tema18">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 18</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/18. Tema 18/01. Tema 18.mp4">tema18 (primera parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema19">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 19</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/19. Tema 19/01. Tema 19.mp4">tema19 (primera parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema20">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 20</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/20. Tema 20/01. Tema 20.mp4">tema20 (primera parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema21">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 21</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/21. Tema 21/01. Tema 21.mp4">tema21 (primera parte)</a>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-                <details class="category cat-procesal">
-                    <summary class="category-summary">
-                        <span class="category-title">Dº Procesal Temas 22-23</span>
-                        <span class="category-count">2 temas · 3 vídeos</span>
-                        <span class="chevron">›</span>
-                    </summary>
-                    <div class="theme-list">
-                        <details class="theme-card tema22">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 22</span>
-                                <span class="theme-count">2 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/22. Tema 22/01. Tema 22 (primera parte).mp4">tema22 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/22. Tema 22/02. Tema 22 (segunda parte).mp4">tema22 (segunda parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema23">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 23</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/23. Tema 23/01. Tema 23.mp4">tema23</a>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-                <details class="category cat-penal">
-                    <summary class="category-summary">
-                        <span class="category-title">Dº Penal - Temas 24-27</span>
-                        <span class="category-count">4 temas · 11 vídeos</span>
-                        <span class="chevron">›</span>
-                    </summary>
-                    <div class="theme-list">
-                        <details class="theme-card tema24">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 24</span>
-                                <span class="theme-count">3 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/24. Tema 24/01. Tema 24 (Primera parte).mp4">tema24 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/24. Tema 24/02. Tema 24 (Segunda parte).mp4">tema24 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/24. Tema 24/03. Tema 24 (Tercera parte).mp4">tema24 (tercera parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema25">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 25</span>
-                                <span class="theme-count">4 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/25. Tema 25/01. Tema 25 (Primera parte).mp4">tema25 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/25. Tema 25/02. Tema 25 (Segunda parte).mp4">tema25 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/25. Tema 25/03. Tema 25 (Tercera parte).mp4">tema25 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/25. Tema 25/04. Tema 25 (Cuarta parte).mp4">tema25 (cuarta parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema26">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 26</span>
-                                <span class="theme-count">2 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/26. Tema 26/01. Tema 26 (Primera parte).mp4">tema26 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/26. Tema 26/02. Tema 26 (Segunda parte).mp4">tema26 (segunda parte)</a>
-                            </div>
-                        </details>
-                        <details class="theme-card tema27">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 27</span>
-                                <span class="theme-count">2 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/27. Tema 27/01. Tema 27 (Primera parte).mp4">tema27 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/27. Tema 27/02. Tema 27 (Segunda parte).mp4">tema27 (segunda parte)</a>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-                <details class="category cat-lopd">
-                    <summary class="category-summary">
-                        <span class="category-title">L.O.P.D - Tema 28</span>
-                        <span class="category-count">1 temas · 2 vídeos</span>
-                        <span class="chevron">›</span>
-                    </summary>
-                    <div class="theme-list">
-                        <details class="theme-card tema28">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 28</span>
-                                <span class="theme-count">2 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/28. Tema 28/01. Tema 28 (Primera parte).mp4">tema28 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/28. Tema 28/02. Tema 28 (Segunda parte).mp4">tema28 (segunda parte)</a>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-                <details class="category cat-igualdad">
-                    <summary class="category-summary">
-                        <span class="category-title">Ley de Igualdad - Tema 29</span>
-                        <span class="category-count">1 temas · 4 vídeos</span>
-                        <span class="chevron">›</span>
-                    </summary>
-                    <div class="theme-list">
-                        <details class="theme-card tema29">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 29</span>
-                                <span class="theme-count">4 vídeos</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/29. Tema 29/01. Tema 29 (Primera parte).mp4">tema29 (primera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/29. Tema 29/02. Tema 29 (Segunda parte).mp4">tema29 (segunda parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/29. Tema 29/03. Tema 29 (Tercera parte).mp4">tema29 (tercera parte)</a>
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/29. Tema 29/04. Tema 29 (Cuarta parte).mp4">tema29 (cuarta parte)</a>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-                <details class="category cat-lgtbi">
-                    <summary class="category-summary">
-                        <span class="category-title">LGTBI+ Tema 30</span>
-                        <span class="category-count">1 temas · 1 vídeos</span>
-                        <span class="chevron">›</span>
-                    </summary>
-                    <div class="theme-list">
-                        <details class="theme-card tema30">
-                            <summary class="theme-summary">
-                                <span class="theme-name">Tema 30</span>
-                                <span class="theme-count">1 vídeo</span>
-                                <span class="chevron">›</span>
-                            </summary>
-                            <div class="links">
-                                <a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/30. Tema 30/01. Tema 30.mp4">tema30</a>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-            </div>
-        </div>
-    </div>
-</body>
+<div class="hoja">
+<div class="hoja2">
+<div id="videos"><h1 class="videos-title">Vídeos del temario</h1>
+<details class="category cat-constitucional">
+<summary class="category-summary">
+<span class="category-title">Constitucional Temas 01-06</span>
+<span class="category-count">6 temas · 27 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="theme-list">
+<details class="theme-card tema01">
+<summary class="theme-summary">
+<span class="theme-name">Tema 01</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/01. Tema 01/01. Tema 01.mp4">tema 1 (primera parte)</a>
+</div>
+</details>
+<details class="theme-card tema02">
+<summary class="theme-summary">
+<span class="theme-name">Tema 02</span>
+<span class="theme-count">6 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/01. Tema 02 (primera parte).mp4">tema 2 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/02. Tema 02 (segunda parte).mp4">tema 2 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/03. Tema 02 (tercera parte).mp4">tema 2 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/04. Tema 02 (cuarta parte).mp4">tema 2 (cuarta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/05. Tema 02 (quinta parte).mp4">tema 2 (quinta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/02. Tema 02/06. Tema 02 (sexta parte).mp4">tema 2 (sexta parte)</a>
+</div>
+</details>
+<details class="theme-card tema03">
+<summary class="theme-summary">
+<span class="theme-name">Tema 03</span>
+<span class="theme-count">8 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/01. Tema 03 (Primera parte).mp4">tema 3 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/02. Tema 03 (Segunda parte).mp4">tema (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/03. Tema 03 (Tercera parte).mp4">tema 3 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/04. Tema 03 (Cuarta parte).mp4">tema 3 (cuarta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/05. Tema 03 (Quinta parte).mp4">tema 3 (quinta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/06. Tema 03 (Sexta parte).mp4">tema 3 (sexta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/07. Tema 03 (Séptima parte).mp4">tema 3 (septima parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/03. Tema 03/08. Tema 03 (Octava parte).mp4">tema 3 (octava parte)</a>
+</div>
+</details>
+<details class="theme-card tema04">
+<summary class="theme-summary">
+<span class="theme-name">Tema 04</span>
+<span class="theme-count">4 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/04. Tema 04/01. Tema 04 (Primera parte).mp4">tema 4 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/04. Tema 04/02. Tema 04 (Segunda parte).mp4">tema 4 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/04. Tema 04/03. Tema 04 (Tercera parte).mp4">tema 4 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/04. Tema 04/04. Tema 04 (Cuarta parte).mp4">tema 4 (cuarta parte)</a>
+</div>
+</details>
+<details class="theme-card tema05">
+<summary class="theme-summary">
+<span class="theme-name">Tema 05</span>
+<span class="theme-count">6 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/01. Tema 05 (Primera parte).mp4">tema 5 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/02. Tema 05 (Segunda parte).mp4">tema 5 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/03. Tema 05 (Tercera parte).mp4">tema 5 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/04. Tema 05 (Cuarta parte).mp4">tema 5 (cuarta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/05. Tema 05 (Quinta parte).mp4">tema 5 (quinta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/05. Tema 05/06. Tema 05 (Sexta parte).mp4">tema 5 (sexta parte)</a>
+</div>
+</details>
+<details class="theme-card tema06">
+<summary class="theme-summary">
+<span class="theme-name">Tema 06</span>
+<span class="theme-count">2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/06. Tema 06/01. Tema 06 (Primera parte).mp4">tema 6 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/06. Tema 06/02. Tema 06 (Segunda parte).mp4">tema 6 (segunda parte)</a>
+</div>
+</details>
+</div>
+</details>
+<details class="category cat-trafico">
+<summary class="category-summary">
+<span class="category-title">Tráfico - Temas 07-17</span>
+<span class="category-count">11 temas · 44 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="theme-list">
+<details class="theme-card tema07">
+<summary class="theme-summary">
+<span class="theme-name">Tema 07</span>
+<span class="theme-count">5 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/01. Tema 07 (primera parte).mp4">tema 7 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/02. Tema 07 (segunda parte).mp4">tema 7 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/03. Tema 07 (tercera parte).mp4">tema 7 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/04. Tema 07 (cuarta parte).mp4">tema 7 (cuarta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/07. Tema 07/05. Tema 07 (quinta parte).mp4">tema 7 (quinta parte)</a>
+</div>
+</details>
+<details class="theme-card tema08">
+<summary class="theme-summary">
+<span class="theme-name">Tema 08</span>
+<span class="theme-count">6 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/01. Tema 08 (primera parte).mp4">tema 8 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/02. Tema 08 (segunda parte).mp4">tema 8 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/03. Tema 08 (tercera parte).mp4">tema 8 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/04. Tema 08 (cuarta parte).mp4">tema 8 (cuarta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/05. Tema 08 (quinta parte).mp4">tema 8 (quinta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/08. Tema 08/06. Tema 08 (sexta parte).mp4">tema 8 (sexta parte)</a>
+</div>
+</details>
+<details class="theme-card tema09">
+<summary class="theme-summary">
+<span class="theme-name">Tema 09</span>
+<span class="theme-count">15 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/01. Tema 09 (primera parte).mp4">tema 09 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/02. Tema 09 (segunda parte).mp4">tema 09 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/03. Tema 09 (tercera parte).mp4">tema 09 (tercer parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/04. Tema 09 (cuarta parte).mp4">tema 09 (cuarta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/05. Tema 09 (quinta parte).mp4">tema 09 (quinta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/06. Tema 09 (sexta parte).mp4">tema 09 (sexta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/07. Tema 09 (séptima parte).mp4">tema 09 (septima parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/08. Tema 09 (octava parte).mp4">tema 09 (octaba parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/09. Tema 09 (novena parte).mp4">tema 09 (novena parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/10. Tema 09 (décima parte).mp4">tema 09 (decima parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/11. Tema 09 (undécima parte).mp4">tema 09 (undecima parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/12. Tema 09 (duodécima parte).mp4">tema 09 (duodecima parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/13. Tema 09 (decimotercera parte).mp4">tema 09 (decimotercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/14. Tema 09 (decimocuarta parte).mp4">tema 09 (decimocuarta parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/09. Tema 09/15. Tema 09 (decimoquinta parte).mp4">tema 09 (decimoquinta parte)</a>
+</div>
+</details>
+<details class="theme-card tema10">
+<summary class="theme-summary">
+<span class="theme-name">Tema 10</span>
+<span class="theme-count">2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/10. Tema 10/01. Tema 10 (primera parte).mp4">tema 10 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/10. Tema 10/02. Tema 10 (segunda parte).mp4">tema 10 (segunda parte)</a>
+</div>
+</details>
+<details class="theme-card tema11">
+<summary class="theme-summary">
+<span class="theme-name">Tema 11</span>
+<span class="theme-count">4 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/11. Tema 11/01. Tema 11 (primera parte).mp4">tema 11 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/11. Tema 11/02. Tema 11 (segunda parte).mp4">tema 11 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/11. Tema 11/03. Tema 11 (tercera parte).mp4">tema 11 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/11. Tema 11/04. Tema 11 (cuarta parte).mp4">tema 11 (cuarta parte)</a>
+</div>
+</details>
+<details class="theme-card tema12">
+<summary class="theme-summary">
+<span class="theme-name">Tema 12</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/12. Tema 12/01. Tema 12.mp4">tema 12</a>
+</div>
+</details>
+<details class="theme-card tema13">
+<summary class="theme-summary">
+<span class="theme-name">Tema 13</span>
+<span class="theme-count">2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/13. Tema 13/01. Tema 13 (primera parte).mp4">tema 13 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/13. Tema 13/02. Tema 13 (segunda parte).mp4">tema 13 (segunda parte)</a>
+</div>
+</details>
+<details class="theme-card tema14">
+<summary class="theme-summary">
+<span class="theme-name">Tema 14</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/14. Tema 14/01. Tema 14.mp4">tema 14 (primera parte)</a>
+</div>
+</details>
+<details class="theme-card tema15">
+<summary class="theme-summary">
+<span class="theme-name">Tema 15</span>
+<span class="theme-count">3 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/15. Tema 15/01. Tema 15 (primera parte).mp4">tema15 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/15. Tema 15/02. Tema 15 (segunda parte).mp4">tema15 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/15. Tema 15/03. Tema 15 (tercera parte).mp4">tema15 (tercera parte)</a>
+</div>
+</details>
+<details class="theme-card tema16">
+<summary class="theme-summary">
+<span class="theme-name">Tema 16</span>
+<span class="theme-count">2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/16. Tema 16/01. Tema 16 (primera parte).mp4">tema16 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/16. Tema 16/02. Tema 16 (segunda parte).mp4">tema16 (segunda parte)</a>
+</div>
+</details>
+<details class="theme-card tema17">
+<summary class="theme-summary">
+<span class="theme-name">Tema 17</span>
+<span class="theme-count">3 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/17. Tema 17/01. Tema 17 (primera parte).mp4">tema17 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/17. Tema 17/02. Tema 17 (segunda parte).mp4">tema17 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/17. Tema 17/03. Tema 17 (tercera parte).mp4">tema17 (tercera parte)</a>
+</div>
+</details>
+</div>
+</details>
+<details class="category cat-policial">
+<summary class="category-summary">
+<span class="category-title">Dº Policial - Temas 18-21</span>
+<span class="category-count">4 temas · 4 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="theme-list">
+<details class="theme-card tema18">
+<summary class="theme-summary">
+<span class="theme-name">Tema 18</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/18. Tema 18/01. Tema 18.mp4">tema18 (primera parte)</a>
+</div>
+</details>
+<details class="theme-card tema19">
+<summary class="theme-summary">
+<span class="theme-name">Tema 19</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/19. Tema 19/01. Tema 19.mp4">tema19 (primera parte)</a>
+</div>
+</details>
+<details class="theme-card tema20">
+<summary class="theme-summary">
+<span class="theme-name">Tema 20</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/20. Tema 20/01. Tema 20.mp4">tema20 (primera parte)</a>
+</div>
+</details>
+<details class="theme-card tema21">
+<summary class="theme-summary">
+<span class="theme-name">Tema 21</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/21. Tema 21/01. Tema 21.mp4">tema21 (primera parte)</a>
+</div>
+</details>
+</div>
+</details>
+<details class="category cat-procesal">
+<summary class="category-summary">
+<span class="category-title">Dº Procesal Temas 22-23</span>
+<span class="category-count">2 temas · 3 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="theme-list">
+<details class="theme-card tema22">
+<summary class="theme-summary">
+<span class="theme-name">Tema 22</span>
+<span class="theme-count">2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/22. Tema 22/01. Tema 22 (primera parte).mp4">tema22 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/22. Tema 22/02. Tema 22 (segunda parte).mp4">tema22 (segunda parte)</a>
+</div>
+</details>
+<details class="theme-card tema23">
+<summary class="theme-summary">
+<span class="theme-name">Tema 23</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/23. Tema 23/01. Tema 23.mp4">tema23</a>
+</div>
+</details>
+</div>
+</details>
+<details class="category cat-penal">
+<summary class="category-summary">
+<span class="category-title">Dº Penal - Temas 24-27</span>
+<span class="category-count">4 temas · 11 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="theme-list">
+<details class="theme-card tema24">
+<summary class="theme-summary">
+<span class="theme-name">Tema 24</span>
+<span class="theme-count">3 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/24. Tema 24/01. Tema 24 (Primera parte).mp4">tema24 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/24. Tema 24/02. Tema 24 (Segunda parte).mp4">tema24 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/24. Tema 24/03. Tema 24 (Tercera parte).mp4">tema24 (tercera parte)</a>
+</div>
+</details>
+<details class="theme-card tema25">
+<summary class="theme-summary">
+<span class="theme-name">Tema 25</span>
+<span class="theme-count">4 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/25. Tema 25/01. Tema 25 (Primera parte).mp4">tema25 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/25. Tema 25/02. Tema 25 (Segunda parte).mp4">tema25 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/25. Tema 25/03. Tema 25 (Tercera parte).mp4">tema25 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/25. Tema 25/04. Tema 25 (Cuarta parte).mp4">tema25 (cuarta parte)</a>
+</div>
+</details>
+<details class="theme-card tema26">
+<summary class="theme-summary">
+<span class="theme-name">Tema 26</span>
+<span class="theme-count">2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/26. Tema 26/01. Tema 26 (Primera parte).mp4">tema26 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/26. Tema 26/02. Tema 26 (Segunda parte).mp4">tema26 (segunda parte)</a>
+</div>
+</details>
+<details class="theme-card tema27">
+<summary class="theme-summary">
+<span class="theme-name">Tema 27</span>
+<span class="theme-count">2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/27. Tema 27/01. Tema 27 (Primera parte).mp4">tema27 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/27. Tema 27/02. Tema 27 (Segunda parte).mp4">tema27 (segunda parte)</a>
+</div>
+</details>
+</div>
+</details>
+<details class="category cat-lopd">
+<summary class="category-summary">
+<span class="category-title">L.O.P.D - Tema 28</span>
+<span class="category-count">1 temas · 2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="theme-list">
+<details class="theme-card tema28">
+<summary class="theme-summary">
+<span class="theme-name">Tema 28</span>
+<span class="theme-count">2 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/28. Tema 28/01. Tema 28 (Primera parte).mp4">tema28 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/28. Tema 28/02. Tema 28 (Segunda parte).mp4">tema28 (segunda parte)</a>
+</div>
+</details>
+</div>
+</details>
+<details class="category cat-igualdad">
+<summary class="category-summary">
+<span class="category-title">Ley de Igualdad - Tema 29</span>
+<span class="category-count">1 temas · 4 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="theme-list">
+<details class="theme-card tema29">
+<summary class="theme-summary">
+<span class="theme-name">Tema 29</span>
+<span class="theme-count">4 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/29. Tema 29/01. Tema 29 (Primera parte).mp4">tema29 (primera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/29. Tema 29/02. Tema 29 (Segunda parte).mp4">tema29 (segunda parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/29. Tema 29/03. Tema 29 (Tercera parte).mp4">tema29 (tercera parte)</a>
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/29. Tema 29/04. Tema 29 (Cuarta parte).mp4">tema29 (cuarta parte)</a>
+</div>
+</details>
+</div>
+</details>
+<details class="category cat-lgtbi">
+<summary class="category-summary">
+<span class="category-title">LGTBI+ Tema 30</span>
+<span class="category-count">1 temas · 1 vídeos</span>
+<span class="chevron">›</span>
+</summary>
+<div class="theme-list">
+<details class="theme-card tema30">
+<summary class="theme-summary">
+<span class="theme-name">Tema 30</span>
+<span class="theme-count">1 vídeo</span>
+<span class="chevron">›</span>
+</summary>
+<div class="links">
+<a href="https://s3-eu-west-1.amazonaws.com/reisan.net.media/Oposiciones+Policía Local Baleares/videos/01. Clases en diferido | Bloque Común | Temario 30 temas/02. Explicación 30 temas | Consulta las explicaciones seleccionando el tema concreto/30. Tema 30/01. Tema 30.mp4">tema30</a>
+</div>
+</details>
+</div>
+</details></div>
+</div>
+</div>
 
+<script>
+    document.querySelectorAll('#videos > .category').forEach((category) => {
+        category.addEventListener('toggle', () => {
+            if (!category.open) return;
+            document.querySelectorAll('#videos > .category').forEach((other) => {
+                if (other !== category) other.removeAttribute('open');
+            });
+        });
+    });
+
+    document.querySelectorAll('.theme-list .theme-card').forEach((theme) => {
+        theme.addEventListener('toggle', () => {
+            if (!theme.open) return;
+            const list = theme.closest('.theme-list');
+            if (!list) return;
+            list.querySelectorAll('.theme-card').forEach((other) => {
+                if (other !== theme) other.removeAttribute('open');
+            });
+        });
+    });
+</script>
+</body>
 </html>
