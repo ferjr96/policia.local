@@ -818,6 +818,11 @@
 </div>
 
 <script>
+  document.querySelectorAll('a[href]').forEach(function(enlace) {
+    enlace.setAttribute('target', '_blank');
+    enlace.setAttribute('rel', 'noopener noreferrer');
+  });
+        
     document.querySelectorAll('#videos > .category').forEach((category) => {
         category.addEventListener('toggle', () => {
             if (!category.open) return;
